@@ -3,7 +3,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcrypt";
 import { UserModel } from "../schemas/user";
 import passportJWT from "passport-jwt";
-import { SECRET_ACCESS_TOKEN } from "../constants/auth";
+import { secretAccessToken } from "../config";
 
 const { Strategy: JWTStrategy, ExtractJwt } = passportJWT;
 /////////////////////////////////////////////////////////////////
@@ -38,7 +38,7 @@ passport.use(
   new JWTStrategy(
     {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: SECRET_ACCESS_TOKEN,
+      secretOrKey: secretAccessToken,
     },
     (jwt_payload, done) => {
       UserModel.findById(jwt_payload.id)

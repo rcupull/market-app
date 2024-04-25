@@ -5,12 +5,7 @@ import { userServices } from "../user/services";
 import { QueryHandle } from "../../types/general";
 import { ServerResponse } from "http";
 import { compact } from "../../utils/general";
-
-const credentialsPath = join(
-  process.cwd(),
-  "../../app-config/firebase-adminsdk.json"
-);
-const serviceAccount = require(credentialsPath);
+import { serviceAccount } from "../../config";
 
 const init = () => {
   firebase.initializeApp({

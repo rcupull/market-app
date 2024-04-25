@@ -1,10 +1,10 @@
 import { PaginateModel, Schema, model } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { SECRET_ACCESS_TOKEN } from "../constants/auth";
 import { User } from "../types/user";
 import { createdAtSchemaDefinition } from "../utils/schemas";
 import mongoosePaginate from "mongoose-paginate-v2";
+import { secretAccessToken } from "../config";
 
 const UserSchema = new Schema<User>({
   ...createdAtSchemaDefinition,
@@ -62,7 +62,7 @@ UserSchema.methods.generateAccessJWT = function () {
     {
       id: this._id,
     },
-    SECRET_ACCESS_TOKEN
+    secretAccessToken
   );
 };
 

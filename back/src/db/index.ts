@@ -1,7 +1,5 @@
 import { connect } from "mongoose";
-
-export const dbUrl =
-  process.env.DB_URL || "mongodb://127.0.0.1:27017/community_db";
+import { dbUrl } from "../config";
 
 export const connectDB = () => {
   connect(dbUrl)

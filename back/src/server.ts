@@ -4,7 +4,8 @@ import cors from "cors";
 import swaggerUiExpress from "swagger-ui-express";
 import { passportMiddlewareInitialize } from "./middlewares/passport";
 import { commaSeparateQuery } from "./middlewares/comma-separate-query";
-import { appAssets, getAssetsDir } from "./config";
+import { appAssetsDir, appFrontDir } from "./config";
+import { join } from "path";
 const DOC = process.env.DOC;
 
 export const app = express();
@@ -25,15 +26,27 @@ app.use((req, res, next) => {
   /**
    * app assets
    */
-  const isAppAsset = appAssets
+  const isAppAsset = ["/app-images"]
     .map((assets) => req.url.startsWith(assets))
     .some(Boolean);
 
   if (isAppAsset) {
-    return express.static(getAssetsDir())(req, res, next);
+    return express.static(join(process.cwd(), appAssetsDir))(req, res, next);
   }
 
-  next();
+  const isFrontFile = [".js", ".png", ".css"]
+    .map((ext) => req.url.endsWith(ext))
+    .some(Boolean);
+
+  if (isFrontFile) {
+    return express.static(join(process.cwd(), appFrontDir))(req, res, next);
+  }
+
+  if (req.url.startsWith("/api")) {
+    return next();
+  }
+
+  res.sendFile(join(process.cwd(), appFrontDir, "index.html"));
 });
 
 // app.use(expressSession);
@@ -43,4 +56,4 @@ app.use(passportMiddlewareInitialize);
 app.use(express.json());
 app.use(commaSeparateQuery);
 app.use(express.urlencoded({ extended: false }));
-app.use("/", router);
+app.use("/api", router);

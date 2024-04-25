@@ -2,11 +2,18 @@
   "name": "app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
+    "<<<<<<Web>>>>>>": "",
     "start:client": "cd ./web && pnpm start",
+    "build:client": "cd ./web && pnpm build",
+    "<<<<<<Backend>>>>>>": "",
     "start:server": "cd ./back && pnpm start",
-    "start": "concurrently \"pnpm run start:client\" \"pnpm run start:server\""
+    "build:server": "cd ./back && pnpm build",
+    "serve:server": "cd ./back && pnpm serve",
+    "<<<<<<Both>>>>>>": "",
+    "start": "APP_CONFIG_PATH='../app-config.json' concurrently \"pnpm start:client\" \"pnpm start:server\"",
+    "build": "APP_CONFIG_PATH='../app-config.json' concurrently \"pnpm build:client\" \"pnpm build:server\"",
+    "serve": "APP_CONFIG_PATH='../app-config.json' pnpm serve:server"
   },
   "keywords": [],
   "author": "",

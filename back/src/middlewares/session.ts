@@ -1,7 +1,6 @@
 import session from "express-session";
-import { SECRET_ACCESS_TOKEN } from "../constants/auth";
 import connectMongoSession from "connect-mongodb-session";
-import { dbUrl } from "../db";
+import { dbUrl, secretAccessToken } from "../config";
 
 const MongoDBStore = connectMongoSession(session);
 
@@ -21,7 +20,7 @@ store.on("error", function (error) {
 });
 
 export const expressSession = session({
-  secret: SECRET_ACCESS_TOKEN,
+  secret: secretAccessToken,
   resave: false,
   store,
   saveUninitialized: false,

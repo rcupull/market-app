@@ -71,7 +71,7 @@ export const getEndpoint: GetEndpoint = ({ path, query, urlParams }) => {
     urlParams,
   });
 
-  return `${getEndpointUrl()}${flattenPath}`;
+  return `${getEndpointUrl()}/api${flattenPath}`;
 };
 
 export const getImageEndpoint = (src: string) => {

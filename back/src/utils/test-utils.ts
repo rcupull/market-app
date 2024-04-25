@@ -3,7 +3,7 @@ import { Path } from "../types/paths";
 import { set } from "./general";
 import mongose, { Schema } from "mongoose";
 import jwt from "jsonwebtoken";
-import { SECRET_ACCESS_TOKEN } from "../constants/auth";
+import { secretAccessToken } from "../config";
 
 const dbTestUrl = "mongodb://127.0.0.1:27017/community_test_db";
 
@@ -35,6 +35,6 @@ export const generateToken = (id: string | Schema.Types.ObjectId) => {
     {
       id,
     },
-    SECRET_ACCESS_TOKEN
+    secretAccessToken
   );
 };
