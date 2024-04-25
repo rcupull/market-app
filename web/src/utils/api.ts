@@ -14,12 +14,8 @@ export const apiErrorsMesages = {
 };
 
 export const getEndpointUrl = () => {
-  if (STAGING) {
-    return `http://192.241.145.70:8088`;
-  }
-
   if (PRODUCTION) {
-    return `http://192.241.145.70:8008`;
+    return `http://192.241.145.70`;
   }
 
   return 'http://localhost:4009';

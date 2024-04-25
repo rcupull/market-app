@@ -11,7 +11,7 @@ node_modules
 dist-ssr
 *.local
 app-config.json
-
+app-config-prod.json
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
