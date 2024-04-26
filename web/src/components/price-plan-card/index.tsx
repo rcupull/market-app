@@ -47,7 +47,7 @@ export const PricePlanCard = ({
           )}
         </div>
 
-        <p className="text- text-gray-600 mt-3 text-start">{description}</p>
+        <p className="text- text-gray-600 mt-3 text-start h-24">{description}</p>
 
         <p className="mt-6 flex items-baseline gap-x-2">
           <span className="text-3xl font-bold tracking-tight text-gray-900">{price}</span>

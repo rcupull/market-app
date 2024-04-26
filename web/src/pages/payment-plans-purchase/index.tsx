@@ -7,8 +7,8 @@ import { FieldInput } from 'components/field-input';
 import { QrCode } from 'components/qr-code';
 import { getQrCodeValueTransfer } from 'components/qr-code/utils';
 
+import { useGetOnePaymentPlan } from 'features/api/payment-plans/useGetOnePaymentPlan';
 import { useAddOnePaymentPlanPurchase } from 'features/api/useAddOnePaymentPlanPurchase';
-import { useGetOnePaymentPlan } from 'features/api/useGetOnePaymentPlan';
 
 import { callAfarIds, useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useGetFormErrors } from 'hooks/useGetFormErrors';

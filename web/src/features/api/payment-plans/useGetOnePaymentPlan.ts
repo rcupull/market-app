@@ -18,7 +18,7 @@ export const useGetOnePaymentPlan = (): {
           {
             method: 'get',
             url: getEndpoint({
-              path: '/paymentPlans/:type',
+              path: '/payment-plans/:type',
               urlParams: {
                 type,
               },

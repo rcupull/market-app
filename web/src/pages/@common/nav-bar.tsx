@@ -111,7 +111,6 @@ export const Navbar = ({ className }: NavbarProps) => {
               className="hidden sm:block"
             />
           )}
-          (
           <Menu
             buttonElement={<IconButton svg={() => <UserIcon className="size-7" />} dark />}
             headerElement={
@@ -179,7 +178,6 @@ export const Navbar = ({ className }: NavbarProps) => {
             ]}
             className="flex-shrink-0"
           />
-          )
         </>
       }
     />

@@ -7,6 +7,7 @@ import { imagesServices } from "../images/services";
 import { userServices } from "./services";
 import { User } from "../../types/user";
 import { UserModel } from "../../schemas/user";
+import { getUserNotFoundResponse } from "../../utils/server-response";
 
 const get_users_userId: () => RequestHandler = () => {
   return (req, res) => {
@@ -89,7 +90,11 @@ const put_users_userId: () => RequestHandler = () => {
 const get_users_userId_payment_plan: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const { user } = req as RequestWithUser;
+      const { user } = req;
+
+      if (!user) {
+        return getUserNotFoundResponse({ res });
+      }
       const planHistory = user.payment.planHistory;
       const { planType } = planHistory[planHistory.length - 1] || {}; // always the last plan is the curent
       const currentPlan = paymentPlans[planType];

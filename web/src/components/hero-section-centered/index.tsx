@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom';
 
+import { Button } from 'components/button';
+
+import { useAuthSignUpModal } from 'pages/@modals/useAuthSignUpModal';
+
 export const HeroSectionCentered = () => {
+  const authSignUpModal = useAuthSignUpModal();
   return (
     <div data-id="HeroSectionCentered" className="relative isolate px-6 lg:px-8">
       <div className="mx-auto max-w-2xl py-32">
@@ -22,12 +27,7 @@ export const HeroSectionCentered = () => {
             Internet. Hay algunas personas que van a huir de la oscuridad.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
-            <Link
-              to="/auth/sign-up"
-              className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Registrarse
-            </Link>
+            <Button label="Registrarse" onClick={() => authSignUpModal.open()} />
             <Link to="/about-us" className="text-sm font-semibold leading-6 text-gray-900">
               Conocer más <span aria-hidden="true">→</span>
             </Link>
