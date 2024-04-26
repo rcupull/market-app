@@ -3,6 +3,7 @@ import { Button } from 'components/button';
 import { SettingsLayout } from './SettingsLayout';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
+import { useBusinessOnboardingModal } from 'pages/@modals/useBusinessOnboardingModal';
 import { useBusinessUpdateAboutUs } from 'pages/@modals/useBusinessUpdateAboutUs';
 import { useBusinessUpdateBanner } from 'pages/@modals/useBusinessUpdateBanner';
 import { useBusinessUpdateInfo } from 'pages/@modals/useBusinessUpdateInfo';
@@ -12,6 +13,7 @@ import { useBusinessUpdatePostForm } from 'pages/@modals/useBusinessUpdatePostFo
 
 export const Settings = () => {
   const businessUpdateInfo = useBusinessUpdateInfo();
+  const businessOnboardingModal = useBusinessOnboardingModal();
   const businessUpdateBanner = useBusinessUpdateBanner();
   const businessUpdateAboutUs = useBusinessUpdateAboutUs();
   const businessUpdateLogo = useBusinessUpdateLogo();
@@ -22,6 +24,19 @@ export const Settings = () => {
 
   return (
     <>
+     <SettingsLayout
+        title="Configuración automática"
+        description="Configura automáticamente los recursos de su negocio para obtener eficientemente el diseño que usted necesita."
+        action={
+          <Button
+            label="Editar"
+            onClick={() =>
+              businessOnboardingModal.open()
+            }
+          />
+        }
+      />
+
       <SettingsLayout
         title="Informaciones básicas"
         description="Configure los link de las redes sociales de su negocio, contacto de whatsapp y demás."

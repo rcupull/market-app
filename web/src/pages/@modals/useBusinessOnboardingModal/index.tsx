@@ -2,8 +2,6 @@ import { ButtonClose } from 'components/button-close';
 
 import { useModal } from 'features/modal/useModal';
 
-import { usePortal } from 'hooks/usePortal';
-
 import { dynamic } from 'utils/makeLazy';
 
 //eslint-disable-next-line
@@ -17,18 +15,15 @@ export const useBusinessOnboardingModal = () => {
   const { pushModal } = useModal();
 
   return {
-    open: (args: {routeName: string}) => {
+    open: () => {
       pushModal(
         'Emergent',
         {
           useProps: () => {
-            const { routeName } = args
-            const portal = usePortal();
 
             return {
-              content: <Component portal={portal} routeName={routeName}/>,
-              secondaryBtn: <ButtonClose />,
-              primaryBtn: <div ref={portal.ref} />,
+              content: <Component  />,
+              customBtn: <ButtonClose className='ml-auto' />,
               className: '!w-[80vw]',
             };
           },

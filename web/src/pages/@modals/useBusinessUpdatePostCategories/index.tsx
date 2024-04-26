@@ -23,10 +23,11 @@ export const useBusinessUpdatePostCategories = () => {
         {
           useProps: () => {
             const portal = usePortal();
+            const { onClose } = useModal();
 
             return {
               title: 'Categorías',
-              content: <Component portal={portal} />,
+              content: <Component portal={portal} onAfterSuccess={onClose} />,
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,
             };

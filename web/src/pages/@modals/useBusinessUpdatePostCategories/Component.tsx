@@ -23,13 +23,11 @@ import { addRow, cn, isEqualObj, removeRow, updateRow } from 'utils/general';
 
 export interface ComponentProps {
   portal: Portal;
-  value: Array<PostCategory>;
-  onChange: (value: Array<PostCategory>) => void;
+  onAfterSuccess: ()=>void
 }
 
-export const Component = ({ portal }: ComponentProps) => {
+export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   const { business, onFetch } = useBusiness();
-  const { onClose } = useModal();
 
   const { routeName } = business || {};
 
@@ -213,7 +211,8 @@ export const Component = ({ portal }: ComponentProps) => {
               {
                 onAfterSuccess: () => {
                   onFetch({ routeName });
-                  onClose();
+
+                  onAfterSuccess()
                 },
               },
             );

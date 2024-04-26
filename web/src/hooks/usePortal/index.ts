@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 
 export interface Portal {
   ref: RefCallback<HTMLElement>;
-  getPortal: (node: React.ReactNode) => React.ReactNode;
+  getPortal: (node: React.ReactElement) => React.ReactNode;
 }
 
 export const usePortal = (): Portal => {

@@ -2,19 +2,20 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 
 import { Button } from 'components/button';
-import { Tabs, TabsProps } from 'components/tabs';
+import { Tabs } from 'components/tabs';
 
-import { PurchaseOrder } from './sub-components/purchase-order';
-import { ShoppingCart } from './sub-components/shooping-cart';
-import { WhatsAppMessage } from './sub-components/whatsApp-message';
-import { StepCommonProps } from './types';
-
-import { useBusiness } from 'pages/@hooks/useBusiness';
 import { cn } from 'utils/general';
 
-export const Component = () => {
+export interface StepProps {
+  backButton: React.ReactElement;
+  nextButton: React.ReactElement;
+}
+export interface StepperProps {
+  items: Array<{ label: string; render: (props: StepProps) => React.ReactNode }>;
+}
+
+export const Stepper = ({ items }: StepperProps) => {
   const [selected, setSelected] = useState(0);
-  const { business } = useBusiness();
 
   /////////////////////////////////////////////////////////////////////////////////
   const backButton = (
@@ -44,32 +45,6 @@ export const Component = () => {
     />
   );
 
-  /////////////////////////////////////////////////////////////////////////////////
-
-  const commonProps: StepCommonProps = {
-    backButton,
-    nextButton,
-  };
-
-  /////////////////////////////////////////////////////////////////////////////////
-
-  const items: TabsProps['items'] = [
-    {
-      label: 'Productos',
-      content: <ShoppingCart {...commonProps} />,
-    },
-    {
-      label: 'Crear orden de compra',
-      content: <PurchaseOrder {...commonProps} />,
-    },
-    business?.shoppingStrategy === 'addToCart_whatsAppWithOwner_pickUpProduct' && {
-      label: 'Contactar con el vendedor',
-      content: <WhatsAppMessage {...commonProps} />,
-    },
-  ];
-
-  /////////////////////////////////////////////////////////////////////////////////
-
   return (
     <>
       <Tabs
@@ -98,7 +73,15 @@ export const Component = () => {
             </div>
           </div>
         )}
-        items={items}
+        items={items.map(({ label, render }) => {
+          return {
+            label,
+            content: render({
+              backButton,
+              nextButton,
+            }),
+          };
+        })}
       />
     </>
   );

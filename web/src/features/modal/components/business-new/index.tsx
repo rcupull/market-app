@@ -177,7 +177,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
                             onCallAfar(callAfarResources, response);
 
                             if (continueWithOnboarding) {
-                              businessOnboardingModal.open({ routeName: response.routeName });
+                              businessOnboardingModal.open();
                             }
                           },
                         },

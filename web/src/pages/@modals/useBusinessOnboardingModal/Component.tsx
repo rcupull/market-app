@@ -1,15 +1,26 @@
-import { Portal } from 'hooks/usePortal';
+import { Stepper } from 'components/stepper-v2';
 
-import { useBusiness } from 'pages/@hooks/useBusiness';
+import { StepBanner } from './steps/step-banner';
+import { StepPostcategories } from './steps/step-post-categories';
+import { StepPostsSections } from './steps/step-posts-sections';
 
-export interface ComponentProps {
-  portal: Portal;
-  routeName: string;
-}
-
-export const Component = ({ portal, routeName }: ComponentProps) => {
-  const {} = useBusiness();
-
-  
-  return <>{ routeName }</>;
+export const Component = () => {
+  return (
+    <Stepper
+      items={[
+        {
+          label: 'Categorias de las publicaciones',
+          render: (props) => <StepPostcategories {...props} />,
+        },
+        {
+          label: 'Grupos de publicaciones',
+          render: (props) => <StepPostsSections {...props} />,
+        },
+        {
+          label: 'Banner publicitario',
+          render: (props) => <StepBanner {...props} />,
+        },
+      ]}
+    />
+  );
 };
