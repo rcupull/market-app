@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { hostname } from "os";
 
 const user = "aseremarket@gmail.com";
 const pass = "apxb pupn lhex catp";
@@ -11,23 +12,12 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const HOSTNAME = process.env.HOSTNAME;
-const PORT = process.env.PORT;
-
-export const getUrl = () => {
-  if (HOSTNAME && PORT) {
-    return `${HOSTNAME}:${PORT}`;
-  }
-
-  return "http://localhost:5173";
-};
-
 const getValidationCodeRoute = (code: string): string => {
-  return `${getUrl()}/validate/${code}`;
+  return `${hostname}/validate/${code}`;
 };
 
 const getForgotPasswordCodeRoute = (code: string): string => {
-  return `${getUrl()}/forgot-password/${code}`;
+  return `${hostname}/forgot-password/${code}`;
 };
 
 export const sendValidationCodeToEmail = ({
