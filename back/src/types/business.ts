@@ -1,8 +1,10 @@
 import { BaseIdentity, Image } from "./general";
-import mongose from "mongoose";
+import { Schema } from "mongoose";
 import { Post } from "./post";
+import { Path } from "./paths";
+import { businessCategoryTree } from "../features/general/constants";
 
-export type BusinessCategory = "food" | "tool" | "clothing" | "service";
+export type BusinessCategory = Path<typeof businessCategoryTree>;
 
 export type PostsLayoutSectionType = "grid" | "oneRowSlider";
 
@@ -112,8 +114,8 @@ export type BusinessShoppingStrategy =
 export interface Business extends BaseIdentity {
   name: string;
   routeName: string;
-  category: BusinessCategory;
-  createdBy: mongose.Types.ObjectId; // userId
+  categories: Array<BusinessCategory>;
+  createdBy: Schema.Types.ObjectId; // userId
   hidden?: boolean;
   bannerImages?: Array<Image>;
   logo?: Image;

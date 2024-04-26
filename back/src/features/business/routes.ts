@@ -15,7 +15,15 @@ export const router = Router();
 router
   .route("/business")
   .get(pagination, businessHandles.get_business())
-  .post(isLogged, isUserBusinessOwner, businessHandles.post_business());
+  .post(
+    validators.body("name").notEmpty(),
+    validators.body("categories").notEmpty(),
+    validators.body("routeName").notEmpty(),
+    validators.handle,
+    isLogged,
+    isUserBusinessOwner,
+    businessHandles.post_business()
+  );
 
 /////////////////////////////////////////////////////////////////
 

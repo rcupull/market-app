@@ -4,7 +4,6 @@ import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { ButtonClose } from 'components/button-close';
 import { FieldInput } from 'components/field-input';
-import { FieldSelect } from 'components/field-select';
 import { Modal } from 'components/modal';
 
 import { useAddOneBusiness } from 'features/api/business/useAddOneBusiness';
@@ -18,10 +17,12 @@ import { useDebouncer } from 'hooks/useDebouncer';
 import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { usePortal } from 'hooks/usePortal';
 
+import { FieldBusinessCategoriesSelect } from './FieldBusinessCategoriesSelect';
+
 import { Formik } from 'formik';
 import { FormRouteName } from 'pages/@common/form-route-name';
-import { BusinessCategory } from 'types/business';
-import { getBusinessCategoryLabel, getRouteName } from 'utils/business';
+import { Business } from 'types/business';
+import { getRouteName } from 'utils/business';
 
 export interface BusinessNewProps {
   callAfarResources?: CallAfarResources;
@@ -42,6 +43,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
 
   const business = getOneBusiness.data;
 
+
   useEffect(() => {
     if (routeName) {
       getOneBusiness.fetch({ routeName });
@@ -57,9 +59,9 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
   const routeValidationErrorMessage = 'Ese nombre de negocio ya existe.';
 
   const newPostForm = (
-    <Formik
+    <Formik<Pick<Business, 'categories' | 'name'>>
       initialValues={{
-        category: '',
+        categories: [],
         name: '',
         ...(business || {}),
       }}
@@ -67,8 +69,14 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
       validate={(values) => {
         return getFormErrors(values, [
           {
-            field: 'category',
+            field: 'categories',
             type: 'required',
+          },
+          {
+            field: 'categories',
+            type: 'custom',
+            customCb: (val) => val.length > 0,
+            message: 'Debes seleccionar al menos una categoría',
           },
           {
             field: 'name',
@@ -101,6 +109,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
       onSubmit={() => {}}
     >
       {({ errors, values, isValid }) => {
+
         return (
           <form>
             <FieldInput
@@ -116,34 +125,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
               className="mt-3"
             />
 
-            {!business && (
-              <FieldSelect<{ category: BusinessCategory; label: string }>
-                items={[
-                  {
-                    category: 'food',
-                    label: getBusinessCategoryLabel('food'),
-                  },
-                  {
-                    category: 'clothing',
-                    label: getBusinessCategoryLabel('clothing'),
-                  },
-                  {
-                    category: 'service',
-                    label: getBusinessCategoryLabel('service'),
-                  },
-                  {
-                    category: 'tool',
-                    label: getBusinessCategoryLabel('tool'),
-                  },
-                ]}
-                renderOption={({ label }) => label}
-                renderValue={({ label }) => label}
-                optionToValue={({ category }) => category}
-                name="category"
-                label="Categoría"
-                className="mt-6"
-              />
-            )}
+            <FieldBusinessCategoriesSelect label="Categorías" className='mt-6'  name='categories' />
 
             {portal.getPortal(
               <Button
@@ -175,11 +157,11 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
                       },
                     );
                   } else {
-                    const { category, name } = values;
+                    const { categories, name } = values;
 
                     addOneBusiness.fetch(
                       {
-                        category,
+                        categories,
                         name,
                         routeName: getRouteName(name),
                       },

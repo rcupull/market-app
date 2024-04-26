@@ -15,6 +15,8 @@ export interface RadioGroupProps<O, V = any> extends StyleProps {
   optionToValue: (item: O) => V;
   disabledOption?: (args: { item: O; index: number }) => boolean;
   onBlur?: () => void;
+  onOptionClicked?: (item: O, options: { selected: boolean }) => void;
+  getOptionCutomStyles?: (item: O, options: { selected: boolean }) => string;
   isBusy?: boolean;
   multi?: boolean;
 }
@@ -31,6 +33,8 @@ export const RadioGroup = <O extends any = any>({
   isBusy,
   multi,
   disabledOption,
+  onOptionClicked,
+  getOptionCutomStyles,
 }: RadioGroupProps<O>) => {
   if (multi) {
     return (
@@ -48,13 +52,16 @@ export const RadioGroup = <O extends any = any>({
                     setSelected(newSelected);
 
                     const newValue = Object.keys(getFlattenJson(newSelected)).map((index) => {
-                      item = items[Number(index)];
-                      return optionToValue(item);
+                      return optionToValue(items[Number(index)]);
                     });
 
                     onChange?.(newValue);
+                    onOptionClicked?.(item, { selected: !checked });
                   }}
-                  className="relative"
+                  className={cn(
+                    'relative',
+                    getOptionCutomStyles?.(item, { selected: !checked }) ?? '',
+                  )}
                 >
                   {renderOption({ checked, item, index })}
 

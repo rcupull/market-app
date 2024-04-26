@@ -10,7 +10,7 @@ const BusinessSchema = new Schema<Business>({
   name: { type: String, required: true },
   routeName: { type: String, required: true },
   hidden: { type: Boolean, default: false },
-  category: { type: String, enum: ["food", "tool", "clothing", "service"] },
+  categories: { type: [String], required: true },
   createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
   postCategories: {
     type: [

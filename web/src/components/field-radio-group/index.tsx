@@ -23,12 +23,16 @@ export const FieldRadioGroup = <O extends any = any, V = any>(
     multi,
     containerClassName,
     disabledOption,
+    onOptionClicked,
+    getOptionCutomStyles
   } = props;
   const { field, error } = useFormikField<V>(props);
 
   return (
     <FormFieldWrapper label={label} error={error} className={className}>
       <RadioGroup
+        onOptionClicked={onOptionClicked}
+        getOptionCutomStyles={getOptionCutomStyles}
         items={items}
         optionToValue={optionToValue}
         renderOption={renderOption}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { isArray, isEqualObj } from 'utils/general';
+import { isArray, isEqualObj, isNumber, isString } from 'utils/general';
 
 type State = Record<number, undefined | boolean>;
 
@@ -23,7 +23,18 @@ export const MultiContainer = <O extends any = any>({
     if (isArray(value)) {
       setSelected(
         items.reduce((acc, item, index) => {
-          const exist = value.find((v) => isEqualObj(optionToValue(item), v));
+          const valueOption = optionToValue(item);
+
+          const exist = value.find((v) => {
+            if (
+              isString(valueOption) && isString(v) || 
+              isNumber(valueOption) && isNumber(v)
+            ) {
+              return valueOption === v;
+            }
+
+            return isEqualObj(valueOption, v);
+          });
 
           return {
             ...acc,

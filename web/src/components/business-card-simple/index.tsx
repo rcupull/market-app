@@ -4,7 +4,6 @@ import { EmptyImage } from 'components/empty-image';
 
 import { Business } from 'types/business';
 import { StyleProps } from 'types/general';
-import { getBusinessCategoryLabel } from 'utils/business';
 import { cn } from 'utils/general';
 export interface BusinessCardSimpleProps extends StyleProps {
   business: Business;
@@ -18,7 +17,7 @@ export const BusinessCardSimple = ({
   className,
   href,
 }: BusinessCardSimpleProps) => {
-  const { category, name, bannerImages } = business;
+  const { name, bannerImages } = business;
 
   const image = bannerImages?.[0];
   const imageSrc = (image && getImageSrc?.(image.src)) || image?.src;
@@ -35,7 +34,6 @@ export const BusinessCardSimple = ({
         )}
       </div>
       <h3 className="mt-4 text-sm text-gray-700">{name}</h3>
-      <h3 className="mt-4 text-sm text-gray-700">{getBusinessCategoryLabel(category)}</h3>
     </Link>
   );
 };

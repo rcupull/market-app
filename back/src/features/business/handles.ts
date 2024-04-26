@@ -149,13 +149,13 @@ const post_business: () => RequestHandler = () => {
 
       const { body } = req;
 
-      const { name, category, routeName } = body;
+      const { name, categories, routeName } = body;
 
       const out = await businessServices.addOne({
-        category,
+        categories,
         name,
         routeName,
-        userId: user._id.toString(),
+        createdBy: user._id,
         res,
         req,
       });

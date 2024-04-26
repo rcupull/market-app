@@ -1,7 +1,7 @@
 import { BaseIdentity, Image } from './general';
 import { PostFormState } from './post';
 
-export type BusinessCategory = 'food' | 'tool' | 'clothing' | 'service';
+export type BusinessCategory = string;
 
 export type PostsLayoutSectionType = 'grid' | 'oneRowSlider';
 export type PostsLayoutSectionVisibility = 'businessPage' | 'postPage';
@@ -111,7 +111,7 @@ export type BusinessShoppingStrategy =
 
 export interface Business extends BaseIdentity {
   name: string;
-  category: BusinessCategory;
+  categories: Array<BusinessCategory>;
   routeName: string;
   createdBy: string; // userId
   hidden?: boolean;

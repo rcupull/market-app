@@ -5,7 +5,7 @@ import { Business } from 'types/business';
 import { getEndpoint } from 'utils/api';
 
 export const useAddOneBusiness = (): {
-  addOneBusiness: FetchResource<{ name: string; routeName: string; category: string }, Business>;
+  addOneBusiness: FetchResource<Pick<Business, 'name' | 'routeName' | 'categories'>, Business>;
 } => {
   const fetch = useFetch<Business>();
 
@@ -13,14 +13,14 @@ export const useAddOneBusiness = (): {
     addOneBusiness: {
       data: fetch[0],
       status: fetch[1],
-      fetch: ({ name, category, routeName }, options = {}) => {
+      fetch: (data, options = {}) => {
         fetch[2](
           {
             method: 'post',
             url: getEndpoint({
               path: '/business',
             }),
-            data: { name, category, routeName },
+            data,
           },
           options,
         );

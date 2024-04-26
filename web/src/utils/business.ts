@@ -2,7 +2,7 @@ import { queryToSearch } from 'hooks/useRouter/utils';
 
 import { deepJsonCopy, isNumber, replaceAll } from './general';
 
-import { Business, BusinessCategory, SearchLayoutType } from 'types/business';
+import { Business, SearchLayoutType } from 'types/business';
 import { Post } from 'types/post';
 import { Shopping } from 'types/shopping';
 
@@ -28,17 +28,6 @@ export const getInitials = (fullname: string) => {
     initials += names[names.length - 1].substring(0, 1).toUpperCase();
   }
   return initials;
-};
-
-export const getBusinessCategoryLabel = (category: BusinessCategory): string => {
-  const record: Record<BusinessCategory, string> = {
-    food: 'Comida',
-    clothing: 'Vestuario',
-    service: 'Servicios',
-    tool: 'Herramientas',
-  };
-
-  return record[category];
 };
 
 export const getOnePostRoute = (args: { routeName: string; postId: string }) => {
