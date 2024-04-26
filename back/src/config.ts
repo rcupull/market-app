@@ -9,6 +9,7 @@ export const secretAccessToken = appConfig.secretAccessToken;
 export const appAssetsDir = appConfig.appAssetsDir;
 export const appFrontDir = appConfig.appFrontDir;
 export const apiPort = appConfig.apiPort;
+export const hostname = appConfig.hostname;
 
 export const getAssetsDir = () => {
   return join(process.cwd(), appAssetsDir);

@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import { hostname } from "os";
+import { hostname } from "../../config";
 
 const user = "aseremarket@gmail.com";
 const pass = "apxb pupn lhex catp";
