@@ -135,6 +135,13 @@ export const mergeDeep = <T extends AnyRecord = AnyRecord>(target: T, source: Pa
   return output;
 };
 
+export const isEqual = (a: any, b: any): boolean => {
+  if (typeof a === 'object' && typeof b === 'object') {
+    return isEqualObj(a, b);
+  }
+
+  return a === b;
+};
 export const isEqualObj = (a: AnyRecord | undefined, b: AnyRecord | undefined): boolean => {
   if (!a || !b) return false;
 
