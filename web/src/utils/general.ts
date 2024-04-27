@@ -170,8 +170,24 @@ export const isEqualObj = (a: AnyRecord | undefined, b: AnyRecord | undefined): 
   return true;
 };
 
-export const addStringToUniqueArray = (array: Array<string>, value: string): Array<string> => {
+export const addStringToUniqueArray = <T extends string = string>(
+  array: Array<T>,
+  value: T,
+): Array<T> => {
   return array.includes(value) ? array : addRow(array, value);
+};
+
+export const flatStringArrayToUniqueArray = <T extends string = string>(
+  array: Array<Array<T>>,
+): Array<T> => {
+  return array.reduce((acc, item) => {
+    let out = acc;
+    item.forEach((field) => {
+      out = addStringToUniqueArray(out, field);
+    });
+
+    return out;
+  }, [] as Array<T>);
 };
 
 export const removeStringFromArray = (array: Array<string>, value: string): Array<string> => {

@@ -4,7 +4,7 @@ import { FetchResource } from 'types/api';
 import { getEndpoint } from 'utils/api';
 
 export const useAuthUpdateFirebaseToken = (): {
-  authUpdateFirebaseToken: FetchResource<{ firebaseToken: string; }, void>;
+  authUpdateFirebaseToken: FetchResource<{ firebaseToken: string }, void>;
 } => {
   const fetch = useFetch();
 

@@ -10,7 +10,7 @@ import { useBusiness } from '../../@hooks/useBusiness';
 
 import { Formik } from 'formik';
 import { Business } from 'types/business';
-import { PostFormState } from 'types/post';
+import { PostFormField } from 'types/post';
 
 interface State extends Pick<Business, 'postFormFields'> {}
 
@@ -41,55 +41,72 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
       {({ values, isValid }) => {
         return (
           <form>
-            <FieldRadioGroup<{ disabled?: boolean; value: keyof PostFormState }>
+            <FieldRadioGroup<{ disabled?: boolean; value: PostFormField; label: string }>
               id="logoField"
               name="postFormFields"
               optionToValue={({ value }) => value}
               disabledOption={({ item: { disabled } }) => !!disabled}
               multi
               renderOption={({ item, checked }) => {
-                const { value, disabled } = item;
-                const label = disabled ? `${value} (requerido)` : value;
-                return <FieldCheckbox noUseFormik value={checked} label={label} />;
+                const { disabled, label } = item;
+                return (
+                  <FieldCheckbox
+                    noUseFormik
+                    value={checked}
+                    label={disabled ? `${label} (requerido)` : label}
+                  />
+                );
               }}
               items={[
                 {
+                  label: 'Nombre del producto',
                   value: 'name', //required
                   disabled: true,
                 },
                 {
+                  label: 'Categorías',
                   value: 'postCategoriesTags', //required
                   disabled: true,
                 },
                 {
+                  label: 'Imágenes',
                   value: 'images', //required
                   disabled: true,
                 },
                 {
+                  label: 'Diseño de la página',
                   value: 'postPageLayout',
                 },
                 {
+                  label: 'Moneda',
                   value: 'currency',
                 },
                 {
+                  label: 'Tallas de ropa',
                   value: 'clothingSizes',
                 },
                 {
+                  label: 'Colores',
                   value: 'colors',
                 },
                 {
+                  label: 'Descripción',
                   value: 'description',
                 },
                 {
+                  label: 'Detalles',
                   value: 'details',
                 },
                 {
+                  label: 'Descuento',
                   value: 'discount',
                 },
                 {
+                  label: 'Precio',
                   value: 'price',
                 },
                 {
+                  label: 'Existencia en almacén',
                   value: 'stockAmount',
                 },
               ]}

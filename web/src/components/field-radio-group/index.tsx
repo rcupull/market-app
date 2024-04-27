@@ -24,7 +24,7 @@ export const FieldRadioGroup = <O extends any = any, V = any>(
     containerClassName,
     disabledOption,
     onOptionClicked,
-    getOptionCutomStyles
+    getOptionCutomStyles,
   } = props;
   const { field, error } = useFormikField<V>(props);
 

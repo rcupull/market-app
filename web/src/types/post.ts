@@ -55,3 +55,5 @@ export type PostFormState = Pick<
   | 'postPageLayout'
   | 'stockAmount'
 > & { images: Array<ImageFile | Image> };
+
+export type PostFormField = keyof PostFormState;

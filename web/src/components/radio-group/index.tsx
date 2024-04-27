@@ -85,11 +85,19 @@ export const RadioGroup = <O extends any = any>({
     );
   }
 
+  /**
+   * When the value is an object the RadioGroupBase no change correctly and it needs to be converted to a basic data type, string in this case
+   */
+  const getComparableValue = (value: any) => JSON.stringify({ value });
+  const getComparableonChange = (onChange: RadioGroupProps<O>['onChange']) => (val: string) => {
+    onChange?.(JSON.parse(val).value);
+  };
+
   return (
     <RadioGroupBase
       onBlur={onBlur}
-      value={value}
-      onChange={onChange}
+      value={getComparableValue(value)}
+      onChange={getComparableonChange(onChange)}
       className={cn('relative', className)}
     >
       {items.map((item, index) => {
@@ -97,7 +105,7 @@ export const RadioGroup = <O extends any = any>({
         const disabled = disabledOption?.({ item, index }) ?? false;
 
         return (
-          <RadioGroupBase.Option key={index} value={value} disabled={disabled}>
+          <RadioGroupBase.Option key={index} value={getComparableValue(value)} disabled={disabled}>
             {({ checked }) => (
               <div className="relative">
                 {renderOption({ checked, item, index })}

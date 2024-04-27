@@ -110,25 +110,19 @@ export const FieldBusinessCategoriesSelect = (
         }
       }}
       renderOption={({ checked, item }) => {
-        const {  value } = item;
-        return (
-          <FieldCheckbox
-            noUseFormik
-            value={checked}
-            label={businessCategoryLabels[value]}
-          />
-        );
+        const { value } = item;
+        return <FieldCheckbox noUseFormik value={checked} label={businessCategoryLabels[value]} />;
       }}
       getOptionCutomStyles={({ level }) => {
         return cn({
           'pl-4': level > 0,
           'col-start-1 col-span-full py-1 my-4 border-y-2 border-gray-300': level === 0,
-        })
+        });
       }}
       multi
       optionToValue={({ value }) => value}
       items={items}
-      containerClassName='grid  grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4'
+      containerClassName="grid  grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4"
       {...props}
     />
   );

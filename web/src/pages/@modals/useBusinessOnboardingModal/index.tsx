@@ -20,10 +20,9 @@ export const useBusinessOnboardingModal = () => {
         'Emergent',
         {
           useProps: () => {
-
             return {
-              content: <Component  />,
-              customBtn: <ButtonClose className='ml-auto' />,
+              content: <Component />,
+              customBtn: <ButtonClose className="ml-auto" />,
               className: '!w-[80vw]',
             };
           },

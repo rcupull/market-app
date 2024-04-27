@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
@@ -23,7 +23,7 @@ import { addRow, cn, isEqualObj, removeRow, updateRow } from 'utils/general';
 
 export interface ComponentProps {
   portal: Portal;
-  onAfterSuccess: ()=>void
+  onAfterSuccess: () => void;
 }
 
 export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
@@ -35,7 +35,11 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   const portalAdd = usePortal();
 
   const { updateBusinessPostCategories } = useUpdateBusinessPostCategories();
-  const [state, setState] = useState<Array<PostCategory>>(initialCategories);
+  const [state, setState] = useState<Array<PostCategory>>([]);
+
+  useEffect(() => {
+    setState(initialCategories);
+  }, [initialCategories]);
 
   const { pushModal } = useModal();
 
@@ -209,7 +213,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
             updateBusinessPostCategories.fetch(
               { postCategories: state, routeName },
               {
-                onAfterSuccess
+                onAfterSuccess,
               },
             );
           }}

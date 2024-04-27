@@ -5,7 +5,10 @@ export interface StepperButtonContainerProps {
   rightButton?: React.ReactNode;
 }
 
-export const StepperButtonContainer = ({ leftButton, rightButton }: StepperButtonContainerProps) => {
+export const StepperButtonContainer = ({
+  leftButton,
+  rightButton,
+}: StepperButtonContainerProps) => {
   return (
     <div
       className={cn('flex items-center w-full mt-6', {

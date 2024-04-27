@@ -26,10 +26,7 @@ export const MultiContainer = <O extends any = any>({
           const valueOption = optionToValue(item);
 
           const exist = value.find((v) => {
-            if (
-              isString(valueOption) && isString(v) || 
-              isNumber(valueOption) && isNumber(v)
-            ) {
+            if ((isString(valueOption) && isString(v)) || (isNumber(valueOption) && isNumber(v))) {
               return valueOption === v;
             }
 

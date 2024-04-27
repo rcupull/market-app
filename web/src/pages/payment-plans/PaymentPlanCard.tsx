@@ -11,8 +11,10 @@ const labels: Record<PaymentPlanType, string> = {
 
 const descriptions: Record<PaymentPlanType, string> = {
   free: 'Ideal para probar nuestras prestaciones y funcionalidades libre de costo y sin compromisos',
-  beginner: 'Perfecto para los que estan comenzando en el mundo del comercio y requieres exponer sus productos',
-  professional: 'Usado por medianos negocios que pueden tener integracion con otros negocios similares y requieren control sobre sus ventas',
+  beginner:
+    'Perfecto para los que estan comenzando en el mundo del comercio y requieres exponer sus productos',
+  professional:
+    'Usado por medianos negocios que pueden tener integracion con otros negocios similares y requieren control sobre sus ventas',
   company: 'Perfecto para los que estan comenzando en el mundo del comercio',
 };
 
@@ -20,8 +22,8 @@ interface PaymentPlanCardProps {
   onClick?: () => void;
   paymentPlan: PaymentPlan;
 }
-export const PaymentPlanCard = ({onClick, paymentPlan}: PaymentPlanCardProps) => {
-  const {  type, price, maxBussinessByUser, maxPostsByBussiness, trialTime} = paymentPlan;
+export const PaymentPlanCard = ({ onClick, paymentPlan }: PaymentPlanCardProps) => {
+  const { type, price, maxBussinessByUser, maxPostsByBussiness, trialTime } = paymentPlan;
 
   return (
     <PricePlanCard
@@ -31,7 +33,7 @@ export const PaymentPlanCard = ({onClick, paymentPlan}: PaymentPlanCardProps) =>
       price={price}
       items={[
         {
-          description: trialTime ? `Primeros ${trialTime} días de prueba` : "Gratis por siempre",
+          description: trialTime ? `Primeros ${trialTime} días de prueba` : 'Gratis por siempre',
           included: true,
         },
         {
