@@ -1,11 +1,12 @@
 import { ButtonSave } from 'components/button-save';
 import { Divider } from 'components/divider';
+import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInput } from 'components/field-input';
 import { FieldPostCardLayout } from 'components/field-post-card-layout';
 import { FieldPostCategoriesButtons } from 'components/field-post-categories-buttons';
 import { FieldPostsSectionLayout } from 'components/field-posts-section-layout';
+import { FieldRadioGroup } from 'components/field-radio-group';
 import { FieldSearchLayout } from 'components/field-search-layout';
-import { FieldSelect } from 'components/field-select';
 import { FieldShowHide } from 'components/field-show-hide';
 
 import { useGetFormErrors } from 'hooks/useGetFormErrors';
@@ -61,12 +62,12 @@ export const Component = ({ portal, sectionId, onAfterSuccess }: ComponentProps)
       {({ values, isValid }) => {
         return (
           <form>
-            <FieldSelect<{ value: PostsLayoutSectionVisibility }>
+            <FieldRadioGroup<{ value: PostsLayoutSectionVisibility }>
               label="Mostrar grupo en"
-              renderOption={({ value }) => value}
-              renderValue={({ value }) => (
-                <div className="rounded-2xl px-2 border border-gray-400">{value}</div>
-              )}
+              renderOption={({ checked, item }) => {
+                return <FieldCheckbox noUseFormik value={checked} label={item.value} />;
+              }}
+              multi
               optionToValue={({ value }) => value}
               items={[
                 {
@@ -76,33 +77,35 @@ export const Component = ({ portal, sectionId, onAfterSuccess }: ComponentProps)
                   value: 'postPage',
                 },
               ]}
-              multi
               name="showIn"
-              className="w-full"
+              containerClassName="flex items-center gap-4"
             />
 
             {/* //////////////////////////////////////////////////////////////////////////////////////////////// */}
             <Divider />
 
-            <FieldInput
-              name="name"
-              label={
-                <div className="flex items-center">
-                  <span>Nombre</span>
-                  <FieldShowHide
-                    name="hiddenName"
-                    title={`${values.hiddenName ? 'Mostrar' : 'Ocultar'} el nombre del grupo.`}
-                  />
-                </div>
-              }
-              className="w-full"
-            />
+            <div className="flex flex-col lg:flex-row items-start justify-between lg:gap-7">
+              <FieldInput
+                name="name"
+                label={
+                  <div className="flex items-center">
+                    <span>Nombre</span>
+                    <FieldShowHide
+                      name="hiddenName"
+                      title={`${values.hiddenName ? 'Mostrar' : 'Ocultar'} el nombre del grupo.`}
+                      className='-my-2'
+                    />
+                  </div>
+                }
+                className="w-full"
+              />
+
+              <Divider className="lg:hidden" />
+
+              <FieldPostsSectionLayout name="type" label="Diseño" className="w-full" />
+            </div>
 
             {/* //////////////////////////////////////////////////////////////////////////////////////////////// */}
-            <Divider />
-
-            <FieldPostsSectionLayout name="type" label="Diseño" className="w-full" />
-
             <Divider />
 
             <FieldPostCategoriesButtons label="Categorías" name="postCategoriesTags" />

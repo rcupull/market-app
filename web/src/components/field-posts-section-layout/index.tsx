@@ -1,15 +1,17 @@
-import { FieldSelect, FieldSelectProps } from 'components/field-select';
+import { FieldCheckbox } from 'components/field-checkbox';
+import { FieldRadioGroup, FieldRadioGroupProps } from 'components/field-radio-group';
 
 import { PostsLayoutSectionType } from 'types/business';
 
 export interface FieldPostsSectionLayoutProps
-  extends Omit<FieldSelectProps, 'items' | 'renderOption' | 'renderValue' | 'optionToValue'> {}
+  extends Omit<FieldRadioGroupProps, 'items' | 'renderOption' | 'optionToValue'> {}
 
 export const FieldPostsSectionLayout = (props: FieldPostsSectionLayoutProps) => {
   return (
-    <FieldSelect<{ [k in string]: PostsLayoutSectionType }>
-      renderOption={({ value }) => value}
-      renderValue={({ value }) => value}
+    <FieldRadioGroup<{ value: PostsLayoutSectionType }>
+      renderOption={({ checked, item }) => {
+        return <FieldCheckbox noUseFormik value={checked} label={item.value} />;
+      }}
       optionToValue={({ value }) => value}
       items={[
         {
@@ -19,6 +21,7 @@ export const FieldPostsSectionLayout = (props: FieldPostsSectionLayoutProps) => 
           value: 'oneRowSlider',
         },
       ]}
+      containerClassName="flex items-center gap-4"
       {...props}
     />
   );

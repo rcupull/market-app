@@ -3,7 +3,7 @@ import { RadioGroup, RadioGroupProps } from 'components/radio-group';
 
 import { FormikFieldProps, useFormikField } from 'hooks/useFormikField';
 
-export interface FieldRadioGroupProps<O, V>
+export interface FieldRadioGroupProps<O = any, V = any>
   extends FormFieldWrapperProps,
     FormikFieldProps<V>,
     Omit<RadioGroupProps<O>, 'onChange' | 'onBlur'> {
@@ -15,6 +15,7 @@ export const FieldRadioGroup = <O extends any = any, V = any>(
 ) => {
   const {
     label,
+    description,
     className,
     optionToValue,
     renderOption,
@@ -29,7 +30,7 @@ export const FieldRadioGroup = <O extends any = any, V = any>(
   const { field, error } = useFormikField<V>(props);
 
   return (
-    <FormFieldWrapper label={label} error={error} className={className}>
+    <FormFieldWrapper label={label} description={description} error={error} className={className}>
       <RadioGroup
         onOptionClicked={onOptionClicked}
         getOptionCutomStyles={getOptionCutomStyles}

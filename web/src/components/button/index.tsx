@@ -19,6 +19,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   isBusy?: boolean;
   svg?: React.FunctionComponent<StyleProps>;
   stopPropagation?: boolean;
+  preventDefault?: boolean;
   needPremium?: boolean;
 }
 
@@ -31,6 +32,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
     disabled: disabledProp,
     svg: Svg,
     stopPropagation,
+    preventDefault,
     onClick,
     needPremium,
     svgPosition = 'left',
@@ -62,6 +64,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
         }
         if (stopPropagation) {
           e.stopPropagation();
+        }
+
+        if (preventDefault) {
+          e.preventDefault();
         }
 
         onClick?.(e);

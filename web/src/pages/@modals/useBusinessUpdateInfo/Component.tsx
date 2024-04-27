@@ -57,7 +57,7 @@ export const Component = ({ portal, options }: ComponentProps) => {
 
   const renderFieldLink = (field: React.ReactNode, href: string) => {
     return (
-      <div className="flex items-center mt-2 w-full">
+      <div className="flex items-center w-full">
         {field}
         <a href={href} className="text-nowrap ml-2 hyperlink mt-8" target="_blank" rel="noreferrer">
           Ir al link
@@ -71,27 +71,27 @@ export const Component = ({ portal, options }: ComponentProps) => {
       {({ values, isValid }) => {
         return (
           <form className="w-full">
-            <FieldInput label="Teléfono" name="whatsAppPhoneNumber" className="w-full" />
+            <FieldInput label="Teléfono" name="whatsAppPhoneNumber" className="w-full mt-4" />
 
             {renderFieldLink(
-              <FieldInput label="Facebook" name="face" className="w-full" />,
+              <FieldInput label="Facebook" name="face" className="w-full mt-4" />,
               values.face,
             )}
             {renderFieldLink(
-              <FieldInput label="Instagram" name="instagram" className="w-full" />,
+              <FieldInput label="Instagram" name="instagram" className="w-full mt-4" />,
               values.instagram,
             )}
             {renderFieldLink(
-              <FieldInput label="Twitter" name="twitter" className="w-full" />,
+              <FieldInput label="Twitter" name="twitter" className="w-full mt-4" />,
               values.twitter,
             )}
             {renderFieldLink(
-              <FieldInput label="Linkedin" name="linkedin" className="w-full" />,
+              <FieldInput label="Linkedin" name="linkedin" className="w-full mt-4" />,
               values.linkedin,
             )}
 
             <FieldSelect<{ value: BusinessShoppingStrategy }>
-              label="Estratégia de venta"
+              label="Estrategia de venta"
               renderOption={({ value }) => value}
               renderValue={({ value }) => value}
               optionToValue={({ value }) => value}
@@ -107,7 +107,7 @@ export const Component = ({ portal, options }: ComponentProps) => {
                 },
               ]}
               name="shoppingStrategy"
-              className="w-full"
+              className="w-full mt-4"
             />
 
             {portal.getPortal(

@@ -1,8 +1,10 @@
 import { useState } from 'react';
 
 import { Accordion } from 'components/accordion';
+import { Divider } from 'components/divider';
+import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldPostShoppingMethodSelect } from 'components/field-post-shopping-method-select';
-import { FieldSelect } from 'components/field-select';
+import { FieldRadioGroup } from 'components/field-radio-group';
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
 
 import { FormikFieldProps, useFormikField } from 'hooks/useFormikField';
@@ -55,126 +57,165 @@ export const FieldPostCardLayout = ({
     <div className="flex flex-col lg:flex-row gap-2 items-center lg:items-start">
       <div className="w-full px-6">
         <div className="flex flex-col justify-around h-full gap-2">
-          <FieldSelect<{ value: PostCardLayoutImages }>
+          <FieldRadioGroup<{ value: PostCardLayoutImages; label:string }>
             label="Imágenes"
             name={getFieldName('images')}
-            renderOption={({ value }) => value}
-            renderValue={({ value }) => value}
+            renderOption={({ checked, item }) => {
+              return <FieldCheckbox noUseFormik value={checked} label={item.label} />;
+            }}
             optionToValue={({ value }) => value}
             items={[
               {
                 value: 'static',
+                label: 'Estatico',
               },
               {
                 value: 'hoverZoom',
+                label: 'Zoom con el mouse',
               },
               {
                 value: 'slider',
+                label: 'Deslizante',
               },
               {
                 value: 'switch',
+                label: 'Alternado',
               },
               {
                 value: 'rounded',
+                label: 'Redondo',
               },
             ]}
-            className="w-full"
+            containerClassName="flex items-center flex-wrap gap-4"
           />
 
-          <FieldSelect<{ value: PostCardSize }>
+          <Divider className="!my-2" />
+
+          <FieldRadioGroup<{ value: PostCardSize; label:string }>
             label="Tamaño"
             name={getFieldName('size')}
-            renderOption={({ value }) => value}
-            renderValue={({ value }) => value}
+            renderOption={({ checked, item }) => {
+              return <FieldCheckbox noUseFormik value={checked} label={item.label} />;
+            }}
             optionToValue={({ value }) => value}
             items={[
               {
                 value: 'small',
+                label: 'Pequeño',
               },
               {
                 value: 'medium',
+                label: 'Mediano',
               },
               {
                 value: 'long',
+                label: 'Largo',
               },
             ]}
-            className="w-full"
+            containerClassName="flex items-center flex-wrap gap-4"
           />
 
-          <FieldSelect<{ value: PostCardLayoutMetaLayout }>
+          <Divider className="!my-2" />
+
+          <FieldRadioGroup<{ value: PostCardLayoutMetaLayout; label:string }>
             label="Diseño de los metadatos"
             name={getFieldName('metaLayout')}
-            renderOption={({ value }) => value}
-            renderValue={({ value }) => value}
+            renderOption={({ checked, item }) => {
+              return <FieldCheckbox noUseFormik value={checked} label={item.label} />;
+            }}
             optionToValue={({ value }) => value}
             items={[
               {
                 value: 'basic',
+                label: 'Basico',
               },
               {
                 value: 'verticalCentered',
+                label: 'Centrado verticalmente',
               },
             ]}
-            className="w-full"
+            containerClassName="flex items-center flex-wrap gap-4"
           />
 
-          <FieldSelect<{ value: PostCardLayoutName }>
+          <Divider className="!my-2" />
+
+          <FieldRadioGroup<{ value: PostCardLayoutName; label: string }>
             label="Nombre"
             name={getFieldName('name')}
-            renderOption={({ value }) => value}
-            renderValue={({ value }) => value}
+            renderOption={({ checked, item }) => {
+              return <FieldCheckbox noUseFormik value={checked} label={item.label} />;
+            }}
             optionToValue={({ value }) => value}
             items={[
               {
                 value: 'none',
+                label: 'Ninguno',
               },
               {
                 value: 'basic',
+                label: 'Basico',
               },
             ]}
-            className="w-full"
+            containerClassName="flex items-center flex-wrap gap-4"
           />
-          <FieldSelect<{ value: PostCardLayoutPrice }>
+
+          <Divider className="!my-2" />
+
+          <FieldRadioGroup<{ value: PostCardLayoutPrice; label: string }>
             label="Precio"
             name={getFieldName('price')}
-            renderOption={({ value }) => value}
-            renderValue={({ value }) => value}
+            renderOption={({ checked, item }) => {
+              return <FieldCheckbox noUseFormik value={checked} label={item.label} />;
+            }}
             optionToValue={({ value }) => value}
             items={[
               {
                 value: 'none',
+                label: 'Ninguno',
               },
               {
                 value: 'basic',
+                label: 'Básico',
               },
               {
                 value: 'smallerCurrency',
+                label: 'Moneda reducida',
               },
               {
                 value: 'usdCurrencySymbol',
+                label: 'Símbolo de USD',
               },
             ]}
-            className="w-full"
+            containerClassName="flex items-center flex-wrap gap-4"
           />
-          <FieldSelect<{ value: PostCardLayoutDiscount }>
+
+          <Divider className="!my-2" />
+
+          <FieldRadioGroup<{ value: PostCardLayoutDiscount; label: string }>
             label="Descuento"
             name={getFieldName('discount')}
-            renderOption={({ value }) => value}
-            renderValue={({ value }) => value}
+            renderOption={({ checked, item }) => {
+              return <FieldCheckbox noUseFormik value={checked} label={item.label} />;
+            }}
             optionToValue={({ value }) => value}
             items={[
               {
                 value: 'none',
+                label: 'Ninguno',
               },
               {
                 value: 'savedMoney',
+                label: 'En dinero',
               },
               {
                 value: 'savedPercent',
+                label: 'En porciento',
               },
             ]}
-            className="w-full"
+            containerClassName="flex items-center flex-wrap gap-4"
           />
+
+          <Divider className="!my-2" />
 
           <FieldPostShoppingMethodSelect
             label="Método de compra"

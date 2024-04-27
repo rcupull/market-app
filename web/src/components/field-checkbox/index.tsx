@@ -16,10 +16,15 @@ export const FieldCheckbox = forwardRef<HTMLInputElement, FieldCheckboxProps>((a
   const { noUseFormik, ...props } = allProps;
 
   if (noUseFormik) {
-    const { className, label, value, onChange, ...omittedProps } = props;
+    const { className, label, value, onChange, description, ...omittedProps } = props;
 
     return (
-      <FormFieldWrapper label={label} className={cn('w-fit', className)} labelPosition="right">
+      <FormFieldWrapper
+        label={label}
+        description={description}
+        className={cn('w-fit', className)}
+        labelPosition="right"
+      >
         <input
           ref={ref}
           type="checkbox"
@@ -35,12 +40,13 @@ export const FieldCheckbox = forwardRef<HTMLInputElement, FieldCheckboxProps>((a
   return (
     <FormikWrapper {...props}>
       {({ error, field }) => {
-        const { className, label, ...omittedProps } = props;
+        const { className, label, description, ...omittedProps } = props;
         const { value = '', ...restField } = field;
 
         return (
           <FormFieldWrapper
             label={label}
+            description={description}
             error={error}
             className={cn('w-fit', className)}
             labelPosition="right"
