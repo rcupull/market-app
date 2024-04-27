@@ -24,17 +24,10 @@ export const Settings = () => {
 
   return (
     <>
-     <SettingsLayout
+      <SettingsLayout
         title="Configuración automática"
         description="Configura automáticamente los recursos de su negocio para obtener eficientemente el diseño que usted necesita."
-        action={
-          <Button
-            label="Editar"
-            onClick={() =>
-              businessOnboardingModal.open()
-            }
-          />
-        }
+        action={<Button label="Editar" onClick={() => businessOnboardingModal.open()} />}
       />
 
       <SettingsLayout
@@ -101,7 +94,16 @@ export const Settings = () => {
       <SettingsLayout
         title="Categorías"
         description="Las categorías permiten clasificar fácilmente las publicaciones por grupos predefinidos. Puedes crear, editar o eliminar categorías. Cada publicacion puede estar asociada a una o varias categorías. En la página de tu negocio, se podrá filtrar tus publicaciones por categorías muy facilmente."
-        action={<Button label="Editar" onClick={() => businessUpdatePostCategories.open()} />}
+        action={
+          <Button
+            label="Editar"
+            onClick={() =>
+              businessUpdatePostCategories.open({
+                onAfterSuccess: () => business && onFetch({ routeName: business?.routeName }),
+              })
+            }
+          />
+        }
       />
 
       <SettingsLayout

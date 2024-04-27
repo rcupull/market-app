@@ -18,7 +18,6 @@ export const useNextButtonPortal = (
         return portal.getPortal(
           cloneElement(nextButton, {
             onClick: node.props.onClick,
-            disabled: node.props.disabled,
             isBusy: node.props.isBusy,
           }),
         );

@@ -27,7 +27,7 @@ export interface ComponentProps {
 }
 
 export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
-  const { business, onFetch } = useBusiness();
+  const { business } = useBusiness();
 
   const { routeName } = business || {};
 
@@ -209,11 +209,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
             updateBusinessPostCategories.fetch(
               { postCategories: state, routeName },
               {
-                onAfterSuccess: () => {
-                  onFetch({ routeName });
-
-                  onAfterSuccess()
-                },
+                onAfterSuccess
               },
             );
           }}

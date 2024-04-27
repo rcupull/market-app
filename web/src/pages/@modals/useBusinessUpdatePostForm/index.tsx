@@ -2,7 +2,6 @@ import { ButtonClose } from 'components/button-close';
 
 import { useModal } from 'features/modal/useModal';
 
-import { FetchOptions } from 'hooks/useFetch';
 import { usePortal } from 'hooks/usePortal';
 
 import { dynamic } from 'utils/makeLazy';
@@ -18,15 +17,25 @@ export const useBusinessUpdatePostForm = () => {
   const { pushModal } = useModal();
 
   return {
-    open: (options?: FetchOptions) => {
+    open: (args?: { onAfterSuccess?: () => void }) => {
       pushModal(
         'Emergent',
         {
           useProps: () => {
             const portal = usePortal();
+            const { onClose } = useModal();
+
             return {
               title: 'Formulario de publicación',
-              content: <Component portal={portal} options={options} />,
+              content: (
+                <Component
+                  portal={portal}
+                  onAfterSuccess={() => {
+                    onClose();
+                    args?.onAfterSuccess?.();
+                  }}
+                />
+              ),
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,
             };

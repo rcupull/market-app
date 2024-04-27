@@ -3,24 +3,24 @@ import { StepperButtonContainer } from 'components/stepper-v2/StepperButtonConta
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useNextButtonPortal } from 'pages/@hooks/useNextButtonPortal';
-import { Component } from 'pages/@modals/useBusinessUpdatePostCategories/Component';
+import { Component } from 'pages/@modals/useBusinessUpdatePostForm/Component';
 
-export interface StepPostcategoriesProps extends StepProps {}
+export interface StepPostsSectionsProps extends StepProps {}
 
-export const StepPostcategories = ({ nextButton }: StepPostcategoriesProps) => {
+export const StepPostForm = ({ backButton, nextButton }: StepPostsSectionsProps) => {
   const { nextAction, portal } = useNextButtonPortal(nextButton);
-  const { business, onFetch } = useBusiness();
+  const { onFetch, business } = useBusiness();
 
   return (
     <div>
       <Component
         portal={portal}
         onAfterSuccess={() => {
-          nextAction();
           business && onFetch({ routeName: business.routeName });
+          nextAction();
         }}
       />
-      <StepperButtonContainer rightButton={<div ref={portal.ref} />} />
+      <StepperButtonContainer leftButton={backButton} rightButton={<div ref={portal.ref} />} />
     </div>
   );
 };

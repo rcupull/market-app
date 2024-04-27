@@ -17,7 +17,7 @@ export const useBusinessUpdatePostCategories = () => {
   const { pushModal } = useModal();
 
   return {
-    open: () => {
+    open: (args?: { onAfterSuccess: () => void }) => {
       pushModal(
         'Emergent',
         {
@@ -27,7 +27,15 @@ export const useBusinessUpdatePostCategories = () => {
 
             return {
               title: 'Categorías',
-              content: <Component portal={portal} onAfterSuccess={onClose} />,
+              content: (
+                <Component
+                  portal={portal}
+                  onAfterSuccess={() => {
+                    args?.onAfterSuccess?.();
+                    onClose();
+                  }}
+                />
+              ),
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,
             };

@@ -3,9 +3,7 @@ import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldRadioGroup } from 'components/field-radio-group';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
-import { useModal } from 'features/modal/useModal';
 
-import { FetchOptions } from 'hooks/useFetch';
 import { Portal } from 'hooks/usePortal';
 
 import { useBusiness } from '../../@hooks/useBusiness';
@@ -18,13 +16,11 @@ interface State extends Pick<Business, 'postFormFields'> {}
 
 export interface ComponentProps {
   portal: Portal;
-  options?: FetchOptions;
+  onAfterSuccess?: () => void;
 }
 
-export const Component = ({ portal, options }: ComponentProps) => {
+export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   const { business } = useBusiness();
-
-  const { onClose } = useModal();
 
   const { postFormFields = [], routeName } = business || {};
 
@@ -118,10 +114,7 @@ export const Component = ({ portal, options }: ComponentProps) => {
                       routeName,
                     },
                     {
-                      onAfterSuccess: () => {
-                        options?.onAfterSuccess?.({});
-                        onClose();
-                      },
+                      onAfterSuccess,
                     },
                   );
                 }}
