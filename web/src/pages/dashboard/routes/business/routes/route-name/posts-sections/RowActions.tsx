@@ -13,9 +13,8 @@ import { PostsLayoutSection } from 'types/business';
 
 export interface RowActionsProps {
   rowData: PostsLayoutSection;
-  routeName: string;
 }
-export const RowActions = ({ rowData, routeName }: RowActionsProps) => {
+export const RowActions = ({ rowData }: RowActionsProps) => {
   const { pushModal } = useModal();
   const { business, onFetch } = useBusiness();
 
@@ -47,7 +46,7 @@ export const RowActions = ({ rowData, routeName }: RowActionsProps) => {
                     { sectionId: rowData._id },
                     {
                       onAfterSuccess: () => {
-                        onFetch({ routeName });
+                        business && onFetch({ routeName: business.routeName });
                         onClose();
                       },
                     },
@@ -64,7 +63,10 @@ export const RowActions = ({ rowData, routeName }: RowActionsProps) => {
 
   const businessNewUpdateSection = useBusinessNewUpdateSection();
   const handleUpdate = () => {
-    businessNewUpdateSection.open({ sectionId: rowData._id });
+    businessNewUpdateSection.open({
+      sectionId: rowData._id,
+      onAfterSuccess: () => business && onFetch({ routeName: business.routeName }),
+    });
   };
 
   return (

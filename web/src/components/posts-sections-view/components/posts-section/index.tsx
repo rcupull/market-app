@@ -88,6 +88,7 @@ export const PostsSection = ({
       onClick={() => {
         businessNewUpdateSection.open({
           sectionId: _id,
+          onAfterSuccess: () => business && onFetch({ routeName: business.routeName }),
         });
       }}
     >

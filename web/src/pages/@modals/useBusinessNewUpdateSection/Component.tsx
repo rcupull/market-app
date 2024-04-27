@@ -8,8 +8,6 @@ import { FieldSearchLayout } from 'components/field-search-layout';
 import { FieldSelect } from 'components/field-select';
 import { FieldShowHide } from 'components/field-show-hide';
 
-import { useModal } from 'features/modal/useModal';
-
 import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { Portal } from 'hooks/usePortal';
 
@@ -28,24 +26,13 @@ type State = PostsLayoutSectionPayload;
 export interface ComponentProps {
   portal: Portal;
   sectionId?: string;
+  onAfterSuccess: () => void;
 }
 
-export const Component = ({ portal, sectionId }: ComponentProps) => {
-  const { business, onFetch } = useBusiness();
-  const { onClose } = useModal();
+export const Component = ({ portal, sectionId, onAfterSuccess }: ComponentProps) => {
+  const { business } = useBusiness();
   const businessOwnerUpdate = useBusinessOwnerUpdate(business);
   const getFormErrors = useGetFormErrors();
-
-  if (!business) {
-    return <></>;
-  }
-
-  const { routeName } = business;
-
-  const onAfterSuccess = () => {
-    onFetch({ routeName });
-    onClose();
-  };
 
   const { section } = (sectionId && getSectionFromBusiness({ business, sectionId })) || {};
 

@@ -78,15 +78,15 @@ export const RouteName = () => {
           },
           {
             label: 'Publicaciones',
-            content: <Posts routeName={routeName} />,
+            content: <Posts />,
           },
           {
             label: 'Grupos de publicaciones',
-            content: <PostsSections routeName={routeName} />,
+            content: <PostsSections />,
           },
           {
             label: 'Órdenes de compras',
-            content: <PurchaseOrders routeName={routeName} />,
+            content: <PurchaseOrders  />,
           },
         ]}
       />

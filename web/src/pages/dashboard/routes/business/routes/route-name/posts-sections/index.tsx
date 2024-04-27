@@ -12,11 +12,7 @@ import { PostsLayoutSection } from 'types/business';
 import { getSearchLayoutLabel } from 'utils/business';
 import { viewUtils } from 'utils/view';
 
-export interface PostsSectionsProps {
-  routeName: string;
-}
-
-export const PostsSections = ({ routeName }: PostsSectionsProps) => {
+export const PostsSections = () => {
   const { business, onFetch } = useBusiness();
 
   const data = business?.layouts?.posts?.sections || [];
@@ -33,12 +29,14 @@ export const PostsSections = ({ routeName }: PostsSectionsProps) => {
         <ButtonNew
           label="Nuevo grupo"
           onClick={() => {
-            businessNewUpdateSection.open();
+            businessNewUpdateSection.open({
+              onAfterSuccess: () => business && onFetch({ routeName: business.routeName }),
+            });
           }}
           className="ml-auto"
         />
 
-        <ButtonRefresh onClick={() => onFetch({ routeName })} />
+        <ButtonRefresh onClick={() => business && onFetch({ routeName: business.routeName })} />
       </TopActions>
       <Table<PostsLayoutSection>
         heads={[null, 'Nombre', 'Categorías', 'Visible en', 'Búsqueda']}
@@ -47,7 +45,7 @@ export const PostsSections = ({ routeName }: PostsSectionsProps) => {
 
           return {
             nodes: [
-              <RowActions key="RowActions" rowData={rowData} routeName={routeName} />,
+              <RowActions key="RowActions" rowData={rowData} />,
               <div key={name} className="flex flex-col">
                 {name}
                 {hiddenName && <span className="text-red-500">(nombre oculto)</span>}

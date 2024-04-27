@@ -11,7 +11,7 @@ export interface FieldPostsSectionLayoutProps
   > {}
 
 export const FieldPostsSectionSelect = ({ label, ...props }: FieldPostsSectionLayoutProps) => {
-  const { business } = useBusiness();
+  const { business, onFetch } = useBusiness();
   const sections = business?.layouts?.posts?.sections || [];
   const businessNewUpdateSection = useBusinessNewUpdateSection();
 
@@ -26,7 +26,9 @@ export const FieldPostsSectionSelect = ({ label, ...props }: FieldPostsSectionLa
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              businessNewUpdateSection.open();
+              businessNewUpdateSection.open({
+                onAfterSuccess: () => business && onFetch({ routeName: business.routeName }),
+              });
             }}
           />
         </div>

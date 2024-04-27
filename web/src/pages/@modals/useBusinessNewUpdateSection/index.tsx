@@ -17,18 +17,27 @@ export const useBusinessNewUpdateSection = () => {
   const { pushModal } = useModal();
 
   return {
-    open: (args?: { sectionId?: string }) => {
+    open: (args?: { sectionId?: string; onAfterSuccess?: () => void }) => {
       pushModal(
         'Emergent',
         {
           useProps: () => {
-            const { sectionId } = args || {};
-
+            const { sectionId, onAfterSuccess } = args || {};
+            const { onClose } = useModal();
             const portal = usePortal();
 
             return {
-              title: 'Informaciones básicas de su negocio',
-              content: <Component portal={portal} sectionId={sectionId} />,
+              title: sectionId ? 'Editar grupo de publicaciones' : 'Crear grupo de publicaciones',
+              content: (
+                <Component
+                  portal={portal}
+                  sectionId={sectionId}
+                  onAfterSuccess={() => {
+                    onAfterSuccess?.();
+                    onClose();
+                  }}
+                />
+              ),
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,
             };

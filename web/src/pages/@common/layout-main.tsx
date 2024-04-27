@@ -2,7 +2,6 @@ import { Popover } from '@headlessui/react';
 
 import { useRouter } from 'hooks/useRouter';
 
-import { AppBreadCrumble } from '../../AppBreadCrumble';
 import { Footer } from './footer';
 import { SideBar } from './side-bar';
 
@@ -59,7 +58,7 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
             },
           )}
         >
-          <AppBreadCrumble className="my-2 ml-4" />
+          {/* <AppBreadCrumble className="my-2 ml-4" /> */}
 
           <div className="p-3">{children}</div>
 

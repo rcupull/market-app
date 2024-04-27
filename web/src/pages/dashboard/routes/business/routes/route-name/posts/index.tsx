@@ -27,15 +27,11 @@ import { getDateString } from 'utils/date';
 import { cn, isNumber } from 'utils/general';
 import { viewUtils } from 'utils/view';
 
-export interface PostsProps {
-  routeName: string;
-}
-
-export const Posts = ({ routeName }: PostsProps) => {
+export const Posts = () => {
   const { getAllPosts } = useGetAllPosts();
   const { pushModal } = useModal();
 
-  const businessOwnerData = useBusiness();
+  const { business } = useBusiness();
 
   const infinityScrolling = useInfinityScrolling({
     fetchPaginatedResources: getAllPosts,
@@ -44,7 +40,8 @@ export const Posts = ({ routeName }: PostsProps) => {
 
   const filters = useFiltersVolatile<GetAllPostsQuery>({
     onChange: (filters) =>
-      getAllPosts.fetch({ includeHidden: true, routeNames: [routeName], ...filters }),
+      business &&
+      getAllPosts.fetch({ includeHidden: true, routeNames: [business.routeName], ...filters }),
   });
 
   useEffect(() => {
@@ -59,13 +56,13 @@ export const Posts = ({ routeName }: PostsProps) => {
   });
 
   const tableCellCategoriesTags = useTableCellCategoriesTags({
-    business: businessOwnerData.business,
+    business,
   });
 
   return (
     <div className="h-full flex flex-col">
       <BulkActions
-        business={businessOwnerData.business}
+        business={business}
         onRefresh={() => filters.onMergeFilters({ page: 1 }, { forceFetch: true })}
         filters={filters.value}
       >
@@ -91,7 +88,7 @@ export const Posts = ({ routeName }: PostsProps) => {
             <Divider className="!my-3" />
 
             <Filters
-              business={businessOwnerData.business}
+              business={business}
               onChange={(filtersValue) => filters.onMergeFilters(filtersValue)}
               value={filters.value}
             />
@@ -131,7 +128,6 @@ export const Posts = ({ routeName }: PostsProps) => {
                     <RowActions
                       key="RowActions"
                       rowData={rowData}
-                      routeName={routeName}
                       callAfarResources={callAfarResources}
                     />,
                     name,

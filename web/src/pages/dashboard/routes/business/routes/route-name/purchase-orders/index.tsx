@@ -8,21 +8,19 @@ import { useGetShoppingOwner } from 'features/api/shopping-owner/useGetShoppingO
 import { RowActions } from './RowActions';
 
 import { TopActions } from 'pages/@common/top-actions';
+import { useBusiness } from 'pages/@hooks/useBusiness';
 import { Shopping } from 'types/shopping';
 import { getDateString } from 'utils/date';
 
-export interface PurchaseOrdersProps {
-  routeName: string;
-}
-
-export const PurchaseOrders = ({ routeName }: PurchaseOrdersProps) => {
+export const PurchaseOrders = () => {
   const { getShoppingOwner } = useGetShoppingOwner();
+  const { business } = useBusiness();
 
-  const onRefresh = () => getShoppingOwner.fetch({ routeName });
+  const onRefresh = () => business && getShoppingOwner.fetch({ routeName: business.routeName });
 
   useEffect(() => {
     onRefresh();
-  }, [routeName]);
+  }, [business]);
 
   return (
     <>

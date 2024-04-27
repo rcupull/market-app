@@ -18,17 +18,18 @@ import { CallAfarResources, useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
 
 import { RowActionsContainer } from 'pages/@common/row-actions-container';
+import { useBusiness } from 'pages/@hooks/useBusiness';
 import { Post } from 'types/post';
 import { getOnePostRoute } from 'utils/business';
 
 export interface RowActionsProps {
   rowData: Post;
-  routeName: string;
   callAfarResources?: CallAfarResources;
 }
-export const RowActions = ({ rowData, callAfarResources, routeName }: RowActionsProps) => {
+export const RowActions = ({ rowData, callAfarResources }: RowActionsProps) => {
   const { pushModal } = useModal();
   const { pushRoute } = useRouter();
+  const { business } = useBusiness();
 
   const { onCallAfar } = useCallFromAfar();
 
@@ -154,7 +155,9 @@ export const RowActions = ({ rowData, callAfarResources, routeName }: RowActions
           { label: 'Duplicar', onClick: handleDuplicate },
           {
             label: 'Ver',
-            onClick: () => pushRoute(getOnePostRoute({ routeName, postId: rowData._id })),
+            onClick: () =>
+              business &&
+              pushRoute(getOnePostRoute({ routeName: business.routeName, postId: rowData._id })),
           },
         ]}
         className="sm:hidden"
@@ -171,7 +174,10 @@ export const RowActions = ({ rowData, callAfarResources, routeName }: RowActions
 
         <IconButtonView
           stopPropagation
-          onClick={() => pushRoute(getOnePostRoute({ routeName, postId: rowData._id }))}
+          onClick={() =>
+            business &&
+            pushRoute(getOnePostRoute({ routeName: business.routeName, postId: rowData._id }))
+          }
         />
       </RowActionsContainer>
     </>
