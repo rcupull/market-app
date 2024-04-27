@@ -62,23 +62,55 @@ export const Component = ({ portal, sectionId, onAfterSuccess }: ComponentProps)
       {({ values, isValid }) => {
         return (
           <form>
-            <FieldRadioGroup<{ value: PostsLayoutSectionVisibility }>
-              label="Mostrar grupo en"
+            <FieldRadioGroup<{
+              value: PostsLayoutSectionVisibility;
+              label: string;
+              description?: React.ReactNode;
+            }>
+              label="Visible en:"
               renderOption={({ checked, item }) => {
-                return <FieldCheckbox noUseFormik value={checked} label={item.value} />;
+                return (
+                  <FieldCheckbox
+                    noUseFormik
+                    value={checked}
+                    label={item.label}
+                    description={item.description}
+                  />
+                );
               }}
               multi
               optionToValue={({ value }) => value}
               items={[
                 {
                   value: 'businessPage',
+                  label: 'Página del negocio',
+                  description: (
+                    <div>
+                      En la página del negocio serán mostrados todos los grupos que{' '}
+                      <span className="font-bold">no esten ocultos</span> y que tengan{' '}
+                      <span className="font-bold">visibilidad</span> en la página del negocio.
+                    </div>
+                  ),
                 },
                 {
                   value: 'postPage',
+                  label: 'Páginas de las publicaciones',
+                  description: (
+                    <div>
+                      Como parte del contenido de la página de una publicación serán mostrados todos
+                      los grupos que tengan <span className="font-bold">visibilidad</span> en la
+                      página de la publicacion.
+                      <br />
+                      Durante la creación/edición de una publicacion usted puede escoger cuales
+                      grupos quiere que se vean como{' '}
+                      <span className="font-bold ml-1">publicaciones relacionadas</span> a la
+                      publicación actual.
+                    </div>
+                  ),
                 },
               ]}
               name="showIn"
-              containerClassName="flex items-center gap-4"
+              containerClassName="flex flex-col sm:flex-row sm:items-center sm:gap-4"
             />
 
             {/* //////////////////////////////////////////////////////////////////////////////////////////////// */}
@@ -93,8 +125,14 @@ export const Component = ({ portal, sectionId, onAfterSuccess }: ComponentProps)
                     <FieldShowHide
                       name="hiddenName"
                       title={`${values.hiddenName ? 'Mostrar' : 'Ocultar'} el nombre del grupo.`}
-                      className='-my-2'
                     />
+                  </div>
+                }
+                description={
+                  <div>
+                    El nombre de un grupo se visualiza justo antes de las publicaciones. El mismo
+                    puede ser oculto para que no aparezca en la página y solo sean visibles las
+                    publicaciones.
                   </div>
                 }
                 className="w-full"
@@ -102,7 +140,7 @@ export const Component = ({ portal, sectionId, onAfterSuccess }: ComponentProps)
 
               <Divider className="lg:hidden" />
 
-              <FieldPostsSectionLayout name="type" label="Diseño" className="w-full" />
+              <FieldPostsSectionLayout name="type" label="Diseño" className="w-full mt-2" />
             </div>
 
             {/* //////////////////////////////////////////////////////////////////////////////////////////////// */}

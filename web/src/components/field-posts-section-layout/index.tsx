@@ -8,17 +8,19 @@ export interface FieldPostsSectionLayoutProps
 
 export const FieldPostsSectionLayout = (props: FieldPostsSectionLayoutProps) => {
   return (
-    <FieldRadioGroup<{ value: PostsLayoutSectionType }>
+    <FieldRadioGroup<{ value: PostsLayoutSectionType; label:string }>
       renderOption={({ checked, item }) => {
-        return <FieldCheckbox noUseFormik value={checked} label={item.value} />;
+        return <FieldCheckbox noUseFormik value={checked} label={item.label} />;
       }}
       optionToValue={({ value }) => value}
       items={[
         {
           value: 'grid',
+          label: 'Rejilla',
         },
         {
           value: 'oneRowSlider',
+          label: 'Fila deslizante',
         },
       ]}
       containerClassName="flex items-center gap-4"

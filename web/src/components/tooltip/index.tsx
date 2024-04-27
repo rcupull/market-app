@@ -19,7 +19,7 @@ export const Tooltip = ({ children, content, className }: TooltipProps) => {
         floatingAs={Fragment}
         portal
         autoPlacement={{
-          allowedPlacements: ['top-start', 'top-end', ],
+          allowedPlacements: ['top-start', 'bottom-start' ],
         }}
       >
         <Popover.Button as="div">{children}</Popover.Button>

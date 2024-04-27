@@ -12,14 +12,14 @@ export interface FieldInputProps
     FormFieldWrapperProps {}
 
 export const FieldInput = forwardRef<HTMLInputElement, FieldInputProps>((props, ref) => {
-  const { className, label, ...omittedProps } = props;
+  const { className, label, description, ...omittedProps } = props;
 
   const { field, error } = useFormikField(props);
 
   const { value, ...restField } = field;
 
   return (
-    <FormFieldWrapper label={label} error={error} className={className}>
+    <FormFieldWrapper label={label} error={error} description={description} className={className}>
       <Input
         ref={ref}
         className={cn({

@@ -24,24 +24,26 @@ export const FormFieldWrapper = ({
           'flex flex-row-reverse items-center': labelPosition === 'right',
         })}
       >
-        <div
-          className={cn('flex items-center', {
-            'mb-2': labelPosition === 'top',
-            'ml-2': labelPosition === 'right',
-          })}
-        >
-          {label && (
-            <label
-              className={cn('block text-sm font-semibold leading-6 text-gray-900  w-fit', {
-                'text-red-500': !!error,
-              })}
-            >
-              {label}
-            </label>
-          )}
+        {(label || description) && (
+          <div
+            className={cn('flex items-center', {
+              'mb-2': labelPosition === 'top',
+              'ml-2': labelPosition === 'right',
+            })}
+          >
+            {label && (
+              <label
+                className={cn('block text-sm font-semibold leading-6 text-gray-900  w-fit', {
+                  'text-red-500': !!error,
+                })}
+              >
+                {label}
+              </label>
+            )}
 
-          {description && <ButtonDescription description={description} />}
-        </div>
+            {description && <ButtonDescription description={description} />}
+          </div>
+        )}
         {children}
       </div>
 
