@@ -62,7 +62,7 @@ export const getSearchLayoutLabel = (type: SearchLayoutType): string => {
     case 'none':
       return 'Ninguno';
     case 'left':
-      return 'Isquierda';
+      return 'Izquierda';
     case 'center':
       return 'Centrado';
     case 'right':

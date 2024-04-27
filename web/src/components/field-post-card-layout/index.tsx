@@ -57,7 +57,7 @@ export const FieldPostCardLayout = ({
     <div className="flex flex-col lg:flex-row gap-2 items-center lg:items-start">
       <div className="w-full px-6">
         <div className="flex flex-col justify-around h-full gap-2">
-          <FieldRadioGroup<{ value: PostCardLayoutImages; label:string }>
+          <FieldRadioGroup<{ value: PostCardLayoutImages; label: string }>
             label="Imágenes"
             name={getFieldName('images')}
             renderOption={({ checked, item }) => {
@@ -91,7 +91,7 @@ export const FieldPostCardLayout = ({
 
           <Divider className="!my-2" />
 
-          <FieldRadioGroup<{ value: PostCardSize; label:string }>
+          <FieldRadioGroup<{ value: PostCardSize; label: string }>
             label="Tamaño"
             name={getFieldName('size')}
             renderOption={({ checked, item }) => {
@@ -117,7 +117,7 @@ export const FieldPostCardLayout = ({
 
           <Divider className="!my-2" />
 
-          <FieldRadioGroup<{ value: PostCardLayoutMetaLayout; label:string }>
+          <FieldRadioGroup<{ value: PostCardLayoutMetaLayout; label: string }>
             label="Diseño de los metadatos"
             name={getFieldName('metaLayout')}
             renderOption={({ checked, item }) => {
@@ -246,6 +246,13 @@ export const FieldPostCardLayout = ({
       }
       error={error}
       className={cn(className)}
+      description={
+        <div>
+          Escoja el diseño de las tarjetas de cada publicación que mejor se ajusta a sus
+          necesidades. Pueden haber grupo de publicaciones promocionales, recientes,
+          categorizadas, incluso referencias a las páginas de otros negocios de Asere Market o link externos.
+        </div>
+      }
     >
       {collapsable ? <Accordion header="Abrir">{content}</Accordion> : content}
     </FormFieldWrapper>

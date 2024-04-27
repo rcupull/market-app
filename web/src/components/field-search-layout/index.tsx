@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { FieldSelect, FieldSelectProps } from 'components/field-select';
+import { FieldCheckbox } from 'components/field-checkbox';
+import { FieldRadioGroup, FieldRadioGroupProps } from 'components/field-radio-group';
 
 import { useFormikField } from 'hooks/useFormikField';
 
@@ -11,7 +12,7 @@ import { getSearchLayoutLabel } from 'utils/business';
 import { cn } from 'utils/general';
 
 export interface FieldSearchLayoutProps
-  extends Omit<FieldSelectProps, 'items' | 'renderOption' | 'renderValue' | 'optionToValue'> {}
+  extends Omit<FieldRadioGroupProps, 'items' | 'renderOption' | 'optionToValue'> {}
 
 export const FieldSearchLayout = (props: FieldSearchLayoutProps) => {
   const { className, ...omittedProps } = props;
@@ -22,36 +23,50 @@ export const FieldSearchLayout = (props: FieldSearchLayoutProps) => {
 
   return (
     <div className={cn('flex flex-col lg:flex-row gap-2 items-center lg:items-start', className)}>
-      <FieldSelect<{ [k in string]: SearchLayoutType }>
-        renderOption={({ tag }) => getSearchLayoutLabel(tag)}
-        renderValue={({ tag }) => getSearchLayoutLabel(tag)}
-        optionToValue={({ tag }) => tag}
+      <FieldRadioGroup<{ value: SearchLayoutType }>
+        renderOption={({ checked, item }) => {
+          return (
+            <FieldCheckbox noUseFormik value={checked} label={getSearchLayoutLabel(item.value)} />
+          );
+        }}
+        description={
+          <div>
+            Escoja como quiere que el usuario busque en sus publicaciones. En caso de seleccionar{' '}
+            <span className="font-bold">Ninguno</span> todas las publicaciones serán mostradas en el
+            mismo orden que aparecen, haciendo scrolling hacia abajo para visualizar las siguientes.
+          </div>
+        }
+        optionToValue={({ value }) => value}
         items={[
           {
-            tag: 'none',
+            value: 'none',
           },
           {
-            tag: 'left',
+            value: 'left',
           },
           {
-            tag: 'center',
+            value: 'center',
           },
           {
-            tag: 'right',
+            value: 'right',
           },
           {
-            tag: 'postCategories',
+            value: 'postCategories',
           },
           {
-            tag: 'postCategoriesScrollable',
+            value: 'postCategoriesScrollable',
           },
           {
-            tag: 'postCategoriesExcluded',
+            value: 'postCategoriesExcluded',
           },
           {
-            tag: 'postCategoriesExcludedScrollable',
+            value: 'postCategoriesExcludedScrollable',
           },
         ]}
+        containerClassName={cn('grid gap-2', {
+          'grid-cols-2': !showPreview,
+          'grid-cols-1': showPreview,
+        })}
         {...props}
         label={
           <div className="flex flex-wrap gap-1">
@@ -63,6 +78,7 @@ export const FieldSearchLayout = (props: FieldSearchLayoutProps) => {
           </div>
         }
       />
+
       {showPreview && (
         <Skeleton
           searchLayoutType={field.value}
