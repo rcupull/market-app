@@ -6,6 +6,7 @@ import { useModal } from 'features/modal/useModal';
 
 import { ButtonPostToCart } from './ButtonPostToCart';
 
+import { useBusiness } from 'pages/@hooks/useBusiness';
 import { PostLayoutShoppingMethod } from 'types/business';
 import { StyleProps } from 'types/general';
 import { Post } from 'types/post';
@@ -24,6 +25,7 @@ export const PostShoppingMethod = ({
   className,
 }: PostShoppingMethodProps) => {
   const { pushModal } = useModal();
+  const {  business} = useBusiness()
 
   if (layout === 'whatsApp_xsLink_lgQR') {
     if (!whatsAppPhoneNumber) {
@@ -69,7 +71,7 @@ export const PostShoppingMethod = ({
     );
   }
 
-  if (layout === 'shoppingCart') {
+  if (layout === 'shoppingCart' && business?.shoppingStrategy === 'addToCart_whatsAppWithOwner_pickUpProduct') {
     return <ButtonPostToCart post={post} className={className} />;
   }
 
