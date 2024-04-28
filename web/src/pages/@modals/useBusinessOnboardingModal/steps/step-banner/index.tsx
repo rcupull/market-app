@@ -11,7 +11,6 @@ export interface StepBannerProps extends OnboardingStepProps {}
 export const StepBanner = ({ backButton, finishButton }: StepBannerProps) => {
   const { nextAction, portal, rightButton } = useNextButtonPortal(finishButton);
   const { business, onFetch } = useBusiness();
-  
 
   return (
     <div>
@@ -22,7 +21,7 @@ export const StepBanner = ({ backButton, finishButton }: StepBannerProps) => {
           business && onFetch({ routeName: business.routeName });
         }}
       />
-      <StepperButtonContainer  leftButton={backButton} rightButton={rightButton} />
+      <StepperButtonContainer leftButton={backButton} rightButton={rightButton} />
     </div>
   );
 };

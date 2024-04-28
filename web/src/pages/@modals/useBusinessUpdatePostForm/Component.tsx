@@ -39,8 +39,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
       onSubmit={() => {}}
       enableReinitialize
     >
-      {({ values, isValid , touched}) => {
-
+      {({ values, isValid, touched }) => {
         return (
           <form>
             <FieldRadioGroup<{ disabled?: boolean; value: PostFormField; label: string }>

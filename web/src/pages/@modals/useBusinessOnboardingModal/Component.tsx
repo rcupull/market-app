@@ -14,7 +14,7 @@ export const Component = () => {
   const finishButton = (
     <Button
       variant="link"
-      label='Finalizar'
+      label="Finalizar"
       onClick={() => {
         onClose();
       }}

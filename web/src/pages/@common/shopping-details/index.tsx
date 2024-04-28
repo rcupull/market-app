@@ -19,6 +19,17 @@ const getStatName: Record<ShoppingState, string> = {
 export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => {
   const { state, posts } = shopping;
 
+  const totalToPay = posts.reduce((amount, { count, post }) => {
+    if (!post.price) {
+      return amount;
+    }
+    if (post.currency !== 'CUP') {
+      console.log('not cup'); //TODO not cup
+      return amount;
+    }
+    return amount + post.price * count; //TODO agregar conversion de moneda su es USD
+  }, 0);
+
   return (
     <div
       onClick={onClick}
@@ -67,6 +78,11 @@ export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => 
             </div>
           );
         })}
+
+        <div className="flex justify-end gap-1">
+          <span className="font-bold">Total a pagar:</span>
+          <span>{`${totalToPay} CUP`}</span>
+        </div>
       </div>
     </div>
   );

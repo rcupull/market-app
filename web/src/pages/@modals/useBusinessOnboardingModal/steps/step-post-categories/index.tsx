@@ -21,7 +21,7 @@ export const StepPostcategories = ({ nextButton, backButton }: StepPostcategorie
           business && onFetch({ routeName: business.routeName });
         }}
       />
-      <StepperButtonContainer leftButton={backButton}  rightButton={rightButton} />
+      <StepperButtonContainer leftButton={backButton} rightButton={rightButton} />
     </div>
   );
 };

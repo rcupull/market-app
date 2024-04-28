@@ -10,6 +10,8 @@ import { shoppingServices } from "./services";
 import { postServices } from "../post/services";
 import { isEqualIds, isNumber } from "../../utils/general";
 import { notificationsServices } from "../notifications";
+import { businessServices } from "../business/services";
+import { computePay } from "./utils";
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -177,7 +179,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
 
       const { shoppingId } = params;
 
-      await shoppingServices.updateOne({
+      const order = await shoppingServices.findAndUpdateOne({
         req,
         res,
         query: {
@@ -186,6 +188,49 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
         },
         update: {
           state: "REQUESTED",
+        },
+      });
+
+      if (order instanceof ServerResponse) return order;
+
+      if (!order) {
+        console.log("It is weird, maybe there is a bug");
+        return res.send({});
+      }
+
+      const business = await businessServices.findOne({
+        res,
+        req,
+        query: {
+          routeName: order.routeName,
+        },
+        projection: {
+          shoppingPayment: 1,
+        },
+      });
+
+      if (business instanceof ServerResponse) return business;
+
+      const { fromCredit, toPay, newCredit } = computePay({
+        currentCredit: business.shoppingPayment.credit,
+        order,
+      });
+
+      await businessServices.updateOne({
+        res,
+        req,
+        query: {
+          routeName: order.routeName,
+        },
+        update: {
+          "shoppingPayment.credit": newCredit,
+          $push: {
+            "shoppingPayment.requests": {
+              shoppingId: order._id,
+              fromCredit,
+              toPay,
+            },
+          },
         },
       });
 

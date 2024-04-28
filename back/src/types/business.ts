@@ -111,6 +111,17 @@ export type BusinessShoppingStrategy =
   | "whatsAppWithOwner_pickUpProduct"
   | "addToCart_whatsAppWithOwner_pickUpProduct";
 
+export interface BusinessPaymentRequest {
+  shoppingId: string;
+  fromCredit: number;
+  toPay: number;
+}
+
+export interface BusinessPaymentRequestHistory extends BusinessPaymentRequest {
+  credit: number;
+  initialCredit: number;
+}
+
 export interface Business extends BaseIdentity {
   name: string;
   routeName: string;
@@ -133,6 +144,14 @@ export interface Business extends BaseIdentity {
   shoppingStrategy?: BusinessShoppingStrategy;
   shoppingMeta?: {
     purchaseRequestTopInfo?: string;
+  };
+  shoppingPayment: {
+    //El credito inicial que el sistema le pone al usuario todos los meses. No es acumulable
+    initialCredit: number;
+    //el credito actual. irá decrementando cada vez que se realice un pedido
+    credit: number;
+    requests: Array<BusinessPaymentRequest>;
+    history: Array<BusinessPaymentRequestHistory>;
   };
   postFormFields?: Array<
     Extract<

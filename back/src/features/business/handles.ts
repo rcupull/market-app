@@ -2,10 +2,11 @@ import { withTryCatch } from "../../utils/error";
 import { businessServices } from "./services";
 import { ServerResponse } from "http";
 import { get200Response } from "../../utils/server-response";
-import { PostCategory } from "../../types/business";
+import { Business, PostCategory } from "../../types/business";
 import { postServices } from "../post/services";
 import { User } from "../../types/user";
 import { RequestHandler } from "../../types/general";
+import { makeReshaper } from "../../utils/makeReshaper";
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {
@@ -40,7 +41,9 @@ const get_business_routeName: () => RequestHandler = () => {
       const out = await businessServices.findOne({
         res,
         req,
-        routeName,
+        query: {
+          routeName,
+        },
       });
 
       if (out instanceof ServerResponse) return;
@@ -62,7 +65,9 @@ const update_business_post_categories: () => RequestHandler = () => {
       const business = await businessServices.findOne({
         res,
         req,
-        routeName,
+        query: {
+          routeName,
+        },
       });
 
       if (business instanceof ServerResponse) return business;
@@ -182,7 +187,21 @@ const put_business_routeName: () => RequestHandler = () => {
           routeName,
           createdBy: user._id,
         },
-        update: body,
+        update: makeReshaper<Business, Business>({
+          name: "name",
+          categories: "categories",
+          routeName: "routeName",
+          hidden: "hidden",
+          socialLinks: "socialLinks",
+          bannerImages: "bannerImages",
+          logo: "logo",
+          layouts: "layouts",
+          aboutUsPage: "aboutUsPage",
+          whatsAppPhoneNumber: "whatsAppPhoneNumber",
+          postFormFields: "postFormFields",
+          shoppingStrategy: "shoppingStrategy",
+          shoppingMeta: "shoppingMeta",
+        })(body),
       });
 
       if (out instanceof ServerResponse) return;

@@ -92,14 +92,8 @@ export const Component = ({ portal, options }: ComponentProps) => {
                 isBusy={updateOneBusiness.status.isBusy}
                 disabled={!isValid}
                 onClick={() => {
-                  const {
-                    face,
-                    instagram,
-                    twitter,
-                    linkedin,
-                    youtube,
-                    whatsAppPhoneNumber,
-                  } = values;
+                  const { face, instagram, twitter, linkedin, youtube, whatsAppPhoneNumber } =
+                    values;
 
                   updateOneBusiness.fetch(
                     {

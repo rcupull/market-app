@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 
+import { LabelValuePair } from 'components/label-value-pair';
 import { SpinnerEllipsis } from 'components/spinner-ellipsis';
 import { Tabs } from 'components/tabs';
 
@@ -46,13 +47,23 @@ export const RouteName = () => {
     return <></>;
   }
 
-  const { name, hidden } = business;
+  const { name, hidden, shoppingPayment } = business;
+
+  const toPay = shoppingPayment.requests.reduce((total, { toPay }) => total + toPay, 0);
 
   return (
     <LayoutSection
       title={name}
       topRightHeader={
         <div className="flex items-center gap-6">
+          <LabelValuePair
+            label="Crédito restante"
+            value={`${shoppingPayment.credit} CUP`}
+            variant={shoppingPayment.credit == 0 ? 'error' : 'default'}
+          />
+
+          <LabelValuePair label="A Pagar" value={`${toPay} CUP`} />
+
           {hidden && (
             <div className="text-red-500 ring-1 ring-red-400 rounded-3xl px-2 py-1/2 text-sm sm:text-lg">
               Oculto

@@ -1,6 +1,7 @@
 import {
   FilterQuery,
   PaginateOptions,
+  ProjectionType,
   UpdateQuery,
   UpdateWithAggregationPipeline,
 } from "mongoose";
@@ -120,20 +121,12 @@ const addOne: QueryHandle<
 
 const findOne: QueryHandle<
   {
-    routeName: string;
-    createdBy?: string;
+    query: FilterQuery<Business>;
+    projection?: ProjectionType<Business>;
   },
   Business
-> = async ({ routeName, createdBy, res }) => {
-  const filterQuery: FilterQuery<Business> = {
-    routeName,
-  };
-
-  if (createdBy) {
-    filterQuery.createdBy = createdBy;
-  }
-
-  const out = await BusinessModel.findOne(filterQuery);
+> = async ({ query, res, projection }) => {
+  const out = await BusinessModel.findOne(query, projection);
 
   if (!out) {
     return get404Response({

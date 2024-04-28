@@ -65,7 +65,7 @@ export const Stepper = ({ items }: StepperProps) => {
               {index + 1}
             </div>
             <div
-              className={cn('text-center',{
+              className={cn('text-center', {
                 'font-semibold': selected,
               })}
             >

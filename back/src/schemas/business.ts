@@ -100,6 +100,34 @@ const BusinessSchema = new Schema<Business>({
   shoppingMeta: {
     purchaseRequestTopInfo: { type: String },
   },
+  shoppingPayment: {
+    initialCredit: { type: Number, default: 500 },
+    credit: { type: Number, default: 500 },
+    requests: {
+      type: [
+        {
+          _id: false,
+          shoppingId: { type: Schema.Types.ObjectId, ref: "Shopping" },
+          fromCredit: { type: Number },
+          toPay: { type: Number },
+        },
+      ],
+      default: [],
+    },
+    history: {
+      type: [
+        {
+          _id: false,
+          credit: { type: Number },
+          initialCredit: { type: Number },
+          shoppingId: { type: Schema.Types.ObjectId, ref: "Shopping" },
+          fromCredit: { type: Number },
+          toPay: { type: Number },
+        },
+      ],
+      default: [],
+    },
+  },
   postFormFields: {
     type: [
       {

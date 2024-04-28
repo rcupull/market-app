@@ -87,7 +87,9 @@ export const isUserThisBusinessOwner: RequestHandler = async (
   const business = await businessServices.findOne({
     res,
     req,
-    routeName,
+    query: {
+      routeName,
+    },
   });
 
   if (business instanceof ServerResponse) return business;
@@ -168,46 +170,6 @@ export type RequestWithUser<
 > = Request<P, ResBody, ReqBody, ReqQuery, Locals> & {
   user: User;
 };
-
-/**
- * Should be put it after isLogged
- */
-// export const verifyBussiness: RequestHandler = (req, res, next) => {
-//   withTryCatch(req, res, async () => {
-//     const user = req.user as unknown as User | undefined;
-//     const routeName = req.params.routeName as string | undefined;
-
-//     if (!routeName) {
-//       return res
-//         .sendStatus(404)
-//         .json({ message: "The businessId does not exist" });
-//     }
-
-//     if (!user) {
-//       return res.sendStatus(404).json({ message: "The user does not exist" });
-//     }
-
-//     const out = await businessServices.findOne({
-//       res,
-//       routeName,
-//     });
-
-//     if (out instanceof ServerResponse) return;
-
-//     const { createdBy } = out;
-
-//     if (createdBy !== user._id) {
-//       return res
-//         .sendStatus(401)
-//         .json({ message: "Not have access to this business" });
-//     }
-
-//     //@ts-expect-error
-//     req["business"] = out;
-
-//     next();
-//   });
-// };
 
 export const verifyPost: RequestHandler = (req, res, next) => {
   withTryCatch(req, res, async () => {

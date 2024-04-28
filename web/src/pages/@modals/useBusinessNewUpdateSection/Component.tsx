@@ -50,7 +50,7 @@ export const Component = ({ portal, sectionId, onAfterSuccess }: ComponentProps)
       }}
       enableReinitialize
       initialTouched={{
-        name: true
+        name: true,
       }}
       onSubmit={() => {}}
       validate={(values) => {
