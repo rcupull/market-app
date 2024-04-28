@@ -75,11 +75,30 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
           onSubmit={() => {}}
         >
           {({ values, isValid, resetForm }) => {
+            const handleAdd = ()=>{
+              const { label } = values;
+
+              setState(
+                addRow(state, {
+                  label,
+                  tag: getPostCategoryTag(label),
+                }),
+              );
+              resetForm();
+            }
+
             return (
               <form className="w-full">
                 <FieldInput
                   id="postCategoryLabel"
                   name="label"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+
+                      handleAdd()
+                    }
+                  }}
                   placeholder='Escriba una nueva categoría, ej. "Productos en oferta", "Recientes", etc"'
                 />
 
@@ -88,17 +107,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                     label="Agregar categoría"
                     disabled={!isValid}
                     stopPropagation
-                    onClick={() => {
-                      const { label } = values;
-
-                      setState(
-                        addRow(state, {
-                          label,
-                          tag: getPostCategoryTag(label),
-                        }),
-                      );
-                      resetForm();
-                    }}
+                    onClick={()=>handleAdd()}
                     variant="primary"
                     className="ml-4"
                   />,

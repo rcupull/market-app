@@ -96,9 +96,12 @@ const getAllWithoutPagination: QueryHandle<
 };
 
 const addOne: QueryHandle<
-  Pick<Business, "categories" | "createdBy" | "routeName" | "name">,
+  Pick<
+    Business,
+    "categories" | "createdBy" | "routeName" | "name" | "postCategories"
+  >,
   Business
-> = async ({ categories, createdBy, routeName, name, res }) => {
+> = async ({ categories, createdBy, routeName, name, res, postCategories }) => {
   const routeNameExists = await BusinessModel.findOne({ routeName });
   if (routeNameExists) {
     return get400Response({
@@ -112,6 +115,7 @@ const addOne: QueryHandle<
     createdBy,
     name,
     routeName,
+    postCategories,
   });
 
   await out.save();

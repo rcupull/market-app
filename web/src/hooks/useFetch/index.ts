@@ -15,6 +15,7 @@ import {
   OnAfterFailed,
   OnAfterSuccess,
 } from 'types/api';
+import { wait } from 'utils/general';
 
 export type FetchOptions<Data = any> = {
   onAfterSuccess?: OnAfterSuccess<Data>;
@@ -71,6 +72,11 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
       setStatus('BUSY');
 
       const resourcesArray = args instanceof Array ? args : [args];
+
+      if (DEVELOPMENT) {
+        //simulate the api call delay
+        await wait(1000);
+      }
 
       const token = getCookie('token') as string | null;
 

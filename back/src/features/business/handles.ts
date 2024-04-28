@@ -7,6 +7,7 @@ import { postServices } from "../post/services";
 import { User } from "../../types/user";
 import { RequestHandler } from "../../types/general";
 import { makeReshaper } from "../../utils/makeReshaper";
+import { getPostCategoriesFromBusinessCategories } from "./utils";
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {
@@ -161,6 +162,7 @@ const post_business: () => RequestHandler = () => {
         name,
         routeName,
         createdBy: user._id,
+        postCategories: getPostCategoriesFromBusinessCategories(categories),
         res,
         req,
       });

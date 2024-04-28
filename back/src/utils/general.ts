@@ -92,3 +92,20 @@ export const isNullOrUndefinedOrEmptyString = (
 export const compact = <T = any>(value: Array<Nullable<T>>): Array<T> => {
   return value.filter((val) => val) as Array<T>;
 };
+
+export const addRow = <T = any>(
+  data: Array<T>,
+  rowData: T,
+  position: "start" | "end" = "end"
+): Array<T> => {
+  const newData = [...data];
+
+  return position === "start" ? [rowData, ...newData] : [...newData, rowData];
+};
+
+export const addStringToUniqueArray = <T extends string = string>(
+  array: Array<T>,
+  value: T
+): Array<T> => {
+  return array.includes(value) ? array : addRow(array, value);
+};
