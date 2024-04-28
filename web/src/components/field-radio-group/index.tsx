@@ -40,14 +40,13 @@ export const FieldRadioGroup = <O extends any = any, V = any>(
         disabledOption={disabledOption}
         isBusy={isBusy}
         multi={multi}
-        onBlur={() => {
+        onChange={(newValue) => {
           field.onBlur({
             target: {
               name: field.name,
             },
           });
-        }}
-        onChange={(newValue) => {
+
           field.onChange({
             target: {
               value: newValue,

@@ -11,6 +11,7 @@ import { useBusiness } from '../../@hooks/useBusiness';
 import { Formik } from 'formik';
 import { Business } from 'types/business';
 import { PostFormField } from 'types/post';
+import { isEmpty } from 'utils/general';
 
 interface State extends Pick<Business, 'postFormFields'> {}
 
@@ -38,7 +39,8 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
       onSubmit={() => {}}
       enableReinitialize
     >
-      {({ values, isValid }) => {
+      {({ values, isValid , touched}) => {
+
         return (
           <form>
             <FieldRadioGroup<{ disabled?: boolean; value: PostFormField; label: string }>
@@ -118,7 +120,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               <Button
                 label="Guardar"
                 isBusy={updateOneBusiness.status.isBusy}
-                disabled={!isValid}
+                disabled={!isValid || isEmpty(touched)}
                 onClick={() => {
                   if (!business) return;
                   const { postFormFields } = values;

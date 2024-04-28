@@ -63,7 +63,8 @@ export const FieldPostShoppingMethodSelect = (props: FieldPostShoppingMethodSele
             El método de compra es la forma en que el cliente contactará con usted para la compra de
             su producto.
             <br />
-            Las opciones siguientes son las posibles según la estrategia de venta seleccionada en la configuración de su negocio.
+            Las opciones siguientes son las posibles según la estrategia de venta seleccionada en la
+            configuración de su negocio.
           </span>
           <Button
             variant="link"

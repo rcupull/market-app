@@ -8,7 +8,7 @@ import { Component } from 'pages/@modals/useBusinessUpdatePostCategories/Compone
 export interface StepPostcategoriesProps extends StepProps {}
 
 export const StepPostcategories = ({ nextButton }: StepPostcategoriesProps) => {
-  const { nextAction, portal } = useNextButtonPortal(nextButton);
+  const { nextAction, portal, rightButton } = useNextButtonPortal(nextButton);
   const { business, onFetch } = useBusiness();
 
   return (
@@ -20,7 +20,7 @@ export const StepPostcategories = ({ nextButton }: StepPostcategoriesProps) => {
           business && onFetch({ routeName: business.routeName });
         }}
       />
-      <StepperButtonContainer rightButton={<div ref={portal.ref} />} />
+      <StepperButtonContainer rightButton={rightButton} />
     </div>
   );
 };

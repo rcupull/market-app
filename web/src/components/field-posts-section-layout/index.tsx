@@ -8,7 +8,7 @@ export interface FieldPostsSectionLayoutProps
 
 export const FieldPostsSectionLayout = (props: FieldPostsSectionLayoutProps) => {
   return (
-    <FieldRadioGroup<{ value: PostsLayoutSectionType; label:string }>
+    <FieldRadioGroup<{ value: PostsLayoutSectionType; label: string }>
       renderOption={({ checked, item }) => {
         return <FieldCheckbox noUseFormik value={checked} label={item.label} />;
       }}

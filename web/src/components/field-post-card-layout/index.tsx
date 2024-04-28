@@ -249,8 +249,8 @@ export const FieldPostCardLayout = ({
       description={
         <div>
           Escoja el diseño de las tarjetas de cada publicación que mejor se ajusta a sus
-          necesidades. Pueden haber grupo de publicaciones promocionales, recientes,
-          categorizadas, incluso referencias a las páginas de otros negocios de Asere Market o link externos.
+          necesidades. Pueden haber grupo de publicaciones promocionales, recientes, categorizadas,
+          incluso referencias a las páginas de otros negocios de Asere Market o link externos.
         </div>
       }
     >

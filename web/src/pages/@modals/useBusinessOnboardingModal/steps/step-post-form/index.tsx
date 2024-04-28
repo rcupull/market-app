@@ -8,7 +8,7 @@ import { Component } from 'pages/@modals/useBusinessUpdatePostForm/Component';
 export interface StepPostsSectionsProps extends StepProps {}
 
 export const StepPostForm = ({ backButton, nextButton }: StepPostsSectionsProps) => {
-  const { nextAction, portal } = useNextButtonPortal(nextButton);
+  const { nextAction, portal, rightButton } = useNextButtonPortal(nextButton);
   const { onFetch, business } = useBusiness();
 
   return (
@@ -20,7 +20,7 @@ export const StepPostForm = ({ backButton, nextButton }: StepPostsSectionsProps)
           nextAction();
         }}
       />
-      <StepperButtonContainer leftButton={backButton} rightButton={<div ref={portal.ref} />} />
+      <StepperButtonContainer leftButton={backButton} rightButton={rightButton} />
     </div>
   );
 };

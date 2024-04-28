@@ -86,7 +86,7 @@ export const RouteName = () => {
           },
           {
             label: 'Órdenes de compras',
-            content: <PurchaseOrders  />,
+            content: <PurchaseOrders />,
           },
         ]}
       />
