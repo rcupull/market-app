@@ -82,7 +82,18 @@ export const Settings = () => {
             publicitarios.
           </div>
         }
-        action={<Button label="Editar" onClick={() => businessUpdateBanner.open()} />}
+        action={
+          <Button
+            label="Editar"
+            onClick={() =>
+              businessUpdateBanner.open({
+                onAfterSuccess: () => {
+                  business && onFetch({ routeName: business?.routeName });
+                },
+              })
+            }
+          />
+        }
       />
 
       <SettingsLayout

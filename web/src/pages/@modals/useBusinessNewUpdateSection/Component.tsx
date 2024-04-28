@@ -49,6 +49,9 @@ export const Component = ({ portal, sectionId, onAfterSuccess }: ComponentProps)
         ...(section || {}),
       }}
       enableReinitialize
+      initialTouched={{
+        name: true
+      }}
       onSubmit={() => {}}
       validate={(values) => {
         return getFormErrors(values, [

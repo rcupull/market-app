@@ -6,7 +6,6 @@ import { FieldInputImages } from 'components/field-input-images';
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
 import { useGetUserPaymentPlan } from 'features/api/useGetUserPaymentPlan';
-import { useModal } from 'features/modal/useModal';
 
 import { Portal } from 'hooks/usePortal';
 
@@ -22,12 +21,12 @@ interface State {
 
 export interface ComponentProps {
   portal: Portal;
+  onAfterSuccess?: () => void;
 }
 
-export const Component = ({ portal }: ComponentProps) => {
-  const { business, onFetch } = useBusiness();
+export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
+  const { business } = useBusiness();
 
-  const { onClose } = useModal();
   const { userPlan } = useGetUserPaymentPlan();
 
   const { bannerImages, routeName } = business || {};
@@ -90,10 +89,7 @@ export const Component = ({ portal }: ComponentProps) => {
                               routeName,
                             },
                             {
-                              onAfterSuccess: () => {
-                                onFetch({ routeName });
-                                onClose();
-                              },
+                              onAfterSuccess,
                             },
                           );
                         },

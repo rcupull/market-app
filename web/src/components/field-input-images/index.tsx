@@ -376,7 +376,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
         </div>
 
         {previewImage && enabledImageHref && (
-          <div className="flex items-center mt-2">
+          <div className="flex flex-col sm:flex-row sm:items-center mt-2 gap-4">
             <Input
               placeholder="Escriba la url promocional de esta imagen del banner (opcional). Ejemplo: https://example.com"
               value={stateToPreview[previewIndex]?.href || ''}
@@ -387,7 +387,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
             />
             <a
               href={stateToPreview[previewIndex]?.href || ''}
-              className="text-nowrap ml-2 hyperlink"
+              className="text-nowrap hyperlink"
               target="_blank"
               rel="noreferrer"
             >

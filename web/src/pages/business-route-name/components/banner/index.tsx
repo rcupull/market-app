@@ -12,7 +12,7 @@ export interface BannerProps extends StyleProps {}
 
 export const Banner = ({ className }: BannerProps) => {
   const businessUpdateBanner = useBusinessUpdateBanner();
-  const { business } = useBusiness();
+  const { business, onFetch } = useBusiness();
   const { bannerImages, layouts } = business || {};
 
   const bannerLayout = layouts?.banner;
@@ -22,7 +22,16 @@ export const Banner = ({ className }: BannerProps) => {
   }
 
   const renderContainer = (content: React.ReactNode) => (
-    <UpdateSomethingContainer title="Editar el banner" onClick={() => businessUpdateBanner.open()}>
+    <UpdateSomethingContainer
+      title="Editar el banner"
+      onClick={() =>
+        businessUpdateBanner.open({
+          onAfterSuccess: () => {
+            business && onFetch({ routeName: business.routeName });
+          },
+        })
+      }
+    >
       {content}
     </UpdateSomethingContainer>
   );
