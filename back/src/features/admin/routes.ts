@@ -22,14 +22,3 @@ router
     isAdmin,
     adminHandles.del_users_userId()
   );
-
-router
-  .route("/admin/users/:userId/plans/:planId")
-  .put(
-    validators.param("userId").notEmpty(),
-    validators.param("planId").notEmpty(),
-    validators.handle,
-    isLogged,
-    isAdmin,
-    adminHandles.put_users_userId_plans_planId()
-  );

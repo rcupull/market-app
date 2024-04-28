@@ -6,7 +6,6 @@ import { Divider } from 'components/divider';
 import { Table } from 'components/table';
 
 import { useGetAllPosts } from 'features/api/posts/useGetAllPosts';
-import { useGetUserPaymentPlan } from 'features/api/useGetUserPaymentPlan';
 import { useModal } from 'features/modal/useModal';
 
 import { useCallFromAfar } from 'hooks/useCallFromAfar';
@@ -48,8 +47,6 @@ export const Posts = () => {
     filters.onRefresh();
   }, []);
 
-  const { isNotValidPostsCountByBussines } = useGetUserPaymentPlan();
-
   const callAfarResources = 'dashboard_business_route-name_posts_onRefresh';
   useCallFromAfar(callAfarResources, () => {
     filters.onMergeFilters({ page: 1 }, { forceFetch: true });
@@ -72,7 +69,6 @@ export const Posts = () => {
               <TopActions>
                 <ButtonNew
                   label="Nueva publicación"
-                  needPremium={isNotValidPostsCountByBussines(getAllPosts.data?.length)}
                   onClick={() =>
                     pushModal('PostNew', {
                       callAfarResources,

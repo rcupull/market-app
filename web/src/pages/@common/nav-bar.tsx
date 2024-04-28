@@ -80,7 +80,7 @@ export const Navbar = ({ className }: NavbarProps) => {
           },
         ////////////////////////////////////////////////////////////////////////////////////////////////
         !isBusinessPage && { name: 'Home', href: '/' },
-        !isBusinessPage && { name: 'Precios', href: '/payment-plans' },
+        !isBusinessPage && { name: 'Precios', href: '/price' },
         !isBusinessPage && { name: '¿Que es Asere Market?', href: '/about-us' },
         ////////////////////////////////////////////////////////////////////////////////////////////////
         isAdmin && { name: 'Admin', href: '/admin', className: '!ml-auto' },

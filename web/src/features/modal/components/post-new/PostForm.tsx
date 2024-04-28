@@ -13,7 +13,6 @@ import { FieldTextArea } from 'components/field-text-area';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
 import { useAddOnePost } from 'features/api/posts/useAddOnePost';
 import { useUpdateOnePost } from 'features/api/posts/useUpdateOnePost';
-import { useGetUserPaymentPlan } from 'features/api/useGetUserPaymentPlan';
 
 import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { Portal } from 'hooks/usePortal';
@@ -43,8 +42,6 @@ export const PostForm = ({
   const { routeName, postFormFields = [] } = business;
   const { addOnePost } = useAddOnePost();
   const { updateOnePost } = useUpdateOnePost();
-
-  const { userPlan } = useGetUserPaymentPlan();
 
   const { addManyImages } = useAddManyImages();
 
@@ -115,7 +112,6 @@ export const PostForm = ({
                 className="mt-6"
                 getImageSrc={getImageEndpoint}
                 multi
-                max={userPlan?.maxImagesByPosts}
               />
               <Divider />
             </>

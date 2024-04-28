@@ -1,8 +1,6 @@
 import { forwardRef } from 'react';
 import { Ellipsis } from 'react-css-spinners';
 
-import { ProLink } from 'components/pro-link';
-
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
@@ -92,8 +90,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
           {...(variant === 'link' ? { color: 'gray' } : {})}
         />
       )}
-
-      {needPremium && <ProLink className="absolute -top-2.5 -right-2.5" />}
     </button>
   );
 });

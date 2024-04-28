@@ -21,7 +21,9 @@ export const Home = () => {
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-[80vh]">
-      <p className='text-xl text-center'>Inicia en el mundo tecnológico publicando tu primer negocio online.</p>
+      <p className="text-xl text-center">
+        Inicia en el mundo tecnológico publicando tu primer negocio online.
+      </p>
       <ButtonNew
         className="mt-6"
         label="Crear mi primer negocio"

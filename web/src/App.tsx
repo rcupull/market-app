@@ -8,7 +8,6 @@ import { AuthenticatedUser } from './components/autenticated-user';
 
 import { LayoutMain } from 'pages/@common/layout-main';
 import { withPageProviders } from 'pages/@common/with-page-providers';
-import { PaymentPlansPurchase } from 'pages/payment-plans-purchase';
 import { dynamic } from 'utils/makeLazy';
 
 const Dashboard = dynamic(() => import('pages/dashboard').then((m) => ({ default: m.Dashboard })));
@@ -24,8 +23,8 @@ const BusinessRouteName = dynamic(() =>
   import('pages/business-route-name').then((m) => ({ default: m.BusinessRouteName })),
 );
 
-const PaymentPlans = dynamic(() =>
-  import('pages/payment-plans').then((m) => ({ default: m.PaymentPlans })),
+const Price = dynamic(() =>
+  import('pages/price').then((m) => ({ default: m.Price })),
 );
 const NotFound = dynamic(() => import('pages/not-found').then((m) => ({ default: m.NotFound })));
 const Home = dynamic(() => import('pages/home').then((m) => ({ default: m.Home })));
@@ -40,17 +39,12 @@ export const App = (): JSX.Element => {
       <Route path="/not-found" element={withPageProviders(<NotFound />, LayoutMain)} />
       <Route path="/about-us" element={withPageProviders(<AboutUs />, LayoutMain)} />
 
-      <Route path="/payment-plans" element={withPageProviders(<PaymentPlans />, LayoutMain)} />
+      <Route path="/price" element={withPageProviders(<Price />, LayoutMain)} />
 
       <Route path="/validate/:code" element={withPageProviders(<Validate />, LayoutMain)} />
       <Route
         path="/forgot-password/:code"
         element={withPageProviders(<ForgotPassword />, LayoutMain)}
-      />
-
-      <Route
-        path="/payment-plans/purchase"
-        element={withPageProviders(<PaymentPlansPurchase />, AuthenticatedUser, LayoutMain)}
       />
 
       <Route

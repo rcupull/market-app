@@ -5,7 +5,6 @@ import { EmptyImage } from 'components/empty-image';
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
 import { IconButtonRemove } from 'components/icon-button-remove';
 import { Input } from 'components/input';
-import { ProLink } from 'components/pro-link';
 
 import { useModal } from 'features/modal/useModal';
 
@@ -271,12 +270,6 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                 </div>
               );
             })}
-
-            {isDisabledByPremium(state) && (
-              <div className="border-2 border-gray-300 rounded-md h-8 w-10 flex items-center justify-center">
-                <ProLink />
-              </div>
-            )}
           </div>
         )}
         <div

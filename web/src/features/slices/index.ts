@@ -1,7 +1,6 @@
 import { createSimpleSlice } from './utils';
 
 export const slices = {
-  useGetUserPaymentPlan: createSimpleSlice('useGetUserPaymentPlan', null),
   useBusiness: createSimpleSlice('useBusiness', null),
   useShopping: createSimpleSlice('useShopping', null),
   useShoppingIdPersistent: createSimpleSlice('useShoppingIdPersistent', null),

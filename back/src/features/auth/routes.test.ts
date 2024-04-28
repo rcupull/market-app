@@ -39,11 +39,8 @@ describe("/auth/sign-in", () => {
         expect(token).toBeTruthy();
 
         expect(user).toMatchInlineSnapshot(
-  setAnyString<User>(
-    "_id",
-    "createdAt",
-    "payment.planHistory.0.dateOfPurchase"
-  ), `
+          setAnyString<User>("_id", "createdAt"),
+          `
 {
   "__v": 0,
   "_id": Anything,
@@ -51,22 +48,13 @@ describe("/auth/sign-in", () => {
   "createdAt": Anything,
   "email": "user1@gmail.com",
   "name": "user1",
-  "payment": {
-    "planHistory": [
-      {
-        "dateOfPurchase": Anything,
-        "planType": "free",
-        "status": "current",
-        "trialMode": true,
-      },
-    ],
-  },
   "profileImage": null,
   "role": "user",
   "shoppingCart": null,
   "validated": true,
 }
-`);
+`
+        );
       });
   });
 });

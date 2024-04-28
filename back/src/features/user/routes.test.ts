@@ -24,11 +24,8 @@ describe("/user/:userId", () => {
       .expect(200)
       .then((response) => {
         expect(response.body).toMatchInlineSnapshot(
-  setAnyString<User>(
-    "_id",
-    "createdAt",
-    "payment.planHistory.0.dateOfPurchase"
-  ), `
+          setAnyString<User>("_id", "createdAt"),
+          `
 {
   "__v": 0,
   "_id": Anything,
@@ -36,22 +33,13 @@ describe("/user/:userId", () => {
   "createdAt": Anything,
   "email": "user1@gmail.com",
   "name": "user1",
-  "payment": {
-    "planHistory": [
-      {
-        "dateOfPurchase": Anything,
-        "planType": "free",
-        "status": "current",
-        "trialMode": true,
-      },
-    ],
-  },
   "profileImage": null,
   "role": "user",
   "shoppingCart": null,
   "validated": true,
 }
-`);
+`
+        );
       });
   });
 
@@ -92,11 +80,8 @@ describe("/user/:userId", () => {
       .expect(200)
       .then((response) => {
         expect(response.body).toMatchInlineSnapshot(
-  setAnyString<User>(
-    "_id",
-    "createdAt",
-    "payment.planHistory.0.dateOfPurchase"
-  ), `
+          setAnyString<User>("_id", "createdAt"),
+          `
 {
   "__v": 0,
   "_id": Anything,
@@ -104,16 +89,6 @@ describe("/user/:userId", () => {
   "createdAt": Anything,
   "email": "user1@gmail.com",
   "name": "user1",
-  "payment": {
-    "planHistory": [
-      {
-        "dateOfPurchase": Anything,
-        "planType": "free",
-        "status": "current",
-        "trialMode": true,
-      },
-    ],
-  },
   "profileImage": {
     "height": 300,
     "src": "http://link-src.com/image.png",
@@ -123,7 +98,8 @@ describe("/user/:userId", () => {
   "shoppingCart": null,
   "validated": true,
 }
-`);
+`
+        );
       });
   });
 

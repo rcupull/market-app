@@ -75,7 +75,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
           onSubmit={() => {}}
         >
           {({ values, isValid, resetForm }) => {
-            const handleAdd = ()=>{
+            const handleAdd = () => {
               const { label } = values;
 
               setState(
@@ -85,7 +85,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                 }),
               );
               resetForm();
-            }
+            };
 
             return (
               <form className="w-full">
@@ -96,7 +96,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                     if (e.key === 'Enter') {
                       e.preventDefault();
 
-                      handleAdd()
+                      handleAdd();
                     }
                   }}
                   placeholder='Escriba una nueva categoría, ej. "Productos en oferta", "Recientes", etc"'
@@ -107,7 +107,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                     label="Agregar categoría"
                     disabled={!isValid}
                     stopPropagation
-                    onClick={()=>handleAdd()}
+                    onClick={() => handleAdd()}
                     variant="primary"
                     className="ml-4"
                   />,

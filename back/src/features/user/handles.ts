@@ -2,7 +2,6 @@ import { RequestHandler } from "../../types/general";
 import { withTryCatch } from "../../utils/error";
 import { ServerResponse } from "http";
 import { RequestWithUser } from "../../middlewares/verify";
-import { paymentPlans } from "../../constants/plans";
 import { imagesServices } from "../images/services";
 import { userServices } from "./services";
 import { User } from "../../types/user";
@@ -87,54 +86,7 @@ const put_users_userId: () => RequestHandler = () => {
  *  //////////////////////////////////////////POSTS
  */
 
-const get_users_userId_payment_plan: () => RequestHandler = () => {
-  return (req, res) => {
-    withTryCatch(req, res, async () => {
-      const { user } = req;
-
-      if (!user) {
-        return getUserNotFoundResponse({ res });
-      }
-      const planHistory = user.payment.planHistory;
-      const { planType } = planHistory[planHistory.length - 1] || {}; // always the last plan is the curent
-      const currentPlan = paymentPlans[planType];
-
-      res.send(currentPlan);
-    });
-  };
-};
-const post_users_userId_payment_plan_purchase: () => RequestHandler = () => {
-  return (req, res) => {
-    withTryCatch(req, res, async () => {
-      const { user, body } = req as RequestWithUser;
-      const { planType, validationPurchaseCode } = body;
-
-      await UserModel.updateOne(
-        { _id: user._id },
-        {
-          $push: {
-            "payment.planHistory": [
-              {
-                planType,
-                dateOfPurchase: new Date(),
-                trialMode: false,
-                status: "validatingPurchase",
-                validationPurchaseCode,
-              },
-            ],
-          },
-        }
-      );
-
-      res.send({});
-    });
-  };
-};
-
 export const userHandles = {
   get_users_userId,
   put_users_userId,
-  //
-  get_users_userId_payment_plan,
-  post_users_userId_payment_plan_purchase,
 };

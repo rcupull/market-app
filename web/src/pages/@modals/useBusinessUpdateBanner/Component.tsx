@@ -5,7 +5,6 @@ import { FieldInputImages } from 'components/field-input-images';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
-import { useGetUserPaymentPlan } from 'features/api/useGetUserPaymentPlan';
 
 import { Portal } from 'hooks/usePortal';
 
@@ -26,8 +25,6 @@ export interface ComponentProps {
 
 export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   const { business } = useBusiness();
-
-  const { userPlan } = useGetUserPaymentPlan();
 
   const { bannerImages, routeName } = business || {};
 
@@ -62,7 +59,6 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               className="mt-6"
               getImageSrc={getImageEndpoint}
               multi
-              max={userPlan?.maxImagesByBusinessBanner}
               enabledImageHref
             />
 

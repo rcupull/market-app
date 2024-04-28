@@ -1,9 +1,4 @@
-import {
-  BaseIdentity,
-  Image,
-  PaymentPlanStatus,
-  PaymentPlanType,
-} from "./general";
+import { BaseIdentity, Image } from "./general";
 
 export type UserRole = "user" | "admin";
 
@@ -17,16 +12,5 @@ export interface User extends BaseIdentity {
   canCreateBusiness: boolean;
   profileImage?: Image;
   generateAccessJWT: () => string;
-  payment: {
-    planHistory: [
-      {
-        planType: PaymentPlanType;
-        dateOfPurchase: string;
-        trialMode: boolean;
-        status: PaymentPlanStatus;
-        validationPurchaseCode?: string;
-      }
-    ];
-  };
   firebaseToken?: string;
 }

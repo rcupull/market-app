@@ -25,36 +25,6 @@ const UserSchema = new Schema<User>({
     },
     default: null,
   },
-  payment: {
-    planHistory: {
-      type: [
-        {
-          _id: false,
-          planType: {
-            type: String,
-            enum: ["free", "beginner", "professional", "company"],
-            required: true,
-          },
-          dateOfPurchase: { type: String, required: true },
-          trialMode: { type: Boolean, required: true },
-          status: {
-            type: String,
-            enum: ["current", "validatingPurchase", "historical"],
-            required: true,
-          },
-          validationPurchaseCode: { type: String },
-        },
-      ],
-      default: [
-        {
-          planType: "free",
-          dateOfPurchase: new Date(),
-          trialMode: true,
-          status: "current",
-        },
-      ],
-    },
-  },
 });
 
 UserSchema.methods.generateAccessJWT = function () {

@@ -126,16 +126,17 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                       pushRoute('/about-us');
                     }}
                   />{' '}
-                  o darle un vistazo a nuestros{' '}
+                  o darle un vistazo al{' '}
                   <Button
                     variant="link"
                     className="!inline-block !whitespace-pre-line"
-                    label="planes premium y gratuitos"
+                    label="precios"
                     onClick={() => {
                       onClose();
-                      pushRoute('/payment-plans');
+                      pushRoute('/price');
                     }}
                   />
+                   de nuestros servicios.
                 </div>
               </form>
             );
