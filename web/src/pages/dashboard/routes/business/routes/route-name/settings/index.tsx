@@ -10,6 +10,7 @@ import { useBusinessUpdateInfo } from 'pages/@modals/useBusinessUpdateInfo';
 import { useBusinessUpdateLogo } from 'pages/@modals/useBusinessUpdateLogo';
 import { useBusinessUpdatePostCategories } from 'pages/@modals/useBusinessUpdatePostCategories';
 import { useBusinessUpdatePostForm } from 'pages/@modals/useBusinessUpdatePostForm';
+import { useBusinessUpdateShopping } from 'pages/@modals/useBusinessUpdateShopping';
 
 export const Settings = () => {
   const businessUpdateInfo = useBusinessUpdateInfo();
@@ -19,6 +20,7 @@ export const Settings = () => {
   const businessUpdateLogo = useBusinessUpdateLogo();
   const businessUpdatePostCategories = useBusinessUpdatePostCategories();
   const businessUpdatePostForm = useBusinessUpdatePostForm();
+  const businessUpdateShopping = useBusinessUpdateShopping();
 
   const { onFetch, business } = useBusiness();
 
@@ -28,6 +30,23 @@ export const Settings = () => {
         title="Configuración automática"
         description="Configura automáticamente los recursos de su negocio para obtener eficientemente el diseño que usted necesita."
         action={<Button label="Editar" onClick={() => businessOnboardingModal.open()} />}
+      />
+
+      <SettingsLayout
+        title="Estrategia de ventas"
+        description="Configura la estrategia de ventas de su negocio."
+        action={
+          <Button
+            label="Editar"
+            onClick={() =>
+              businessUpdateShopping.open({
+                onAfterSuccess: () => {
+                  business && onFetch({ routeName: business?.routeName });
+                },
+              })
+            }
+          />
+        }
       />
 
       <SettingsLayout

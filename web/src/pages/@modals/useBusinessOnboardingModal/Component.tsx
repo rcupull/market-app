@@ -7,6 +7,7 @@ import { StepBanner } from './steps/step-banner';
 import { StepPostcategories } from './steps/step-post-categories';
 import { StepPostForm } from './steps/step-post-form';
 import { StepPostsSections } from './steps/step-posts-sections';
+import { StepShopping } from './steps/step-shopping';
 
 export const Component = () => {
   const { onClose } = useModal();
@@ -23,6 +24,10 @@ export const Component = () => {
   return (
     <Stepper
       items={[
+        {
+          label: '¿Como pretende vender sus productos?',
+          render: (props) => <StepShopping {...props} finishButton={finishButton} />,
+        },
         {
           label: 'Categorías de las publicaciones',
           render: (props) => <StepPostcategories {...props} finishButton={finishButton} />,

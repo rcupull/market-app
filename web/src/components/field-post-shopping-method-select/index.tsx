@@ -7,7 +7,7 @@ import { FormFieldWrapperProps } from 'components/form-field-wrapper';
 import { FormikFieldProps, useFormikField } from 'hooks/useFormikField';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useBusinessUpdateInfo } from 'pages/@modals/useBusinessUpdateInfo';
+import { useBusinessUpdateShopping } from 'pages/@modals/useBusinessUpdateShopping';
 import { PostLayoutShoppingMethod } from 'types/business';
 import { AnyRecord } from 'types/general';
 
@@ -23,7 +23,7 @@ interface Option {
 export const FieldPostShoppingMethodSelect = (props: FieldPostShoppingMethodSelectProps) => {
   const { field } = useFormikField(props);
 
-  const businessUpdateInfo = useBusinessUpdateInfo();
+  const businessUpdateShopping = useBusinessUpdateShopping();
 
   const { business, status, onFetch } = useBusiness();
 
@@ -68,12 +68,12 @@ export const FieldPostShoppingMethodSelect = (props: FieldPostShoppingMethodSele
           </span>
           <Button
             variant="link"
-            label="Ver configuración básica de mi negocio"
+            label="Ver configuración de venta de mi negocio"
             onClick={(e) => {
               e.preventDefault();
               if (!business) return;
 
-              businessUpdateInfo.open({
+              businessUpdateShopping.open({
                 onAfterSuccess: () => onFetch({ routeName: business.routeName }),
               });
             }}
