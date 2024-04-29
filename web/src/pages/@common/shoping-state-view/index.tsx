@@ -1,12 +1,5 @@
-import { Shopping, ShoppingState } from 'types/shopping';
-
-const labels: Record<ShoppingState, string> = {
-  CONSTRUCTION: 'En construcción',
-  REQUESTED: 'Solicitado',
-  DELIVERED: 'Entregado',
-  CANCELED: 'Cancelado',
-  REJECTED: 'Rechazado',
-};
+import { Shopping } from 'types/shopping';
+import { getShoppingStateLabel } from 'utils/shopping';
 
 export interface ShoppingStateViewProps {
   shopping: Shopping;
@@ -14,5 +7,5 @@ export interface ShoppingStateViewProps {
 export const ShoppingStateView = ({ shopping }: ShoppingStateViewProps) => {
   const { state } = shopping;
 
-  return <>{labels[state]}</>;
+  return <>{getShoppingStateLabel(state)}</>;
 };

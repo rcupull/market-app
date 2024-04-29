@@ -58,11 +58,16 @@ export const RouteName = () => {
         <div className="flex items-center gap-6">
           <LabelValuePair
             label="Crédito restante"
-            value={`${shoppingPayment.credit} CUP`}
+            value={<span className="text-nowrap">{`${shoppingPayment.credit} CUP`}</span>}
             variant={shoppingPayment.credit == 0 ? 'error' : 'default'}
+            className="ring-1 ring-gray-400 rounded-2xl py-0.5 px-2"
           />
 
-          <LabelValuePair label="A Pagar" value={`${toPay} CUP`} />
+          <LabelValuePair
+            label="A Pagar"
+            value={<span className="text-nowrap">{`${toPay} CUP`}</span>}
+            className="ring-1 ring-gray-400 rounded-2xl py-0.5 px-2"
+          />
 
           {hidden && (
             <div className="text-red-500 ring-1 ring-red-400 rounded-3xl px-2 py-1/2 text-sm sm:text-lg">

@@ -1,22 +1,14 @@
 import { EmptyImage } from 'components/empty-image';
 import { LabelValuePair } from 'components/label-value-pair';
 
-import { Shopping, ShoppingState } from 'types/shopping';
+import { Shopping } from 'types/shopping';
 import { cn } from 'utils/general';
-import { getShoppingData } from 'utils/shopping';
+import { getShoppingData, getShoppingStateLabel } from 'utils/shopping';
 
 export interface ShoppingDetailsProps {
   shopping: Shopping;
   onClick?: () => void;
 }
-
-const getStatName: Record<ShoppingState, string> = {
-  CONSTRUCTION: 'En construcción',
-  REQUESTED: 'Solicitado',
-  DELIVERED: 'Entregado',
-  CANCELED: 'Cancelado',
-  REJECTED: 'Rechazado',
-};
 
 export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => {
   const { state, posts } = shopping;
@@ -34,14 +26,13 @@ export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => 
         <span>Estado:</span>
         <span
           className={cn('font-bold', {
-            'text-red-500': state === 'REJECTED',
             'text-green-500': state === 'DELIVERED',
             'text-yellow-500': state === 'REQUESTED',
             'text-gray-300': state === 'CONSTRUCTION',
             'text-gray-500': state === 'CANCELED',
           })}
         >
-          {getStatName[state]}
+          {getShoppingStateLabel(state)}
         </span>
       </div>
 

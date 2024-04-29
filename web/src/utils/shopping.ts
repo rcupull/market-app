@@ -1,4 +1,4 @@
-import { Shopping } from 'types/shopping';
+import { Shopping, ShoppingState } from 'types/shopping';
 
 export const getShoppingData = (
   shopping: Shopping,
@@ -25,4 +25,15 @@ export const getShoppingData = (
     totalProducts,
     totalPrice,
   };
+};
+
+export const getShoppingStateLabel = (state: ShoppingState): string => {
+  const labels: Record<ShoppingState, string> = {
+    CONSTRUCTION: 'En construcción',
+    REQUESTED: 'Solicitado',
+    DELIVERED: 'Entregado',
+    CANCELED: 'Cancelado',
+  };
+
+  return labels[state];
 };
