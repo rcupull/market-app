@@ -13,6 +13,10 @@ import { PostsSections } from './posts-sections';
 import { PurchaseOrders } from './purchase-orders';
 import { Settings } from './settings';
 
+import SvgAddressCard from 'icons/AddressCard';
+import SvgCogSolid from 'icons/CogSolid';
+import SvgLayerGroupSolid from 'icons/LayerGroupSolid';
+import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { LayoutSection } from 'pages/@common/layout-section';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 
@@ -89,20 +93,24 @@ export const RouteName = () => {
         selected={query.businessTab as number | undefined}
         items={[
           {
-            label: 'Configuración',
-            content: <Settings />,
-          },
-          {
             label: 'Publicaciones',
             content: <Posts />,
+            svg:SvgAddressCard,
           },
           {
             label: 'Grupos de publicaciones',
             content: <PostsSections />,
+            svg:SvgLayerGroupSolid,
           },
           {
             label: 'Órdenes de compras',
             content: <PurchaseOrders />,
+            svg:SvgShoppingCartSolid,
+          },
+          {
+            label: 'Configuración',
+            svg: SvgCogSolid,
+            content: <Settings />,
           },
         ]}
       />

@@ -51,7 +51,7 @@ export const PostsSectionCards = ({
   }
 
   return (
-    <CardGroup className="mt-8">
+    <CardGroup>
       {posts?.map((post, index) => {
         const { _id } = post;
 

@@ -31,6 +31,7 @@ export const Banner = ({ className }: BannerProps) => {
           },
         })
       }
+      className={className}
     >
       {content}
     </UpdateSomethingContainer>
@@ -43,7 +44,7 @@ export const Banner = ({ className }: BannerProps) => {
       return (
         <a
           href={href}
-          className={cn('h-96 flex items-center justify-center', className)}
+          className={cn('h-96 flex items-center justify-center')}
           target="_blank"
           rel="noreferrer"
         >
@@ -53,7 +54,7 @@ export const Banner = ({ className }: BannerProps) => {
     }
 
     return (
-      <div className={cn('h-96 flex items-center justify-center', className)}>
+      <div className={cn('h-96 flex items-center justify-center')}>
         {content || <EmptyImage />}
       </div>
     );

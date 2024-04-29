@@ -102,7 +102,7 @@ export const PostsSection = ({
         )}
       >
         {!hiddenName && (
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center mb-8">
             <h2 className="text-3xl font-bold">{name}</h2>
             {renderHiddenSection && (
               <span className="text-sm sm:text-lg ml-3 text-yellow-600">

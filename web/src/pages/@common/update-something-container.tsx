@@ -28,7 +28,7 @@ export const UpdateSomethingContainer = ({
   return (
     <div
       className={cn(
-        'relative border-2 border-dashed border-transparent rounded-md',
+        'relative border-2 border-dashed border-transparent rounded-md max-w-full',
         {
           '!border-gray-400': over,
           '!border-gray-200': !over,

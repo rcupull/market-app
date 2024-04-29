@@ -6,12 +6,14 @@ import { cn, compact } from 'utils/general';
 
 interface TabItem<L extends string = string> extends StyleProps {
   label: L;
+  svg?: React.FunctionComponent<StyleProps>
   content: React.ReactNode;
 }
 
 type ItemRender<L extends string = string> = (args: {
   selected: boolean;
   label: L;
+  svg?: React.FunctionComponent<StyleProps>;
   index: number;
 }) => React.ReactElement;
 
@@ -24,16 +26,17 @@ export interface TabsProps<L extends string = string> extends StyleProps {
   contentClassName?: string;
 }
 
-const clasicItemRender: ItemRender = ({ selected, label }) => {
+const clasicItemRender: ItemRender = ({ selected, label, svg:Svg }) => {
   return (
     <div
       className={cn(
-        'w-full text-center p-2 bg-gray-50 rounded-sm hover:bg-gray-100 border-b-2 border-transparent text-nowrap',
+        'w-full text-center p-2 bg-gray-50 rounded-sm hover:bg-gray-100 border-b-2 border-transparent text-nowrap flex items-center gap-2',
         {
           '!border-indigo-600': selected,
         },
       )}
     >
+      {Svg && <Svg className='h-6 w-6 text-gray-400' /> }
       {label}
     </div>
   );
@@ -52,13 +55,13 @@ export const Tabs = <L extends string = string>({
   return (
     <Tab.Group selectedIndex={selected} onChange={onSelect}>
       <Tab.List className={cn('flex gap-1 overflow-auto', className)}>
-        {items.map(({ label, className }, index) => {
+        {items.map(({ label, className, svg }, index) => {
           return (
             <Tab key={index} as={Fragment}>
               {({ selected }) => {
                 return (
                   <div className={cn('cursor-pointer focus-visible:outline-none', className)}>
-                    {itemRender({ label, selected, index })}
+                    {itemRender({ label, selected, index, svg })}
                   </div>
                 );
               }}
