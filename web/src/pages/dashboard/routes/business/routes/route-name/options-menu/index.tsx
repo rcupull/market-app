@@ -1,6 +1,7 @@
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { ButtonRemove } from 'components/button-remove';
+import { Divider } from 'components/divider';
 import { IconButtonOptionsBars } from 'components/icon-button-options-bars';
 import { IconButtonRemove } from 'components/icon-button-remove';
 import { IconButtonShowHide } from 'components/icon-button-show-hide';
@@ -19,6 +20,7 @@ import { useModal } from 'features/modal/useModal';
 import { callAfarIds, useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
 
+import { KpiCredit, KpiToPay } from 'pages/@common/kpis-business';
 import { Business } from 'types/business';
 
 export interface OptionsMenuProps {
@@ -126,6 +128,15 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
     <Menu
       className="sm:hidden"
       buttonElement={<IconButtonOptionsBars />}
+      bottomElement={
+        <div className="flex flex-col items-center gap-2 p-2">
+          <Divider className="!m-0" />
+
+          <KpiCredit className="flex sm:hidden" />
+
+          <KpiToPay className="flex sm:hidden" />
+        </div>
+      }
       items={[
         {
           label: `${hidden ? 'Mostrar' : 'Ocultar'} este negocio`,

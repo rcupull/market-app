@@ -21,7 +21,7 @@ export const Home = ({ routeName }: HomeProps) => {
       onClick={() => pushRoute(`/dashboard/business/${routeName}`)}
     >
       <LayoutPage>
-        <Banner className='hidden sm:block'/>
+        <Banner className="hidden sm:block" />
 
         <PostsSectionsView
           routeName={routeName}

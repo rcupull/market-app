@@ -54,9 +54,7 @@ export const Banner = ({ className }: BannerProps) => {
     }
 
     return (
-      <div className={cn('h-96 flex items-center justify-center')}>
-        {content || <EmptyImage />}
-      </div>
+      <div className={cn('h-96 flex items-center justify-center')}>{content || <EmptyImage />}</div>
     );
   };
 

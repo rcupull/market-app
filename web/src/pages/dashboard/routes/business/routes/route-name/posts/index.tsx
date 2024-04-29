@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { ButtonNew } from 'components/button-new';
 import { ButtonRefresh } from 'components/button-refresh';
 import { Divider } from 'components/divider';
+import { IconButton } from 'components/icon-button';
 import { Table } from 'components/table';
 
 import { useGetAllPosts } from 'features/api/posts/useGetAllPosts';
@@ -17,6 +18,8 @@ import { PostAmount } from './PostAmount';
 import { RowActions } from './RowActions';
 import { useInfinityScrolling } from './useInfinityScrolling';
 
+import SvgPlusSolid from 'icons/PlusSolid';
+import SvgSyncSolid from 'icons/SyncSolid';
 import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useTableCellCategoriesTags } from 'pages/@hooks/useTableCellCategoriesTags';
@@ -56,6 +59,48 @@ export const Posts = () => {
     business,
   });
 
+  const buttonNew = (
+    <>
+      <ButtonNew
+        label="Nueva publicación"
+        onClick={() =>
+          pushModal('PostNew', {
+            callAfarResources,
+          })
+        }
+        className="ml-auto hidden sm:block"
+      />
+      <IconButton
+        title="Nueva publicación"
+        svg={SvgPlusSolid}
+        onClick={() =>
+          pushModal('PostNew', {
+            callAfarResources,
+          })
+        }
+        variant="primary"
+        className="ml-auto block sm:hidden"
+      />
+    </>
+  );
+
+  const buttonRefresh = (
+    <>
+      <ButtonRefresh
+        onClick={filters.onRefresh}
+        isBusy={getAllPosts.status.isBusy}
+        className="hidden sm:block"
+      />
+      <IconButton
+        title="Actualizar"
+        svg={SvgSyncSolid}
+        onClick={filters.onRefresh}
+        isBusy={getAllPosts.status.isBusy}
+        className="block sm:hidden"
+      />
+    </>
+  );
+
   return (
     <div className="h-full flex flex-col">
       <BulkActions
@@ -67,17 +112,8 @@ export const Posts = () => {
           <>
             {getBulkTopActionsNode(
               <TopActions>
-                <ButtonNew
-                  label="Nueva publicación"
-                  onClick={() =>
-                    pushModal('PostNew', {
-                      callAfarResources,
-                    })
-                  }
-                  className="ml-auto"
-                />
-
-                <ButtonRefresh onClick={filters.onRefresh} isBusy={getAllPosts.status.isBusy} />
+                {buttonNew}
+                {buttonRefresh}
               </TopActions>,
             )}
 

@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { LabelValuePair } from 'components/label-value-pair';
 import { SpinnerEllipsis } from 'components/spinner-ellipsis';
 import { Tabs } from 'components/tabs';
 
@@ -17,6 +16,7 @@ import SvgAddressCard from 'icons/AddressCard';
 import SvgCogSolid from 'icons/CogSolid';
 import SvgLayerGroupSolid from 'icons/LayerGroupSolid';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
+import { KpiCredit, KpiToPay } from 'pages/@common/kpis-business';
 import { LayoutSection } from 'pages/@common/layout-section';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 
@@ -51,27 +51,16 @@ export const RouteName = () => {
     return <></>;
   }
 
-  const { name, hidden, shoppingPayment } = business;
-
-  const toPay = shoppingPayment.requests.reduce((total, { toPay }) => total + toPay, 0);
+  const { name, hidden } = business;
 
   return (
     <LayoutSection
       title={name}
       topRightHeader={
         <div className="flex items-center gap-6">
-          <LabelValuePair
-            label="Crédito restante"
-            value={<span className="text-nowrap">{`${shoppingPayment.credit} CUP`}</span>}
-            variant={shoppingPayment.credit == 0 ? 'error' : 'default'}
-            className="ring-1 ring-gray-400 rounded-2xl py-0.5 px-2"
-          />
+          <KpiCredit className="hidden sm:flex" />
 
-          <LabelValuePair
-            label="A Pagar"
-            value={<span className="text-nowrap">{`${toPay} CUP`}</span>}
-            className="ring-1 ring-gray-400 rounded-2xl py-0.5 px-2"
-          />
+          <KpiToPay className="hidden sm:flex" />
 
           {hidden && (
             <div className="text-red-500 ring-1 ring-red-400 rounded-3xl px-2 py-1/2 text-sm sm:text-lg">
@@ -95,17 +84,17 @@ export const RouteName = () => {
           {
             label: 'Publicaciones',
             content: <Posts />,
-            svg:SvgAddressCard,
+            svg: SvgAddressCard,
           },
           {
             label: 'Grupos de publicaciones',
             content: <PostsSections />,
-            svg:SvgLayerGroupSolid,
+            svg: SvgLayerGroupSolid,
           },
           {
             label: 'Órdenes de compras',
             content: <PurchaseOrders />,
-            svg:SvgShoppingCartSolid,
+            svg: SvgShoppingCartSolid,
           },
           {
             label: 'Configuración',

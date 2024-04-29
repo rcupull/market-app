@@ -113,7 +113,7 @@ export const Navbar = ({ className }: NavbarProps) => {
           )}
           <Menu
             buttonElement={<IconButton svg={() => <UserIcon className="size-7" />} dark />}
-            headerElement={
+            topElement={
               <>
                 {user ? (
                   <div className="px-2 py-3 flex flex-col items-center border">

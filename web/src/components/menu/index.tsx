@@ -16,10 +16,17 @@ interface MenuItem {
 export interface MenuProps extends StyleProps {
   items?: Array<Nullable<MenuItem>>;
   buttonElement: React.ReactNode;
-  headerElement?: React.ReactNode;
+  topElement?: React.ReactNode;
+  bottomElement?: React.ReactNode;
 }
 
-export const Menu = ({ className, buttonElement, items = [], headerElement }: MenuProps) => {
+export const Menu = ({
+  className,
+  buttonElement,
+  items = [],
+  topElement,
+  bottomElement,
+}: MenuProps) => {
   return (
     <MenuBase data-id="Menu" as="div" className={cn('relative', className)}>
       <Float
@@ -45,7 +52,7 @@ export const Menu = ({ className, buttonElement, items = [], headerElement }: Me
         >
           <MenuBase.Items className="absolute right-0 z-10 mt-2 w-max origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <MenuBase.Item key="header" as="div">
-              {headerElement}
+              {topElement}
             </MenuBase.Item>
 
             {compact(items).map(({ label, href, onClick, svg: Svg }, index) => (
@@ -90,6 +97,10 @@ export const Menu = ({ className, buttonElement, items = [], headerElement }: Me
                 }}
               </MenuBase.Item>
             ))}
+
+            <MenuBase.Item key="bottomElement" as="div">
+              {bottomElement}
+            </MenuBase.Item>
           </MenuBase.Items>
         </Transition>
       </Float>

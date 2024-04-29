@@ -6,7 +6,7 @@ import { cn, compact } from 'utils/general';
 
 interface TabItem<L extends string = string> extends StyleProps {
   label: L;
-  svg?: React.FunctionComponent<StyleProps>
+  svg?: React.FunctionComponent<StyleProps>;
   content: React.ReactNode;
 }
 
@@ -26,7 +26,7 @@ export interface TabsProps<L extends string = string> extends StyleProps {
   contentClassName?: string;
 }
 
-const clasicItemRender: ItemRender = ({ selected, label, svg:Svg }) => {
+const clasicItemRender: ItemRender = ({ selected, label, svg: Svg }) => {
   return (
     <div
       className={cn(
@@ -36,7 +36,7 @@ const clasicItemRender: ItemRender = ({ selected, label, svg:Svg }) => {
         },
       )}
     >
-      {Svg && <Svg className='h-6 w-6 text-gray-400' /> }
+      {Svg && <Svg className="h-6 w-6 text-gray-400" />}
       {label}
     </div>
   );
