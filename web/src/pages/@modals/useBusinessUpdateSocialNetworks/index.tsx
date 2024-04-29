@@ -14,7 +14,7 @@ const Component = dynamic(() =>
   })),
 );
 
-export const useBusinessUpdateInfo = () => {
+export const useBusinessUpdateSocialNetworks = () => {
   const { pushModal } = useModal();
 
   return {
@@ -26,7 +26,7 @@ export const useBusinessUpdateInfo = () => {
             const portal = usePortal();
 
             return {
-              title: 'Informaciones básicas de su negocio',
+              title: 'Redes sociales',
               content: <Component portal={portal} options={options} />,
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,

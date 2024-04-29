@@ -19,7 +19,6 @@ interface State {
   twitter: string;
   linkedin: string;
   youtube: string;
-  whatsAppPhoneNumber: string;
 }
 
 export interface ComponentProps {
@@ -40,7 +39,6 @@ export const Component = ({ portal, options }: ComponentProps) => {
       twitter: business?.socialLinks?.twitter || '',
       linkedin: business?.socialLinks?.linkedin || '',
       youtube: business?.socialLinks?.youtube || '',
-      whatsAppPhoneNumber: business?.whatsAppPhoneNumber || '',
     }),
     [business],
   );
@@ -67,8 +65,6 @@ export const Component = ({ portal, options }: ComponentProps) => {
       {({ values, isValid }) => {
         return (
           <form className="w-full">
-            <FieldInput label="Teléfono" name="whatsAppPhoneNumber" className="w-full mt-4" />
-
             {renderFieldLink(
               <FieldInput label="Facebook" name="face" className="w-full mt-4" />,
               values.face,
@@ -92,13 +88,11 @@ export const Component = ({ portal, options }: ComponentProps) => {
                 isBusy={updateOneBusiness.status.isBusy}
                 disabled={!isValid}
                 onClick={() => {
-                  const { face, instagram, twitter, linkedin, youtube, whatsAppPhoneNumber } =
-                    values;
+                  const { face, instagram, twitter, linkedin, youtube } = values;
 
                   updateOneBusiness.fetch(
                     {
                       update: {
-                        whatsAppPhoneNumber,
                         socialLinks: {
                           face,
                           instagram,

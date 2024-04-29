@@ -27,7 +27,7 @@ export const useBusinessUpdateShopping = () => {
             const portal = usePortal();
 
             return {
-              title: 'Configuración de venta de su negocio',
+              title: 'Gestión de ventas',
               content: (
                 <Component
                   portal={portal}

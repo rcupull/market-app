@@ -25,7 +25,7 @@ export const useBusinessUpdateAboutUs = () => {
             const portal = usePortal();
 
             return {
-              title: 'Presentación de la tienda',
+              title: 'Presentación del negocio',
               content: <Component portal={portal} />,
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,

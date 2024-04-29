@@ -45,7 +45,18 @@ export const Component = ({ portal }: ComponentProps) => {
         {({ values, isValid }) => {
           return (
             <form className="w-full">
-              <FieldToggleButton label="Visible" name="visible" />
+              <FieldToggleButton
+                label="Visible"
+                name="visible"
+                description={
+                  <div>
+                    La página de presentacion se muestra en conjunto con la de las publicaciones y
+                    tiene como objetivo personalizar una descripcion, comentarios o reseñas que
+                    usted necesite mostrar sobre su negocio. Si no necesita de este espacio
+                    desactive este campo para no mostrar la página.
+                  </div>
+                }
+              />
 
               <FieldInput label="Título de la página" name="title" className="mt-6" />
 
@@ -54,6 +65,17 @@ export const Component = ({ portal }: ComponentProps) => {
                 name="description"
                 className="mt-6"
                 classNameContainer="max-h-[50vh]"
+                description={
+                  <div>
+                    En este módulo usted puede formular un texto enriquecido que se mostrará en la
+                    página de presentacion.
+                    <br />
+                    <br />
+                    <span className="italic">
+                      Nota: Las ampliación de las funcionalidades de este módulo estan en desarrollo, para incorporar imágenes y otros formatos de texto.
+                    </span>
+                  </div>
+                }
               />
 
               {portal.getPortal(

@@ -13,13 +13,13 @@ export interface FieldCheckEditorProps
 }
 
 export const FieldCheckEditor = (props: FieldCheckEditorProps) => {
-  const { label, className, classNameContainer } = props;
+  const { label, className, classNameContainer, description } = props;
 
   const { field, error } = useFormikField(props);
   const { value } = field;
 
   return (
-    <FormFieldWrapper label={label} error={error} className={className}>
+    <FormFieldWrapper label={label} error={error} className={className} description={description}>
       <CheckEditor
         value={value}
         classNameContainer={classNameContainer}

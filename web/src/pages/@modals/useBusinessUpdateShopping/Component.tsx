@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { Button } from 'components/button';
 import { FieldCheckbox } from 'components/field-checkbox';
+import { FieldInput } from 'components/field-input';
 import { FieldRadioGroup } from 'components/field-radio-group';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
@@ -16,6 +17,7 @@ import { isEmpty } from 'utils/general';
 
 interface State {
   shoppingStrategy: BusinessShoppingStrategy;
+  whatsAppPhoneNumber?: string;
 }
 
 export interface ComponentProps {
@@ -31,6 +33,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   const initialValues = useMemo<State>(
     () => ({
       shoppingStrategy: business?.shoppingStrategy || 'none',
+      whatsAppPhoneNumber: business?.whatsAppPhoneNumber,
     }),
     [business],
   );
@@ -46,6 +49,8 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
       {({ values, isValid, touched }) => {
         return (
           <form className="w-full">
+            <FieldInput label="Contacto de WhatsApp" name="whatsAppPhoneNumber" placeholder='Teléfono: ej: +53533333' className="w-60" />
+
             <FieldRadioGroup<{
               value: BusinessShoppingStrategy;
               label: string;
@@ -116,12 +121,13 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                 isBusy={updateOneBusiness.status.isBusy}
                 disabled={!isValid || isEmpty(touched)}
                 onClick={() => {
-                  const { shoppingStrategy } = values;
+                  const { shoppingStrategy, whatsAppPhoneNumber } = values;
 
                   updateOneBusiness.fetch(
                     {
                       update: {
                         shoppingStrategy,
+                        whatsAppPhoneNumber,
                       },
                       routeName,
                     },

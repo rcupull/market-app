@@ -13,13 +13,13 @@ export interface FieldToggleButtonProps
 }
 
 export const FieldToggleButton = (props: FieldToggleButtonProps) => {
-  const { label, className } = props;
+  const { label, className, description } = props;
 
   const { field, error } = useFormikField(props);
   const { value } = field;
 
   return (
-    <FormFieldWrapper label={label} error={error} className={className}>
+    <FormFieldWrapper label={label} error={error} className={className} description={description}>
       <ToggleButton
         value={value}
         onChange={(newValue) => {

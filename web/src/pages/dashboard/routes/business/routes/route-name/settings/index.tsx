@@ -13,14 +13,14 @@ import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useBusinessOnboardingModal } from 'pages/@modals/useBusinessOnboardingModal';
 import { useBusinessUpdateAboutUs } from 'pages/@modals/useBusinessUpdateAboutUs';
 import { useBusinessUpdateBanner } from 'pages/@modals/useBusinessUpdateBanner';
-import { useBusinessUpdateInfo } from 'pages/@modals/useBusinessUpdateInfo';
 import { useBusinessUpdateLogo } from 'pages/@modals/useBusinessUpdateLogo';
 import { useBusinessUpdatePostCategories } from 'pages/@modals/useBusinessUpdatePostCategories';
 import { useBusinessUpdatePostForm } from 'pages/@modals/useBusinessUpdatePostForm';
 import { useBusinessUpdateShopping } from 'pages/@modals/useBusinessUpdateShopping';
+import { useBusinessUpdateSocialNetworks } from 'pages/@modals/useBusinessUpdateSocialNetworks';
 
 export const Settings = () => {
-  const businessUpdateInfo = useBusinessUpdateInfo();
+  const businessUpdateSocialNetworks = useBusinessUpdateSocialNetworks();
   const businessOnboardingModal = useBusinessOnboardingModal();
   const businessUpdateBanner = useBusinessUpdateBanner();
   const businessUpdateAboutUs = useBusinessUpdateAboutUs();
@@ -40,8 +40,8 @@ export const Settings = () => {
       />
 
       <SettingsLayout
-        title="Gestion de ventas"
-        description="Optimice las ventas de su negocio com mejor desee."
+        title="Gestión de ventas"
+        description="Optimice las ventas de su negocio como mejor desee."
         svg={SvgShoppingCartSolid}
         onClick={() =>
           businessUpdateShopping.open({
@@ -57,7 +57,7 @@ export const Settings = () => {
         svg={SvgShareAltSolid}
         description="No dejes de lado tus redes sociales y compártelas con tus clientes."
         onClick={() =>
-          businessUpdateInfo.open({
+          businessUpdateSocialNetworks.open({
             onAfterSuccess: () => {
               business && onFetch({ routeName: business?.routeName });
             },
@@ -66,8 +66,9 @@ export const Settings = () => {
       />
 
       <SettingsLayout
-        title="Formulario"
+        title="Formulario de publicaciones"
         svg={SvgWpforms}
+        description='No necesita ver los datos que no poseen sus productos. Personalice su formulario de las publicaciones.'
         onClick={() =>
           businessUpdatePostForm.open({
             onAfterSuccess: () => {
@@ -109,8 +110,8 @@ export const Settings = () => {
       />
 
       <SettingsLayout
-        title="Pagina 'Sobre nosotros'"
-        description="Aprobecha el espacio de comunicarle a tus clientes los matices de tu negocio."
+        title="Presentación del negocio"
+        description="Aprobecha este espacio para comunicarle a tus clientes los matices de tu negocio."
         svg={SvgUsersSolid}
         onClick={() => businessUpdateAboutUs.open()}
       />
