@@ -68,7 +68,7 @@ export const Settings = () => {
       <SettingsLayout
         title="Formulario de publicaciones"
         svg={SvgWpforms}
-        description='No necesita ver los datos que no poseen sus productos. Personalice su formulario de las publicaciones.'
+        description="No necesita ver los datos que no poseen sus productos. Personalice su formulario de las publicaciones."
         onClick={() =>
           businessUpdatePostForm.open({
             onAfterSuccess: () => {
@@ -81,7 +81,7 @@ export const Settings = () => {
       <SettingsLayout
         title="Banner"
         svg={SvgBootstrap}
-        description='Personaliza tu mejores ofertas con tu banner promosional.'
+        description="Personaliza tu mejores ofertas con tu banner promosional."
         onClick={() =>
           businessUpdateBanner.open({
             onAfterSuccess: () => {
@@ -101,7 +101,7 @@ export const Settings = () => {
       <SettingsLayout
         title="Categorías"
         svg={SvgTagsSolid}
-        description='Categoriza tus productos y mejorarás tus ventas.'
+        description="Categoriza tus productos y mejorarás tus ventas."
         onClick={() =>
           businessUpdatePostCategories.open({
             onAfterSuccess: () => business && onFetch({ routeName: business?.routeName }),

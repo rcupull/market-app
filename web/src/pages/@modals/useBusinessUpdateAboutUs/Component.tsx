@@ -72,7 +72,8 @@ export const Component = ({ portal }: ComponentProps) => {
                     <br />
                     <br />
                     <span className="italic">
-                      Nota: Las ampliación de las funcionalidades de este módulo estan en desarrollo, para incorporar imágenes y otros formatos de texto.
+                      Nota: Las ampliación de las funcionalidades de este módulo estan en
+                      desarrollo, para incorporar imágenes y otros formatos de texto.
                     </span>
                   </div>
                 }

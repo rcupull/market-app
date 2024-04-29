@@ -1,7 +1,9 @@
 import { EmptyImage } from 'components/empty-image';
+import { LabelValuePair } from 'components/label-value-pair';
 
 import { Shopping, ShoppingState } from 'types/shopping';
 import { cn } from 'utils/general';
+import { getShoppingData } from 'utils/shopping';
 
 export interface ShoppingDetailsProps {
   shopping: Shopping;
@@ -19,16 +21,7 @@ const getStatName: Record<ShoppingState, string> = {
 export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => {
   const { state, posts } = shopping;
 
-  const totalToPay = posts.reduce((amount, { count, post }) => {
-    if (!post.price) {
-      return amount;
-    }
-    if (post.currency !== 'CUP') {
-      console.log('not cup'); //TODO not cup
-      return amount;
-    }
-    return amount + post.price * count; //TODO agregar conversion de moneda su es USD
-  }, 0);
+  const { totalPrice, totalProducts } = getShoppingData(shopping);
 
   return (
     <div
@@ -79,9 +72,9 @@ export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => 
           );
         })}
 
-        <div className="flex justify-end gap-1">
-          <span className="font-bold">Total a pagar:</span>
-          <span>{`${totalToPay} CUP`}</span>
+        <div className="flex justify-end gap-4">
+          <LabelValuePair label="Total" value={`${totalProducts}`} />
+          <LabelValuePair label="Precio" value={`${totalPrice} CUP`} />
         </div>
       </div>
     </div>

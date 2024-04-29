@@ -28,7 +28,7 @@ export const SettingsLayout = ({
         <Svg className="h-32 w-24 fill-gray-400 text-gray-400" />
       </div>
       <h2 className="font-bold">{title}</h2>
-      <span className='text-sm'>{description}</span>
+      <span className="text-sm">{description}</span>
       <div className="mt-auto flex items-center justify-end">
         <Button variant="link" onClick={onClick} label="Editar" />
       </div>

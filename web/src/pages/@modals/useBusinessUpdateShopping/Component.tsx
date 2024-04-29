@@ -49,7 +49,12 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
       {({ values, isValid, touched }) => {
         return (
           <form className="w-full">
-            <FieldInput label="Contacto de WhatsApp" name="whatsAppPhoneNumber" placeholder='Teléfono: ej: +53533333' className="w-60" />
+            <FieldInput
+              label="Contacto de WhatsApp"
+              name="whatsAppPhoneNumber"
+              placeholder="Teléfono: ej: +53533333"
+              className="w-60"
+            />
 
             <FieldRadioGroup<{
               value: BusinessShoppingStrategy;

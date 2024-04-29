@@ -1,11 +1,14 @@
 import { useFetch } from 'hooks/useFetch';
 
 import { FetchResource } from 'types/api';
-import { Shopping } from 'types/shopping';
+import { Shopping, ShoppingState } from 'types/shopping';
 import { getEndpoint } from 'utils/api';
 
 export const useGetShoppingOwner = (): {
-  getShoppingOwner: FetchResource<{ routeName: string }, Array<Shopping>>;
+  getShoppingOwner: FetchResource<
+    { routeName: string; states?: Array<ShoppingState> },
+    Array<Shopping>
+  >;
 } => {
   const fetch = useFetch<Array<Shopping>>();
 

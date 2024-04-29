@@ -43,19 +43,21 @@ const get_shopping: () => RequestHandler = () => {
 const get_shopping_owner: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const { business } = req;
+      const { business, query } = req;
 
       if (!business) {
         return getBusinessNotFoundResponse({ res });
       }
 
       const { routeName } = business;
+      const { states } = query;
 
       const out = await shoppingServices.getAll({
         req,
         res,
         query: {
           "posts.post.routeName": routeName,
+          ...(states ? { state: { $in: states } } : {}),
         },
       });
 
