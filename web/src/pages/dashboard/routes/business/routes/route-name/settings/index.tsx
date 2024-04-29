@@ -1,8 +1,7 @@
-import { UserIcon } from '@heroicons/react/24/outline';
-
 import { SettingsLayout } from './SettingsLayout';
 
 import SvgBootstrap from 'icons/Bootstrap';
+import SvgFighterJetSolid from 'icons/FighterJetSolid';
 import SvgMedrt from 'icons/Medrt';
 import SvgShareAltSolid from 'icons/ShareAltSolid';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
@@ -34,8 +33,14 @@ export const Settings = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
       <SettingsLayout
-        title="Configuración automática"
-        svg={UserIcon}
+        title="Configuración rápida"
+        description={
+          <>
+            Configure su negocio para tener online rápidamente las primeras publicaicones.{' '}
+            <span className="font-bold">Solo recomendable para negocios recien creados.</span>
+          </>
+        }
+        svg={SvgFighterJetSolid}
         onClick={() => businessOnboardingModal.open()}
       />
 

@@ -5,7 +5,7 @@ import { cn } from 'utils/general';
 
 export interface SettingsLayoutProps extends StyleProps {
   title: React.ReactNode;
-  description?: string;
+  description?: React.ReactNode;
   onClick?: () => void;
   svg: React.FunctionComponent<StyleProps>;
 }
