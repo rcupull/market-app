@@ -23,9 +23,7 @@ const BusinessRouteName = dynamic(() =>
   import('pages/business-route-name').then((m) => ({ default: m.BusinessRouteName })),
 );
 
-const Price = dynamic(() =>
-  import('pages/price').then((m) => ({ default: m.Price })),
-);
+const Price = dynamic(() => import('pages/price').then((m) => ({ default: m.Price })));
 const NotFound = dynamic(() => import('pages/not-found').then((m) => ({ default: m.NotFound })));
 const Home = dynamic(() => import('pages/home').then((m) => ({ default: m.Home })));
 

@@ -83,7 +83,7 @@ export const SideBar = ({ className }: SideBarProps) => {
             label: 'Mis negocios',
             href: '/dashboard/business',
             svg: BookmarkIcon,
-            endElement: <AddNewBusinessButton className="ml-auto" />
+            endElement: <AddNewBusinessButton className="ml-auto" />,
           },
         ...business.map(({ name, routeName, hidden }) => {
           // BUSINESS

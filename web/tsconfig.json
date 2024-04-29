@@ -41,6 +41,9 @@
       "constants*": [
         "./src/constants*"
       ],
+      "icons*": [
+        "./src/icons*"
+      ],
     }
   },
   "include": ["src"],

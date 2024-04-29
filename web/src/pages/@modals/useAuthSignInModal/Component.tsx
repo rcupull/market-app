@@ -136,7 +136,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                       pushRoute('/price');
                     }}
                   />
-                   de nuestros servicios.
+                  de nuestros servicios.
                 </div>
               </form>
             );
