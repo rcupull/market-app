@@ -11,7 +11,7 @@
     "build:server": "cd ./back && pnpm build",
     "serve:server": "cd ./back && pnpm serve",
     "<<<<<<Both>>>>>>": "",
-    "start": "APP_CONFIG_PATH='../app-config.json' concurrently \"pnpm start:client\" \"pnpm start:server\"",
+    "start": "NODE_ENV=development APP_CONFIG_PATH='../app-config.json' concurrently \"pnpm start:client\" \"pnpm start:server\"",
     "build": "APP_CONFIG_PATH='../app-config.json' concurrently \"pnpm build:client\" \"pnpm build:server\"",
     "serve": "APP_CONFIG_PATH='../app-config.json' pnpm serve:server"
   },
