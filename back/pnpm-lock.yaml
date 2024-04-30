@@ -41,9 +41,6 @@ dependencies:
   google-img-scrap:
     specifier: ^1.1.3
     version: 1.1.3
-  greenlock-express:
-    specifier: v4
-    version: 4.0.3
   jsonwebtoken:
     specifier: ^9.0.2
     version: 9.0.2
@@ -103,9 +100,6 @@ devDependencies:
   '@types/express-session':
     specifier: ^1.17.10
     version: 1.17.10
-  '@types/greenlock-express':
-    specifier: ^4.0.3
-    version: 4.0.3
   '@types/jest':
     specifier: ^29.5.12
     version: 29.5.12
@@ -1210,12 +1204,6 @@ packages:
     dev: false
     optional: true
 
-  /@greenlock/manager@3.1.0:
-    resolution: {integrity: sha512-PBy5CMK+j4oD7sj7hF5qE+xKEOSiiuL2hHd5X5ttEbtnTSDKjNeqbrR5k2ZddwVNdjOVeBIeuqlm81IFZ+Ftew==}
-    dependencies:
-      greenlock-manager-fs: 3.1.1
-    dev: false
-
   /@grpc/grpc-js@1.10.6:
     resolution: {integrity: sha512-xP58G7wDQ4TCmN/cMUHh00DS7SRDv/+lC+xFLrTkMIN8h55X5NhZMLYbvy7dSELP15qlI6hPhNCRWVMtZMwqLA==}
     engines: {node: '>=12.10.0'}
@@ -1594,86 +1582,6 @@ packages:
     requiresBuild: true
     dev: false
     optional: true
-
-  /@root/acme@3.1.0:
-    resolution: {integrity: sha512-GAyaW63cpSYd2KvVp5lHLbCWeEhJPKZK9nsJvZJOKsD9Uv88KEttn4FpDZEJ+2q3Jsey0DWpuQ2I4ft0JV9p2w==}
-    requiresBuild: true
-    dependencies:
-      '@root/csr': 0.8.1
-      '@root/encoding': 1.0.1
-      '@root/keypairs': 0.10.3
-      '@root/pem': 1.0.4
-      '@root/request': 1.9.2
-      '@root/x509': 0.7.2
-    dev: false
-
-  /@root/asn1@1.0.0:
-    resolution: {integrity: sha512-0lfZNuOULKJDJmdIkP8V9RnbV3XaK6PAHD3swnFy4tZwtlMDzLKoM/dfNad7ut8Hu3r91wy9uK0WA/9zym5mig==}
-    dependencies:
-      '@root/encoding': 1.0.1
-    dev: false
-
-  /@root/csr@0.8.1:
-    resolution: {integrity: sha512-hKl0VuE549TK6SnS2Yn9nRvKbFZXn/oAg+dZJU/tlKl/f/0yRXeuUzf8akg3JjtJq+9E592zDqeXZ7yyrg8fSQ==}
-    dependencies:
-      '@root/asn1': 1.0.0
-      '@root/pem': 1.0.4
-      '@root/x509': 0.7.2
-    dev: false
-
-  /@root/encoding@1.0.1:
-    resolution: {integrity: sha512-OaEub02ufoU038gy6bsNHQOjIn8nUjGiLcaRmJ40IUykneJkIW5fxDqKxQx48cszuNflYldsJLPPXCrGfHs8yQ==}
-    dev: false
-
-  /@root/greenlock-express@4.0.4:
-    resolution: {integrity: sha512-a0/9tHNQwt5Uyod7Mp59lo5UwrjdpOaRgaw8oKvDopVvrjsk1Urdhz9MoLh5p4APt7KhAI/hMFSG4gvczgSwaA==}
-    dependencies:
-      '@root/greenlock': 4.0.5
-      redirect-https: 1.3.1
-    dev: false
-
-  /@root/greenlock@4.0.5:
-    resolution: {integrity: sha512-KR9w3mYE9aH33FCibI8oSYBQV+f7lc3MVPdZ9nxY2tqRLmJp05cMOMz340mtG14VnWDuznLj4TbBj3sHIuoQPQ==}
-    hasBin: true
-    dependencies:
-      '@greenlock/manager': 3.1.0
-      '@root/acme': 3.1.0
-      '@root/csr': 0.8.1
-      '@root/keypairs': 0.10.3
-      '@root/mkdirp': 1.0.0
-      '@root/request': 1.9.2
-      acme-http-01-standalone: 3.0.5
-      cert-info: 1.5.1
-      greenlock-store-fs: 3.2.2
-      safe-replace: 1.1.0
-    dev: false
-
-  /@root/keypairs@0.10.3:
-    resolution: {integrity: sha512-hbmjVbk/G99Z1XlUzJM4VOAaR8jm4vMnfwpZL301FA24ubJ/bOjj6enCrz9gKsQvBO6RY4/R4MgUuWpXeqeZZQ==}
-    dependencies:
-      '@root/encoding': 1.0.1
-      '@root/pem': 1.0.4
-      '@root/x509': 0.7.2
-    dev: false
-
-  /@root/mkdirp@1.0.0:
-    resolution: {integrity: sha512-hxGAYUx5029VggfG+U9naAhQkoMSXtOeXtbql97m3Hi6/sQSRL/4khKZPyOF6w11glyCOU38WCNLu9nUcSjOfA==}
-    dev: false
-
-  /@root/pem@1.0.4:
-    resolution: {integrity: sha512-rEUDiUsHtild8GfIjFE9wXtcVxeS+ehCJQBwbQQ3IVfORKHK93CFnRtkr69R75lZFjcmKYVc+AXDB+AeRFOULA==}
-    dev: false
-
-  /@root/request@1.9.2:
-    resolution: {integrity: sha512-wVaL9yVV9oDR9UNbPZa20qgY+4Ch6YN8JUkaE4el/uuS5dmhD8Lusm/ku8qJVNtmQA56XLzEDCRS6/vfpiHK2A==}
-    dev: false
-
-  /@root/x509@0.7.2:
-    resolution: {integrity: sha512-ENq3LGYORK5NiMFHEVeNMt+fTXaC7DTS6sQXoqV+dFdfT0vmiL5cDLjaXQhaklJQq0NiwicZegzJRl1ZOTp3WQ==}
-    dependencies:
-      '@root/asn1': 1.0.0
-      '@root/encoding': 1.0.1
-    dev: false
 
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -2266,10 +2174,6 @@ packages:
       '@types/node': 20.11.6
     dev: true
 
-  /@types/greenlock-express@4.0.3:
-    resolution: {integrity: sha512-B93+uxx0le7c9Ogk4d2BVclPPuMvl/vrroybmYOx23F2B+fuajcP6IKsKdpT1X9Fm7uW5RsxBIxUBwJDZ6rTOQ==}
-    dev: true
-
   /@types/http-errors@2.0.4:
     resolution: {integrity: sha512-D0CFMMtydbJAegzOyHjtiKPLlvnm3iTZyZRSZoLq2mRhDdmLfIWOCYPfQJ4cu2erKghU++QvjcUjp/5h7hESpA==}
 
@@ -2472,10 +2376,6 @@ packages:
     dependencies:
       mime-types: 2.1.35
       negotiator: 0.6.3
-    dev: false
-
-  /acme-http-01-standalone@3.0.5:
-    resolution: {integrity: sha512-W4GfK+39GZ+u0mvxRVUcVFCG6gposfzEnSBF20T/NUwWAKG59wQT1dUbS1NixRIAsRuhpGc4Jx659cErFQH0Pg==}
     dev: false
 
   /acorn-walk@8.3.2:
@@ -2854,11 +2754,6 @@ packages:
   /caniuse-lite@1.0.30001607:
     resolution: {integrity: sha512-WcvhVRjXLKFB/kmOFVwELtMxyhq3iM/MvmXcyCe2PNf166c39mptscOc/45TTS96n2gpNV2z7+NakArTWZCQ3w==}
     dev: true
-
-  /cert-info@1.5.1:
-    resolution: {integrity: sha512-eoQC/yAgW3gKTKxjzyClvi+UzuY97YCjcl+lSqbsGIy7HeGaWxCPOQFivhUYm27hgsBMhsJJFya3kGvK6PMIcQ==}
-    hasBin: true
-    dev: false
 
   /chalk@2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
@@ -3724,28 +3619,6 @@ packages:
   /graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
     dev: true
-
-  /greenlock-express@4.0.3:
-    resolution: {integrity: sha512-swTCuaLcZWbwRe9gf28AN1VO2PLiAoPB7StVhEFTBqCqqoHgiu0PJqdz3IbnfXB/8Kckx4sZ+B+Re2BvoCHY4A==}
-    dependencies:
-      '@root/greenlock': 4.0.5
-      '@root/greenlock-express': 4.0.4
-      redirect-https: 1.3.1
-    dev: false
-
-  /greenlock-manager-fs@3.1.1:
-    resolution: {integrity: sha512-np6qdnPIOZx40PAcSQcqK1eMPWjTKxsxcgRd/OVg0ai49WC1Ds74CTrwmB84pq2n53ikbnDBQFmKEQ4AC0DK8w==}
-    dependencies:
-      '@root/mkdirp': 1.0.0
-      safe-replace: 1.1.0
-    dev: false
-
-  /greenlock-store-fs@3.2.2:
-    resolution: {integrity: sha512-92ejLB4DyV4qv/2b6VLGF2nKfYQeIfg3o+e/1cIoYLjlIaUFdbBXkzLTRozFlHsQPZt2ALi5qYrpC9IwH7GK8A==}
-    dependencies:
-      '@root/mkdirp': 1.0.0
-      safe-replace: 1.1.0
-    dev: false
 
   /gtoken@7.1.0:
     resolution: {integrity: sha512-pCcEwRi+TKpMlxAQObHDQ56KawURgyAf6jtIY046fJ5tIv3zDe/LEIubckAO8fj6JnAxLdmWkUfNyulQ2iKdEw==}
@@ -5352,12 +5225,6 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /redirect-https@1.3.1:
-    resolution: {integrity: sha512-Stex2nI+tMpZXKvy++32TiBXEy+GdpAfp3EUnl5BqCiJ5f5i6XvUSFrs7TR7IoRSlthM7ZtD89uYGTtJBXlFYg==}
-    dependencies:
-      escape-html: 1.0.3
-    dev: false
-
   /require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
     engines: {node: '>=0.10.0'}
@@ -5422,10 +5289,6 @@ packages:
 
   /safe-buffer@5.2.1:
     resolution: {integrity: sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==}
-    dev: false
-
-  /safe-replace@1.1.0:
-    resolution: {integrity: sha512-9/V2E0CDsKs9DWOOwJH7jYpSl9S3N05uyevNjvsnDauBqRowBPOyot1fIvV5N2IuZAbYyvrTXrYFVG0RZInfFw==}
     dev: false
 
   /safer-buffer@2.1.2:
