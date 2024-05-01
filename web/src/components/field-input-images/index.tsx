@@ -167,10 +167,10 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
 
       field.onBlur({
         target: {
-          name: field.name
-        }
+          name: field.name,
+        },
       });
-      
+
       field.onChange({
         target: {
           name: field.name,

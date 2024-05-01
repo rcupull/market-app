@@ -62,3 +62,15 @@ router
     isUserThisBusinessOwner,
     businessHandles.update_business_post_categories()
   );
+
+router
+  .route("/business/:routeName/sections/reorder")
+  .put(
+    validators.param("routeName").notEmpty(),
+    validators.body("fromIndex").notEmpty(),
+    validators.body("toIndex").notEmpty(),
+    validators.handle,
+    isLogged,
+    isUserThisBusinessOwner,
+    businessHandles.put_business_section_reorder()
+  );

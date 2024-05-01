@@ -90,8 +90,9 @@ export const Component = ({ portal, sectionId, onAfterSuccess }: ComponentProps)
                   description: (
                     <div>
                       En la página del negocio serán mostrados todos los grupos que{' '}
-                      <span className="font-bold">no esten ocultos</span> y que tengan la {' '}
-                      <span className="font-bold">visibilidad</span> activada en la página del negocio.
+                      <span className="font-bold">no esten ocultos</span> y que tengan la{' '}
+                      <span className="font-bold">visibilidad</span> activada en la página del
+                      negocio.
                     </div>
                   ),
                 },
@@ -100,13 +101,17 @@ export const Component = ({ portal, sectionId, onAfterSuccess }: ComponentProps)
                   label: 'Páginas de las publicaciones',
                   description: (
                     <div>
-                      Como parte del contenido de la <span className='font-bold'>página de la publicación</span> serán mostrados todos
-                      los grupos que tengan la <span className="font-bold">visibilidad</span> activada en dicha página.
+                      Como parte del contenido de la{' '}
+                      <span className="font-bold">página de la publicación</span> serán mostrados
+                      todos los grupos que tengan la <span className="font-bold">visibilidad</span>{' '}
+                      activada en dicha página.
                       <br />
                       Durante la creación/edición de una publicacion usted puede escoger cuales
                       grupos quiere que se vean como{' '}
-                      <span className="font-bold ml-1">publicaciones relacionadas o similares</span> a la
-                      publicación actual.
+                      <span className="font-bold ml-1">
+                        publicaciones relacionadas o similares
+                      </span>{' '}
+                      a la publicación actual.
                     </div>
                   ),
                 },

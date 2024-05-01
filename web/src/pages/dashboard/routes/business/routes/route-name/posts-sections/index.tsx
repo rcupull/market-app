@@ -2,6 +2,8 @@ import { ButtonNew } from 'components/button-new';
 import { ButtonRefresh } from 'components/button-refresh';
 import { Table } from 'components/table';
 
+import { useBusinessSectionsReorder } from 'features/api/business/useBusinessSectionsReorder';
+
 import { RowActions } from './RowActions';
 
 import { TopActions } from 'pages/@common/top-actions';
@@ -13,7 +15,9 @@ import { getSearchLayoutLabel } from 'utils/business';
 import { viewUtils } from 'utils/view';
 
 export const PostsSections = () => {
-  const { business, onFetch } = useBusiness();
+  const { business, onFetch, status } = useBusiness();
+
+  const { businessSectionsReorder } = useBusinessSectionsReorder();
 
   const data = business?.layouts?.posts?.sections || [];
 
@@ -39,7 +43,20 @@ export const PostsSections = () => {
         <ButtonRefresh onClick={() => business && onFetch({ routeName: business.routeName })} />
       </TopActions>
       <Table<PostsLayoutSection>
-        heads={[null, 'Nombre', 'Categorías', 'Visible en', 'Búsqueda']}
+        enabledReorder
+        onReorder={({ fromIndex, toIndex }) => {
+          if (!business) return;
+
+          businessSectionsReorder.fetch(
+            { routeName: business?.routeName, fromIndex, toIndex },
+            {
+              onAfterSuccess: () => {
+                onFetch({ routeName: business?.routeName });
+              },
+            },
+          );
+        }}
+        heads={['Acciones', 'Nombre', 'Categorías', 'Visible en', 'Búsqueda']}
         getRowProps={(rowData) => {
           const { name, postCategoriesTags, hiddenName, searchLayout, showIn } = rowData;
 
@@ -57,6 +74,7 @@ export const PostsSections = () => {
           };
         }}
         data={data}
+        isBusy={businessSectionsReorder.status.isBusy || status.isBusy}
       />
     </>
   );

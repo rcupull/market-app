@@ -3,6 +3,7 @@ import { businessServices } from "./services";
 import { ServerResponse } from "http";
 import {
   get200Response,
+  get400Response,
   getBusinessNotFoundResponse,
   getUserNotFoundResponse,
 } from "../../utils/server-response";
@@ -13,6 +14,7 @@ import { RequestHandler } from "../../types/general";
 import { makeReshaper } from "../../utils/makeReshaper";
 import { getPostCategoriesFromBusinessCategories } from "./utils";
 import { imagesServices } from "../images/services";
+import { addRow, movRow } from "../../utils/general";
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {
@@ -255,6 +257,57 @@ const delete_business_routeName: () => RequestHandler = () => {
   };
 };
 
+const put_business_section_reorder: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { params, body, business } = req;
+      const { routeName } = params;
+      const { fromIndex, toIndex } = body;
+
+      if (!business) {
+        return getBusinessNotFoundResponse({ res });
+      }
+
+      const businessSections = business.layouts?.posts?.sections;
+
+      if (
+        !businessSections ||
+        businessSections.length < fromIndex ||
+        businessSections.length < toIndex
+      ) {
+        return get400Response({
+          res,
+          json: {
+            message: "Invalid fromIndex/toIndex",
+          },
+        });
+      }
+
+      await businessServices.updateOne({
+        res,
+        req,
+        query: {
+          routeName,
+        },
+        update: {
+          $set: {
+            "layouts.posts.sections": movRow(
+              businessSections,
+              fromIndex,
+              toIndex
+            ),
+          },
+        },
+      });
+
+      get200Response({
+        res,
+        json: {},
+      });
+    });
+  };
+};
+
 export const businessHandles = {
   get_business,
   get_business_routeName,
@@ -264,4 +317,6 @@ export const businessHandles = {
   post_business,
   put_business_routeName,
   delete_business_routeName,
+  //
+  put_business_section_reorder,
 };

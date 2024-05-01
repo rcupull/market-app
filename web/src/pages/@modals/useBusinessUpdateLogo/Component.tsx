@@ -17,7 +17,7 @@ import { Image, ImageFile } from 'types/general';
 import { getImageEndpoint } from 'utils/api';
 
 interface State {
-  logoField: Array<ImageFile | Image | undefined |  null>;
+  logoField: Array<ImageFile | Image | undefined | null>;
 }
 
 export interface ComponentProps {
@@ -83,18 +83,22 @@ export const Component = ({ portal }: ComponentProps) => {
                         },
                       },
                     );
-                  }
-
+                  };
 
                   if (logo) {
                     addManyImages.fetch(
-                      { images: [logo], routeName, userId: business.createdBy, ...imagesDimensions.logo },
+                      {
+                        images: [logo],
+                        routeName,
+                        userId: business.createdBy,
+                        ...imagesDimensions.logo,
+                      },
                       {
                         onAfterSuccess: ([logo]) => submitLogo(logo),
                       },
                     );
-                  }else{
-                    submitLogo(null)
+                  } else {
+                    submitLogo(null);
                   }
                 }}
                 variant="primary"

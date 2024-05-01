@@ -225,5 +225,5 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
       isBusy={getOneBusiness.status.isBusy}
       secondaryBtn={<ButtonClose />}
     />
-  );  
+  );
 };

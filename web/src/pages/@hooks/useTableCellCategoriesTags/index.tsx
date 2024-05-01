@@ -27,7 +27,7 @@ export const useTableCellCategoriesTags = ({
   return {
     onGetTableCellNode: ({ postCategoriesTags }) => {
       return (
-        <div key="categories" className="flex flex-col">
+        <div key="categories" className="flex flex-wrap max-w-48">
           {viewUtils.mapToOutlinedBox({
             value: postCategoriesTags,
             preMap: (tag) => tagsRecord[tag],

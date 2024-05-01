@@ -35,7 +35,7 @@ export const RouteName = () => {
   const business = businessOwnerData.business;
   const { isBusy, isFailed, wasCalled } = businessOwnerData.status;
 
-  if (isBusy) {
+  if (isBusy && !business) {
     return (
       <div className="flex items-center justify-center size-full">
         <SpinnerEllipsis />

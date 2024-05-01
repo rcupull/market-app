@@ -1,9 +1,11 @@
 import { useRef } from 'react';
 
+import { SpinnerBox } from 'components/spinner-box';
 import { SpinnerEllipsis } from 'components/spinner-ellipsis';
 
 import { useScrollBottom } from 'hooks/useScrollBottom';
 
+import { ReorderContainer } from './reorder-container';
 import { TableRow, TableRowProps } from './table-row';
 
 import { AnyRecord, StyleProps } from 'types/general';
@@ -17,10 +19,13 @@ export interface TableProps<RowData extends AnyRecord = AnyRecord> extends Style
   //
   onScrollBottom?: () => void;
   isBusyBottom?: boolean;
+
+  onReorder?: (args: { fromIndex: number; toIndex: number }) => void;
+  enabledReorder?: boolean;
 }
 
 export const Table = <RowData extends AnyRecord = AnyRecord>({
-  heads,
+  heads: headsProp,
   getRowProps,
   data,
   className,
@@ -29,46 +34,54 @@ export const Table = <RowData extends AnyRecord = AnyRecord>({
   //
   onScrollBottom,
   isBusyBottom,
+  //
+  enabledReorder,
+  onReorder,
 }: TableProps<RowData>) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const { onScroll } = useScrollBottom(ref, () => onScrollBottom?.());
 
+  let heads = headsProp;
+  if (heads && enabledReorder) {
+    heads = [null, ...heads];
+  }
+
   return (
-    <div ref={ref} onScroll={onScroll} className={cn('relative max-h-screen', className)}>
-      <table className="min-w-full overflow-auto max-h-full table-auto">
-        <thead className="sticky top-0 z-10">
-          <tr>
-            {heads.map((head, index) => {
+    <ReorderContainer onReorder={onReorder}>
+      <div ref={ref} onScroll={onScroll} className={cn('relative max-h-screen', className)}>
+        <table className="min-w-full overflow-auto max-h-full table-auto">
+          <thead className="sticky top-0 z-10">
+            <tr>
+              {heads.map((head, index) => {
+                return (
+                  <th
+                    key={index}
+                    className="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
+                  >
+                    {head}
+                  </th>
+                );
+              })}
+            </tr>
+          </thead>
+
+          <tbody className="bg-white">
+            {data?.map((d, index) => {
+              const rowProps = getRowProps(d, index);
               return (
-                <th
-                  key={index}
-                  className="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
-                >
-                  {head}
-                </th>
+                <TableRow key={index} {...rowProps} index={index} enabledReorder={enabledReorder} />
               );
             })}
-          </tr>
-        </thead>
-
-        <tbody className="bg-white ">
-          {data?.map((d, index) => {
-            const rowProps = getRowProps(d, index);
-            return <TableRow key={index} {...rowProps} />;
-          })}
-        </tbody>
-      </table>
-      {isBusyBottom && (
-        <div className="flex justify-center">
-          <SpinnerEllipsis />
-        </div>
-      )}
-      {isBusy && (
-        <div className="absolute min-h-96 inset-0 flex justify-center items-center bg-white opacity-70">
-          <SpinnerEllipsis />
-        </div>
-      )}
-    </div>
+          </tbody>
+        </table>
+        {isBusyBottom && (
+          <div className="flex justify-center">
+            <SpinnerEllipsis />
+          </div>
+        )}
+        {isBusy && <SpinnerBox />}
+      </div>
+    </ReorderContainer>
   );
 };

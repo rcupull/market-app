@@ -141,6 +141,16 @@ export const addRow = <T = any>(
   return position === "start" ? [rowData, ...newData] : [...newData, rowData];
 };
 
+export const movRow = <T = any>(
+  data: Array<T>,
+  fromIndex: number,
+  toIndex: number
+): Array<T> => {
+  const new_index = ((toIndex % data.length) + data.length) % data.length;
+  data.splice(new_index, 0, data.splice(fromIndex, 1)[0]);
+  return data;
+};
+
 export const addStringToUniqueArray = <T extends string = string>(
   array: Array<T>,
   value: T
