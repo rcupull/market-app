@@ -1,6 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { cloneElement, Fragment } from 'react';
 
+import { SpinnerBox } from 'components/spinner-box';
+
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
@@ -11,6 +13,7 @@ export interface ModalProps extends StyleProps {
   primaryBtn?: React.ReactElement;
   secondaryBtn?: React.ReactElement;
   customBtn?: React.ReactElement;
+  isBusy?: boolean;
 }
 
 export const Modal = ({
@@ -21,6 +24,7 @@ export const Modal = ({
   customBtn,
   badge,
   className,
+  isBusy,
 }: ModalProps) => {
   return (
     <Transition.Root show={true} as={Fragment}>
@@ -91,6 +95,7 @@ export const Modal = ({
                       className: 'w-full sm:w-auto mt-3 sm:mt-0 ml-0 sm:ml-3',
                     })}
                 </div>
+                {isBusy && <SpinnerBox />}
               </Dialog.Panel>
             </Transition.Child>
           </div>

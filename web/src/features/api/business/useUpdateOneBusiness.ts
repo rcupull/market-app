@@ -17,7 +17,6 @@ export const useUpdateOneBusiness = (): {
           | 'socialLinks'
           | 'bannerImages'
           | 'name'
-          | 'routeName'
           | 'logo'
           | 'layouts'
           | 'aboutUsPage'

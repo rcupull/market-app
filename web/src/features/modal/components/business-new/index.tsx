@@ -121,17 +121,21 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
                 label="Nombre del negocio"
               />
 
-              <FormRouteName
-                routeName={getRouteName(values.name)}
-                error={routeValidationErrorMessage === errors.name}
-                className="mt-3"
-              />
+              {!routeName && (
+                <>
+                  <FormRouteName
+                    routeName={getRouteName(values.name)}
+                    error={routeValidationErrorMessage === errors.name}
+                    className="mt-3"
+                  />
 
-              <FieldBusinessCategoriesSelect
-                label="Categorías"
-                className="mt-6"
-                name="categories"
-              />
+                  <FieldBusinessCategoriesSelect
+                    label="Categorías"
+                    className="mt-6"
+                    name="categories"
+                  />
+                </>
+              )}
 
               {portal.getPortal(
                 <Button
@@ -147,7 +151,6 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
                           routeName: business.routeName,
                           update: {
                             name,
-                            routeName: getRouteName(name),
                           },
                         },
                         {
@@ -193,7 +196,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
         }}
       </Formik>
 
-      {!business && (
+      {!routeName && (
         <div className="flex flex-col bg-red-100 mt-10 p-5 rounded-sm">
           <span className="text-sm">
             Cada negocio requiere de una configuración básica inicial para tener online rápidamente
@@ -219,7 +222,8 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
       content={newPostForm}
       badge={<Badge variant="info" />}
       primaryBtn={<div ref={portal.ref} />}
+      isBusy={getOneBusiness.status.isBusy}
       secondaryBtn={<ButtonClose />}
     />
-  );
+  );  
 };
