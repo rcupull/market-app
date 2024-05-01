@@ -1,25 +1,15 @@
 import { RequestHandler } from "../../types/general";
 import { uploadImageMiddleware } from "../../middlewares/files";
-import { combineMiddleware, isNumber } from "../../utils/general";
+import { isNumber } from "../../utils/general";
 import { withTryCatch } from "../../utils/error";
 import { imagesServices } from "./services";
 import { ServerResponse } from "http";
-import {
-  get200Response,
-  get400Response,
-  get500Response,
-} from "../../utils/server-response";
+import { get200Response, get400Response } from "../../utils/server-response";
 import { getAssetsDir } from "../../config";
 import sharp from "sharp";
-import { getDirPathNameToUpload } from "./utils";
+import { getFullFileNameToSave } from "./utils";
 import path from "path";
 import fs from "fs";
-
-interface ResizeArgs {
-  widthOrOptions?: number | sharp.ResizeOptions | null;
-  height?: number | null;
-  options?: sharp.ResizeOptions;
-}
 
 const save_image: () => RequestHandler = () => {
   return (req, res) => {
@@ -29,13 +19,18 @@ const save_image: () => RequestHandler = () => {
           return get400Response({ res, json: { message: err.message } });
         }
 
-        const dirPathName = getDirPathNameToUpload({ req });
+        const filename = getFullFileNameToSave({
+          userId: req.query.userId,
+          postId: req.query.postId,
+          routeName: req.query.routeName,
+        });
+
         const { width, height } = req.query;
 
-        if (!dirPathName) {
+        if (!filename) {
           return get400Response({
             res,
-            json: { message: "has not dirPathName" },
+            json: { message: "has not filename" },
           });
         }
 
@@ -48,10 +43,9 @@ const save_image: () => RequestHandler = () => {
           });
         }
 
-        const webImagePathName = path.join(
-          dirPathName,
-          `${Date.now()}-${path.parse(file.path).name}.web`
-        );
+        const webImagePathNameFilename = `${filename}-${
+          path.parse(file.path).name
+        }.web`;
 
         const realWidth =
           width && isNumber(Number(width)) ? Number(width) : undefined;
@@ -60,14 +54,14 @@ const save_image: () => RequestHandler = () => {
 
         await sharp(file.path)
           .resize(realWidth, realHeight)
-          .toFile(webImagePathName);
+          .toFile(webImagePathNameFilename);
 
         fs.unlinkSync(file.path);
 
         return get200Response({
           res,
           json: {
-            imageSrc: webImagePathName.replace(getAssetsDir(), ""),
+            imageSrc: webImagePathNameFilename.replace(getAssetsDir(), ""),
           },
         });
       });

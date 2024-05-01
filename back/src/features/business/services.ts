@@ -149,7 +149,7 @@ const deleteOne: QueryHandle<{
   /**
    * Remove all business images
    */
-  await imagesServices.deleteDir({
+  await imagesServices.deleteImagesBy({
     res,
     req,
     userId,

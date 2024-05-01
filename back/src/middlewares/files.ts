@@ -1,18 +1,12 @@
 import multer from "multer";
 import fs from "fs";
-import { getDirPathNameToUpload } from "../features/images/utils";
+import { getAssetsImageDir } from "../config";
 
 const imageStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const dirPathName = getDirPathNameToUpload({ req });
+    fs.mkdirSync(getAssetsImageDir(), { recursive: true });
 
-    if (!dirPathName) {
-      return cb(new Error("has not dirPathName"), "");
-    }
-
-    fs.mkdirSync(dirPathName, { recursive: true });
-
-    cb(null, dirPathName);
+    cb(null, getAssetsImageDir());
   },
 });
 

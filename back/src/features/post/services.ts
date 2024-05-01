@@ -199,9 +199,9 @@ const deleteMany: QueryHandle<{
 const deleteOne: QueryHandle<{
   postId: string;
 }> = async ({ postId, res, req }) => {
-  const currentPost = req.post;
+  const { post } = req;
 
-  if (!currentPost) {
+  if (!post) {
     return getPostNotFoundResponse({
       res,
     });
@@ -210,12 +210,12 @@ const deleteOne: QueryHandle<{
   /**
    * Remove all images of post
    */
-  await imagesServices.deleteDir({
+  await imagesServices.deleteImagesBy({
     res,
     req,
-    userId: currentPost.createdBy.toString(),
+    userId: post.createdBy.toString(),
     postId,
-    routeName: currentPost.routeName,
+    routeName: post.routeName,
   });
 
   /**

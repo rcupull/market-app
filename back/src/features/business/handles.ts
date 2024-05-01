@@ -213,7 +213,6 @@ const put_business_routeName: () => RequestHandler = () => {
         update: makeReshaper<Business, Business>({
           name: "name",
           categories: "categories",
-          routeName: "routeName",
           hidden: "hidden",
           socialLinks: "socialLinks",
           bannerImages: "bannerImages",

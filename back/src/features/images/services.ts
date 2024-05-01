@@ -2,6 +2,7 @@ import { Image, QueryHandle } from "../../types/general";
 import fs from "fs";
 import { get400Response } from "../../utils/server-response";
 import { getAssetsDir, getAssetsImageDir } from "../../config";
+import { deleteDirFilesUsingStartPattern, getFileNameToSave } from "./utils";
 
 const deleteOne: QueryHandle<{
   src: string;
@@ -62,8 +63,26 @@ const deleteOldImages: QueryHandle<{
   });
 };
 
+const deleteImagesBy: QueryHandle<{
+  routeName?: string;
+  postId?: string;
+  userId: string;
+}> = async ({ routeName, postId, userId }) => {
+  const filename = getFileNameToSave({
+    userId,
+    postId,
+    routeName,
+  });
+
+  console.log("filename", filename);
+  if (!filename) return;
+
+  deleteDirFilesUsingStartPattern(filename, getAssetsImageDir());
+};
+
 export const imagesServices = {
   deleteOne,
   deleteOldImages,
   deleteDir,
+  deleteImagesBy,
 };

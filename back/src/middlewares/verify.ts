@@ -105,6 +105,35 @@ export const isUserThisBusinessOwner: RequestHandler = async (
   });
 };
 
+export const getBusinessMiddleware: RequestHandler = async (req, res, next) => {
+  /**
+   * put the business in the req if exists routeName
+   */
+
+  if (req.business) {
+    return next();
+  }
+
+  const routeName = getFieldInReqData(req, "routeName");
+
+  if (!routeName) {
+    return next();
+  }
+
+  const business = await businessServices.findOne({
+    res,
+    req,
+    query: {
+      routeName,
+    },
+  });
+
+  if (business instanceof ServerResponse) return next();
+
+  req["business"] = business;
+  return next();
+};
+
 export const isUserThisPostOwner: RequestHandler = async (req, res, next) => {
   const user = req.user as User;
   const postId = req.params.postId;

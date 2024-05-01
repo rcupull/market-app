@@ -30,7 +30,7 @@ const del_users_userId: () => RequestHandler = () => {
       /**
        * Remove all business images
        */
-      const out = await imagesServices.deleteDir({
+      const out = await imagesServices.deleteImagesBy({
         res,
         req,
         userId,
