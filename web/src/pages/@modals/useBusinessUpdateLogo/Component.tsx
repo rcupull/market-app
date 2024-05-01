@@ -11,6 +11,7 @@ import { Portal } from 'hooks/usePortal';
 
 import { useBusiness } from '../../@hooks/useBusiness';
 
+import { imagesDimensions } from 'constants/posts';
 import { Formik } from 'formik';
 import { Image, ImageFile } from 'types/general';
 import { getImageEndpoint } from 'utils/api';
@@ -87,7 +88,7 @@ export const Component = ({ portal }: ComponentProps) => {
 
                   if (logo) {
                     addManyImages.fetch(
-                      { images: [logo], routeName, userId: business.createdBy, width: 200, height: 200 },
+                      { images: [logo], routeName, userId: business.createdBy, ...imagesDimensions.logo },
                       {
                         onAfterSuccess: ([logo]) => submitLogo(logo),
                       },

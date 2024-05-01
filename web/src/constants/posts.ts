@@ -28,3 +28,16 @@ export const allClotingSize: Array<PostClothingSize> = [
   '2XL',
   '3XL',
 ];
+
+type ImagesDimensionsType = 'cardPost' | 'logo';
+
+export const imagesDimensions: Record<ImagesDimensionsType, { width: number; height: number }> = {
+  cardPost: {
+    width: 246,
+    height: 210,
+  },
+  logo: {
+    width: 200,
+    height: 200,
+  },
+};

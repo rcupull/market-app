@@ -165,6 +165,12 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
 
       setState(newState);
 
+      field.onBlur({
+        target: {
+          name: field.name
+        }
+      });
+      
       field.onChange({
         target: {
           name: field.name,

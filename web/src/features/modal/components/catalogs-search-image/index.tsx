@@ -109,6 +109,8 @@ export const CatalogsSearchImage = ({ onSelected, multi }: CatalogsSearchImagePr
     <div>
       <SearchFilter
         value={search}
+        hideButtons
+        placeholder='Buscar'
         onChange={(search) => {
           setSearch(search);
 

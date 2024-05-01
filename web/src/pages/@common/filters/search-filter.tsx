@@ -14,6 +14,7 @@ export interface SearchFilterProps extends StyleProps {
   onChange?: (search: string | undefined) => void;
   value?: string;
   hideButtons?: boolean;
+  placeholder?: string;
 }
 
 export const SearchFilter = ({
@@ -22,6 +23,7 @@ export const SearchFilter = ({
   className,
   value,
   hideButtons,
+  placeholder,
 }: SearchFilterProps) => {
   const submitBtnPortal = usePortal();
   const clearBtnPortal = usePortal();
@@ -41,6 +43,7 @@ export const SearchFilter = ({
               <form className="flex w-full">
                 <FieldInput
                   name="search"
+                  placeholder={placeholder}
                   className="w-full"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
@@ -72,6 +75,7 @@ export const SearchFilter = ({
               <FieldInput
                 name="search"
                 className="w-full sm:w-64 mr-auto"
+                placeholder={placeholder}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     e.preventDefault();

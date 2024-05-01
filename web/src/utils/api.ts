@@ -15,7 +15,7 @@ export const apiErrorsMesages = {
 
 export const getEndpointUrl = () => {
   if (PRODUCTION) {
-    return `http://192.241.145.70`;
+    return `http://aseremarket.net`;
   }
 
   return 'http://localhost:4009';
@@ -67,7 +67,7 @@ export const getEndpoint: GetEndpoint = ({ path, query, urlParams }) => {
     urlParams,
   });
 
-  return `${getEndpointUrl()}/api${flattenPath}`;
+  return `${getEndpointUrl()}/api-services${flattenPath}`;
 };
 
 export const getImageEndpoint = (src: string) => {

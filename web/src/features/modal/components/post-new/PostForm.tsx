@@ -17,6 +17,7 @@ import { useUpdateOnePost } from 'features/api/posts/useUpdateOnePost';
 import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { Portal } from 'hooks/usePortal';
 
+import { imagesDimensions } from 'constants/posts';
 import { Formik } from 'formik';
 import { OnAfterSuccess } from 'types/api';
 import { Business } from 'types/business';
@@ -238,7 +239,7 @@ export const PostForm = ({
                     const { _id: postId } = post;
 
                     addManyImages.fetch(
-                      { images, routeName, postId, userId: post.createdBy },
+                      { images, routeName, postId, userId: post.createdBy, ...imagesDimensions.cardPost },
                       {
                         onAfterSuccess: (images) => {
                           updateOnePost.fetch(
