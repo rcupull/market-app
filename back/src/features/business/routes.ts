@@ -25,6 +25,10 @@ router
     businessHandles.post_business()
   );
 
+router
+  .route("/business/summary")
+  .get(pagination, businessHandles.get_business_summary());
+
 /////////////////////////////////////////////////////////////////
 
 router

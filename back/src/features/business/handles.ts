@@ -7,14 +7,15 @@ import {
   getBusinessNotFoundResponse,
   getUserNotFoundResponse,
 } from "../../utils/server-response";
-import { Business, PostCategory } from "../../types/business";
+import { Business, BusinessSummary, PostCategory } from "../../types/business";
 import { postServices } from "../post/services";
 import { User } from "../../types/user";
 import { RequestHandler } from "../../types/general";
 import { makeReshaper } from "../../utils/makeReshaper";
 import { getPostCategoriesFromBusinessCategories } from "./utils";
 import { imagesServices } from "../images/services";
-import { addRow, movRow } from "../../utils/general";
+import { movRow } from "../../utils/general";
+import { PaginateResult } from "../../middlewares/pagination";
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {
@@ -34,6 +35,42 @@ const get_business: () => RequestHandler = () => {
       });
 
       if (out instanceof ServerResponse) return;
+
+      res.send(out);
+    });
+  };
+};
+
+const get_business_summary: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { paginateOptions, query } = req;
+
+      const { routeNames, search, userId, includeHidden } = query;
+
+      const business = await businessServices.getAll({
+        res,
+        req,
+        paginateOptions,
+        routeNames,
+        search,
+        createdBy: userId,
+        hidden: includeHidden ? undefined : false,
+      });
+
+      if (business instanceof ServerResponse) return;
+
+      const out: PaginateResult<BusinessSummary> = {
+        ...business,
+        data: business.data.map(({ routeName, _id, name }) => ({
+          name,
+          routeName,
+          _id,
+          bestDiscount: 20,
+          mostSelledProductsImages: [],
+          salesAmount: 78,
+        })),
+      };
 
       res.send(out);
     });
@@ -319,4 +356,5 @@ export const businessHandles = {
   delete_business_routeName,
   //
   put_business_section_reorder,
+  get_business_summary,
 };

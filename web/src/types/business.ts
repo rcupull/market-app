@@ -147,3 +147,9 @@ export interface Business extends BaseIdentity {
   };
   postFormFields?: Array<PostFormField>;
 }
+
+export interface BusinessSummary extends Pick<Business, '_id' | 'name' | 'routeName'> {
+  mostSelledProductsImages: Array<Image>;
+  bestDiscount: number;
+  salesAmount: number;
+}
