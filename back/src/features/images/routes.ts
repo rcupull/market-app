@@ -7,8 +7,6 @@ export const router = Router();
 
 /////////////////////////////////////////////////////////////////
 
-router
-  .route("/images")
-  .post(validators.handle, isLogged, imageHandles.save_image());
+router.route("/images").post(isLogged, imageHandles.save_image());
 
 /////////////////////////////////////////////////////////////////

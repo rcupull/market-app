@@ -4,9 +4,8 @@ import { GetAllArgs, postServices } from "./services";
 import { ServerResponse } from "http";
 import { User } from "../../types/user";
 import { imagesServices } from "../images/services";
-import { Post } from "../../types/post";
 import { getPostNotFoundResponse } from "../../utils/server-response";
-import { isEmpty } from "../../utils/general";
+import { isEmpty, isEqual } from "../../utils/general";
 
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
@@ -146,25 +145,20 @@ const post_posts_postId_duplicate: () => RequestHandler = () => {
 const put_posts_postId: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const currentPost = req.post;
+      const { post, body } = req;
 
-      if (!currentPost) {
+      if (!post) {
         return getPostNotFoundResponse({
           res,
         });
       }
 
-      const { params, body } = req;
-      const { postId } = params;
-
-      const { images } = body as Post;
-
-      if (images?.length) {
+      if (!isEqual(body.images, post.images)) {
         await imagesServices.deleteOldImages({
           res,
           req,
           newImagesSrcs: body.images,
-          oldImagesSrcs: currentPost.images,
+          oldImagesSrcs: post.images,
         });
       }
 
@@ -172,7 +166,7 @@ const put_posts_postId: () => RequestHandler = () => {
         res,
         req,
         query: {
-          _id: postId,
+          _id: post._id,
         },
         update: body,
       });

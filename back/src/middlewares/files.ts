@@ -1,34 +1,31 @@
 import multer from "multer";
 import fs from "fs";
-import { getAssetsImageDir } from "../config";
+import { getDirPathNameToUpload } from "../features/images/utils";
 
 const imageStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const { routeName, postId, userId } = req.query;
+    const dirPathName = getDirPathNameToUpload({ req });
 
-    if (postId && !routeName) {
-      return cb(new Error("routeName is required to upload a postimage"), "");
+    if (!dirPathName) {
+      return cb(new Error("has not dirPathName"), "");
     }
 
-    let path = `${getAssetsImageDir()}/${userId}/`;
+    fs.mkdirSync(dirPathName, { recursive: true });
 
-    if (routeName) {
-      path = `${path}${routeName}/`;
-    }
-
-    if (postId) {
-      path = `${path}${postId}/`;
-    }
-
-    fs.mkdirSync(path, { recursive: true });
-
-    cb(null, path); // Destination folder for uploaded files
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname); // Rename the file to include the timestamp
+    cb(null, dirPathName);
   },
 });
 
 export const uploadImageMiddleware = multer({
   storage: imageStorage,
-});
+  limits: {
+    fileSize: 5 * 1024 * 1024,
+  },
+  // fileFilter: (req, file, done) => {
+  //   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+  //     done(null, true);
+  //   } else {
+  //     done(null, false);
+  //   }
+  // },
+}).single("image");

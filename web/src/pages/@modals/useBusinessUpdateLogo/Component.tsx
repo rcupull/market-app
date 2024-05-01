@@ -16,7 +16,7 @@ import { Image, ImageFile } from 'types/general';
 import { getImageEndpoint } from 'utils/api';
 
 interface State {
-  logoField: Array<ImageFile | Image | undefined>;
+  logoField: Array<ImageFile | Image | undefined |  null>;
 }
 
 export interface ComponentProps {
@@ -67,28 +67,33 @@ export const Component = ({ portal }: ComponentProps) => {
 
                   const [logo] = logoField;
 
-                  if (logo) {
-                    addManyImages.fetch(
-                      { images: [logo], routeName, userId: business.createdBy },
+                  const submitLogo = (logo: Image | null) => {
+                    updateOneBusiness.fetch(
                       {
-                        onAfterSuccess: ([logo]) => {
-                          updateOneBusiness.fetch(
-                            {
-                              update: {
-                                logo,
-                              },
-                              routeName,
-                            },
-                            {
-                              onAfterSuccess: () => {
-                                onFetch({ routeName });
-                                onClose();
-                              },
-                            },
-                          );
+                        update: {
+                          logo,
+                        },
+                        routeName,
+                      },
+                      {
+                        onAfterSuccess: () => {
+                          onFetch({ routeName });
+                          onClose();
                         },
                       },
                     );
+                  }
+
+
+                  if (logo) {
+                    addManyImages.fetch(
+                      { images: [logo], routeName, userId: business.createdBy, width: 200, height: 200 },
+                      {
+                        onAfterSuccess: ([logo]) => submitLogo(logo),
+                      },
+                    );
+                  }else{
+                    submitLogo(null)
                   }
                 }}
                 variant="primary"

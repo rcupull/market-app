@@ -6,7 +6,14 @@ import { getEndpoint } from 'utils/api';
 
 export const useAddManyImages = (): {
   addManyImages: FetchResource<
-    { images: Array<ImageFile | Image>; userId: string; routeName?: string; postId?: string },
+    {
+      images: Array<ImageFile | Image>;
+      userId: string;
+      routeName?: string;
+      postId?: string;
+      height?: number;
+      width?: number;
+    },
     Array<Image>
   >;
 } => {
@@ -16,7 +23,7 @@ export const useAddManyImages = (): {
     addManyImages: {
       data: fetch[0],
       status: fetch[1],
-      fetch: ({ images, userId, postId, routeName }, options = {}) => {
+      fetch: ({ images, userId, postId, routeName, width, height }, options = {}) => {
         const promises = images.map((image) => {
           return new Promise<Image>((resolve) => {
             if (image.src instanceof File) {
@@ -28,7 +35,7 @@ export const useAddManyImages = (): {
                   method: 'post',
                   url: getEndpoint({
                     path: '/images',
-                    query: { userId, routeName, postId },
+                    query: { userId, routeName, postId, width, height },
                   }),
                   data: form,
                   headers: {

@@ -127,7 +127,7 @@ export interface Business extends BaseIdentity {
   createdBy: string; // userId
   hidden?: boolean;
   bannerImages?: Array<Image>;
-  logo?: Image;
+  logo?: Image | null;
   postCategories?: Array<PostCategory>;
   socialLinks?: SocialLinks;
   layouts?: BusinessLayouts;

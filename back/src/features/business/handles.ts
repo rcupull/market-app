@@ -1,13 +1,18 @@
 import { withTryCatch } from "../../utils/error";
 import { businessServices } from "./services";
 import { ServerResponse } from "http";
-import { get200Response } from "../../utils/server-response";
+import {
+  get200Response,
+  getBusinessNotFoundResponse,
+  getUserNotFoundResponse,
+} from "../../utils/server-response";
 import { Business, PostCategory } from "../../types/business";
 import { postServices } from "../post/services";
 import { User } from "../../types/user";
 import { RequestHandler } from "../../types/general";
 import { makeReshaper } from "../../utils/makeReshaper";
 import { getPostCategoriesFromBusinessCategories } from "./utils";
+import { imagesServices } from "../images/services";
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {
@@ -177,11 +182,27 @@ const post_business: () => RequestHandler = () => {
 const put_business_routeName: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const user = req.user as User;
+      const { user, business } = req;
+
+      if (!user) {
+        return getUserNotFoundResponse({ res });
+      }
+
+      if (!business) {
+        return getBusinessNotFoundResponse({ res });
+      }
 
       const { params, body } = req;
       const { routeName } = params;
 
+      if (body.logo === null && business.logo) {
+        await imagesServices.deleteOldImages({
+          res,
+          req,
+          newImagesSrcs: [],
+          oldImagesSrcs: [business.logo],
+        });
+      }
       const out = await businessServices.updateOne({
         res,
         req,

@@ -38,7 +38,6 @@ router
     validators.param("routeName").notEmpty(),
     validators.handle,
     isLogged,
-    isUserBusinessOwner,
     isUserThisBusinessOwner,
     businessHandles.put_business_routeName()
   )

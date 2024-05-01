@@ -1,12 +1,12 @@
 import { Image, QueryHandle } from "../../types/general";
 import fs from "fs";
 import { get400Response } from "../../utils/server-response";
-import { getAssetsImageDir } from "../../config";
+import { getAssetsDir, getAssetsImageDir } from "../../config";
 
 const deleteOne: QueryHandle<{
   src: string;
 }> = async ({ src, res }) => {
-  const fullPath = `${getAssetsImageDir()}${src}`;
+  const fullPath = `${getAssetsDir()}${src}`;
 
   if (fs.existsSync(fullPath)) {
     fs.unlink(fullPath, (err) => {
@@ -52,11 +52,7 @@ const deleteDir: QueryHandle<{
 const deleteOldImages: QueryHandle<{
   newImagesSrcs: Array<Image> | undefined;
   oldImagesSrcs: Array<Image> | undefined;
-}> = async ({ newImagesSrcs, oldImagesSrcs, res, req }) => {
-  if (!oldImagesSrcs?.length || !newImagesSrcs?.length) {
-    return;
-  }
-
+}> = async ({ newImagesSrcs = [], oldImagesSrcs = [], res, req }) => {
   const imagesToRemove = oldImagesSrcs.filter(
     ({ src }) => !newImagesSrcs.map(({ src }) => src).includes(src)
   );

@@ -24,6 +24,44 @@ export const isEqualIds = (
   return id1Str === id2Str;
 };
 
+export const isEqual = (a: any, b: any): boolean => {
+  if (typeof a === "object" && typeof b === "object") {
+    return isEqualObj(a, b);
+  }
+
+  return a === b;
+};
+export const isEqualObj = (
+  a: AnyRecord | undefined,
+  b: AnyRecord | undefined
+): boolean => {
+  if (!a || !b) return false;
+
+  if (isArray(a) && isArray(b) && a.length !== b.length) {
+    return false;
+  }
+
+  for (const prop in a) {
+    //eslint-disable-next-line
+    if (a.hasOwnProperty(prop)) {
+      //eslint-disable-next-line
+      if (b.hasOwnProperty(prop)) {
+        //@ts-expect-error ignore
+        if (typeof a[prop] === "object") {
+          //@ts-expect-error ignore
+          if (!isEqualObj(a[prop], b[prop])) return false;
+        } else {
+          //@ts-expect-error ignore
+          if (a[prop] !== b[prop]) return false;
+        }
+      } else {
+        return false;
+      }
+    }
+  }
+  return true;
+};
+
 export const combineMiddleware = (...mids: Array<RequestHandler>) => {
   return mids.reduce(function (a, b) {
     return function (req, res, next) {

@@ -117,7 +117,10 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
           }
 
           newStateToPreview = addOneEmptyPreview(newStateToPreview);
-          setPreviewIndex(newStateToPreview.length - 1);
+
+          if (multi) {
+            setPreviewIndex(newStateToPreview.length - 1);
+          }
           break;
         }
         case 'remove': {
