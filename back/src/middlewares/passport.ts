@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { UserModel } from "../schemas/user";
 import passportJWT from "passport-jwt";
 import { secretAccessToken } from "../config";
+import { logger } from "../features/logger";
 
 const { Strategy: JWTStrategy, ExtractJwt } = passportJWT;
 /////////////////////////////////////////////////////////////////
@@ -26,6 +27,8 @@ passport.use(
           message: "Incorrect username or password.",
         });
       }
+
+      logger.info(`User ${user.email} logged in.`);
 
       return done(null, user);
     } catch (err) {
