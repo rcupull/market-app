@@ -4,7 +4,7 @@ module.exports = {
       name: "Asere Market",
       script: "./back/build/index.js",
       env: {
-        APP_CONFIG_PATH: "../app-config-prod.json",
+        APP_CONFIG_PATH: "./app-config-prod.json",
       },
     },
   ],
