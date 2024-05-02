@@ -1,5 +1,6 @@
 import { apiPort } from "./config";
 import { connectDB } from "./db";
+import { logger } from "./features/logger";
 import { notificationsServices } from "./features/notifications";
 import { app } from "./server";
 
@@ -9,5 +10,5 @@ connectDB();
 notificationsServices.init();
 
 app.listen(PORT, () => {
-  console.log(`Server running at port ${PORT}`);
+  logger.info(`Server running at port ${PORT}`);
 });

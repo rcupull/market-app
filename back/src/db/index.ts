@@ -1,12 +1,13 @@
 import { connect } from "mongoose";
 import { dbUrl } from "../config";
+import { logger } from "../features/logger";
 
 export const connectDB = () => {
   connect(dbUrl)
     .then(() => {
-      console.log("connected");
+      logger.info("connected");
     })
     .catch((e) => {
-      console.log(`Error: ${e}`);
+      logger.info(`Error: ${e}`);
     });
 };

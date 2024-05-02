@@ -1,4 +1,5 @@
 import { Shopping } from "../../types/shopping";
+import { logger } from "../logger";
 
 export const computePay = ({
   order,
@@ -17,7 +18,7 @@ export const computePay = ({
     }
 
     if (post.currency !== "CUP") {
-      console.log("not cup"); //TODO not cup
+      logger.info("not cup"); //TODO not cup
       return amount;
     }
 

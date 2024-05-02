@@ -1,6 +1,7 @@
 import { getAssetsImageDir } from "../../config";
 import fs from "fs";
 import { join, resolve } from "path";
+import { logger } from "../logger";
 
 export const getFullFileNameToSave = (args: {
   routeName?: string;
@@ -22,12 +23,12 @@ export const getFileNameToSave = (args: {
   const { routeName, postId, userId } = args;
 
   if (!userId) {
-    console.log("no userId found");
+    logger.info("no userId found");
     return null;
   }
 
   if (postId && !routeName) {
-    console.log("no routeName found");
+    logger.info("no routeName found");
     return null;
   }
 

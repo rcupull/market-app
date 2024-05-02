@@ -74,7 +74,6 @@ const deleteImagesBy: QueryHandle<{
     routeName,
   });
 
-  console.log("filename", filename);
   if (!filename) return;
 
   deleteDirFilesUsingStartPattern(filename, getAssetsImageDir());

@@ -12,6 +12,7 @@ import { isEqualIds, isNumber } from "../../utils/general";
 import { notificationsServices } from "../notifications";
 import { businessServices } from "../business/services";
 import { computePay } from "./utils";
+import { logger } from "../logger";
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -196,7 +197,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
       if (order instanceof ServerResponse) return order;
 
       if (!order) {
-        console.log("It is weird, maybe there is a bug");
+        logger.info("It is weird, maybe there is a bug");
         return res.send({});
       }
 
