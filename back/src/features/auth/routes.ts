@@ -30,7 +30,7 @@ router
 router
   .route("/auth/sign-out")
   .post(
-    validators.body("token").notEmpty(),
+    validators.body("refreshToken").notEmpty(),
     validators.handle,
     authHandles.post_signOut()
   );

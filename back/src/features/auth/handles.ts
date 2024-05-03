@@ -15,6 +15,7 @@ import {
   get201Response,
   get401Response,
   get404Response,
+  getSessionNotFoundResponse,
   getUserNotFoundResponse,
 } from "../../utils/server-response";
 import { secretRefreshToken } from "../../config";
@@ -40,11 +41,22 @@ const post_signIn: () => RequestHandler = () => {
       //@ts-expect-error ignore
       const { password: ommited, ...userData } = user.toJSON();
 
+      const accessToken = generateAccessJWT({ id: user._id.toString() });
+      const refreshToken = generateRefreshJWT({ id: user._id.toString() });
+
+      const session = new SessionModel({
+        refreshToken,
+        createdAt: new Date(),
+        userId: userData._id,
+      });
+
+      await session.save();
+
       get200Response({
         res,
         json: {
-          accessToken: generateAccessJWT({ id: user._id.toString() }),
-          refreshToken: generateRefreshJWT({ id: user._id.toString() }),
+          accessToken,
+          refreshToken,
           user: userData,
         },
       });
@@ -57,6 +69,12 @@ const post_refresh: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { refreshToken } = req.body;
 
+      const currentSession = await SessionModel.findOne({ refreshToken });
+
+      if (!currentSession) {
+        return getSessionNotFoundResponse({ res });
+      }
+
       jwt.verify(
         refreshToken,
         secretRefreshToken,
@@ -64,9 +82,11 @@ const post_refresh: () => RequestHandler = () => {
           if (err) {
             logger.error(`Error refreshing token ${err}`);
 
-            return get401Response({
-              res,
-              json: {},
+            return SessionModel.deleteOne({ refreshToken }).then(() => {
+              get401Response({
+                res,
+                json: {},
+              });
             });
           }
 
@@ -85,18 +105,9 @@ const post_refresh: () => RequestHandler = () => {
 const post_signOut: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const { token } = req.body;
+      const { refreshToken } = req.body;
 
-      const session = await SessionModel.findOne({ token });
-
-      if (!session) {
-        return get401Response({
-          res,
-          json: { message: "The session does not exist" },
-        });
-      }
-
-      await SessionModel.deleteOne({ token });
+      await SessionModel.deleteOne({ refreshToken });
 
       return get200Response({
         res,

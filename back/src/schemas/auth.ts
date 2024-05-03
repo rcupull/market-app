@@ -18,7 +18,8 @@ export const ValidationCodeModel = model<ValidationCode>(
 
 const SessionShema = new Schema<Session>({
   ...createdAtSchemaDefinition,
-  token: { type: String, required: true, unique: true },
+  refreshToken: { type: String, required: true, unique: true },
+  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 export const SessionModel = model<Session>("Session", SessionShema, "sessions");

@@ -38,12 +38,9 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & {
         },
         {
           onAfterSuccess: (user) => {
-            const { accessToken, refreshToken } = authData || {};
-
             setCookie('user', user);
             setDataRedux({
-              accessToken,
-              refreshToken,
+              ...authData,
               user,
             });
           },
@@ -68,9 +65,11 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & {
             ...options,
             onAfterSuccess: async (response) => {
               const { accessToken, user, refreshToken } = response;
+              
               setCookie('accessToken', accessToken);
               setCookie('refreshToken', refreshToken);
               setCookie('user', user);
+
               await wait(100);
               options?.onAfterSuccess?.(response);
             },

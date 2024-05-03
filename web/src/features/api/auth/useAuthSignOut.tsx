@@ -1,14 +1,17 @@
 import { useAuth } from 'features/api-slices/useAuth';
+import { useCookies } from 'features/cookies/useCookies';
 
 import { useFetch } from 'hooks/useFetch';
 
 import { FetchResource } from 'types/api';
+import { getEndpoint } from 'utils/api';
 
 export const useAuthSignOut = (): {
-  authSignOut: FetchResource;
+  authSignOut: FetchResource<void, void>;
 } => {
   const { authSignIn } = useAuth();
 
+  const { getCookie } = useCookies();
   const fetch = useFetch();
 
   return {
@@ -16,23 +19,22 @@ export const useAuthSignOut = (): {
       data: fetch[0],
       status: fetch[1],
       fetch: (_, options) => {
-        authSignIn.reset();
-        options?.onAfterSuccess?.(undefined);
+        const refreshToken = getCookie('refreshToken');
 
-        // fetch[2](
-        //   {
-        //     method: 'post',
-        //     url: getEndpoint({ path: '/auth/sign-out' }),
-        //     data: { token },
-        //   },
-        //   {
-        //     ...options,
-        //     onAfterSuccess: (response) => {
-        //       authSignIn.reset();
-        //       options?.onAfterSuccess?.(response);
-        //     },
-        //   },
-        // );
+        fetch[2](
+          {
+            method: 'post',
+            url: getEndpoint({ path: '/auth/sign-out' }),
+            data: { refreshToken },
+          },
+          {
+            ...options,
+            onAfterSuccess: () => {
+              authSignIn.reset();
+              options?.onAfterSuccess?.();
+            },
+          },
+        );
       },
       reset: fetch[3],
     },

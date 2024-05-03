@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 import { BaseIdentity } from "./general";
 
 export interface Session extends BaseIdentity {
-  token: string;
+  refreshToken: string;
   userId: Schema.Types.ObjectId;
 }
 
