@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { Session, ValidationCode } from "../types/auth";
+import { AuthSession, ValidationCode } from "../types/auth";
 import { createdAtSchemaDefinition } from "../utils/schemas";
 
 const ValidationCodeShema = new Schema<ValidationCode>({
@@ -16,9 +16,14 @@ export const ValidationCodeModel = model<ValidationCode>(
 
 ///////////////////////////////////////////////////////////////////////////////
 
-const SessionShema = new Schema<Session>({
+const AuthSessionShema = new Schema<AuthSession>({
   ...createdAtSchemaDefinition,
-  token: { type: String, required: true, unique: true },
+  refreshToken: { type: String, required: true },
+  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
-export const SessionModel = model<Session>("Session", SessionShema, "sessions");
+export const AuthSessionModel = model<AuthSession>(
+  "AuthSession",
+  AuthSessionShema,
+  "auth_sessions"
+);

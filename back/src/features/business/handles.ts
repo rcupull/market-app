@@ -195,7 +195,11 @@ const update_business_post_categories: () => RequestHandler = () => {
 const post_business: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const user = req.user as User;
+      const { user } = req;
+
+      if (!user) {
+        return getUserNotFoundResponse({ res });
+      }
 
       const { body } = req;
 
@@ -275,7 +279,11 @@ const put_business_routeName: () => RequestHandler = () => {
 const delete_business_routeName: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const user = req.user as User;
+      const { user } = req;
+
+      if (!user) {
+        return getUserNotFoundResponse({ res });
+      }
       const { params } = req;
 
       const { routeName } = params;

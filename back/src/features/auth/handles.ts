@@ -2,25 +2,34 @@ import { RequestHandler } from "../../types/general";
 import { withTryCatch } from "../../utils/error";
 import { ServerResponse } from "http";
 import { v4 as uuid } from "uuid";
-import { SessionModel, ValidationCodeModel } from "../../schemas/auth";
+import { AuthSessionModel, ValidationCodeModel } from "../../schemas/auth";
 import { userServices } from "../user/services";
+import jwt from "jsonwebtoken";
+
 import {
   sendForgotPasswordCodeToEmail,
   sendValidationCodeToEmail,
 } from "../email";
-import { User } from "../../types/user";
 import {
   get200Response,
   get201Response,
   get401Response,
   get404Response,
+  getSessionNotFoundResponse,
   getUserNotFoundResponse,
 } from "../../utils/server-response";
+import { secretRefreshToken } from "../../config";
+import { generateAccessJWT, generateRefreshJWT } from "../../utils/auth";
+import { logger } from "../logger";
 
 const post_signIn: () => RequestHandler = () => {
-  return (req, res, next) => {
+  return (req, res) => {
     withTryCatch(req, res, async () => {
-      const user = req.user as User;
+      const { user } = req;
+
+      if (!user) {
+        return getUserNotFoundResponse({ res });
+      }
       const { validated } = user;
 
       if (!validated) {
@@ -32,10 +41,69 @@ const post_signIn: () => RequestHandler = () => {
       //@ts-expect-error ignore
       const { password: ommited, ...userData } = user.toJSON();
 
+      const accessToken = generateAccessJWT({ id: user._id.toString() });
+      const refreshToken = generateRefreshJWT({ id: user._id.toString() });
+
+      const authSession = new AuthSessionModel({
+        refreshToken,
+        userId: user._id,
+      });
+
+      await authSession.save();
+
       get200Response({
         res,
-        json: { token: user.generateAccessJWT(), user: userData },
+        json: {
+          accessToken,
+          refreshToken,
+          user: userData,
+        },
       });
+    });
+  };
+};
+
+const post_refresh: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { refreshToken } = req.body;
+
+      const currentSession = await AuthSessionModel.findOne({
+        refreshToken,
+      });
+
+      if (!currentSession) {
+        return getSessionNotFoundResponse({ res });
+      }
+
+      jwt.verify(
+        refreshToken,
+        secretRefreshToken,
+        (err: any, jwt_payload: any) => {
+          if (err) {
+            logger.error(`Error refreshing token ${err}`);
+
+            /**
+             * Cuando falla la verificación del token de refresco, se elimina la sesión
+             */
+            return AuthSessionModel.deleteOne({ refreshToken }).then(() => {
+              get401Response({
+                res,
+                json: {
+                  message: "Error refreshing token",
+                },
+              });
+            });
+          }
+
+          get200Response({
+            res,
+            json: {
+              accessToken: generateAccessJWT({ id: jwt_payload.id }),
+            },
+          });
+        }
+      );
     });
   };
 };
@@ -43,18 +111,9 @@ const post_signIn: () => RequestHandler = () => {
 const post_signOut: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const { token } = req.body;
+      const { refreshToken } = req.body;
 
-      const session = await SessionModel.findOne({ token });
-
-      if (!session) {
-        return get401Response({
-          res,
-          json: { message: "The session does not exist" },
-        });
-      }
-
-      await SessionModel.deleteOne({ token });
+      await AuthSessionModel.deleteOne({ refreshToken });
 
       return get200Response({
         res,
@@ -278,6 +337,8 @@ export const authHandles = {
   post_signOut,
   post_signUp,
   post_validate,
+  post_refresh,
+  //
   post_change_password,
   post_forgot_password_request,
   post_forgot_password_validate,

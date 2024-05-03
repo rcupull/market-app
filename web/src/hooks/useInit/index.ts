@@ -1,10 +1,14 @@
 import { useEffect } from 'react';
 
+import { useAuthRefresh } from 'features/api/auth/useAuthRefresh';
+import { useAuthSignOut } from 'features/api/auth/useAuthSignOut';
 import { useAuth } from 'features/api-slices/useAuth';
 import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
+import { useCookies } from 'features/cookies/useCookies';
 
 import { callAfarIds, useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useDebouncer } from 'hooks/useDebouncer';
+import { useInterval } from 'hooks/useInterval';
 import { useRouter } from 'hooks/useRouter';
 
 export const useInit = () => {
@@ -42,5 +46,33 @@ export const useInit = () => {
 
       return reset;
     }
+  }, [isAuthenticated]);
+
+  ////////////////////////////////////////////////////////////////////////
+  const { authRefresh } = useAuthRefresh();
+  const refreshInterval = useInterval({ startCalling: true });
+  const { authSignOut } = useAuthSignOut();
+  const { setCookie } = useCookies();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      refreshInterval(
+        () => {
+          authRefresh.fetch(undefined, {
+            onAfterSuccess: ({ accessToken }) => {
+              setCookie('accessToken', accessToken);
+            },
+            onAfterFailed: () => {
+              authSignOut.fetch();
+            },
+          });
+        },
+        20 * 60 * 1000, //20min
+      );
+    } else {
+      refreshInterval.cancel();
+    }
+
+    return refreshInterval.cancel;
   }, [isAuthenticated]);
 };

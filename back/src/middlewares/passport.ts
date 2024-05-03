@@ -57,7 +57,7 @@ passport.use(
   )
 );
 
-export const passportLocalMiddleware = passport.authenticate("local", {
+export const autenticationMiddleware = passport.authenticate("local", {
   session: false,
 });
 

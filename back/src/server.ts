@@ -49,9 +49,7 @@ app.use((req, res, next) => {
   res.sendFile(join(process.cwd(), appFrontDir, "index.html"));
 });
 
-// app.use(expressSession);
 app.use(passportMiddlewareInitialize);
-// app.use(passportMiddleware.authenticate("session"));
 
 app.use(express.json());
 app.use(commaSeparateQuery);

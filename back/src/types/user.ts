@@ -11,6 +11,5 @@ export interface User extends BaseIdentity {
   validated: boolean;
   canCreateBusiness: boolean;
   profileImage?: Image;
-  generateAccessJWT: () => string;
   firebaseToken?: string;
 }

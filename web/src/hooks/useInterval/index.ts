@@ -8,7 +8,9 @@ export interface UseIntervalReturn {
   (args: Args, delay?: number): void;
   cancel(): void;
 }
-export const useInterval = (): UseIntervalReturn => {
+export const useInterval = (options?: { startCalling?: boolean }): UseIntervalReturn => {
+  const { startCalling } = options || {};
+
   //@ts-expect-error ignore
   const intervalId = useRef<NodeJS.Timeout | null>(null);
   const nextCallbackToCall = useRef<number>(0);
@@ -21,7 +23,7 @@ export const useInterval = (): UseIntervalReturn => {
       intervalId.current = null;
     }
 
-    intervalId.current = setInterval(() => {
+    const callTheNextcallback = () => {
       const callback = callbackArray[nextCallbackToCall.current];
 
       nextCallbackToCall.current = nextCallbackToCall.current + 1;
@@ -30,7 +32,10 @@ export const useInterval = (): UseIntervalReturn => {
       }
 
       callback();
-    }, interval);
+    };
+
+    if (startCalling) callTheNextcallback();
+    intervalId.current = setInterval(callTheNextcallback, interval);
   };
 
   out.cancel = () => {

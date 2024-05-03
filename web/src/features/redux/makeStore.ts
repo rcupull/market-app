@@ -27,11 +27,14 @@ export const makerStore = (preloadedState: Partial<AnyRecord> = {}) => {
   });
 
   // setting authentication data
-  const token = cookiesUtilsBackdoor.getCookie('token') as string | null;
+  const refreshToken = cookiesUtilsBackdoor.getCookie('refreshToken') as string | null;
+  const accessToken = cookiesUtilsBackdoor.getCookie('accessToken') as string | null;
   const user = cookiesUtilsBackdoor.getCookie('user') as User | null;
-  if (token && user) {
+
+  if (accessToken && refreshToken && user) {
     const authData: AuthData = {
-      token,
+      accessToken,
+      refreshToken,
       user,
     };
 

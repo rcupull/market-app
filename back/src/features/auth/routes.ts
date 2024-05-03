@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { validators } from "../../middlewares/express-validator";
 import { authHandles } from "./handles";
-import { passportLocalMiddleware } from "../../middlewares/passport";
+import { autenticationMiddleware } from "../../middlewares/passport";
 import { isLogged } from "../../middlewares/verify";
 
 export const router = Router();
@@ -14,15 +14,23 @@ router
     validators.body("username").notEmpty(),
     validators.body("password").notEmpty(),
     validators.handle,
-    passportLocalMiddleware,
+    autenticationMiddleware,
     authHandles.post_signIn()
+  );
+
+router
+  .route("/auth/refresh")
+  .post(
+    validators.body("refreshToken").notEmpty(),
+    validators.handle,
+    authHandles.post_refresh()
   );
 /////////////////////////////////////////////////////////////////
 
 router
   .route("/auth/sign-out")
   .post(
-    validators.body("token").notEmpty(),
+    validators.body("refreshToken").notEmpty(),
     validators.handle,
     authHandles.post_signOut()
   );

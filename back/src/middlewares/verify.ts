@@ -6,7 +6,11 @@ import { ServerResponse } from "http";
 import { postServices } from "../features/post/services";
 import { isEqualIds } from "../utils/general";
 import { passportJwtMiddleware } from "./passport";
-import { get401Response, get404Response } from "../utils/server-response";
+import {
+  get401Response,
+  get404Response,
+  getUserNotFoundResponse,
+} from "../utils/server-response";
 import { businessServices } from "../features/business/services";
 
 export const isLogged = passportJwtMiddleware;
@@ -24,7 +28,12 @@ export const isAdmin: RequestHandler = (req, res, next) => {
 };
 
 export const isUserIdAccessible: RequestHandler = (req, res, next) => {
-  const user = req.user as User;
+  const { user } = req;
+
+  if (!user) {
+    return getUserNotFoundResponse({ res });
+  }
+
   const { userId } = req.params;
 
   if (!userId) {
@@ -135,15 +144,13 @@ export const getBusinessMiddleware: RequestHandler = async (req, res, next) => {
 };
 
 export const isUserThisPostOwner: RequestHandler = async (req, res, next) => {
-  const user = req.user as User;
-  const postId = req.params.postId;
+  const { user } = req;
 
   if (!user) {
-    return get404Response({
-      res,
-      json: { message: "user not found" },
-    });
+    return getUserNotFoundResponse({ res });
   }
+
+  const postId = req.params.postId;
 
   if (!postId) {
     return get404Response({
@@ -202,7 +209,11 @@ export type RequestWithUser<
 
 export const verifyPost: RequestHandler = (req, res, next) => {
   withTryCatch(req, res, async () => {
-    const user = req.user as User;
+    const { user } = req;
+
+    if (!user) {
+      return getUserNotFoundResponse({ res });
+    }
 
     if (!user) {
       return res
