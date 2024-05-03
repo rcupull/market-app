@@ -78,7 +78,7 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
         await wait(1000);
       }
 
-      const token = getCookie('token') as string | null;
+      const accessToken = getCookie('accessToken') as string | null;
 
       const promises = resourcesArray.map(({ method, url, data, headers = {} }) => {
         return axios({
@@ -87,7 +87,7 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
           data,
           headers: {
             ...headers,
-            Authorization: token && `Bearer ${token}`,
+            Authorization: accessToken && `Bearer ${accessToken}`,
           },
         });
       });

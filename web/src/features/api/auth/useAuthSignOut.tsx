@@ -7,7 +7,7 @@ import { FetchResource } from 'types/api';
 export const useAuthSignOut = (): {
   authSignOut: FetchResource;
 } => {
-  const { authData, authSignIn } = useAuth();
+  const { authSignIn } = useAuth();
 
   const fetch = useFetch();
 
@@ -16,13 +16,6 @@ export const useAuthSignOut = (): {
       data: fetch[0],
       status: fetch[1],
       fetch: (_, options) => {
-        const { token } = authData || {};
-
-        if (!token) {
-          console.log('has no token');
-          return;
-        }
-
         authSignIn.reset();
         options?.onAfterSuccess?.(undefined);
 

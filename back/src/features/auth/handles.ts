@@ -4,11 +4,12 @@ import { ServerResponse } from "http";
 import { v4 as uuid } from "uuid";
 import { SessionModel, ValidationCodeModel } from "../../schemas/auth";
 import { userServices } from "../user/services";
+import jwt from "jsonwebtoken";
+
 import {
   sendForgotPasswordCodeToEmail,
   sendValidationCodeToEmail,
 } from "../email";
-import { User } from "../../types/user";
 import {
   get200Response,
   get201Response,
@@ -16,11 +17,18 @@ import {
   get404Response,
   getUserNotFoundResponse,
 } from "../../utils/server-response";
+import { secretRefreshToken } from "../../config";
+import { generateAccessJWT, generateRefreshJWT } from "../../utils/auth";
+import { logger } from "../logger";
 
 const post_signIn: () => RequestHandler = () => {
-  return (req, res, next) => {
+  return (req, res) => {
     withTryCatch(req, res, async () => {
-      const user = req.user as User;
+      const { user } = req;
+
+      if (!user) {
+        return getUserNotFoundResponse({ res });
+      }
       const { validated } = user;
 
       if (!validated) {
@@ -34,8 +42,42 @@ const post_signIn: () => RequestHandler = () => {
 
       get200Response({
         res,
-        json: { token: user.generateAccessJWT(), user: userData },
+        json: {
+          accessToken: generateAccessJWT({ id: user._id.toString() }),
+          refreshToken: generateRefreshJWT({ id: user._id.toString() }),
+          user: userData,
+        },
       });
+    });
+  };
+};
+
+const post_refresh: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { refreshToken } = req.body;
+
+      jwt.verify(
+        refreshToken,
+        secretRefreshToken,
+        (err: any, jwt_payload: any) => {
+          if (err) {
+            logger.error(`Error refreshing token ${err}`);
+
+            return get401Response({
+              res,
+              json: {},
+            });
+          }
+
+          get200Response({
+            res,
+            json: {
+              accessToken: generateAccessJWT({ id: jwt_payload.id }),
+            },
+          });
+        }
+      );
     });
   };
 };
@@ -278,6 +320,8 @@ export const authHandles = {
   post_signOut,
   post_signUp,
   post_validate,
+  post_refresh,
+  //
   post_change_password,
   post_forgot_password_request,
   post_forgot_password_validate,

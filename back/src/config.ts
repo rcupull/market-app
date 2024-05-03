@@ -6,6 +6,7 @@ const appConfig = require(join(process.cwd(), APP_CONFIG_PATH));
 export const serviceAccount = appConfig.googleApplicationCredentials;
 export const dbUrl = appConfig.dbUrl;
 export const secretAccessToken = appConfig.secretAccessToken;
+export const secretRefreshToken = appConfig.secretRefreshToken;
 export const appAssetsDir = appConfig.appAssetsDir;
 export const appFrontDir = appConfig.appFrontDir;
 export const apiPort = appConfig.apiPort;

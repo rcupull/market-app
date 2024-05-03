@@ -27,15 +27,6 @@ const UserSchema = new Schema<User>({
   },
 });
 
-UserSchema.methods.generateAccessJWT = function () {
-  return jwt.sign(
-    {
-      id: this._id,
-    },
-    secretAccessToken
-  );
-};
-
 const updateUserPassword = (user: User): Promise<void> => {
   return new Promise((resolve, reject) => {
     bcrypt.genSalt(10, (err, salt) => {

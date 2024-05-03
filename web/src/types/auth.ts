@@ -16,5 +16,6 @@ export type UserData = User | null;
 
 export interface AuthData {
   user: User;
-  token: string;
+  accessToken: string;
+  refreshToken: string;
 }

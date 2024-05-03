@@ -2,9 +2,11 @@ import { RequestHandler } from "../../types/general";
 import { withTryCatch } from "../../utils/error";
 import { GetAllArgs, postServices } from "./services";
 import { ServerResponse } from "http";
-import { User } from "../../types/user";
 import { imagesServices } from "../images/services";
-import { getPostNotFoundResponse } from "../../utils/server-response";
+import {
+  getPostNotFoundResponse,
+  getUserNotFoundResponse,
+} from "../../utils/server-response";
 import { isEmpty, isEqual } from "../../utils/general";
 
 const get_posts: () => RequestHandler = () => {
@@ -63,7 +65,12 @@ const get_posts_postId: () => RequestHandler = () => {
 const post_posts: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const user = req.user as User;
+      const { user } = req;
+
+      if (!user) {
+        return getUserNotFoundResponse({ res });
+      }
+
       const { body } = req;
 
       const {
