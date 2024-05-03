@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
 
@@ -5,6 +7,7 @@ import { useAuth } from 'features/api-slices/useAuth';
 import { useModal } from 'features/modal/useModal';
 
 import { useGetFormErrors } from 'hooks/useGetFormErrors';
+import { useKeyBoard } from 'hooks/useKeyBoard';
 import { Portal } from 'hooks/usePortal';
 import { useRouter } from 'hooks/useRouter';
 
@@ -25,6 +28,24 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
   const authSignUpModal = useAuthSignUpModal();
 
   const getFormErrors = useGetFormErrors();
+
+  const refPassword = useRef<HTMLInputElement>(null);
+
+  const emailKeyboard = useKeyBoard({
+    Enter: (e) => {
+      e.preventDefault();
+      refPassword.current?.focus();
+    },
+  });
+
+  const passwordKeyboard = useKeyBoard<{
+    handleSubmit: () => void;
+  }>({
+    Enter: (e, { handleSubmit }) => {
+      e.preventDefault();
+      handleSubmit();
+    },
+  });
 
   return (
     <div className="flex min-h-full flex-col justify-center">
@@ -60,18 +81,38 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
             ]);
           }}
         >
-          {({ handleSubmit, isValid, values }) => {
+          {({ isValid, values }) => {
+            const handleSubmit = () => {
+              if (!isValid) return;
+
+              const { email, password } = values;
+
+              authSignIn.fetch(
+                { email, password },
+                {
+                  onAfterSuccess: () => {
+                    if (redirect) {
+                      pushRoute(redirect);
+                    }
+                    onClose();
+                  },
+                },
+              );
+            };
             return (
-              <form onSubmit={handleSubmit}>
+              <form>
                 <FieldInput
                   id="email"
                   name="email"
                   type="email"
                   autoComplete="email"
+                  autoFocus
                   label="Correo Electrónico"
+                  {...emailKeyboard()}
                 />
 
                 <FieldInput
+                  ref={refPassword}
                   id="password"
                   name="password"
                   type="password"
@@ -79,6 +120,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                   autoFocus={!!email}
                   label="Contraseña"
                   className="mt-6"
+                  {...passwordKeyboard({ handleSubmit })}
                 />
 
                 {portal.getPortal(
@@ -86,21 +128,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                     label="Iniciar sesión"
                     isBusy={authSignIn.status.isBusy}
                     disabled={!isValid}
-                    onClick={() => {
-                      const { email, password } = values;
-
-                      authSignIn.fetch(
-                        { email, password },
-                        {
-                          onAfterSuccess: () => {
-                            if (redirect) {
-                              pushRoute(redirect);
-                            }
-                            onClose();
-                          },
-                        },
-                      );
-                    }}
+                    onClick={handleSubmit}
                     className="w-full"
                   />,
                 )}

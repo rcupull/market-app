@@ -14,6 +14,7 @@ import { IconButton } from 'components/icon-button';
 import { IconUpdate } from 'components/icon-update';
 import { Menu } from 'components/menu';
 import { NavBar as NavBarBase } from 'components/nav-bar';
+import { UserAvatar } from 'components/user-avatar';
 
 import { useAuthSignOut } from 'features/api/auth/useAuthSignOut';
 import { useAuth } from 'features/api-slices/useAuth';
@@ -112,7 +113,13 @@ export const Navbar = ({ className }: NavbarProps) => {
             />
           )}
           <Menu
-            buttonElement={<IconButton svg={() => <UserIcon className="size-7" />} dark />}
+            buttonElement={
+              isAuthenticated ? (
+                <UserAvatar />
+              ) : (
+                <IconButton svg={() => <UserIcon className="size-7" />} dark />
+              )
+            }
             topElement={
               <>
                 {user ? (
