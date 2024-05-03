@@ -2,7 +2,7 @@ import { RequestHandler } from "../../types/general";
 import { withTryCatch } from "../../utils/error";
 import { ServerResponse } from "http";
 import { v4 as uuid } from "uuid";
-import { SessionModel, ValidationCodeModel } from "../../schemas/auth";
+import { AuthSessionModel, ValidationCodeModel } from "../../schemas/auth";
 import { userServices } from "../user/services";
 import jwt from "jsonwebtoken";
 
@@ -44,13 +44,12 @@ const post_signIn: () => RequestHandler = () => {
       const accessToken = generateAccessJWT({ id: user._id.toString() });
       const refreshToken = generateRefreshJWT({ id: user._id.toString() });
 
-      const session = new SessionModel({
+      const authSession = new AuthSessionModel({
         refreshToken,
-        createdAt: new Date(),
-        userId: userData._id,
+        userId: user._id,
       });
 
-      await session.save();
+      await authSession.save();
 
       get200Response({
         res,
@@ -69,7 +68,9 @@ const post_refresh: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { refreshToken } = req.body;
 
-      const currentSession = await SessionModel.findOne({ refreshToken });
+      const currentSession = await AuthSessionModel.findOne({
+        refreshToken,
+      });
 
       if (!currentSession) {
         return getSessionNotFoundResponse({ res });
@@ -82,10 +83,15 @@ const post_refresh: () => RequestHandler = () => {
           if (err) {
             logger.error(`Error refreshing token ${err}`);
 
-            return SessionModel.deleteOne({ refreshToken }).then(() => {
+            /**
+             * Cuando falla la verificación del token de refresco, se elimina la sesión
+             */
+            return AuthSessionModel.deleteOne({ refreshToken }).then(() => {
               get401Response({
                 res,
-                json: {},
+                json: {
+                  message: "Error refreshing token",
+                },
               });
             });
           }
@@ -107,7 +113,7 @@ const post_signOut: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { refreshToken } = req.body;
 
-      await SessionModel.deleteOne({ refreshToken });
+      await AuthSessionModel.deleteOne({ refreshToken });
 
       return get200Response({
         res,
