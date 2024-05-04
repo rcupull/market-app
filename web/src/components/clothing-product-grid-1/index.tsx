@@ -21,7 +21,7 @@ export interface ClothingProductGrid1Props {
     images?: (props: ProductImagesProps) => React.ReactNode;
     price?: (props: ProductPriceProps) => React.ReactNode;
     review?: (props: ReviewProps) => React.ReactNode;
-    colors?: (props: FieldColorSelectProps<PostColor>) => React.ReactNode;
+    colors?: (props: FieldColorSelectProps) => React.ReactNode;
     clothingSize?: (props: FieldClothingSizeSelectProps) => React.ReactNode;
     description?: (props: ProductDescriptionProps) => React.ReactNode;
     highLights?: (props: ProductHighLightsProps) => React.ReactNode;
@@ -90,7 +90,7 @@ export const ClothingProductGrid1 = ({
                     render.colors?.({
                       items: colors,
                       className: 'mt-10',
-                      label: 'Colores',
+                      label: 'Colores disponibles',
                       name: 'color',
                     })}
 
@@ -99,13 +99,13 @@ export const ClothingProductGrid1 = ({
                     render.clothingSize?.({
                       sizesInStock: clothingSizes,
                       className: 'mt-10',
-                      label: 'Tallas',
+                      label: 'Tallas disponibles',
                       name: 'clothingSizes',
                     })}
 
                   {portal.getPortal(
                     <Button
-                      label="Add to bag"
+                      label="Agregar al carro"
                       className="mt-10 w-full"
                       onClick={() => {
                         const { color, size } = values;

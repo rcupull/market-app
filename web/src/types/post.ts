@@ -27,16 +27,29 @@ export interface Post extends BaseIdentity {
   postPageLayout?: PostPageLayout;
 }
 
-export type PostColor = 'white' | 'gray' | 'black';
+export type PostColor =
+  | 'white'
+  | 'gray'
+  | 'black'
+  | 'blue'
+  | 'red'
+  | 'green'
+  | 'purple'
+  | 'orange'
+  | 'yellow'
+  | 'slate'
+  | 'pink'
+  | 'fuchsia'
+  | 'violet'
+  | 'cyan'
+  | 'teal';
 
-export type PostColorMeta = Record<
-  PostColor,
-  {
-    name: PostColor;
-    bgColor: string;
-    selectedRingColor: string;
-  }
->;
+export interface PostColorValue {
+  name: PostColor;
+  bgColor: string;
+  selectedRingColor: string;
+}
+export type PostColorMeta = Record<PostColor, PostColorValue>;
 // ////////////////CLOTHING
 
 export type PostClothingSize = 'XXS' | 'XS' | 'S' | 'M' | 'L' | 'XL' | '2XL' | '3XL';

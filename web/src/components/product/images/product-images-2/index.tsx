@@ -48,7 +48,7 @@ export const ProductImages2 = ({ value, className }: ProductImages2Props) => {
           <img
             src={getImageEndpoint(selectedImage.src)}
             alt={selectedImage.alt}
-            className="object-cover object-center"
+            className="object-cover object-center h-80 w-96"
           />
         ) : (
           <UnknownImage className="border-2 rounded-lg" />
