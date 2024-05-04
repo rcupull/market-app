@@ -1,4 +1,3 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 
 import { Button } from 'components/button';
@@ -9,6 +8,8 @@ import { ShoppingCart } from './sub-components/shooping-cart';
 import { WhatsAppMessage } from './sub-components/whatsApp-message';
 import { StepCommonProps } from './types';
 
+import SvgAngleLeftSolid from 'icons/AngleLeftSolid';
+import SvgAngleRightSolid from 'icons/AngleRightSolid';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { cn } from 'utils/general';
 
@@ -20,7 +21,7 @@ export const Component = () => {
   const backButton = (
     <Button
       label="Atrás"
-      svg={ChevronLeftIcon}
+      svg={SvgAngleLeftSolid}
       variant="link"
       onClick={() => {
         if (selected > 0) {
@@ -33,7 +34,7 @@ export const Component = () => {
   const nextButton = (
     <Button
       label="Siguiente"
-      svg={ChevronRightIcon}
+      svg={SvgAngleRightSolid}
       svgPosition="right"
       variant="link"
       onClick={() => {

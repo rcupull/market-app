@@ -1,4 +1,3 @@
-
 import { useCookies } from 'features/cookies/useCookies';
 
 import { useFetch } from 'hooks/useFetch';
@@ -17,14 +16,13 @@ export const useAuthRefresh = (): {
       data: fetch[0],
       status: fetch[1],
       fetch: (_, options = {}) => {
+        const refreshToken = getCookie('refreshToken');
 
-        const refreshToken = getCookie('refreshToken')
-        
         fetch[2](
           {
             method: 'post',
             url: getEndpoint({ path: '/auth/refresh' }),
-            data: { refreshToken,  },
+            data: { refreshToken },
           },
           options,
         );

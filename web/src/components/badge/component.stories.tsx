@@ -13,5 +13,11 @@ export const Variants = () => (
     <br />
     <br />
     <Badge variant="success" />
+    <br />
+    <br />
+    <Badge variant="cart" />
+    <br />
+    <br />
+    <Badge variant="warning" />
   </>
 );

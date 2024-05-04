@@ -65,7 +65,7 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & {
             ...options,
             onAfterSuccess: async (response) => {
               const { accessToken, user, refreshToken } = response;
-              
+
               setCookie('accessToken', accessToken);
               setCookie('refreshToken', refreshToken);
               setCookie('user', user);

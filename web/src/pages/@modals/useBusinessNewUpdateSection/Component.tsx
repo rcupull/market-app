@@ -167,6 +167,7 @@ export const Component = ({ portal, sectionId, onAfterSuccess }: ComponentProps)
               label="Diseño de las tarjetas de publicaciones"
               name="postCardLayout"
               className="w-full"
+              collapsable
             />
 
             {/* //////////////////////////////////////////////////////////////////////////////////////////////// */}

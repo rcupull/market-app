@@ -1,11 +1,8 @@
-import {
-  CheckCircleIcon,
-  ExclamationTriangleIcon,
-  InformationCircleIcon,
-  ShoppingCartIcon,
-} from '@heroicons/react/24/outline';
 import { useMemo } from 'react';
 
+import SvgExclamationTriangleSolid from 'icons/ExclamationTriangleSolid';
+import SvgInfoCircleSolid from 'icons/InfoCircleSolid';
+import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { cn } from 'utils/general';
 
 export interface BadgeProps {
@@ -15,11 +12,11 @@ export interface BadgeProps {
 
 export const Badge = ({ variant, className }: BadgeProps) => {
   const IconComponent = useMemo(() => {
-    if (variant === 'error') return ExclamationTriangleIcon;
-    if (variant === 'success') return CheckCircleIcon;
-    if (variant === 'info') return InformationCircleIcon;
-    if (variant === 'warning') return ExclamationTriangleIcon;
-    if (variant === 'cart') return ShoppingCartIcon;
+    if (variant === 'error') return SvgExclamationTriangleSolid;
+    if (variant === 'success') return SvgInfoCircleSolid;
+    if (variant === 'info') return SvgInfoCircleSolid;
+    if (variant === 'warning') return SvgExclamationTriangleSolid;
+    if (variant === 'cart') return SvgShoppingCartSolid;
 
     return () => null;
   }, [variant]);
@@ -40,11 +37,11 @@ export const Badge = ({ variant, className }: BadgeProps) => {
     >
       <IconComponent
         className={cn('h-6 w-6', {
-          ['text-red-600']: variant == 'error',
-          ['text-green-600']: variant == 'success',
-          ['text-blue-600']: variant == 'info',
-          ['text-yellow-600']: variant == 'warning',
-          ['text-gray-600']: variant == 'cart',
+          ['fill-red-600']: variant == 'error',
+          ['fill-green-600']: variant == 'success',
+          ['fill-blue-600']: variant == 'info',
+          ['fill-yellow-600']: variant == 'warning',
+          ['fill-gray-600']: variant == 'cart',
         })}
         aria-hidden="true"
       />

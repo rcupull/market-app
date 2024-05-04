@@ -1,24 +1,27 @@
-import { forwardRef } from 'react';
+import { cloneElement, forwardRef, isValidElement, ReactElement } from 'react';
 import { Ellipsis } from 'react-css-spinners';
 
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
 const primaryStyles =
-  'bg-indigo-600 text-white  hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600';
-const errorStyles = 'bg-red-600 text-white  hover:bg-red-500';
-const linkStyles = 'text-indigo-600 hover:text-indigo-500 !shadow-none !m-0 !p-0 h-fit';
-const outlinedStyles = 'bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50';
+  'bg-indigo-600 text-white fill-white  hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600';
+const errorStyles = 'bg-red-600 text-white fill-white  hover:bg-red-500';
+const linkStyles =
+  'text-indigo-600 fill-indigo-600 hover:text-indigo-500 !shadow-none !m-0 !p-0 h-fit';
+const outlinedStyles =
+  'bg-white text-gray-900 fill-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50';
+
+type ButtonSvg = React.FunctionComponent<StyleProps> | React.ReactElement<StyleProps>;
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'outlined' | 'error' | 'link';
   svgPosition?: 'left' | 'right';
   label?: string;
   isBusy?: boolean;
-  svg?: React.FunctionComponent<StyleProps>;
+  svg?: ButtonSvg;
   stopPropagation?: boolean;
   preventDefault?: boolean;
-  needPremium?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
@@ -28,16 +31,30 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
     label,
     isBusy,
     disabled: disabledProp,
-    svg: Svg,
+    svg,
     stopPropagation,
     preventDefault,
     onClick,
-    needPremium,
     svgPosition = 'left',
     ...omittedProps
   } = props;
 
-  const disabled = disabledProp || isBusy || needPremium;
+  const disabled = disabledProp || isBusy;
+
+  const getSvg = (Component: ButtonSvg): ReactElement => {
+    const commonClassName = cn('h-5 w-5', {
+      ['mr-2']: svgPosition === 'left' && label,
+      ['ml-2']: svgPosition === 'right' && label,
+    });
+
+    if (isValidElement(Component)) {
+      return cloneElement(Component, {
+        className: cn(commonClassName, Component.props?.className || ''),
+      });
+    }
+
+    return <Component className={commonClassName} />;
+  };
 
   return (
     <button
@@ -72,9 +89,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
       }}
       {...omittedProps}
     >
-      {Svg && svgPosition === 'left' && <Svg className={cn('h-5 w-5', { ['mr-2']: label })} />}
+      {svg && svgPosition === 'left' && getSvg(svg)}
       {label}
-      {Svg && svgPosition === 'right' && <Svg className={cn('h-5 w-5', { ['ml-2']: label })} />}
+      {svg && svgPosition === 'right' && getSvg(svg)}
+
       {isBusy && (
         <Ellipsis
           size={40}

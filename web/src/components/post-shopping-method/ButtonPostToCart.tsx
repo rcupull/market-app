@@ -1,4 +1,3 @@
-import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 
 import { IconButton } from 'components/icon-button';
@@ -7,6 +6,7 @@ import { useUpdateAddOneShopping } from 'features/api/shopping/useUpdateAddOneSh
 
 import { useDebouncer } from 'hooks/useDebouncer';
 
+import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useShopping } from 'pages/@hooks/useShopping';
 import { StyleProps } from 'types/general';
@@ -36,7 +36,7 @@ export const ButtonPostToCart = ({ post, className }: ButtonPostToCartProps) => 
   return (
     <IconButton
       title="Adicionar el carrito"
-      svg={() => <ShoppingCartIcon className="size-8" />}
+      svg={<SvgShoppingCartSolid className="!size-8 !fill-gray-500" />}
       isBusy={updateAddOneShopping.status.isBusy}
       onClick={(e) => {
         e.preventDefault();

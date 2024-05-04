@@ -1,15 +1,3 @@
-import {
-  ArrowRightEndOnRectangleIcon,
-  ArrowRightStartOnRectangleIcon,
-  Cog8ToothIcon,
-  HomeIcon,
-  KeyIcon,
-  UserCircleIcon,
-  UserGroupIcon,
-  UserIcon,
-  UserPlusIcon,
-} from '@heroicons/react/24/outline';
-
 import { IconButton } from 'components/icon-button';
 import { IconUpdate } from 'components/icon-update';
 import { Menu } from 'components/menu';
@@ -27,6 +15,16 @@ import { BusinessLogo } from './business-logo';
 import { BusinessName } from './business-name';
 import { ShoppingCartMenu } from './shopping-cart-menu';
 
+import SvgCogSolid from 'icons/CogSolid';
+import SvgHomeSolid from 'icons/HomeSolid';
+import SvgKeySolid from 'icons/KeySolid';
+import SvgSignInAltSolid from 'icons/SignInAltSolid';
+import SvgSignOutAltSolid from 'icons/SignOutAltSolid';
+import SvgStoreSolid from 'icons/StoreSolid';
+import SvgUser from 'icons/User';
+import SvgUserCircleSolid from 'icons/UserCircleSolid';
+import SvgUserPlusSolid from 'icons/UserPlusSolid';
+import SvgUsersSolid from 'icons/UsersSolid';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useAuthChangePasswordModal } from 'pages/@modals/useAuthChangePasswordModal';
 import { useAuthForgotPasswordRequestModal } from 'pages/@modals/useAuthForgotPasswordRequestModal';
@@ -84,14 +82,21 @@ export const Navbar = ({ className }: NavbarProps) => {
         !isBusinessPage && { name: 'Precios', href: '/price' },
         !isBusinessPage && { name: '¿Que es Asere Market?', href: '/about-us' },
         ////////////////////////////////////////////////////////////////////////////////////////////////
-        isAdmin && { name: 'Admin', href: '/admin', className: '!ml-auto' },
       ]}
       postContent={
         <>
+          {isAdmin && (
+            <IconButton
+              title="Administración"
+              svg={<SvgCogSolid className="!size-7" />}
+              dark
+              onClick={() => pushRoute('/admin')}
+            />
+          )}
           {isBusinessPage && (
             <IconButton
               title="Página inicial"
-              svg={() => <HomeIcon className="size-7" />}
+              svg={<SvgHomeSolid className="!size-7" />}
               dark
               onClick={() => pushRoute('/')}
             />
@@ -99,8 +104,8 @@ export const Navbar = ({ className }: NavbarProps) => {
           {isBusinessPage && hasSomeShoppingCartStrategy && <ShoppingCartMenu />}
           {isUser && (
             <IconButton
-              title="Panel de Control"
-              svg={() => <Cog8ToothIcon className="size-7" />}
+              title="Mis tiendas"
+              svg={<SvgStoreSolid className="!size-7" />}
               dark
               onClick={() => {
                 if (routeName) {
@@ -117,7 +122,7 @@ export const Navbar = ({ className }: NavbarProps) => {
               isAuthenticated ? (
                 <UserAvatar />
               ) : (
-                <IconButton svg={() => <UserIcon className="size-7" />} dark />
+                <IconButton svg={<SvgUser className="!size-7" />} dark />
               )
             }
             topElement={
@@ -138,7 +143,7 @@ export const Navbar = ({ className }: NavbarProps) => {
               </>
             }
             items={[
-              { label: 'Inicio', href: '/', svg: HomeIcon },
+              { label: 'Inicio', href: '/', svg: SvgHomeSolid },
               user && {
                 label: 'Editar perfil',
                 onClick: () => {
@@ -152,17 +157,17 @@ export const Navbar = ({ className }: NavbarProps) => {
               !isAuthenticated && {
                 label: 'Iniciar sesión',
                 onClick: () => authSignInModal.open(),
-                svg: ArrowRightEndOnRectangleIcon,
+                svg: SvgSignInAltSolid,
               },
               !isAuthenticated && {
                 label: 'Créate una cuenta',
                 onClick: () => authSignUpModal.open(),
-                svg: UserPlusIcon,
+                svg: SvgUserPlusSolid,
               },
               !isAuthenticated && {
                 label: 'Recupera tu cuenta olvidada',
                 onClick: () => authForgotPasswordRequestModal.open(),
-                svg: UserCircleIcon,
+                svg: SvgUserCircleSolid,
               },
               isAuthenticated && {
                 label: 'Cerrar sesión',
@@ -172,16 +177,16 @@ export const Navbar = ({ className }: NavbarProps) => {
                   }
                   setTimeout(() => authSignOut.fetch(), 500);
                 },
-                svg: ArrowRightStartOnRectangleIcon,
+                svg: SvgSignOutAltSolid,
               },
               isAuthenticated && {
                 label: 'Cambiar contraseña',
                 onClick: () => {
                   authChangePasswordModal.open();
                 },
-                svg: KeyIcon,
+                svg: SvgKeySolid,
               },
-              { label: 'Saber más sobre nosotros', href: '/about-us', svg: UserGroupIcon },
+              { label: 'Saber más sobre nosotros', href: '/about-us', svg: SvgUsersSolid },
             ]}
             className="flex-shrink-0"
           />

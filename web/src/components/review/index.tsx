@@ -1,6 +1,6 @@
-import { StarIcon } from '@heroicons/react/20/solid';
 import { useMemo } from 'react';
 
+import SvgStar from 'icons/Star';
 import { StyleProps } from 'types/general';
 import { PostReviews } from 'types/post';
 import { cn } from 'utils/general';
@@ -34,10 +34,10 @@ export const Review = ({ value, onClickToReview, className }: ReviewProps) => {
       <div className="flex items-center">
         <div className="flex items-center">
           {[0, 1, 2, 3, 4].map((rating) => (
-            <StarIcon
+            <SvgStar
               key={rating}
               className={cn(
-                average > rating ? 'text-gray-900' : 'text-gray-200',
+                average > rating ? 'fill-gray-900' : 'fill-gray-200',
                 'h-5 w-5 flex-shrink-0',
               )}
               aria-hidden="true"

@@ -1,12 +1,13 @@
 import { Listbox, Transition } from '@headlessui/react';
 import { Float } from '@headlessui-float/react';
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
 import { Fragment, useEffect, useState } from 'react';
 
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
 
 import { useFormikField } from 'hooks/useFormikField';
 
+import SvgCheckSolid from 'icons/CheckSolid';
+import SvgSortDownSolid from 'icons/SortDownSolid';
 import { AnyRecord, StyleProps } from 'types/general';
 import { cn, getFlattenArray, isArray, isEqualObj, removeRow } from 'utils/general';
 
@@ -109,7 +110,7 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
                         : renderValue(state))}
                   </div>
                   <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                    <ChevronUpDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                    <SvgSortDownSolid className="h-5 w-5 fill-gray-400" aria-hidden="true" />
                   </span>
                 </Listbox.Button>
 
@@ -164,10 +165,10 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
                               {selected && (
                                 <span
                                   className={cn(
-                                    'bg-inherit absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600',
+                                    'bg-inherit absolute inset-y-0 right-0 flex items-center pr-4 fill-indigo-600',
                                   )}
                                 >
-                                  <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                  <SvgCheckSolid className="h-5 w-5" aria-hidden="true" />
                                 </span>
                               )}
                             </div>

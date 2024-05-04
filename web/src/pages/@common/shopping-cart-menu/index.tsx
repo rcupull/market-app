@@ -1,5 +1,3 @@
-import { ShoppingCartIcon } from '@heroicons/react/24/outline';
-
 import { Button } from 'components/button';
 import { IconButton } from 'components/icon-button';
 import { Menu } from 'components/menu';
@@ -11,6 +9,7 @@ import { useRouter } from 'hooks/useRouter';
 import { ShoppingCartPosts } from '../shopping-cart-posts';
 import { ShoppingCartRemoveAllButton } from '../shopping-cart-remove-all-button';
 
+import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useShopping } from 'pages/@hooks/useShopping';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
@@ -95,7 +94,7 @@ export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
         <div className="relative">
           <IconButton
             title="Carro de Compras"
-            svg={() => <ShoppingCartIcon className="size-7" />}
+            svg={<SvgShoppingCartSolid className="!size-8" />}
             dark
           />
           {isAuthenticated && (

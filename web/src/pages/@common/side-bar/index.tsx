@@ -1,12 +1,3 @@
-import {
-  BookmarkIcon,
-  Cog8ToothIcon,
-  CurrencyDollarIcon,
-  HomeIcon,
-  UserCircleIcon,
-  UserGroupIcon,
-} from '@heroicons/react/24/outline';
-
 import { IconShowHide } from 'components/icon-show-hide';
 import { SideBar as SideBarBase } from 'components/side-bar';
 
@@ -18,6 +9,11 @@ import { useRouter } from 'hooks/useRouter';
 import { AddNewBusinessButton } from './AddNewBusinessButton';
 import { SideBarUserHeader } from './SideBarUserHeader';
 
+import SvgCogSolid from 'icons/CogSolid';
+import SvgDollarSignSolid from 'icons/DollarSignSolid';
+import SvgHomeSolid from 'icons/HomeSolid';
+import SvgStoreSolid from 'icons/StoreSolid';
+import SvgUsersSolid from 'icons/UsersSolid';
 import { StyleProps } from 'types/general';
 
 export interface SideBarProps extends StyleProps {}
@@ -43,18 +39,23 @@ export const SideBar = ({ className }: SideBarProps) => {
         isDashboardOrAdminPage && {
           divider: true,
         },
-        isBusinessPage && { label: 'Publicaciones', href: `/${routeName}`, svg: HomeIcon },
-        !isBusinessPage && { label: 'Inicio', href: '/', svg: HomeIcon, className: 'sm:hidden' },
+        isBusinessPage && { label: 'Publicaciones', href: `/${routeName}`, svg: SvgHomeSolid },
+        !isBusinessPage && {
+          label: 'Inicio',
+          href: '/',
+          svg: SvgHomeSolid,
+          className: 'sm:hidden',
+        },
         !isBusinessPage && {
           label: 'Precio',
           href: '/price',
-          svg: CurrencyDollarIcon,
+          svg: SvgDollarSignSolid,
           className: 'sm:hidden',
         },
         !isBusinessPage && {
           label: '¿Que es Asere Market?',
           href: '/about-us',
-          svg: UserCircleIcon,
+          svg: SvgUsersSolid,
           className: 'sm:hidden',
         },
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,14 +68,14 @@ export const SideBar = ({ className }: SideBarProps) => {
             // ADMIN
             label: 'Admin',
             href: '/admin',
-            svg: Cog8ToothIcon,
+            svg: SvgCogSolid,
           },
         isAuthenticated &&
           isAdmin && {
             // ADMIN
             label: 'Usuarios',
             href: '/admin/users',
-            svg: UserGroupIcon,
+            svg: SvgUsersSolid,
             className: 'pl-10',
           },
         isAuthenticated &&
@@ -82,7 +83,7 @@ export const SideBar = ({ className }: SideBarProps) => {
             // BUSINESS
             label: 'Mis negocios',
             href: '/dashboard/business',
-            svg: BookmarkIcon,
+            svg: SvgStoreSolid,
             endElement: <AddNewBusinessButton className="ml-auto" />,
           },
         ...business.map(({ name, routeName, hidden }) => {

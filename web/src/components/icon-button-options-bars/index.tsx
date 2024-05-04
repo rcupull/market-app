@@ -1,9 +1,9 @@
-import { Bars3Icon } from '@heroicons/react/24/outline';
-
 import { IconButton, IconButtonProps } from 'components/icon-button';
+
+import SvgBarsSolid from 'icons/BarsSolid';
 
 export interface IconButtonOptionsBarsProps extends IconButtonProps {}
 
 export const IconButtonOptionsBars = (props: IconButtonOptionsBarsProps) => (
-  <IconButton svg={Bars3Icon} title="Opciones" {...props} />
+  <IconButton svg={SvgBarsSolid} title="Opciones" {...props} />
 );

@@ -1,6 +1,7 @@
-import { PlusCircleIcon } from '@heroicons/react/24/outline';
-
+import SvgPlusCircleSolid from 'icons/PlusCircleSolid';
 import { StyleProps } from 'types/general';
 export interface IconAddProps extends StyleProps {}
 
-export const IconAdd = ({ className }: IconAddProps) => <PlusCircleIcon className={className} />;
+export const IconAdd = ({ className }: IconAddProps) => (
+  <SvgPlusCircleSolid className={className} />
+);

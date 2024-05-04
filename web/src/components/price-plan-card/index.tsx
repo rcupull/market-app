@@ -1,7 +1,7 @@
-import { CheckIcon, XMarkIcon } from '@heroicons/react/20/solid';
-
 import { Button } from 'components/button';
 
+import SvgCheckSolid from 'icons/CheckSolid';
+import SvgTimesSolid from 'icons/TimesSolid';
 import { cn } from 'utils/general';
 
 interface PriceItem {
@@ -70,9 +70,9 @@ export const PricePlanCard = ({
             return (
               <div key={index} className="flex items-center mt-2">
                 {included ? (
-                  <CheckIcon className="h-5 w-5 text-indigo-700" />
+                  <SvgCheckSolid className="h-5 w-5 fill-indigo-700" />
                 ) : (
-                  <XMarkIcon className="h-5 w-5 text-red-700" />
+                  <SvgTimesSolid className="h-5 w-5 fill-red-700" />
                 )}
 
                 <span className="text-sm leading-6 text-gray-900 ml-2">{description}</span>

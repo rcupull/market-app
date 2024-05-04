@@ -1,8 +1,9 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 import { useEffect, useState } from 'react';
 
 import { Button, ButtonProps } from 'components/button';
 
+import SvgAngleLeftSolid from 'icons/AngleLeftSolid';
+import SvgAngleRightSolid from 'icons/AngleRightSolid';
 import { Paginator } from 'types/api';
 import { StyleProps } from 'types/general';
 import { cn, getRange, isNullOrUndefined, isNumber } from 'utils/general';
@@ -123,7 +124,7 @@ export const Pagination = ({ paginator, onChange, className }: PaginationProps) 
           aria-label="Pagination"
         >
           <NavButton
-            svg={ChevronLeftIcon}
+            svg={SvgAngleLeftSolid}
             className="rounded-l-md"
             disabled={!hasPrevPage}
             onClick={handlePrev}
@@ -141,7 +142,7 @@ export const Pagination = ({ paginator, onChange, className }: PaginationProps) 
           })}
 
           <NavButton
-            svg={ChevronRightIcon}
+            svg={SvgAngleRightSolid}
             className="rounded-r-md"
             disabled={!hasNextPage}
             onClick={handleNext}

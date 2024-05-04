@@ -34,6 +34,7 @@ export const Menu = ({
         className="relative"
         offset={4}
         floatingAs={Fragment}
+        portal
         autoPlacement={{
           allowedPlacements: ['bottom-start', 'bottom-end'],
         }}

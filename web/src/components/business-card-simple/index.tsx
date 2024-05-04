@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { EmptyImage } from 'components/empty-image';
 
-import {  BusinessSummary } from 'types/business';
+import { BusinessSummary } from 'types/business';
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 export interface BusinessCardSimpleProps extends StyleProps {

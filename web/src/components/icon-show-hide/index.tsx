@@ -1,5 +1,5 @@
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
-
+import SvgEye from 'icons/Eye';
+import SvgEyeSlash from 'icons/EyeSlash';
 import { StyleProps } from 'types/general';
 
 export interface IconShowHideProps extends StyleProps {
@@ -7,6 +7,6 @@ export interface IconShowHideProps extends StyleProps {
 }
 
 export const IconShowHide = ({ hidden, className }: IconShowHideProps) => {
-  const Icon = hidden ? EyeSlashIcon : EyeIcon;
+  const Icon = hidden ? SvgEyeSlash : SvgEye;
   return <Icon className={className} />;
 };

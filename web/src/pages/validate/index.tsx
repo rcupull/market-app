@@ -1,4 +1,3 @@
-import { CheckCircleIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 
 import { Button } from 'components/button';
@@ -8,6 +7,8 @@ import { useAuthValidate } from 'features/api/auth/useAuthValidate';
 
 import { useRouter } from 'hooks/useRouter';
 
+import SvgCheckCircle from 'icons/CheckCircle';
+import SvgExclamationTriangleSolid from 'icons/ExclamationTriangleSolid';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 
 export const Validate = () => {
@@ -50,7 +51,7 @@ export const Validate = () => {
 
       {status === 'success' && (
         <>
-          <CheckCircleIcon className="size-20 bg-green-100 text-green-500 rounded-full p-1" />
+          <SvgCheckCircle className="size-20 bg-green-100 fill-green-500 rounded-full p-1" />
 
           <span className="text-2xl font-semibold">Cuenta activada</span>
 
@@ -64,7 +65,7 @@ export const Validate = () => {
 
       {status === 'error' && (
         <>
-          <ExclamationTriangleIcon className="size-20 bg-red-100 text-red-500 rounded-full p-1" />
+          <SvgExclamationTriangleSolid className="size-20 bg-red-100 fill-red-500 rounded-full p-1" />
 
           <span className="text-2xl font-semibold w-96 text-center">
             Error en la activación. Asegurese de haber usado el enlace correcto. Si el problema

@@ -1,9 +1,10 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 
 import { Button } from 'components/button';
 import { Tabs } from 'components/tabs';
 
+import SvgAngleLeftSolid from 'icons/AngleLeftSolid';
+import SvgAngleRightSolid from 'icons/AngleRightSolid';
 import { cn } from 'utils/general';
 
 export interface StepProps {
@@ -21,7 +22,7 @@ export const Stepper = ({ items }: StepperProps) => {
   const backButton = (
     <Button
       label="Atrás"
-      svg={ChevronLeftIcon}
+      svg={SvgAngleLeftSolid}
       variant="link"
       onClick={() => {
         if (selected > 0) {
@@ -34,7 +35,7 @@ export const Stepper = ({ items }: StepperProps) => {
   const nextButton = (
     <Button
       label="Siguiente"
-      svg={ChevronRightIcon}
+      svg={SvgAngleRightSolid}
       svgPosition="right"
       variant="link"
       onClick={() => {

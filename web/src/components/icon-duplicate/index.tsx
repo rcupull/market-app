@@ -1,10 +1,9 @@
-import { DocumentDuplicateIcon } from '@heroicons/react/24/outline';
-
+import SvgCopySolid from 'icons/CopySolid';
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
 export interface IconDuplicateProps extends StyleProps {}
 
 export const IconDuplicate = ({ className }: IconDuplicateProps) => (
-  <DocumentDuplicateIcon className={cn('!text-green-800', className)} />
+  <SvgCopySolid className={cn('!fill-green-800', className)} />
 );

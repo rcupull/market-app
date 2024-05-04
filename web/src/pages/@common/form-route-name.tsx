@@ -1,5 +1,5 @@
-import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
-
+import SvgCheckCircle from 'icons/CheckCircle';
+import SvgTimesCircle from 'icons/TimesCircle';
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
@@ -10,9 +10,9 @@ export interface FormRouteNameProps extends StyleProps {
 
 export const FormRouteName = ({ routeName, error, className }: FormRouteNameProps) => {
   const iconToRender = error ? (
-    <XCircleIcon className="text-red-500 w-5 h-5" />
+    <SvgTimesCircle className="fill-red-500 w-5 h-5" />
   ) : (
-    <CheckCircleIcon className="text-green-500 w-5 h-5" />
+    <SvgCheckCircle className="fill-green-500 w-5 h-5" />
   );
 
   return (

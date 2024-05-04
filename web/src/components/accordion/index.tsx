@@ -1,6 +1,6 @@
 import { Disclosure } from '@headlessui/react';
-import { ChevronRightIcon } from '@heroicons/react/20/solid';
 
+import SvgAngleRightSolid from 'icons/AngleRightSolid';
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
@@ -17,8 +17,8 @@ export const Accordion = ({ children, header, className }: AccordionProps) => {
             <Disclosure.Button className="flex w-full items-center border border-gray-200 p-2 rounded-sm">
               {header}
 
-              <ChevronRightIcon
-                className={cn('w-6 h-6 ml-auto text-gray-400', {
+              <SvgAngleRightSolid
+                className={cn('w-5 h-5 ml-auto fill-gray-400', {
                   'rotate-90 transform': open,
                 })}
               />

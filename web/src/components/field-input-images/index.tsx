@@ -1,4 +1,3 @@
-import { PlusIcon } from '@heroicons/react/24/outline';
 import { forwardRef, useEffect, useMemo, useState } from 'react';
 
 import { EmptyImage } from 'components/empty-image';
@@ -10,6 +9,7 @@ import { useModal } from 'features/modal/useModal';
 
 import { useFormikField } from 'hooks/useFormikField';
 
+import SvgPlusSolid from 'icons/PlusSolid';
 import { Image, ImageFile } from 'types/general';
 import { getFileImageSize } from 'utils/file';
 import { cn, getFlattenArray, isNumber, removeRow, updateRow } from 'utils/general';
@@ -273,7 +273,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                   ) : (
                     <div className="relative h-full w-full text-gray-500">
                       <EmptyImage key={index} className="h-full w-full" />
-                      <PlusIcon className="h-4 w-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-600 font-bold" />
+                      <SvgPlusSolid className="h-4 w-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-600 font-bold" />
                     </div>
                   )}
                 </div>

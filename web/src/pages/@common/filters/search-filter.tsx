@@ -1,11 +1,11 @@
-import { MagnifyingGlassIcon, XCircleIcon } from '@heroicons/react/24/solid';
-
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
 
 import { usePortal } from 'hooks/usePortal';
 
 import { Formik } from 'formik';
+import SvgSearchSolid from 'icons/SearchSolid';
+import SvgTimesCircle from 'icons/TimesCircle';
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
@@ -98,7 +98,7 @@ export const SearchFilter = ({
                     variant="primary"
                     className="hidden sm:block"
                   />
-                  <MagnifyingGlassIcon className="sm:hidden h-8 w-8 rounded-full p-1 text-indigo-500 cursor-pointer hover:bg-gray-100" />
+                  <SvgSearchSolid className="sm:hidden h-8 w-8 rounded-full p-1 fill-indigo-500 cursor-pointer hover:bg-gray-100" />
                 </div>,
               )}
 
@@ -111,7 +111,7 @@ export const SearchFilter = ({
                   }}
                 >
                   <Button label="Limpiar" variant="outlined" className="hidden sm:block" />
-                  <XCircleIcon className="sm:hidden h-8 w-8 rounded-full p-1 text-red-500 cursor-pointer hover:bg-gray-100" />
+                  <SvgTimesCircle className="sm:hidden h-8 w-8 rounded-full p-1 fill-red-500 cursor-pointer hover:bg-gray-100" />
                 </div>,
               )}
             </form>

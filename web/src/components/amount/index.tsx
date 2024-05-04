@@ -1,4 +1,3 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { useEffect, useRef, useState } from 'react';
 
 import { Button } from 'components/button';
@@ -7,6 +6,8 @@ import { SpinnerEllipsis } from 'components/spinner-ellipsis';
 
 import { useDebouncer } from 'hooks/useDebouncer';
 
+import SvgAngleLeftSolid from 'icons/AngleLeftSolid';
+import SvgAngleRightSolid from 'icons/AngleRightSolid';
 import { StyleProps } from 'types/general';
 import { cn, isNumber } from 'utils/general';
 
@@ -39,7 +40,7 @@ export const Amount = ({ value, onChange, className, isBusy }: AmountProps) => {
   return (
     <div className={cn('relative flex items-center gap-1', className)}>
       <Button
-        svg={() => <ChevronLeftIcon className="size-3" />}
+        svg={<SvgAngleLeftSolid className="!size-3" />}
         stopPropagation
         onClick={() => {
           if (!isNumber(state)) return;
@@ -66,7 +67,7 @@ export const Amount = ({ value, onChange, className, isBusy }: AmountProps) => {
       />
 
       <Button
-        svg={() => <ChevronRightIcon className="size-3" />}
+        svg={<SvgAngleRightSolid className="!size-3" />}
         stopPropagation
         onClick={() => {
           if (!isNumber(state)) return;
