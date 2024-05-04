@@ -4,6 +4,7 @@ import { queryToSearch, searchToQuery } from './utils';
 
 import { Query } from 'types/api';
 import { AnyRecord } from 'types/general';
+import { getOnePostRoute } from 'utils/business';
 import { getFlattenJson } from 'utils/general';
 
 interface UseRouterReturn {
@@ -24,6 +25,7 @@ interface UseRouterReturn {
   isBusinessPage: boolean;
   isShoppingPage: boolean;
   isPostPage: boolean;
+  isThisPostPage: (args: { postId: string; routeName: string }) => boolean;
   isBusinessAboutUsPage: boolean;
   isDashboardPage: boolean;
   isAdminPage: boolean;
@@ -72,6 +74,9 @@ export const useRouter = (): UseRouterReturn => {
     isBusinessPage: pathname.startsWith(`/${routeName}`),
     isShoppingPage: pathname.startsWith(`/${routeName}/shopping`),
     isPostPage: pathname.startsWith(`/${routeName}/posts`),
+    isThisPostPage: ({ routeName, postId }) => {
+      return pathname.startsWith(getOnePostRoute({ postId, routeName }));
+    },
     isAboutUsPage: pathname.startsWith(`/about-us`),
     isBusinessAboutUsPage: pathname.startsWith(`/${routeName}/about-us`),
     isDashboardPage,

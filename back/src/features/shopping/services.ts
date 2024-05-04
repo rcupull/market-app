@@ -7,15 +7,16 @@ import { FilterQuery, UpdateQuery } from "mongoose";
 import { UpdateOptions } from "mongodb";
 import { ShoppingModel } from "../../schemas/shopping";
 import { Shopping } from "../../types/shopping";
-import { Post } from "../../types/post";
+import { Post, PostPurshaseNotes } from "../../types/post";
 import { isEqualIds } from "../../utils/general";
 
 const updateOrAddOne: QueryHandle<
   {
     amountToAdd?: Number;
+    purshaseNotes?: PostPurshaseNotes;
   },
   void
-> = async ({ amountToAdd = 1, req, res }) => {
+> = async ({ amountToAdd = 1, req, res, purshaseNotes }) => {
   const { user, post } = req;
 
   if (!user) {
@@ -92,6 +93,7 @@ const updateOrAddOne: QueryHandle<
       posts: [
         {
           post,
+          purshaseNotes,
           count: amountToAdd,
           lastUpdatedDate: new Date(),
         },

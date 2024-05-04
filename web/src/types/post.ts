@@ -27,6 +27,11 @@ export interface Post extends BaseIdentity {
   postPageLayout?: PostPageLayout;
 }
 
+export interface PostPurshaseNotes {
+  interestedByColors?: Array<PostColor>;
+  interestedByClothingSizes?: Array<PostClothingSize>;
+}
+
 export type PostColor =
   | 'white'
   | 'gray'

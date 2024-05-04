@@ -3,10 +3,11 @@ import { UnknownImage } from 'components/unknown-image';
 import { ProductImagesProps } from '../types';
 
 import { Image } from 'types/general';
+import { getImageEndpoint } from 'utils/api';
 import { cn } from 'utils/general';
 
 export type ProductImages1Props = ProductImagesProps;
-export const ProductImages1 = ({ value, className, getImageUrl }: ProductImages1Props) => {
+export const ProductImages1 = ({ value, className }: ProductImages1Props) => {
   const renderImage = (image: Image | undefined): React.ReactNode => {
     if (!image) {
       return <UnknownImage className="h-full w-full border-2 rounded-lg" />;
@@ -16,7 +17,7 @@ export const ProductImages1 = ({ value, className, getImageUrl }: ProductImages1
 
     return (
       <img
-        src={getImageUrl ? getImageUrl(src) : src}
+        src={getImageEndpoint(src)}
         alt={alt}
         className="h-full w-full object-cover object-center"
       />

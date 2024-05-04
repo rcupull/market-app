@@ -9,6 +9,7 @@ import { useRouter } from 'hooks/useRouter';
 import { ShoppingCartPosts } from '../shopping-cart-posts';
 import { ShoppingCartRemoveAllButton } from '../shopping-cart-remove-all-button';
 
+import SvgCartPlusSolid from 'icons/CartPlusSolid';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useShopping } from 'pages/@hooks/useShopping';
@@ -55,33 +56,35 @@ export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
       return (
         <div>
           <div className="text-center font-semibold text-lg my-2">
-            Tu bolsa de compra esta vacía
+            Tu carro de compra esta vacío
           </div>
 
           <div className="text-center">
-            Agrega productos a tu bolsa y te facilitaremos la compra.
+            <SvgCartPlusSolid className="size-9 inline" />
+            <br />
+            Agrega algunos de nuestros productos y te facilitaremos la compra.
           </div>
         </div>
       );
     }
 
     return (
-      <div>
-        <span>
+      <div className="w-full">
+        {/* <span>
           Haz crecer tu negocio online en Cuba y usa <span className="font-bold">Asere Market</span>{' '}
           para enganchar a tus clientes
-        </span>
+        </span> */}
 
+        <div className="mt-4">Tu selección hasta ahora:</div>
         <ShoppingCartPosts value={shopping.constructionShopping} />
 
         <div className="flex justify-between mt-2">
           <ShoppingCartRemoveAllButton />
 
           <Button
-            variant="link"
             label="Crear orden de compra"
             onClick={() => buyProductsModal.open()}
-            className="bg-indigo-600 text-white hover:text-gray-100 !px-2 !rounded-2xl"
+            className="!px-2 !py-0 !rounded-2xl"
           />
         </div>
       </div>

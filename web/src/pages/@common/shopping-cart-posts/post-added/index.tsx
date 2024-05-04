@@ -8,6 +8,8 @@ import { useRemoveShopping } from 'features/api/shopping/useRemoveShopping';
 import { useUpdateAddOneShopping } from 'features/api/shopping/useUpdateAddOneShopping';
 import { useModal } from 'features/modal/useModal';
 
+import { IconButtonViewPostPage } from './IconButtonViewPostPage';
+
 import { useShopping } from 'pages/@hooks/useShopping';
 import { Post } from 'types/post';
 
@@ -32,6 +34,10 @@ export const PostAdded = ({ count, post }: PostAddedProps) => {
 
       {name}
 
+      <div className="ml-auto" />
+
+      <IconButtonViewPostPage post={post} />
+
       <Amount
         value={count}
         isBusy={updateAddOneShopping.status.isBusy}
@@ -45,7 +51,6 @@ export const PostAdded = ({ count, post }: PostAddedProps) => {
             },
           );
         }}
-        className="ml-auto"
       />
 
       <img />

@@ -22,7 +22,6 @@ import { UpdateSomethingContainer } from 'pages/@common/update-something-contain
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { usePostIdPersistent } from 'pages/@hooks/usePostIdPersistent';
 import { PostsLayoutSection } from 'types/business';
-import { getImageEndpoint } from 'utils/api';
 
 export interface PostIdProps {
   routeName: string;
@@ -83,11 +82,7 @@ export const PostId = ({ routeName }: PostIdProps) => {
         backButton
       >
         <ClothingProductGrid1
-          onAddToCar={(value) => {
-            console.log('value', value);
-          }}
-          getImageUrl={getImageEndpoint}
-          value={post}
+          post={post}
           render={{
             images: (props) => <ProductImages2 {...props} />,
             price: (props) => <ProductPrice1 {...props} />,

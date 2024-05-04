@@ -1,5 +1,5 @@
 import { BaseIdentity } from "./general";
-import { Post } from "./post";
+import { Post, PostPurshaseNotes } from "./post";
 
 export type ShoppingState =
   | "CONSTRUCTION"
@@ -10,6 +10,7 @@ export type ShoppingState =
 export interface Shopping extends BaseIdentity {
   posts: Array<{
     post: Post;
+    purshaseNotes?: PostPurshaseNotes;
     count: number;
     lastUpdatedDate: Date;
   }>;

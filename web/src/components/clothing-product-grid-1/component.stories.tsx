@@ -19,10 +19,7 @@ export default {
 export const Default = (): JSX.Element => (
   <FormikWrapper>
     <ClothingProductGrid1
-      onAddToCar={(value) => {
-        console.log('value', value);
-      }}
-      value={dummyPostClothing}
+      post={dummyPostClothing}
       render={{
         images: (props) => <ProductImages1 {...props} />,
         price: (props) => <ProductPrice1 {...props} />,

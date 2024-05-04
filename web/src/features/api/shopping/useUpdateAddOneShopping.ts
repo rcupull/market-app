@@ -1,12 +1,12 @@
 import { useFetch } from 'hooks/useFetch';
 
 import { FetchResource } from 'types/api';
-import { Post } from 'types/post';
+import { Post, PostPurshaseNotes } from 'types/post';
 import { getEndpoint } from 'utils/api';
 
 export const useUpdateAddOneShopping = (): {
   updateAddOneShopping: FetchResource<
-    { routeName: string; postId: string; amountToAdd?: number },
+    { routeName: string; postId: string; amountToAdd?: number; purshaseNotes?: PostPurshaseNotes },
     Post
   >;
 } => {

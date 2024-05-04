@@ -4,7 +4,7 @@ import { QrCode } from 'components/qr-code';
 
 import { useModal } from 'features/modal/useModal';
 
-import { ButtonPostToCart } from './ButtonPostToCart';
+import { ButtonPostToCart, ButtonPostToCartProps } from './ButtonPostToCart';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { PostLayoutShoppingMethod } from 'types/business';
@@ -14,15 +14,19 @@ import { getWhatsAppPostLink } from 'utils/business';
 
 export interface PostShoppingMethodProps extends StyleProps {
   post: Post;
+  purshaseNotes?: ButtonPostToCartProps['purshaseNotes'];
   layout?: PostLayoutShoppingMethod;
   whatsAppPhoneNumber?: string;
+  btnPostToCartVariant?: ButtonPostToCartProps['variant'];
 }
 
 export const PostShoppingMethod = ({
   layout,
   whatsAppPhoneNumber,
   post,
+  purshaseNotes,
   className,
+  btnPostToCartVariant,
 }: PostShoppingMethodProps) => {
   const { pushModal } = useModal();
   const { business } = useBusiness();
@@ -75,7 +79,14 @@ export const PostShoppingMethod = ({
     layout === 'shoppingCart' &&
     business?.shoppingStrategy === 'addToCart_whatsAppWithOwner_pickUpProduct'
   ) {
-    return <ButtonPostToCart post={post} className={className} />;
+    return (
+      <ButtonPostToCart
+        post={post}
+        purshaseNotes={purshaseNotes}
+        className={className}
+        variant={btnPostToCartVariant}
+      />
+    );
   }
 
   return <></>;

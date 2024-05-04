@@ -1,7 +1,19 @@
-import { PaginateModel, Schema, model } from "mongoose";
+import { PaginateModel, Schema, SchemaDefinition, model } from "mongoose";
 import { createdAtSchemaDefinition } from "../utils/schemas";
 import { Shopping } from "../types/shopping";
 import { PostSchema } from "./post";
+import { PostPurshaseNotes } from "../types/post";
+
+const purshaseNotesSchemaDefinition: SchemaDefinition<PostPurshaseNotes> = {
+  interestedByClothingSizes: {
+    _id: false,
+    type: [String],
+  },
+  interestedByColors: {
+    _id: false,
+    type: [String],
+  },
+};
 
 const ShoppingSchema = new Schema<Shopping>({
   ...createdAtSchemaDefinition,
@@ -12,6 +24,10 @@ const ShoppingSchema = new Schema<Shopping>({
         post: { type: PostSchema, required: true },
         count: { type: Number, required: true },
         lastUpdatedDate: { type: Date, required: true },
+        purshaseNotes: {
+          _id: false,
+          type: purshaseNotesSchemaDefinition,
+        },
       },
     ],
   },

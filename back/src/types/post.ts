@@ -4,7 +4,22 @@ import { PostPageLayout } from "./business";
 
 export type PostCurrency = "CUP" | "MLC" | "USD";
 
-export type PostColor = "white" | "gray" | "black";
+export type PostColor =
+  | "white"
+  | "gray"
+  | "black"
+  | "blue"
+  | "red"
+  | "green"
+  | "purple"
+  | "orange"
+  | "yellow"
+  | "slate"
+  | "pink"
+  | "fuchsia"
+  | "violet"
+  | "cyan"
+  | "teal";
 
 export type PostClothingSize =
   | "XXS"
@@ -17,6 +32,11 @@ export type PostClothingSize =
   | "3XL";
 
 export type PostReviews = [number, number, number, number, number];
+
+export interface PostPurshaseNotes {
+  interestedByColors?: Array<PostColor>;
+  interestedByClothingSizes?: Array<PostClothingSize>;
+}
 
 export interface Post extends BaseIdentity {
   images?: Array<Image>;

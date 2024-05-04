@@ -1,6 +1,6 @@
-import { Button } from 'components/button';
 import { FieldClothingSizeSelectProps } from 'components/field-clothing-size-select';
 import { FieldColorSelectProps } from 'components/field-colors-select';
+import { PostShoppingMethod } from 'components/post-shopping-method';
 import { ProductDescriptionProps } from 'components/product/description/types';
 import { ProductDetailsProps } from 'components/product/details/types';
 import { ProductHighLightsProps } from 'components/product/hightlights/types';
@@ -11,12 +11,11 @@ import { ReviewProps } from 'components/review';
 import { usePortal } from 'hooks/usePortal';
 
 import { Formik } from 'formik';
-import { Post, PostColor } from 'types/post';
+import { useBusiness } from 'pages/@hooks/useBusiness';
+import { Post } from 'types/post';
 
 export interface ClothingProductGrid1Props {
-  value?: Post | null;
-  onAddToCar?: (args: { color?: PostColor; size?: string }) => void;
-  getImageUrl?: (src: string) => string;
+  post?: Post | null;
   render: {
     images?: (props: ProductImagesProps) => React.ReactNode;
     price?: (props: ProductPriceProps) => React.ReactNode;
@@ -29,15 +28,11 @@ export interface ClothingProductGrid1Props {
   };
 }
 
-export const ClothingProductGrid1 = ({
-  value,
-  render,
-  onAddToCar,
-  getImageUrl,
-}: ClothingProductGrid1Props) => {
+export const ClothingProductGrid1 = ({ post, render }: ClothingProductGrid1Props) => {
   const portal = usePortal();
+  const { business } = useBusiness();
 
-  if (!value) return <></>;
+  if (!post) return <></>;
 
   const {
     colors,
@@ -49,18 +44,18 @@ export const ClothingProductGrid1 = ({
     highlights,
     reviews,
     images,
-  } = value;
+  } = post;
 
   return (
     <div className="bg-white w-full">
       {/* Image gallery */}
-      {render.images?.({ value: images, getImageUrl, className: 'pt-2' })}
+      {render.images?.({ value: images, className: 'pt-2' })}
 
       {/* Product info */}
       <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
         <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
           <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            {value.name}
+            {post.name}
           </h1>
         </div>
 
@@ -76,8 +71,8 @@ export const ClothingProductGrid1 = ({
 
           <Formik
             initialValues={{
-              color: colors?.[0],
-              size: clothingSizes?.find((size) => size),
+              interestedByColors: [],
+              interestedByClothingSizes: [],
             }}
             validate={() => ({})}
             onSubmit={() => {}}
@@ -91,7 +86,8 @@ export const ClothingProductGrid1 = ({
                       items: colors,
                       className: 'mt-10',
                       label: 'Colores disponibles',
-                      name: 'color',
+                      name: 'interestedByColors',
+                      multi: true,
                     })}
 
                   {/* Sizes */}
@@ -100,18 +96,21 @@ export const ClothingProductGrid1 = ({
                       sizesInStock: clothingSizes,
                       className: 'mt-10',
                       label: 'Tallas disponibles',
-                      name: 'clothingSizes',
+                      name: 'interestedByClothingSizes',
+                      multi: true,
                     })}
 
                   {portal.getPortal(
-                    <Button
-                      label="Agregar al carro"
-                      className="mt-10 w-full"
-                      onClick={() => {
-                        const { color, size } = values;
-
-                        onAddToCar?.({ color, size });
+                    <PostShoppingMethod
+                      post={post}
+                      purshaseNotes={{
+                        interestedByClothingSizes: values.interestedByClothingSizes,
+                        interestedByColors: values.interestedByColors,
                       }}
+                      layout={post.postPageLayout?.shoppingMethod}
+                      whatsAppPhoneNumber={business?.whatsAppPhoneNumber}
+                      btnPostToCartVariant="button"
+                      className="mt-4 w-full"
                     />,
                   )}
                 </form>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { Button } from 'components/button';
 import { IconButton } from 'components/icon-button';
 
 import { useUpdateAddOneShopping } from 'features/api/shopping/useUpdateAddOneShopping';
@@ -10,13 +11,20 @@ import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useShopping } from 'pages/@hooks/useShopping';
 import { StyleProps } from 'types/general';
-import { Post } from 'types/post';
+import { Post, PostPurshaseNotes } from 'types/post';
 
 export interface ButtonPostToCartProps extends StyleProps {
   post: Post;
+  purshaseNotes?: PostPurshaseNotes;
+  variant?: 'icon' | 'button';
 }
 
-export const ButtonPostToCart = ({ post, className }: ButtonPostToCartProps) => {
+export const ButtonPostToCart = ({
+  post,
+  className,
+  variant = 'icon',
+  purshaseNotes,
+}: ButtonPostToCartProps) => {
   const [count, setCount] = useState<number>(0);
   const { stockAmount } = post;
 
@@ -33,32 +41,56 @@ export const ButtonPostToCart = ({ post, className }: ButtonPostToCartProps) => 
     return <></>;
   }
 
-  return (
-    <IconButton
-      title="Adicionar el carrito"
-      svg={<SvgShoppingCartSolid className="!size-8 !fill-gray-500" />}
-      isBusy={updateAddOneShopping.status.isBusy}
-      onClick={(e) => {
-        e.preventDefault();
+  const handleCall = () => {
+    const amountToAdd = count + 1;
+    setCount(amountToAdd);
 
-        const amountToAdd = count + 1;
-        setCount(amountToAdd);
+    debouncer(() => {
+      setCount(0);
+      if (!business) return;
 
-        debouncer(() => {
-          setCount(0);
-          if (!business) return;
+      updateAddOneShopping.fetch(
+        { postId: post._id, amountToAdd, routeName: business.routeName, purshaseNotes },
+        {
+          onAfterSuccess: () => {
+            shopping.onFetch({ routeName: business.routeName });
+          },
+        },
+      );
+    }, 500);
+  };
 
-          updateAddOneShopping.fetch(
-            { postId: post._id, amountToAdd, routeName: business.routeName },
-            {
-              onAfterSuccess: () => {
-                shopping.onFetch({ routeName: business.routeName });
-              },
-            },
-          );
-        }, 500);
-      }}
-      className={className}
-    />
-  );
+  if (variant === 'button') {
+    return (
+      <Button
+        label="Adicionar el carrito"
+        svg={SvgShoppingCartSolid}
+        isBusy={updateAddOneShopping.status.isBusy}
+        onClick={(e) => {
+          e.preventDefault();
+
+          handleCall();
+        }}
+        className={className}
+      />
+    );
+  }
+
+  if (variant === 'icon') {
+    return (
+      <IconButton
+        title="Adicionar el carrito"
+        svg={<SvgShoppingCartSolid className="!size-8 !fill-gray-500" />}
+        isBusy={updateAddOneShopping.status.isBusy}
+        onClick={(e) => {
+          e.preventDefault();
+
+          handleCall();
+        }}
+        className={className}
+      />
+    );
+  }
+
+  return <></>;
 };

@@ -1,4 +1,4 @@
-import { RequestHandler } from "../../types/general";
+import { AnyRecord, RequestHandler } from "../../types/general";
 import { withTryCatch } from "../../utils/error";
 import { ServerResponse } from "http";
 import {
@@ -13,6 +13,7 @@ import { notificationsServices } from "../notifications";
 import { businessServices } from "../business/services";
 import { computePay } from "./utils";
 import { logger } from "../logger";
+import { PostPurshaseNotes } from "../../types/post";
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -96,10 +97,18 @@ const get_shopping_shoppingId: () => RequestHandler = () => {
   };
 };
 
-const post_shopping: () => RequestHandler = () => {
+const post_shopping: () => RequestHandler<
+  AnyRecord,
+  any,
+  {
+    purshaseNotes?: PostPurshaseNotes;
+    amountToAdd?: number;
+  }
+> = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
       const { user, post } = req;
+      //
 
       if (!user) {
         return getUserNotFoundResponse({ res });
@@ -111,8 +120,12 @@ const post_shopping: () => RequestHandler = () => {
 
       const { body } = req;
 
-      const { amountToAdd = 1 } = body;
+      const { amountToAdd = 1, purshaseNotes } = body;
 
+      /**
+       * Update the post stock in the case that it has enabled this features
+       * this service return the amount added to the post and the current stock
+       */
       const updateStockResponse = await postServices.updateStockAmount({
         req,
         res,
@@ -123,12 +136,15 @@ const post_shopping: () => RequestHandler = () => {
         return updateStockResponse;
       }
 
-      if (
-        isNumber(updateStockResponse?.amountAddedToPost) &&
-        isNumber(updateStockResponse?.currentStockAmount)
-      ) {
-        const { amountAddedToPost, currentStockAmount } = updateStockResponse;
+      /**
+       * update the shopping with the new amount according to amount added to post.
+       * updateStockResponse is null if the stock amount fearure is not enabled
+       */
 
+      const { amountAddedToPost, currentStockAmount } =
+        updateStockResponse || {};
+
+      if (isNumber(amountAddedToPost) && isNumber(currentStockAmount)) {
         await shoppingServices.updateOrAddOne({
           req,
           res,
@@ -158,10 +174,14 @@ const post_shopping: () => RequestHandler = () => {
         return res.send({});
       }
 
+      /**
+       * The purshaseNotes is added only when the purshase is created
+       */
       await shoppingServices.updateOrAddOne({
         req,
         res,
         amountToAdd,
+        purshaseNotes,
       });
 
       res.send({});
