@@ -24,7 +24,7 @@ export const Badge = ({ variant, className }: BadgeProps) => {
   return (
     <div
       className={cn(
-        'flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full',
+        'flex size-12 flex-shrink-0 items-center justify-center rounded-full',
         {
           ['bg-red-100']: variant == 'error',
           ['bg-green-100']: variant == 'success',
@@ -36,7 +36,7 @@ export const Badge = ({ variant, className }: BadgeProps) => {
       )}
     >
       <IconComponent
-        className={cn('h-6 w-6', {
+        className={cn('size-8', {
           ['fill-red-600']: variant == 'error',
           ['fill-green-600']: variant == 'success',
           ['fill-blue-600']: variant == 'info',

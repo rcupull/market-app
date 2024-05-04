@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { ButtonClose } from 'components/button-close';
+import { IconButtonUpdate } from 'components/icon-button-update';
 import { IconUpdate } from 'components/icon-update';
 import { Modal } from 'components/modal';
 import { SpinnerEllipsis } from 'components/spinner-ellipsis';
@@ -69,24 +70,34 @@ export const PostNew = ({ postId, callAfarResources }: PostNewProps) => {
     );
   };
 
+  const getEditFormbutton = () => {
+    const handleClick = () => {
+      businessUpdatePostForm.open({
+        onAfterSuccess: () => {
+          if (!business) return;
+          onFetch({ routeName: business.routeName });
+        },
+      });
+    };
+    return (
+      <>
+        <Button
+          variant="link"
+          svg={IconUpdate}
+          label="Editar campos del formulario"
+          onClick={handleClick}
+          className='hidden sm:flex'
+        />
+        <IconButtonUpdate title="Editar campos del formulario" onClick={handleClick} className='block sm:hidden' />
+      </>
+    );
+  };
   return (
     <Modal
       title={
         <div className="flex items-center justify-between">
           {postId ? 'Editar publicación' : 'Nueva publicación'}
-          <Button
-            variant="link"
-            svg={IconUpdate}
-            label="Editar campos del formulario"
-            onClick={() =>
-              businessUpdatePostForm.open({
-                onAfterSuccess: () => {
-                  if (!business) return;
-                  onFetch({ routeName: business.routeName });
-                },
-              })
-            }
-          />
+          {getEditFormbutton()}
         </div>
       }
       content={getContent()}
