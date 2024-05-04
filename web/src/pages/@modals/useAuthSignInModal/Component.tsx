@@ -14,6 +14,7 @@ import { useRouter } from 'hooks/useRouter';
 import { useAuthSignUpModal } from '../useAuthSignUpModal';
 
 import { Formik } from 'formik';
+import { getDashboardRoute } from 'utils/business';
 
 export interface ComponentProps {
   portal: Portal;
@@ -22,7 +23,7 @@ export interface ComponentProps {
 }
 
 export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
-  const { authSignIn } = useAuth();
+  const { authSignIn, getIsUser } = useAuth();
   const { pushRoute } = useRouter();
   const { onClose } = useModal();
   const authSignUpModal = useAuthSignUpModal();
@@ -90,10 +91,13 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
               authSignIn.fetch(
                 { email, password },
                 {
-                  onAfterSuccess: () => {
+                  onAfterSuccess: ({ user }) => {
                     if (redirect) {
                       pushRoute(redirect);
+                    } else if (getIsUser(user)) {
+                      pushRoute(getDashboardRoute());
                     }
+
                     onClose();
                   },
                 },

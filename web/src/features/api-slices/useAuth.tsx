@@ -4,18 +4,21 @@ import { useCookies } from 'features/cookies/useCookies';
 import { useApiPersistent } from 'features/slices/useApiPersistent';
 
 import { FetchResource } from 'types/api';
-import { AuthData } from 'types/auth';
+import { AuthData, User } from 'types/auth';
 import { wait } from 'utils/general';
 
-export const useAuth = (): ReturnType<typeof useAuthSignIn> & {
+type UseAuthMeta = {
   authData: AuthData | null;
   authSignIn: FetchResource<{ email: string; password: string }, AuthData>;
   isAdmin: boolean;
   isUser: boolean;
+  getIsUser: (user: User | undefined) => boolean;
   isBasicUser: boolean;
   isAuthenticated: boolean;
   onRefreshAuthUser: () => void;
-} => {
+};
+
+export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
   const { authSignIn } = useAuthSignIn();
 
   const { data, setDataRedux, status, fetch, reset } = useApiPersistent('useAuth', authSignIn);
@@ -25,6 +28,10 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & {
   const { getOneUser } = useGetOneUser();
 
   const authData = data;
+
+  const getIsUser: UseAuthMeta['getIsUser'] = (user) => {
+    return user?.role === 'user' && user?.canCreateBusiness;
+  };
 
   return {
     onRefreshAuthUser: () => {
@@ -49,7 +56,8 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & {
     },
     isAuthenticated: !!authData,
     isAdmin: authData?.user?.role === 'admin',
-    isUser: authData?.user?.role === 'user' && authData?.user?.canCreateBusiness,
+    getIsUser,
+    isUser: getIsUser(authData?.user),
     isBasicUser: authData?.user?.role === 'user' && !authData?.user?.canCreateBusiness,
     authData,
     authSignIn: {
