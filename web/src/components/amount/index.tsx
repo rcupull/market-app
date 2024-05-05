@@ -49,7 +49,7 @@ export const Amount = ({ value, onChange, className, isBusy }: AmountProps) => {
           handleChange(state - 1);
         }}
         variant="outlined"
-        className="!p-1.5"
+        className="!p-1 !ring-1"
       />
 
       <Input
@@ -75,7 +75,7 @@ export const Amount = ({ value, onChange, className, isBusy }: AmountProps) => {
           handleChange(state + 1);
         }}
         variant="outlined"
-        className="!p-1.5"
+        className="!p-1 !ring-1"
       />
 
       {isBusy && (

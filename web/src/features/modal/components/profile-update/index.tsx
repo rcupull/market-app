@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { ButtonClose } from 'components/button-close';
+import { FieldInput } from 'components/field-input';
 import { FieldInputImages } from 'components/field-input-images';
 import { Modal } from 'components/modal';
 
@@ -47,6 +48,7 @@ export const ProfileUpdate = ({ userId, callAfarResources }: ProfileUpdateProps)
     <Formik
       initialValues={{
         profileImages: user?.profileImage ? [user?.profileImage] : [],
+        name: user?.name,
       }}
       enableReinitialize
       validate={() => {}}
@@ -55,27 +57,30 @@ export const ProfileUpdate = ({ userId, callAfarResources }: ProfileUpdateProps)
       {({ values, isValid }) => {
         return (
           <form>
+            <FieldInput name="name" label="Nombre" />
+
             <FieldInputImages
               id="profileImages"
               name="profileImages"
               label="Imagen del perfil"
               getImageSrc={getImageEndpoint}
+              className='mt-6'
             />
-
             {portal.getPortal(
               <Button
                 label="Guardar"
-                isBusy={addOneBusiness.status.isBusy}
+                isBusy={addOneBusiness.status.isBusy || updateOneUser.status.isBusy}
                 disabled={!isValid}
                 onClick={() => {
-                  const { profileImages } = values;
+                  const { profileImages, name } = values;
 
-                  const handleSubmit = (profileImage?: Image) => {
+                  const handleSubmit = (profileImage?: Image | null) => {
                     updateOneUser.fetch(
                       {
                         userId,
                         update: {
                           profileImage,
+                          name,
                         },
                       },
                       {
@@ -98,7 +103,7 @@ export const ProfileUpdate = ({ userId, callAfarResources }: ProfileUpdateProps)
                       },
                     );
                   } else {
-                    handleSubmit(undefined);
+                    handleSubmit(null);
                   }
                 }}
                 variant="primary"
@@ -116,6 +121,7 @@ export const ProfileUpdate = ({ userId, callAfarResources }: ProfileUpdateProps)
       title="Editar perfil"
       content={content}
       badge={<Badge variant="info" />}
+      isBusy={getOneUser.status.isBusy}
       primaryBtn={<div ref={portal.ref} />}
       secondaryBtn={<ButtonClose />}
     />

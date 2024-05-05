@@ -36,7 +36,7 @@ export const Menu = ({
         floatingAs={Fragment}
         portal
         autoPlacement={{
-          allowedPlacements: ['bottom-start', 'bottom-end'],
+          allowedPlacements: ['bottom-start', 'bottom-end', 'top-start', 'top-end'],
         }}
       >
         <MenuBase.Button as="div" className="cursor-pointer">

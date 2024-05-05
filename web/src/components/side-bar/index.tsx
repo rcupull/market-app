@@ -30,7 +30,7 @@ export const SideBar = ({ className, items, collapse }: SideBarProps) => {
     <div
       data-id="SideBar"
       className={cn(
-        'flex flex-col items-center w-full h-full overflow-hidden text-gray-700 bg-gray-100 pb-3',
+        'flex flex-col items-center w-full h-full overflow-hidden text-gray-700 bg-gray-100 pb-3  border-r-2 border-gray-300',
         className,
       )}
     >
@@ -41,7 +41,7 @@ export const SideBar = ({ className, items, collapse }: SideBarProps) => {
         const isActive = pathname === href;
 
         if (divider) {
-          return <Divider key={index} className={cn('border-gray-500 !mt-3 !mb-1', className)} />;
+          return <Divider key={index} className={cn('!mt-3 !mb-1', className)} />;
         }
 
         if (content) {

@@ -28,7 +28,7 @@ export const Skeleton = ({ searchLayoutType, className }: SkeletonProps) => {
   };
 
   const renderFooter = () => {
-    return <MutedBox className="h-10 flex items-center justify-center">Footer</MutedBox>;
+    return <MutedBox className="h-9 flex items-center justify-center">Footer</MutedBox>;
   };
 
   return (

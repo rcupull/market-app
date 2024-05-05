@@ -14,8 +14,8 @@ export const SideBarUserHeader = ({ className }: SideBarUserHeaderProps) => {
 
   return (
     <div className={cn('flex flex-col items-center mb-2', className)}>
-      <UserAvatar className="mt-4 !h-14 !w-14" />
-      <span className="mt-4 text-sm border px-2 py-1 rounded-2xl">{name}</span>
+      <UserAvatar className="mt-4" size='medium' />
+      <span className="mt-4 text-sm border px-2 py-1 border-gray-400 rounded-2xl">{name}</span>
     </div>
   );
 };

@@ -163,7 +163,7 @@ export const RowActions = ({ rowData, callAfarResources }: RowActionsProps) => {
         className="sm:hidden"
       />
 
-      <RowActionsContainer className="hidden sm:flex">
+      <RowActionsContainer className="hidden sm:block">
         <IconButtonRemove onClick={handleDelete} />
         <IconButtonShowHide
           hidden={rowData.hidden}

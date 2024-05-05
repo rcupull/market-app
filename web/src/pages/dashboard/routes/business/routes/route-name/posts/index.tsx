@@ -208,7 +208,7 @@ export const Posts = () => {
                             })}
                           />
                         ) : (
-                          <span className="text-red-500">Desabilitada</span>
+                          <span className="text-red-500">Desabilitado</span>
                         ),
                       },
                     ]),
