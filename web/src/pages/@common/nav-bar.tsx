@@ -78,7 +78,7 @@ export const Navbar = ({ className }: NavbarProps) => {
             href: getBusinessAboutUsRoute({ routeName }),
           },
         ////////////////////////////////////////////////////////////////////////////////////////////////
-        !isBusinessPage && { name: 'Nuestros servicios', href: '/' },
+        !isBusinessPage && { name: 'Inicio', href: '/' },
         !isBusinessPage && { name: 'Precios', href: '/price' },
         !isBusinessPage && { name: '¿Que es Asere Market?', href: '/about-us' },
         ////////////////////////////////////////////////////////////////////////////////////////////////
