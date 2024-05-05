@@ -33,10 +33,13 @@ export const getPostCategoriesFromBusinessCategories = (
     ]);
     //////////////////////////////////////////////////////////////////////
 
-    ifStartWithThenAdd(businessCategory, "mercado.fresh", [
-      "Del Mar",
-      "De la Tierra",
+    ifStartWithThenAdd(businessCategory, "fastFood", [
+      "Ofertas del día",
+      "Especialidad de la casa",
+      "Más vendido",
     ]);
+
+    //////////////////////////////////////////////////////////////////////
   });
 
   return allLabels.map((label) => ({ label, tag: getPostCategoryTag(label) }));

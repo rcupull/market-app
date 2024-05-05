@@ -30,7 +30,7 @@ export const PostCategoriesFilterButtons = ({
   excluding,
   type,
   debounceDelay = 0,
-  buttonType = 'button'
+  buttonType = 'button',
 }: PostCategoriesFilterButtonsProps) => {
   const debouncer = useDebouncer();
   const [state, setState] = useState<Array<string>>();
@@ -81,8 +81,8 @@ export const PostCategoriesFilterButtons = ({
         return (
           <Button
             key={index}
-            {...buttonType === 'button' ? {variant: selected ? 'primary' : 'outlined'} : {}}
-            {...buttonType === 'tab' ? {variant: selected ? 'sublined' : 'transparent'} : {}}
+            {...(buttonType === 'button' ? { variant: selected ? 'primary' : 'outlined' } : {})}
+            {...(buttonType === 'tab' ? { variant: selected ? 'sublined' : 'transparent' } : {})}
             onClick={(e) => {
               e.preventDefault();
 

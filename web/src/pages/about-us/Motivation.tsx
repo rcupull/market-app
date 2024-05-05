@@ -12,7 +12,9 @@ export const Motivation = () => {
   return (
     <div className="flex flex-col sm:flex-row gap-10">
       <div className="flex flex-col justify-center">
-        <p className="text-5xl font-bold text-center sm:text-left">Estamos cambiando como las personas piensan</p>
+        <p className="text-5xl font-bold text-center sm:text-left">
+          Estamos cambiando como las personas piensan
+        </p>
 
         <p className="mt-8 sm:mt-4">
           Somos un equipo tecnologico y de comunicacion con el proposito de cambiar parte de la

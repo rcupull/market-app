@@ -10,8 +10,18 @@ export const businessCategoryTree = {
     plusSize: {},
     seasonal: {},
   },
-  mercado: {
-    fresh: {},
+  computers: {
+    laptops: {},
+    desktops: {},
+    networking: {},
+    motherboard: {},
+  },
+  fastFood: {
+    confectionery: {},
+    pizzas: {},
+    sandwiches: {},
+    iceCream: {},
+    burguers: {},
   },
 };
 
@@ -27,6 +37,15 @@ export const businessCategoryLabels: Record<
   "clothing.kids": "Niños",
   "clothing.men": "Hombres",
   "clothing.women": "Mujeres",
-  mercado: "Mercado",
-  "mercado.fresh": "Congelados",
+  computers: "Computadoras y similares",
+  "computers.desktops": "Escritorios",
+  "computers.laptops": "Portatiles",
+  "computers.motherboard": "Placas base",
+  "computers.networking": "Redes",
+  fastFood: "Comida rápida",
+  "fastFood.burguers": "Hamburguesas",
+  "fastFood.confectionery": "Confitería",
+  "fastFood.iceCream": "Helados",
+  "fastFood.pizzas": "Pizzas",
+  "fastFood.sandwiches": "Sandwiches",
 };

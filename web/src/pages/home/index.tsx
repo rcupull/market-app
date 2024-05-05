@@ -47,7 +47,6 @@ export const Home = () => {
       <Highlights className="my-20" />
 
       <LayoutPageSection isBusy={getAllBusinessSummary.status.isBusy} className="mt-20">
-
         <div ref={refCardContainer} onScroll={onScroll} className="overflow-y-auto max-h-50rem">
           <CardGroup className="mt-6">
             {infinityScrolling.tableData?.map((businessSummary, index) => {

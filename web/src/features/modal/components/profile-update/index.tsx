@@ -64,7 +64,7 @@ export const ProfileUpdate = ({ userId, callAfarResources }: ProfileUpdateProps)
               name="profileImages"
               label="Imagen del perfil"
               getImageSrc={getImageEndpoint}
-              className='mt-6'
+              className="mt-6"
             />
             {portal.getPortal(
               <Button

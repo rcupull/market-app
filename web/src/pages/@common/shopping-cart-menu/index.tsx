@@ -70,7 +70,6 @@ export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
 
     return (
       <div className="w-full">
-
         <div className="mt-4">Tu selección hasta ahora:</div>
         <ShoppingCartPosts value={shopping.constructionShopping} />
 
@@ -91,11 +90,7 @@ export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
     <Menu
       buttonElement={
         <div className="relative">
-          <IconButton
-            title="Carro de Compras"
-            svg={<SvgShoppingCartSolid className="!size-8" />}
-            
-          />
+          <IconButton title="Carro de Compras" svg={<SvgShoppingCartSolid className="!size-8" />} />
           {isAuthenticated && (
             <span className="absolute text-gray-100 font-bold top-0 right-0">
               {shopping.constructionShoppingProductsCount}

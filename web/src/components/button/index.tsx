@@ -4,8 +4,7 @@ import { Ellipsis } from 'react-css-spinners';
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
-const primaryStyles =
-  'bg-indigo-600 text-white fill-white hover:bg-indigo-500 hover:bg-indigo-500';
+const primaryStyles = 'bg-indigo-600 text-white fill-white hover:bg-indigo-500 hover:bg-indigo-500';
 const errorStyles = 'bg-red-600 text-white fill-white  hover:bg-red-500';
 const linkStyles =
   'text-indigo-600 fill-indigo-600 hover:text-indigo-500 !shadow-none !m-0 !p-0 h-fit';
@@ -13,7 +12,7 @@ const outlinedStyles =
   'bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100';
 const sublinedStyles =
   'bg-transparent text-gray-900 fill-blue-900 border-b-2 border-blue-600 !rounded-none hover:bg-gray-100';
-  const transparentStyles =
+const transparentStyles =
   'bg-transparent text-gray-900 fill-gray-900  hover:bg-gray-100 !shadow-none border-b-2 border-transparent';
 
 type ButtonSvg = React.FunctionComponent<StyleProps> | React.ReactElement<StyleProps>;

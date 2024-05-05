@@ -2,8 +2,7 @@ import { Button, ButtonProps } from 'components/button';
 
 import { cn } from 'utils/general';
 
-export interface IconButtonProps extends ButtonProps {
-}
+export interface IconButtonProps extends ButtonProps {}
 
 export const IconButton = ({ className, variant, ...omittedProps }: IconButtonProps) => (
   <Button

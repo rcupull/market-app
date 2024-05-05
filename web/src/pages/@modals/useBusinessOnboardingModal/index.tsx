@@ -1,5 +1,3 @@
-import { ButtonClose } from 'components/button-close';
-
 import { useModal } from 'features/modal/useModal';
 
 import { dynamic } from 'utils/makeLazy';
@@ -22,7 +20,6 @@ export const useBusinessOnboardingModal = () => {
           useProps: () => {
             return {
               content: <Component />,
-              customBtn: <ButtonClose className="ml-auto" />,
               className: '!w-[80vw]',
             };
           },

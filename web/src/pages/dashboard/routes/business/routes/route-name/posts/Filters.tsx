@@ -26,11 +26,11 @@ export const Filters = ({ business, onChange, value, className }: FiltersProps) 
   const sections = layouts?.posts?.sections || [];
   const [selectedSection, setSelectedSection] = useState();
 
-  useEffect(()=>{
-    if(filterType === 'categories'){
-      setSelectedSection(undefined)
+  useEffect(() => {
+    if (filterType === 'categories') {
+      setSelectedSection(undefined);
     }
-  },[filterType])
+  }, [filterType]);
 
   return (
     <div className={className}>

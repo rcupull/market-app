@@ -93,7 +93,7 @@ export const SideBar = ({ className }: SideBarProps) => {
             isUser && {
               label: name,
               href: `/dashboard/business/${routeName}`,
-              endElement: hidden && <span className='text-gray-500 text-sm'>(Oculto)</span>,
+              endElement: hidden && <span className="text-gray-500 text-sm">(Oculto)</span>,
               className: 'pl-10',
             }
           );

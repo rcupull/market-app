@@ -86,9 +86,13 @@ export const PostNew = ({ postId, callAfarResources }: PostNewProps) => {
           svg={IconUpdate}
           label="Editar campos del formulario"
           onClick={handleClick}
-          className='hidden sm:flex'
+          className="hidden sm:flex"
         />
-        <IconButtonUpdate title="Editar campos del formulario" onClick={handleClick} className='block sm:hidden' />
+        <IconButtonUpdate
+          title="Editar campos del formulario"
+          onClick={handleClick}
+          className="block sm:hidden"
+        />
       </>
     );
   };

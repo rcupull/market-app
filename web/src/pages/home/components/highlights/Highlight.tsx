@@ -14,9 +14,9 @@ export const Highlight = ({ className, svg: Svg, label, description }: Highlight
         <Svg className="size-9 fill-white rounded-md" />
       </div>
 
-      <div className='text-lg font-semibold mt-4'>{label}</div>
+      <div className="text-lg font-semibold mt-4">{label}</div>
 
-      <div className='text-md mt-2'>{description}</div>
+      <div className="text-md mt-2">{description}</div>
     </div>
   );
 };

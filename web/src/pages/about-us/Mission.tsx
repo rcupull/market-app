@@ -12,7 +12,7 @@ export const Mission = ({ className }: MissionProps) => {
       </div>
     );
   };
-  
+
   return (
     <div className={cn('flex gap-28', className)}>
       <div className="flex flex-col gap-4">

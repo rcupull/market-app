@@ -12,6 +12,7 @@ import { Portal } from 'hooks/usePortal';
 import { useBusiness } from '../../@hooks/useBusiness';
 
 import { Formik } from 'formik';
+import SvgArrowRightSolid from 'icons/ArrowRightSolid';
 import { BusinessShoppingStrategy } from 'types/business';
 import { isEmpty } from 'utils/general';
 
@@ -58,7 +59,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
 
             <FieldRadioGroup<{
               value: BusinessShoppingStrategy;
-              label: string;
+              label: React.ReactNode;
               description?: React.ReactNode;
             }>
               label="Estrategia de venta"
@@ -77,7 +78,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               items={[
                 {
                   value: 'none',
-                  label: 'Ninguno',
+                  label: 'Ninguna',
                 },
                 {
                   value: 'whatsAppWithOwner_pickUpProduct',
@@ -97,7 +98,15 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                 },
                 {
                   value: 'addToCart_whatsAppWithOwner_pickUpProduct',
-                  label: 'Añadir al carrito y contactar por whatsapp',
+                  label: (
+                    <div className="flex items-center">
+                      Añadir al carrito
+                      <SvgArrowRightSolid className="w-9 h-4 px-2" />
+                      Generar orden de compra
+                      <SvgArrowRightSolid className="w-9 h-4 px-2" />
+                      Contactar por whatsapp
+                    </div>
+                  ),
                   description: (
                     <div>
                       El procedimiento es por{' '}
@@ -116,8 +125,8 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                   ),
                 },
               ]}
-              containerClassName="flex items-center flex-wrap gap-4"
-              className="mt-4"
+              containerClassName="flex flex-col gap-2"
+              className="mt-6"
             />
 
             {portal.getPortal(

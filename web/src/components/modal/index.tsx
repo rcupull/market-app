@@ -1,8 +1,12 @@
 import { Dialog, Transition } from '@headlessui/react';
 import React, { cloneElement, Fragment } from 'react';
 
+import { IconButton } from 'components/icon-button';
 import { SpinnerBox } from 'components/spinner-box';
 
+import { useModal } from 'features/modal/useModal';
+
+import SvgTimesSolid from 'icons/TimesSolid';
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
@@ -26,6 +30,8 @@ export const Modal = ({
   className,
   isBusy,
 }: ModalProps) => {
+  const { onClose } = useModal();
+
   return (
     <Transition.Root show={true} as={Fragment}>
       <Dialog
@@ -63,13 +69,15 @@ export const Modal = ({
                   className,
                 )}
               >
+                <IconButton
+                  className="!absolute top-0 right-0"
+                  svg={SvgTimesSolid}
+                  onClick={onClose}
+                />
+
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start w-full">
-                    {badge && (
-                      <div className="mx-9 sm:mx-2 flex justify-center">
-                        {badge}
-                      </div>
-                    )}
+                    {badge && <div className="mx-9 sm:mx-2 flex justify-center">{badge}</div>}
 
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
                       <Dialog.Title
@@ -82,19 +90,21 @@ export const Modal = ({
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row sm:px-6">
-                  {customBtn}
+                {(customBtn || primaryBtn || secondaryBtn) && (
+                  <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row sm:px-6">
+                    {customBtn}
 
-                  {primaryBtn &&
-                    cloneElement(primaryBtn, {
-                      className: 'w-full sm:w-auto ml-auto',
-                    })}
+                    {primaryBtn &&
+                      cloneElement(primaryBtn, {
+                        className: 'w-full sm:w-auto ml-auto',
+                      })}
 
-                  {secondaryBtn &&
-                    cloneElement(secondaryBtn, {
-                      className: 'w-full sm:w-auto mt-3 sm:mt-0 ml-0 sm:ml-3',
-                    })}
-                </div>
+                    {secondaryBtn &&
+                      cloneElement(secondaryBtn, {
+                        className: 'w-full sm:w-auto mt-3 sm:mt-0 ml-0 sm:ml-3',
+                      })}
+                  </div>
+                )}
                 {isBusy && <SpinnerBox />}
               </Dialog.Panel>
             </Transition.Child>

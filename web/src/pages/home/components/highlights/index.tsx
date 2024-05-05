@@ -44,7 +44,12 @@ const items: Array<HighlightProps> = [
   {
     svg: SvgUserTagSolid,
     label: 'Suscripciones',
-    description: <div>Notificamos a los clientes de cada nueva oferta que registre, actualizaciones de productos y ofertas especiales.</div>,
+    description: (
+      <div>
+        Notificamos a los clientes de cada nueva oferta que registre, actualizaciones de productos y
+        ofertas especiales.
+      </div>
+    ),
   },
   {
     svg: SvgCalendarAlt,
