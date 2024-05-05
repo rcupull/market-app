@@ -86,7 +86,7 @@ export const Settings = () => {
       <SettingsLayout
         title="Banner"
         svg={SvgBootstrap}
-        description="Personaliza tu mejores ofertas con tu banner promosional."
+        description="Personaliza tu mejores ofertas con tu banner promocional."
         onClick={() =>
           businessUpdateBanner.open({
             onAfterSuccess: () => {

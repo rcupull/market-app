@@ -70,10 +70,6 @@ export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
 
     return (
       <div className="w-full">
-        {/* <span>
-          Haz crecer tu negocio online en Cuba y usa <span className="font-bold">Asere Market</span>{' '}
-          para enganchar a tus clientes
-        </span> */}
 
         <div className="mt-4">Tu selección hasta ahora:</div>
         <ShoppingCartPosts value={shopping.constructionShopping} />

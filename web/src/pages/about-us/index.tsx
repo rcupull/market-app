@@ -12,7 +12,7 @@ export const AboutUs = () => {
 
         <div>
           Ofrecemos una servicio web dirigida para los emprendedores, vendedores, creadores y
-          emporesas cubanas que necesitan promosionar las ventas de sus productos y no poseen ese
+          emporesas cubanas que necesitan promocionar las ventas de sus productos y no poseen ese
           espacio digital donde visualizar el concepto de sus aspiraciones.
         </div>
 
