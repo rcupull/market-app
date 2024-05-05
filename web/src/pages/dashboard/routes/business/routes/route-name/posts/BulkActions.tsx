@@ -236,13 +236,12 @@ export const BulkActions = ({ business, children, onRefresh, filters }: BulkActi
               <ButtonDescription
                 description={
                   <HtmlTextContainer>
-                    Puede realizar acciones sobre varias publicaciones seleccionadas:
-                    <ul className="text-sm">
+                    Puede realizar acciones sobre varias publicaciones:
+                    <ol className="text-sm mt-2">
                       <li>Seleccione la acción a realizar.</li>
                       <li>Seleccione las publicaciones sobre la cual realizará la acción.</li>
-                      <li>Luego confirme la acción en el botón correspondiente.</li>
-                      <li>Tambien puede cancelar la acción en caso de no continuar.</li>
-                    </ul>
+                      <li>Luego confirme la acción o cancele en el botón correspondiente.</li>
+                    </ol>
                   </HtmlTextContainer>
                 }
               />
