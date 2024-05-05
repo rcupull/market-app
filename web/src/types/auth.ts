@@ -8,7 +8,7 @@ export interface User extends BaseIdentity {
   password: string;
   role: UserRole;
   validated: boolean;
-  profileImage?: Image;
+  profileImage?: Image | null;
   canCreateBusiness: boolean;
 }
 

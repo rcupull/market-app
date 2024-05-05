@@ -10,7 +10,7 @@ export interface LayoutPageProps extends ChildrenProp {
 
 export const LayoutPage = ({ children, title, backButton }: LayoutPageProps) => {
   return (
-    <main className="flex flex-col items-center  px-6 sm:px-16 md:px-32 relative">
+    <main className="flex flex-col items-center px-0 sm:px-16 md:px-32 relative">
       <div className="flex items-center justify-start w-full my-6">
         {backButton && <BackButton />}
 

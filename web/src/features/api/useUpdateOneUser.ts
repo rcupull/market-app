@@ -6,7 +6,7 @@ import { getEndpoint } from 'utils/api';
 
 export const useUpdateOneUser = (): {
   updateOneUser: FetchResource<
-    { userId: string; update: Partial<Pick<User, 'profileImage'>> },
+    { userId: string; update: Partial<Pick<User, 'profileImage' | 'name'>> },
     void
   >;
 } => {

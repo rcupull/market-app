@@ -73,11 +73,6 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
 
       const resourcesArray = args instanceof Array ? args : [args];
 
-      if (DEVELOPMENT) {
-        //simulate the api call delay
-        await wait(1000);
-      }
-
       const accessToken = getCookie('accessToken') as string | null;
 
       const promises = resourcesArray.map(({ method, url, data, headers = {} }) => {
@@ -93,6 +88,11 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
       });
 
       const responseArray = await Promise.all(promises);
+
+      if (DEVELOPMENT) {
+        //simulate the api call delay
+        await wait(1000);
+      }
 
       const response = (
         args instanceof Array ? responseArray.map(({ data }) => data) : responseArray[0].data

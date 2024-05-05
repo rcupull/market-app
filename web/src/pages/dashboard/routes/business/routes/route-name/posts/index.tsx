@@ -130,7 +130,7 @@ export const Posts = () => {
             <Table
               className="!max-h-[calc(100vh-25rem)]"
               heads={getBulkHeaderNodes([
-                null,
+                'Acciones',
                 'Nombre',
                 'Categorías',
                 'Imágen',
@@ -208,7 +208,7 @@ export const Posts = () => {
                             })}
                           />
                         ) : (
-                          <span className="text-red-500">Desabilitada</span>
+                          <span className="text-red-500">Desabilitado</span>
                         ),
                       },
                     ]),

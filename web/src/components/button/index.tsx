@@ -5,17 +5,21 @@ import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
 const primaryStyles =
-  'bg-indigo-600 text-white fill-white  hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600';
+  'bg-indigo-600 text-white fill-white hover:bg-indigo-500 hover:bg-indigo-500';
 const errorStyles = 'bg-red-600 text-white fill-white  hover:bg-red-500';
 const linkStyles =
   'text-indigo-600 fill-indigo-600 hover:text-indigo-500 !shadow-none !m-0 !p-0 h-fit';
 const outlinedStyles =
-  'bg-white text-gray-900 fill-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50';
+  'bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100';
+const sublinedStyles =
+  'bg-transparent text-gray-900 fill-blue-900 border-b-2 border-blue-600 !rounded-none hover:bg-gray-100';
+  const transparentStyles =
+  'bg-transparent text-gray-900 fill-gray-900  hover:bg-gray-100 !shadow-none border-b-2 border-transparent';
 
 type ButtonSvg = React.FunctionComponent<StyleProps> | React.ReactElement<StyleProps>;
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'outlined' | 'error' | 'link';
+  variant?: 'primary' | 'outlined' | 'error' | 'link' | 'sublined' | 'transparent';
   svgPosition?: 'left' | 'right';
   label?: string;
   isBusy?: boolean;
@@ -66,6 +70,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
           [outlinedStyles]: variant === 'outlined',
           [errorStyles]: variant === 'error',
           [linkStyles]: variant === 'link',
+          [sublinedStyles]: variant === 'sublined',
+          [transparentStyles]: variant === 'transparent',
           ['cursor-not-allowed']: disabled,
           ['!bg-indigo-300']: variant === 'primary' && disabled,
           ['!bg-gray-300']: variant === 'outlined' && disabled,

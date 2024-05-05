@@ -5,9 +5,11 @@ import { getImageEndpoint } from 'utils/api';
 import { getInitials } from 'utils/business';
 import { cn } from 'utils/general';
 
-export interface UserAvatarProps extends StyleProps {}
+export interface UserAvatarProps extends StyleProps {
+  size?: 'small' | 'medium';
+}
 
-export const UserAvatar = ({ className }: UserAvatarProps) => {
+export const UserAvatar = ({ className, size = 'small' }: UserAvatarProps) => {
   const { authData } = useAuth();
 
   let profileImageSrc = authData?.user?.profileImage?.src;
@@ -19,7 +21,14 @@ export const UserAvatar = ({ className }: UserAvatarProps) => {
     return (
       <img
         data-id="UserAvatar"
-        className={cn('h-8 w-8 rounded-full', className)}
+        className={cn(
+          'rounded-full',
+          {
+            'size-10': size === 'small',
+            'size-16': size === 'medium',
+          },
+          className,
+        )}
         src={profileImageSrc}
         alt=""
       />
@@ -33,9 +42,23 @@ export const UserAvatar = ({ className }: UserAvatarProps) => {
   return (
     <div
       data-id="UserAvatar"
-      className={cn('h-8 w-8 rounded-full flex items-center justify-center bg-gray-200', className)}
+      className={cn(
+        'rounded-full flex items-center justify-center bg-gray-200',
+        {
+          'size-10': size === 'small',
+          'size-16': size === 'medium',
+        },
+        className,
+      )}
     >
-      <span className="text-gray-600 text-xl">{getInitials(profileName)}</span>
+      <span
+        className={cn('text-gray-600', {
+          'text-xl': size === 'small',
+          'text-3xl': size === 'medium',
+        })}
+      >
+        {getInitials(profileName)}
+      </span>
     </div>
   );
 };

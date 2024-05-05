@@ -78,7 +78,7 @@ export const Navbar = ({ className }: NavbarProps) => {
             href: getBusinessAboutUsRoute({ routeName }),
           },
         ////////////////////////////////////////////////////////////////////////////////////////////////
-        !isBusinessPage && { name: 'Home', href: '/' },
+        !isBusinessPage && { name: 'Nuestros servicios', href: '/' },
         !isBusinessPage && { name: 'Precios', href: '/price' },
         !isBusinessPage && { name: '¿Que es Asere Market?', href: '/about-us' },
         ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -89,7 +89,6 @@ export const Navbar = ({ className }: NavbarProps) => {
             <IconButton
               title="Administración"
               svg={<SvgCogSolid className="!size-7" />}
-              dark
               onClick={() => pushRoute('/admin')}
             />
           )}
@@ -97,7 +96,6 @@ export const Navbar = ({ className }: NavbarProps) => {
             <IconButton
               title="Página inicial"
               svg={<SvgHomeSolid className="!size-7" />}
-              dark
               onClick={() => pushRoute('/')}
             />
           )}
@@ -106,7 +104,6 @@ export const Navbar = ({ className }: NavbarProps) => {
             <IconButton
               title="Mis tiendas"
               svg={<SvgStoreSolid className="!size-7" />}
-              dark
               onClick={() => {
                 if (routeName) {
                   pushRoute(getDashboardBusinessRoute({ routeName }));
@@ -122,7 +119,7 @@ export const Navbar = ({ className }: NavbarProps) => {
               isAuthenticated ? (
                 <UserAvatar />
               ) : (
-                <IconButton svg={<SvgUser className="!size-7" />} dark />
+                <IconButton svg={<SvgUser className="!size-7" />} />
               )
             }
             topElement={

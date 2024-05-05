@@ -36,18 +36,21 @@ export const Footer = ({ className, socialLinks }: FooterProps) => {
     );
   };
   return (
-    <footer
-      className={cn('flex flex-col items-center bg-gray-800 text-center text-white', className)}
-    >
-      <div className="container px-6 pt-6">
-        <div className="mb-6 flex justify-center">
-          {renderSocialNetworkLink(SocialNetworkFace, face)}
-          {renderSocialNetworkLink(SocialNetworkIg, instagram)}
-          {renderSocialNetworkLink(SocialNetworkIn, linkedin)}
-          {renderSocialNetworkLink(SocialNetworkX, twitter)}
-        </div>
+    <footer className={cn('shadow-lg -scale-y-100', className)}>
+      <div
+        className={cn(
+          '-scale-y-100 flex flex-col items-center bg-white shadow-xl text-center text-gray-700',
+        )}
+      >
+        <div className="container px-6 pt-6">
+          <div className="mb-6 flex justify-center">
+            {renderSocialNetworkLink(SocialNetworkFace, face)}
+            {renderSocialNetworkLink(SocialNetworkIg, instagram)}
+            {renderSocialNetworkLink(SocialNetworkIn, linkedin)}
+            {renderSocialNetworkLink(SocialNetworkX, twitter)}
+          </div>
 
-        {/* <div>
+          {/* <div>
           <form action="">
             <div className="gird-cols-1 grid items-center justify-center gap-4 md:grid-cols-3">
               <div className="md:mb-6 md:ml-auto">
@@ -85,7 +88,7 @@ export const Footer = ({ className, socialLinks }: FooterProps) => {
           </form>
         </div> */}
 
-        {/* <div className="mb-6">
+          {/* <div className="mb-6">
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt distinctio earum repellat
             quaerat voluptatibus placeat nam, commodi optio pariatur est quia magnam eum harum
@@ -93,7 +96,7 @@ export const Footer = ({ className, socialLinks }: FooterProps) => {
           </p>
         </div> */}
 
-        {/* <div className="grid md:grid-cols-2 lg:grid-cols-4">
+          {/* <div className="grid md:grid-cols-2 lg:grid-cols-4">
           <div className="mb-6">
             <h5 className="mb-2.5 font-bold uppercase">Links</h5>
 
@@ -202,9 +205,10 @@ export const Footer = ({ className, socialLinks }: FooterProps) => {
             </ul>
           </div>
         </div> */}
-      </div>
+        </div>
 
-      <div className="w-full p-4 text-center">© 2024 Todo los derechos reservados</div>
+        <div className="w-full p-4 text-center">© 2024 Todo los derechos reservados</div>
+      </div>
     </footer>
   );
 };

@@ -94,7 +94,7 @@ export const PostsSection = ({
     >
       <div
         className={cn(
-          'mt-10 p-4',
+          'mt-10 p-0 lg:p-4',
           {
             'bg-gray-200 rounded-md': renderHiddenSection,
           },

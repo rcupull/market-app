@@ -21,13 +21,22 @@ export const IsBusy = (): JSX.Element => <Button label="Label" isBusy />;
 
 export const Designs = (): JSX.Element => (
   <>
-    <Button label="Primary" variant="primary" />
+    <Button label="Primary" variant="primary" svg={SvgStoreSolid}/>
     <br />
     <br />
-    <Button label="Outlined" variant="outlined" />
+    <Button label="Outlined" variant="outlined" svg={SvgStoreSolid}/>
     <br />
     <br />
-    <Button label="Error" variant="error" />
+    <Button label="Error" variant="error" svg={SvgStoreSolid}/>
+    <br />
+    <br />
+    <Button label="Link" variant="link" svg={SvgStoreSolid}/>
+    <br />
+    <br />
+    <Button label="Sublined" variant="sublined" svg={SvgStoreSolid}/>
+    <br />
+    <br />
+    <Button label="Transparent" variant="transparent" svg={SvgStoreSolid}/>
   </>
 );
 

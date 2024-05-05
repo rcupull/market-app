@@ -76,7 +76,7 @@ export const RouteName = () => {
       }
     >
       <Tabs
-        className="mt-4"
+        className="mt-4 shadow-lg"
         contentClassName="w-full overflow-y-auto h-[calc(100vh-12rem)]"
         onSelect={(businessTab) => onChangeQuery({ businessTab })}
         selected={query.businessTab as number | undefined}

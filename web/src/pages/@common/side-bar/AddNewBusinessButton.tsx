@@ -25,7 +25,6 @@ export const AddNewBusinessButton = ({ className }: AddNewBusinessButtonProps) =
   return (
     <IconButtonAdd
       title="Agragar nuevo negocio"
-      dark
       onClick={(e) => {
         e.stopPropagation();
         e.preventDefault();

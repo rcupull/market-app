@@ -2,9 +2,11 @@ import { useState } from 'react';
 
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
+import { ButtonDescription } from 'components/button-decription';
 import { ButtonRemove } from 'components/button-remove';
 import { ButtonSave } from 'components/button-save';
 import { FieldCheckbox } from 'components/field-checkbox';
+import { HtmlTextContainer } from 'components/html-text-container';
 import { IconButtonOptionsBars } from 'components/icon-button-options-bars';
 import { Menu } from 'components/menu';
 
@@ -230,20 +232,32 @@ export const BulkActions = ({ business, children, onRefresh, filters }: BulkActi
           buttonElement={
             <div className="flex items-center">
               <IconButtonOptionsBars />
-              <span className="ml-2"> Acciones múltiples</span>
+              <span className="ml-2">Acciones múltiples</span>
+              <ButtonDescription
+                description={
+                  <HtmlTextContainer>
+                    Puede realizar acciones sobre varias publicaciones:
+                    <ol className="text-sm mt-2">
+                      <li>Seleccione la acción a realizar.</li>
+                      <li>Seleccione las publicaciones sobre la cual realizará la acción.</li>
+                      <li>Luego confirme la acción o cancele en el botón correspondiente.</li>
+                    </ol>
+                  </HtmlTextContainer>
+                }
+              />
             </div>
           }
           items={[
             {
-              label: 'Eliminar',
+              label: 'Eliminar varios',
               onClick: () => setAction('delete'),
             },
             {
-              label: 'Ocultar',
+              label: 'Ocultar varios',
               onClick: () => setAction('hide'),
             },
             {
-              label: 'Mostrar',
+              label: 'Mostrar varios',
               onClick: () => setAction('show'),
             },
           ]}
@@ -262,7 +276,7 @@ export const BulkActions = ({ business, children, onRefresh, filters }: BulkActi
       {children({
         getBulkTopActionsNode: (node) => {
           return (
-            <div className="flex items-center">
+            <div className="flex items-center px-1">
               {menuNode}
               <div className="ml-auto relative">
                 {node}
@@ -285,7 +299,6 @@ export const BulkActions = ({ business, children, onRefresh, filters }: BulkActi
                 setSelectedPosts([]);
                 setSelectedAll(e.target.checked);
               }}
-              label={<span className="text-nowrap -mr-[20rem]">Todos</span>}
             />,
             ...nodes,
           ];

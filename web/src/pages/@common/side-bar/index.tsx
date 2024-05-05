@@ -1,4 +1,3 @@
-import { IconShowHide } from 'components/icon-show-hide';
 import { SideBar as SideBarBase } from 'components/side-bar';
 
 import { useAuth } from 'features/api-slices/useAuth';
@@ -94,7 +93,7 @@ export const SideBar = ({ className }: SideBarProps) => {
             isUser && {
               label: name,
               href: `/dashboard/business/${routeName}`,
-              endElement: <IconShowHide className="h-4 ml-auto" hidden={hidden} />,
+              endElement: hidden && <span className='text-gray-500 text-sm'>(Oculto)</span>,
               className: 'pl-10',
             }
           );
