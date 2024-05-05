@@ -1,43 +1,20 @@
+import { Mission } from './Mission';
+import { Motivation } from './Motivation';
+
 import { LayoutPage } from 'pages/@common/layout-page';
 
 export const AboutUs = () => {
   return (
     <LayoutPage title="¿Que es Asere Market?">
-      <div className="flex flex-col items-start gap-4">
-        <div>
-          Somos un equipo tecnologico y de comunicacion con el proposito de cambiar parte de la
-          realidad cubana, reduciendo los limites entre un emprendedor con ancias de exito y un
-          mundo tecnologico dificil de tocar desde el interior de Cuba.
-        </div>
+      <Motivation />
 
-        <div>
-          Ofrecemos una servicio web dirigida para los emprendedores, vendedores, creadores y
-          emporesas cubanas que necesitan promocionar las ventas de sus productos y no poseen ese
-          espacio digital donde visualizar el concepto de sus aspiraciones.
-        </div>
+      <Mission className="mt-20" />
 
-        <div>
-          Establece una espacio unico para su negocio donde solos sus productos serán visibles para
-          Cuba y el mundo.
-        </div>
-        <div>
-          Usted gestiona personalmente la estructura de sus paginas, administrando el que y como
-          será visualizados sus publicaciones
-        </div>
-        <div>
-          Contamos con un equipo de desarrollo competente enfocado en mejorar contantemente los
-          servicios que se pretann actualmente y agregar constantemente mejoraas y nuevas
-          funcionalidades que podran ser usadas por todos nustros clientes
-        </div>
-
-        <div>Registra tu negocio en una plataforma hecha en cuba y para cuba. </div>
-        <div>
-          Publica facilmente con nosotros, si contratar servicios tecnologicos fuera del pais.{' '}
-        </div>
-        <div>
-          Precios competitivos en moneda nacional en nuestros planes de pago y capas gratuitas o
-          temporales para que pruebes nustroso servicios
-        </div>
+      <div className="h-[25rem] overflow-hidden rounded-xl flex items-center my-16">
+        <img
+          className="object-cover rounded-xl"
+          src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
+        />
       </div>
     </LayoutPage>
   );

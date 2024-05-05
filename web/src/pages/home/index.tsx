@@ -44,7 +44,7 @@ export const Home = () => {
 
       <Inspiration />
 
-      <Highlights className="mt-20" />
+      <Highlights className="my-20" />
 
       <LayoutPageSection isBusy={getAllBusinessSummary.status.isBusy} className="mt-20">
 
