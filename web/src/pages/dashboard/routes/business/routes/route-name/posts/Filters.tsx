@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button } from 'components/button';
 import { FieldCheckbox } from 'components/field-checkbox';
@@ -24,6 +24,13 @@ export const Filters = ({ business, onChange, value, className }: FiltersProps) 
   const [filterType, setFilterType] = useState<FilterType>('categories');
 
   const sections = layouts?.posts?.sections || [];
+  const [selectedSection, setSelectedSection] = useState();
+
+  useEffect(()=>{
+    if(filterType === 'categories'){
+      setSelectedSection(undefined)
+    }
+  },[filterType])
 
   return (
     <div className={className}>
@@ -59,21 +66,27 @@ export const Filters = ({ business, onChange, value, className }: FiltersProps) 
           }
           value={postCategoriesTags}
           type="wrapped"
+          buttonType="tab"
         />
       )}
 
       {filterType === 'section' && (
         <RadioGroup<PostsLayoutSection>
-          // onChange={setFilterType}
-          // value={filterType}
-          onChange={(postCategoriesTags) =>
-            onChange?.({ page: 1, postCategoriesTags, postCategoriesMethod: 'some' })
-          }
+          value={selectedSection}
+          onChange={(section) => {
+            setSelectedSection(section);
+
+            onChange?.({
+              page: 1,
+              postCategoriesTags: section.postCategoriesTags,
+              postCategoriesMethod: 'some',
+            });
+          }}
           items={sections}
           renderOption={({ checked, item }) => (
-            <Button label={item.name} variant={checked ? 'primary' : 'outlined'} />
+            <Button label={item.name} variant={checked ? 'sublined' : 'transparent'} />
           )}
-          optionToValue={({ postCategoriesTags }) => postCategoriesTags}
+          optionToValue={(option) => option}
           className="flex items-center gap-2"
         />
       )}

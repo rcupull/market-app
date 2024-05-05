@@ -24,7 +24,7 @@ export const NavBar = ({ items, preContent, postContent, className }: NavbarProp
     <div
       data-id="NavBar"
       className={cn(
-        'w-full px-8 bg-gray-800 flex items-center justify-center h-16 gap-6',
+        'w-full px-8 bg-white flex shadow-lg items-center justify-center h-16 gap-6',
         className,
       )}
     >
@@ -39,8 +39,8 @@ export const NavBar = ({ items, preContent, postContent, className }: NavbarProp
               to={item.href}
               className={cn(
                 current
-                  ? 'bg-gray-900 text-white'
-                  : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                  ? 'bg-gray-300 text-gray-600'
+                  : 'text-gray-700 hover:bg-gray-200 hover:text-gray-600',
                 'rounded-md px-3 py-2 text-sm font-medium text-nowrap',
                 item.className,
               )}

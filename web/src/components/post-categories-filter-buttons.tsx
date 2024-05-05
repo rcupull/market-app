@@ -19,6 +19,7 @@ export interface PostCategoriesFilterButtonsProps extends StyleProps {
   excluding?: boolean;
   debounceDelay?: number;
   type?: 'wrapped' | 'scrollable';
+  buttonType?: 'button' | 'tab';
 }
 
 export const PostCategoriesFilterButtons = ({
@@ -29,6 +30,7 @@ export const PostCategoriesFilterButtons = ({
   excluding,
   type,
   debounceDelay = 0,
+  buttonType = 'button'
 }: PostCategoriesFilterButtonsProps) => {
   const debouncer = useDebouncer();
   const [state, setState] = useState<Array<string>>();
@@ -65,10 +67,10 @@ export const PostCategoriesFilterButtons = ({
   return (
     <div
       className={cn(
-        'flex w-full gap-3',
+        'flex w-full gap-3 p-2',
         {
           'flex-wrap': type === 'wrapped',
-          'overflow-x-auto max-h-full': type === 'scrollable',
+          'overflow-x-auto max-w-full': type === 'scrollable',
         },
         className,
       )}
@@ -79,7 +81,8 @@ export const PostCategoriesFilterButtons = ({
         return (
           <Button
             key={index}
-            variant={selected ? 'primary' : 'outlined'}
+            {...buttonType === 'button' ? {variant: selected ? 'primary' : 'outlined'} : {}}
+            {...buttonType === 'tab' ? {variant: selected ? 'sublined' : 'transparent'} : {}}
             onClick={(e) => {
               e.preventDefault();
 

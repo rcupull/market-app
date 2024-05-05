@@ -94,7 +94,7 @@ export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
           <IconButton
             title="Carro de Compras"
             svg={<SvgShoppingCartSolid className="!size-8" />}
-            dark
+            
           />
           {isAuthenticated && (
             <span className="absolute text-gray-100 font-bold top-0 right-0">

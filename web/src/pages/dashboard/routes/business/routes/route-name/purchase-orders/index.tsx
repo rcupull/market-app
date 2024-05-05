@@ -10,8 +10,9 @@ import { TableRequested } from './table-requested';
 export const PurchaseOrders = () => {
   return (
     <Tabs
+      className='p-2 gap-2'
       itemRender={({ selected, label }) => (
-        <Button label={label} variant={selected ? 'primary' : 'outlined'} />
+        <Button label={label} variant={selected ? 'sublined' : 'transparent'} />
       )}
       items={[
         {

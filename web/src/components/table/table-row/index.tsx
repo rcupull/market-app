@@ -58,7 +58,7 @@ export const TableRow = ({
             ref: setNodeRef,
             ...listeners,
             ...attributes,
-            className: '!cursor-grab !hover:bg-gray-100',
+            className: '!cursor-grab !hover:bg-gray-100 !p-0',
           };
         }
 
