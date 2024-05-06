@@ -12,7 +12,7 @@ export interface PostsSectionsViewProps extends StyleProps {
 
 export const PostsSectionsView = ({ routeName, layouts, visibility }: PostsSectionsViewProps) => {
   return (
-    <div data-testid="PostsSectionsView" className="flex flex-col w-full">
+    <div data-id="PostsSectionsView" className="flex flex-col w-full">
       {layouts?.map((layout, index) => {
         return (
           <PostsSection

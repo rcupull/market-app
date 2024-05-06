@@ -104,6 +104,7 @@ export const CardPostImage = ({ post, layout, className }: CardPostImageProps) =
 
   return (
     <div
+      data-id = 'CardPostImage'
       ref={ref}
       style={style}
       className={cn(
