@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "vite",
-    "build": "vite build",
+    "build": "rm -rf ./build && vite build",
     "staging": "NODE_ENV=staging vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",

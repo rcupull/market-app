@@ -14,11 +14,9 @@ export const apiErrorsMesages = {
 };
 
 export const getEndpointUrl = () => {
-  if (PRODUCTION) {
-    return `http://aseremarket.net`;
-  }
+  const { protocol, hostname } = window.location;
 
-  return 'http://localhost:4009';
+  return `${protocol}//${hostname}`;
 };
 
 export const injectUrlParams = (url: string, urlParams: UrlParams = {}): string => {

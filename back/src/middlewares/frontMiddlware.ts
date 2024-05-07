@@ -1,6 +1,6 @@
 import { RequestHandler, Router } from "express";
 import { join } from "path";
-import { apiPort, appAssetsDir, appFrontDir, hostname } from "../config";
+import { appFrontDir, hostname } from "../config";
 import express from "express";
 import fs from "fs";
 import { get404Response } from "../utils/server-response";
@@ -29,7 +29,8 @@ const injectMeta = (html: string, meta: HtmlMeta) => {
     .replace("__META_OG_TITLE__", title)
     .replace("__META_OG_DESCR__", description)
     .replace("__META_OG_IMAGE__", image)
-    .replace("__META_OG_URL__", url);
+    .replace("__META_OG_URL__", url)
+    .replace("__META_DES__", description);
 };
 
 const injectMetaService: RequestHandler = (req, res, next) => {
@@ -81,9 +82,9 @@ const injectBusinessMetaMiddlware: RequestHandler = async (req, res, next) => {
       description: "Emprendimiento cubano la plataforma Asere Market", //TODO
       title: `${business.name}`,
       image: business.logo?.src
-        ? `${hostname}:${apiPort}${business.logo?.src}`
+        ? `${hostname}${business.logo?.src}`
         : defaultMeta.image,
-      url: `${hostname}:${apiPort}/${business.routeName}`,
+      url: `${hostname}/${business.routeName}`,
     };
   }
 

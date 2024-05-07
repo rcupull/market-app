@@ -6,7 +6,7 @@
   "scripts": {
     "doc": "ts-node ./swagger-autogen.ts",
     "start": "DOC=true nodemon src/index.ts",
-    "build": "tsc",
+    "build": "rm -rf ./build && tsc",
     "serve": "node build/index.js",
     "test": "jest",
     "deploy": "pnpm build && pnpm serve"

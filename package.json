@@ -11,10 +11,11 @@
     "build:server": "cd ./back && pnpm build",
     "serve:server": "cd ./back && pnpm serve",
     "<<<<<<Both>>>>>>": "",
-    "start": "APP_CONFIG_PATH='../app-config-start.json' concurrently \"pnpm start:client\" \"pnpm start:server\"",
-    "start:prod": "APP_CONFIG_PATH='../app-config-start-prod.json' concurrently \"pnpm start:client\" \"pnpm start:server\"",
-    "build": "APP_CONFIG_PATH='../app-config-prod.json' concurrently \"pnpm build:client\" \"pnpm build:server\"",
-    "serve": "APP_CONFIG_PATH='../app-config-prod.json' pnpm serve:server"
+    "start": "NODE_ENV=development DB_ENV=development concurrently \"pnpm start:client\" \"pnpm start:server\"",
+    "start:prod": "NODE_ENV=development DB_ENV=production concurrently \"pnpm start:client\" \"pnpm start:server\"",
+    "stage": "NODE_ENV=development DB_ENV=development concurrently \"pnpm build:client\" \"pnpm build:server\" && pnpm serve",
+    "build": "NODE_ENV=production DB_ENV=production concurrently \"pnpm build:client\" \"pnpm build:server\"",
+    "serve": "NODE_ENV=development DB_ENV=development pnpm serve:server"
   },
   "keywords": [],
   "author": "",

@@ -1,7 +1,5 @@
 import { join } from "path";
-
-const APP_CONFIG_PATH = process.env.APP_CONFIG_PATH || "";
-const appConfig = require(join(process.cwd(), APP_CONFIG_PATH));
+const appConfig = require("../../app-config.js");
 
 export const serviceAccount = appConfig.googleApplicationCredentials;
 export const dbUrl = appConfig.dbUrl;
@@ -9,7 +7,6 @@ export const secretAccessToken = appConfig.secretAccessToken;
 export const secretRefreshToken = appConfig.secretRefreshToken;
 export const appAssetsDir = appConfig.appAssetsDir;
 export const appFrontDir = appConfig.appFrontDir;
-export const apiPort = appConfig.apiPort;
 export const hostname = appConfig.hostname;
 
 export const getAssetsDir = () => {
