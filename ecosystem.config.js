@@ -6,7 +6,6 @@ module.exports = {
       env: {
         DB_ENV: "production",
         NODE_ENV: "production",
-        // CONFIG_PATH: "./app-config.js",
       },
     },
   ],
