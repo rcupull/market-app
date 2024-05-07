@@ -31,6 +31,7 @@ declare global {
       post?: Post;
       business?: Business;
       paginateOptions?: PaginateOptions;
+      htmlMeta?: HtmlMeta;
     }
   }
 }
@@ -65,3 +66,10 @@ export type EmptyObjectOf<T> = EmptyObject<T> extends T
   : never;
 
 export type Nullable<T> = T | false | null | undefined;
+
+export interface HtmlMeta {
+  title: string;
+  description: string;
+  url: string;
+  image: string;
+}
