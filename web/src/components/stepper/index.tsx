@@ -49,6 +49,7 @@ export const Stepper = ({ items, contentClassName }: StepperProps) => {
   return (
     <>
       <Tabs
+        disabledStepNavigation
         itemContainerClassName={({ selected }) =>
           cn({
             'flex-grow flex justify-start': selected,

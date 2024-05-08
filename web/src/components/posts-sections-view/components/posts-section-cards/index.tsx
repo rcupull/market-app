@@ -2,8 +2,6 @@ import { CardGroup } from 'components/card-group';
 import { CardPost } from 'components/card-post';
 import { Swiper } from 'components/swiper';
 
-import { CallAfarResources } from 'hooks/useCallFromAfar';
-
 import { Business, PostsLayoutSection } from 'types/business';
 import { StyleProps } from 'types/general';
 import { Post } from 'types/post';
@@ -13,14 +11,14 @@ export interface PostsSectionCardsProps extends StyleProps {
   posts: Array<Post> | null;
   business: Business;
   layout: PostsLayoutSection;
-  callAfarResources?: CallAfarResources;
+  onRefresh: ()=>void;
 }
 
 export const PostsSectionCards = ({
   business,
   posts,
   layout,
-  callAfarResources,
+  onRefresh,
 }: PostsSectionCardsProps) => {
   const { routeName } = business;
   const { type } = layout;
@@ -40,7 +38,7 @@ export const PostsSectionCards = ({
                 post={post}
                 layout={layout.postCardLayout}
                 href={getOnePostRoute({ routeName, postId: _id })}
-                callAfarResources={callAfarResources}
+                onRefresh={onRefresh}
               />
             ),
           };
@@ -60,7 +58,7 @@ export const PostsSectionCards = ({
             post={post}
             layout={layout.postCardLayout}
             href={getOnePostRoute({ routeName, postId: _id })}
-            callAfarResources={callAfarResources}
+            onRefresh={onRefresh}
           />
         );
       })}

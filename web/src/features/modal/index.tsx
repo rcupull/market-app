@@ -15,7 +15,6 @@ const componentRecord: Record<ModalId, LoadableReturn> = {
       default: m.CatalogsSearchImage,
     })),
   ),
-  PostNew: dynamic(() => import('./components/post-new').then((m) => ({ default: m.PostNew }))),
   BusinessNew: dynamic(() =>
     import('./components/business-new').then((m) => ({ default: m.BusinessNew })),
   ),

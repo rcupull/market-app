@@ -2,10 +2,6 @@ import { Link } from 'react-router-dom';
 
 import { PostShoppingMethod } from 'components/post-shopping-method';
 
-import { useModal } from 'features/modal/useModal';
-
-import { CallAfarResources } from 'hooks/useCallFromAfar';
-
 import { CardPostImage } from './CardPostImage';
 import { CardPostName } from './CardPostName';
 import { CardPostPrice } from './CardPostPrice';
@@ -13,6 +9,7 @@ import { CardPostStockAmount } from './CardPostStockAmount';
 import { getCardPostSizes } from './utils';
 
 import { UpdateSomethingContainer } from 'pages/@common/update-something-container';
+import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
 import { PostCardLayout } from 'types/business';
 import { Post } from 'types/post';
 import { cn } from 'utils/general';
@@ -22,7 +19,7 @@ export interface CardPostProps {
   post: Post;
   layout?: PostCardLayout;
   href: string;
-  callAfarResources?: CallAfarResources;
+  onRefresh: () => void;
   neverUpdate?: boolean;
 }
 
@@ -32,9 +29,9 @@ export const CardPost = ({
   post,
   layout,
   href,
-  callAfarResources,
+  onRefresh,
 }: CardPostProps) => {
-  const { pushModal } = useModal();
+  const businessNewUpdatePost = useBusinessNewUpdatePost();
   const { size, metaLayout } = layout || {};
 
   const renderMeta = () => {
@@ -83,7 +80,14 @@ export const CardPost = ({
   return (
     <UpdateSomethingContainer
       title="Editar esta publicación"
-      onClick={() => pushModal('PostNew', { postId: post._id, callAfarResources })}
+      onClick={() =>
+        businessNewUpdatePost.open({
+          postId: post._id,
+          onAfterSuccess: () => {
+            onRefresh();
+          },
+        })
+      }
     >
       {content}
     </UpdateSomethingContainer>

@@ -29,7 +29,7 @@ export const Mission = ({ className }: MissionProps) => {
           Cuba y el mundo.
         </p>
         <p>
-          Usted gestiona personalmente la estructura de sus paginas, administrando el que y como
+          Usted gestiona personalmente la estructura de sus páginas, administrando el que y como
           será visualizados sus publicaciones
         </p>
         <p>

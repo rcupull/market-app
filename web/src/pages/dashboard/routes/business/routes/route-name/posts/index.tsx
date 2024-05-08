@@ -39,14 +39,15 @@ export const Posts = () => {
   });
 
   const filters = useFiltersVolatile<GetAllPostsQuery>({
-    onChange: (filters) =>
+    onChange: (filters) => {
       business &&
-      getAllPosts.fetch({ includeHidden: true, routeNames: [business.routeName], ...filters }),
+        getAllPosts.fetch({ includeHidden: true, routeNames: [business.routeName], ...filters });
+    },
   });
 
   useEffect(() => {
     filters.onRefresh();
-  }, []);
+  }, [business?.routeName]);
 
   const onRefreshForce = () => {
     filters.onMergeFilters({ page: 1 }, { forceFetch: true });

@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 import { useGetAllPosts } from 'features/api/posts/useGetAllPosts';
 
-import { useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 import { useHotUpdateTableData } from 'hooks/useHotUpdateTableData';
 
@@ -29,7 +28,6 @@ export const PostsSection = ({
   routeName,
   layout,
   className,
-  index,
   visibility,
 }: PostsSectionProps) => {
   const { business, onFetch } = useBusiness();
@@ -71,10 +69,6 @@ export const PostsSection = ({
   }, [JSON.stringify(postCategoriesTags)]);
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  const callAfarResourcesRefreshBusiness = `post_section_${index}_business_onRefresh`;
-  useCallFromAfar(callAfarResourcesRefreshBusiness, () => onFetch({ routeName }));
-
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const businessNewUpdateSection = useBusinessNewUpdateSection();
 
@@ -88,7 +82,9 @@ export const PostsSection = ({
       onClick={() => {
         businessNewUpdateSection.open({
           sectionId: _id,
-          onAfterSuccess: () => business && onFetch({ routeName: business.routeName }),
+          onAfterSuccess: () => {
+            business && onFetch({ routeName: business.routeName })
+          },
         });
       }}
     >
@@ -118,7 +114,7 @@ export const PostsSection = ({
           layout={layout}
           posts={hotUpdateTableData.data}
           business={business}
-          callAfarResources={[callAfarResourcesRefreshBusiness]}
+          onRefresh={() => filters.onRefresh()}
         />
       </div>
     </UpdateSomethingContainer>

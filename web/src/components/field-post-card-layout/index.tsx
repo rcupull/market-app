@@ -51,7 +51,7 @@ export const FieldPostCardLayout = ({
     },
   });
 
-  const [showPreview, setShowPreview] = useState(false);
+  const [showPreview, setShowPreview] = useState(true);
 
   const content = (
     <div className="flex flex-col lg:flex-row gap-2 items-center lg:items-start">

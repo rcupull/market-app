@@ -32,5 +32,5 @@ export interface DummyPostCardProps {
 }
 
 export const DummyPostCard = ({ postCardLayout }: DummyPostCardProps) => {
-  return <CardPost neverUpdate href="/" layout={postCardLayout} post={dummyPost} />;
+  return <CardPost neverUpdate href="/" layout={postCardLayout} post={dummyPost} onRefresh={() => {}} />;
 };

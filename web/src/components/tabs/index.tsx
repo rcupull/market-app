@@ -25,6 +25,7 @@ export interface TabsProps<L extends string = string> extends StyleProps {
   onSelect?: (newSelected: number) => void;
   contentClassName?: string;
   itemContainerClassName?: (args: { selected: boolean; index: number }) => string;
+  disabledStepNavigation?: boolean;
 }
 
 const clasicItemRender: ItemRender = ({ selected, label, svg: Svg }) => {
@@ -51,6 +52,7 @@ export const Tabs = <L extends string = string>({
   itemRender = clasicItemRender,
   itemContainerClassName,
   contentClassName,
+  disabledStepNavigation,
 }: TabsProps<L>) => {
   const items = compact(itemsProp);
 
@@ -65,8 +67,16 @@ export const Tabs = <L extends string = string>({
                   <div
                     className={cn(
                       'cursor-pointer focus-visible:outline-none',
+                      {
+                        'cursor-default': disabledStepNavigation,
+                      },
                       itemContainerClassName?.({ selected, index }),
                     )}
+                    onClick={(e) => {
+                      if (disabledStepNavigation) {
+                        e.preventDefault();
+                      }
+                    }}
                   >
                     {itemRender({ label, selected, index, svg })}
                   </div>

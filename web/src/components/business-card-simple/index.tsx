@@ -23,7 +23,7 @@ export const BusinessCardSimple = ({
   const imageSrc = (image && getImageSrc?.(image.src)) || image?.src;
 
   return (
-    <Link data-id="ProductSimple" className={cn('group', className)} to={href}>
+    <Link data-id="BusinessCardSimple" className={cn('group', className)} to={href}>
       <div className="overflow-hidden rounded-lg bg-gray-100 flex items-center justify-center h-64 w-64">
         {imageSrc ? (
           <img src={imageSrc} className="object-contain object-center group-hover:opacity-75" />

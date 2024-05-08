@@ -12,15 +12,13 @@ import { ProductImages2 } from 'components/product/images/product-images-2';
 import { ProductPrice1 } from 'components/product/price/product-price-1';
 import { Review } from 'components/review';
 
-import { useModal } from 'features/modal/useModal';
-
-import { useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
 
 import { LayoutPage } from 'pages/@common/layout-page';
 import { UpdateSomethingContainer } from 'pages/@common/update-something-container';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { usePostIdPersistent } from 'pages/@hooks/usePostIdPersistent';
+import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
 import { PostsLayoutSection } from 'types/business';
 
 export interface PostIdProps {
@@ -29,13 +27,10 @@ export interface PostIdProps {
 export const PostId = ({ routeName }: PostIdProps) => {
   const { params } = useRouter();
   const { postId } = params;
-  const { pushModal } = useModal();
+  const businessNewUpdatePost = useBusinessNewUpdatePost();
 
   const postIdPersistent = usePostIdPersistent();
   const businessPageData = useBusiness();
-  useCallFromAfar(postId, () => {
-    postId && postIdPersistent.fetch({ id: postId });
-  });
 
   useEffect(() => {
     if (postId) {
@@ -65,7 +60,12 @@ export const PostId = ({ routeName }: PostIdProps) => {
   return (
     <UpdateSomethingContainer
       title="Editar esta publicación"
-      onClick={() => pushModal('PostNew', { postId: post._id, callAfarResources: postId })}
+      onClick={() => {
+        businessNewUpdatePost.open({
+          postId: post._id,
+          onAfterSuccess: () => postIdPersistent.fetch({ id: post._id }),
+        });
+      }}
     >
       <LayoutPage
         title={
