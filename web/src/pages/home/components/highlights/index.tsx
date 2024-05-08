@@ -13,7 +13,7 @@ const items: Array<HighlightProps> = [
   {
     svg: SvgGlobeAmericasSolid,
     label: 'Espacio único',
-    description: <div>Organice sus productos para facilitar una venta fácil y eficiente.</div>,
+    description: <div>Organice  sus productos y garantice una venta satisfactoria.</div>,
   },
   {
     svg: SvgUniversalAccessSolid,
@@ -37,7 +37,7 @@ const items: Array<HighlightProps> = [
     label: 'Manejo de stock',
     description: (
       <div>
-        Garantizamos que la cantidad en almacén de sus productos estén siempre actualizados.
+        Garantizamos la actualización de sus productos en almacén
       </div>
     ),
   },
@@ -46,8 +46,7 @@ const items: Array<HighlightProps> = [
     label: 'Suscripciones',
     description: (
       <div>
-        Notificamos a los clientes de cada nueva oferta que registre, actualizaciones de productos y
-        ofertas especiales.
+       Actualizamos a los clientes de los nuevos productos y ofertas especiales.
       </div>
     ),
   },
@@ -55,7 +54,7 @@ const items: Array<HighlightProps> = [
     svg: SvgCalendarAlt,
     label: 'Disponibilidad',
     description: (
-      <div>¡El tiempo es dinero! Mantenga su negocio en funcionamiento y no pierda ventas.</div>
+      <div>Mantenga su negocio vivo, activo y productivo, no pierdas ventas. !EL TIEMPO ES DINERO!</div>
     ),
   },
 ];
