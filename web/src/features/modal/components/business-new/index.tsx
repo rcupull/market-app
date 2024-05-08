@@ -22,6 +22,7 @@ import { FieldBusinessCategoriesSelect } from './FieldBusinessCategoriesSelect';
 
 import { Formik } from 'formik';
 import { FormRouteName } from 'pages/@common/form-route-name';
+import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useBusinessOnboardingModal } from 'pages/@modals/useBusinessOnboardingModal';
 import { Business } from 'types/business';
 import { getRouteName } from 'utils/business';
@@ -34,6 +35,7 @@ export interface BusinessNewProps {
 export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) => {
   const { onClose } = useModal();
 
+  const businessData = useBusiness();
   const { onCallAfar } = useCallFromAfar();
 
   const [continueWithOnboarding, setContinueWithOnboarding] = useState(false);
@@ -180,6 +182,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
                             onCallAfar(callAfarResources, response);
 
                             if (continueWithOnboarding) {
+                              businessData.onReset();
                               businessOnboardingModal.open();
                             }
                           },

@@ -24,12 +24,7 @@ export interface PostsSectionProps extends StyleProps {
   visibility: PostsLayoutSectionVisibility;
 }
 
-export const PostsSection = ({
-  routeName,
-  layout,
-  className,
-  visibility,
-}: PostsSectionProps) => {
+export const PostsSection = ({ routeName, layout, className, visibility }: PostsSectionProps) => {
   const { business, onFetch } = useBusiness();
   const { name, hiddenName, postCategoriesTags, _id, showIn } = layout;
 
@@ -83,7 +78,7 @@ export const PostsSection = ({
         businessNewUpdateSection.open({
           sectionId: _id,
           onAfterSuccess: () => {
-            business && onFetch({ routeName: business.routeName })
+            business && onFetch({ routeName: business.routeName });
           },
         });
       }}

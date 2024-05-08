@@ -11,7 +11,7 @@ export interface PostsSectionCardsProps extends StyleProps {
   posts: Array<Post> | null;
   business: Business;
   layout: PostsLayoutSection;
-  onRefresh: ()=>void;
+  onRefresh: () => void;
 }
 
 export const PostsSectionCards = ({
