@@ -54,7 +54,7 @@ export const Stepper = ({ items, contentClassName }: StepperProps) => {
             'flex-grow flex justify-start': selected,
           })
         }
-        contentClassName={cn("w-full mt-8", contentClassName)}
+        contentClassName={cn('w-full mt-8', contentClassName)}
         onSelect={setSelected}
         selected={selected}
         itemRender={({ label, selected, index }) => (

@@ -10,17 +10,18 @@ import { useBusiness } from '../../@hooks/useBusiness';
 
 import { Formik } from 'formik';
 import { Business } from 'types/business';
+import { StyleProps } from 'types/general';
 import { PostFormField } from 'types/post';
 import { isEmpty } from 'utils/general';
 
 interface State extends Pick<Business, 'postFormFields'> {}
 
-export interface ComponentProps {
+export interface ComponentProps extends StyleProps {
   portal: Portal;
   onAfterSuccess?: () => void;
 }
 
-export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
+export const Component = ({ portal, onAfterSuccess, className }: ComponentProps) => {
   const { business } = useBusiness();
 
   const { postFormFields = [], routeName } = business || {};
@@ -41,7 +42,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
     >
       {({ values, isValid, touched }) => {
         return (
-          <form>
+          <form className={className}>
             <FieldRadioGroup<{ disabled?: boolean; value: PostFormField; label: string }>
               id="logoField"
               name="postFormFields"

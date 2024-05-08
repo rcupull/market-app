@@ -24,10 +24,7 @@ export interface TabsProps<L extends string = string> extends StyleProps {
   selected?: number;
   onSelect?: (newSelected: number) => void;
   contentClassName?: string;
-  itemContainerClassName?: (args: {
-    selected: boolean;
-    index: number;
-  })=>string;
+  itemContainerClassName?: (args: { selected: boolean; index: number }) => string;
 }
 
 const clasicItemRender: ItemRender = ({ selected, label, svg: Svg }) => {
@@ -65,7 +62,12 @@ export const Tabs = <L extends string = string>({
             <Tab key={index} as={Fragment}>
               {({ selected }) => {
                 return (
-                  <div className={cn('cursor-pointer focus-visible:outline-none', itemContainerClassName?.({selected, index}))}>
+                  <div
+                    className={cn(
+                      'cursor-pointer focus-visible:outline-none',
+                      itemContainerClassName?.({ selected, index }),
+                    )}
+                  >
                     {itemRender({ label, selected, index, svg })}
                   </div>
                 );

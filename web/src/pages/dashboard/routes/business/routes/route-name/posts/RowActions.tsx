@@ -14,24 +14,24 @@ import { useRemoveOnePost } from 'features/api/posts/useRemoveOnePost';
 import { useUpdateOnePost } from 'features/api/posts/useUpdateOnePost';
 import { useModal } from 'features/modal/useModal';
 
-import { CallAfarResources, useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
 
 import { RowActionsContainer } from 'pages/@common/row-actions-container';
 import { useBusiness } from 'pages/@hooks/useBusiness';
+import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
 import { Post } from 'types/post';
 import { getOnePostRoute } from 'utils/business';
 
 export interface RowActionsProps {
   rowData: Post;
-  callAfarResources?: CallAfarResources;
+  onRefreshForce: () => void;
 }
-export const RowActions = ({ rowData, callAfarResources }: RowActionsProps) => {
+export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
   const { pushModal } = useModal();
+
+  const businessNewUpdatePost = useBusinessNewUpdatePost();
   const { pushRoute } = useRouter();
   const { business } = useBusiness();
-
-  const { onCallAfar } = useCallFromAfar();
 
   const handleDelete = () => {
     pushModal(
@@ -40,7 +40,6 @@ export const RowActions = ({ rowData, callAfarResources }: RowActionsProps) => {
         useProps: () => {
           const { removeOnePost } = useRemoveOnePost();
           const { onClose } = useModal();
-          const { onCallAfar } = useCallFromAfar();
           return {
             content: (
               <div>
@@ -61,8 +60,7 @@ export const RowActions = ({ rowData, callAfarResources }: RowActionsProps) => {
                     {
                       onAfterSuccess: () => {
                         onClose();
-
-                        onCallAfar(callAfarResources);
+                        onRefreshForce();
                       },
                     },
                   )
@@ -83,7 +81,6 @@ export const RowActions = ({ rowData, callAfarResources }: RowActionsProps) => {
         useProps: () => {
           const { updateOnePost } = useUpdateOnePost();
           const { onClose } = useModal();
-          const { onCallAfar } = useCallFromAfar();
           return {
             content: (
               <div>
@@ -105,7 +102,7 @@ export const RowActions = ({ rowData, callAfarResources }: RowActionsProps) => {
                     {
                       onAfterSuccess: () => {
                         onClose();
-                        onCallAfar(callAfarResources);
+                        onRefreshForce();
                       },
                     },
                   )
@@ -128,16 +125,18 @@ export const RowActions = ({ rowData, callAfarResources }: RowActionsProps) => {
       },
       {
         onAfterSuccess: () => {
-          onCallAfar(callAfarResources);
+          onRefreshForce();
         },
       },
     );
   };
 
   const handleUpdate = () => {
-    pushModal('PostNew', {
+    businessNewUpdatePost.open({
       postId: rowData._id,
-      callAfarResources,
+      onAfterSuccess: () => {
+        onRefreshForce();
+      },
     });
   };
 

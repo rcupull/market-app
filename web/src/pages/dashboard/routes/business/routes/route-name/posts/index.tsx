@@ -7,9 +7,7 @@ import { IconButton } from 'components/icon-button';
 import { Table } from 'components/table';
 
 import { useGetAllPosts } from 'features/api/posts/useGetAllPosts';
-import { useModal } from 'features/modal/useModal';
 
-import { useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 
 import { BulkActions } from './BulkActions';
@@ -23,6 +21,7 @@ import SvgSyncSolid from 'icons/SyncSolid';
 import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useTableCellCategoriesTags } from 'pages/@hooks/useTableCellCategoriesTags';
+import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
 import { GetAllPostsQuery } from 'types/api';
 import { getImageEndpoint } from 'utils/api';
 import { getDateString } from 'utils/date';
@@ -31,8 +30,7 @@ import { viewUtils } from 'utils/view';
 
 export const Posts = () => {
   const { getAllPosts } = useGetAllPosts();
-  const { pushModal } = useModal();
-
+  const businessNewUpdatePost = useBusinessNewUpdatePost();
   const { business } = useBusiness();
 
   const infinityScrolling = useInfinityScrolling({
@@ -50,10 +48,9 @@ export const Posts = () => {
     filters.onRefresh();
   }, []);
 
-  const callAfarResources = 'dashboard_business_route-name_posts_onRefresh';
-  useCallFromAfar(callAfarResources, () => {
+  const onRefreshForce = () => {
     filters.onMergeFilters({ page: 1 }, { forceFetch: true });
-  });
+  };
 
   const tableCellCategoriesTags = useTableCellCategoriesTags({
     business,
@@ -63,21 +60,21 @@ export const Posts = () => {
     <>
       <ButtonNew
         label="Nueva publicación"
-        onClick={() =>
-          pushModal('PostNew', {
-            callAfarResources,
-          })
-        }
+        onClick={() => {
+          businessNewUpdatePost.open({
+            onAfterSuccess: () => onRefreshForce(),
+          });
+        }}
         className="ml-auto hidden sm:block"
       />
       <IconButton
         title="Nueva publicación"
         svg={SvgPlusSolid}
-        onClick={() =>
-          pushModal('PostNew', {
-            callAfarResources,
-          })
-        }
+        onClick={() => {
+          businessNewUpdatePost.open({
+            onAfterSuccess: () => onRefreshForce(),
+          });
+        }}
         variant="primary"
         className="ml-auto block sm:hidden"
       />
@@ -160,7 +157,7 @@ export const Posts = () => {
                     <RowActions
                       key="RowActions"
                       rowData={rowData}
-                      callAfarResources={callAfarResources}
+                      onRefreshForce={onRefreshForce}
                     />,
                     name,
                     tableCellCategoriesTags.onGetTableCellNode({ postCategoriesTags }),
