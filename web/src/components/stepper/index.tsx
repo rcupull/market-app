@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { Button } from 'components/button';
-import { Tabs } from 'components/tabs';
+import { Tabs, TabsProps } from 'components/tabs';
 
 import SvgAngleLeftSolid from 'icons/AngleLeftSolid';
 import SvgAngleRightSolid from 'icons/AngleRightSolid';
@@ -11,11 +11,11 @@ export interface StepProps {
   backButton: React.ReactElement;
   nextButton: React.ReactElement;
 }
-export interface StepperProps {
+export interface StepperProps extends Pick<TabsProps, 'contentClassName'> {
   items: Array<{ label: string; render: (props: StepProps) => React.ReactNode }>;
 }
 
-export const Stepper = ({ items }: StepperProps) => {
+export const Stepper = ({ items, contentClassName }: StepperProps) => {
   const [selected, setSelected] = useState(0);
 
   /////////////////////////////////////////////////////////////////////////////////
@@ -49,29 +49,27 @@ export const Stepper = ({ items }: StepperProps) => {
   return (
     <>
       <Tabs
-        className="justify-between"
-        contentClassName="w-full mt-8"
+        itemContainerClassName={({ selected }) =>
+          cn({
+            'flex-grow flex justify-start': selected,
+          })
+        }
+        contentClassName={cn("w-full mt-8", contentClassName)}
         onSelect={setSelected}
         selected={selected}
         itemRender={({ label, selected, index }) => (
-          <div className="flex flex-col items-center">
+          <div className="flex items-center">
             <div
               className={cn(
                 'border-2 border-gray-400 rounded-full w-8 h-8 flex items-center justify-center',
                 {
-                  'font-semibold !border-indigo-500': selected,
+                  'font-semibold !border-indigo-500 !bg-indigo-500 !text-white': selected,
                 },
               )}
             >
               {index + 1}
             </div>
-            <div
-              className={cn('text-center', {
-                'font-semibold': selected,
-              })}
-            >
-              {label}
-            </div>
+            {selected && <div className={cn('text-center font-semibold ml-4')}>{label}</div>}
           </div>
         )}
         items={items.map(({ label, render }) => {

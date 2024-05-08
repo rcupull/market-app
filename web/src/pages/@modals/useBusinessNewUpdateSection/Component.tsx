@@ -20,17 +20,18 @@ import {
   useBusinessOwnerUpdate,
 } from 'pages/@hooks/useBusinessOwnerUpdate';
 import { PostsLayoutSectionVisibility } from 'types/business';
+import { StyleProps } from 'types/general';
 import { getSectionFromBusiness } from 'utils/business';
 
 type State = PostsLayoutSectionPayload;
 
-export interface ComponentProps {
+export interface ComponentProps extends StyleProps {
   portal: Portal;
   sectionId?: string;
   onAfterSuccess: () => void;
 }
 
-export const Component = ({ portal, sectionId, onAfterSuccess }: ComponentProps) => {
+export const Component = ({ portal, sectionId, onAfterSuccess, className }: ComponentProps) => {
   const { business } = useBusiness();
   const businessOwnerUpdate = useBusinessOwnerUpdate(business);
   const getFormErrors = useGetFormErrors();
@@ -64,7 +65,7 @@ export const Component = ({ portal, sectionId, onAfterSuccess }: ComponentProps)
     >
       {({ values, isValid }) => {
         return (
-          <form>
+          <form className={className}>
             <FieldRadioGroup<{
               value: PostsLayoutSectionVisibility;
               label: string;

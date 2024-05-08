@@ -1,4 +1,4 @@
-import { StepperButtonContainer } from 'components/stepper-v2/StepperButtonContainer';
+import { StepperButtonContainer } from 'components/stepper/StepperButtonContainer';
 
 import { OnboardingStepProps } from '../../types';
 

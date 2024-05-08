@@ -1,4 +1,4 @@
-import { StepperButtonContainer } from 'components/stepper-v2/StepperButtonContainer';
+import { StepperButtonContainer } from 'components/stepper/StepperButtonContainer';
 
 import { OnboardingStepProps } from '../../types';
 
@@ -20,6 +20,7 @@ export const StepPostsSections = ({ backButton, nextButton }: StepPostsSectionsP
           business && onFetch({ routeName: business.routeName });
           nextAction();
         }}
+        className="max-h-[70vh] overflow-y-auto"
       />
       <StepperButtonContainer leftButton={backButton} rightButton={rightButton} />
     </div>
