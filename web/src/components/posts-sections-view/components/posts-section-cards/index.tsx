@@ -22,7 +22,7 @@ export const PostsSectionCards = ({
   layout,
   callAfarResources,
 }: PostsSectionCardsProps) => {
-  const { routeName, whatsAppPhoneNumber } = business;
+  const { routeName } = business;
   const { type } = layout;
 
   if (type === 'oneRowSlider') {
@@ -40,7 +40,6 @@ export const PostsSectionCards = ({
                 post={post}
                 layout={layout.postCardLayout}
                 href={getOnePostRoute({ routeName, postId: _id })}
-                whatsAppPhoneNumber={whatsAppPhoneNumber}
                 callAfarResources={callAfarResources}
               />
             ),
@@ -61,7 +60,6 @@ export const PostsSectionCards = ({
             post={post}
             layout={layout.postCardLayout}
             href={getOnePostRoute({ routeName, postId: _id })}
-            whatsAppPhoneNumber={whatsAppPhoneNumber}
             callAfarResources={callAfarResources}
           />
         );

@@ -11,7 +11,6 @@ import { ReviewProps } from 'components/review';
 import { usePortal } from 'hooks/usePortal';
 
 import { Formik } from 'formik';
-import { useBusiness } from 'pages/@hooks/useBusiness';
 import { Post } from 'types/post';
 
 export interface ClothingProductGrid1Props {
@@ -30,7 +29,6 @@ export interface ClothingProductGrid1Props {
 
 export const ClothingProductGrid1 = ({ post, render }: ClothingProductGrid1Props) => {
   const portal = usePortal();
-  const { business } = useBusiness();
 
   if (!post) return <></>;
 
@@ -108,7 +106,6 @@ export const ClothingProductGrid1 = ({ post, render }: ClothingProductGrid1Props
                         interestedByColors: values.interestedByColors,
                       }}
                       layout={post.postPageLayout?.shoppingMethod}
-                      whatsAppPhoneNumber={business?.whatsAppPhoneNumber}
                       btnPostToCartVariant="button"
                       className="mt-4 w-full"
                     />,

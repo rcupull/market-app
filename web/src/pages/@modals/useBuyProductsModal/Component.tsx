@@ -10,12 +10,10 @@ import { StepCommonProps } from './types';
 
 import SvgAngleLeftSolid from 'icons/AngleLeftSolid';
 import SvgAngleRightSolid from 'icons/AngleRightSolid';
-import { useBusiness } from 'pages/@hooks/useBusiness';
 import { cn } from 'utils/general';
 
 export const Component = () => {
   const [selected, setSelected] = useState(0);
-  const { business } = useBusiness();
 
   /////////////////////////////////////////////////////////////////////////////////
   const backButton = (
@@ -63,7 +61,7 @@ export const Component = () => {
       label: 'Crear orden de compra',
       content: <PurchaseOrder {...commonProps} />,
     },
-    business?.shoppingStrategy === 'addToCart_whatsAppWithOwner_pickUpProduct' && {
+    {
       label: 'Contactar con el vendedor',
       content: <WhatsAppMessage {...commonProps} />,
     },

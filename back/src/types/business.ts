@@ -58,10 +58,7 @@ export type PostCardLayoutPrice =
   | "smallerCurrency"
   | "usdCurrencySymbol";
 export type PostCardLayoutDiscount = "none" | "savedPercent" | "savedMoney";
-export type PostLayoutShoppingMethod =
-  | "none"
-  | "whatsApp_xsLink_lgQR"
-  | "shoppingCart";
+export type PostLayoutShoppingMethod = "none" | "shoppingCart";
 
 export type PostLayoutShoppingCart = "none" | "added_whatsApp";
 
@@ -107,10 +104,6 @@ export interface BusinessAboutUsPage {
   description?: string; // checkeditor text
 }
 
-export type BusinessShoppingStrategy =
-  | "whatsAppWithOwner_pickUpProduct"
-  | "addToCart_whatsAppWithOwner_pickUpProduct";
-
 export interface BusinessPaymentRequest {
   shoppingId: string;
   fromCredit: number;
@@ -141,7 +134,6 @@ export interface Business extends BaseIdentity {
   layouts?: BusinessLayouts;
   aboutUsPage?: BusinessAboutUsPage;
   whatsAppPhoneNumber?: string;
-  shoppingStrategy?: BusinessShoppingStrategy;
   shoppingMeta?: {
     purchaseRequestTopInfo?: string;
   };

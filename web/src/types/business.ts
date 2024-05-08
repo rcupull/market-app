@@ -44,7 +44,7 @@ export type PostCardLayoutName = 'none' | 'basic';
 export type PostCardLayoutPrice = 'none' | 'basic' | 'smallerCurrency' | 'usdCurrencySymbol';
 export type PostCardLayoutDiscount = 'none' | 'savedPercent' | 'savedMoney';
 export type PostCardLayoutMetaLayout = 'basic' | 'verticalCentered';
-export type PostLayoutShoppingMethod = 'none' | 'whatsApp_xsLink_lgQR' | 'shoppingCart';
+export type PostLayoutShoppingMethod = 'none' | 'shoppingCart';
 
 export interface PostCardLayout {
   images?: PostCardLayoutImages;
@@ -133,7 +133,6 @@ export interface Business extends BaseIdentity {
   layouts?: BusinessLayouts;
   aboutUsPage?: BusinessAboutUsPage;
   whatsAppPhoneNumber?: string;
-  shoppingStrategy?: BusinessShoppingStrategy;
   shoppingMeta?: {
     purchaseRequestTopInfo?: string;
   };

@@ -11,7 +11,7 @@ import { SchemaDefinition } from "../types/general";
 const PostLayoutShoppingMethodDefinition: SchemaDefinition<PostLayoutShoppingMethod> =
   {
     type: String,
-    enum: ["none", "whatsApp_xsLink_lgQR", "shoppingCart"],
+    enum: ["none", "shoppingCart"],
   };
 
 export const PostCardLayoutSchema = new Schema<PostCardLayout>({

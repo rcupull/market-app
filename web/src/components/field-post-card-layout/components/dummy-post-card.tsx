@@ -32,13 +32,5 @@ export interface DummyPostCardProps {
 }
 
 export const DummyPostCard = ({ postCardLayout }: DummyPostCardProps) => {
-  return (
-    <CardPost
-      neverUpdate
-      href="/"
-      layout={postCardLayout}
-      post={dummyPost}
-      whatsAppPhoneNumber="5555555555"
-    />
-  );
+  return <CardPost neverUpdate href="/" layout={postCardLayout} post={dummyPost} />;
 };

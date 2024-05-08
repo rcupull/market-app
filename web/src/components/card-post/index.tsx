@@ -24,7 +24,6 @@ export interface CardPostProps {
   href: string;
   callAfarResources?: CallAfarResources;
   neverUpdate?: boolean;
-  whatsAppPhoneNumber?: string;
 }
 
 export const CardPost = ({
@@ -34,7 +33,6 @@ export const CardPost = ({
   layout,
   href,
   callAfarResources,
-  whatsAppPhoneNumber,
 }: CardPostProps) => {
   const { pushModal } = useModal();
   const { size, metaLayout } = layout || {};
@@ -49,12 +47,7 @@ export const CardPost = ({
             <CardPostStockAmount post={post} />
           </div>
 
-          <PostShoppingMethod
-            layout={layout?.shoppingMethod}
-            post={post}
-            whatsAppPhoneNumber={whatsAppPhoneNumber}
-            className="ml-auto"
-          />
+          <PostShoppingMethod layout={layout?.shoppingMethod} post={post} className="ml-auto" />
         </div>
       );
     }
@@ -65,11 +58,7 @@ export const CardPost = ({
           <CardPostName layout={layout} post={post} />
           <CardPostPrice layout={layout} post={post} />
 
-          <PostShoppingMethod
-            layout={layout?.shoppingMethod}
-            post={post}
-            whatsAppPhoneNumber={whatsAppPhoneNumber}
-          />
+          <PostShoppingMethod layout={layout?.shoppingMethod} post={post} />
         </div>
       );
     }

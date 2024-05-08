@@ -6,12 +6,13 @@ import { useBusinessSectionsReorder } from 'features/api/business/useBusinessSec
 
 import { RowActions } from './RowActions';
 
+import SvgCheckCircle from 'icons/CheckCircle';
+import SvgTimesCircle from 'icons/TimesCircle';
 import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useTableCellCategoriesTags } from 'pages/@hooks/useTableCellCategoriesTags';
 import { useBusinessNewUpdateSection } from 'pages/@modals/useBusinessNewUpdateSection';
 import { PostsLayoutSection } from 'types/business';
-import { getSearchLayoutLabel } from 'utils/business';
 import { viewUtils } from 'utils/view';
 
 export const PostsSections = () => {
@@ -56,9 +57,12 @@ export const PostsSections = () => {
             },
           );
         }}
-        heads={['Acciones', 'Nombre', 'Categorías', 'Visible en', 'Búsqueda']}
+        heads={['Acciones', 'Nombre', 'Categorías', 'Visible en', 'Detalles']}
         getRowProps={(rowData) => {
-          const { name, postCategoriesTags, hiddenName, searchLayout, showIn } = rowData;
+          const { name, postCategoriesTags, hiddenName, searchLayout, showIn, postCardLayout } =
+            rowData;
+
+          const { shoppingMethod } = postCardLayout || {};
 
           return {
             nodes: [
@@ -69,7 +73,26 @@ export const PostsSections = () => {
               </div>,
               tableCellCategoriesTags.onGetTableCellNode({ postCategoriesTags }),
               viewUtils.mapToOutlinedBox({ value: showIn }),
-              searchLayout && getSearchLayoutLabel(searchLayout),
+              viewUtils.keyValueList([
+                {
+                  label: 'Búsqueda',
+                  value:
+                    searchLayout !== 'none' ? (
+                      <SvgCheckCircle className="fill-green-500 size-6" />
+                    ) : (
+                      <SvgTimesCircle className="fill-red-500 size-6" />
+                    ),
+                },
+                {
+                  label: 'Adicionar al carro',
+                  value:
+                    shoppingMethod === 'shoppingCart' ? (
+                      <SvgCheckCircle className="fill-green-500 size-6" />
+                    ) : (
+                      <SvgTimesCircle className="fill-red-500 size-6" />
+                    ),
+                },
+              ]),
             ],
           };
         }}

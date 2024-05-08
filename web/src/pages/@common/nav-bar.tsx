@@ -45,7 +45,7 @@ export const Navbar = ({ className }: NavbarProps) => {
   const { user } = authData || {};
   const { isBusinessPage, params, isAuthenticatedPage } = useRouter();
   const { routeName } = params;
-  const { business, hasSomeShoppingCartStrategy } = useBusiness();
+  const { business } = useBusiness();
   const authChangePasswordModal = useAuthChangePasswordModal();
   const aboutUsPage = business?.aboutUsPage || {};
   const { pushModal } = useModal();
@@ -99,7 +99,7 @@ export const Navbar = ({ className }: NavbarProps) => {
               onClick={() => pushRoute('/')}
             />
           )}
-          {isBusinessPage && hasSomeShoppingCartStrategy && <ShoppingCartMenu />}
+          {isBusinessPage && <ShoppingCartMenu />}
           {isUser && (
             <IconButton
               title="Mis tiendas"

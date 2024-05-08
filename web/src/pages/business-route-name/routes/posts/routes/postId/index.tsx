@@ -74,7 +74,6 @@ export const PostId = ({ routeName }: PostIdProps) => {
             <PostShoppingMethod
               post={post}
               layout={post.postPageLayout?.shoppingMethod}
-              whatsAppPhoneNumber={business.whatsAppPhoneNumber}
               className="ml-auto"
             />
           </div>

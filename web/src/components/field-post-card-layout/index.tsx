@@ -47,7 +47,7 @@ export const FieldPostCardLayout = ({
       discount: 'none',
       name: 'basic',
       price: 'smallerCurrency',
-      shoppingMethod: undefined,
+      shoppingMethod: 'shoppingCart',
     },
   });
 
@@ -218,7 +218,7 @@ export const FieldPostCardLayout = ({
           <Divider className="!my-2" />
 
           <FieldPostShoppingMethodSelect
-            label="Método de compra"
+            label="Adiccionar al carro"
             name={getFieldName('shoppingMethod')}
             className="w-full"
           />

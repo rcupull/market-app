@@ -264,7 +264,6 @@ const put_business_routeName: () => RequestHandler = () => {
           aboutUsPage: "aboutUsPage",
           whatsAppPhoneNumber: "whatsAppPhoneNumber",
           postFormFields: "postFormFields",
-          shoppingStrategy: "shoppingStrategy",
           shoppingMeta: "shoppingMeta",
         })(body),
       });
