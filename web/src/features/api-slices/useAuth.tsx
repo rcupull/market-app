@@ -35,7 +35,7 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
   };
 
   const getIsAdmin: UseAuthMeta['getIsAdmin'] = (user) => {
-    return user?.role === 'admin'
+    return user?.role === 'admin';
   };
 
   return {

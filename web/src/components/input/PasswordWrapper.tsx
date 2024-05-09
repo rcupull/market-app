@@ -4,7 +4,6 @@ import { IconButtonShowHide } from 'components/icon-button-show-hide';
 
 import { InputProps } from './types';
 
-
 export interface PasswordWrapperProps {
   children: (args: { endElement: React.ReactNode; type: InputProps['type'] }) => React.ReactNode;
 }

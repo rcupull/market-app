@@ -14,6 +14,7 @@ import { useRouter } from 'hooks/useRouter';
 import { useAuthSignUpModal } from '../useAuthSignUpModal';
 
 import { Formik } from 'formik';
+import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
 import { getAdminRoute, getDashboardRoute } from 'utils/business';
 
 export interface ComponentProps {
@@ -51,11 +52,9 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
   return (
     <div className="flex min-h-full flex-col justify-center">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          className="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
-        />
+        <div className="flex justify-center">
+          <BusinessMarketLogo className="!size-28" />
+        </div>
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Inicia sesión en tu cuenta
         </h2>
@@ -96,7 +95,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                       pushRoute(redirect);
                     } else if (getIsUser(user)) {
                       pushRoute(getDashboardRoute());
-                    }else if(getIsAdmin(user)){
+                    } else if (getIsAdmin(user)) {
                       pushRoute(getAdminRoute());
                     }
 
@@ -160,7 +159,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                       pushRoute('/about-us');
                     }}
                   />{' '}
-                  o darle un vistazo al{' '}
+                  o darle un vistazo a los{' '}
                   <Button
                     variant="link"
                     className="!inline-block !whitespace-pre-line"
@@ -169,7 +168,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                       onClose();
                       pushRoute('/price');
                     }}
-                  />
+                  />{' '}
                   de nuestros servicios.
                 </div>
               </form>
