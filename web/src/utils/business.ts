@@ -57,6 +57,10 @@ export const getDashboardRoute = () => {
   return `/dashboard`;
 };
 
+export const getAdminRoute = () => {
+  return `/admin`;
+};
+
 export const getSearchLayoutLabel = (type: SearchLayoutType): string => {
   switch (type) {
     case 'none':

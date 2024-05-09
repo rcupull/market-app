@@ -13,6 +13,7 @@ type UseAuthMeta = {
   isAdmin: boolean;
   isUser: boolean;
   getIsUser: (user: User | undefined) => boolean;
+  getIsAdmin: (user: User | undefined) => boolean;
   isBasicUser: boolean;
   isAuthenticated: boolean;
   onRefreshAuthUser: () => void;
@@ -31,6 +32,10 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
 
   const getIsUser: UseAuthMeta['getIsUser'] = (user) => {
     return user?.role === 'user' && user?.canCreateBusiness;
+  };
+
+  const getIsAdmin: UseAuthMeta['getIsAdmin'] = (user) => {
+    return user?.role === 'admin'
   };
 
   return {
@@ -57,6 +62,7 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
     isAuthenticated: !!authData,
     isAdmin: authData?.user?.role === 'admin',
     getIsUser,
+    getIsAdmin,
     isUser: getIsUser(authData?.user),
     isBasicUser: authData?.user?.role === 'user' && !authData?.user?.canCreateBusiness,
     authData,
