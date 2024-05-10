@@ -44,7 +44,7 @@ export const Home = () => {
 
       <Inspiration />
 
-      <Highlights className="my-20" />
+      <Highlights className="px-10 sm:px-0 my-20" />
 
       <LayoutPageSection isBusy={getAllBusinessSummary.status.isBusy} className="mt-20">
         <div ref={refCardContainer} onScroll={onScroll} className="overflow-y-auto max-h-50rem">

@@ -50,7 +50,6 @@ export const PostCardLayoutSchema = new Schema<PostCardLayout>({
 });
 
 export const PostPageLayoutSchema = new Schema<PostPageLayout>({
-  shoppingMethod: PostLayoutShoppingMethodDefinition,
   postsSectionsBelowIds: { type: [String] },
 });
 

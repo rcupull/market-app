@@ -39,7 +39,6 @@ export interface PostsLayout {
 }
 
 export interface PostPageLayout {
-  shoppingMethod?: PostLayoutShoppingMethod;
   postsSectionsBelowIds?: Array<string>;
 }
 
@@ -157,7 +156,6 @@ export interface Business extends BaseIdentity {
       | "details"
       | "postCategoriesTags"
       | "discount"
-      | "postPageLayout"
       | "stockAmount"
       | "images"
     >

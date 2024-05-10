@@ -1,5 +1,4 @@
 import { Accordion } from 'components/accordion';
-import { FieldPostShoppingMethodSelect } from 'components/field-post-shopping-method-select';
 import { FieldPostsSectionSelect } from 'components/field-posts-section-select';
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
 
@@ -33,8 +32,6 @@ export const FieldPostPageLayout = ({
 
   const content = (
     <div className="flex flex-col justify-around h-full px-6 gap-2">
-      <FieldPostShoppingMethodSelect label="Contacto" name={getFieldName('shoppingMethod')} />
-
       <FieldPostsSectionSelect
         label="Grupos de publicaciones similares"
         name={getFieldName('postsSectionsBelowIds')}

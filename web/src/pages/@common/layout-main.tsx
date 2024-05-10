@@ -30,9 +30,9 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
       {({ close }) => {
         return (
           <>
-            <Popover.Button as="div" className="absolute -top-12 z-10">
+            <Popover.Button as="div" className="absolute -top-14 z-10">
               <div className="flex w-14 cursor-pointer">
-                <BusinessLogo className="ml-auto" />
+                <BusinessLogo className="ml-auto !h-12" />
               </div>
             </Popover.Button>
 
