@@ -68,6 +68,35 @@ router
   );
 
 router
+  .route("/business/:routeName/sections")
+  .post(
+    validators.param("routeName").notEmpty(),
+    validators.handle,
+    isLogged,
+    isUserThisBusinessOwner,
+    businessHandles.post_business_routeName_sections()
+  );
+
+router
+  .route("/business/:routeName/sections/:sectionId")
+  .put(
+    validators.param("routeName").notEmpty(),
+    validators.param("sectionId").notEmpty(),
+    validators.handle,
+    isLogged,
+    isUserThisBusinessOwner,
+    businessHandles.put_business_routeName_sections_sectionId()
+  )
+  .delete(
+    validators.param("routeName").notEmpty(),
+    validators.param("sectionId").notEmpty(),
+    validators.handle,
+    isLogged,
+    isUserThisBusinessOwner,
+    businessHandles.del_business_routeName_sections_sectionId()
+  );
+
+router
   .route("/business/:routeName/sections/reorder")
   .put(
     validators.param("routeName").notEmpty(),

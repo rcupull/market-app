@@ -9,15 +9,19 @@ import { FieldRadioGroup } from 'components/field-radio-group';
 import { FieldSearchLayout } from 'components/field-search-layout';
 import { FieldShowHide } from 'components/field-show-hide';
 
+import { useAddBusinessSection } from 'features/api/business/useAddBusinessSection';
+import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusinessSection';
+
 import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { Portal } from 'hooks/usePortal';
 
 import { Formik } from 'formik';
+import { useBusiness } from 'pages/@hooks/useBusiness';
 import {
+  PostsLayoutSection,
   PostsLayoutSectionPayload,
-  useBusinessOwnerUpdate,
-} from 'pages/@hooks/useBusinessOwnerUpdate';
-import { Business, PostsLayoutSection, PostsLayoutSectionVisibility } from 'types/business';
+  PostsLayoutSectionVisibility,
+} from 'types/business';
 import { StyleProps } from 'types/general';
 import { PostType } from 'types/post';
 import { getRandomHash } from 'utils/general';
@@ -29,18 +33,19 @@ export interface ComponentProps extends StyleProps {
   section?: PostsLayoutSection;
   onAfterSuccess: () => void;
   postType?: PostType;
-  business: Business;
 }
 
 export const Component = ({
   portal,
   section,
-  business,
   onAfterSuccess,
   className,
   postType,
 }: ComponentProps) => {
-  const businessOwnerUpdate = useBusinessOwnerUpdate(business);
+  const { business } = useBusiness();
+  const { updateBusinessSection } = useUpdateBusinessSection();
+  const { addBusinessSection } = useAddBusinessSection();
+
   const getFormErrors = useGetFormErrors();
 
   const postForm = (
@@ -181,19 +186,26 @@ export const Component = ({
 
             {portal.getPortal(
               <ButtonSave
-                isBusy={businessOwnerUpdate.status.isBusy}
+                isBusy={addBusinessSection.status.isBusy || updateBusinessSection.status.isBusy}
                 disabled={!isValid}
-                onClick={() =>
+                onClick={() => {
+                  if (!business) return;
                   section
-                    ? businessOwnerUpdate.updatePostsLayoutSection(
-                        { value: values, sectionId: section._id },
-                        { onAfterSuccess },
+                    ? updateBusinessSection.fetch(
+                        {
+                          routeName: business.routeName,
+                          sectionId: section._id,
+                          data: values,
+                        },
+                        {
+                          onAfterSuccess,
+                        },
                       )
-                    : businessOwnerUpdate.addPostsLayoutSection(
-                        { value: values },
+                    : addBusinessSection.fetch(
+                        { routeName: business.routeName, data: values },
                         { onAfterSuccess },
-                      )
-                }
+                      );
+                }}
                 variant="primary"
                 className="w-full"
               />,
@@ -320,19 +332,24 @@ export const Component = ({
 
             {portal.getPortal(
               <ButtonSave
-                isBusy={businessOwnerUpdate.status.isBusy}
+                isBusy={addBusinessSection.status.isBusy || updateBusinessSection.status.isBusy}
                 disabled={!isValid}
-                onClick={() =>
+                onClick={() => {
+                  if (!business) return;
                   section
-                    ? businessOwnerUpdate.updatePostsLayoutSection(
-                        { value: values, sectionId: section._id },
+                    ? updateBusinessSection.fetch(
+                        {
+                          routeName: business.routeName,
+                          sectionId: section._id,
+                          data: values,
+                        },
                         { onAfterSuccess },
                       )
-                    : businessOwnerUpdate.addPostsLayoutSection(
-                        { value: values },
+                    : addBusinessSection.fetch(
+                        { routeName: business.routeName, data: values },
                         { onAfterSuccess },
-                      )
-                }
+                      );
+                }}
                 variant="primary"
                 className="w-full"
               />,

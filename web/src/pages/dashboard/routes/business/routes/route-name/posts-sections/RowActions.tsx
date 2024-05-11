@@ -3,11 +3,11 @@ import { ButtonRemove } from 'components/button-remove';
 import { IconButtonRemove } from 'components/icon-button-remove';
 import { IconButtonUpdate } from 'components/icon-button-update';
 
+import { useRemoveBusinessSection } from 'features/api/business/useRemoveBusinessSection';
 import { useModal } from 'features/modal/useModal';
 
 import { RowActionsContainer } from 'pages/@common/row-actions-container';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useBusinessOwnerUpdate } from 'pages/@hooks/useBusinessOwnerUpdate';
 import { useBusinessNewUpdateSection } from 'pages/@modals/useBusinessNewUpdateSection';
 import { PostsLayoutSection } from 'types/business';
 
@@ -23,8 +23,7 @@ export const RowActions = ({ rowData }: RowActionsProps) => {
       'Confirmation',
       {
         useProps: () => {
-          const businessOwnerUpdate = useBusinessOwnerUpdate(business);
-
+          const { removeBusinessSection } = useRemoveBusinessSection();
           const { onClose } = useModal();
           return {
             content: (
@@ -40,10 +39,12 @@ export const RowActions = ({ rowData }: RowActionsProps) => {
             badge: <Badge variant="error" />,
             primaryBtn: (
               <ButtonRemove
-                isBusy={businessOwnerUpdate.status.isBusy}
+                isBusy={removeBusinessSection.status.isBusy}
                 onClick={() => {
-                  businessOwnerUpdate.removePostsLayoutSection(
-                    { sectionId: rowData._id },
+                  if (!business) return;
+
+                  removeBusinessSection.fetch(
+                    { sectionId: rowData._id, routeName: business.routeName },
                     {
                       onAfterSuccess: () => {
                         business && onFetch({ routeName: business.routeName });

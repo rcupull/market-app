@@ -1,6 +1,6 @@
 import { PostCardLayout } from 'types/business';
 import { Post, PostCurrency } from 'types/post';
-import { cn } from 'utils/general';
+import { cn, isNumber } from 'utils/general';
 
 const renderPriceCurrency = (
   price: number,
@@ -42,9 +42,10 @@ export const CardPostPrice = ({ post, layout }: CardPostPriceProps) => {
   const hasDiscount = !!discount && !!discountLayout && discountLayout !== 'none';
 
   const renderDiscount = () => {
-    if (!discount) {
+    if (!discount || !isNumber(price) || !currency) {
       return null;
     }
+
 
     if (discountLayout === 'savedMoney') {
       const oldPrice = price + discount;
@@ -65,7 +66,7 @@ export const CardPostPrice = ({ post, layout }: CardPostPriceProps) => {
     return null;
   };
 
-  if (priceLayout !== 'none') {
+  if (priceLayout !== 'none' && isNumber(price) && currency) {
     return (
       <div className="mt-1 text-lg font-medium text-gray-900 flex items-center">
         <div

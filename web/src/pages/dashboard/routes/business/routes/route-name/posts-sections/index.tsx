@@ -44,10 +44,7 @@ export const PostsSections = () => {
           className="ml-auto"
         />
 
-        <ButtonNew
-          label="Nueva de enlaces"
-          onClick={handleNewLinksSections}
-        />
+        <ButtonNew label="Nueva de enlaces" onClick={handleNewLinksSections} />
 
         <ButtonRefresh onClick={() => business && onFetch({ routeName: business.routeName })} />
       </TopActions>

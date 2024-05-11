@@ -1,5 +1,3 @@
-import { useAuth } from 'features/api-slices/useAuth';
-
 import { useFetch } from 'hooks/useFetch';
 
 import { FetchResource } from 'types/api';
@@ -31,10 +29,6 @@ export const useUpdateOneBusiness = (): {
 } => {
   const fetch = useFetch();
 
-  const { authData } = useAuth();
-
-  const userId = authData?.user._id || '<unknow user>';
-
   return {
     updateOneBusiness: {
       data: fetch[0],
@@ -45,7 +39,7 @@ export const useUpdateOneBusiness = (): {
             method: 'put',
             url: getEndpoint({
               path: '/business/:routeName',
-              urlParams: { routeName, userId },
+              urlParams: { routeName },
             }),
             data: update,
           },

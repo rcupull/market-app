@@ -1,3 +1,5 @@
+import { isNumber } from './general';
+
 import { Shopping, ShoppingState } from 'types/shopping';
 
 export const getShoppingData = (
@@ -14,6 +16,11 @@ export const getShoppingData = (
   posts.forEach(({ count, post }) => {
     if (post.currency !== 'CUP') {
       console.log('not cup'); //TODO not cup
+      return;
+    }
+
+    if (!isNumber(post.price)) {
+      console.log('not price number');
       return;
     }
 

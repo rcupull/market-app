@@ -355,11 +355,7 @@ export const Component = ({
                 isBusy={addOnePost.status.isBusy || updateOnePost.status.isBusy}
                 disabled={!isValid}
                 onClick={() => {
-                  const {
-                    images,
-                    name,
-                    postCategoriesTags,
-                  } = values;
+                  const { images, name, postCategoriesTags } = values;
 
                   const handelUpdatePost = (post: Post) => {
                     const { _id: postId } = post;

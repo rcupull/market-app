@@ -41,7 +41,12 @@ export const Links = () => {
   const filters = useFiltersVolatile<GetAllPostsQuery>({
     onChange: (filters) => {
       business &&
-        getAllPosts.fetch({ postType: 'link', includeHidden: true, routeNames: [business.routeName], ...filters });
+        getAllPosts.fetch({
+          postType: 'link',
+          includeHidden: true,
+          routeNames: [business.routeName],
+          ...filters,
+        });
     },
   });
 

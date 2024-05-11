@@ -14,6 +14,7 @@ export const StepPost = ({ backButton, nextButton }: StepPostProps) => {
     <div>
       <Component
         portal={portal}
+        postType='product'
         onAfterSuccess={() => {
           nextAction();
         }}

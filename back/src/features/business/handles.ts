@@ -352,6 +352,96 @@ const put_business_section_reorder: () => RequestHandler = () => {
   };
 };
 
+const post_business_routeName_sections: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { params, body } = req;
+      const { routeName } = params;
+
+      await businessServices.updateOne({
+        res,
+        req,
+        query: {
+          routeName,
+        },
+        update: {
+          $push: {
+            "layouts.posts.sections": body,
+          },
+        },
+      });
+
+      get200Response({
+        res,
+        json: {},
+      });
+    });
+  };
+};
+
+const put_business_routeName_sections_sectionId: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { params, body } = req;
+      const { routeName, sectionId } = params;
+
+      await businessServices.updateOne({
+        res,
+        req,
+        query: {
+          routeName,
+        },
+        update: {
+          $set: {
+            "layouts.posts.sections.$[section]": body,
+          },
+        },
+        options: {
+          arrayFilters: [
+            {
+              "section._id": sectionId,
+            },
+          ],
+        },
+      });
+
+      get200Response({
+        res,
+        json: {},
+      });
+    });
+  };
+};
+
+const del_business_routeName_sections_sectionId: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { params, body } = req;
+      const { routeName, sectionId } = params;
+
+      await businessServices.updateOne({
+        res,
+        req,
+        query: {
+          routeName,
+        },
+        update: {
+          $pull: {
+            "layouts.posts.sections": {
+              _id: sectionId,
+            },
+          },
+        },
+      });
+
+      get200Response({
+        res,
+        json: {},
+      });
+    });
+  };
+};
+
 export const businessHandles = {
   get_business,
   get_business_routeName,
@@ -363,5 +453,9 @@ export const businessHandles = {
   delete_business_routeName,
   //
   put_business_section_reorder,
+  post_business_routeName_sections,
+  put_business_routeName_sections_sectionId,
+  del_business_routeName_sections_sectionId,
+
   get_business_summary,
 };

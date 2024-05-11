@@ -156,3 +156,15 @@ export interface BusinessSummary extends Pick<Business, '_id' | 'name' | 'routeN
   bestDiscount: number;
   salesAmount: number;
 }
+
+export type PostsLayoutSectionPayload = Pick<
+  PostsLayoutSection,
+  | 'name'
+  | 'postCardLayout'
+  | 'postCategoriesTags'
+  | 'searchLayout'
+  | 'hiddenName'
+  | 'showIn'
+  | 'type'
+  | 'postType'
+>;
