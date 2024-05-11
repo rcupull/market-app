@@ -6,11 +6,8 @@ import { useBusinessSectionsReorder } from 'features/api/business/useBusinessSec
 
 import { RowActions } from './RowActions';
 
-import SvgCheckCircle from 'icons/CheckCircle';
-import SvgTimesCircle from 'icons/TimesCircle';
 import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useTableCellCategoriesTags } from 'pages/@hooks/useTableCellCategoriesTags';
 import { useBusinessNewUpdateSection } from 'pages/@modals/useBusinessNewUpdateSection';
 import { PostsLayoutSection } from 'types/business';
 import { viewUtils } from 'utils/view';
@@ -22,23 +19,34 @@ export const PostsSections = () => {
 
   const data = business?.layouts?.posts?.sections || [];
 
-  const tableCellCategoriesTags = useTableCellCategoriesTags({
-    business,
-  });
-
   const businessNewUpdateSection = useBusinessNewUpdateSection();
+
+  const handleNewProductsSections = () => {
+    businessNewUpdateSection.open({
+      postType: 'product',
+      onAfterSuccess: () => business && onFetch({ routeName: business.routeName }),
+    });
+  };
+
+  const handleNewLinksSections = () => {
+    businessNewUpdateSection.open({
+      postType: 'link',
+      onAfterSuccess: () => business && onFetch({ routeName: business.routeName }),
+    });
+  };
 
   return (
     <>
       <TopActions>
         <ButtonNew
-          label="Nuevo grupo"
-          onClick={() => {
-            businessNewUpdateSection.open({
-              onAfterSuccess: () => business && onFetch({ routeName: business.routeName }),
-            });
-          }}
+          label="Nueva de productos"
+          onClick={handleNewProductsSections}
           className="ml-auto"
+        />
+
+        <ButtonNew
+          label="Nueva de enlaces"
+          onClick={handleNewLinksSections}
         />
 
         <ButtonRefresh onClick={() => business && onFetch({ routeName: business.routeName })} />
@@ -57,12 +65,9 @@ export const PostsSections = () => {
             },
           );
         }}
-        heads={['Acciones', 'Nombre', 'Categorías', 'Visible en', 'Detalles']}
+        heads={['Acciones', 'Nombre', 'Tipo', 'Visible en']}
         getRowProps={(rowData) => {
-          const { name, postCategoriesTags, hiddenName, searchLayout, showIn, postCardLayout } =
-            rowData;
-
-          const { shoppingMethod } = postCardLayout || {};
+          const { name, hiddenName, showIn, postType } = rowData;
 
           return {
             nodes: [
@@ -71,28 +76,8 @@ export const PostsSections = () => {
                 {name}
                 {hiddenName && <span className="text-red-500">(nombre oculto)</span>}
               </div>,
-              tableCellCategoriesTags.onGetTableCellNode({ postCategoriesTags }),
+              postType === 'product' ? 'Productos' : 'Enlaces',
               viewUtils.mapToOutlinedBox({ value: showIn }),
-              viewUtils.keyValueList([
-                {
-                  label: 'Búsqueda',
-                  value:
-                    searchLayout !== 'none' ? (
-                      <SvgCheckCircle className="fill-green-500 size-6" />
-                    ) : (
-                      <SvgTimesCircle className="fill-red-500 size-6" />
-                    ),
-                },
-                {
-                  label: 'Adicionar al carro',
-                  value:
-                    shoppingMethod === 'shoppingCart' ? (
-                      <SvgCheckCircle className="fill-green-500 size-6" />
-                    ) : (
-                      <SvgTimesCircle className="fill-red-500 size-6" />
-                    ),
-                },
-              ]),
             ],
           };
         }}

@@ -28,7 +28,7 @@ import { getDateString } from 'utils/date';
 import { cn, isNumber } from 'utils/general';
 import { viewUtils } from 'utils/view';
 
-export const Posts = () => {
+export const Links = () => {
   const { getAllPosts } = useGetAllPosts();
   const businessNewUpdatePost = useBusinessNewUpdatePost();
   const { business } = useBusiness();
@@ -41,7 +41,7 @@ export const Posts = () => {
   const filters = useFiltersVolatile<GetAllPostsQuery>({
     onChange: (filters) => {
       business &&
-        getAllPosts.fetch({ includeHidden: true, routeNames: [business.routeName], ...filters });
+        getAllPosts.fetch({ postType: 'link', includeHidden: true, routeNames: [business.routeName], ...filters });
     },
   });
 
@@ -60,19 +60,21 @@ export const Posts = () => {
   const buttonNew = (
     <>
       <ButtonNew
-        label="Nueva publicación"
+        label="Nuevo enlace"
         onClick={() => {
           businessNewUpdatePost.open({
+            postType: 'link',
             onAfterSuccess: () => onRefreshForce(),
           });
         }}
         className="ml-auto hidden sm:block"
       />
       <IconButton
-        title="Nueva publicación"
+        title="Nuevo enlace"
         svg={SvgPlusSolid}
         onClick={() => {
           businessNewUpdatePost.open({
+            postType: 'link',
             onAfterSuccess: () => onRefreshForce(),
           });
         }}

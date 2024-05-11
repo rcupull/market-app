@@ -6,15 +6,17 @@ import { Tabs } from 'components/tabs';
 
 import { useRouter } from 'hooks/useRouter';
 
+import { Links } from './links';
 import { OptionsMenu } from './options-menu';
-import { Posts } from './posts';
 import { PostsSections } from './posts-sections';
+import { Products } from './products';
 import { PurchaseOrders } from './purchase-orders';
 import { Settings } from './settings';
 
 import SvgAddressCard from 'icons/AddressCard';
 import SvgCogSolid from 'icons/CogSolid';
 import SvgLayerGroupSolid from 'icons/LayerGroupSolid';
+import SvgLinkSolid from 'icons/LinkSolid';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { KpiCredit, KpiToPay } from 'pages/@common/kpis-business';
 import { LayoutSection } from 'pages/@common/layout-section';
@@ -82,12 +84,17 @@ export const RouteName = () => {
         selected={query.businessTab as number | undefined}
         items={[
           {
-            label: 'Publicaciones',
-            content: <Posts />,
+            label: 'Productos',
+            content: <Products />,
             svg: SvgAddressCard,
           },
           {
-            label: 'Grupos de publicaciones',
+            label: 'Enlaces',
+            content: <Links />,
+            svg: SvgLinkSolid,
+          },
+          {
+            label: 'Secciones',
             content: <PostsSections />,
             svg: SvgLayerGroupSolid,
           },

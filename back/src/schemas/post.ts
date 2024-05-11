@@ -61,6 +61,12 @@ export const PostSchema = new Schema<Post>({
   postPageLayout: {
     type: PostPageLayoutSchema,
   },
+  postType: {
+    type: String,
+    enum: ["product", "link"],
+    required: true,
+    default: "product",
+  },
 });
 
 PostSchema.plugin(mongoosePaginate);

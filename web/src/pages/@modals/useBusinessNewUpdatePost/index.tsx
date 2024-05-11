@@ -7,6 +7,7 @@ import { useModal } from 'features/modal/useModal';
 
 import { usePortal } from 'hooks/usePortal';
 
+import { PostType } from 'types/post';
 import { dynamic } from 'utils/makeLazy';
 
 //eslint-disable-next-line
@@ -20,15 +21,17 @@ export const useBusinessNewUpdatePost = () => {
   const { pushModal } = useModal();
 
   return {
-    open: (args?: { postId?: string; onAfterSuccess?: () => void }) => {
+    open: (args: { postId?: string; postType?: PostType; onAfterSuccess?: () => void }) => {
       pushModal(
         'Emergent',
         {
           useProps: () => {
-            const { postId, onAfterSuccess } = args || {};
+            const { postId, onAfterSuccess, postType } = args || {};
             const { onClose } = useModal();
             const portal = usePortal();
             const { getOnePost } = useGetOnePost();
+
+            const realPostType = postType || getOnePost.data?.postType;
 
             useEffect(() => {
               if (postId) {
@@ -45,6 +48,7 @@ export const useBusinessNewUpdatePost = () => {
                 <Component
                   portal={portal}
                   post={getOnePost.data}
+                  postType={realPostType}
                   onAfterSuccess={() => {
                     onAfterSuccess?.();
                     onClose();
@@ -52,8 +56,20 @@ export const useBusinessNewUpdatePost = () => {
                 />
               );
             };
+
+            const getTitle = () => {
+              if (!realPostType) {
+                return 'Cargando...';
+              }
+
+              if (postId) {
+                return realPostType == 'product' ? 'Editar Producto' : 'Editar Enlace';
+              } else {
+                return realPostType == 'product' ? 'Nuevo Producto' : 'Nuevo Enlace';
+              }
+            };
             return {
-              title: postId ? 'Editar publicación' : 'Nueva publicación',
+              title: getTitle(),
               isBusy: getOnePost.status.isBusy,
               content: getContent(),
               secondaryBtn: <ButtonClose />,

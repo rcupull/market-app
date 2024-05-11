@@ -1,5 +1,5 @@
 import { BaseIdentity, Image } from './general';
-import { PostFormField } from './post';
+import { PostFormField, PostType } from './post';
 
 export type BusinessCategory = string;
 
@@ -18,9 +18,13 @@ export type SearchLayoutType =
 
 export type FooterLayoutType = 'none' | 'basic';
 
+export type PostSectionType = 'post' | 'link';
+
 export interface PostsLayoutSection {
   _id: string;
   showIn?: Array<PostsLayoutSectionVisibility>;
+  //
+  postType: PostType;
   //
   name: string;
   hiddenName?: boolean;

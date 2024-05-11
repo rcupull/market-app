@@ -1,6 +1,7 @@
 import { FetchOptions } from 'hooks/useFetch';
 
 import { AnyRecord } from './general';
+import { PostType } from './post';
 
 //eslint-disable-next-line
 import { ParsedQuery } from 'query-string';
@@ -92,6 +93,7 @@ export type GetAllPostsQuery = {
   //
   limit?: number;
   page?: number;
+  postType?: PostType;
 };
 
 export type GetAllBusinessQuery = {

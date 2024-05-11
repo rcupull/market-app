@@ -1,7 +1,7 @@
 import { FilterQuery, PaginateOptions, Schema, UpdateQuery } from "mongoose";
 import { QueryHandle } from "../../types/general";
 import { PostModel } from "../../schemas/post";
-import { Post } from "../../types/post";
+import { Post, PostType } from "../../types/post";
 import { PaginateResult } from "../../middlewares/pagination";
 import { imagesServices } from "../images/services";
 import { ServerResponse } from "http";
@@ -22,6 +22,7 @@ export interface GetAllArgs {
   //
   postCategoriesTags?: Array<string>;
   postCategoriesMethod?: "some" | "every";
+  postType?: PostType;
 }
 
 export type PostUpdate = Partial<
@@ -56,6 +57,7 @@ const getAll: QueryHandle<GetAllArgs, PaginateResult<Post>> = async ({
   createdBy,
   postCategoriesTags,
   postCategoriesMethod,
+  postType,
 }) => {
   const filterQuery: FilterQuery<Post> = {};
 
@@ -82,6 +84,9 @@ const getAll: QueryHandle<GetAllArgs, PaginateResult<Post>> = async ({
     }
   }
 
+  if (postType) {
+    filterQuery.postType = postType;
+  }
   ///////////////////////////////////////////////////////////////////
 
   if (routeNames?.length) {
@@ -245,6 +250,7 @@ const addOne: QueryHandle<
     | "postPageLayout"
     | "postCategoriesTags"
     | "stockAmount"
+    | "postType"
   >,
   Post
 > = async (args) => {

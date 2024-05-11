@@ -5,6 +5,7 @@ export const dummyPostClothing: Post = {
   createdBy: '123',
   price: 192,
   currency: 'USD',
+  postType: 'product',
   _id: '123',
   reviews: [200, 45, 7, 1, 1],
   createdAt: '2021-01-01',

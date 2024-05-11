@@ -12,6 +12,7 @@ const imagesSrcs = [
 ];
 
 const dummyPost: Post = {
+  postType: 'product',
   name: 'Zapatos de mujer',
   createdBy: '123',
   images: imagesSrcs.map((src) => ({

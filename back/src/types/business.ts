@@ -1,6 +1,6 @@
 import { BaseIdentity, Image } from "./general";
 import { Schema } from "mongoose";
-import { Post } from "./post";
+import { Post, PostType } from "./post";
 import { Path } from "./paths";
 import { businessCategoryTree } from "../features/general/constants";
 
@@ -24,7 +24,9 @@ export type FooterLayoutType = "none" | "basic";
 export interface PostsLayoutSection {
   name: string;
   showIn?: Array<"businessPage" | "postPage">;
-
+  //
+  postType: PostType;
+  //
   hiddenName?: boolean;
   //
   searchLayout?: SearchLayoutType;

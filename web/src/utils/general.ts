@@ -211,3 +211,5 @@ export const getRandomNumber = (min: number, max: number) => {
 export const wait = (timeout = 10): Promise<void> => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
+
+export const getRandomHash = () => `${Date.now()}`;

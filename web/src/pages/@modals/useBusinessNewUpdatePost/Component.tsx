@@ -22,16 +22,23 @@ import { useBusiness } from '../../@hooks/useBusiness';
 import { imagesDimensions } from 'constants/posts';
 import { Formik } from 'formik';
 import { StyleProps } from 'types/general';
-import { Post, PostCurrency, PostFormState } from 'types/post';
+import { Post, PostCurrency, PostFormState, PostType } from 'types/post';
 import { getImageEndpoint } from 'utils/api';
 
 export interface ComponentProps extends StyleProps {
   portal: Portal;
   post?: Post;
   onAfterSuccess: () => void;
+  postType: PostType;
 }
 
-export const Component = ({ portal, onAfterSuccess, post, className }: ComponentProps) => {
+export const Component = ({
+  portal,
+  onAfterSuccess,
+  post,
+  className,
+  postType,
+}: ComponentProps) => {
   const { business } = useBusiness();
 
   const { addOnePost } = useAddOnePost();
@@ -46,7 +53,7 @@ export const Component = ({ portal, onAfterSuccess, post, className }: Component
 
   const { routeName, postFormFields = [] } = business;
 
-  return (
+  const productForm = (
     <Formik<PostFormState>
       initialValues={{
         name: '',
@@ -285,6 +292,7 @@ export const Component = ({ portal, onAfterSuccess, post, className }: Component
                         discount,
                         postPageLayout,
                         stockAmount,
+                        postType,
                       },
                       {
                         onAfterSuccess: (response) => {
@@ -305,4 +313,110 @@ export const Component = ({ portal, onAfterSuccess, post, className }: Component
       }}
     </Formik>
   );
+
+  const linkForm = (
+    <Formik<PostFormState>
+      initialValues={{
+        name: '',
+        images: [],
+        postCategoriesTags: [],
+        ...(post || {}),
+      }}
+      enableReinitialize
+      validate={(values) =>
+        getFormErrors(values, [
+          {
+            field: 'name',
+            type: 'required',
+          },
+        ])
+      }
+      onSubmit={() => {}}
+    >
+      {({ values, isValid }) => {
+        return (
+          <form className={className}>
+            <FieldInput name="name" label="Nombre del enlace" />
+            <Divider />
+
+            <FieldInputImages
+              label="Imagen"
+              id="images"
+              name="images"
+              className="mt-6"
+              getImageSrc={getImageEndpoint}
+              multi
+            />
+            <Divider />
+
+            {portal.getPortal(
+              <Button
+                label="Guardar"
+                isBusy={addOnePost.status.isBusy || updateOnePost.status.isBusy}
+                disabled={!isValid}
+                onClick={() => {
+                  const {
+                    images,
+                    name,
+                    postCategoriesTags,
+                  } = values;
+
+                  const handelUpdatePost = (post: Post) => {
+                    const { _id: postId } = post;
+
+                    addManyImages.fetch(
+                      {
+                        images,
+                        routeName,
+                        postId,
+                        userId: post.createdBy,
+                        ...imagesDimensions.cardPost,
+                      },
+                      {
+                        onAfterSuccess: (images) => {
+                          updateOnePost.fetch(
+                            {
+                              postId,
+                              images,
+                              name,
+                              postCategoriesTags,
+                            },
+                            {
+                              onAfterSuccess,
+                            },
+                          );
+                        },
+                      },
+                    );
+                  };
+                  const handelAddPost = () => {
+                    addOnePost.fetch(
+                      {
+                        name,
+                        routeName,
+                        postCategoriesTags,
+                        images: [],
+                        postType,
+                      },
+                      {
+                        onAfterSuccess: (response) => {
+                          handelUpdatePost(response);
+                        },
+                      },
+                    );
+                  };
+
+                  post ? handelUpdatePost(post) : handelAddPost();
+                }}
+                variant="primary"
+                className="w-full"
+              />,
+            )}
+          </form>
+        );
+      }}
+    </Formik>
+  );
+
+  return postType === 'product' ? productForm : linkForm;
 };

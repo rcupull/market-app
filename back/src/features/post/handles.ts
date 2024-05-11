@@ -21,6 +21,7 @@ const get_posts: () => RequestHandler = () => {
         postCategoriesMethod,
         includeHidden,
         postsIds,
+        postType,
       } = query;
 
       const out = await postServices.getAll({
@@ -34,6 +35,7 @@ const get_posts: () => RequestHandler = () => {
         hiddenBusiness: includeHidden ? undefined : false,
         postCategoriesTags,
         postCategoriesMethod,
+        postType,
       });
 
       if (out instanceof ServerResponse) return;
@@ -89,6 +91,7 @@ const post_posts: () => RequestHandler = () => {
         price,
         postCategoriesTags,
         stockAmount,
+        postType,
       } = body;
 
       const out = await postServices.addOne({
@@ -109,6 +112,7 @@ const post_posts: () => RequestHandler = () => {
         stockAmount,
         //
         createdBy: user._id,
+        postType,
         res,
         req,
       });

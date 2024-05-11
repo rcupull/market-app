@@ -16,6 +16,7 @@ export type PostsLayoutSectionPayload = Pick<
   | 'hiddenName'
   | 'showIn'
   | 'type'
+  | 'postType'
 >;
 
 export const useBusinessOwnerUpdate = (

@@ -14,7 +14,7 @@ import { Inspiration } from './components/inspiration';
 
 import { LayoutPage } from 'pages/@common/layout-page';
 import { LayoutPageSection } from 'pages/@common/layout-page-section';
-import { useInfinityScrolling } from 'pages/dashboard/routes/business/routes/route-name/posts/useInfinityScrolling';
+import { useInfinityScrolling } from 'pages/dashboard/routes/business/routes/route-name/products/useInfinityScrolling';
 import { GetAllBusinessQuery } from 'types/api';
 import { getImageEndpoint } from 'utils/api';
 import { getBusinessRoute } from 'utils/business';

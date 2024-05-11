@@ -3,16 +3,18 @@ import { BaseIdentity, Image, ImageFile } from './general';
 
 export type PostCurrency = 'CUP' | 'USD' | 'MLC';
 
+export type PostType = 'product' | 'link'; // el tipo de publicaciones que posee
+
 export type PostReviews = [number, number, number, number, number];
 
 export interface Post extends BaseIdentity {
   createdBy: string;
   images?: Array<Image>;
   routeName: string;
-  description: string;
+  description?: string;
   name: string;
-  price: number;
-  currency: PostCurrency;
+  price?: number;
+  currency?: PostCurrency;
   reviews?: PostReviews;
   colors?: Array<PostColor>;
   highlights?: Array<string>;
@@ -25,6 +27,8 @@ export interface Post extends BaseIdentity {
   clothingSizes?: Array<PostClothingSize>;
   //
   postPageLayout?: PostPageLayout;
+
+  postType: PostType;
 }
 
 export interface PostPurshaseNotes {

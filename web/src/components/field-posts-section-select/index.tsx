@@ -21,12 +21,13 @@ export const FieldPostsSectionSelect = ({ label, ...props }: FieldPostsSectionLa
         <div className="flex items-center">
           {label}
           <IconButtonAdd
-            title="Agregar nuevo grupo de publicaciones"
+            title="Agregar nueva seccion de productos"
             className="text-green-600 font-bold ml-2"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               businessNewUpdateSection.open({
+                postType: 'product',
                 onAfterSuccess: () => business && onFetch({ routeName: business.routeName }),
               });
             }}

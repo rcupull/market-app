@@ -88,6 +88,12 @@ export const PostsLayoutSectionSchema = new Schema<PostsLayoutSection>({
   postCardLayout: {
     type: PostCardLayoutSchema,
   },
+  postType: {
+    type: String,
+    enum: ["product", "link"],
+    required: true,
+    default: "product",
+  },
 });
 
 export const PostLayoutSchema = new Schema<PostsLayout>({

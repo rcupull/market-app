@@ -73,7 +73,7 @@ export const PostsSection = ({ routeName, layout, className, visibility }: Posts
 
   return (
     <UpdateSomethingContainer
-      title="Editar este grupo de publicaciones"
+      title="Editar esta sección"
       onClick={() => {
         businessNewUpdateSection.open({
           sectionId: _id,

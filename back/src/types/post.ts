@@ -2,6 +2,8 @@ import { Schema } from "mongoose";
 import { BaseIdentity, Image } from "./general";
 import { PostPageLayout } from "./business";
 
+export type PostType = "product" | "link"; // el tipo de publicaciones que posee
+
 export type PostCurrency = "CUP" | "MLC" | "USD";
 
 export type PostColor =
@@ -59,4 +61,6 @@ export interface Post extends BaseIdentity {
   clothingSizes?: Array<PostClothingSize>;
   //
   postPageLayout?: PostPageLayout;
+
+  postType?: PostType;
 }
