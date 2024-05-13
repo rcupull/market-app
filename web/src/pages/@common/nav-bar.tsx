@@ -15,13 +15,13 @@ import { BusinessLogo } from './business-logo';
 import { BusinessName } from './business-name';
 import { ShoppingCartMenu } from './shopping-cart-menu';
 
+import SvgBarsSolid from 'icons/BarsSolid';
 import SvgCogSolid from 'icons/CogSolid';
 import SvgHomeSolid from 'icons/HomeSolid';
 import SvgKeySolid from 'icons/KeySolid';
 import SvgSignInAltSolid from 'icons/SignInAltSolid';
 import SvgSignOutAltSolid from 'icons/SignOutAltSolid';
 import SvgStoreSolid from 'icons/StoreSolid';
-import SvgUser from 'icons/User';
 import SvgUserCircleSolid from 'icons/UserCircleSolid';
 import SvgUserPlusSolid from 'icons/UserPlusSolid';
 import SvgUsersSolid from 'icons/UsersSolid';
@@ -119,7 +119,7 @@ export const Navbar = ({ className }: NavbarProps) => {
               isAuthenticated ? (
                 <UserAvatar />
               ) : (
-                <IconButton svg={<SvgUser className="!size-7" />} />
+                <IconButton svg={<SvgBarsSolid className="!size-7" />} />
               )
             }
             topElement={
