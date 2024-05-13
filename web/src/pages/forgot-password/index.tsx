@@ -35,7 +35,7 @@ export const ForgotPassword = () => {
 
       <Button
         label="Iniciar sesión"
-        onClick={() => authSignInModal.open({ email, redirect: '/' })}
+        onClick={() => authSignInModal.open({ email })}
         className="!mt-8 !text-lg"
       />
     </>
