@@ -6,6 +6,7 @@ import { FieldColorSelect } from 'components/field-colors-select';
 import { FieldInput } from 'components/field-input';
 import { FieldInputImages } from 'components/field-input-images';
 import { FieldPostCategoriesButtons } from 'components/field-post-categories-buttons';
+import { FieldPostLink } from 'components/field-post-link';
 import { FieldPostPageLayout } from 'components/field-post-page-layout';
 import { FieldPostStockAmount } from 'components/field-post-stock-amount';
 import { FieldRadioGroup } from 'components/field-radio-group';
@@ -363,13 +364,13 @@ export const Component = ({
     tags: post?.postCategoriesTags || [],
   });
 
-
   const linkForm = (
     <Formik<PostFormState & { sectionIds: Array<string> }>
       initialValues={{
         name: '',
         images: [],
         postCategoriesTags: [linkTag],
+        postLink: undefined,
         sectionIds: sections.map((section) => section._id),
         ...(post || {}),
       }}
@@ -391,10 +392,10 @@ export const Component = ({
             <Divider />
 
             <FieldRadioGroup<{ label: string; value: string }>
-              label="Secciones"
+              label="Incluir en las secciones"
               name="sectionIds"
               className="mt-6"
-              items={getSections({postType: 'link'}).map(({ name, _id }) => ({
+              items={getSections({ postType: 'link' }).map(({ name, _id }) => ({
                 label: name,
                 value: _id,
               }))}
@@ -404,6 +405,9 @@ export const Component = ({
               optionToValue={({ value }) => value}
               multi
             />
+            <Divider />
+
+            <FieldPostLink name="postLink" className="mt-6" />
             <Divider />
 
             <FieldInputImages
@@ -426,7 +430,7 @@ export const Component = ({
                 }
                 disabled={!isValid}
                 onClick={() => {
-                  const { images, name, postCategoriesTags, sectionIds } = values;
+                  const { images, name, postCategoriesTags, sectionIds, postLink } = values;
 
                   const handelUpdatePost = (post: Post) => {
                     const { _id: postId } = post;
@@ -446,6 +450,7 @@ export const Component = ({
                               postId,
                               images,
                               name,
+                              postLink,
                             },
                             {
                               onAfterSuccess: async () => {
@@ -468,6 +473,7 @@ export const Component = ({
                         postCategoriesTags,
                         images: [],
                         postType,
+                        postLink,
                       },
                       {
                         onAfterSuccess: (response) => {

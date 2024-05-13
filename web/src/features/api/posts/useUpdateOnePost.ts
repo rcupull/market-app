@@ -26,6 +26,7 @@ export const useUpdateOnePost = (): {
         | 'discount'
         | 'postPageLayout'
         | 'stockAmount'
+        | 'postLink'
       >
     >,
     void

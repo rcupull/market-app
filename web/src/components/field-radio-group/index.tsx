@@ -26,6 +26,7 @@ export const FieldRadioGroup = <O extends any = any, V = any>(
     disabledOption,
     onOptionClicked,
     getOptionCutomStyles,
+    onChange,
   } = props;
   const { field, error } = useFormikField<V>(props);
 
@@ -41,6 +42,8 @@ export const FieldRadioGroup = <O extends any = any, V = any>(
         isBusy={isBusy}
         multi={multi}
         onChange={(newValue) => {
+          onChange?.(newValue);
+
           field.onBlur({
             target: {
               name: field.name,

@@ -1,4 +1,4 @@
-import { RequestHandler } from "../../types/general";
+import { AnyRecord, RequestHandler } from "../../types/general";
 import { withTryCatch } from "../../utils/error";
 import { GetAllArgs, postServices } from "./services";
 import { ServerResponse } from "http";
@@ -8,6 +8,7 @@ import {
   getUserNotFoundResponse,
 } from "../../utils/server-response";
 import { isEmpty, isEqual } from "../../utils/general";
+import { Post } from "../../types/post";
 
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
@@ -64,7 +65,7 @@ const get_posts_postId: () => RequestHandler = () => {
   };
 };
 
-const post_posts: () => RequestHandler = () => {
+const post_posts: () => RequestHandler<AnyRecord, any, Post> = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
       const { user } = req;
@@ -92,6 +93,7 @@ const post_posts: () => RequestHandler = () => {
         postCategoriesTags,
         stockAmount,
         postType,
+        postLink,
       } = body;
 
       const out = await postServices.addOne({
@@ -113,6 +115,7 @@ const post_posts: () => RequestHandler = () => {
         //
         createdBy: user._id,
         postType,
+        postLink,
         res,
         req,
       });

@@ -26,6 +26,7 @@ export const useAddOnePost = (): {
       | 'postPageLayout'
       | 'stockAmount'
       | 'postType'
+      | 'postLink'
     >,
     Post
   >;

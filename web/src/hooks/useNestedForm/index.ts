@@ -11,6 +11,7 @@ export const useNestedForm = <V extends AnyRecord = AnyRecord>(args: {
   initialValues: V;
 }): {
   getFieldName: (fieldName: keyof V) => string;
+  reset: () => void;
   value: V;
 } => {
   const { field, initialValues } = args;
@@ -29,6 +30,14 @@ export const useNestedForm = <V extends AnyRecord = AnyRecord>(args: {
 
   return {
     getFieldName: (fieldname) => `${name}.${fieldname.toString()}`,
+    reset: () => {
+      onChange?.({
+        target: {
+          name,
+          value: initialValues,
+        },
+      });
+    },
     value,
   };
 };

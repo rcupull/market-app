@@ -40,6 +40,8 @@ export interface PostPurshaseNotes {
   interestedByClothingSizes?: Array<PostClothingSize>;
 }
 
+export type PostLinkType = "business" | "external";
+
 export interface Post extends BaseIdentity {
   images?: Array<Image>;
   routeName: string; // routeName from business
@@ -63,4 +65,12 @@ export interface Post extends BaseIdentity {
   postPageLayout?: PostPageLayout;
 
   postType?: PostType;
+
+  /**
+   * the link when the postType === "link"
+   */
+  postLink?: {
+    type: PostLinkType;
+    value: string;
+  };
 }

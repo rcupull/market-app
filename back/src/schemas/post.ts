@@ -67,6 +67,13 @@ export const PostSchema = new Schema<Post>({
     required: true,
     default: "product",
   },
+  postLink: {
+    type: {
+      type: String,
+      enum: ["business", "external"],
+    },
+    value: { type: String },
+  },
 });
 
 PostSchema.plugin(mongoosePaginate);

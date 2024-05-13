@@ -5,7 +5,7 @@ import { Swiper } from 'components/swiper';
 import { Business, PostsLayoutSection } from 'types/business';
 import { StyleProps } from 'types/general';
 import { Post } from 'types/post';
-import { getOnePostRoute } from 'utils/business';
+import { getBusinessRoute, getOnePostRoute } from 'utils/business';
 
 export interface PostsSectionCardsProps extends StyleProps {
   posts: Array<Post> | null;
@@ -21,7 +21,35 @@ export const PostsSectionCards = ({
   onRefresh,
 }: PostsSectionCardsProps) => {
   const { routeName } = business;
-  const { type } = layout;
+  const { type, postType } = layout;
+
+  const getPostHref = (post: Post): string => {
+    const { _id: postId, postLink } = post;
+
+    if (postType === 'product') {
+      return getOnePostRoute({ routeName, postId });
+    }
+
+    if (postType === 'link') {
+      const { type, value } = postLink || {};
+      if (!value) {
+        console.log('should has some value in href');
+        return '#';
+      }
+
+      if (type === 'external') {
+        return value;
+      }
+
+      if (type === 'business') {
+        return getBusinessRoute({ routeName: value });
+      }
+
+      return '#';
+    }
+
+    return '#';
+  };
 
   if (type === 'oneRowSlider') {
     return (
@@ -29,15 +57,13 @@ export const PostsSectionCards = ({
         className="!w-[90vw] !sm:w-[80vw]"
         slidesPerView="auto"
         items={posts?.map((post, index) => {
-          const { _id } = post;
-
           return {
             content: (
               <CardPost
                 key={index}
                 post={post}
                 layout={layout.postCardLayout}
-                href={getOnePostRoute({ routeName, postId: _id })}
+                href={getPostHref(post)}
                 onRefresh={onRefresh}
               />
             ),
@@ -50,14 +76,12 @@ export const PostsSectionCards = ({
   return (
     <CardGroup>
       {posts?.map((post, index) => {
-        const { _id } = post;
-
         return (
           <CardPost
             key={index}
             post={post}
             layout={layout.postCardLayout}
-            href={getOnePostRoute({ routeName, postId: _id })}
+            href={getPostHref(post)}
             onRefresh={onRefresh}
           />
         );

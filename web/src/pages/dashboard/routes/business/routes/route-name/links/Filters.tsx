@@ -1,4 +1,4 @@
-import {  useState } from 'react';
+import { useState } from 'react';
 
 import { Button } from 'components/button';
 import { RadioGroup } from 'components/radio-group';
@@ -14,10 +14,9 @@ export interface FiltersProps extends StyleProps {
 }
 
 export const Filters = ({ business, onChange, className }: FiltersProps) => {
-  const {  layouts } = business || {};
+  const { layouts } = business || {};
 
-
-  const sections = (layouts?.posts?.sections || []).filter(({postType})=> postType === 'link');
+  const sections = (layouts?.posts?.sections || []).filter(({ postType }) => postType === 'link');
   const [selectedSection, setSelectedSection] = useState();
 
   return (

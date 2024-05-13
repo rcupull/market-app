@@ -10,6 +10,7 @@ import {
   getPostNotFoundResponse,
 } from "../../utils/server-response";
 import { isNumber } from "../../utils/general";
+import { makeReshaper } from "../../utils/makeReshaper";
 
 export interface GetAllArgs {
   paginateOptions?: PaginateOptions;
@@ -24,28 +25,6 @@ export interface GetAllArgs {
   postCategoriesMethod?: "some" | "every";
   postType?: PostType;
 }
-
-export type PostUpdate = Partial<
-  Pick<
-    Post,
-    | "currency"
-    | "description"
-    | "images"
-    | "price"
-    | "clothingSizes"
-    | "colors"
-    | "details"
-    | "highlights"
-    | "hidden"
-    | "hiddenBusiness"
-    | "name"
-    | "reviews"
-    | "postCategoriesTags"
-    | "discount"
-    | "postPageLayout"
-    | "stockAmount"
-  >
->;
 
 const getAll: QueryHandle<GetAllArgs, PaginateResult<Post>> = async ({
   paginateOptions = {},
@@ -251,6 +230,7 @@ const addOne: QueryHandle<
     | "postCategoriesTags"
     | "stockAmount"
     | "postType"
+    | "postLink"
   >,
   Post
 > = async ({ res, req, ...args }) => {
@@ -263,45 +243,30 @@ const addOne: QueryHandle<
 
 const updateOne: QueryHandle<{
   query: FilterQuery<Post>;
-  update: PostUpdate;
+  update: Partial<Post>;
 }> = async ({ query, update }) => {
-  const {
-    clothingSizes,
-    colors,
-    details,
-    highlights,
-    images,
-    name,
-    price,
-    reviews,
-    currency,
-    description,
-    hidden,
-    hiddenBusiness,
-    postCategoriesTags,
-    discount,
-    postPageLayout,
-    stockAmount,
-  } = update;
-
-  await PostModel.updateOne(query, {
-    clothingSizes,
-    colors,
-    details,
-    highlights,
-    images,
-    name,
-    price,
-    reviews,
-    currency,
-    description,
-    hidden,
-    hiddenBusiness,
-    postCategoriesTags,
-    discount,
-    postPageLayout,
-    stockAmount,
-  });
+  await PostModel.updateOne(
+    query,
+    makeReshaper<Partial<Post>, Partial<Post>>({
+      clothingSizes: "clothingSizes",
+      colors: "colors",
+      details: "details",
+      highlights: "highlights",
+      images: "images",
+      name: "name",
+      price: "price",
+      reviews: "reviews",
+      currency: "currency",
+      description: "description",
+      hidden: "hidden",
+      hiddenBusiness: "hiddenBusiness",
+      postCategoriesTags: "postCategoriesTags",
+      discount: "discount",
+      postPageLayout: "postPageLayout",
+      stockAmount: "stockAmount",
+      postLink: "postLink",
+    })(update)
+  );
 };
 
 const updateStockAmount: QueryHandle<
