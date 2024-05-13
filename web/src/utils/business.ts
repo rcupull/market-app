@@ -1,6 +1,6 @@
 import { queryToSearch } from 'hooks/useRouter/utils';
 
-import { deepJsonCopy, isNumber, replaceAll } from './general';
+import { deepJsonCopy, replaceAll } from './general';
 
 import { Business, SearchLayoutType } from 'types/business';
 import { Post } from 'types/post';
@@ -82,25 +82,6 @@ export const getSearchLayoutLabel = (type: SearchLayoutType): string => {
     default:
       return 'unknown category';
   }
-};
-
-export const getSectionFromBusiness = (args: { sectionId: string; business: Business | null }) => {
-  const { business, sectionId } = args;
-
-  const index = business?.layouts?.posts?.sections?.findIndex?.(({ _id }) => _id === sectionId);
-
-  if (isNumber(index) && index >= 0) {
-    const section = business?.layouts?.posts?.sections?.[index];
-
-    if (!section) return undefined;
-
-    return {
-      index,
-      section,
-    };
-  }
-
-  return undefined;
 };
 
 export const getLayoutsFromBusiness = (business: Business) => {

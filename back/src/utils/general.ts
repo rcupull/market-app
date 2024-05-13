@@ -157,3 +157,5 @@ export const addStringToUniqueArray = <T extends string = string>(
 ): Array<T> => {
   return array.includes(value) ? array : addRow(array, value);
 };
+
+export const getRandomHash = () => `${Date.now()}`;

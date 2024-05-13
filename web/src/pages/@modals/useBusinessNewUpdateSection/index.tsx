@@ -6,7 +6,6 @@ import { usePortal } from 'hooks/usePortal';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { PostType } from 'types/post';
-import { getSectionFromBusiness } from 'utils/business';
 import { dynamic } from 'utils/makeLazy';
 
 //eslint-disable-next-line
@@ -28,10 +27,9 @@ export const useBusinessNewUpdateSection = () => {
             const { sectionId, onAfterSuccess, postType } = args || {};
             const { onClose } = useModal();
             const portal = usePortal();
-            const { business } = useBusiness();
+            const { getSections } = useBusiness();
 
-            const { section } =
-              (sectionId && getSectionFromBusiness({ business, sectionId })) || {};
+            const [section] = sectionId ? getSections({ ids: [sectionId] }) : [];
 
             const realPostType = postType || section?.postType;
 

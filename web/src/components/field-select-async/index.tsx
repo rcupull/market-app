@@ -5,6 +5,7 @@ import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-w
 import { SpinnerEllipsis } from 'components/spinner-ellipsis';
 
 import { useDebouncer } from 'hooks/useDebouncer';
+import { FetchOptions } from 'hooks/useFetch';
 import { useFormikField } from 'hooks/useFormikField';
 
 import { FetchResourceWithPagination } from 'types/api';
@@ -39,6 +40,7 @@ export const FieldSelectAsync = <Option extends AnyRecord = AnyRecord>({
   const { field, error } = useFormikField(props);
   const [state, setState] = useState<any>();
   const [open, setOpen] = useState(false);
+  const [initialFetching, setInitialFetching] = useState(false);
 
   const { data, fetch, status } = useCall();
   const { value } = field;
@@ -47,9 +49,11 @@ export const FieldSelectAsync = <Option extends AnyRecord = AnyRecord>({
 
   const items = data || [];
 
-  const itemToSelectOption = (item: Option | undefined): {
-    value: any,
-    label: React.ReactNode
+  const itemToSelectOption = (
+    item: Option | undefined,
+  ): {
+    value: any;
+    label: React.ReactNode;
   } => {
     if (item === undefined) {
       return {
@@ -81,7 +85,7 @@ export const FieldSelectAsync = <Option extends AnyRecord = AnyRecord>({
     }
 
     setState(newState);
-  }, [JSON.stringify([value])]);
+  }, [JSON.stringify([value, items])]);
 
   const handleChange = (newValue: any) => {
     if (isArray(newValue)) {
@@ -107,23 +111,52 @@ export const FieldSelectAsync = <Option extends AnyRecord = AnyRecord>({
     }
   };
 
-  const handleFetch = (search: string) => {
-    fetch(searchToArgs(search), {
-      onAfterSuccess: () => {},
+  const handleFetch = (search: string, options?: FetchOptions) => {
+    fetch(searchToArgs(search), options);
+  };
+
+  const hasValue = isArray(value) ? value.length : value;
+
+  const handleInitialFetch = () => {
+    setInitialFetching(true);
+    handleFetch('', {
+      onAfterSuccess: () => {
+        setTimeout(() => setInitialFetching(false), 100);
+      },
     });
   };
 
   useEffect(() => {
-    if (open && data === null) {
-      handleFetch('');
+    if (hasValue && data === null) {
+      return handleInitialFetch();
     }
-  }, [open]);
+
+    if (open && data === null) {
+      return handleInitialFetch();
+    }
+  }, [open, hasValue]);
+
+  ////////////////////////////////////////////////////////////////////////////////
+  const getPlaceholder = () => {
+    if (initialFetching) {
+      return 'Cargando...';
+    }
+    return 'Buscar';
+  };
+
+  const getDisabled = () => {
+    if (initialFetching || disabled) {
+      return true;
+    }
+
+    return false;
+  };
 
   return (
     <FormFieldWrapper label={label} error={error} className={className}>
       <Select<{ value: Option }>
-        isDisabled={disabled}
-        placeholder="Buscar..."
+        isDisabled={getDisabled()}
+        placeholder={getPlaceholder()}
         isLoading={status.isBusy}
         loadingMessage={() => <SpinnerEllipsis />}
         value={state}

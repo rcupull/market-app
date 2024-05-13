@@ -139,7 +139,7 @@ const findOne: QueryHandle<
     });
   }
 
-  return out;
+  return out.toJSON();
 };
 
 const deleteOne: QueryHandle<{

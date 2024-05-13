@@ -20,7 +20,7 @@ export const Default = (): JSX.Element => {
           useCall={useCall}
           searchToArgs={(search) => ({ search })}
           renderOption={({ name }) => name}
-          className='w-full'
+          className="w-full"
         />
 
         <FieldSelectAsync<Post>
@@ -28,7 +28,7 @@ export const Default = (): JSX.Element => {
           useCall={useCall}
           searchToArgs={(search) => ({ search })}
           renderOption={({ name }) => name}
-          className='w-full'
+          className="w-full"
         />
       </div>
     </FormikWrapper>
@@ -47,7 +47,7 @@ export const WithOptionToValue = (): JSX.Element => {
           searchToArgs={(search) => ({ search })}
           renderOption={({ name }) => name}
           optionToValue={({ name }) => name}
-          className='w-full'
+          className="w-full"
         />
 
         <FieldSelectAsync<Post>
@@ -56,7 +56,7 @@ export const WithOptionToValue = (): JSX.Element => {
           searchToArgs={(search) => ({ search })}
           renderOption={({ name }) => name}
           optionToValue={({ name }) => name}
-          className='w-full'
+          className="w-full"
         />
       </div>
     </FormikWrapper>

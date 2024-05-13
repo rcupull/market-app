@@ -7,6 +7,11 @@ export type PostType = 'product' | 'link'; // el tipo de publicaciones que posee
 
 export type PostReviews = [number, number, number, number, number];
 
+export type PostLinkType = 'business' | 'external';
+export interface PostLink {
+  type: PostLinkType;
+  value: string;
+}
 export interface Post extends BaseIdentity {
   createdBy: string;
   images?: Array<Image>;
@@ -29,6 +34,8 @@ export interface Post extends BaseIdentity {
   postPageLayout?: PostPageLayout;
 
   postType: PostType;
+
+  postLink?: PostLink;
 }
 
 export interface PostPurshaseNotes {
@@ -76,6 +83,7 @@ export type PostFormState = Pick<
   | 'discount'
   | 'postPageLayout'
   | 'stockAmount'
+  | 'postLink'
 > & { images: Array<ImageFile | Image> };
 
 export type PostFormField = keyof PostFormState;

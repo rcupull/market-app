@@ -1,20 +1,25 @@
 import { Button } from 'components/button';
 import { Divider } from 'components/divider';
+import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldClothingSizeSelect } from 'components/field-clothing-size-select';
 import { FieldColorSelect } from 'components/field-colors-select';
 import { FieldInput } from 'components/field-input';
 import { FieldInputImages } from 'components/field-input-images';
 import { FieldPostCategoriesButtons } from 'components/field-post-categories-buttons';
+import { FieldPostLink } from 'components/field-post-link';
 import { FieldPostPageLayout } from 'components/field-post-page-layout';
 import { FieldPostStockAmount } from 'components/field-post-stock-amount';
+import { FieldRadioGroup } from 'components/field-radio-group';
 import { FieldSelect } from 'components/field-select';
 import { FieldTextArea } from 'components/field-text-area';
 
+import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusinessSection';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
 import { useAddOnePost } from 'features/api/posts/useAddOnePost';
 import { useUpdateOnePost } from 'features/api/posts/useUpdateOnePost';
 
 import { useGetFormErrors } from 'hooks/useGetFormErrors';
+import { useMemoizedHash } from 'hooks/useMemoizedHash';
 import { Portal } from 'hooks/usePortal';
 
 import { useBusiness } from '../../@hooks/useBusiness';
@@ -24,6 +29,7 @@ import { Formik } from 'formik';
 import { StyleProps } from 'types/general';
 import { Post, PostCurrency, PostFormState, PostType } from 'types/post';
 import { getImageEndpoint } from 'utils/api';
+import { addStringToUniqueArray } from 'utils/general';
 
 export interface ComponentProps extends StyleProps {
   portal: Portal;
@@ -39,13 +45,53 @@ export const Component = ({
   className,
   postType,
 }: ComponentProps) => {
-  const { business } = useBusiness();
+  const { business, onFetch, getSections } = useBusiness();
 
+  const { updateBusinessSection } = useUpdateBusinessSection();
   const { addOnePost } = useAddOnePost();
   const { updateOnePost } = useUpdateOnePost();
   const { addManyImages } = useAddManyImages();
 
+  const updateLinkInSections = async (
+    sectionIds: Array<string>,
+    linkTag: string,
+  ): Promise<void> => {
+    if (!business) return;
+
+    if (sectionIds.length) {
+      const promises = getSections({ ids: sectionIds }).map((section) => {
+        return new Promise<void>((resolve) => {
+          if (!section) {
+            return resolve();
+          }
+
+          updateBusinessSection.fetch(
+            {
+              routeName: business.routeName,
+              sectionId: section._id,
+              data: {
+                postCategoriesTags: addStringToUniqueArray(
+                  section.postCategoriesTags || [],
+                  linkTag,
+                ),
+              },
+            },
+            {
+              onAfterSuccess: () => {
+                resolve();
+              },
+            },
+          );
+        });
+      });
+
+      await Promise.all(promises);
+      onFetch({ routeName: business?.routeName });
+    }
+  };
+
   const getFormErrors = useGetFormErrors();
+  const linkTag = useMemoizedHash();
 
   if (!business) {
     return <></>;
@@ -314,12 +360,18 @@ export const Component = ({
     </Formik>
   );
 
+  const sections = getSections({
+    tags: post?.postCategoriesTags || [],
+  });
+
   const linkForm = (
-    <Formik<PostFormState>
+    <Formik<PostFormState & { sectionIds: Array<string> }>
       initialValues={{
         name: '',
         images: [],
-        postCategoriesTags: [],
+        postCategoriesTags: [linkTag],
+        postLink: undefined,
+        sectionIds: sections.map((section) => section._id),
         ...(post || {}),
       }}
       enableReinitialize
@@ -339,6 +391,25 @@ export const Component = ({
             <FieldInput name="name" label="Nombre del enlace" />
             <Divider />
 
+            <FieldRadioGroup<{ label: string; value: string }>
+              label="Incluir en las secciones"
+              name="sectionIds"
+              className="mt-6"
+              items={getSections({ postType: 'link' }).map(({ name, _id }) => ({
+                label: name,
+                value: _id,
+              }))}
+              renderOption={({ checked, item }) => {
+                return <FieldCheckbox noUseFormik value={checked} label={item.label} />;
+              }}
+              optionToValue={({ value }) => value}
+              multi
+            />
+            <Divider />
+
+            <FieldPostLink name="postLink" className="mt-6" />
+            <Divider />
+
             <FieldInputImages
               label="Imagen"
               id="images"
@@ -352,10 +423,14 @@ export const Component = ({
             {portal.getPortal(
               <Button
                 label="Guardar"
-                isBusy={addOnePost.status.isBusy || updateOnePost.status.isBusy}
+                isBusy={
+                  addOnePost.status.isBusy ||
+                  updateOnePost.status.isBusy ||
+                  updateBusinessSection.status.isBusy
+                }
                 disabled={!isValid}
                 onClick={() => {
-                  const { images, name, postCategoriesTags } = values;
+                  const { images, name, postCategoriesTags, sectionIds, postLink } = values;
 
                   const handelUpdatePost = (post: Post) => {
                     const { _id: postId } = post;
@@ -375,10 +450,15 @@ export const Component = ({
                               postId,
                               images,
                               name,
-                              postCategoriesTags,
+                              postLink,
                             },
                             {
-                              onAfterSuccess,
+                              onAfterSuccess: async () => {
+                                const [linkTag] = postCategoriesTags || [];
+                                await updateLinkInSections(sectionIds, linkTag || '<unknow Tag>');
+
+                                onAfterSuccess();
+                              },
                             },
                           );
                         },
@@ -393,6 +473,7 @@ export const Component = ({
                         postCategoriesTags,
                         images: [],
                         postType,
+                        postLink,
                       },
                       {
                         onAfterSuccess: (response) => {

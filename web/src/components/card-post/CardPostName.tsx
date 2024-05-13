@@ -1,12 +1,14 @@
 import { PostCardLayout } from 'types/business';
+import { StyleProps } from 'types/general';
 import { Post } from 'types/post';
+import { cn } from 'utils/general';
 
-export interface CardPostNameProps {
+export interface CardPostNameProps extends StyleProps {
   post: Post;
   layout?: PostCardLayout;
 }
 
-export const CardPostName = ({ post, layout }: CardPostNameProps) => {
+export const CardPostName = ({ post, layout, className }: CardPostNameProps) => {
   const nameLayout = layout?.name;
   const name = post.name;
 
@@ -14,5 +16,5 @@ export const CardPostName = ({ post, layout }: CardPostNameProps) => {
     return <></>;
   }
 
-  return <h3 className="mt-4 text-lg text-gray-700">{name}</h3>;
+  return <h3 className={cn('mt-4 text-lg text-gray-700', className)}>{name}</h3>;
 };

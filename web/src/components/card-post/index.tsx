@@ -52,7 +52,7 @@ export const CardPost = ({
     if (metaLayout === 'verticalCentered') {
       return (
         <div className="flex flex-col items-center flex-shrink-0">
-          <CardPostName layout={layout} post={post} />
+          <CardPostName layout={layout} post={post} className="text-center" />
           <CardPostPrice layout={layout} post={post} />
 
           <PostShoppingMethod layout={layout?.shoppingMethod} post={post} />
@@ -77,8 +77,17 @@ export const CardPost = ({
     return content;
   }
 
+  const getWarning = (): string | undefined => {
+    if (!href || href === '#') {
+      return 'Este enlace no tiene un link establecido. Actualice el tipo de enlace.';
+    }
+
+    return undefined;
+  };
+
   return (
     <UpdateSomethingContainer
+      warning={getWarning()}
       title="Editar esta publicación"
       onClick={() =>
         businessNewUpdatePost.open({
