@@ -6,7 +6,9 @@ export default {
   },
   plugins: [
     //eslint-disable-next-line
-    require('@tailwindcss/forms'),
+    require('@tailwindcss/forms')({
+      strategy: 'class',
+    }),
     //eslint-disable-next-line
     require('tailwindcss/plugin')(({ addUtilities, theme }) => {
       addUtilities({
