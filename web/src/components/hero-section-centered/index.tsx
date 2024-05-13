@@ -10,7 +10,7 @@ import { useAuthSignUpModal } from 'pages/@modals/useAuthSignUpModal';
 export const HeroSectionCentered = () => {
   const authSignUpModal = useAuthSignUpModal();
   const authSignInModal = useAuthSignInModal();
-  const {isAuthenticated} = useAuth()
+  const { isAuthenticated } = useAuth();
 
   return (
     <div data-id="HeroSectionCentered" className="relative isolate px-6 lg:px-8">
@@ -25,21 +25,26 @@ export const HeroSectionCentered = () => {
             Internet. Hay algunas personas que van a huir de la oscuridad.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
-            {!isAuthenticated && <Button label="Registrarse" onClick={() => authSignUpModal.open()} />}
+            {!isAuthenticated && (
+              <Button label="Registrarse" onClick={() => authSignUpModal.open()} />
+            )}
             <Link to="/about-us" className="text-sm font-semibold leading-6 text-gray-900">
               Conocer más <span aria-hidden="true">→</span>
             </Link>
           </div>
 
-          {!isAuthenticated && <div className='mt-6'>
-            Si ya tienes cuenta {' '}
-            <Button
-              className="!inline-block !text-[16px]"
-              label="inicia sesión"
-              onClick={() => authSignInModal.open()}
-              variant="link"
-            />, compra o gestiona tus negocios.
-          </div>}
+          {!isAuthenticated && (
+            <div className="mt-6">
+              Si ya tienes cuenta{' '}
+              <Button
+                className="!inline-block !text-[16px]"
+                label="inicia sesión"
+                onClick={() => authSignInModal.open()}
+                variant="link"
+              />
+              , compra o gestiona tus negocios.
+            </div>
+          )}
         </div>
       </div>
     </div>

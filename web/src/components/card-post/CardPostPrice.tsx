@@ -46,7 +46,6 @@ export const CardPostPrice = ({ post, layout }: CardPostPriceProps) => {
       return null;
     }
 
-
     if (discountLayout === 'savedMoney') {
       const oldPrice = price + discount;
       return (
