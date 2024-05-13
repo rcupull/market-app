@@ -253,7 +253,7 @@ const addOne: QueryHandle<
     | "postType"
   >,
   Post
-> = async (args) => {
+> = async ({ res, req, ...args }) => {
   const newPost = new PostModel(args);
 
   await newPost.save();

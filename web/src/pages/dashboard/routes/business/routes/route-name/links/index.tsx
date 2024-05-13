@@ -12,7 +12,6 @@ import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 
 import { BulkActions } from './BulkActions';
 import { Filters } from './Filters';
-import { PostAmount } from './PostAmount';
 import { RowActions } from './RowActions';
 import { useInfinityScrolling } from './useInfinityScrolling';
 
@@ -20,12 +19,11 @@ import SvgPlusSolid from 'icons/PlusSolid';
 import SvgSyncSolid from 'icons/SyncSolid';
 import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useTableCellCategoriesTags } from 'pages/@hooks/useTableCellCategoriesTags';
 import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
 import { GetAllPostsQuery } from 'types/api';
 import { getImageEndpoint } from 'utils/api';
 import { getDateString } from 'utils/date';
-import { cn, isNumber } from 'utils/general';
+import { cn } from 'utils/general';
 import { viewUtils } from 'utils/view';
 
 export const Links = () => {
@@ -57,10 +55,6 @@ export const Links = () => {
   const onRefreshForce = () => {
     filters.onMergeFilters({ page: 1 }, { forceFetch: true });
   };
-
-  const tableCellCategoriesTags = useTableCellCategoriesTags({
-    business,
-  });
 
   const buttonNew = (
     <>
@@ -137,23 +131,12 @@ export const Links = () => {
               heads={getBulkHeaderNodes([
                 'Acciones',
                 'Nombre',
-                'Categorías',
                 'Imágen',
                 'Fecha de Creación',
                 'Detalles',
               ])}
               getRowProps={(rowData) => {
-                const {
-                  _id: postId,
-                  name,
-                  createdAt,
-                  currency,
-                  price,
-                  postCategoriesTags,
-                  hidden,
-                  images,
-                  stockAmount,
-                } = rowData;
+                const { name, createdAt, hidden, images } = rowData;
 
                 const mainImage = images?.[0];
 
@@ -168,7 +151,6 @@ export const Links = () => {
                       onRefreshForce={onRefreshForce}
                     />,
                     name,
-                    tableCellCategoriesTags.onGetTableCellNode({ postCategoriesTags }),
                     mainImage ? (
                       <img
                         src={getImageEndpoint(mainImage.src)}
@@ -188,33 +170,6 @@ export const Links = () => {
                           >{`${hidden ? 'Oculta' : 'Visible'}`}</span>
                         ),
                         value: null,
-                      },
-                      {
-                        label: 'Precio',
-                        value: `${price} ${currency}`,
-                      },
-                      {
-                        label: (
-                          <span
-                            className={cn({
-                              'text-red-500': stockAmount === 0,
-                            })}
-                          >
-                            Stock
-                          </span>
-                        ),
-                        value: isNumber(stockAmount) ? (
-                          <PostAmount
-                            value={stockAmount}
-                            postId={postId}
-                            onAfterSuccess={filters.onRefresh}
-                            className={cn({
-                              'border-2 rounded-lg border-red-500': stockAmount === 0,
-                            })}
-                          />
-                        ) : (
-                          <span className="text-red-500">Desabilitado</span>
-                        ),
                       },
                     ]),
                   ]),

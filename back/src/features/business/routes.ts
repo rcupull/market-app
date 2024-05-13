@@ -78,6 +78,18 @@ router
   );
 
 router
+  .route("/business/:routeName/sections/reorder")
+  .put(
+    validators.param("routeName").notEmpty(),
+    validators.body("fromIndex").notEmpty(),
+    validators.body("toIndex").notEmpty(),
+    validators.handle,
+    isLogged,
+    isUserThisBusinessOwner,
+    businessHandles.put_business_section_reorder()
+  );
+
+router
   .route("/business/:routeName/sections/:sectionId")
   .put(
     validators.param("routeName").notEmpty(),
@@ -94,16 +106,4 @@ router
     isLogged,
     isUserThisBusinessOwner,
     businessHandles.del_business_routeName_sections_sectionId()
-  );
-
-router
-  .route("/business/:routeName/sections/reorder")
-  .put(
-    validators.param("routeName").notEmpty(),
-    validators.body("fromIndex").notEmpty(),
-    validators.body("toIndex").notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserThisBusinessOwner,
-    businessHandles.put_business_section_reorder()
   );

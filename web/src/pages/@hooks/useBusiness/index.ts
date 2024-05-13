@@ -5,7 +5,8 @@ import { useApiPersistent } from 'features/slices/useApiPersistent';
 import { FetchOptions } from 'hooks/useFetch';
 
 import { FetchStatus } from 'types/api';
-import { Business } from 'types/business';
+import { Business, PostsLayoutSection } from 'types/business';
+import { PostType } from 'types/post';
 
 export const useBusiness = (): {
   business: Business | null;
@@ -13,6 +14,11 @@ export const useBusiness = (): {
   onFetch: (args: { routeName: string }, options?: FetchOptions) => void;
   onReset: () => void;
   owner: boolean;
+  getSections: (args?: {
+    ids?: Array<string>;
+    tags?: Array<string>;
+    postType?: PostType;
+  }) => Array<PostsLayoutSection>;
 } => {
   const { getOneBusiness } = useGetOneBusiness();
   const { authData } = useAuth();
@@ -25,5 +31,25 @@ export const useBusiness = (): {
     onReset: reset,
     status,
     business: data,
+    getSections: (args) => {
+      const { ids, tags, postType } = args || {};
+      let out = data?.layouts?.posts?.sections || [];
+
+      if (tags) {
+        out = out.filter(({ postCategoriesTags }) => {
+          return postCategoriesTags?.map((tag) => tags.includes(tag)).some(Boolean);
+        });
+      }
+
+      if (ids) {
+        out = out.filter(({ _id }) => ids.includes(_id));
+      }
+
+      if (postType) {
+        out = out.filter((section) => section.postType === postType);
+      }
+
+      return out;
+    },
   };
 };

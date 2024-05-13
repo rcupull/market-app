@@ -14,7 +14,7 @@ import { RequestHandler } from "../../types/general";
 import { makeReshaper } from "../../utils/makeReshaper";
 import { getPostCategoriesFromBusinessCategories } from "./utils";
 import { imagesServices } from "../images/services";
-import { movRow } from "../../utils/general";
+import { isEqualIds, movRow } from "../../utils/general";
 import { PaginateResult } from "../../middlewares/pagination";
 
 const get_business: () => RequestHandler = () => {
@@ -382,8 +382,17 @@ const post_business_routeName_sections: () => RequestHandler = () => {
 const put_business_routeName_sections_sectionId: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const { params, body } = req;
+      const { params, body, business } = req;
       const { routeName, sectionId } = params;
+
+      if (!business) {
+        return getBusinessNotFoundResponse({ res });
+      }
+
+      const currentSection =
+        business.layouts?.posts?.sections?.find((section) =>
+          isEqualIds(sectionId, section._id)
+        ) || {};
 
       await businessServices.updateOne({
         res,
@@ -393,7 +402,10 @@ const put_business_routeName_sections_sectionId: () => RequestHandler = () => {
         },
         update: {
           $set: {
-            "layouts.posts.sections.$[section]": body,
+            "layouts.posts.sections.$[section]": {
+              ...currentSection,
+              ...body,
+            },
           },
         },
         options: {
