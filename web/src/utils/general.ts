@@ -155,7 +155,7 @@ export const isEqualObj = (a: AnyRecord | undefined, b: AnyRecord | undefined): 
       //eslint-disable-next-line
       if (b.hasOwnProperty(prop)) {
         //@ts-expect-error ignore
-        if (typeof a[prop] === 'object') {
+        if (typeof a[prop] === 'object' && a[prop] !== null) {
           //@ts-expect-error ignore
           if (!isEqualObj(a[prop], b[prop])) return false;
         } else {
