@@ -45,8 +45,10 @@ export interface FetchResourceWithPagination<Args = undefined, D extends AnyReco
 
 export type ApiStatus = 'NOT_STARTED' | 'BUSY' | 'SUCCESS' | 'FAILED';
 
+export type ApiErrorReazon = 'EMAIL_ALREADY_REGISTERED';
 export interface ApiError {
   message: string;
+  reazon?: ApiErrorReazon;
 }
 
 export type UrlParams = AnyRecord;

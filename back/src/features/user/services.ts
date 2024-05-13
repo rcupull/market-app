@@ -20,7 +20,8 @@ const addOne: QueryHandle<
     return get401Response({
       res,
       json: {
-        message: "Email already registered",
+        message: "Ese email ya fue registrado",
+        reazon: "EMAIL_ALREADY_REGISTERED",
       },
     });
   }

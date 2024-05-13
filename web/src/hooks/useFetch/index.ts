@@ -4,9 +4,10 @@ import { useCookies } from 'features/cookies/useCookies';
 
 import { useDebouncedValue } from 'hooks/useDebouncedValue';
 
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import {
   ApiError,
+  ApiErrorReazon,
   ApiStatus,
   FetchData,
   FetchMethod,
@@ -103,9 +104,16 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
       setStatus('SUCCESS');
       setWasCalled(true);
     } catch (e) {
-      onAfterFailed?.(e as ApiError);
+      const { response } = e as AxiosError<{ message?: string; reazon?: ApiErrorReazon }>;
+
+      const apiError: ApiError = {
+        message: response?.data?.message || 'Something went wrong',
+        reazon: response?.data?.reazon,
+      };
+
+      onAfterFailed?.(apiError);
       setResponse(null);
-      setError(e as ApiError);
+      setError(apiError);
       setStatus('FAILED');
       setWasCalled(true);
     }

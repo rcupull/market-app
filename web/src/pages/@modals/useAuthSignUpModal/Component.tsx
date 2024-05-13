@@ -72,7 +72,7 @@ export const Component = ({ portal }: ComponentProps) => {
           }}
           onSubmit={() => {}}
         >
-          {({ handleSubmit, isValid, values }) => {
+          {({ handleSubmit, isValid, values, setErrors, errors }) => {
             return (
               <form onSubmit={handleSubmit}>
                 <FieldInput id="name" name="name" autoComplete="name" label="Nombre" />
@@ -151,6 +151,14 @@ export const Component = ({ portal }: ComponentProps) => {
                               },
                               { emergent: true },
                             );
+                          },
+                          onAfterFailed: (e) => {
+                            if (e.reazon === 'EMAIL_ALREADY_REGISTERED') {
+                              setErrors({
+                                ...errors,
+                                email: e.message,
+                              });
+                            }
                           },
                         },
                       );
