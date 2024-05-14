@@ -29,6 +29,7 @@ import { Formik } from 'formik';
 import { StyleProps } from 'types/general';
 import { Post, PostCurrency, PostFormState, PostType } from 'types/post';
 import { getImageEndpoint } from 'utils/api';
+import { getRequiredLabel } from 'utils/form';
 import { addStringToUniqueArray } from 'utils/general';
 
 export interface ComponentProps extends StyleProps {
@@ -122,6 +123,12 @@ export const Component = ({
             field: 'name',
             type: 'required',
           },
+          {
+            field: 'postCategoriesTags',
+            type: 'custom',
+            customCb: (value) => value?.length,
+            message: 'Debe seleccionar al menos una categoría',
+          },
         ])
       }
       onSubmit={() => {}}
@@ -131,7 +138,7 @@ export const Component = ({
           <form className={className}>
             {/** ALWAYS VISIBLE */}
             <>
-              <FieldInput name="name" label="Nombre del producto" />
+              <FieldInput name="name" label={getRequiredLabel('Nombre del producto')} />
               <Divider />
             </>
 
@@ -171,7 +178,7 @@ export const Component = ({
             {/** ALWAYS VISIBLE */}
             <>
               <FieldPostCategoriesButtons
-                label="Categorías"
+                label={getRequiredLabel('Categorías')}
                 name="postCategoriesTags"
                 className="mt-6"
               />

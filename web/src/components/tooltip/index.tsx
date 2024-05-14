@@ -1,4 +1,4 @@
-import { Popover, Transition } from '@headlessui/react';
+import { Popover } from '@headlessui/react';
 import { Float } from '@headlessui-float/react';
 import { Fragment, useState } from 'react';
 
