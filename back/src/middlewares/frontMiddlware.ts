@@ -106,6 +106,7 @@ export const frontMiddlware = combineMiddleware(
       "/dashboard",
       "/admin",
       "/about-us",
+      "/docs",
     ];
 
     const isNotBusinessRoute =

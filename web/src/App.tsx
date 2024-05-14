@@ -17,6 +17,7 @@ const ForgotPassword = dynamic(() =>
 );
 
 const Admin = dynamic(() => import('pages/admin').then((m) => ({ default: m.Admin })));
+const Docs = dynamic(() => import('pages/docs').then((m) => ({ default: m.Docs })));
 
 const AboutUs = dynamic(() => import('pages/about-us').then((m) => ({ default: m.AboutUs })));
 const BusinessRouteName = dynamic(() =>
@@ -49,6 +50,8 @@ export const App = (): JSX.Element => {
         path="/admin/*"
         element={withPageProviders(<Admin />, AuthenticatedAdmin, LayoutMain)}
       />
+
+      <Route path="/docs/*" element={withPageProviders(<Docs />, LayoutMain)} />
 
       <Route
         path="/dashboard/*"

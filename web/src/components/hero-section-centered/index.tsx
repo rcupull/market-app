@@ -13,7 +13,7 @@ export const HeroSectionCentered = () => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <div data-id="HeroSectionCentered" className="relative isolate px-6 lg:px-8">
+    <div data-id="HeroSectionCentered" className="relative isolate px-6 lg:px-8 mx-auto">
       <div className="mx-auto max-w-2xl py-16 lg:py-32">
         <div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
         <div className="text-center">

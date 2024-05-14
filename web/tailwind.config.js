@@ -21,7 +21,9 @@ export default {
           textDecorationLine: 'underline',
         },
         '.no-preflight a': {
-          color: theme('colors.blue.600'),
+          color: theme('colors.blue.700'),
+        },
+        '.no-preflight a:hover': {
           textDecorationLine: 'underline',
         },
         ////////////////////////////////////HX
