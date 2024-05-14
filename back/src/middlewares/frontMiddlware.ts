@@ -109,9 +109,6 @@ export const frontMiddlware = combineMiddleware(
       "/docs",
     ];
 
-    logger.info("req.url");
-    logger.info(req.url);
-
     const isNotBusinessRoute =
       noBusinessRoutes
         .map((noBusinessRoute) => req.url.startsWith(noBusinessRoute))
