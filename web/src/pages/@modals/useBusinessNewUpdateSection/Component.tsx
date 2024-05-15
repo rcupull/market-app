@@ -23,6 +23,7 @@ import {
 } from 'types/business';
 import { StyleProps } from 'types/general';
 import { PostType } from 'types/post';
+import { getRequiredLabel } from 'utils/form';
 import { getRandomHash } from 'utils/general';
 
 type State = PostsLayoutSectionPayload;
@@ -133,7 +134,7 @@ export const Component = ({
                 name="name"
                 label={
                   <div className="flex items-center">
-                    <span>Nombre</span>
+                    <span>{getRequiredLabel('Nombre')}</span>
                     <FieldShowHide
                       name="hiddenName"
                       title={`${values.hiddenName ? 'Mostrar' : 'Ocultar'} el nombre del grupo.`}
@@ -302,7 +303,7 @@ export const Component = ({
               name="name"
               label={
                 <div className="flex items-center">
-                  <span>Nombre</span>
+                  <span>{getRequiredLabel('Nombre')}</span>
                   <FieldShowHide
                     name="hiddenName"
                     title={`${values.hiddenName ? 'Mostrar' : 'Ocultar'} el nombre del grupo.`}

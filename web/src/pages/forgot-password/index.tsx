@@ -12,6 +12,7 @@ import { useRouter } from 'hooks/useRouter';
 import SvgCheckCircle from 'icons/CheckCircle';
 import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
+import { getRequiredLabel } from 'utils/form';
 
 export const ForgotPassword = () => {
   const { params } = useRouter();
@@ -61,6 +62,10 @@ export const ForgotPassword = () => {
             },
             {
               field: 'newPasswordAgain',
+              type: 'required',
+            },
+            {
+              field: 'newPasswordAgain',
               type: 'equal',
               equalField: 'newPassword',
               message: 'Las dos contraseña deben ser iguales',
@@ -74,14 +79,14 @@ export const ForgotPassword = () => {
                   id="email"
                   name="newPassword"
                   type="password"
-                  label="Nueva contraseña"
+                  label={getRequiredLabel("Nueva contraseña")}
                 />
 
                 <FieldInput
                   id="email"
                   name="newPasswordAgain"
                   type="password"
-                  label="Repetir contraseña"
+                  label={getRequiredLabel("Repetir contraseña")}
                   className="mt-6"
                 />
 

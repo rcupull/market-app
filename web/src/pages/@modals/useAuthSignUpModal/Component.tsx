@@ -12,6 +12,7 @@ import { Portal } from 'hooks/usePortal';
 import { useAuthSignInModal } from '../useAuthSignInModal';
 
 import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
+import { getRequiredLabel } from 'utils/form';
 
 export interface ComponentProps {
   portal: Portal;
@@ -61,22 +62,27 @@ export const Component = ({ portal }: ComponentProps) => {
             },
             {
               field: 'confirmPassword',
+              type: 'required',
+            },
+            {
+              field: 'confirmPassword',
               type: 'equal',
               equalField: 'password',
+              message: 'Las dos contraseña deben ser iguales',
             },
           ]}
         >
           {({ handleSubmit, isValid, values, setErrors, errors }) => {
             return (
               <form onSubmit={handleSubmit}>
-                <FieldInput id="name" name="name" autoComplete="name" label="Nombre" />
+                <FieldInput id="name" name="name" autoComplete="name" label={getRequiredLabel("Nombre")} />
 
                 <FieldInput
                   id="email"
                   name="email"
                   type="email"
                   autoComplete="email"
-                  label="Correo electrónico"
+                  label={getRequiredLabel("Correo electrónico")}
                   className="mt-6"
                 />
 
@@ -86,7 +92,7 @@ export const Component = ({ portal }: ComponentProps) => {
                     name="password"
                     type="password"
                     autoComplete="password"
-                    label="Contraseña"
+                    label={getRequiredLabel("Contraseña")}
                     className="mt-6"
                   />
                 </div>
@@ -95,13 +101,19 @@ export const Component = ({ portal }: ComponentProps) => {
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
-                  label="Confirmar contraseña"
+                  label={getRequiredLabel("Confirmar contraseña")}
                   className="mt-6"
                 />
 
                 <FieldCheckbox
                   name="canCreateBusiness"
                   label="Propietario de negocios"
+                  description={
+                    <div>
+                      Los propietarios de negocios pueden crear negocios en nuestro sistema y publicar los productos que comercializan.
+                      Si usted no tiene productos para comercializar a través de Asere Market no necesita marcar esta opción. 
+                    </div>
+                  }
                   className="mt-6"
                 />
 
