@@ -72,21 +72,21 @@ export const ForgotPassword = () => {
             },
           ]}
         >
-          {({ handleSubmit, isValid, values }) => {
+          {({ isValid, values }) => {
             return (
-              <form onSubmit={handleSubmit}>
+              <form>
                 <FieldInput
                   id="email"
                   name="newPassword"
                   type="password"
-                  label={getRequiredLabel("Nueva contraseña")}
+                  label={getRequiredLabel('Nueva contraseña')}
                 />
 
                 <FieldInput
                   id="email"
                   name="newPasswordAgain"
                   type="password"
-                  label={getRequiredLabel("Repetir contraseña")}
+                  label={getRequiredLabel('Repetir contraseña')}
                   className="mt-6"
                 />
 

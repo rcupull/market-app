@@ -72,17 +72,22 @@ export const Component = ({ portal }: ComponentProps) => {
             },
           ]}
         >
-          {({ handleSubmit, isValid, values, setErrors, errors }) => {
+          {({ isValid, values, setErrors, errors }) => {
             return (
-              <form onSubmit={handleSubmit}>
-                <FieldInput id="name" name="name" autoComplete="name" label={getRequiredLabel("Nombre")} />
+              <form>
+                <FieldInput
+                  id="name"
+                  name="name"
+                  autoComplete="name"
+                  label={getRequiredLabel('Nombre')}
+                />
 
                 <FieldInput
                   id="email"
                   name="email"
                   type="email"
                   autoComplete="email"
-                  label={getRequiredLabel("Correo electrónico")}
+                  label={getRequiredLabel('Correo electrónico')}
                   className="mt-6"
                 />
 
@@ -92,7 +97,7 @@ export const Component = ({ portal }: ComponentProps) => {
                     name="password"
                     type="password"
                     autoComplete="password"
-                    label={getRequiredLabel("Contraseña")}
+                    label={getRequiredLabel('Contraseña')}
                     className="mt-6"
                   />
                 </div>
@@ -101,7 +106,7 @@ export const Component = ({ portal }: ComponentProps) => {
                   id="confirmPassword"
                   name="confirmPassword"
                   type="password"
-                  label={getRequiredLabel("Confirmar contraseña")}
+                  label={getRequiredLabel('Confirmar contraseña')}
                   className="mt-6"
                 />
 
@@ -110,8 +115,9 @@ export const Component = ({ portal }: ComponentProps) => {
                   label="Propietario de negocios"
                   description={
                     <div>
-                      Los propietarios de negocios pueden crear negocios en nuestro sistema y publicar los productos que comercializan.
-                      Si usted no tiene productos para comercializar a través de Asere Market no necesita marcar esta opción. 
+                      Los propietarios de negocios pueden crear negocios en nuestro sistema y
+                      publicar los productos que comercializan. Si usted no tiene productos para
+                      comercializar a través de Asere Market no necesita marcar esta opción.
                     </div>
                   }
                   className="mt-6"

@@ -45,9 +45,9 @@ export const Component = ({ portal }: ComponentProps) => {
             },
           ]}
         >
-          {({ handleSubmit, isValid, values }) => {
+          {({ isValid, values }) => {
             return (
-              <form onSubmit={handleSubmit}>
+              <form>
                 <FieldInput
                   id="email"
                   name="email"
