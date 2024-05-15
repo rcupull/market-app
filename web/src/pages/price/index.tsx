@@ -41,8 +41,8 @@ export const Price = () => {
           </li>
           <li className="my-2">
             El sistema se resposabiliza de “bannar” a los usuario que reiteradamente generen órdenes
-            de compra y no efectuen ventas satisfactorias protegiendo asi el flujo de ventas de
-            cada negocio.
+            de compra y no efectuen ventas satisfactorias protegiendo asi el flujo de ventas de cada
+            negocio.
           </li>
         </ol>
       </HtmlTextContainer>
