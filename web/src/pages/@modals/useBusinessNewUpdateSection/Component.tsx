@@ -58,9 +58,6 @@ export const Component = ({
         postType: 'product',
         ...(section || {}),
       }}
-      initialTouched={{
-        name: true,
-      }}
       validate={[
         {
           field: 'name',
@@ -159,7 +156,18 @@ export const Component = ({
             {/* //////////////////////////////////////////////////////////////////////////////////////////////// */}
             <Divider />
 
-            <FieldPostCategoriesButtons label="Categorías" name="postCategoriesTags" />
+            <FieldPostCategoriesButtons
+              description={
+                <div>
+                  La sección visualizará todos los productos que pertenezcan al menos a una de las
+                  categorías asociadas a dicha sección. En caso de no seleccinar ninguna categoria
+                  seran mostradas todos los productos del negocio.{' '}
+                  <span>Siempre será recomendable clasificar correctamente sus productos.</span>
+                </div>
+              }
+              label="Categorías"
+              name="postCategoriesTags"
+            />
 
             {/* //////////////////////////////////////////////////////////////////////////////////////////////// */}
             <Divider />
@@ -227,9 +235,6 @@ export const Component = ({
         showIn: ['businessPage', 'postPage'],
         postType: 'link',
         ...(section || {}),
-      }}
-      initialTouched={{
-        name: true,
       }}
       validate={[
         {

@@ -215,13 +215,6 @@ export const FieldPostCardLayout = ({
             containerClassName="flex items-center flex-wrap gap-4"
           />
 
-          <Divider className="!my-2" />
-
-          <FieldPostShoppingMethodSelect
-            label="Adiccionar al carro"
-            name={getFieldName('shoppingMethod')}
-            className="w-full"
-          />
         </div>
       </div>
       {showPreview && (

@@ -37,11 +37,11 @@ export const Component = () => {
           render: (props) => <StepShopping {...props} finishButton={finishButton} />,
         },
         {
-          label: 'Agregue su primer grupo de publicaciones',
+          label: 'Agregue su primera sección de productos',
           render: (props) => <StepPostsSections {...props} finishButton={finishButton} />,
         },
         {
-          label: 'Agregue su primera publicación',
+          label: 'Agregue su primer producto',
           render: (props) => <StepPost {...props} finishButton={finishButton} />,
         },
         {

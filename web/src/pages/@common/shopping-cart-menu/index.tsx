@@ -92,7 +92,7 @@ export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
         <div className="relative">
           <IconButton title="Carro de Compras" svg={<SvgShoppingCartSolid className="!size-8" />} />
           {isAuthenticated && (
-            <span className="absolute text-gray-100 font-bold top-0 right-0">
+            <span className="absolute text-gray-600 font-bold top-0 right-0">
               {shopping.constructionShoppingProductsCount}
             </span>
           )}

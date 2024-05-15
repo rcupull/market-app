@@ -26,7 +26,7 @@ export interface PostsSectionProps extends StyleProps {
 
 export const PostsSection = ({ routeName, layout, className, visibility }: PostsSectionProps) => {
   const { business, onFetch } = useBusiness();
-  const { name, hiddenName, postCategoriesTags, _id, showIn } = layout;
+  const { name, hiddenName, postCategoriesTags, _id, showIn, postType } = layout;
 
   const { getAllPosts } = useGetAllPosts();
   const { owner } = useBusiness();
@@ -48,6 +48,7 @@ export const PostsSection = ({ routeName, layout, className, visibility }: Posts
     getAllPosts.fetch({
       routeNames: [routeName],
       postCategoriesTags,
+      postType,
       ...filters,
       postCategoriesMethod: hasCategoriesTags ? 'every' : 'some',
     });

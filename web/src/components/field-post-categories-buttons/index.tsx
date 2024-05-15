@@ -17,7 +17,7 @@ export interface FieldPostCategoriesButtonsProps
     FormikFieldProps<State> {}
 
 export const FieldPostCategoriesButtons = (props: FieldPostCategoriesButtonsProps) => {
-  const { className, label } = props;
+  const { className, label, description } = props;
   const [state, setState] = useState<State>();
 
   const { field, error } = useFormikField(props);
@@ -62,6 +62,7 @@ export const FieldPostCategoriesButtons = (props: FieldPostCategoriesButtonsProp
       }
       error={error}
       className={className}
+      description={description}
     >
       <PostCategoriesFilterButtons
         postCategories={postCategories}

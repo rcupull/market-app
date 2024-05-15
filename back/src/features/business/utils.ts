@@ -21,16 +21,14 @@ export const getPostCategoriesFromBusinessCategories = (
 
   businessCategories.forEach((businessCategory) => {
     ifStartWithThenAdd(businessCategory, "clothing", ["Recientes"]);
+    ifStartWithThenAdd(businessCategory, "clothing", ["Ofertas"]);
     ifStartWithThenAdd(businessCategory, "clothing.men", ["Hombres"]);
     ifStartWithThenAdd(businessCategory, "clothing.kids", ["Niños"]);
     ifStartWithThenAdd(businessCategory, "clothing.women", ["Mujeres"]);
-    ifStartWithThenAdd(businessCategory, "clothing.seasonal", [
-      "Invierno",
-      "Ropa de playa",
-    ]);
     ifStartWithThenAdd(businessCategory, "clothing.sportswearAndActivewear", [
       "Deportivas",
     ]);
+
     //////////////////////////////////////////////////////////////////////
 
     ifStartWithThenAdd(businessCategory, "fastFood", [
@@ -40,6 +38,36 @@ export const getPostCategoriesFromBusinessCategories = (
     ]);
 
     //////////////////////////////////////////////////////////////////////
+
+    ifStartWithThenAdd(businessCategory, "computers", [
+      "Ofertas",
+      "Nuevos Productos",
+    ]);
+
+    //////////////////////////////////////////////////////////////////////
+    ifStartWithThenAdd(businessCategory, "house", ["Ofertas"]);
+    ifStartWithThenAdd(businessCategory, "house.rent", [
+      "Para cubanos",
+      "Para extranjeros",
+      "Por horas",
+      "Por tiempo indefinido",
+      "Económicos",
+      "En la ciudad",
+      "En la Playa",
+    ]);
+
+    //////////////////////////////////////////////////////////////////////
+    ifStartWithThenAdd(businessCategory, "services", [
+      "Nuevas ofertas",
+      "Especiales",
+      "Rebajas",
+    ]);
+
+    //////////////////////////////////////////////////////////////////////
+    ifStartWithThenAdd(businessCategory, "miscellaneousItems", [
+      "Nuevas ofertas",
+      "Rebajas",
+    ]);
   });
 
   return allLabels.map((label) => ({ label, tag: getPostCategoryTag(label) }));
