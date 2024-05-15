@@ -1,5 +1,6 @@
 import { Button } from 'components/button';
 import { FieldCheckEditor } from 'components/field-check-editor';
+import { Formik } from 'components/formik';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useModal } from 'features/modal/useModal';
@@ -7,8 +8,6 @@ import { useModal } from 'features/modal/useModal';
 import { Portal } from 'hooks/usePortal';
 
 import { useBusiness } from '../../@hooks/useBusiness';
-
-import { Formik } from 'formik';
 
 interface State {
   purchaseRequestTopInfo: string;
@@ -35,8 +34,6 @@ export const Component = ({ portal }: ComponentProps) => {
         initialValues={{
           purchaseRequestTopInfo: shoppingMeta.purchaseRequestTopInfo || '',
         }}
-        enableReinitialize
-        onSubmit={() => {}}
       >
         {({ values, isValid }) => {
           return (

@@ -18,11 +18,11 @@ export const HeroSectionCentered = () => {
         <div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Datos para enriquecer tu negocio online
+            Recursos para enriquecer tu negocio online
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Sin embargo, algunas grandes cosas no salen del alma. El que desea las ventajas de
-            Internet. Hay algunas personas que van a huir de la oscuridad.
+            El emprendimiento es algo grande, no desprecies a quien no lo hace. Quien trabaja duro,
+            quien ama el dolor, quien construye sus sueños, siempre será triunfador.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             {!isAuthenticated && (

@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { Button } from 'components/button';
 import { FieldInputImages } from 'components/field-input-images';
+import { Formik } from 'components/formik';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
@@ -12,7 +13,6 @@ import { Portal } from 'hooks/usePortal';
 import { useBusiness } from '../../@hooks/useBusiness';
 
 import { imagesDimensions } from 'constants/posts';
-import { Formik } from 'formik';
 import { Image, ImageFile } from 'types/general';
 import { getImageEndpoint } from 'utils/api';
 
@@ -46,7 +46,7 @@ export const Component = ({ portal }: ComponentProps) => {
   }
 
   return (
-    <Formik<State> initialValues={initialValues} onSubmit={() => {}} enableReinitialize>
+    <Formik<State> initialValues={initialValues}>
       {({ values, isValid }) => {
         return (
           <form>

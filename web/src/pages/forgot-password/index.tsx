@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
+import { Formik } from 'components/formik';
 
 import { useAuthForgotPasswordValidate } from 'features/api/auth/useAuthForgotPasswordValidate';
 
@@ -9,7 +10,6 @@ import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { usePortal } from 'hooks/usePortal';
 import { useRouter } from 'hooks/useRouter';
 
-import { Formik } from 'formik';
 import SvgCheckCircle from 'icons/CheckCircle';
 import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
@@ -57,7 +57,6 @@ export const ForgotPassword = () => {
       <div className="mt-10 w-full">
         <Formik
           initialValues={{ newPassword: '', newPasswordAgain: '' }}
-          onSubmit={() => {}}
           validate={(values) => {
             return getFormErrors(values, [
               {

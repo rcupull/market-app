@@ -1,9 +1,9 @@
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
+import { Formik } from 'components/formik';
 
 import { usePortal } from 'hooks/usePortal';
 
-import { Formik } from 'formik';
 import SvgSearchSolid from 'icons/SearchSolid';
 import SvgTimesCircle from 'icons/TimesCircle';
 import { StyleProps } from 'types/general';
@@ -32,11 +32,9 @@ export const SearchFilter = ({
     return (
       <div className={cn(className)}>
         <Formik
-          enableReinitialize
           initialValues={{
             search: value || '',
           }}
-          onSubmit={() => {}}
         >
           {({ values }) => {
             return (
@@ -63,11 +61,9 @@ export const SearchFilter = ({
   return (
     <div className={cn('flex items-center w-full sm:w-fit ', className)}>
       <Formik
-        enableReinitialize
         initialValues={{
           search: value || '',
         }}
-        onSubmit={() => {}}
       >
         {({ values, handleReset }) => {
           return (

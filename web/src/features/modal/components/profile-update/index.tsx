@@ -5,6 +5,7 @@ import { Button } from 'components/button';
 import { ButtonClose } from 'components/button-close';
 import { FieldInput } from 'components/field-input';
 import { FieldInputImages } from 'components/field-input-images';
+import { Formik } from 'components/formik';
 import { Modal } from 'components/modal';
 
 import { useAddOneBusiness } from 'features/api/business/useAddOneBusiness';
@@ -16,7 +17,6 @@ import { useModal } from 'features/modal/useModal';
 import { CallAfarResources, useCallFromAfar } from 'hooks/useCallFromAfar';
 import { usePortal } from 'hooks/usePortal';
 
-import { Formik } from 'formik';
 import { Image } from 'types/general';
 import { getImageEndpoint } from 'utils/api';
 
@@ -50,9 +50,7 @@ export const ProfileUpdate = ({ userId, callAfarResources }: ProfileUpdateProps)
         profileImages: user?.profileImage ? [user?.profileImage] : [],
         name: user?.name,
       }}
-      enableReinitialize
       validate={() => {}}
-      onSubmit={() => {}}
     >
       {({ values, isValid }) => {
         return (

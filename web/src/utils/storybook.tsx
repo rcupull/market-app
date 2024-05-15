@@ -1,4 +1,5 @@
-import { Formik } from 'formik';
+import { Formik } from 'components/formik';
+
 import { ChildrenProp } from 'types/general';
 
 interface FormikWrapper extends ChildrenProp {
@@ -7,7 +8,7 @@ interface FormikWrapper extends ChildrenProp {
 
 export const FormikWrapper = ({ children, errors = {} }: FormikWrapper) => {
   return (
-    <Formik initialValues={{}} onSubmit={() => {}} validate={() => errors}>
+    <Formik initialValues={{}} validate={() => errors}>
       {({ values }) => {
         console.log('Formik values in the story: ', values);
         return <form>{children}</form>;

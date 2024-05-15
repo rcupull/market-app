@@ -12,6 +12,7 @@ import { FieldPostStockAmount } from 'components/field-post-stock-amount';
 import { FieldRadioGroup } from 'components/field-radio-group';
 import { FieldSelect } from 'components/field-select';
 import { FieldTextArea } from 'components/field-text-area';
+import { Formik } from 'components/formik';
 
 import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusinessSection';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
@@ -25,7 +26,6 @@ import { Portal } from 'hooks/usePortal';
 import { useBusiness } from '../../@hooks/useBusiness';
 
 import { imagesDimensions } from 'constants/posts';
-import { Formik } from 'formik';
 import { StyleProps } from 'types/general';
 import { Post, PostCurrency, PostFormState, PostType } from 'types/post';
 import { getImageEndpoint } from 'utils/api';
@@ -116,7 +116,6 @@ export const Component = ({
         stockAmount: null,
         ...(post || {}),
       }}
-      enableReinitialize
       validate={(values) =>
         getFormErrors(values, [
           {
@@ -131,7 +130,6 @@ export const Component = ({
           },
         ])
       }
-      onSubmit={() => {}}
     >
       {({ values, isValid }) => {
         return (
@@ -381,7 +379,6 @@ export const Component = ({
         sectionIds: sections.map((section) => section._id),
         ...(post || {}),
       }}
-      enableReinitialize
       validate={(values) =>
         getFormErrors(values, [
           {
@@ -390,7 +387,6 @@ export const Component = ({
           },
         ])
       }
-      onSubmit={() => {}}
     >
       {({ values, isValid }) => {
         return (

@@ -8,6 +8,7 @@ import { FieldPostsSectionLayout } from 'components/field-posts-section-layout';
 import { FieldRadioGroup } from 'components/field-radio-group';
 import { FieldSearchLayout } from 'components/field-search-layout';
 import { FieldShowHide } from 'components/field-show-hide';
+import { Formik } from 'components/formik';
 
 import { useAddBusinessSection } from 'features/api/business/useAddBusinessSection';
 import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusinessSection';
@@ -15,7 +16,6 @@ import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusines
 import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { Portal } from 'hooks/usePortal';
 
-import { Formik } from 'formik';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import {
   PostsLayoutSection,
@@ -60,11 +60,9 @@ export const Component = ({
         postType: 'product',
         ...(section || {}),
       }}
-      enableReinitialize
       initialTouched={{
         name: true,
       }}
-      onSubmit={() => {}}
       validate={(values) => {
         return getFormErrors(values, [
           {
@@ -234,11 +232,9 @@ export const Component = ({
         postType: 'link',
         ...(section || {}),
       }}
-      enableReinitialize
       initialTouched={{
         name: true,
       }}
-      onSubmit={() => {}}
       validate={(values) => {
         return getFormErrors(values, [
           {

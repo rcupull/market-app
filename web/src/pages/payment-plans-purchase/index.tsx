@@ -57,7 +57,7 @@ export const PaymentPlansPurchase = () => {
   //               initialValues={{
   //                 validationPurchaseCode: '',
   //               }}
-  //               enableReinitialize
+  //
   //               validate={(values) => {
   //                 return getFormErrors(values, [
   //                   {
@@ -66,7 +66,7 @@ export const PaymentPlansPurchase = () => {
   //                   },
   //                 ]);
   //               }}
-  //               onSubmit={() => {}}
+  //
   //             >
   //               {({ values, isValid }) => {
   //                 return (

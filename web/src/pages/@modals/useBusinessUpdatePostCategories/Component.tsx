@@ -5,6 +5,7 @@ import { Button } from 'components/button';
 import { ButtonRemove } from 'components/button-remove';
 import { ButtonSave } from 'components/button-save';
 import { FieldInput } from 'components/field-input';
+import { Formik } from 'components/formik';
 import { IconButtonRemove } from 'components/icon-button-remove';
 import { IconButtonShowHide } from 'components/icon-button-show-hide';
 
@@ -16,7 +17,6 @@ import { Portal, usePortal } from 'hooks/usePortal';
 
 import { useBusiness } from '../../@hooks/useBusiness';
 
-import { Formik } from 'formik';
 import { PostCategory } from 'types/business';
 import { getPostCategoryTag } from 'utils/business';
 import { addRow, cn, isEqualObj, removeRow, updateRow } from 'utils/general';
@@ -72,7 +72,6 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               },
             ]);
           }}
-          onSubmit={() => {}}
         >
           {({ values, isValid, resetForm }) => {
             const handleAdd = () => {

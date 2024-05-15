@@ -2,6 +2,7 @@ import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInput } from 'components/field-input';
+import { Formik } from 'components/formik';
 
 import { useAuthSignUp } from 'features/api/auth/useAuthSignUp';
 import { useModal } from 'features/modal/useModal';
@@ -11,7 +12,6 @@ import { Portal } from 'hooks/usePortal';
 
 import { useAuthSignInModal } from '../useAuthSignInModal';
 
-import { Formik } from 'formik';
 import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
 
 export interface ComponentProps {
@@ -70,7 +70,6 @@ export const Component = ({ portal }: ComponentProps) => {
               },
             ]);
           }}
-          onSubmit={() => {}}
         >
           {({ handleSubmit, isValid, values, setErrors, errors }) => {
             return (

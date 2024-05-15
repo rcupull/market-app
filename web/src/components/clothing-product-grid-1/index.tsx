@@ -1,5 +1,6 @@
 import { FieldClothingSizeSelectProps } from 'components/field-clothing-size-select';
 import { FieldColorSelectProps } from 'components/field-colors-select';
+import { Formik } from 'components/formik';
 import { PostShoppingMethod } from 'components/post-shopping-method';
 import { ProductDescriptionProps } from 'components/product/description/types';
 import { ProductDetailsProps } from 'components/product/details/types';
@@ -10,7 +11,6 @@ import { ReviewProps } from 'components/review';
 
 import { usePortal } from 'hooks/usePortal';
 
-import { Formik } from 'formik';
 import { Post } from 'types/post';
 
 export interface ClothingProductGrid1Props {
@@ -73,7 +73,6 @@ export const ClothingProductGrid1 = ({ post, render }: ClothingProductGrid1Props
               interestedByClothingSizes: [],
             }}
             validate={() => ({})}
-            onSubmit={() => {}}
           >
             {({ values }) => {
               return (

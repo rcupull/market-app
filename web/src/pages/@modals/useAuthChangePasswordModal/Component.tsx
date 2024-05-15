@@ -1,5 +1,6 @@
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
+import { Formik } from 'components/formik';
 
 import { useAuthChangePassword } from 'features/api/auth/useAuthChangePassword';
 import { useModal } from 'features/modal/useModal';
@@ -7,8 +8,8 @@ import { useModal } from 'features/modal/useModal';
 import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { Portal } from 'hooks/usePortal';
 
-import { Formik } from 'formik';
 import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
+import { getRequiredLabel } from 'utils/form';
 
 export interface ComponentProps {
   portal: Portal;
@@ -35,11 +36,14 @@ export const Component = ({ portal }: ComponentProps) => {
       <div className="mt-10">
         <Formik
           initialValues={{ newPassword: '', newPasswordAgain: '' }}
-          onSubmit={() => {}}
           validate={(values) => {
             return getFormErrors(values, [
               {
                 field: 'newPassword',
+                type: 'required',
+              },
+              {
+                field: 'newPasswordAgain',
                 type: 'required',
               },
               {
@@ -58,14 +62,14 @@ export const Component = ({ portal }: ComponentProps) => {
                   id="email"
                   name="newPassword"
                   type="password"
-                  label="Nueva contraseña"
+                  label={getRequiredLabel('Nueva contraseña')}
                 />
 
                 <FieldInput
                   id="password"
                   name="newPasswordAgain"
                   type="password"
-                  label="Repetir contraseña"
+                  label={getRequiredLabel('Repetir contraseña')}
                   className="mt-6"
                 />
 

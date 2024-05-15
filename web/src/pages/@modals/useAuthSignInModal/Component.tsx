@@ -2,6 +2,7 @@ import { useRef } from 'react';
 
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
+import { Formik } from 'components/formik';
 
 import { useAuth } from 'features/api-slices/useAuth';
 import { useModal } from 'features/modal/useModal';
@@ -13,9 +14,9 @@ import { useRouter } from 'hooks/useRouter';
 
 import { useAuthSignUpModal } from '../useAuthSignUpModal';
 
-import { Formik } from 'formik';
 import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
 import { getAdminRoute, getDashboardRoute } from 'utils/business';
+import { getRequiredLabel } from 'utils/form';
 
 export interface ComponentProps {
   portal: Portal;
@@ -63,7 +64,6 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
       <div className="mt-10">
         <Formik
           initialValues={{ email, password: '' }}
-          onSubmit={() => {}}
           validate={(values) => {
             return getFormErrors(values, [
               {
@@ -112,7 +112,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                   type="email"
                   autoComplete="email"
                   autoFocus
-                  label="Correo Electrónico"
+                  label={getRequiredLabel('Correo Electrónico')}
                   {...emailKeyboard()}
                 />
 
@@ -123,7 +123,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                   type="password"
                   autoComplete="current-password"
                   autoFocus={!!email}
-                  label="Contraseña"
+                  label={getRequiredLabel('Contraseña')}
                   className="mt-6"
                   {...passwordKeyboard({ handleSubmit })}
                 />

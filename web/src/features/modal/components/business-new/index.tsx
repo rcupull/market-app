@@ -5,6 +5,7 @@ import { Button } from 'components/button';
 import { ButtonClose } from 'components/button-close';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInput } from 'components/field-input';
+import { Formik } from 'components/formik';
 import { Modal } from 'components/modal';
 
 import { useAddOneBusiness } from 'features/api/business/useAddOneBusiness';
@@ -20,12 +21,12 @@ import { usePortal } from 'hooks/usePortal';
 
 import { FieldBusinessCategoriesSelect } from './FieldBusinessCategoriesSelect';
 
-import { Formik } from 'formik';
 import { FormRouteName } from 'pages/@common/form-route-name';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useBusinessOnboardingModal } from 'pages/@modals/useBusinessOnboardingModal';
 import { Business } from 'types/business';
 import { getRouteName } from 'utils/business';
+import { getRequiredLabel } from 'utils/form';
 
 export interface BusinessNewProps {
   callAfarResources?: CallAfarResources;
@@ -72,7 +73,6 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
           name: '',
           ...(business || {}),
         }}
-        enableReinitialize
         validate={(values) => {
           return getFormErrors(values, [
             {
@@ -111,7 +111,6 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
             },
           ]);
         }}
-        onSubmit={() => {}}
       >
         {({ errors, values, isValid }) => {
           return (
@@ -120,7 +119,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
                 id="business-name"
                 name="name"
                 autoComplete="business-name"
-                label="Nombre del negocio"
+                label={getRequiredLabel('Nombre del negocio')}
               />
 
               {!routeName && (
@@ -132,7 +131,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
                   />
 
                   <FieldBusinessCategoriesSelect
-                    label="Categorías"
+                    label={getRequiredLabel('Categorías')}
                     className="mt-6"
                     name="categories"
                   />

@@ -73,10 +73,6 @@ export const FieldBusinessCategoriesSelect = (
     });
   }, [JSON.stringify(businessCategoryTree)]);
 
-  if (!businessCategoryTree || !businessCategoryLabels) {
-    return <></>;
-  }
-
   const maxLevel = Math.max(...items.map(({ level }) => level));
   ////////////////////////////////////////////////////////////////////////////////
   const addAllChildrenFrom = (path: string) => {
@@ -104,6 +100,7 @@ export const FieldBusinessCategoriesSelect = (
 
   return (
     <FieldRadioGroup<Option>
+      isBusy={generalBusinessCategories.status.isBusy}
       onOptionClicked={({ value, level }, { selected }) => {
         if (level < maxLevel) {
           (selected ? addAllChildrenFrom : removeAllChildrenFrom)(value);
@@ -111,7 +108,9 @@ export const FieldBusinessCategoriesSelect = (
       }}
       renderOption={({ checked, item }) => {
         const { value } = item;
-        return <FieldCheckbox noUseFormik value={checked} label={businessCategoryLabels[value]} />;
+        return (
+          <FieldCheckbox noUseFormik value={checked} label={businessCategoryLabels?.[value]} />
+        );
       }}
       getOptionCutomStyles={({ level }) => {
         return cn({

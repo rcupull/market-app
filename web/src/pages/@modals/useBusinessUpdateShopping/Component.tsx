@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
+import { Formik } from 'components/formik';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 
@@ -9,7 +10,6 @@ import { Portal } from 'hooks/usePortal';
 
 import { useBusiness } from '../../@hooks/useBusiness';
 
-import { Formik } from 'formik';
 import { isEmpty } from 'utils/general';
 
 interface State {
@@ -40,7 +40,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   const { routeName } = business;
 
   return (
-    <Formik<State> initialValues={initialValues} enableReinitialize onSubmit={() => {}}>
+    <Formik<State> initialValues={initialValues}>
       {({ values, isValid, touched }) => {
         return (
           <form className="w-full">

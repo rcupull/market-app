@@ -1,6 +1,7 @@
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
+import { Formik } from 'components/formik';
 
 import { useAuthForgotPasswordRequest } from 'features/api/auth/useAuthForgotPasswordRequest';
 import { useModal } from 'features/modal/useModal';
@@ -8,8 +9,8 @@ import { useModal } from 'features/modal/useModal';
 import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { Portal } from 'hooks/usePortal';
 
-import { Formik } from 'formik';
 import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
+import { getRequiredLabel } from 'utils/form';
 
 export interface ComponentProps {
   portal: Portal;
@@ -36,16 +37,15 @@ export const Component = ({ portal }: ComponentProps) => {
       <div className="mt-10">
         <Formik
           initialValues={{ email: '' }}
-          onSubmit={() => {}}
           validate={(values) => {
             return getFormErrors(values, [
               {
                 field: 'email',
-                type: 'email',
+                type: 'required',
               },
               {
                 field: 'email',
-                type: 'required',
+                type: 'email',
               },
             ]);
           }}
@@ -53,7 +53,12 @@ export const Component = ({ portal }: ComponentProps) => {
           {({ handleSubmit, isValid, values }) => {
             return (
               <form onSubmit={handleSubmit}>
-                <FieldInput id="email" name="email" type="email" label="Correo electrónico" />
+                <FieldInput
+                  id="email"
+                  name="email"
+                  type="email"
+                  label={getRequiredLabel('Correo electrónico')}
+                />
 
                 {portal.getPortal(
                   <Button

@@ -2,6 +2,7 @@ import { Button } from 'components/button';
 import { FieldCheckEditor } from 'components/field-check-editor';
 import { FieldInput } from 'components/field-input';
 import { FieldToggleButton } from 'components/field-toggle-button';
+import { Formik } from 'components/formik';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useModal } from 'features/modal/useModal';
@@ -10,7 +11,6 @@ import { Portal } from 'hooks/usePortal';
 
 import { useBusiness } from '../../@hooks/useBusiness';
 
-import { Formik } from 'formik';
 import { BusinessAboutUsPage } from 'types/business';
 
 interface State extends BusinessAboutUsPage {}
@@ -39,8 +39,6 @@ export const Component = ({ portal }: ComponentProps) => {
           title: business?.aboutUsPage?.title || '',
           description: business?.aboutUsPage?.description || '',
         }}
-        enableReinitialize
-        onSubmit={() => {}}
       >
         {({ values, isValid }) => {
           return (

@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
+import { Formik } from 'components/formik';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useModal } from 'features/modal/useModal';
@@ -10,8 +11,6 @@ import { FetchOptions } from 'hooks/useFetch';
 import { Portal } from 'hooks/usePortal';
 
 import { useBusiness } from '../../@hooks/useBusiness';
-
-import { Formik } from 'formik';
 
 interface State {
   face: string;
@@ -61,7 +60,7 @@ export const Component = ({ portal, options }: ComponentProps) => {
   };
 
   return (
-    <Formik<State> initialValues={initialValues} enableReinitialize onSubmit={() => {}}>
+    <Formik<State> initialValues={initialValues}>
       {({ values, isValid }) => {
         return (
           <form className="w-full">

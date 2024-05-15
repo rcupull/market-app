@@ -2,6 +2,7 @@ import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldRadioGroup } from 'components/field-radio-group';
+import { Formik } from 'components/formik';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 
@@ -9,7 +10,6 @@ import { Portal } from 'hooks/usePortal';
 
 import { useBusiness } from '../../@hooks/useBusiness';
 
-import { Formik } from 'formik';
 import { Business } from 'types/business';
 import { StyleProps } from 'types/general';
 import { PostFormField } from 'types/post';
@@ -51,8 +51,6 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
         initialValues={{
           postFormFields,
         }}
-        onSubmit={() => {}}
-        enableReinitialize
       >
         {({ values, isValid, touched }) => {
           return (

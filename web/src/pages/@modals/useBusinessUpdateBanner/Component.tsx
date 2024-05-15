@@ -2,6 +2,7 @@ import { Button } from 'components/button';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInputImages } from 'components/field-input-images';
 import { FieldRadioGroup } from 'components/field-radio-group';
+import { Formik } from 'components/formik';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
@@ -10,7 +11,6 @@ import { Portal } from 'hooks/usePortal';
 
 import { useBusiness } from '../../@hooks/useBusiness';
 
-import { Formik } from 'formik';
 import { BannerLayoutType } from 'types/business';
 import { Image, ImageFile } from 'types/general';
 import { getImageEndpoint } from 'utils/api';
@@ -40,8 +40,6 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
         bannerImages: bannerImages || [],
         bannerLayoutType: business?.layouts?.banner?.type || 'none',
       }}
-      onSubmit={() => {}}
-      enableReinitialize
     >
       {({ values, isValid, touched }) => {
         return (
