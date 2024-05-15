@@ -114,6 +114,10 @@ export const frontMiddlware = combineMiddleware(
         .map((noBusinessRoute) => req.url.startsWith(noBusinessRoute))
         .some(Boolean) || req.path === "/";
 
+    logger.info("frontMiddlware");
+    logger.info(isNotBusinessRoute);
+    logger.info(req.url);
+
     if (isNotBusinessRoute) {
       injectDefaultMetaMiddlware(req, res, next);
     } else {
