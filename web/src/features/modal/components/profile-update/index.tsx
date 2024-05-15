@@ -50,7 +50,6 @@ export const ProfileUpdate = ({ userId, callAfarResources }: ProfileUpdateProps)
         profileImages: user?.profileImage ? [user?.profileImage] : [],
         name: user?.name,
       }}
-      validate={() => {}}
     >
       {({ values, isValid }) => {
         return (

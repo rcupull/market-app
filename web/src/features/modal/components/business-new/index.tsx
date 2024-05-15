@@ -16,7 +16,6 @@ import { useModal } from 'features/modal/useModal';
 
 import { CallAfarResources, useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useDebouncer } from 'hooks/useDebouncer';
-import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { usePortal } from 'hooks/usePortal';
 
 import { FieldBusinessCategoriesSelect } from './FieldBusinessCategoriesSelect';
@@ -61,8 +60,6 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
 
   const portal = usePortal();
 
-  const getFormErrors = useGetFormErrors();
-
   const routeValidationErrorMessage = 'Ese nombre de negocio ya existe.';
 
   const newPostForm = (
@@ -73,44 +70,42 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
           name: '',
           ...(business || {}),
         }}
-        validate={(values) => {
-          return getFormErrors(values, [
-            {
-              field: 'categories',
-              type: 'custom',
-              customCb: (val) => {
-                return val.length > 0;
-              },
-              message: 'Debes seleccionar al menos una categoría',
+        validate={[
+          {
+            field: 'categories',
+            type: 'custom',
+            customCb: (val) => {
+              return val.length > 0;
             },
-            {
-              field: 'name',
-              type: 'required',
-            },
-            {
-              field: 'name',
-              type: 'custom',
-              message: routeValidationErrorMessage,
-              customCb: async (name) => {
-                const routeName = getRouteName(name);
-                return new Promise((resolve) => {
-                  debouncer(() => {
-                    getAllBusiness.fetch(
-                      { routeNames: [routeName] },
-                      {
-                        onAfterSuccess: (response) => {
-                          const { data } = response;
-                          const exists = !!data.length;
-                          resolve(!exists);
-                        },
+            message: 'Debes seleccionar al menos una categoría',
+          },
+          {
+            field: 'name',
+            type: 'required',
+          },
+          {
+            field: 'name',
+            type: 'custom',
+            message: routeValidationErrorMessage,
+            customCb: async (name) => {
+              const routeName = getRouteName(name);
+              return new Promise((resolve) => {
+                debouncer(() => {
+                  getAllBusiness.fetch(
+                    { routeNames: [routeName] },
+                    {
+                      onAfterSuccess: (response) => {
+                        const { data } = response;
+                        const exists = !!data.length;
+                        resolve(!exists);
                       },
-                    );
-                  }, 500);
-                });
-              },
+                    },
+                  );
+                }, 500);
+              });
             },
-          ]);
-        }}
+          },
+        ]}
       >
         {({ errors, values, isValid }) => {
           return (

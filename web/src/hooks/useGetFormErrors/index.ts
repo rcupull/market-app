@@ -28,9 +28,13 @@ interface Validation<V extends AnyRecord, F extends keyof V = keyof V> {
   message?: string;
 }
 
+export type FormValidations<V extends AnyRecord, F extends keyof V = keyof V> = Array<
+  Validation<V, F>
+>;
+
 export type GetFormErrors<V extends AnyRecord, F extends keyof V = keyof V> = (
   value: V,
-  validations: Array<Validation<V, F>>,
+  validations: FormValidations<V, F>,
 ) => Promise<Partial<Record<F, string>>>;
 
 export const useGetFormErrors = <V extends AnyRecord, F extends keyof V = keyof V>(): GetFormErrors<

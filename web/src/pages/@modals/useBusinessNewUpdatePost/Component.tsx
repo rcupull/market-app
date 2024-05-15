@@ -19,7 +19,6 @@ import { useAddManyImages } from 'features/api/images/useAddManyImages';
 import { useAddOnePost } from 'features/api/posts/useAddOnePost';
 import { useUpdateOnePost } from 'features/api/posts/useUpdateOnePost';
 
-import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { useMemoizedHash } from 'hooks/useMemoizedHash';
 import { Portal } from 'hooks/usePortal';
 
@@ -91,7 +90,6 @@ export const Component = ({
     }
   };
 
-  const getFormErrors = useGetFormErrors();
   const linkTag = useMemoizedHash();
 
   if (!business) {
@@ -116,20 +114,18 @@ export const Component = ({
         stockAmount: null,
         ...(post || {}),
       }}
-      validate={(values) =>
-        getFormErrors(values, [
-          {
-            field: 'name',
-            type: 'required',
-          },
-          {
-            field: 'postCategoriesTags',
-            type: 'custom',
-            customCb: (value) => value?.length,
-            message: 'Debe seleccionar al menos una categoría',
-          },
-        ])
-      }
+      validate={[
+        {
+          field: 'name',
+          type: 'required',
+        },
+        {
+          field: 'postCategoriesTags',
+          type: 'custom',
+          customCb: (value) => value?.length,
+          message: 'Debe seleccionar al menos una categoría',
+        },
+      ]}
     >
       {({ values, isValid }) => {
         return (
@@ -379,14 +375,12 @@ export const Component = ({
         sectionIds: sections.map((section) => section._id),
         ...(post || {}),
       }}
-      validate={(values) =>
-        getFormErrors(values, [
-          {
-            field: 'name',
-            type: 'required',
-          },
-        ])
-      }
+      validate={[
+        {
+          field: 'name',
+          type: 'required',
+        },
+      ]}
     >
       {({ values, isValid }) => {
         return (

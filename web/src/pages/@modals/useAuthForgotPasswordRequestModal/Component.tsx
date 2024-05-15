@@ -6,7 +6,6 @@ import { Formik } from 'components/formik';
 import { useAuthForgotPasswordRequest } from 'features/api/auth/useAuthForgotPasswordRequest';
 import { useModal } from 'features/modal/useModal';
 
-import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { Portal } from 'hooks/usePortal';
 
 import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
@@ -19,8 +18,6 @@ export interface ComponentProps {
 export const Component = ({ portal }: ComponentProps) => {
   const { onClose, pushModal } = useModal();
   const { authForgotPasswordRequest } = useAuthForgotPasswordRequest();
-
-  const getFormErrors = useGetFormErrors();
 
   return (
     <div className="flex min-h-full flex-col justify-center">
@@ -37,18 +34,16 @@ export const Component = ({ portal }: ComponentProps) => {
       <div className="mt-10">
         <Formik
           initialValues={{ email: '' }}
-          validate={(values) => {
-            return getFormErrors(values, [
-              {
-                field: 'email',
-                type: 'required',
-              },
-              {
-                field: 'email',
-                type: 'email',
-              },
-            ]);
-          }}
+          validate={[
+            {
+              field: 'email',
+              type: 'required',
+            },
+            {
+              field: 'email',
+              type: 'email',
+            },
+          ]}
         >
           {({ handleSubmit, isValid, values }) => {
             return (

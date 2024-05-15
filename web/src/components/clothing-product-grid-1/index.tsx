@@ -72,7 +72,6 @@ export const ClothingProductGrid1 = ({ post, render }: ClothingProductGrid1Props
               interestedByColors: [],
               interestedByClothingSizes: [],
             }}
-            validate={() => ({})}
           >
             {({ values }) => {
               return (

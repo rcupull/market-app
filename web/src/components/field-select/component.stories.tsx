@@ -118,27 +118,27 @@ export const Label = (): JSX.Element => (
   </FormikWrapper>
 );
 
-export const Error = (): JSX.Element => (
-  <FormikWrapper errors={{ field: 'invalid field' }}>
-    <FieldSelect<Person>
-      items={people}
-      label="Label"
-      name="field"
-      renderOption={({ avatar, name }) => (
-        <>
-          <img src={avatar} alt="" className="h-5 w-5 flex-shrink-0 rounded-full" />
-          <span className="ml-3">{name}</span>
-        </>
-      )}
-      renderValue={({ avatar, name }) => (
-        <>
-          <img src={avatar} alt="" className="h-5 w-5 flex-shrink-0 rounded-full" />
-          <span className="ml-3">{name}</span>
-        </>
-      )}
-    />
-  </FormikWrapper>
-);
+// export const Error = (): JSX.Element => (
+//   <FormikWrapper errors={{ field: 'invalid field' }}>
+//     <FieldSelect<Person>
+//       items={people}
+//       label="Label"
+//       name="field"
+//       renderOption={({ avatar, name }) => (
+//         <>
+//           <img src={avatar} alt="" className="h-5 w-5 flex-shrink-0 rounded-full" />
+//           <span className="ml-3">{name}</span>
+//         </>
+//       )}
+//       renderValue={({ avatar, name }) => (
+//         <>
+//           <img src={avatar} alt="" className="h-5 w-5 flex-shrink-0 rounded-full" />
+//           <span className="ml-3">{name}</span>
+//         </>
+//       )}
+//     />
+//   </FormikWrapper>
+// );
 
 // export const Label = (): JSX.Element => {
 //   const [value, setValue] = useState<Person>();

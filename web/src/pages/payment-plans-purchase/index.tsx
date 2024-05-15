@@ -6,7 +6,7 @@ export const PaymentPlansPurchase = () => {
   // const { onCallAfar } = useCallFromAfar();
   // const submitBtnPortal = usePortal();
 
-  // const getFormErrors = useGetFormErrors();
+  //
 
   // if (!type) {
   //   return <Navigate to="/payment-plans" />;

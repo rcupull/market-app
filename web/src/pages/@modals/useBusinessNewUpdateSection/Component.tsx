@@ -13,7 +13,6 @@ import { Formik } from 'components/formik';
 import { useAddBusinessSection } from 'features/api/business/useAddBusinessSection';
 import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusinessSection';
 
-import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { Portal } from 'hooks/usePortal';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
@@ -46,8 +45,6 @@ export const Component = ({
   const { updateBusinessSection } = useUpdateBusinessSection();
   const { addBusinessSection } = useAddBusinessSection();
 
-  const getFormErrors = useGetFormErrors();
-
   const postForm = (
     <Formik<State>
       initialValues={{
@@ -63,14 +60,12 @@ export const Component = ({
       initialTouched={{
         name: true,
       }}
-      validate={(values) => {
-        return getFormErrors(values, [
-          {
-            field: 'name',
-            type: 'required',
-          },
-        ]);
-      }}
+      validate={[
+        {
+          field: 'name',
+          type: 'required',
+        },
+      ]}
     >
       {({ values, isValid }) => {
         return (
@@ -235,14 +230,12 @@ export const Component = ({
       initialTouched={{
         name: true,
       }}
-      validate={(values) => {
-        return getFormErrors(values, [
-          {
-            field: 'name',
-            type: 'required',
-          },
-        ]);
-      }}
+      validate={[
+        {
+          field: 'name',
+          type: 'required',
+        },
+      ]}
     >
       {({ values, isValid }) => {
         return (

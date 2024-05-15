@@ -5,7 +5,6 @@ import { Formik } from 'components/formik';
 import { useAuthChangePassword } from 'features/api/auth/useAuthChangePassword';
 import { useModal } from 'features/modal/useModal';
 
-import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { Portal } from 'hooks/usePortal';
 
 import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
@@ -18,8 +17,6 @@ export interface ComponentProps {
 export const Component = ({ portal }: ComponentProps) => {
   const { onClose } = useModal();
   const { authChangePassword } = useAuthChangePassword();
-
-  const getFormErrors = useGetFormErrors();
 
   return (
     <div className="flex min-h-full flex-col justify-center">
@@ -36,24 +33,22 @@ export const Component = ({ portal }: ComponentProps) => {
       <div className="mt-10">
         <Formik
           initialValues={{ newPassword: '', newPasswordAgain: '' }}
-          validate={(values) => {
-            return getFormErrors(values, [
-              {
-                field: 'newPassword',
-                type: 'required',
-              },
-              {
-                field: 'newPasswordAgain',
-                type: 'required',
-              },
-              {
-                field: 'newPasswordAgain',
-                type: 'equal',
-                equalField: 'newPassword',
-                message: 'Las dos contraseña deben ser iguales',
-              },
-            ]);
-          }}
+          validate={[
+            {
+              field: 'newPassword',
+              type: 'required',
+            },
+            {
+              field: 'newPasswordAgain',
+              type: 'required',
+            },
+            {
+              field: 'newPasswordAgain',
+              type: 'equal',
+              equalField: 'newPassword',
+              message: 'Las dos contraseña deben ser iguales',
+            },
+          ]}
         >
           {({ handleSubmit, isValid, values }) => {
             return (

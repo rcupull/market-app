@@ -18,8 +18,8 @@ export const Label = (): JSX.Element => (
   </FormikWrapper>
 );
 
-export const Error = (): JSX.Element => (
-  <FormikWrapper errors={{ field: 'invalid field' }}>
-    <FieldTextArea name="field" label="Nombre" />
-  </FormikWrapper>
-);
+// export const Error = (): JSX.Element => (
+//   <FormikWrapper errors={{ field: 'invalid field' }}>
+//     <FieldTextArea name="field" label="Nombre" />
+//   </FormikWrapper>
+// );

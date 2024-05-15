@@ -12,7 +12,6 @@ import { IconButtonShowHide } from 'components/icon-button-show-hide';
 import { useUpdateBusinessPostCategories } from 'features/api/business/useUpdateBusinessPostCategories';
 import { useModal } from 'features/modal/useModal';
 
-import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { Portal, usePortal } from 'hooks/usePortal';
 
 import { useBusiness } from '../../@hooks/useBusiness';
@@ -43,8 +42,6 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
 
   const { pushModal } = useModal();
 
-  const getFormErrors = useGetFormErrors();
-
   if (!routeName) {
     return <></>;
   }
@@ -56,22 +53,20 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
           initialValues={{
             label: '',
           }}
-          validate={(values) => {
-            return getFormErrors(values, [
-              {
-                field: 'label',
-                type: 'required',
+          validate={[
+            {
+              field: 'label',
+              type: 'required',
+            },
+            {
+              field: 'label',
+              type: 'custom',
+              message: 'Esa categoría ya existe.',
+              customCb: (label) => {
+                return !state.map(({ label }) => label).includes(label);
               },
-              {
-                field: 'label',
-                type: 'custom',
-                message: 'Esa categoría ya existe.',
-                customCb: (label) => {
-                  return !state.map(({ label }) => label).includes(label);
-                },
-              },
-            ]);
-          }}
+            },
+          ]}
         >
           {({ values, isValid, resetForm }) => {
             const handleAdd = () => {

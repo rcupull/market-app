@@ -6,7 +6,6 @@ import { Formik } from 'components/formik';
 
 import { useAuthForgotPasswordValidate } from 'features/api/auth/useAuthForgotPasswordValidate';
 
-import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { usePortal } from 'hooks/usePortal';
 import { useRouter } from 'hooks/useRouter';
 
@@ -23,8 +22,6 @@ export const ForgotPassword = () => {
 
   const [email, setEmail] = useState<string>();
   const portal = usePortal();
-
-  const getFormErrors = useGetFormErrors();
 
   const sucessContent = (
     <>
@@ -57,20 +54,18 @@ export const ForgotPassword = () => {
       <div className="mt-10 w-full">
         <Formik
           initialValues={{ newPassword: '', newPasswordAgain: '' }}
-          validate={(values) => {
-            return getFormErrors(values, [
-              {
-                field: 'newPassword',
-                type: 'required',
-              },
-              {
-                field: 'newPasswordAgain',
-                type: 'equal',
-                equalField: 'newPassword',
-                message: 'Las dos contraseña deben ser iguales',
-              },
-            ]);
-          }}
+          validate={[
+            {
+              field: 'newPassword',
+              type: 'required',
+            },
+            {
+              field: 'newPasswordAgain',
+              type: 'equal',
+              equalField: 'newPassword',
+              message: 'Las dos contraseña deben ser iguales',
+            },
+          ]}
         >
           {({ handleSubmit, isValid, values }) => {
             return (

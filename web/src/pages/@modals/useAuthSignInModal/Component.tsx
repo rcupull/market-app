@@ -7,7 +7,6 @@ import { Formik } from 'components/formik';
 import { useAuth } from 'features/api-slices/useAuth';
 import { useModal } from 'features/modal/useModal';
 
-import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { useKeyBoard } from 'hooks/useKeyBoard';
 import { Portal } from 'hooks/usePortal';
 import { useRouter } from 'hooks/useRouter';
@@ -29,8 +28,6 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
   const { pushRoute } = useRouter();
   const { onClose } = useModal();
   const authSignUpModal = useAuthSignUpModal();
-
-  const getFormErrors = useGetFormErrors();
 
   const refPassword = useRef<HTMLInputElement>(null);
 
@@ -64,22 +61,20 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
       <div className="mt-10">
         <Formik
           initialValues={{ email, password: '' }}
-          validate={(values) => {
-            return getFormErrors(values, [
-              {
-                field: 'email',
-                type: 'required',
-              },
-              {
-                field: 'email',
-                type: 'email',
-              },
-              {
-                field: 'password',
-                type: 'required',
-              },
-            ]);
-          }}
+          validate={[
+            {
+              field: 'email',
+              type: 'required',
+            },
+            {
+              field: 'email',
+              type: 'email',
+            },
+            {
+              field: 'password',
+              type: 'required',
+            },
+          ]}
         >
           {({ isValid, values }) => {
             const handleSubmit = () => {

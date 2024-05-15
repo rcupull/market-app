@@ -7,7 +7,6 @@ import { Formik } from 'components/formik';
 import { useAuthSignUp } from 'features/api/auth/useAuthSignUp';
 import { useModal } from 'features/modal/useModal';
 
-import { useGetFormErrors } from 'hooks/useGetFormErrors';
 import { Portal } from 'hooks/usePortal';
 
 import { useAuthSignInModal } from '../useAuthSignInModal';
@@ -22,8 +21,6 @@ export const Component = ({ portal }: ComponentProps) => {
   const { authSignUp } = useAuthSignUp();
   const authSignInModal = useAuthSignInModal();
   const { onClose, pushModal } = useModal();
-
-  const getFormErrors = useGetFormErrors();
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-2 lg:px-8">
@@ -45,31 +42,29 @@ export const Component = ({ portal }: ComponentProps) => {
             name: '',
             canCreateBusiness: false,
           }}
-          validate={(values) => {
-            return getFormErrors(values, [
-              {
-                field: 'email',
-                type: 'required',
-              },
-              {
-                field: 'email',
-                type: 'email',
-              },
-              {
-                field: 'password',
-                type: 'required',
-              },
-              {
-                field: 'name',
-                type: 'required',
-              },
-              {
-                field: 'confirmPassword',
-                type: 'equal',
-                equalField: 'password',
-              },
-            ]);
-          }}
+          validate={[
+            {
+              field: 'email',
+              type: 'required',
+            },
+            {
+              field: 'email',
+              type: 'email',
+            },
+            {
+              field: 'password',
+              type: 'required',
+            },
+            {
+              field: 'name',
+              type: 'required',
+            },
+            {
+              field: 'confirmPassword',
+              type: 'equal',
+              equalField: 'password',
+            },
+          ]}
         >
           {({ handleSubmit, isValid, values, setErrors, errors }) => {
             return (

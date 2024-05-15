@@ -18,11 +18,11 @@ export const Label = (): JSX.Element => (
   </FormikWrapper>
 );
 
-export const Error = (): JSX.Element => (
-  <FormikWrapper errors={{ field: 'invalid field' }}>
-    <FieldClothingSizeSelect name="field" label="Sizes" />
-  </FormikWrapper>
-);
+// export const Error = (): JSX.Element => (
+//   <FormikWrapper errors={{ field: 'invalid field' }}>
+//     <FieldClothingSizeSelect name="field" label="Sizes" />
+//   </FormikWrapper>
+// );
 
 export const CustomItems = (): JSX.Element => (
   <FormikWrapper>
