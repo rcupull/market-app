@@ -76,7 +76,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
             },
           ]}
         >
-          {({ isValid, values }) => {
+          {({ isValid, values, setErrors }) => {
             const handleSubmit = () => {
               if (!isValid) return;
 
@@ -95,6 +95,12 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                     }
 
                     onClose();
+                  },
+                  onAfterFailed: () => {
+                    setErrors({
+                      email: 'Email o contraseña incorrecta',
+                      password: 'Email o contraseña incorrecta',
+                    });
                   },
                 },
               );
