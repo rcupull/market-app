@@ -18,7 +18,7 @@ export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => 
   return (
     <div
       onClick={onClick}
-      className={cn('w-[35rem] p-3', {
+      className={cn('p-3', {
         'cursor-pointer': onClick,
       })}
     >
@@ -56,7 +56,7 @@ export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => 
               </div>
               <span className="text-wrap max-w-48 flex-grow">{name}</span>
 
-              <span>{`${count} ${count === 1 ? 'artículo' : 'artículos'}`}</span>
+              <span>{`${count} ${count === 1 ? 'unidad' : 'unidades'}`}</span>
 
               <span>{`${price} ${currency}`}</span>
             </div>
@@ -64,8 +64,8 @@ export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => 
         })}
 
         <div className="flex justify-end gap-4">
-          <LabelValuePair label="Total" value={`${totalProducts}`} />
-          <LabelValuePair label="Precio" value={`${totalPrice} CUP`} />
+          <LabelValuePair label="Total" value={` ${totalProducts} ${totalProducts === 1 ? 'unidad' : 'unidades'}`} />
+          <LabelValuePair label="Precio" value={` ${totalPrice} CUP`} />
         </div>
       </div>
     </div>

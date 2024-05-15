@@ -10,7 +10,7 @@ import { getWhatsAppShoppingLink } from 'utils/business';
 
 export interface WhatsAppMessageProps extends StepCommonProps {}
 
-export const WhatsAppMessage = ({ backButton }: WhatsAppMessageProps) => {
+export const WhatsAppMessage = ({ backButton, finishButton }: WhatsAppMessageProps) => {
   const { business } = useBusiness();
   const { lastShopping } = useShopping();
 
@@ -38,7 +38,7 @@ export const WhatsAppMessage = ({ backButton }: WhatsAppMessageProps) => {
         <QrCode value={whatsappLink} className="w-60 h-60 mt-2" />
       </div>
 
-      <ButtonNavContainer leftButton={backButton} />
+      <ButtonNavContainer leftButton={backButton}  rightButton={finishButton}/>
     </>
   );
 };

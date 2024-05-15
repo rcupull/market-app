@@ -1,4 +1,5 @@
-export interface StepCommonProps {
-  backButton: React.ReactElement;
-  nextButton: React.ReactElement;
+import { StepProps } from 'components/stepper';
+
+export interface StepCommonProps extends StepProps {
+  finishButton: React.ReactElement;
 }
