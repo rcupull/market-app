@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { useAuth } from 'features/api-slices/useAuth';
 
+import { useBusiness } from 'pages/@hooks/useBusiness';
 import { dynamic } from 'utils/makeLazy';
 
 const Business = dynamic(() =>
@@ -18,6 +20,14 @@ const Settings = dynamic(() =>
 
 export const Dashboard = () => {
   const { isUser } = useAuth();
+
+  const businessOwnerData = useBusiness();
+  
+  useEffect(() => {
+    return () => {
+      businessOwnerData.onReset();
+    };
+  }, []);
 
   if (!isUser) {
     return <Navigate to="/" />;
