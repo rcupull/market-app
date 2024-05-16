@@ -64,7 +64,10 @@ export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => 
         })}
 
         <div className="flex justify-end gap-4">
-          <LabelValuePair label="Total" value={` ${totalProducts} ${totalProducts === 1 ? 'unidad' : 'unidades'}`} />
+          <LabelValuePair
+            label="Total"
+            value={` ${totalProducts} ${totalProducts === 1 ? 'unidad' : 'unidades'}`}
+          />
           <LabelValuePair label="Precio" value={` ${totalPrice} CUP`} />
         </div>
       </div>

@@ -39,6 +39,20 @@ const ShoppingSchema = new Schema<Shopping>({
     enum: ["CONSTRUCTION", "REQUESTED", "DELIVERED", "CANCELED"],
     required: true,
   },
+  history: {
+    type: [
+      {
+        state: {
+          type: String,
+          enum: ["CONSTRUCTION", "REQUESTED", "DELIVERED", "CANCELED"],
+          required: true,
+        },
+        lastUpdatedDate: {
+          type: Date,
+        },
+      },
+    ],
+  },
 });
 
 export const ShoppingModel = model<Shopping>(

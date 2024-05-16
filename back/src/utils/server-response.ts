@@ -98,3 +98,7 @@ export const getBusinessNotFoundResponse = ({ res }: { res: Response }) => {
 export const getSessionNotFoundResponse = ({ res }: { res: Response }) => {
   return get404Response({ res, json: { message: "Session not found" } });
 };
+
+export const getShoppingNotFoundResponse = ({ res }: { res: Response }) => {
+  return get404Response({ res, json: { message: "Shopping not found" } });
+};

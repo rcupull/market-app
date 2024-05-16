@@ -4,6 +4,7 @@ import { ServerResponse } from "http";
 import {
   getBusinessNotFoundResponse,
   getPostNotFoundResponse,
+  getShoppingNotFoundResponse,
   getUserNotFoundResponse,
 } from "../../utils/server-response";
 import { shoppingServices } from "./services";
@@ -14,6 +15,7 @@ import { businessServices } from "../business/services";
 import { computePay } from "./utils";
 import { logger } from "../logger";
 import { PostPurshaseNotes } from "../../types/post";
+import { ShoppingModel } from "../../schemas/shopping";
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -262,6 +264,52 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
   };
 };
 
+const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const user = req.user;
+
+      if (!user) {
+        return getUserNotFoundResponse({ res });
+      }
+
+      const { params, body } = req;
+
+      const { shoppingId } = params;
+      const { state } = body;
+
+      const currentOrder = await ShoppingModel.findOne({
+        _id: shoppingId,
+        purchaserId: user._id,
+      });
+
+      if (!currentOrder) {
+        return getShoppingNotFoundResponse({ res });
+      }
+
+      if (currentOrder?.history) {
+        currentOrder.history.push({
+          state: currentOrder.state,
+          lastUpdatedDate: new Date(),
+        });
+      } else {
+        currentOrder.history = [
+          {
+            state: currentOrder.state,
+            lastUpdatedDate: new Date(),
+          },
+        ];
+      }
+
+      currentOrder.state = state;
+
+      await currentOrder.save();
+
+      res.send({});
+    });
+  };
+};
+
 const delete_shopping: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
@@ -424,6 +472,7 @@ export const shoppingHandles = {
   delete_shopping,
   get_shopping_shoppingId,
   post_shopping_shoppingId_make_order,
+  post_shopping_shoppingId_change_state,
   //
   get_shopping_owner,
 };

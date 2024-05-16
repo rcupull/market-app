@@ -41,7 +41,11 @@ export const TableAll = () => {
             nodes: [
               <RowActions key="RowActions" rowData={rowData} />,
               purchaserName,
-              <ShoppingStateView key="ShoppingState" shopping={rowData} />,
+              <ShoppingStateView
+                key="ShoppingState"
+                shopping={rowData}
+                onAfterSuccess={() => onRefresh()}
+              />,
               getDateString({ date: createdAt, showTime: true }),
             ],
           };

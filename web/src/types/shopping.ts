@@ -13,4 +13,8 @@ export interface Shopping extends BaseIdentity {
   purchaserName: string;
   routeName: string;
   state: ShoppingState;
+  history?: Array<{
+    state: ShoppingState;
+    lastUpdatedDate: string;
+  }>;
 }

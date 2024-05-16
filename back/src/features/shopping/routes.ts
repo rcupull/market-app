@@ -62,3 +62,13 @@ router
     isLogged,
     shoppingHandles.post_shopping_shoppingId_make_order()
   );
+
+router
+  .route("/shopping/:shoppingId/changeState")
+  .post(
+    validators.param("shoppingId").notEmpty(),
+    validators.body("state").notEmpty(),
+    validators.handle,
+    isLogged,
+    shoppingHandles.post_shopping_shoppingId_change_state()
+  );

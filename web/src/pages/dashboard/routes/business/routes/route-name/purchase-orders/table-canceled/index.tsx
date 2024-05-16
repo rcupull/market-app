@@ -45,7 +45,11 @@ export const TableCanceled = () => {
             nodes: [
               <RowActions key="RowActions" rowData={rowData} />,
               purchaserName,
-              <ShoppingStateView key="ShoppingState" shopping={rowData} />,
+              <ShoppingStateView
+                key="ShoppingState"
+                shopping={rowData}
+                onAfterSuccess={() => onRefresh()}
+              />,
               totalProducts,
               <span key="price" className="text-nowrap">{`${totalPrice} CUP`}</span>,
               getDateString({ date: createdAt, showTime: true }),

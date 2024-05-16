@@ -20,4 +20,8 @@ export interface Shopping extends BaseIdentity {
   //
   routeName: string;
   state: ShoppingState;
+  history?: Array<{
+    state: ShoppingState;
+    lastUpdatedDate: Date;
+  }>;
 }

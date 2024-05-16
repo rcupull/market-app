@@ -8,7 +8,7 @@ import { ShoppingCart } from './sub-components/shooping-cart';
 import { WhatsAppMessage } from './sub-components/whatsApp-message';
 
 export const Component = () => {
-  const {onClose} = useModal()
+  const { onClose } = useModal();
 
   const finishButton = (
     <Button
@@ -27,15 +27,15 @@ export const Component = () => {
         items={[
           {
             label: 'Productos',
-            render: (props)=><ShoppingCart {...props} finishButton={finishButton}/>,
+            render: (props) => <ShoppingCart {...props} finishButton={finishButton} />,
           },
           {
             label: 'Crear orden de compra',
-            render: (props)=><PurchaseOrder {...props} finishButton={finishButton}/>,
+            render: (props) => <PurchaseOrder {...props} finishButton={finishButton} />,
           },
           {
             label: 'Contactar con el vendedor',
-            render: (props)=><WhatsAppMessage {...props} finishButton={finishButton}/>,
+            render: (props) => <WhatsAppMessage {...props} finishButton={finishButton} />,
           },
         ]}
       />

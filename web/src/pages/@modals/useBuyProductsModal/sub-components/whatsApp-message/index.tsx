@@ -38,7 +38,7 @@ export const WhatsAppMessage = ({ backButton, finishButton }: WhatsAppMessagePro
         <QrCode value={whatsappLink} className="w-60 h-60 mt-2" />
       </div>
 
-      <ButtonNavContainer leftButton={backButton}  rightButton={finishButton}/>
+      <ButtonNavContainer leftButton={backButton} rightButton={finishButton} />
     </>
   );
 };
