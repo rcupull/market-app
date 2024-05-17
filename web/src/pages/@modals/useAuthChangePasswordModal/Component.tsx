@@ -9,6 +9,7 @@ import { Portal } from 'hooks/usePortal';
 
 import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
 import { getRequiredLabel } from 'utils/form';
+import { getStrongPasswordTracking } from 'utils/password';
 
 export interface ComponentProps {
   portal: Portal;
@@ -39,6 +40,12 @@ export const Component = ({ portal }: ComponentProps) => {
               type: 'required',
             },
             {
+              field: 'newPassword',
+              type: 'custom',
+              customCb: (value) => getStrongPasswordTracking(value).valid,
+              message: 'Contraseña inválida',
+            },
+            {
               field: 'newPasswordAgain',
               type: 'required',
             },
@@ -59,6 +66,10 @@ export const Component = ({ portal }: ComponentProps) => {
                   type="password"
                   label={getRequiredLabel('Nueva contraseña')}
                 />
+
+                <div className="mt-3">
+                  {getStrongPasswordTracking(values.newPassword).trackingNode}
+                </div>
 
                 <FieldInput
                   id="password"

@@ -51,12 +51,17 @@ export const useGetFormErrors = <V extends AnyRecord, F extends keyof V = keyof 
       const { field, type, message, equalField, customCb } = validation;
 
       if (errors[field]) return; //return if has error
-      if (refValues.current?.[field] === value[field]) {
-        errors[field] = refErrors.current?.[field]; // return de same error if has not change the value
-        return;
-      }
 
       const fieldValue = value[field];
+
+      if (type !== 'equal' && refValues.current?.[field] === fieldValue) {
+        /**
+         * // return de same error if has not change the value
+         * if type = 'equal' the validation depends of two values. It is necessary ignore this rule
+         */
+        errors[field] = refErrors.current?.[field];
+        return;
+      }
 
       if (type === 'required' && !validationsCallback.required(fieldValue)) {
         errors[field] = message || `Campo requerido.`;

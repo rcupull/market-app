@@ -22,7 +22,7 @@ export const Dashboard = () => {
   const { isUser } = useAuth();
 
   const businessOwnerData = useBusiness();
-  
+
   useEffect(() => {
     return () => {
       businessOwnerData.onReset();

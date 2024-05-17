@@ -13,6 +13,7 @@ import { useAuthSignInModal } from '../useAuthSignInModal';
 
 import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
 import { getRequiredLabel } from 'utils/form';
+import { getStrongPasswordTracking } from 'utils/password';
 
 export interface ComponentProps {
   portal: Portal;
@@ -55,6 +56,12 @@ export const Component = ({ portal }: ComponentProps) => {
             {
               field: 'password',
               type: 'required',
+            },
+            {
+              field: 'password',
+              type: 'custom',
+              customCb: (value) => getStrongPasswordTracking(value).valid,
+              message: 'Contraseña inválida',
             },
             {
               field: 'name',
@@ -100,6 +107,10 @@ export const Component = ({ portal }: ComponentProps) => {
                     label={getRequiredLabel('Contraseña')}
                     className="mt-6"
                   />
+
+                  <div className="mt-3">
+                    {getStrongPasswordTracking(values.password).trackingNode}
+                  </div>
                 </div>
 
                 <FieldInput

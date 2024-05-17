@@ -13,6 +13,7 @@ import SvgCheckCircle from 'icons/CheckCircle';
 import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { getRequiredLabel } from 'utils/form';
+import { getStrongPasswordTracking } from 'utils/password';
 
 export const ForgotPassword = () => {
   const { params } = useRouter();
@@ -61,6 +62,12 @@ export const ForgotPassword = () => {
               type: 'required',
             },
             {
+              field: 'newPassword',
+              type: 'custom',
+              customCb: (value) => getStrongPasswordTracking(value).valid,
+              message: 'Contraseña inválida',
+            },
+            {
               field: 'newPasswordAgain',
               type: 'required',
             },
@@ -76,14 +83,16 @@ export const ForgotPassword = () => {
             return (
               <form>
                 <FieldInput
-                  id="email"
                   name="newPassword"
                   type="password"
                   label={getRequiredLabel('Nueva contraseña')}
                 />
 
+                <div className="mt-3">
+                  {getStrongPasswordTracking(values.newPassword).trackingNode}
+                </div>
+
                 <FieldInput
-                  id="email"
                   name="newPasswordAgain"
                   type="password"
                   label={getRequiredLabel('Repetir contraseña')}
@@ -116,7 +125,7 @@ export const ForgotPassword = () => {
             );
           }}
         </Formik>
-        <div ref={portal.ref} />,
+        <div ref={portal.ref} />
       </div>
     </>
   );
