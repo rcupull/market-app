@@ -24,21 +24,21 @@ export const Price = () => {
 
           <li className="my-2">
             Una vez agotado el crédito inicial, siendo previamente informado 7 dias antes, el
-            propietario debe comprar los créditos que necesite para mantener la puesta en linea de
+            propietario debe comprar los créditos que necesite para mantener la puesta en línea de
             sus nogocios.
           </li>
 
           <li className="my-2">
-            Cada propietario será el responsable de tener sus productos actualizados para minimizar
-            el número de órdenes de compra que sean concretadas como ventas. Para apoyar este
-            proceso Asere Market posee un sistema de control de disponibilidad en almacén que el
-            propietario puede habilitar en sus productos.
+            Cada propietario será el responsable de actualizar sus productos para minimizar el
+            número de órdenes de compra que <span className='font-bold'>no</span> sean concretadas como ventas teniendo el apoyo del
+            sistema de control de disponibilidad en almacén que el propietario puede habilitar en
+            sus productos.
           </li>
 
           <li className="my-2">
             El sistema se resposabiliza de “bannar” a los usuario que reiteradamente generen órdenes
             de compra y no efectuen ventas satisfactorias protegiendo asi el flujo de ventas de cada
-            negocio
+            negocio.
           </li>
         </ol>
       </HtmlTextContainer>
