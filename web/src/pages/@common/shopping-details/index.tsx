@@ -18,7 +18,7 @@ export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => 
   return (
     <div
       onClick={onClick}
-      className={cn('p-3', {
+      className={cn('w-full p-3', {
         'cursor-pointer': onClick,
       })}
     >

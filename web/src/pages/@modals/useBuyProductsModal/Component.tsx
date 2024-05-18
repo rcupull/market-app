@@ -3,12 +3,19 @@ import { Stepper } from 'components/stepper';
 
 import { useModal } from 'features/modal/useModal';
 
+import { useRouter } from 'hooks/useRouter';
+
 import { PurchaseOrder } from './sub-components/purchase-order';
+import { PurchaseOrderSuccess } from './sub-components/purchase-order-success';
 import { ShoppingCart } from './sub-components/shooping-cart';
-import { WhatsAppMessage } from './sub-components/whatsApp-message';
+
+import { useBusiness } from 'pages/@hooks/useBusiness';
+import { getBusinessRoute } from 'utils/business';
 
 export const Component = () => {
   const { onClose } = useModal();
+  const { business } = useBusiness();
+  const { pushRoute } = useRouter();
 
   const finishButton = (
     <Button
@@ -16,7 +23,7 @@ export const Component = () => {
       label="Finalizar"
       onClick={() => {
         onClose();
-        // business && pushRoute(getBusinessRoute({ routeName: business.routeName }));
+        business && pushRoute(getBusinessRoute({ routeName: business.routeName }));
       }}
     />
   );
@@ -34,8 +41,8 @@ export const Component = () => {
             render: (props) => <PurchaseOrder {...props} finishButton={finishButton} />,
           },
           {
-            label: 'Contactar con el vendedor',
-            render: (props) => <WhatsAppMessage {...props} finishButton={finishButton} />,
+            label: 'Orden de compra creada',
+            render: (props) => <PurchaseOrderSuccess {...props} finishButton={finishButton} />,
           },
         ]}
       />
