@@ -1,5 +1,4 @@
 import { Badge } from 'components/badge';
-import { ButtonClose } from 'components/button-close';
 
 import { useModal } from 'features/modal/useModal';
 
@@ -24,7 +23,6 @@ export const useBuyProductsModal = () => {
             return {
               badge: <Badge variant="cart" />,
               content: <Component />,
-              customBtn: <ButtonClose className="ml-auto" />,
               className: '!min-w-[50rem]',
             };
           },

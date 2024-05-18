@@ -8,6 +8,7 @@ export const secretRefreshToken = appConfig.secretRefreshToken;
 export const appAssetsDir = appConfig.appAssetsDir;
 export const appFrontDir = appConfig.appFrontDir;
 export const hostname = appConfig.hostname;
+export const enabledWhatsapp = appConfig.enabledWhatsapp;
 
 export const getAssetsDir = () => {
   return join(process.cwd(), appAssetsDir);

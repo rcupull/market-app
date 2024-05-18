@@ -5,8 +5,15 @@ import { app } from "./server";
 import fs from "fs";
 import https from "https";
 import http from "http";
+import { whatsappServices } from "./features/whatsapp";
+import { enabledWhatsapp } from "./config";
 
 connectDB();
+
+if (enabledWhatsapp) {
+  whatsappServices.init();
+}
+
 notificationsServices.init();
 
 if (process.env.NODE_ENV === "production") {

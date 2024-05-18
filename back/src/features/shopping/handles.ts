@@ -16,6 +16,8 @@ import { computePay } from "./utils";
 import { logger } from "../logger";
 import { PostPurshaseNotes } from "../../types/post";
 import { ShoppingModel } from "../../schemas/shopping";
+import { whatsappServices } from "../whatsapp";
+import { Business } from "../../types/business";
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -219,11 +221,13 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
       if (order instanceof ServerResponse) return order;
 
       if (!order) {
-        logger.info("It is weird, maybe there is a bug");
+        logger.error("It is weird, maybe there is a bug");
         return res.send({});
       }
 
-      const business = await businessServices.findOne({
+      const business:
+        | Pick<Business, "shoppingPayment" | "whatsAppPhoneNumber" | "name">
+        | ServerResponse = await businessServices.findOne({
         res,
         req,
         query: {
@@ -231,11 +235,16 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
         },
         projection: {
           shoppingPayment: 1,
+          whatsAppPhoneNumber: 1,
+          name: 1,
         },
       });
 
       if (business instanceof ServerResponse) return business;
 
+      /**
+       * compute payment and reduce de credit with this product
+       */
       const { fromCredit, toPay, newCredit } = computePay({
         currentCredit: business.shoppingPayment.credit,
         order,
@@ -258,6 +267,19 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
           },
         },
       });
+
+      /**
+       * send whatsapp message
+       */
+
+      if (business.whatsAppPhoneNumber) {
+        whatsappServices.sendMessage(
+          business.whatsAppPhoneNumber,
+          `Una nueva orden de compra ha sido solicitada en su negocio "${business.name}" de nuestra plataforma Asere Market. Puede ver los detalles en la sección de órdenes de compras.`
+        );
+      } else {
+        logger.warn("Whatsapp phone number not found");
+      }
 
       res.send({});
     });
