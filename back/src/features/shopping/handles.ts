@@ -16,7 +16,6 @@ import { computePay } from "./utils";
 import { logger } from "../logger";
 import { PostPurshaseNotes } from "../../types/post";
 import { ShoppingModel } from "../../schemas/shopping";
-import { whatsappServices } from "../whatsapp";
 import { Business } from "../../types/business";
 
 const get_shopping: () => RequestHandler = () => {
@@ -272,14 +271,14 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
        * send whatsapp message
        */
 
-      if (business.whatsAppPhoneNumber) {
-        whatsappServices.sendMessage(
-          business.whatsAppPhoneNumber,
-          `Una nueva orden de compra ha sido solicitada en su negocio "${business.name}" de nuestra plataforma Asere Market. Puede ver los detalles en la sección de órdenes de compras.`
-        );
-      } else {
-        logger.warn("Whatsapp phone number not found");
-      }
+      // if (business.whatsAppPhoneNumber) {
+      //   whatsappServices.sendMessage(
+      //     business.whatsAppPhoneNumber,
+      //     `Una nueva orden de compra ha sido solicitada en su negocio "${business.name}" de nuestra plataforma Asere Market. Puede ver los detalles en la sección de órdenes de compras.`
+      //   );
+      // } else {
+      //   logger.warn("Whatsapp phone number not found");
+      // }
 
       res.send({});
     });
