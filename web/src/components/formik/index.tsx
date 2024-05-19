@@ -1,10 +1,10 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { FormValidations, useGetFormErrors } from 'hooks/useGetFormErrors';
 
 import type { FormikConfig, FormikProps as FormikBaseProps, FormikValues } from 'formik';
 import { Formik as FormikBase } from 'formik';
-import { deepJsonCopy, isEqualObj } from 'utils/general';
+import { isEqual } from 'utils/general';
 
 export interface FormikProps<Values extends FormikValues = FormikValues>
   extends Omit<FormikConfig<Values>, 'onSubmit' | 'validate' | 'children'> {
@@ -17,31 +17,41 @@ export const Formik = <Values extends FormikValues = FormikValues>({
   validate,
   children,
   onChange,
+  initialValues,
   ...props
 }: FormikProps<Values>) => {
   const getFormErrors = useGetFormErrors<Values>();
-  const { initialValues } = props;
 
   const refValues = useRef<Values>(initialValues);
+  const refSetValues = useRef<FormikBaseProps<Values>['setValues']>();
+
+  const hasChange = !isEqual(initialValues, refValues.current);
+
+  useEffect(() => {
+    if (hasChange) {
+      refValues.current = initialValues;
+      refSetValues.current?.(initialValues);
+    }
+  }, [hasChange]);
 
   return (
-    <FormikBase
+    <FormikBase<Values>
       validateOnMount
       enableReinitialize
       onSubmit={() => {}}
+      initialValues={initialValues}
       {...props}
       validate={validate ? (values) => getFormErrors(values, validate) : undefined}
     >
       {(args) => {
-        const { values } = args;
+        const { values, setValues } = args;
 
-        /**
-         * The best found way to coding onChange callback. Maybe Formik has a native onChange callback
-         */
-        if (!isEqualObj(values, refValues.current)) {
-          refValues.current = deepJsonCopy(values);
+        if (!isEqual(values, refValues.current)) {
           onChange?.(values);
         }
+
+        refValues.current = values;
+        refSetValues.current = setValues;
 
         return children?.(args);
       }}

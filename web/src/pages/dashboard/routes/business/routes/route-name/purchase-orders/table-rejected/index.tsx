@@ -14,12 +14,12 @@ import { Shopping } from 'types/shopping';
 import { getDateString } from 'utils/date';
 import { getShoppingData } from 'utils/shopping';
 
-export const TableCanceled = () => {
+export const TableRejected = () => {
   const { getShoppingOwner } = useGetShoppingOwner();
   const { business } = useBusiness();
 
   const onRefresh = () =>
-    business && getShoppingOwner.fetch({ routeName: business.routeName, states: ['CANCELED'] });
+    business && getShoppingOwner.fetch({ routeName: business.routeName, states: ['REJECTED'] });
 
   useEffect(() => {
     onRefresh();

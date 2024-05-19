@@ -1,7 +1,7 @@
 import { BaseIdentity } from './general';
 import { Post } from './post';
 
-export type ShoppingState = 'CONSTRUCTION' | 'REQUESTED' | 'DELIVERED' | 'CANCELED';
+export type ShoppingState = 'CONSTRUCTION' | 'REQUESTED' | 'DELIVERED' | 'CANCELED' | 'REJECTED';
 
 export interface Shopping extends BaseIdentity {
   posts: Array<{

@@ -147,7 +147,9 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
                                   : [...state, item],
                               );
                             } else {
-                              handleChange(selected ? undefined : item);
+                              if (!selected) {
+                                handleChange(selected ? undefined : item);
+                              }
                             }
                           }}
                           value={null}

@@ -29,7 +29,7 @@ export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => 
             'text-green-500': state === 'DELIVERED',
             'text-yellow-500': state === 'REQUESTED',
             'text-gray-300': state === 'CONSTRUCTION',
-            'text-gray-500': state === 'CANCELED',
+            'text-red-500': state === 'REJECTED' || state === 'CANCELED',
           })}
         >
           {getShoppingStateLabel(state)}
