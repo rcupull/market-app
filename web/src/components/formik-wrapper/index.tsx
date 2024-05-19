@@ -1,10 +1,10 @@
-import { FormikFieldProps, FormikFieldReturn, useFormikField } from 'hooks/useFormikField';
+import { useFormField } from 'components/formux/useFormField';
 
-export interface FormikWrapperProps<Val = any> extends Omit<FormikFieldProps<Val>, 'children'> {
-  children: (args: FormikFieldReturn<Val>) => React.ReactNode;
+export interface FormikWrapperProps {
+  children: (args: ReturnType<typeof useFormField<any>>) => React.ReactNode;
 }
 export const FormikWrapper = ({ children, ...props }: FormikWrapperProps) => {
-  const args = useFormikField(props);
+  const args = useFormField<any>(props);
 
   return <>{children(args)}</>;
 };

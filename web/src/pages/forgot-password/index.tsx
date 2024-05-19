@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { useAuthForgotPasswordValidate } from 'features/api/auth/useAuthForgotPasswordValidate';
 
@@ -54,8 +54,8 @@ export const ForgotPassword = () => {
       </div>
 
       <div className="mt-10 w-full">
-        <Formik
-          initialValues={{ newPassword: '', newPasswordAgain: '' }}
+        <Formux
+          value={{ newPassword: '', newPasswordAgain: '' }}
           validate={[
             {
               field: 'newPassword',
@@ -79,7 +79,7 @@ export const ForgotPassword = () => {
             },
           ]}
         >
-          {({ isValid, values }) => {
+          {({ isValid, value }) => {
             return (
               <form>
                 <FieldInput
@@ -89,7 +89,7 @@ export const ForgotPassword = () => {
                 />
 
                 <div className="mt-3">
-                  {getStrongPasswordTracking(values.newPassword).trackingNode}
+                  {getStrongPasswordTracking(value.newPassword).trackingNode}
                 </div>
 
                 <FieldInput
@@ -107,7 +107,7 @@ export const ForgotPassword = () => {
                     onClick={() => {
                       if (!code) return;
 
-                      const { newPassword } = values;
+                      const { newPassword } = value;
 
                       authForgotPasswordValidate.fetch(
                         { code, newPassword },
@@ -124,7 +124,7 @@ export const ForgotPassword = () => {
               </form>
             );
           }}
-        </Formik>
+        </Formux>
         <div ref={portal.ref} />
       </div>
     </>

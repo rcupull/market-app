@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { ButtonSave } from 'components/button-save';
 import { Divider } from 'components/divider';
 import { FieldCheckbox } from 'components/field-checkbox';
@@ -8,7 +10,7 @@ import { FieldPostsSectionLayout } from 'components/field-posts-section-layout';
 import { FieldRadioGroup } from 'components/field-radio-group';
 import { FieldSearchLayout } from 'components/field-search-layout';
 import { FieldShowHide } from 'components/field-show-hide';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { useAddBusinessSection } from 'features/api/business/useAddBusinessSection';
 import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusinessSection';
@@ -22,42 +24,49 @@ import {
   PostsLayoutSectionVisibility,
 } from 'types/business';
 import { StyleProps } from 'types/general';
-import { PostType } from 'types/post';
 import { getRequiredLabel } from 'utils/form';
-import { getRandomHash } from 'utils/general';
 
 type State = PostsLayoutSectionPayload;
 
-export interface ComponentProps extends StyleProps {
+export interface ComponentProductProps extends StyleProps {
   portal: Portal;
   section?: PostsLayoutSection;
   onAfterSuccess: () => void;
-  postType?: PostType;
 }
 
-export const Component = ({
+export const ComponentProduct = ({
   portal,
   section,
   onAfterSuccess,
   className,
-  postType,
-}: ComponentProps) => {
+}: ComponentProductProps) => {
   const { business } = useBusiness();
   const { updateBusinessSection } = useUpdateBusinessSection();
   const { addBusinessSection } = useAddBusinessSection();
 
-  const postForm = (
-    <Formik<State>
-      initialValues={{
-        name: '',
-        postCardLayout: undefined,
-        postCategoriesTags: [],
-        searchLayout: undefined,
-        type: 'grid',
-        showIn: ['businessPage', 'postPage'],
-        postType: 'product',
-        ...(section || {}),
-      }}
+  const [state, setState] = useState<State>({
+    name: '',
+    postCardLayout: {
+      images: 'static',
+      size: 'medium',
+      metaLayout: 'basic',
+      discount: 'none',
+      name: 'basic',
+      price: 'smallerCurrency',
+      shoppingMethod: 'shoppingCart',
+    },
+    postCategoriesTags: [],
+    searchLayout: 'none',
+    type: 'grid',
+    showIn: ['businessPage', 'postPage'],
+    postType: 'product',
+    ...(section || {}),
+  });
+
+  return (
+    <Formux<State>
+      value={state}
+      onChange={setState}
       validate={[
         {
           field: 'name',
@@ -65,7 +74,7 @@ export const Component = ({
         },
       ]}
     >
-      {({ values, isValid }) => {
+      {({ value, isValid }) => {
         return (
           <form className={className}>
             <FieldRadioGroup<{
@@ -134,7 +143,7 @@ export const Component = ({
                     <span>{getRequiredLabel('Nombre')}</span>
                     <FieldShowHide
                       name="hiddenName"
-                      title={`${values.hiddenName ? 'Mostrar' : 'Ocultar'} el nombre del grupo.`}
+                      title={`${value.hiddenName ? 'Mostrar' : 'Ocultar'} el nombre del grupo.`}
                     />
                   </div>
                 }
@@ -197,14 +206,14 @@ export const Component = ({
                         {
                           routeName: business.routeName,
                           sectionId: section._id,
-                          data: values,
+                          data: value,
                         },
                         {
                           onAfterSuccess,
                         },
                       )
                     : addBusinessSection.fetch(
-                        { routeName: business.routeName, data: values },
+                        { routeName: business.routeName, data: value },
                         { onAfterSuccess },
                       );
                 }}
@@ -215,145 +224,6 @@ export const Component = ({
           </form>
         );
       }}
-    </Formik>
+    </Formux>
   );
-
-  const linkForm = (
-    <Formik<State>
-      initialValues={{
-        name: '',
-        postCardLayout: {
-          images: 'rounded',
-          metaLayout: 'verticalCentered',
-          price: 'none',
-          shoppingMethod: 'none',
-          size: 'medium',
-        },
-        postCategoriesTags: [getRandomHash()],
-        searchLayout: undefined,
-        type: 'oneRowSlider',
-        showIn: ['businessPage', 'postPage'],
-        postType: 'link',
-        ...(section || {}),
-      }}
-      validate={[
-        {
-          field: 'name',
-          type: 'required',
-        },
-      ]}
-    >
-      {({ values, isValid }) => {
-        return (
-          <form className={className}>
-            <FieldRadioGroup<{
-              value: PostsLayoutSectionVisibility;
-              label: string;
-              description?: React.ReactNode;
-            }>
-              label="Visible en:"
-              renderOption={({ checked, item }) => {
-                return (
-                  <FieldCheckbox
-                    noUseFormik
-                    value={checked}
-                    label={item.label}
-                    description={item.description}
-                  />
-                );
-              }}
-              multi
-              optionToValue={({ value }) => value}
-              items={[
-                {
-                  value: 'businessPage',
-                  label: 'Página del negocio',
-                  description: (
-                    <div>
-                      En la página del negocio serán mostrados todos los grupos que{' '}
-                      <span className="font-bold">no esten ocultos</span> y que tengan la{' '}
-                      <span className="font-bold">visibilidad</span> activada en la página del
-                      negocio.
-                    </div>
-                  ),
-                },
-                {
-                  value: 'postPage',
-                  label: 'Páginas de las publicaciones',
-                  description: (
-                    <div>
-                      Como parte del contenido de la{' '}
-                      <span className="font-bold">página de la publicación</span> serán mostrados
-                      todos los grupos que tengan la <span className="font-bold">visibilidad</span>{' '}
-                      activada en dicha página.
-                      <br />
-                      Durante la creación/edición de una publicacion usted puede escoger cuales
-                      grupos quiere que se vean como{' '}
-                      <span className="font-bold ml-1">
-                        publicaciones relacionadas o similares
-                      </span>{' '}
-                      a la publicación actual.
-                    </div>
-                  ),
-                },
-              ]}
-              name="showIn"
-              containerClassName="flex flex-col sm:flex-row sm:items-center sm:gap-4"
-            />
-
-            {/* //////////////////////////////////////////////////////////////////////////////////////////////// */}
-            <Divider />
-
-            <FieldInput
-              name="name"
-              label={
-                <div className="flex items-center">
-                  <span>{getRequiredLabel('Nombre')}</span>
-                  <FieldShowHide
-                    name="hiddenName"
-                    title={`${values.hiddenName ? 'Mostrar' : 'Ocultar'} el nombre del grupo.`}
-                  />
-                </div>
-              }
-              description={
-                <div>
-                  El nombre de un grupo se visualiza justo antes de las publicaciones. El mismo
-                  puede ser oculto para que no aparezca en la página y solo sean visibles las
-                  publicaciones.
-                </div>
-              }
-              className="w-full"
-            />
-
-            {portal.getPortal(
-              <ButtonSave
-                isBusy={addBusinessSection.status.isBusy || updateBusinessSection.status.isBusy}
-                disabled={!isValid}
-                onClick={() => {
-                  if (!business) return;
-                  section
-                    ? updateBusinessSection.fetch(
-                        {
-                          routeName: business.routeName,
-                          sectionId: section._id,
-                          data: values,
-                        },
-                        { onAfterSuccess },
-                      )
-                    : addBusinessSection.fetch(
-                        { routeName: business.routeName, data: values },
-                        { onAfterSuccess },
-                      );
-                }}
-                variant="primary"
-                className="w-full"
-              />,
-            )}
-          </form>
-        );
-      }}
-    </Formik>
-  );
-
-  return postType === 'link' ? linkForm : postForm;
 };

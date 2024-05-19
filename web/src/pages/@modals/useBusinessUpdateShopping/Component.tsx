@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 
@@ -26,7 +26,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
 
   const { updateOneBusiness } = useUpdateOneBusiness();
 
-  const initialValues = useMemo<State>(
+  const value = useMemo<State>(
     () => ({
       whatsAppPhoneNumber: business?.whatsAppPhoneNumber,
     }),
@@ -40,8 +40,8 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   const { routeName } = business;
 
   return (
-    <Formik<State> initialValues={initialValues}>
-      {({ values, isValid, touched }) => {
+    <Formux<State> value={value}>
+      {({ value, isValid, touched }) => {
         return (
           <form className="w-full">
             <FieldInput
@@ -57,7 +57,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                 isBusy={updateOneBusiness.status.isBusy}
                 disabled={!isValid || isEmpty(touched)}
                 onClick={() => {
-                  const { whatsAppPhoneNumber } = values;
+                  const { whatsAppPhoneNumber } = value;
 
                   updateOneBusiness.fetch(
                     {
@@ -78,6 +78,6 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
           </form>
         );
       }}
-    </Formik>
+    </Formux>
   );
 };

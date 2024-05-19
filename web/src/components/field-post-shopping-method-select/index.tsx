@@ -1,16 +1,14 @@
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldRadioGroup } from 'components/field-radio-group';
 import { FormFieldWrapperProps } from 'components/form-field-wrapper';
-
-import { FormikFieldProps, useFormikField } from 'hooks/useFormikField';
+import { useFormField } from 'components/formux/useFormField';
 
 import SvgCartPlusSolid from 'icons/CartPlusSolid';
 import { PostLayoutShoppingMethod } from 'types/business';
-import { AnyRecord } from 'types/general';
 
-export interface FieldPostShoppingMethodSelectProps
-  extends FormFieldWrapperProps,
-    FormikFieldProps<AnyRecord> {}
+export interface FieldPostShoppingMethodSelectProps extends FormFieldWrapperProps {
+  name?: string;
+}
 
 interface Option {
   value: PostLayoutShoppingMethod;
@@ -18,7 +16,7 @@ interface Option {
   description?: React.ReactNode;
 }
 export const FieldPostShoppingMethodSelect = (props: FieldPostShoppingMethodSelectProps) => {
-  const { field } = useFormikField(props);
+  const { field } = useFormField(props);
 
   return (
     <FieldRadioGroup<Option>

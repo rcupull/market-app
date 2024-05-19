@@ -1,18 +1,13 @@
 import { Accordion } from 'components/accordion';
 import { FieldPostsSectionSelect } from 'components/field-posts-section-select';
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
+import { useFormField } from 'components/formux/useFormField';
 
-import { FormikFieldProps, useFormikField } from 'hooks/useFormikField';
-import { useNestedForm } from 'hooks/useNestedForm';
-
-import { PostPageLayout } from 'types/business';
-import { AnyRecord } from 'types/general';
 import { cn } from 'utils/general';
 
-export interface FieldPostPageLayoutProps
-  extends FormFieldWrapperProps,
-    FormikFieldProps<AnyRecord> {
+export interface FieldPostPageLayoutProps extends FormFieldWrapperProps {
   collapsable?: boolean;
+  name?: string;
 }
 
 export const FieldPostPageLayout = ({
@@ -21,20 +16,13 @@ export const FieldPostPageLayout = ({
   collapsable,
   ...props
 }: FieldPostPageLayoutProps) => {
-  const { field, error } = useFormikField(props);
-
-  const { getFieldName } = useNestedForm<PostPageLayout>({
-    field,
-    initialValues: {
-      shoppingMethod: undefined,
-    },
-  });
+  const { error, getNestedFieldName } = useFormField(props);
 
   const content = (
     <div className="flex flex-col justify-around h-full px-6 gap-2">
       <FieldPostsSectionSelect
         label="Secciones similares"
-        name={getFieldName('postsSectionsBelowIds')}
+        name={getNestedFieldName('postsSectionsBelowIds')}
         className="mt-6"
       />
     </div>

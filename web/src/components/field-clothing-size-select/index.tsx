@@ -2,8 +2,7 @@ import { RadioGroup } from '@headlessui/react';
 import { useEffect, useState } from 'react';
 
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
-
-import { FormikFieldProps, useFormikField } from 'hooks/useFormikField';
+import { useFormField } from 'components/formux/useFormField';
 
 import { allClotingSize } from 'constants/posts';
 import { PostClothingSize } from 'types/post';
@@ -11,20 +10,19 @@ import { addRow, cn, isNumber, removeRow } from 'utils/general';
 
 type Value = PostClothingSize | Array<PostClothingSize>;
 
-export interface FieldClothingSizeSelectProps<V extends Value = Value>
-  extends FormFieldWrapperProps,
-    FormikFieldProps<V> {
+export interface FieldClothingSizeSelectProps extends FormFieldWrapperProps {
   sizesInStock?: Array<PostClothingSize>;
   multi?: boolean;
+  name?: string;
 }
 
 export const FieldClothingSizeSelect = <V extends Value = Value>(
-  props: FieldClothingSizeSelectProps<V>,
+  props: FieldClothingSizeSelectProps,
 ) => {
   const [state, setState] = useState<V>();
 
   const { label, className, sizesInStock: sizesInStockProp, multi } = props;
-  const { field, error } = useFormikField<V>(props);
+  const { field, error } = useFormField(props);
   const { value } = field;
 
   useEffect(() => {
@@ -68,10 +66,12 @@ export const FieldClothingSizeSelect = <V extends Value = Value>(
   return (
     <FormFieldWrapper label={label} error={error} className={className}>
       <RadioGroup
-        onBlur={(e) => {
-          //@ts-expect-error ignore
-          e.target.name = field.name; // had code the blur event to detect touch in formik
-          field.onBlur(e);
+        onBlur={() => {
+          field.onBlur({
+            target: {
+              name: field.name,
+            },
+          });
         }}
       >
         <RadioGroup.Label className="sr-only">Choose a size</RadioGroup.Label>

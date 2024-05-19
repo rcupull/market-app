@@ -1,14 +1,13 @@
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInput, FieldInputProps } from 'components/field-input';
-
-import { useFormikField } from 'hooks/useFormikField';
+import { useFormField } from 'components/formux/useFormField';
 
 import { isNumber } from 'utils/general';
 
 export interface FieldPostStockAmountProps extends FieldInputProps {}
 
 export const FieldPostStockAmount = ({ label, ...props }: FieldPostStockAmountProps) => {
-  const { field } = useFormikField(props);
+  const { field } = useFormField(props);
 
   return (
     <FieldInput

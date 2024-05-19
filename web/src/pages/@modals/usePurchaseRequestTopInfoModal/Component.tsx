@@ -1,6 +1,6 @@
 import { Button } from 'components/button';
 import { FieldCheckEditor } from 'components/field-check-editor';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useModal } from 'features/modal/useModal';
@@ -30,12 +30,12 @@ export const Component = ({ portal }: ComponentProps) => {
 
   return (
     <>
-      <Formik<State>
-        initialValues={{
+      <Formux<State>
+        value={{
           purchaseRequestTopInfo: shoppingMeta.purchaseRequestTopInfo || '',
         }}
       >
-        {({ values, isValid }) => {
+        {({ value, isValid }) => {
           return (
             <form className="w-full">
               <FieldCheckEditor
@@ -50,7 +50,7 @@ export const Component = ({ portal }: ComponentProps) => {
                   isBusy={updateOneBusiness.status.isBusy}
                   disabled={!isValid}
                   onClick={() => {
-                    const { purchaseRequestTopInfo } = values;
+                    const { purchaseRequestTopInfo } = value;
                     updateOneBusiness.fetch(
                       {
                         update: {
@@ -76,7 +76,7 @@ export const Component = ({ portal }: ComponentProps) => {
             </form>
           );
         }}
-      </Formik>
+      </Formux>
     </>
   );
 };

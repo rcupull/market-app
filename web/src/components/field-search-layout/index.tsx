@@ -2,8 +2,7 @@ import { useState } from 'react';
 
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldRadioGroup, FieldRadioGroupProps } from 'components/field-radio-group';
-
-import { useFormikField } from 'hooks/useFormikField';
+import { useFormField } from 'components/formux/useFormField';
 
 import { Skeleton } from './skeleton';
 
@@ -19,7 +18,7 @@ export const FieldSearchLayout = (props: FieldSearchLayoutProps) => {
   const { label } = omittedProps;
   const [showPreview, setShowPreview] = useState(false);
 
-  const { field } = useFormikField(props);
+  const { field } = useFormField(props);
 
   return (
     <div className={cn('flex flex-col lg:flex-row gap-2 items-center lg:items-start', className)}>

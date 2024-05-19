@@ -2,12 +2,11 @@ import { forwardRef, useEffect, useMemo, useState } from 'react';
 
 import { EmptyImage } from 'components/empty-image';
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
+import { useFormField } from 'components/formux/useFormField';
 import { IconButtonRemove } from 'components/icon-button-remove';
 import { Input } from 'components/input';
 
 import { useModal } from 'features/modal/useModal';
-
-import { useFormikField } from 'hooks/useFormikField';
 
 import SvgPlusSolid from 'icons/PlusSolid';
 import { Image, ImageFile } from 'types/general';
@@ -40,7 +39,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
     } = props;
 
     const { pushModal } = useModal();
-    const { field, error } = useFormikField(props);
+    const { field, error } = useFormField(props);
 
     const { value } = field;
 

@@ -12,13 +12,14 @@ import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { Shopping } from 'types/shopping';
 import { getDateString } from 'utils/date';
+import { getShoppingData } from 'utils/shopping';
 
-export const TableContruction = () => {
+export const TableRejected = () => {
   const { getShoppingOwner } = useGetShoppingOwner();
   const { business } = useBusiness();
 
   const onRefresh = () =>
-    business && getShoppingOwner.fetch({ routeName: business.routeName, states: ['CONSTRUCTION'] });
+    business && getShoppingOwner.fetch({ routeName: business.routeName, states: ['REJECTED'] });
 
   useEffect(() => {
     onRefresh();
@@ -34,9 +35,11 @@ export const TableContruction = () => {
         />
       </TopActions>
       <Table<Shopping>
-        heads={[null, 'Cliente', 'Estado', 'Fecha de creación']}
+        heads={[null, 'Cliente', 'Estado', 'Unidades', 'Precio total', 'Fecha de creación']}
         getRowProps={(rowData) => {
           const { createdAt, purchaserName } = rowData;
+
+          const { totalPrice, totalProducts } = getShoppingData(rowData);
 
           return {
             nodes: [
@@ -47,6 +50,8 @@ export const TableContruction = () => {
                 shopping={rowData}
                 onAfterSuccess={() => onRefresh()}
               />,
+              totalProducts,
+              <span key="price" className="text-nowrap">{`${totalPrice} CUP`}</span>,
               getDateString({ date: createdAt, showTime: true }),
             ],
           };

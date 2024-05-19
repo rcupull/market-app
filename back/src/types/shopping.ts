@@ -5,7 +5,8 @@ export type ShoppingState =
   | "CONSTRUCTION"
   | "REQUESTED"
   | "DELIVERED"
-  | "CANCELED";
+  | "CANCELED"
+  | "REJECTED";
 
 export interface Shopping extends BaseIdentity {
   posts: Array<{

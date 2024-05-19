@@ -1,6 +1,6 @@
 import { FieldClothingSizeSelectProps } from 'components/field-clothing-size-select';
 import { FieldColorSelectProps } from 'components/field-colors-select';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 import { PostShoppingMethod } from 'components/post-shopping-method';
 import { ProductDescriptionProps } from 'components/product/description/types';
 import { ProductDetailsProps } from 'components/product/details/types';
@@ -67,13 +67,13 @@ export const ClothingProductGrid1 = ({ post, render }: ClothingProductGrid1Props
           {/* Reviews */}
           {reviews && render.review?.({ value: reviews, className: 'mt-10' })}
 
-          <Formik
-            initialValues={{
+          <Formux
+            value={{
               interestedByColors: [],
               interestedByClothingSizes: [],
             }}
           >
-            {({ values }) => {
+            {({ value }) => {
               return (
                 <form className="mt-10">
                   {/* Colors */}
@@ -100,8 +100,8 @@ export const ClothingProductGrid1 = ({ post, render }: ClothingProductGrid1Props
                     <PostShoppingMethod
                       post={post}
                       purshaseNotes={{
-                        interestedByClothingSizes: values.interestedByClothingSizes,
-                        interestedByColors: values.interestedByColors,
+                        interestedByClothingSizes: value.interestedByClothingSizes,
+                        interestedByColors: value.interestedByColors,
                       }}
                       layout={post.postPageLayout?.shoppingMethod}
                       btnPostToCartVariant="button"
@@ -111,7 +111,7 @@ export const ClothingProductGrid1 = ({ post, render }: ClothingProductGrid1Props
                 </form>
               );
             }}
-          </Formik>
+          </Formux>
 
           <div ref={portal.ref} />
         </div>

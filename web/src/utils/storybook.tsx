@@ -1,4 +1,4 @@
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { ChildrenProp } from 'types/general';
 
@@ -6,11 +6,11 @@ interface FormikWrapper extends ChildrenProp {}
 
 export const FormikWrapper = ({ children }: FormikWrapper) => {
   return (
-    <Formik initialValues={{}}>
-      {({ values }) => {
-        console.log('Formik values in the story: ', values);
+    <Formux value={{}}>
+      {({ value }) => {
+        console.log('Formik values in the story: ', value);
         return <form>{children}</form>;
       }}
-    </Formik>
+    </Formux>
   );
 };

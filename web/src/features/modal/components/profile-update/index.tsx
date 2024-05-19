@@ -5,7 +5,7 @@ import { Button } from 'components/button';
 import { ButtonClose } from 'components/button-close';
 import { FieldInput } from 'components/field-input';
 import { FieldInputImages } from 'components/field-input-images';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 import { Modal } from 'components/modal';
 
 import { useAddOneBusiness } from 'features/api/business/useAddOneBusiness';
@@ -45,13 +45,13 @@ export const ProfileUpdate = ({ userId, callAfarResources }: ProfileUpdateProps)
   const portal = usePortal();
 
   const content = (
-    <Formik
-      initialValues={{
+    <Formux
+      value={{
         profileImages: user?.profileImage ? [user?.profileImage] : [],
         name: user?.name,
       }}
     >
-      {({ values, isValid }) => {
+      {({ value, isValid }) => {
         return (
           <form>
             <FieldInput name="name" label="Nombre" />
@@ -69,7 +69,7 @@ export const ProfileUpdate = ({ userId, callAfarResources }: ProfileUpdateProps)
                 isBusy={addOneBusiness.status.isBusy || updateOneUser.status.isBusy}
                 disabled={!isValid}
                 onClick={() => {
-                  const { profileImages, name } = values;
+                  const { profileImages, name } = value;
 
                   const handleSubmit = (profileImage?: Image | null) => {
                     updateOneUser.fetch(
@@ -110,7 +110,7 @@ export const ProfileUpdate = ({ userId, callAfarResources }: ProfileUpdateProps)
           </form>
         );
       }}
-    </Formik>
+    </Formux>
   );
 
   return (

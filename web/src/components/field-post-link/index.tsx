@@ -2,27 +2,17 @@ import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInput } from 'components/field-input';
 import { FieldRadioGroup, FieldRadioGroupProps } from 'components/field-radio-group';
 import { FieldSelectAsync } from 'components/field-select-async';
+import { useFormField } from 'components/formux/useFormField';
 
 import { useGetAllBusiness } from 'features/api/business/useGetAllBusiness';
 
-import { useFormikField } from 'hooks/useFormikField';
-import { useNestedForm } from 'hooks/useNestedForm';
-
-import { PostLink, PostLinkType } from 'types/post';
+import { PostLinkType } from 'types/post';
 
 export interface FieldPostsSectionLayoutProps
   extends Omit<FieldRadioGroupProps, 'items' | 'renderOption' | 'optionToValue'> {}
 
 export const FieldPostLink = (props: FieldPostsSectionLayoutProps) => {
-  const { field } = useFormikField(props);
-
-  const { getFieldName, value, reset } = useNestedForm<PostLink>({
-    field,
-    initialValues: {
-      type: 'business',
-      value: '',
-    },
-  });
+  const { field, getNestedFieldName } = useFormField(props);
 
   const useCall = () => useGetAllBusiness().getAllBusiness;
 
@@ -45,20 +35,30 @@ export const FieldPostLink = (props: FieldPostsSectionLayoutProps) => {
         ]}
         containerClassName="flex items-center gap-4"
         label="Tipo de enlace"
-        name={getFieldName('type')}
-        onChange={() => reset()}
+        name={getNestedFieldName('type')}
+        onChange={() =>
+          field.onChange({
+            target: {
+              name: field.name,
+              value: {
+                type: 'business',
+                value: '',
+              },
+            },
+          })
+        }
       />
-      {value?.type === 'external' && (
+      {field.value?.type === 'external' && (
         <FieldInput
           className="mt-6"
           placeholder="Escriba el enlace externo. Ex: https://example.com"
-          name={getFieldName('value')}
+          name={getNestedFieldName('value')}
         />
       )}
-      {value?.type === 'business' && (
+      {field.value?.type === 'business' && (
         <FieldSelectAsync
           className="mt-6"
-          name={getFieldName('value')}
+          name={getNestedFieldName('value')}
           useCall={useCall}
           searchToArgs={(search) => ({ search })}
           renderOption={({ name }) => name}

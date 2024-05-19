@@ -1,7 +1,7 @@
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { useAuthForgotPasswordRequest } from 'features/api/auth/useAuthForgotPasswordRequest';
 import { useModal } from 'features/modal/useModal';
@@ -32,8 +32,8 @@ export const Component = ({ portal }: ComponentProps) => {
       </div>
 
       <div className="mt-10">
-        <Formik
-          initialValues={{ email: '' }}
+        <Formux
+          value={{ email: '' }}
           validate={[
             {
               field: 'email',
@@ -45,7 +45,7 @@ export const Component = ({ portal }: ComponentProps) => {
             },
           ]}
         >
-          {({ isValid, values }) => {
+          {({ isValid, value }) => {
             return (
               <form>
                 <FieldInput
@@ -61,7 +61,7 @@ export const Component = ({ portal }: ComponentProps) => {
                     isBusy={authForgotPasswordRequest.status.isBusy}
                     disabled={!isValid}
                     onClick={() => {
-                      const { email } = values;
+                      const { email } = value;
 
                       authForgotPasswordRequest.fetch(
                         { email },
@@ -106,7 +106,7 @@ export const Component = ({ portal }: ComponentProps) => {
               </form>
             );
           }}
-        </Formik>
+        </Formux>
       </div>
     </div>
   );

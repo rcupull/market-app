@@ -30,9 +30,9 @@ export const Price = () => {
 
           <li className="my-2">
             Cada propietario será el responsable de actualizar sus productos para minimizar el
-            número de órdenes de compra que <span className='font-bold'>no</span> sean concretadas como ventas teniendo el apoyo del
-            sistema de control de disponibilidad en almacén que el propietario puede habilitar en
-            sus productos.
+            número de órdenes de compra que <span className="font-bold">no</span> sean concretadas
+            como ventas teniendo el apoyo del sistema de control de disponibilidad en almacén que el
+            propietario puede habilitar en sus productos.
           </li>
 
           <li className="my-2">

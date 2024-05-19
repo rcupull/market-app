@@ -1,8 +1,6 @@
-import { useMemo } from 'react';
-
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useModal } from 'features/modal/useModal';
@@ -31,17 +29,6 @@ export const Component = ({ portal, options }: ComponentProps) => {
 
   const { updateOneBusiness } = useUpdateOneBusiness();
 
-  const initialValues = useMemo<State>(
-    () => ({
-      face: business?.socialLinks?.face || '',
-      instagram: business?.socialLinks?.instagram || '',
-      twitter: business?.socialLinks?.twitter || '',
-      linkedin: business?.socialLinks?.linkedin || '',
-      youtube: business?.socialLinks?.youtube || '',
-    }),
-    [business],
-  );
-
   if (!business) {
     return <></>;
   }
@@ -60,25 +47,33 @@ export const Component = ({ portal, options }: ComponentProps) => {
   };
 
   return (
-    <Formik<State> initialValues={initialValues}>
-      {({ values, isValid }) => {
+    <Formux<State>
+      value={{
+        face: business?.socialLinks?.face || '',
+        instagram: business?.socialLinks?.instagram || '',
+        twitter: business?.socialLinks?.twitter || '',
+        linkedin: business?.socialLinks?.linkedin || '',
+        youtube: business?.socialLinks?.youtube || '',
+      }}
+    >
+      {({ value, isValid }) => {
         return (
           <form className="w-full">
             {renderFieldLink(
               <FieldInput label="Facebook" name="face" className="w-full mt-4" />,
-              values.face,
+              value.face,
             )}
             {renderFieldLink(
               <FieldInput label="Instagram" name="instagram" className="w-full mt-4" />,
-              values.instagram,
+              value.instagram,
             )}
             {renderFieldLink(
               <FieldInput label="Twitter" name="twitter" className="w-full mt-4" />,
-              values.twitter,
+              value.twitter,
             )}
             {renderFieldLink(
               <FieldInput label="Linkedin" name="linkedin" className="w-full mt-4" />,
-              values.linkedin,
+              value.linkedin,
             )}
 
             {portal.getPortal(
@@ -87,7 +82,7 @@ export const Component = ({ portal, options }: ComponentProps) => {
                 isBusy={updateOneBusiness.status.isBusy}
                 disabled={!isValid}
                 onClick={() => {
-                  const { face, instagram, twitter, linkedin, youtube } = values;
+                  const { face, instagram, twitter, linkedin, youtube } = value;
 
                   updateOneBusiness.fetch(
                     {
@@ -117,6 +112,6 @@ export const Component = ({ portal, options }: ComponentProps) => {
           </form>
         );
       }}
-    </Formik>
+    </Formux>
   );
 };

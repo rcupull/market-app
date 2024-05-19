@@ -1,9 +1,8 @@
 import { forwardRef } from 'react';
 
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
+import { useFormField } from 'components/formux/useFormField';
 import { Input } from 'components/input';
-
-import { useFormikField } from 'hooks/useFormikField';
 
 import { cn, isNullOrUndefined } from 'utils/general';
 
@@ -14,7 +13,7 @@ export interface FieldInputProps
 export const FieldInput = forwardRef<HTMLInputElement, FieldInputProps>((props, ref) => {
   const { className, label, description, ...omittedProps } = props;
 
-  const { field, error } = useFormikField(props);
+  const { field, error } = useFormField(props);
 
   const { value, ...restField } = field;
 

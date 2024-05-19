@@ -36,7 +36,7 @@ const ShoppingSchema = new Schema<Shopping>({
   routeName: { type: String, required: true },
   state: {
     type: String,
-    enum: ["CONSTRUCTION", "REQUESTED", "DELIVERED", "CANCELED"],
+    enum: ["CONSTRUCTION", "REQUESTED", "DELIVERED", "CANCELED", "REJECTED"],
     required: true,
   },
   history: {
@@ -44,7 +44,13 @@ const ShoppingSchema = new Schema<Shopping>({
       {
         state: {
           type: String,
-          enum: ["CONSTRUCTION", "REQUESTED", "DELIVERED", "CANCELED"],
+          enum: [
+            "CONSTRUCTION",
+            "REQUESTED",
+            "DELIVERED",
+            "CANCELED",
+            "REJECTED",
+          ],
           required: true,
         },
         lastUpdatedDate: {

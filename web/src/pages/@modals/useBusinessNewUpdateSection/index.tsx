@@ -9,9 +9,16 @@ import { PostType } from 'types/post';
 import { dynamic } from 'utils/makeLazy';
 
 //eslint-disable-next-line
-const Component = dynamic(() =>
-  import('./Component').then((m) => ({
-    default: m.Component,
+const ComponentLink = dynamic(() =>
+  import('./ComponentLink').then((m) => ({
+    default: m.ComponentLink,
+  })),
+);
+
+//eslint-disable-next-line
+const ComponentProduct = dynamic(() =>
+  import('./ComponentProduct').then((m) => ({
+    default: m.ComponentProduct,
   })),
 );
 
@@ -48,13 +55,15 @@ export const useBusinessNewUpdateSection = () => {
                   : 'Nueva sección de enlaces';
               }
             };
+
+            const Component = realPostType === 'product' ? ComponentProduct : ComponentLink;
+
             return {
               title: getTitle(),
               content: (
                 <Component
                   portal={portal}
                   section={section}
-                  postType={realPostType}
                   onAfterSuccess={() => {
                     onAfterSuccess?.();
                     onClose();

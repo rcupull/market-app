@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import Select from 'react-select';
 
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
+import { useFormField } from 'components/formux/useFormField';
 import { SpinnerEllipsis } from 'components/spinner-ellipsis';
 
 import { useDebouncer } from 'hooks/useDebouncer';
 import { FetchOptions } from 'hooks/useFetch';
-import { useFormikField } from 'hooks/useFormikField';
 
 import { FetchResourceWithPagination } from 'types/api';
 import { AnyRecord, StyleProps } from 'types/general';
@@ -37,7 +37,7 @@ export const FieldSelectAsync = <Option extends AnyRecord = AnyRecord>({
   optionToValue,
   ...props
 }: Omit<FieldSelectAsyncProps<Option>, 'items'>) => {
-  const { field, error } = useFormikField(props);
+  const { field, error } = useFormField(props);
   const [state, setState] = useState<any>();
   const [open, setOpen] = useState(false);
   const [initialFetching, setInitialFetching] = useState(false);
@@ -195,7 +195,7 @@ export const FieldSelectAsync = <Option extends AnyRecord = AnyRecord>({
 
           field.onBlur({
             target: {
-              name: field,
+              name: field.name,
             },
           });
 

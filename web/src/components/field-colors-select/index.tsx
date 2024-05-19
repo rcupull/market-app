@@ -1,8 +1,7 @@
 import { useMemo } from 'react';
 
 import { FieldRadioGroup, FieldRadioGroupProps } from 'components/field-radio-group';
-
-import { useFormikField } from 'hooks/useFormikField';
+import { useFormField } from 'components/formux/useFormField';
 
 import { allColorMeta } from 'constants/posts';
 import { PostColor, PostColorValue } from 'types/post';
@@ -16,7 +15,7 @@ export interface FieldColorSelectProps
 export const FieldColorSelect = (props: FieldColorSelectProps) => {
   const { items, ...omittedProps } = props;
 
-  const { error } = useFormikField(props);
+  const { error } = useFormField(props);
   const itemsMeta = useMemo(() => {
     if (!items?.length) return Object.values(allColorMeta);
 

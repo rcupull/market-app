@@ -1,8 +1,7 @@
 import { forwardRef } from 'react';
 
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
-
-import { useFormikField } from 'hooks/useFormikField';
+import { useFormField } from 'components/formux/useFormField';
 
 import { cn } from 'utils/general';
 
@@ -13,7 +12,7 @@ export interface FieldTextAreaProps
 export const FieldTextArea = forwardRef<HTMLTextAreaElement, FieldTextAreaProps>((props, ref) => {
   const { className, label, ...omittedProps } = props;
 
-  const { field, error } = useFormikField(props);
+  const { field, error } = useFormField(props);
 
   return (
     <FormFieldWrapper label={label} error={error} className={className}>
