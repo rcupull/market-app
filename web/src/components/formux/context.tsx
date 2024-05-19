@@ -8,4 +8,7 @@ export const FormContext = createContext<ContextState>({
   errors: {},
   setErrors: () => {},
   isValid: true,
+  touched: {},
+  setTouched: () => {},
+  resetForm: () => {},
 });

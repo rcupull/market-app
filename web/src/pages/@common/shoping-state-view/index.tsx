@@ -1,5 +1,5 @@
 import { FieldSelect } from 'components/field-select';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { useShoppingChangeState } from 'features/api/shopping/useShoppingChangeState';
 
@@ -20,8 +20,8 @@ export const ShoppingStateView = ({ shopping, onAfterSuccess }: ShoppingStateVie
   const { shoppingChangeState } = useShoppingChangeState();
 
   return (
-    <Formik<State>
-      initialValues={{state}}
+    <Formux<State>
+      value={{ state }}
       onChange={({ state }) => {
         shoppingChangeState.fetch(
           { state, shoppingId: _id },
@@ -64,7 +64,7 @@ export const ShoppingStateView = ({ shopping, onAfterSuccess }: ShoppingStateVie
           </form>
         );
       }}
-    </Formik>
+    </Formux>
   );
   //
   return <>{getShoppingStateLabel(state)}</>;

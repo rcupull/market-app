@@ -2,7 +2,7 @@ import { useRef } from 'react';
 
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { useAuth } from 'features/api-slices/useAuth';
 import { useModal } from 'features/modal/useModal';
@@ -59,8 +59,8 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
       </div>
 
       <div className="mt-10">
-        <Formik
-          initialValues={{ email, password: '' }}
+        <Formux
+          value={{ email, password: '' }}
           validate={[
             {
               field: 'email',
@@ -76,11 +76,11 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
             },
           ]}
         >
-          {({ isValid, values, setErrors }) => {
+          {({ isValid, value, setErrors }) => {
             const handleSubmit = () => {
               if (!isValid) return;
 
-              const { email, password } = values;
+              const { email, password } = value;
 
               authSignIn.fetch(
                 { email, password },
@@ -175,7 +175,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
               </form>
             );
           }}
-        </Formik>
+        </Formux>
       </div>
     </div>
   );

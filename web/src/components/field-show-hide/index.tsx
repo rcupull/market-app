@@ -2,16 +2,12 @@ import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-w
 import { useFormField } from 'components/formux/useFormField';
 import { IconButtonShowHide } from 'components/icon-button-show-hide';
 
-import { FormikFieldProps } from 'hooks/useFormikField';
-
 import { StyleProps } from 'types/general';
 
-export interface FieldShowHideProps
-  extends StyleProps,
-    FormFieldWrapperProps,
-    FormikFieldProps<boolean> {
+export interface FieldShowHideProps extends StyleProps, FormFieldWrapperProps {
   oposite?: boolean;
   title?: string;
+  name?: string;
 }
 
 export const FieldShowHide = (props: FieldShowHideProps) => {

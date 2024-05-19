@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { Button } from 'components/button';
 import { FieldInputImages } from 'components/field-input-images';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
@@ -34,7 +34,7 @@ export const Component = ({ portal }: ComponentProps) => {
   const { updateOneBusiness } = useUpdateOneBusiness();
   const { addManyImages } = useAddManyImages();
 
-  const initialValues = useMemo<State>(
+  const value = useMemo<State>(
     () => ({
       logoField: [logo],
     }),
@@ -46,8 +46,8 @@ export const Component = ({ portal }: ComponentProps) => {
   }
 
   return (
-    <Formik<State> initialValues={initialValues}>
-      {({ values, isValid }) => {
+    <Formux<State> value={value}>
+      {({ value: values, isValid }) => {
         return (
           <form>
             <FieldInputImages
@@ -61,7 +61,7 @@ export const Component = ({ portal }: ComponentProps) => {
               <Button
                 label="Guardar"
                 isBusy={updateOneBusiness.status.isBusy || addManyImages.status.isBusy}
-                disabled={!isValid || initialValues.logoField === values.logoField}
+                disabled={!isValid || value.logoField === values.logoField}
                 onClick={() => {
                   if (!business) return;
                   const { logoField } = values;
@@ -108,6 +108,6 @@ export const Component = ({ portal }: ComponentProps) => {
           </form>
         );
       }}
-    </Formik>
+    </Formux>
   );
 };

@@ -2,15 +2,11 @@ import { CheckEditor } from 'components/check-editor';
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
 import { useFormField } from 'components/formux/useFormField';
 
-import { FormikFieldProps } from 'hooks/useFormikField';
-
 import { StyleProps } from 'types/general';
-export interface FieldCheckEditorProps
-  extends StyleProps,
-    FormFieldWrapperProps,
-    FormikFieldProps<string> {
+export interface FieldCheckEditorProps extends StyleProps, FormFieldWrapperProps {
   onChange?: (e: React.ChangeEvent) => void;
   classNameContainer?: string;
+  name?: string;
 }
 
 export const FieldCheckEditor = (props: FieldCheckEditorProps) => {

@@ -4,11 +4,9 @@ import { ToggleButton } from 'components/toggle-button';
 
 import { StyleProps } from 'types/general';
 
-export interface FieldToggleButtonProps
-  extends StyleProps,
-    FormFieldWrapperProps {
+export interface FieldToggleButtonProps extends StyleProps, FormFieldWrapperProps {
   onChange?: (e: React.ChangeEvent) => void;
-  name?:string
+  name?: string;
 }
 
 export const FieldToggleButton = (props: FieldToggleButtonProps) => {

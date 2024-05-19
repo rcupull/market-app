@@ -6,10 +6,9 @@ import { useFormField } from 'components/formux/useFormField';
 import SvgCartPlusSolid from 'icons/CartPlusSolid';
 import { PostLayoutShoppingMethod } from 'types/business';
 
-export interface FieldPostShoppingMethodSelectProps
-  extends FormFieldWrapperProps {
-    name?:string
-  }
+export interface FieldPostShoppingMethodSelectProps extends FormFieldWrapperProps {
+  name?: string;
+}
 
 interface Option {
   value: PostLayoutShoppingMethod;

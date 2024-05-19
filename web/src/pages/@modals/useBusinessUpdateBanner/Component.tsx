@@ -2,7 +2,7 @@ import { Button } from 'components/button';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInputImages } from 'components/field-input-images';
 import { FieldRadioGroup } from 'components/field-radio-group';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
@@ -35,13 +35,13 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   const { addManyImages } = useAddManyImages();
 
   return (
-    <Formik<State>
-      initialValues={{
+    <Formux<State>
+      value={{
         bannerImages: bannerImages || [],
         bannerLayoutType: business?.layouts?.banner?.type || 'none',
       }}
     >
-      {({ values, isValid, touched }) => {
+      {({ value, isValid, touched }) => {
         return (
           <form>
             <FieldRadioGroup<{
@@ -88,7 +88,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                 onClick={() => {
                   if (!business) return;
 
-                  const { bannerImages, bannerLayoutType } = values;
+                  const { bannerImages, bannerLayoutType } = value;
 
                   if (bannerImages.length) {
                     addManyImages.fetch(
@@ -124,6 +124,6 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
           </form>
         );
       }}
-    </Formik>
+    </Formux>
   );
 };

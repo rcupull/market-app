@@ -5,7 +5,7 @@ import { Button } from 'components/button';
 import { ButtonClose } from 'components/button-close';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInput } from 'components/field-input';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 import { Modal } from 'components/modal';
 
 import { useAddOneBusiness } from 'features/api/business/useAddOneBusiness';
@@ -64,8 +64,8 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
 
   const newPostForm = (
     <>
-      <Formik<Pick<Business, 'categories' | 'name'>>
-        initialValues={{
+      <Formux<Pick<Business, 'categories' | 'name'>>
+        value={{
           categories: [],
           name: '',
           ...(business || {}),
@@ -107,7 +107,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
           },
         ]}
       >
-        {({ errors, values, isValid }) => {
+        {({ errors, value, isValid }) => {
           return (
             <form>
               <FieldInput
@@ -120,7 +120,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
               {!routeName && (
                 <>
                   <FormRouteName
-                    routeName={getRouteName(values.name)}
+                    routeName={getRouteName(value.name)}
                     error={routeValidationErrorMessage === errors.name}
                     className="mt-3"
                   />
@@ -140,7 +140,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
                   disabled={!isValid}
                   onClick={() => {
                     if (business) {
-                      const { name } = values;
+                      const { name } = value;
 
                       updateOneBusiness.fetch(
                         {
@@ -162,7 +162,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
                         },
                       );
                     } else {
-                      const { categories, name } = values;
+                      const { categories, name } = value;
 
                       addOneBusiness.fetch(
                         {
@@ -191,7 +191,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
             </form>
           );
         }}
-      </Formik>
+      </Formux>
 
       {!routeName && (
         <div className="flex flex-col bg-red-100 mt-10 p-5 rounded-sm">

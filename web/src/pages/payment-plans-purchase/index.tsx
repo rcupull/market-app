@@ -53,8 +53,8 @@ export const PaymentPlansPurchase = () => {
   //           </div>
   //         ) : (
   //           <>
-  //             <Formik
-  //               initialValues={{
+  //            <Formux
+  //               value={{
   //                 validationPurchaseCode: '',
   //               }}
   //
@@ -103,7 +103,7 @@ export const PaymentPlansPurchase = () => {
   //                   </form>
   //                 );
   //               }}
-  //             </Formik>
+  //             </Formux>
 
   //             <div ref={submitBtnPortal.ref} />
   //           </>

@@ -1,18 +1,16 @@
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
+import { useFormField } from 'components/formux/useFormField';
 import { RadioGroup, RadioGroupProps } from 'components/radio-group';
 
-import { FormikFieldProps, useFormikField } from 'hooks/useFormikField';
-
-export interface FieldRadioGroupProps<O = any, V = any>
+export interface FieldRadioGroupProps<O = any>
   extends FormFieldWrapperProps,
-    FormikFieldProps<V>,
     Omit<RadioGroupProps<O>, 'onChange' | 'onBlur'> {
   containerClassName?: string;
+  name?: string;
+  onChange?: (value: any) => void;
 }
 //eslint-disable-next-line
-export const FieldRadioGroup = <O extends any = any, V = any>(
-  props: FieldRadioGroupProps<O, V>,
-) => {
+export const FieldRadioGroup = <O extends any = any>(props: FieldRadioGroupProps<O>) => {
   const {
     label,
     description,
@@ -28,7 +26,7 @@ export const FieldRadioGroup = <O extends any = any, V = any>(
     getOptionCutomStyles,
     onChange,
   } = props;
-  const { field, error } = useFormikField<V>(props);
+  const { field, error } = useFormField(props);
 
   return (
     <FormFieldWrapper label={label} description={description} error={error} className={className}>

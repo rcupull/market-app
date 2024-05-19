@@ -13,7 +13,7 @@ export const useFormField = (args: {
   };
 } => {
   const { name } = args;
-  const { setValue, value, errors } = useForm();
+  const { setValue, value, errors, setTouched, touched } = useForm();
 
   return {
     getNestedFieldName: (fieldName) => `${name}.${fieldName.toString()}`,
@@ -26,7 +26,11 @@ export const useFormField = (args: {
           setValue({ ...value, [name]: e.target.value });
         }
       },
-      onBlur: () => {},
+      onBlur: () => {
+        if (name) {
+          setTouched({ ...touched, [name]: true });
+        }
+      },
     },
   };
 };

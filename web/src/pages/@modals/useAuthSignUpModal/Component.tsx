@@ -2,7 +2,7 @@ import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInput } from 'components/field-input';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { useAuthSignUp } from 'features/api/auth/useAuthSignUp';
 import { useModal } from 'features/modal/useModal';
@@ -36,8 +36,8 @@ export const Component = ({ portal }: ComponentProps) => {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <Formik
-          initialValues={{
+        <Formux
+          value={{
             email: '',
             password: '',
             confirmPassword: '',
@@ -79,7 +79,7 @@ export const Component = ({ portal }: ComponentProps) => {
             },
           ]}
         >
-          {({ isValid, values, setErrors, errors }) => {
+          {({ isValid, value, setErrors, errors }) => {
             return (
               <form>
                 <FieldInput
@@ -109,7 +109,7 @@ export const Component = ({ portal }: ComponentProps) => {
                   />
 
                   <div className="mt-3">
-                    {getStrongPasswordTracking(values.password).trackingNode}
+                    {getStrongPasswordTracking(value.password).trackingNode}
                   </div>
                 </div>
 
@@ -140,7 +140,7 @@ export const Component = ({ portal }: ComponentProps) => {
                     isBusy={authSignUp.status.isBusy}
                     disabled={!isValid}
                     onClick={() => {
-                      const { email, password, name, canCreateBusiness } = values;
+                      const { email, password, name, canCreateBusiness } = value;
                       authSignUp.fetch(
                         { email, password, name, canCreateBusiness },
                         {
@@ -203,7 +203,7 @@ export const Component = ({ portal }: ComponentProps) => {
               </form>
             );
           }}
-        </Formik>
+        </Formux>
       </div>
     </div>
   );

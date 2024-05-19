@@ -2,7 +2,7 @@ import { Button } from 'components/button';
 import { FieldCheckEditor } from 'components/field-check-editor';
 import { FieldInput } from 'components/field-input';
 import { FieldToggleButton } from 'components/field-toggle-button';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useModal } from 'features/modal/useModal';
@@ -33,14 +33,14 @@ export const Component = ({ portal }: ComponentProps) => {
 
   return (
     <>
-      <Formik<State>
-        initialValues={{
+      <Formux<State>
+        value={{
           visible: business?.aboutUsPage?.visible || false,
           title: business?.aboutUsPage?.title || '',
           description: business?.aboutUsPage?.description || '',
         }}
       >
-        {({ values, isValid }) => {
+        {({ value, isValid }) => {
           return (
             <form className="w-full">
               <FieldToggleButton
@@ -86,7 +86,7 @@ export const Component = ({ portal }: ComponentProps) => {
                     updateOneBusiness.fetch(
                       {
                         update: {
-                          aboutUsPage: values,
+                          aboutUsPage: value,
                         },
                         routeName,
                       },
@@ -105,7 +105,7 @@ export const Component = ({ portal }: ComponentProps) => {
             </form>
           );
         }}
-      </Formik>
+      </Formux>
     </>
   );
 };

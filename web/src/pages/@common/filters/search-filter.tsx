@@ -1,6 +1,6 @@
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { usePortal } from 'hooks/usePortal';
 
@@ -31,12 +31,12 @@ export const SearchFilter = ({
   if (hideButtons) {
     return (
       <div className={cn(className)}>
-        <Formik
-          initialValues={{
+        <Formux
+          value={{
             search: value || '',
           }}
         >
-          {({ values }) => {
+          {({ value }) => {
             return (
               <form className="flex w-full">
                 <FieldInput
@@ -46,26 +46,26 @@ export const SearchFilter = ({
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       e.preventDefault();
-                      onChange?.(values.search);
+                      onChange?.(value.search);
                     }
                   }}
                 />
               </form>
             );
           }}
-        </Formik>
+        </Formux>
       </div>
     );
   }
 
   return (
     <div className={cn('flex items-center w-full sm:w-fit ', className)}>
-      <Formik
-        initialValues={{
+      <Formux
+        value={{
           search: value || '',
         }}
       >
-        {({ values, handleReset }) => {
+        {({ value }) => {
           return (
             <form className="flex w-full">
               <FieldInput
@@ -75,7 +75,7 @@ export const SearchFilter = ({
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     e.preventDefault();
-                    onChange?.(values.search);
+                    onChange?.(value.search);
                   }
                 }}
               />
@@ -84,13 +84,13 @@ export const SearchFilter = ({
                 <div
                   className="ml-2"
                   onClick={() => {
-                    onChange?.(values.search);
+                    onChange?.(value.search);
                   }}
                 >
                   <Button
                     label="Buscar"
                     isBusy={isBusy}
-                    value={value}
+                    // value={value}
                     variant="primary"
                     className="hidden sm:block"
                   />
@@ -102,7 +102,7 @@ export const SearchFilter = ({
                 <div
                   className="ml-2"
                   onClick={() => {
-                    handleReset();
+                    // handleReset();
                     onChange?.(undefined);
                   }}
                 >
@@ -113,7 +113,7 @@ export const SearchFilter = ({
             </form>
           );
         }}
-      </Formik>
+      </Formux>
 
       <div ref={submitBtnPortal.ref} />
 

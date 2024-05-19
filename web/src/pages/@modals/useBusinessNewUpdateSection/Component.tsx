@@ -8,7 +8,7 @@ import { FieldPostsSectionLayout } from 'components/field-posts-section-layout';
 import { FieldRadioGroup } from 'components/field-radio-group';
 import { FieldSearchLayout } from 'components/field-search-layout';
 import { FieldShowHide } from 'components/field-show-hide';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { useAddBusinessSection } from 'features/api/business/useAddBusinessSection';
 import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusinessSection';
@@ -47,8 +47,8 @@ export const Component = ({
   const { addBusinessSection } = useAddBusinessSection();
 
   const postForm = (
-    <Formik<State>
-      initialValues={{
+    <Formux<State>
+      value={{
         name: '',
         postCardLayout: {
           images: 'static',
@@ -73,7 +73,7 @@ export const Component = ({
         },
       ]}
     >
-      {({ values, isValid }) => {
+      {({ value, isValid }) => {
         return (
           <form className={className}>
             <FieldRadioGroup<{
@@ -142,7 +142,7 @@ export const Component = ({
                     <span>{getRequiredLabel('Nombre')}</span>
                     <FieldShowHide
                       name="hiddenName"
-                      title={`${values.hiddenName ? 'Mostrar' : 'Ocultar'} el nombre del grupo.`}
+                      title={`${value.hiddenName ? 'Mostrar' : 'Ocultar'} el nombre del grupo.`}
                     />
                   </div>
                 }
@@ -205,14 +205,14 @@ export const Component = ({
                         {
                           routeName: business.routeName,
                           sectionId: section._id,
-                          data: values,
+                          data: value,
                         },
                         {
                           onAfterSuccess,
                         },
                       )
                     : addBusinessSection.fetch(
-                        { routeName: business.routeName, data: values },
+                        { routeName: business.routeName, data: value },
                         { onAfterSuccess },
                       );
                 }}
@@ -223,12 +223,12 @@ export const Component = ({
           </form>
         );
       }}
-    </Formik>
+    </Formux>
   );
 
   const linkForm = (
-    <Formik<State>
-      initialValues={{
+    <Formux<State>
+      value={{
         name: '',
         postCardLayout: {
           images: 'rounded',
@@ -251,7 +251,7 @@ export const Component = ({
         },
       ]}
     >
-      {({ values, isValid }) => {
+      {({ value, isValid }) => {
         return (
           <form className={className}>
             <FieldRadioGroup<{
@@ -319,7 +319,7 @@ export const Component = ({
                   <span>{getRequiredLabel('Nombre')}</span>
                   <FieldShowHide
                     name="hiddenName"
-                    title={`${values.hiddenName ? 'Mostrar' : 'Ocultar'} el nombre del grupo.`}
+                    title={`${value.hiddenName ? 'Mostrar' : 'Ocultar'} el nombre del grupo.`}
                   />
                 </div>
               }
@@ -344,12 +344,12 @@ export const Component = ({
                         {
                           routeName: business.routeName,
                           sectionId: section._id,
-                          data: values,
+                          data: value,
                         },
                         { onAfterSuccess },
                       )
                     : addBusinessSection.fetch(
-                        { routeName: business.routeName, data: values },
+                        { routeName: business.routeName, data: value },
                         { onAfterSuccess },
                       );
                 }}
@@ -360,7 +360,7 @@ export const Component = ({
           </form>
         );
       }}
-    </Formik>
+    </Formux>
   );
 
   return postType === 'link' ? linkForm : postForm;

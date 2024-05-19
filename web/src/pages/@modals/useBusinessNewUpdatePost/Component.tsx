@@ -12,7 +12,7 @@ import { FieldPostStockAmount } from 'components/field-post-stock-amount';
 import { FieldRadioGroup } from 'components/field-radio-group';
 import { FieldSelect } from 'components/field-select';
 import { FieldTextArea } from 'components/field-text-area';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusinessSection';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
@@ -99,8 +99,8 @@ export const Component = ({
   const { routeName, postFormFields = [] } = business;
 
   const productForm = (
-    <Formik<PostFormState>
-      initialValues={{
+    <Formux<PostFormState>
+      value={{
         name: '',
         price: 0,
         currency: 'CUP',
@@ -129,7 +129,7 @@ export const Component = ({
         },
       ]}
     >
-      {({ values, isValid }) => {
+      {({ value, isValid }) => {
         return (
           <form className={className}>
             {/** ALWAYS VISIBLE */}
@@ -287,7 +287,7 @@ export const Component = ({
                     discount,
                     postPageLayout,
                     stockAmount,
-                  } = values;
+                  } = value;
 
                   const handelUpdatePost = (post: Post) => {
                     const { _id: postId } = post;
@@ -360,7 +360,7 @@ export const Component = ({
           </form>
         );
       }}
-    </Formik>
+    </Formux>
   );
 
   const sections = getSections({
@@ -368,8 +368,8 @@ export const Component = ({
   });
 
   const linkForm = (
-    <Formik<PostFormState & { sectionIds: Array<string> }>
-      initialValues={{
+    <Formux<PostFormState & { sectionIds: Array<string> }>
+      value={{
         name: '',
         images: [],
         postCategoriesTags: [linkTag],
@@ -384,7 +384,7 @@ export const Component = ({
         },
       ]}
     >
-      {({ values, isValid }) => {
+      {({ value, isValid }) => {
         return (
           <form className={className}>
             <FieldInput name="name" label="Nombre del enlace" />
@@ -429,7 +429,7 @@ export const Component = ({
                 }
                 disabled={!isValid}
                 onClick={() => {
-                  const { images, name, postCategoriesTags, sectionIds, postLink } = values;
+                  const { images, name, postCategoriesTags, sectionIds, postLink } = value;
 
                   const handelUpdatePost = (post: Post) => {
                     const { _id: postId } = post;
@@ -491,7 +491,7 @@ export const Component = ({
           </form>
         );
       }}
-    </Formik>
+    </Formux>
   );
 
   return postType === 'product' ? productForm : linkForm;

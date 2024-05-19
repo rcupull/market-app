@@ -2,7 +2,7 @@ import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldRadioGroup } from 'components/field-radio-group';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 
@@ -47,16 +47,15 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
         </span>
       </div>
 
-      <Formik<State>
-        initialValues={{
+      <Formux<State>
+        value={{
           postFormFields,
         }}
       >
-        {({ values, isValid, touched }) => {
+        {({ value, isValid, touched }) => {
           return (
             <form className={className}>
               <FieldRadioGroup<{ value: PostFormField; label: string }>
-                id="logoField"
                 name="postFormFields"
                 optionToValue={({ value }) => value}
                 multi
@@ -113,7 +112,7 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
                   disabled={!isValid || isEmpty(touched)}
                   onClick={() => {
                     if (!business) return;
-                    const { postFormFields } = values;
+                    const { postFormFields } = value;
 
                     updateOneBusiness.fetch(
                       {
@@ -134,7 +133,7 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
             </form>
           );
         }}
-      </Formik>
+      </Formux>
     </div>
   );
 };

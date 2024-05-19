@@ -5,7 +5,7 @@ import { Button } from 'components/button';
 import { ButtonRemove } from 'components/button-remove';
 import { ButtonSave } from 'components/button-save';
 import { FieldInput } from 'components/field-input';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 import { IconButtonRemove } from 'components/icon-button-remove';
 import { IconButtonShowHide } from 'components/icon-button-show-hide';
 
@@ -49,8 +49,8 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   return (
     <>
       <div className="flex">
-        <Formik
-          initialValues={{
+        <Formux
+          value={{
             label: '',
           }}
           validate={[
@@ -68,9 +68,9 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
             },
           ]}
         >
-          {({ values, isValid, resetForm }) => {
+          {({ value, isValid, resetForm }) => {
             const handleAdd = () => {
-              const { label } = values;
+              const { label } = value;
 
               setState(
                 addRow(state, {
@@ -109,7 +109,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               </form>
             );
           }}
-        </Formik>
+        </Formux>
         <div ref={portalAdd.ref} />
       </div>
 

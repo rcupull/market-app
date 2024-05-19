@@ -9,8 +9,8 @@ import { useGeneralBusinessCategories } from 'features/api/general/useGeneralBus
 import { AnyRecord } from 'types/general';
 import { cn } from 'utils/general';
 
-export interface FieldBusinessCategoriesSelectProps<O, V>
-  extends Omit<FieldRadioGroupProps<O, V>, 'renderOption' | 'optionToValue' | 'items'> {}
+export interface FieldBusinessCategoriesSelectProps<O>
+  extends Omit<FieldRadioGroupProps<O>, 'renderOption' | 'optionToValue' | 'items'> {}
 
 interface Option {
   value: string;
@@ -18,11 +18,11 @@ interface Option {
 }
 
 export const FieldBusinessCategoriesSelect = (
-  props: FieldBusinessCategoriesSelectProps<AnyRecord, Array<string>>,
+  props: FieldBusinessCategoriesSelectProps<AnyRecord>,
 ) => {
   const { generalBusinessCategories } = useGeneralBusinessCategories();
 
-  const { field } = useFormField(props);
+  const { field } = useFormField<Array<any>>(props);
   useEffect(() => {
     generalBusinessCategories.fetch();
   }, []);
@@ -76,7 +76,7 @@ export const FieldBusinessCategoriesSelect = (
   ////////////////////////////////////////////////////////////////////////////////
   const addAllChildrenFrom = (path: string) => {
     const allPaths = items.map(({ value }) => value);
-    const newValue = [...field.value, ...allPaths.filter((p) => p.startsWith(path))];
+    const newValue = [...(field.value || []), ...allPaths.filter((p) => p.startsWith(path))];
     field.onChange({
       target: {
         name: field.name,
@@ -87,7 +87,7 @@ export const FieldBusinessCategoriesSelect = (
 
   ////////////////////////////////////////////////////////////////////////////////
   const removeAllChildrenFrom = (path: string) => {
-    const newvalue = field.value.filter((p) => !p.startsWith(path));
+    const newvalue = (field.value || []).filter((p) => !p.startsWith(path));
 
     field.onChange({
       target: {

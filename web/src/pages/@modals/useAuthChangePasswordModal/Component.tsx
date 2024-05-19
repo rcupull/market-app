@@ -1,6 +1,6 @@
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
-import { Formik } from 'components/formik';
+import { Formux } from 'components/formux';
 
 import { useAuthChangePassword } from 'features/api/auth/useAuthChangePassword';
 import { useModal } from 'features/modal/useModal';
@@ -32,8 +32,8 @@ export const Component = ({ portal }: ComponentProps) => {
       </div>
 
       <div className="mt-10">
-        <Formik
-          initialValues={{ newPassword: '', newPasswordAgain: '' }}
+        <Formux
+          value={{ newPassword: '', newPasswordAgain: '' }}
           validate={[
             {
               field: 'newPassword',
@@ -57,7 +57,7 @@ export const Component = ({ portal }: ComponentProps) => {
             },
           ]}
         >
-          {({ isValid, values }) => {
+          {({ isValid, value }) => {
             return (
               <form>
                 <FieldInput
@@ -68,7 +68,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 />
 
                 <div className="mt-3">
-                  {getStrongPasswordTracking(values.newPassword).trackingNode}
+                  {getStrongPasswordTracking(value.newPassword).trackingNode}
                 </div>
 
                 <FieldInput
@@ -85,7 +85,7 @@ export const Component = ({ portal }: ComponentProps) => {
                     isBusy={authChangePassword.status.isBusy}
                     disabled={!isValid}
                     onClick={() => {
-                      const { newPassword } = values;
+                      const { newPassword } = value;
 
                       authChangePassword.fetch(
                         { newPassword },
@@ -102,7 +102,7 @@ export const Component = ({ portal }: ComponentProps) => {
               </form>
             );
           }}
-        </Formik>
+        </Formux>
       </div>
     </div>
   );
