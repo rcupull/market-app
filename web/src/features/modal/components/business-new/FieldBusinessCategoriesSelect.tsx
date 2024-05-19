@@ -2,10 +2,9 @@ import { useEffect, useMemo } from 'react';
 
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldRadioGroup, FieldRadioGroupProps } from 'components/field-radio-group';
+import { useFormField } from 'components/formux/useFormField';
 
 import { useGeneralBusinessCategories } from 'features/api/general/useGeneralBusinessCategories';
-
-import { useFormikField } from 'hooks/useFormikField';
 
 import { AnyRecord } from 'types/general';
 import { cn } from 'utils/general';
@@ -23,7 +22,7 @@ export const FieldBusinessCategoriesSelect = (
 ) => {
   const { generalBusinessCategories } = useGeneralBusinessCategories();
 
-  const { field } = useFormikField(props);
+  const { field } = useFormField(props);
   useEffect(() => {
     generalBusinessCategories.fetch();
   }, []);

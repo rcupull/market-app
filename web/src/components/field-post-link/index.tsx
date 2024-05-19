@@ -2,19 +2,17 @@ import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInput } from 'components/field-input';
 import { FieldRadioGroup, FieldRadioGroupProps } from 'components/field-radio-group';
 import { FieldSelectAsync } from 'components/field-select-async';
+import { useFormField } from 'components/formux/useFormField';
 
 import { useGetAllBusiness } from 'features/api/business/useGetAllBusiness';
 
-import { useFormikField } from 'hooks/useFormikField';
-
 import { PostLinkType } from 'types/post';
-import { getNestedFieldName } from 'utils/form';
 
 export interface FieldPostsSectionLayoutProps
   extends Omit<FieldRadioGroupProps, 'items' | 'renderOption' | 'optionToValue'> {}
 
 export const FieldPostLink = (props: FieldPostsSectionLayoutProps) => {
-  const { field } = useFormikField(props);
+  const { field, getNestedFieldName } = useFormField(props);
 
   const useCall = () => useGetAllBusiness().getAllBusiness;
 
@@ -37,7 +35,7 @@ export const FieldPostLink = (props: FieldPostsSectionLayoutProps) => {
         ]}
         containerClassName="flex items-center gap-4"
         label="Tipo de enlace"
-        name={getNestedFieldName(field, 'type')}
+        name={getNestedFieldName('type')}
         onChange={() =>
           field.onChange({
             target: {
@@ -54,13 +52,13 @@ export const FieldPostLink = (props: FieldPostsSectionLayoutProps) => {
         <FieldInput
           className="mt-6"
           placeholder="Escriba el enlace externo. Ex: https://example.com"
-          name={getNestedFieldName(field, 'value')}
+          name={getNestedFieldName('value')}
         />
       )}
       {field.value?.type === 'business' && (
         <FieldSelectAsync
           className="mt-6"
-          name={getNestedFieldName(field, 'value')}
+          name={getNestedFieldName('value')}
           useCall={useCall}
           searchToArgs={(search) => ({ search })}
           renderOption={({ name }) => name}

@@ -3,8 +3,7 @@ import { Float } from '@headlessui-float/react';
 import { Fragment, useEffect, useState } from 'react';
 
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
-
-import { useFormikField } from 'hooks/useFormikField';
+import { useFormField } from 'components/formux/useFormField';
 
 import SvgCheckSolid from 'icons/CheckSolid';
 import SvgSortDownSolid from 'icons/SortDownSolid';
@@ -33,7 +32,7 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
 
   const [state, setState] = useState<Option | Array<Option>>();
 
-  const { field, error } = useFormikField(props);
+  const { field, error } = useFormField(props);
   const { value = multi ? [] : null } = field;
 
   useEffect(() => {

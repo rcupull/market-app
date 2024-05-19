@@ -1,21 +1,20 @@
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
+import { useFormField } from 'components/formux/useFormField';
 import { ToggleButton } from 'components/toggle-button';
-
-import { FormikFieldProps, useFormikField } from 'hooks/useFormikField';
 
 import { StyleProps } from 'types/general';
 
 export interface FieldToggleButtonProps
   extends StyleProps,
-    FormFieldWrapperProps,
-    FormikFieldProps<boolean> {
+    FormFieldWrapperProps {
   onChange?: (e: React.ChangeEvent) => void;
+  name?:string
 }
 
 export const FieldToggleButton = (props: FieldToggleButtonProps) => {
   const { label, className, description } = props;
 
-  const { field, error } = useFormikField(props);
+  const { field, error } = useFormField(props);
   const { value } = field;
 
   return (

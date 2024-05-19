@@ -5,8 +5,7 @@ import { Divider } from 'components/divider';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldRadioGroup } from 'components/field-radio-group';
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
-
-import { FormikFieldProps, useFormikField } from 'hooks/useFormikField';
+import { useFormField } from 'components/formux/useFormField';
 
 import { DummyPostCard } from './components/dummy-post-card';
 
@@ -18,14 +17,11 @@ import {
   PostCardLayoutPrice,
   PostCardSize,
 } from 'types/business';
-import { AnyRecord } from 'types/general';
-import { getNestedFieldName } from 'utils/form';
 import { cn } from 'utils/general';
 
-export interface FieldPostCardLayoutProps
-  extends FormFieldWrapperProps,
-    FormikFieldProps<AnyRecord> {
+export interface FieldPostCardLayoutProps extends FormFieldWrapperProps {
   collapsable?: boolean;
+  name?: string;
 }
 
 export const FieldPostCardLayout = ({
@@ -34,7 +30,7 @@ export const FieldPostCardLayout = ({
   collapsable,
   ...props
 }: FieldPostCardLayoutProps) => {
-  const { field, error } = useFormikField(props);
+  const { field, error, getNestedFieldName } = useFormField(props);
 
   const [showPreview, setShowPreview] = useState(true);
 
@@ -44,7 +40,7 @@ export const FieldPostCardLayout = ({
         <div className="flex flex-col justify-around h-full gap-2">
           <FieldRadioGroup<{ value: PostCardLayoutImages; label: string }>
             label="Imágenes"
-            name={getNestedFieldName(field, 'images')}
+            name={getNestedFieldName('images')}
             renderOption={({ checked, item }) => {
               return <FieldCheckbox noUseFormik value={checked} label={item.label} />;
             }}
@@ -78,7 +74,7 @@ export const FieldPostCardLayout = ({
 
           <FieldRadioGroup<{ value: PostCardSize; label: string }>
             label="Tamaño"
-            name={getNestedFieldName(field, 'size')}
+            name={getNestedFieldName('size')}
             renderOption={({ checked, item }) => {
               return <FieldCheckbox noUseFormik value={checked} label={item.label} />;
             }}
@@ -104,7 +100,7 @@ export const FieldPostCardLayout = ({
 
           <FieldRadioGroup<{ value: PostCardLayoutMetaLayout; label: string }>
             label="Diseño de los metadatos"
-            name={getNestedFieldName(field, 'metaLayout')}
+            name={getNestedFieldName('metaLayout')}
             description={
               <div>
                 Los metadatos son el conjunto de características de una publicación. Incluye el
@@ -132,7 +128,7 @@ export const FieldPostCardLayout = ({
 
           <FieldRadioGroup<{ value: PostCardLayoutName; label: string }>
             label="Nombre"
-            name={getNestedFieldName(field, 'name')}
+            name={getNestedFieldName('name')}
             renderOption={({ checked, item }) => {
               return <FieldCheckbox noUseFormik value={checked} label={item.label} />;
             }}
@@ -154,7 +150,7 @@ export const FieldPostCardLayout = ({
 
           <FieldRadioGroup<{ value: PostCardLayoutPrice; label: string }>
             label="Precio"
-            name={getNestedFieldName(field, 'price')}
+            name={getNestedFieldName('price')}
             renderOption={({ checked, item }) => {
               return <FieldCheckbox noUseFormik value={checked} label={item.label} />;
             }}
@@ -184,7 +180,7 @@ export const FieldPostCardLayout = ({
 
           <FieldRadioGroup<{ value: PostCardLayoutDiscount; label: string }>
             label="Descuento"
-            name={getNestedFieldName(field, 'discount')}
+            name={getNestedFieldName('discount')}
             renderOption={({ checked, item }) => {
               return <FieldCheckbox noUseFormik value={checked} label={item.label} />;
             }}

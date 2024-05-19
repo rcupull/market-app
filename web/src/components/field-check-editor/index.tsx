@@ -1,7 +1,8 @@
 import { CheckEditor } from 'components/check-editor';
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
+import { useFormField } from 'components/formux/useFormField';
 
-import { FormikFieldProps, useFormikField } from 'hooks/useFormikField';
+import { FormikFieldProps } from 'hooks/useFormikField';
 
 import { StyleProps } from 'types/general';
 export interface FieldCheckEditorProps
@@ -15,7 +16,7 @@ export interface FieldCheckEditorProps
 export const FieldCheckEditor = (props: FieldCheckEditorProps) => {
   const { label, className, classNameContainer, description } = props;
 
-  const { field, error } = useFormikField(props);
+  const { field, error } = useFormField(props);
   const { value } = field;
 
   return (

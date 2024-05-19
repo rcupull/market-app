@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
+import { useFormField } from 'components/formux/useFormField';
 import { IconButtonAdd } from 'components/icon-button-add';
-
-import { FormikFieldProps, useFormikField } from 'hooks/useFormikField';
 
 import { PostCategoriesFilterButtons } from '../post-categories-filter-buttons';
 
@@ -12,15 +11,15 @@ import { useBusinessUpdatePostCategories } from 'pages/@modals/useBusinessUpdate
 
 type State = Array<string>;
 
-export interface FieldPostCategoriesButtonsProps
-  extends FormFieldWrapperProps,
-    FormikFieldProps<State> {}
+export interface FieldPostCategoriesButtonsProps extends FormFieldWrapperProps {
+  name?: string;
+}
 
 export const FieldPostCategoriesButtons = (props: FieldPostCategoriesButtonsProps) => {
   const { className, label, description } = props;
   const [state, setState] = useState<State>();
 
-  const { field, error } = useFormikField(props);
+  const { field, error } = useFormField(props);
 
   const { value, onChange, name, onBlur } = field;
 
