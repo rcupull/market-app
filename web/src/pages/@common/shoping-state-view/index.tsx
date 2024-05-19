@@ -7,6 +7,9 @@ import { Shopping, ShoppingState } from 'types/shopping';
 import { cn } from 'utils/general';
 import { getShoppingStateLabel } from 'utils/shopping';
 
+interface State {
+  state: ShoppingState;
+}
 export interface ShoppingStateViewProps {
   shopping: Shopping;
   onAfterSuccess?: () => void;
@@ -17,8 +20,8 @@ export const ShoppingStateView = ({ shopping, onAfterSuccess }: ShoppingStateVie
   const { shoppingChangeState } = useShoppingChangeState();
 
   return (
-    <Formik<{ state: ShoppingState }>
-      initialValues={{ state }}
+    <Formik<State>
+      initialValues={{state}}
       onChange={({ state }) => {
         shoppingChangeState.fetch(
           { state, shoppingId: _id },

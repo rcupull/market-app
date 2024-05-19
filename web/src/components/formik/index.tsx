@@ -1,10 +1,9 @@
-import { useEffect, useRef } from 'react';
-
 import { FormValidations, useGetFormErrors } from 'hooks/useGetFormErrors';
+
+import { FormikContextHandle } from './FormikContextHandle';
 
 import type { FormikConfig, FormikProps as FormikBaseProps, FormikValues } from 'formik';
 import { Formik as FormikBase } from 'formik';
-import { isEqual } from 'utils/general';
 
 export interface FormikProps<Values extends FormikValues = FormikValues>
   extends Omit<FormikConfig<Values>, 'onSubmit' | 'validate' | 'children'> {
@@ -21,19 +20,6 @@ export const Formik = <Values extends FormikValues = FormikValues>({
   ...props
 }: FormikProps<Values>) => {
   const getFormErrors = useGetFormErrors<Values>();
-
-  const refValues = useRef<Values>(initialValues);
-  const refSetValues = useRef<FormikBaseProps<Values>['setValues']>();
-
-  const hasChange = !isEqual(initialValues, refValues.current);
-
-  useEffect(() => {
-    if (hasChange) {
-      refValues.current = initialValues;
-      refSetValues.current?.(initialValues);
-    }
-  }, [hasChange]);
-
   return (
     <FormikBase<Values>
       validateOnMount
@@ -43,18 +29,12 @@ export const Formik = <Values extends FormikValues = FormikValues>({
       {...props}
       validate={validate ? (values) => getFormErrors(values, validate) : undefined}
     >
-      {(args) => {
-        const { values, setValues } = args;
-
-        if (!isEqual(values, refValues.current)) {
-          onChange?.(values);
-        }
-
-        refValues.current = values;
-        refSetValues.current = setValues;
-
-        return children?.(args);
-      }}
+      {(args) => (
+        <>
+          <FormikContextHandle<Values> onChange={onChange} initialValues={initialValues} />
+          {children?.(args)}
+        </>
+      )}
     </FormikBase>
   );
 };

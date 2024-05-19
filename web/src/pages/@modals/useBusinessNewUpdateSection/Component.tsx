@@ -50,9 +50,17 @@ export const Component = ({
     <Formik<State>
       initialValues={{
         name: '',
-        postCardLayout: undefined,
+        postCardLayout: {
+          images: 'static',
+          size: 'medium',
+          metaLayout: 'basic',
+          discount: 'none',
+          name: 'basic',
+          price: 'smallerCurrency',
+          shoppingMethod: 'shoppingCart',
+        },
         postCategoriesTags: [],
-        searchLayout: undefined,
+        searchLayout: 'none',
         type: 'grid',
         showIn: ['businessPage', 'postPage'],
         postType: 'product',

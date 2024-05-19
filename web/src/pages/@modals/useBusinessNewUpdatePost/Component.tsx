@@ -110,7 +110,9 @@ export const Component = ({
         clothingSizes: [],
         images: [],
         postCategoriesTags: [],
-        postPageLayout: undefined,
+        postPageLayout: {
+          shoppingMethod: undefined,
+        },
         stockAmount: null,
         ...(post || {}),
       }}
