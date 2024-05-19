@@ -48,10 +48,6 @@ export const ShoppingStateView = ({ shopping, onAfterSuccess }: ShoppingStateVie
                   value: 'REQUESTED',
                   label: 'Solicitado',
                 },
-                {
-                  value: 'CONSTRUCTION',
-                  label: 'En construcción',
-                },
               ]}
             />
           </form>

@@ -3,7 +3,6 @@ import { Tabs } from 'components/tabs';
 
 import { TableAll } from './table-all';
 import { TableCanceled } from './table-canceled';
-import { TableContruction } from './table-construction';
 import { TableDelivered } from './table-delivered';
 import { TableRequested } from './table-requested';
 
@@ -18,10 +17,6 @@ export const PurchaseOrders = () => {
         {
           label: 'Solicitados',
           content: <TableRequested />,
-        },
-        {
-          label: 'En construcción',
-          content: <TableContruction />,
         },
         {
           label: 'Entregados',
