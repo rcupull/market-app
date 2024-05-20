@@ -107,3 +107,14 @@ router
     isUserThisBusinessOwner,
     businessHandles.del_business_routeName_sections_sectionId()
   );
+
+router
+  .route("/business/:routeName/chatbotValidate")
+  .post(
+    validators.param("routeName").notEmpty(),
+    validators.body("code").notEmpty(),
+    validators.handle,
+    isLogged,
+    isUserThisBusinessOwner,
+    businessHandles.post_business_routeName_chatbot_validate()
+  );

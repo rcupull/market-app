@@ -117,6 +117,12 @@ export interface BusinessPaymentRequestHistory extends BusinessPaymentRequest {
   initialCredit: number;
 }
 
+export interface TelegramBotChat {
+  chatId: number;
+  firstName?: string;
+  userName?: string;
+}
+
 export interface Business extends BaseIdentity {
   name: string;
   routeName: string;
@@ -136,6 +142,7 @@ export interface Business extends BaseIdentity {
   layouts?: BusinessLayouts;
   aboutUsPage?: BusinessAboutUsPage;
   whatsAppPhoneNumber?: string;
+  telegramBotChat?: TelegramBotChat;
   shoppingMeta?: {
     purchaseRequestTopInfo?: string;
   };
