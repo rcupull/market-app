@@ -32,7 +32,7 @@ export const LabelValuePair = ({
 
   return (
     <div
-      className={cn(className, {
+      className={cn('flex items-center', className, {
         'text-red-700': variant === 'error',
         'text-green-700': variant === 'success',
         'text-indigo-700': variant === 'primary',

@@ -18,7 +18,7 @@ import SvgCogSolid from 'icons/CogSolid';
 import SvgLayerGroupSolid from 'icons/LayerGroupSolid';
 import SvgLinkSolid from 'icons/LinkSolid';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
-import { KpiCredit, KpiToPay } from 'pages/@common/kpis-business';
+import { KpiCredit, KpiTelegram, KpiToPay } from 'pages/@common/kpis-business';
 import { LayoutSection } from 'pages/@common/layout-section';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 
@@ -60,6 +60,8 @@ export const RouteName = () => {
       title={name}
       topRightHeader={
         <div className="flex items-center gap-6">
+          <KpiTelegram className="hidden sm:flex" />
+
           <KpiCredit className="hidden sm:flex" />
 
           <KpiToPay className="hidden sm:flex" />

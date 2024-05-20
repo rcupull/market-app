@@ -20,7 +20,7 @@ import { useModal } from 'features/modal/useModal';
 import { callAfarIds, useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
 
-import { KpiCredit, KpiToPay } from 'pages/@common/kpis-business';
+import { KpiCredit, KpiTelegram, KpiToPay } from 'pages/@common/kpis-business';
 import { Business } from 'types/business';
 
 export interface OptionsMenuProps {
@@ -131,6 +131,8 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
       bottomElement={
         <div className="flex flex-col items-center gap-2 p-2">
           <Divider className="!m-0" />
+
+          <KpiTelegram className="flex sm:hidden" />
 
           <KpiCredit className="flex sm:hidden" />
 
