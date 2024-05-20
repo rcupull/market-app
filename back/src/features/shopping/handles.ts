@@ -17,6 +17,7 @@ import { logger } from "../logger";
 import { PostPurshaseNotes } from "../../types/post";
 import { ShoppingModel } from "../../schemas/shopping";
 import { Business } from "../../types/business";
+import { telegramServices } from "../telegram";
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -225,7 +226,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
       }
 
       const business:
-        | Pick<Business, "shoppingPayment" | "whatsAppPhoneNumber" | "name">
+        | Pick<Business, "shoppingPayment" | "name" | "telegramBotChat">
         | ServerResponse = await businessServices.findOne({
         res,
         req,
@@ -234,7 +235,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
         },
         projection: {
           shoppingPayment: 1,
-          whatsAppPhoneNumber: 1,
+          telegramBotChat: 1,
           name: 1,
         },
       });
@@ -271,14 +272,16 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
        * send whatsapp message
        */
 
-      // if (business.whatsAppPhoneNumber) {
-      //   whatsappServices.sendMessage(
-      //     business.whatsAppPhoneNumber,
-      //     `Una nueva orden de compra ha sido solicitada en su negocio "${business.name}" de nuestra plataforma Asere Market. Puede ver los detalles en la sección de órdenes de compras.`
-      //   );
-      // } else {
-      //   logger.warn("Whatsapp phone number not found");
-      // }
+      if (business.telegramBotChat) {
+        telegramServices.sendMessage(
+          business.telegramBotChat.chatId,
+          `Una nueva orden de compra ha sido solicitada en su negocio "${business.name}" de nuestra plataforma Asere Market. Puede ver los detalles en la sección de órdenes de compras.`
+        );
+      } else {
+        logger.warn(
+          `the business ${business.name} has not a activated telegram account`
+        );
+      }
 
       res.send({});
     });

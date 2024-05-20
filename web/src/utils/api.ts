@@ -13,6 +13,14 @@ export const apiErrorsMesages = {
     'PreAuthentication failed with error Usted no tiene acceso a los recursos de esta aplicación.',
 };
 
+export const getTelegramUrl = () => {
+  if (DEVELOPMENT) {
+    return 'https://t.me/AsereMarketDevBot';
+  }
+
+  return 'https://t.me/AsereMarketBot';
+};
+
 export const getEndpointUrl = () => {
   const { protocol, hostname } = window.location;
 

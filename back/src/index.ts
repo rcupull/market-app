@@ -5,9 +5,11 @@ import { app } from "./server";
 import fs from "fs";
 import https from "https";
 import http from "http";
+import { telegramServices } from "./features/telegram";
 
 connectDB();
 
+telegramServices.init();
 notificationsServices.init();
 
 if (process.env.NODE_ENV === "production") {

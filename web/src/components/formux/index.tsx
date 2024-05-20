@@ -54,6 +54,9 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
     },
     resetForm: () => {
       setFormState(value);
+      setErrors({});
+      setTouched({});
+      setIsValid(true);
     },
   };
 

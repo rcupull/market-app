@@ -88,6 +88,12 @@ const BusinessSchema = new Schema<Business>({
     description: { type: String },
   },
   whatsAppPhoneNumber: { type: String },
+  telegramBotChat: {
+    chatId: { type: String },
+    firstName: { type: String },
+    userName: { type: String },
+    type: { type: String, enum: ["private"] },
+  },
   shoppingMeta: {
     purchaseRequestTopInfo: { type: String },
   },

@@ -4,6 +4,7 @@ import { ServerResponse } from "http";
 import {
   get200Response,
   get400Response,
+  get404Response,
   getBusinessNotFoundResponse,
   getUserNotFoundResponse,
 } from "../../utils/server-response";
@@ -16,6 +17,7 @@ import { getPostCategoriesFromBusinessCategories } from "./utils";
 import { imagesServices } from "../images/services";
 import { isEqualIds, movRow } from "../../utils/general";
 import { PaginateResult } from "../../middlewares/pagination";
+import { ValidationCodeModel } from "../../schemas/auth";
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {
@@ -454,6 +456,58 @@ const del_business_routeName_sections_sectionId: () => RequestHandler = () => {
   };
 };
 
+const post_business_routeName_chatbot_validate: () => RequestHandler = () => {
+  return async (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { body, business } = req;
+      const { code } = body;
+
+      if (!business) {
+        return getBusinessNotFoundResponse({ res });
+      }
+
+      const validationCode = await ValidationCodeModel.findOneAndDelete({
+        code,
+      });
+
+      if (!validationCode) {
+        return get404Response({
+          res,
+          json: {
+            message:
+              "Este codigo de validación no existe o ya el bot fue verificado con este código",
+          },
+        });
+      }
+
+      const { meta } = validationCode.toJSON();
+
+      if (!meta) {
+        return get404Response({
+          res,
+          json: {
+            message:
+              "No hay metadatos disponibles en este codigo de validación del bot",
+          },
+        });
+      }
+
+      await businessServices.updateOne({
+        res,
+        req,
+        query: {
+          _id: business._id,
+        },
+        update: {
+          telegramBotChat: meta,
+        },
+      });
+
+      res.send({});
+    });
+  };
+};
+
 export const businessHandles = {
   get_business,
   get_business_routeName,
@@ -470,4 +524,6 @@ export const businessHandles = {
   del_business_routeName_sections_sectionId,
 
   get_business_summary,
+
+  post_business_routeName_chatbot_validate,
 };
