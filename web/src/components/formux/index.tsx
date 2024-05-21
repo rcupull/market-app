@@ -20,38 +20,36 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
   const [touched, setTouched] = useState<FormTouched<Value>>({});
   const [isValid, setIsValid] = useState<boolean>(true);
 
-  const handleValidate = (newValue: Value) => {
-    if (!validate) return;
-
-    getFormErrors(newValue, validate).then((newErrors) => {
-      setErrors(newErrors);
-
-      setIsValid(isEmpty(getFlattenJson(newErrors)));
-    });
-  };
+  useEffect(() => {
+    setFormState(value);
+  }, [JSON.stringify(value)]);
 
   useEffect(() => {
-    handleValidate(value);
-    setFormState(value);
+    onChange?.(formState);
+
+    if (validate?.length) {
+      getFormErrors(formState, validate).then((newErrors) => {
+        setErrors(newErrors);
+        setIsValid(isEmpty(getFlattenJson(newErrors)));
+      });
+    }
+  }, [JSON.stringify(formState)]);
+
+  const getErrors = () => {
     /**
-     * it is important for now not type JSON.stringify(value) in the dependencies array. Maybe in the future
-     * this causes a lot of unnecessary re-renders but some time the form not render correctly. Ex: state button in the order tables.
+     * Only get errors for touched fields
      */
-  }, [value]);
+    return Object.keys(touched).reduce((acc, key) => ({ ...acc, [key]: errors[key] }), {});
+  };
 
   const state: ContextState<Value> = {
     value: formState,
     isValid,
-    errors,
+    errors: getErrors(),
     setErrors,
     setTouched,
     touched,
-    setValue: (newFormState) => {
-      handleValidate(newFormState);
-      setFormState(newFormState);
-
-      onChange?.(newFormState);
-    },
+    setValue: setFormState,
     resetForm: () => {
       setFormState(value);
       setErrors({});

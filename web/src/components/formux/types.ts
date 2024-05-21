@@ -4,13 +4,14 @@ import { AnyRecord } from 'types/general';
 
 export interface ContextState<Value extends AnyRecord = AnyRecord> {
   value: Value;
-  setValue: (value: Value) => void;
+  setValue: React.Dispatch<React.SetStateAction<Value>>;
   //
   errors: FormErrors<Value>;
-  setErrors: (errors: FormErrors<Value>) => void;
+  setErrors: React.Dispatch<React.SetStateAction<FormErrors<Value>>>;
+
   //
   touched: FormTouched<Value>;
-  setTouched: (touched: FormTouched<Value>) => void;
+  setTouched: React.Dispatch<React.SetStateAction<FormTouched<Value>>>;
   //
   isValid: boolean;
   resetForm: () => void;

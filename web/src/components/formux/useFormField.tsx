@@ -2,7 +2,8 @@ import { useForm } from './useForm';
 
 import { get, set } from 'utils/general';
 
-export const useFormField = <Value = any,>(args: {
+//eslint-disable-next-line
+export const useFormField = <Value extends any = any>(args: {
   name?: string;
 }): {
   error?: string;
@@ -15,7 +16,7 @@ export const useFormField = <Value = any,>(args: {
   };
 } => {
   const { name } = args;
-  const { setValue, value, errors, setTouched, touched } = useForm();
+  const { setValue, value, errors, setTouched } = useForm();
 
   return {
     getNestedFieldName: (fieldName) => `${name}.${fieldName.toString()}`,
@@ -24,16 +25,18 @@ export const useFormField = <Value = any,>(args: {
       value: name ? get(value, name) : undefined,
       name,
       onChange: (e) => {
-        if (name) {
-          const neValue = { ...value };
-          set(neValue, name, e.target.value);
-          setValue(neValue);
-        }
+        if (!name) return;
+
+        setValue((state) => {
+          const newState = { ...state };
+          set(newState, name, e.target.value);
+          return newState;
+        });
       },
       onBlur: () => {
-        if (name) {
-          setTouched({ ...touched, [name]: true });
-        }
+        if (!name) return;
+
+        setTouched((touched) => ({ ...touched, [name]: true }));
       },
     },
   };
