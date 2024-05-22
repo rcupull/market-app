@@ -1,5 +1,9 @@
+import { useState } from 'react';
+
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
+import { Divider } from 'components/divider';
+import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInput } from 'components/field-input';
 import { Formux } from 'components/formux';
 import { HtmlTextContainer } from 'components/html-text-container';
@@ -24,83 +28,105 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   const { businessChatBotValidate } = useBusinessChatBotValidate();
 
   const { telegramBotChat } = business || {};
+  const [updateTelegramAccount, setUpdateTelegramAccount] = useState(!telegramBotChat);
 
   return (
     <HtmlTextContainer>
-      Todas las notificaciones de nustra plataforma se envian usando nuestro bot de Telegram. El
-      cual debe activar para poder recibirlas.
+      Nuestra plataforma utiliza Telegram para mantenerlo actualizado del estado de sus negocios,
+      órdenes de compra y otras informaciones importantes.
       {telegramBotChat && (
-        <div className="flex gap-6 font-bold my-8 ring ring-green-400 rounded-xl p-2">
-          <Badge variant="success" />
-          Este negocio ya tiene una cuanta de telegram activa y no es necesario hacerlo nuevamente.
-          Si necesita cambiar la cuenta de telegram de este negocio entonces continue los siguientes
-          pasos.
+        <div className="flex flex-col items-center my-8 gap-5">
+          <div className="flex items-center gap-6 font-bold ring ring-green-400 rounded-xl p-2">
+            <Badge variant="success" />
+
+            <div>{`Este negocio ya posee una cuanta de Telegram activa con el usuario "${telegramBotChat.firstName}"`}</div>
+          </div>
+
+          <FieldCheckbox
+            label="Cambiar la cuenta de Telegram"
+            description="Si desea cambiar la cuenta de Telegram de este negocio, seleccione la casilla."
+            noUseFormik
+            value={updateTelegramAccount}
+            onChange={(e) => {
+              console.log('e', e);
+              setUpdateTelegramAccount(e.target.checked);
+            }}
+          />
         </div>
       )}
-      <h3 className="mt-4">
-        1. Si tiene <span className="font-bold">varias cuentas</span> de Telegram en su dispositivo
-        asegúrese de que la cuenta activa es la que desea asociar a este negocio.
-      </h3>
-      <h3 className="mt-4">2. De click en el siguiente enlace o escanear el QR continuación.</h3>
-      <div className="flex flex-col items-center gap-4 mt-4">
-        <a href={getTelegramUrl()} target="_blank" rel="noreferrer">
-          {getTelegramUrl()}
-        </a>
+      {updateTelegramAccount && (
+        <ol className="mt-4 text-left">
+          <Divider />
+          <li>
+            De click en el enlace o escanee el QR siguiente.
+            <div className="flex flex-col items-center gap-4 mt-4">
+              <a href={getTelegramUrl()} target="_blank" rel="noreferrer">
+                {getTelegramUrl()}
+              </a>
 
-        <QrCode value={getTelegramUrl()} className="size-40" />
-      </div>
-      <h3 className="mt-4">
-        3. Inicie el chat bot en el botón <span className="font-bold">Iniciar</span> o enviando un
-        mensaje con el texto <span className="font-bold">/start</span>{' '}
-      </h3>
-      <h3 className="mt-4">
-        4. Use el código enviado a su cuenta para activar el chatbot en este negocio.
-      </h3>
-      <Formux
-        value={{
-          code: '',
-        }}
-        validate={[
-          {
-            field: 'code',
-            type: 'required',
-          },
-        ]}
-      >
-        {({ value, isValid, resetForm }) => {
-          return (
-            <form className="mt-10">
-              <FieldInput
-                name="code"
-                label="Código de activación"
-                placeholder="Escriba el código de activación"
-              />
+              <QrCode value={getTelegramUrl()} className="size-40" />
+            </div>
+          </li>
 
-              {portal.getPortal(
-                <Button
-                  label="Activar"
-                  disabled={!isValid}
-                  onClick={() => {
-                    if (!business) return;
-                    const { code } = value;
-                    const { routeName } = business;
+          <li className="mt-4">
+            De click sobre el botón <span className="font-bold">Iniciar</span>. En caso de que{' '}
+            <span className="font-bold">no aparezca</span> dicho botón envie un mensaje con el texto{' '}
+            <span className="font-bold">&quot;/start&quot;</span>
+          </li>
 
-                    businessChatBotValidate.fetch(
-                      { code, routeName },
-                      {
-                        onAfterSuccess: () => {
-                          resetForm();
-                          onAfterSuccess?.();
-                        },
-                      },
-                    );
-                  }}
-                />,
-              )}
-            </form>
-          );
-        }}
-      </Formux>
+          <li className="mt-4">
+            Copie el código enviado a su cuenta de Telegram, péguelo en el campo siguiente y de
+            click en <span className="font-bold">Activar</span>.
+          </li>
+
+          <Formux
+            value={{
+              code: '',
+            }}
+            validate={[
+              {
+                field: 'code',
+                type: 'required',
+              },
+            ]}
+          >
+            {({ value, isValid, resetForm }) => {
+              return (
+                <form className="mt-4">
+                  <FieldInput
+                    name="code"
+                    label="Código de activación"
+                    placeholder="Escriba el código de activación"
+                  />
+
+                  {portal.getPortal(
+                    <Button
+                      label="Activar"
+                      disabled={!isValid}
+                      className="w-full"
+                      onClick={() => {
+                        if (!business) return;
+                        const { code } = value;
+                        const { routeName } = business;
+
+                        businessChatBotValidate.fetch(
+                          { code, routeName },
+                          {
+                            onAfterSuccess: () => {
+                              resetForm();
+                              onAfterSuccess?.();
+                            },
+                          },
+                        );
+                      }}
+                    />,
+                  )}
+                </form>
+              );
+            }}
+          </Formux>
+        </ol>
+      )}
     </HtmlTextContainer>
   );
 };
