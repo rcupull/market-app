@@ -1,11 +1,17 @@
+import { useEffect, useState } from 'react';
+
+import { Badge } from 'components/badge';
+import { ButtonClose } from 'components/button-close';
+import { ButtonSave } from 'components/button-save';
 import { FieldSelect } from 'components/field-select';
 import { Formux } from 'components/formux';
 
 import { useShoppingChangeState } from 'features/api/shopping/useShoppingChangeState';
+import { useModal } from 'features/modal/useModal';
 
+import { FetchStatus } from 'types/api';
 import { Shopping, ShoppingState } from 'types/shopping';
-import { cn } from 'utils/general';
-import { getShoppingStateLabel } from 'utils/shopping';
+import { cn, isEqual } from 'utils/general';
 
 interface State {
   state: ShoppingState;
@@ -13,22 +19,75 @@ interface State {
 export interface ShoppingStateViewProps {
   shopping: Shopping;
   onAfterSuccess?: () => void;
+  fetchStatus: FetchStatus;
 }
-export const ShoppingStateView = ({ shopping, onAfterSuccess }: ShoppingStateViewProps) => {
+export const ShoppingStateView = ({
+  shopping,
+  onAfterSuccess,
+  fetchStatus,
+}: ShoppingStateViewProps) => {
   const { state, _id } = shopping;
+  const [formState, setFormState] = useState<State>({ state });
+  const { pushModal } = useModal();
 
-  const { shoppingChangeState } = useShoppingChangeState();
+  useEffect(() => {
+    if (fetchStatus.isSuccess) {
+      setFormState({ state });
+    }
+  }, [fetchStatus.isSuccess]);
 
   return (
     <Formux<State>
-      value={{ state }}
-      onChange={({ state }) => {
-        shoppingChangeState.fetch(
-          { state, shoppingId: _id },
-          {
-            onAfterSuccess,
-          },
-        );
+      value={formState}
+      onChange={(newFormState) => {
+        setFormState(newFormState);
+
+        if (!isEqual(newFormState, formState)) {
+          pushModal(
+            'Confirmation',
+            {
+              useProps: () => {
+                const { onClose } = useModal();
+
+                const { shoppingChangeState } = useShoppingChangeState();
+
+                return {
+                  content: 'Seguro que desea actualizar el estado de esta orden de compra?',
+                  badge: <Badge variant="warning" />,
+                  primaryBtn: (
+                    <ButtonSave
+                      label="Actualizar"
+                      isBusy={shoppingChangeState.status.isBusy}
+                      onClick={() => {
+                        const { state } = newFormState;
+
+                        shoppingChangeState.fetch(
+                          { state, shoppingId: _id },
+                          {
+                            onAfterSuccess: () => {
+                              onClose();
+                              onAfterSuccess?.();
+                            },
+                          },
+                        );
+                      }}
+                    />
+                  ),
+                  secondaryBtn: (
+                    <ButtonClose
+                      onClick={() => {
+                        const { state } = shopping;
+                        setFormState({ state });
+                        onClose();
+                      }}
+                    />
+                  ),
+                };
+              },
+            },
+            { emergent: true },
+          );
+        }
       }}
     >
       {() => {
@@ -66,6 +125,4 @@ export const ShoppingStateView = ({ shopping, onAfterSuccess }: ShoppingStateVie
       }}
     </Formux>
   );
-  //
-  return <>{getShoppingStateLabel(state)}</>;
 };

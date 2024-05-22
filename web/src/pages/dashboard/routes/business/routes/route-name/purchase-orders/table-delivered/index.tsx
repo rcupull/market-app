@@ -48,6 +48,7 @@ export const TableDelivered = () => {
               <ShoppingStateView
                 key="ShoppingState"
                 shopping={rowData}
+                fetchStatus={getShoppingOwner.status}
                 onAfterSuccess={() => onRefresh()}
               />,
               totalProducts,

@@ -47,6 +47,7 @@ export const TableRejected = () => {
               purchaserName,
               <ShoppingStateView
                 key="ShoppingState"
+                fetchStatus={getShoppingOwner.status}
                 shopping={rowData}
                 onAfterSuccess={() => onRefresh()}
               />,

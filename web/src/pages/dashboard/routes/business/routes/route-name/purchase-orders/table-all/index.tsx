@@ -44,6 +44,7 @@ export const TableAll = () => {
               <ShoppingStateView
                 key="ShoppingState"
                 shopping={rowData}
+                fetchStatus={getShoppingOwner.status}
                 onAfterSuccess={() => onRefresh()}
               />,
               getDateString({ date: createdAt, showTime: true }),
