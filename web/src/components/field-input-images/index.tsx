@@ -11,7 +11,7 @@ import { useModal } from 'features/modal/useModal';
 import SvgPlusSolid from 'icons/PlusSolid';
 import { Image, ImageFile } from 'types/general';
 import { getFileImageSize } from 'utils/file';
-import { cn, getFlattenArray, isNumber, removeRow, updateRow } from 'utils/general';
+import { cn, getFlattenArray, removeRow, updateRow } from 'utils/general';
 
 export interface FieldInputImagesProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
@@ -48,12 +48,8 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
     const [stateToPreview, setStateToPreview] = useState<State>([undefined]);
     const [previewIndex, setPreviewIndex] = useState<number>(0);
 
-    const isDisabledByPremium = (s: State) => {
-      return isNumber(max) && max <= getFlattenState(s).length;
-    };
-
     const addOneEmptyPreview = (s: State): State => {
-      return isDisabledByPremium(s) ? s : [...s, undefined];
+      return [...s, undefined];
     };
 
     const getImageSrc = (image: Image | ImageFile) => {
@@ -252,6 +248,16 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
       }
     };
 
+    const handleOpenCatalogsSearchImage = () => {
+      pushModal(
+        'CatalogsSearchImage',
+        {
+          onSelected: (images) => handleAddManyImages(images),
+          multi: true,
+        },
+        { emergent: true },
+      );
+    };
     return (
       <FormFieldWrapper label={label} error={error} className={className}>
         {multi && (
@@ -270,7 +276,12 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                   {image ? (
                     <img src={getImageSrc(image)} className="h-full w-full" />
                   ) : (
-                    <div className="relative h-full w-full text-gray-500">
+                    <div
+                      className="relative h-full w-full text-gray-500"
+                      onClick={() => {
+                        handleOpenCatalogsSearchImage();
+                      }}
+                    >
                       <EmptyImage key={index} className="h-full w-full" />
                       <SvgPlusSolid className="h-4 w-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-600 font-bold" />
                     </div>
@@ -289,8 +300,6 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
           }}
           onDrop={(event) => {
             event.preventDefault();
-
-            if (isDisabledByPremium(state)) return;
 
             const fileArray: Array<File> = Array.from(event.dataTransfer.files);
 
@@ -323,9 +332,6 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                     htmlFor={field.name}
                     className={cn(
                       'relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500',
-                      {
-                        '!cursor-not-allowed': isDisabledByPremium(state),
-                      },
                     )}
                   >
                     <span>Suba una imagen</span>
@@ -334,7 +340,6 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                       type="file"
                       className="sr-only"
                       accept="image/*"
-                      disabled={isDisabledByPremium(state)}
                       {...omittedProps}
                       {...field}
                       value=""
@@ -350,21 +355,9 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                   <p
                     className={cn(
                       'relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500',
-                      {
-                        '!cursor-not-allowed': isDisabledByPremium(state),
-                      },
                     )}
                     onClick={() => {
-                      if (isDisabledByPremium(state)) return;
-
-                      pushModal(
-                        'CatalogsSearchImage',
-                        {
-                          onSelected: (images) => handleAddManyImages(images),
-                          multi: true,
-                        },
-                        { emergent: true },
-                      );
+                      handleOpenCatalogsSearchImage();
                     }}
                   >
                     o busque en nuestros catálogos
