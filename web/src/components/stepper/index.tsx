@@ -7,15 +7,15 @@ import SvgAngleLeftSolid from 'icons/AngleLeftSolid';
 import SvgAngleRightSolid from 'icons/AngleRightSolid';
 import { cn } from 'utils/general';
 
-export interface StepProps {
+export interface StepProps  {
   backButton: React.ReactElement;
   nextButton: React.ReactElement;
 }
-export interface StepperProps extends Pick<TabsProps, 'contentClassName'> {
+export interface StepperProps extends Pick<TabsProps, 'contentClassName' | 'disabledStepNavigation'> {
   items: Array<{ label: string; render: (props: StepProps) => React.ReactNode }>;
 }
 
-export const Stepper = ({ items, contentClassName }: StepperProps) => {
+export const Stepper = ({ items, contentClassName, disabledStepNavigation = true }: StepperProps) => {
   const [selected, setSelected] = useState(0);
 
   /////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +49,7 @@ export const Stepper = ({ items, contentClassName }: StepperProps) => {
   return (
     <>
       <Tabs
-        disabledStepNavigation
+        disabledStepNavigation={disabledStepNavigation}
         itemContainerClassName={({ selected }) =>
           cn({
             'flex-grow flex justify-start': selected,

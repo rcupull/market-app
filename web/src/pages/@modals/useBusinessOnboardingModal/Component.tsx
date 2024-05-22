@@ -21,7 +21,7 @@ export const Component = () => {
   const finishButton = (
     <Button
       variant="link"
-      label="Finalizar"
+      label="Ir a la página del negocio"
       onClick={() => {
         onClose();
         business && pushRoute(getBusinessRoute({ routeName: business.routeName }));
@@ -31,6 +31,8 @@ export const Component = () => {
 
   return (
     <Stepper
+      //Enable stepper navigation only in development
+      disabledStepNavigation={!DEVELOPMENT}
       items={[
         {
           label: 'Datos básicos para la venta',
