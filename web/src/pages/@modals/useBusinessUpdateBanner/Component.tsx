@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { Button } from 'components/button';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInputImages } from 'components/field-input-images';
@@ -14,7 +16,6 @@ import { useBusiness } from '../../@hooks/useBusiness';
 import { BannerLayoutType } from 'types/business';
 import { Image, ImageFile } from 'types/general';
 import { getImageEndpoint } from 'utils/api';
-import { isEmpty } from 'utils/general';
 
 interface State {
   bannerImages: Array<ImageFile | Image>;
@@ -31,17 +32,31 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
 
   const { bannerImages, routeName } = business || {};
 
+  const [state, setState] = useState<State>({
+    bannerImages: bannerImages || [],
+    bannerLayoutType: business?.layouts?.banner?.type || 'none',
+  });
+
   const { updateOneBusiness } = useUpdateOneBusiness();
   const { addManyImages } = useAddManyImages();
 
   return (
     <Formux<State>
-      value={{
-        bannerImages: bannerImages || [],
-        bannerLayoutType: business?.layouts?.banner?.type || 'none',
-      }}
+      onChange={setState}
+      value={state}
+      validate={
+        state.bannerLayoutType !== 'none'
+          ? [
+              {
+                field: 'bannerImages',
+                type: 'custom',
+                customCb: (value) => value.length,
+              },
+            ]
+          : undefined
+      }
     >
-      {({ value, isValid, touched }) => {
+      {({ value, isValid }) => {
         return (
           <form>
             <FieldRadioGroup<{
@@ -84,7 +99,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               <Button
                 label="Guardar"
                 isBusy={updateOneBusiness.status.isBusy || addManyImages.status.isBusy}
-                disabled={!isValid || isEmpty(touched)}
+                disabled={!isValid}
                 onClick={() => {
                   if (!business) return;
 

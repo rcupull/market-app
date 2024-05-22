@@ -26,14 +26,19 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
 
   useEffect(() => {
     onChange?.(formState);
+  }, [JSON.stringify(formState)]);
 
-    if (validate?.length) {
+  useEffect(() => {
+    if (validate) {
       getFormErrors(formState, validate).then((newErrors) => {
         setErrors(newErrors);
         setIsValid(isEmpty(getFlattenJson(newErrors)));
       });
+    } else {
+      setErrors({});
+      setIsValid(true);
     }
-  }, [JSON.stringify(formState)]);
+  }, [JSON.stringify([formState, validate])]);
 
   const getErrors = () => {
     /**

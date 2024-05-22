@@ -18,19 +18,12 @@ export const useNextButtonPortal = (
       ...portal,
       getPortal: (node: React.ReactElement) => {
         const { onClick, disabled, isBusy } = node.props;
-
-        /**
-         * If disabled = true not should be changes to call to api and save. Then we call portal with nextButton
-         * if disabled = false we call portal with cloneElement for save changes
-         */
         return portal.getPortal(
-          disabled
-            ? cloneElement(nextButton)
-            : cloneElement(nextButton, {
-                onClick,
-                disabled,
-                isBusy,
-              }),
+          cloneElement(nextButton, {
+            onClick,
+            disabled,
+            isBusy,
+          }),
         );
       },
     },
