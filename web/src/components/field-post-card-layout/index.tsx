@@ -103,8 +103,9 @@ export const FieldPostCardLayout = ({
             name={getNestedFieldName('metaLayout')}
             description={
               <div>
-                Los metadatos son el conjunto de detalles que se muestran de una publicación. Incluye el
-                nombre, precio, descuento, etc. Todos los metadatos se muestran en la parte inferior de la imagen.
+                Los metadatos son el conjunto de detalles que se muestran de una publicación.
+                Incluye el nombre, precio, descuento, etc. Todos los metadatos se muestran en la
+                parte inferior de la imagen.
               </div>
             }
             renderOption={({ checked, item }) => {

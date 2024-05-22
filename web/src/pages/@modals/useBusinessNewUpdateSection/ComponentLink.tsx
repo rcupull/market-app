@@ -132,6 +132,7 @@ export const ComponentLink = ({
 
             <FieldInput
               name="name"
+              placeholder='Ejemplo: "Nuestros negocios asociados"'
               label={
                 <div className="flex items-center">
                   <span>{getRequiredLabel('Nombre')}</span>

@@ -138,6 +138,7 @@ export const ComponentProduct = ({
             <div className="flex flex-col lg:flex-row items-start justify-between lg:gap-7">
               <FieldInput
                 name="name"
+                placeholder='Ejemplo: "Ofertas de verano"'
                 label={
                   <div className="flex items-center">
                     <span>{getRequiredLabel('Nombre')}</span>

@@ -134,13 +134,23 @@ export const Component = ({
           <form className={className}>
             {/** ALWAYS VISIBLE */}
             <>
-              <FieldInput name="name" label={getRequiredLabel('Nombre del producto')} />
+              <FieldInput
+                name="name"
+                placeholder='Ej. "Pantalon negro para chicas"'
+                label={getRequiredLabel('Nombre del producto')}
+              />
               <Divider />
             </>
 
             {postFormFields.includes('description') && (
               <>
-                <FieldTextArea label="Descripción" name="description" rows={3} className="mt-6" />
+                <FieldTextArea
+                  label="Descripción"
+                  placeholder='Ej. "Pantalon de vestir con tejido grueso, confeccionado a mano y diseño personalizado."'
+                  name="description"
+                  rows={3}
+                  className="mt-6"
+                />
                 <Divider />
               </>
             )}
@@ -150,6 +160,7 @@ export const Component = ({
                 <FieldTextArea
                   id="post_details"
                   name="details"
+                  placeholder=' Ej. "Pantalon de excelente confección, elavorado con tejidos completamente cubanos y 100% algodon. Elaborado por el grupo crativo de artesanos y sastres de Pinar."'
                   label="Detalles del producto"
                   className="mt-6"
                   rows={3}
@@ -176,6 +187,12 @@ export const Component = ({
               <FieldPostCategoriesButtons
                 label={getRequiredLabel('Categorías')}
                 name="postCategoriesTags"
+                description={
+                  <div>
+                    Todos los productos deben tener a al menos una categoría para que puedan ser
+                    asociados a una sección de productos en tu negocio.
+                  </div>
+                }
                 className="mt-6"
               />
               <Divider />
@@ -230,6 +247,20 @@ export const Component = ({
                       id="post_stockAmount"
                       name="stockAmount"
                       label="Disponibilidad"
+                      description={
+                        <div>
+                          Marcando la casilla anterior usted puede habilitar el{' '}
+                          <span className="font-bold">
+                            seguimiento automático de la disponibilidad del producto.
+                          </span>
+                          Cada vez que se agregue un producto a un carro de compras, el sistema
+                          actualizará la disponibilidad en la página de su negocio. Si la
+                          disponibilidad llega a cero el producto queda como{' '}
+                          <span className="font-bold">no disponible</span>
+                          evitando que los usuarios generen nuevas órdenes de compras con este
+                          producto.
+                        </div>
+                      }
                       className="mt-6 w-full"
                     />
                   )}
@@ -260,7 +291,7 @@ export const Component = ({
             {postFormFields.includes('postPageLayout') && (
               <>
                 <FieldPostPageLayout
-                  label="Diseño de la página de la publicación"
+                  label="Página de la publicación"
                   name="postPageLayout"
                   className="w-full"
                 />

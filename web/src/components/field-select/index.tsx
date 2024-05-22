@@ -27,8 +27,17 @@ export interface FieldSelectProps<Option extends AnyRecord = AnyRecord, Value = 
 export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
   props: FieldSelectProps<Option>,
 ) => {
-  const { items, renderOption, renderValue, label, className, optionToValue, multi, disabled } =
-    props;
+  const {
+    items,
+    renderOption,
+    renderValue,
+    label,
+    className,
+    optionToValue,
+    multi,
+    disabled,
+    description,
+  } = props;
 
   const [state, setState] = useState<Option | Array<Option>>();
 
@@ -73,7 +82,7 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
     }
   };
   return (
-    <FormFieldWrapper label={label} error={error} className={className}>
+    <FormFieldWrapper label={label} error={error} className={className} description={description}>
       <Listbox disabled={disabled}>
         {({ open }) => {
           return (

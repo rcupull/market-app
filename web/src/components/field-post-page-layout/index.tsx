@@ -21,7 +21,13 @@ export const FieldPostPageLayout = ({
   const content = (
     <div className="flex flex-col justify-around h-full px-6 gap-2">
       <FieldPostsSectionSelect
-        label="Secciones similares"
+        label="Secciones relacionadas"
+        description={
+          <div>
+            Las secciones relacionadas se muestran debajo de los detalles del producto y permiten
+            que el usuario mantenga un flujo de navegación con publicaciones similares a la actual.
+          </div>
+        }
         name={getNestedFieldName('postsSectionsBelowIds')}
         className="mt-6"
       />
