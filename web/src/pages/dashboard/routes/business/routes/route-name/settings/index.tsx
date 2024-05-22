@@ -32,17 +32,19 @@ export const Settings = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
-      <SettingsLayout
-        title="Configuración rápida"
-        description={
-          <>
-            Configure su negocio para tener online rápidamente las primeras publicaicones.{' '}
-            <span className="font-bold">Solo recomendable para negocios recien creados.</span>
-          </>
-        }
-        svg={SvgFighterJetSolid}
-        onClick={() => businessOnboardingModal.open()}
-      />
+      {DEVELOPMENT && (
+        <SettingsLayout
+          title="Configuración rápida(DEV)"
+          description={
+            <>
+              Configure su negocio para tener online rápidamente las primeras publicaicones.{' '}
+              <span className="font-bold">Solo recomendable para negocios recien creados.</span>
+            </>
+          }
+          svg={SvgFighterJetSolid}
+          onClick={() => businessOnboardingModal.open()}
+        />
+      )}
 
       <SettingsLayout
         title="Gestión de ventas"

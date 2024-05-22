@@ -199,7 +199,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
             Cada negocio requiere de una configuración básica inicial para tener online rápidamente
             las primeras publicaciones. Si usted tiene experiencia en el trabajo con la plataforma,
             puede continuar sin usar nuestra configuracio automática, en caso contrario le
-            recomendamos que continue con nosotros marcando el checkbox siguiente.
+            recomendamos que continue con nosotros marcando la casilla siguiente.
           </span>
           <FieldCheckbox
             label="Continuar con la configuración básica del negocio."
