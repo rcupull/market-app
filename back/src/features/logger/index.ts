@@ -1,4 +1,5 @@
 import { createLogger, transports, format } from "winston";
+import "winston-daily-rotate-file";
 
 import fs from "fs";
 const { combine, timestamp, label, printf, colorize } = format;
@@ -30,15 +31,25 @@ const productionsLogger = () => {
   return createLogger({
     level: "info",
     transports: [
-      new transports.File({
-        filename: "./logs/info-logs.log",
+      new transports.DailyRotateFile({
+        filename: "./logs/%DATE%-info.log",
+        datePattern: "YYYY-MM-DD",
+        zippedArchive: true,
+        format: format.combine(
+          format.timestamp({ format: "HH:mm:ss" }),
+          format.json()
+        ),
         level: "info",
-        format: format.combine(format.timestamp(), format.json()),
       }),
-      new transports.File({
-        filename: "./logs/error-logs.log",
+      new transports.DailyRotateFile({
+        filename: "./logs/%DATE%-error.log",
+        datePattern: "YYYY-MM-DD",
+        zippedArchive: true,
         level: "error",
-        format: format.combine(format.timestamp(), format.json()),
+        format: format.combine(
+          format.timestamp({ format: "HH:mm:ss" }),
+          format.json()
+        ),
       }),
     ],
   });
