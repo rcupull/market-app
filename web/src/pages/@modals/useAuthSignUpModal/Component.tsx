@@ -121,18 +121,23 @@ export const Component = ({ portal }: ComponentProps) => {
                   className="mt-6"
                 />
 
-                <FieldCheckbox
-                  name="canCreateBusiness"
-                  label="Propietario de negocios"
-                  description={
-                    <div>
-                      Los propietarios de negocios pueden crear negocios en nuestro sistema y
-                      publicar los productos que comercializan. Si usted no tiene productos para
-                      comercializar a través de Asere Market no necesita marcar esta opción.
-                    </div>
-                  }
-                  className="mt-6"
-                />
+                <div className="flex flex-col bg-red-100 mt-10 p-5 rounded-sm">
+                  <span className="text-sm">
+                    Regístrese como propietario de negocios marcando la siguiente casilla:
+                  </span>
+                  <FieldCheckbox
+                    name="canCreateBusiness"
+                    label="Propietario de negocios"
+                    description={
+                      <div>
+                        Los propietarios de negocios pueden crear negocios en nuestro sistema y
+                        publicar los productos que comercializan. Si usted no tiene productos para
+                        comercializar a través de Asere Market no necesita marcar esta opción.
+                      </div>
+                    }
+                    className="mt-2"
+                  />
+                </div>
 
                 {portal.getPortal(
                   <Button

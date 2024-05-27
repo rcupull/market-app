@@ -98,8 +98,7 @@ export const ComponentLink = ({
                     <div>
                       En la página del negocio serán mostrados todos los grupos que{' '}
                       <span className="font-bold">no esten ocultos</span> y que tengan la{' '}
-                      <span className="font-bold">visibilidad</span> activada en la página del
-                      negocio.
+                      <span className="font-bold">visibilidad</span> activada.
                     </div>
                   ),
                 },
@@ -109,11 +108,11 @@ export const ComponentLink = ({
                   description: (
                     <div>
                       Como parte del contenido de la{' '}
-                      <span className="font-bold">página de la publicación</span> serán mostrados
-                      todos los grupos que tengan la <span className="font-bold">visibilidad</span>{' '}
-                      activada en dicha página.
+                      <span className="font-bold">página de la publicación</span> se mostrarán todos
+                      los grupos que tengan la <span className="font-bold">visibilidad</span>{' '}
+                      activada.
                       <br />
-                      Durante la creación/edición de una publicacion usted puede escoger cuales
+                      Durante la creación/edición de una publicación usted puede elegir que grupos
                       grupos quiere que se vean como{' '}
                       <span className="font-bold ml-1">
                         publicaciones relacionadas o similares

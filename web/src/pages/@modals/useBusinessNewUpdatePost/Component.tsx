@@ -252,13 +252,11 @@ export const Component = ({
                           Marcando la casilla anterior usted puede habilitar el{' '}
                           <span className="font-bold">
                             seguimiento automático de la disponibilidad del producto.
-                          </span>
-                          Cada vez que se agregue un producto a un carro de compras, el sistema
-                          actualizará la disponibilidad en la página de su negocio. Si la
-                          disponibilidad llega a cero el producto queda como{' '}
-                          <span className="font-bold">no disponible</span>
-                          evitando que los usuarios generen nuevas órdenes de compras con este
-                          producto.
+                          </span>{' '}
+                          Cada vez que se agregue un producto a un carro de compras, el sistema la
+                          actualiza en la página de su negocio, si esta llega a cero el producto
+                          queda como <span className="font-bold">no disponible</span> evitando que
+                          los usuarios generen nuevas órdenes de compras con este producto.
                         </div>
                       }
                       className="mt-6 w-full"

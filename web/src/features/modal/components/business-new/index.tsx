@@ -196,10 +196,9 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
       {!routeName && (
         <div className="flex flex-col bg-red-100 mt-10 p-5 rounded-sm">
           <span className="text-sm">
-            Cada negocio requiere de una configuración básica inicial para tener online rápidamente
-            las primeras publicaciones. Si usted tiene experiencia en el trabajo con la plataforma,
-            puede continuar sin usar nuestra configuracio automática, en caso contrario le
-            recomendamos que continue con nosotros marcando la casilla siguiente.
+            Cada emprendedor requiere en su negocio de una configuración básica inicial para sus
+            primeras publicaciones, le recomendamos continuar con nosotros marcando la casilla
+            siguiente:
           </span>
           <FieldCheckbox
             label="Continuar con la configuración básica del negocio."

@@ -103,8 +103,7 @@ export const ComponentProduct = ({
                     <div>
                       En la página del negocio serán mostrados todos los grupos que{' '}
                       <span className="font-bold">no esten ocultos</span> y que tengan la{' '}
-                      <span className="font-bold">visibilidad</span> activada en la página del
-                      negocio.
+                      <span className="font-bold">visibilidad</span> activada.
                     </div>
                   ),
                 },
@@ -170,8 +169,8 @@ export const ComponentProduct = ({
               description={
                 <div>
                   La sección visualizará todos los productos que pertenezcan al menos a una de las
-                  categorías asociadas a dicha sección. En caso de no seleccinar ninguna categoria
-                  seran mostradas todos los productos del negocio.{' '}
+                  categorías asociadas, en caso de no seleccinar ninguna se mostrarán todos los
+                  productos del negocio.{' '}
                   <span>Siempre será recomendable clasificar correctamente sus productos.</span>
                 </div>
               }
