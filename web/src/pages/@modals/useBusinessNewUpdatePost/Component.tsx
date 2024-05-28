@@ -127,6 +127,12 @@ export const Component = ({
           customCb: (value) => value?.length,
           message: 'Debe seleccionar al menos una categoría',
         },
+        {
+          field: 'price',
+          type: 'custom',
+          customCb: (priceVal) => priceVal > 0,
+          message: 'El precio de un producto debe ser mayor que 0'
+        }
       ]}
     >
       {({ value, isValid }) => {
