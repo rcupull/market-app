@@ -209,7 +209,7 @@ export const Component = ({
               postFormFields.includes('discount') ||
               postFormFields.includes('stockAmount')) && (
               <>
-                <div className="flex flex-col sm:flex-row items-center gap-6">
+                <div className="flex flex-col sm:flex-row justify-center gap-6">
                   <FieldInput
                     id="post_price"
                     name="price"
