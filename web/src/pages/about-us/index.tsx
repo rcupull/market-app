@@ -19,3 +19,5 @@ export const AboutUs = () => {
     </LayoutPage>
   );
 };
+
+export default AboutUs;

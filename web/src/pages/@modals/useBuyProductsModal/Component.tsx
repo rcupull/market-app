@@ -49,3 +49,5 @@ export const Component = () => {
     </>
   );
 };
+
+export default Component;

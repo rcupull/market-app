@@ -525,3 +525,5 @@ export const Component = ({
 
   return postType === 'product' ? productForm : linkForm;
 };
+
+export default Component;

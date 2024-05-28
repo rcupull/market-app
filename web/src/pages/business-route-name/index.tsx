@@ -10,20 +10,12 @@ import { useShopping } from 'pages/@hooks/useShopping';
 import { getBusinessRoute } from 'utils/business';
 import { dynamic } from 'utils/makeLazy';
 
-const Posts = dynamic(() => import('./routes/posts').then((m) => ({ default: m.Posts })));
-const Shopping = dynamic(() => import('./routes/shopping').then((m) => ({ default: m.Shopping })));
+const Posts = dynamic(() => import('./routes/posts').then((m) => m));
+const Shopping = dynamic(() => import('./routes/shopping').then((m) => m));
 
-const Home = dynamic(() =>
-  import('./routes/home').then((m) => ({
-    default: m.Home,
-  })),
-);
+const Home = dynamic(() => import('./routes/home').then((m) => m));
 
-const AboutUs = dynamic(() =>
-  import('./routes/about-us').then((m) => ({
-    default: m.AboutUs,
-  })),
-);
+const AboutUs = dynamic(() => import('./routes/about-us').then((m) => m));
 
 export const BusinessRouteName = () => {
   const { params } = useRouter();
@@ -78,3 +70,5 @@ export const BusinessRouteName = () => {
     </Routes>
   );
 };
+
+export default BusinessRouteName;

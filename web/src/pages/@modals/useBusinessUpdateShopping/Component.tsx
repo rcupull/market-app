@@ -130,3 +130,5 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
     </HtmlTextContainer>
   );
 };
+
+export default Component;

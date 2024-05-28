@@ -65,3 +65,5 @@ export const Home = () => {
     </LayoutPage>
   );
 };
+
+export default Home;

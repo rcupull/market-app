@@ -45,3 +45,5 @@ export const Price = () => {
     </LayoutPage>
   );
 };
+
+export default Price;

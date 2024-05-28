@@ -9,18 +9,10 @@ import { PostType } from 'types/post';
 import { dynamic } from 'utils/makeLazy';
 
 //eslint-disable-next-line
-const ComponentLink = dynamic(() =>
-  import('./ComponentLink').then((m) => ({
-    default: m.ComponentLink,
-  })),
-);
+const ComponentLink = dynamic(() => import('./ComponentLink').then((m) => m));
 
 //eslint-disable-next-line
-const ComponentProduct = dynamic(() =>
-  import('./ComponentProduct').then((m) => ({
-    default: m.ComponentProduct,
-  })),
-);
+const ComponentProduct = dynamic(() => import('./ComponentProduct').then((m) => m));
 
 export const useBusinessNewUpdateSection = () => {
   const { pushModal } = useModal();

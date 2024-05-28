@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { dynamic } from 'utils/makeLazy';
-const Home = dynamic(() => import('./routes/home').then((m) => ({ default: m.Home })));
+const Home = dynamic(() => import('./routes/home').then((m) => m));
 
 export const Docs = () => {
   return (
@@ -10,3 +10,4 @@ export const Docs = () => {
     </Routes>
   );
 };
+export default Docs;

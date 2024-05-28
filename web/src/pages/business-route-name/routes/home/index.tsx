@@ -32,3 +32,5 @@ export const Home = ({ routeName }: HomeProps) => {
     </UpdateSomethingContainer>
   );
 };
+
+export default Home;

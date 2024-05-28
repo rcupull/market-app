@@ -115,3 +115,5 @@ export const RouteName = () => {
     </LayoutSection>
   );
 };
+
+export default RouteName;

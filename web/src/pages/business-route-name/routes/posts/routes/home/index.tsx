@@ -9,3 +9,5 @@ export interface HomeProps {
 export const Home = ({ routeName }: HomeProps) => {
   return <Navigate to={getBusinessRoute({ routeName })} />;
 };
+
+export default Home;

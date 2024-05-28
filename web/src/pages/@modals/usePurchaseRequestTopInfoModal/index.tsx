@@ -8,11 +8,7 @@ import { usePortal } from 'hooks/usePortal';
 import { dynamic } from 'utils/makeLazy';
 
 //eslint-disable-next-line
-const Component = dynamic(() =>
-  import('./Component').then((m) => ({
-    default: m.Component,
-  })),
-);
+const Component = dynamic(() => import('./Component').then((m) => m));
 
 export const usePurchaseRequestTopInfoModal = () => {
   const { pushModal } = useModal();

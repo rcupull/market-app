@@ -223,3 +223,5 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
     />
   );
 };
+
+export default BusinessNew;

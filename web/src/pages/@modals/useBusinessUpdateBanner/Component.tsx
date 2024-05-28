@@ -142,3 +142,5 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
     </Formux>
   );
 };
+
+export default Component;

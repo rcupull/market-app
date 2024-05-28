@@ -137,3 +137,5 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
     </div>
   );
 };
+
+export default Component;
