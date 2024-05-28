@@ -98,6 +98,14 @@ export const Component = ({
 
   const { routeName, postFormFields = [] } = business;
 
+  const handleInputFocus = (event : React.FocusEvent<HTMLInputElement>) => {
+    if(event.target.value === '0'){
+      event.target.value = "";
+    }else{
+      event.target.select();
+    }
+  }
+
   const productForm = (
     <Formux<PostFormState>
       value={{
@@ -130,8 +138,8 @@ export const Component = ({
         {
           field: 'price',
           type: 'custom',
-          customCb: (priceVal) => priceVal > 0,
-          message: 'El precio de un producto debe ser mayor que 0'
+          customCb: (priceVal) => isNaN(priceVal) || priceVal > 0,
+          message: 'El precio debe ser un número mayor que 0'
         }
       ]}
     >
@@ -215,6 +223,7 @@ export const Component = ({
                     name="price"
                     label="Precio"
                     type="number"
+                    onFocus={handleInputFocus}
                     className="mt-6 w-full"
                   />
 
