@@ -26,7 +26,7 @@ export const FormFieldWrapper = ({
       >
         {(label || description) && (
           <div
-            className={cn('flex items-center', {
+            className={cn('flex items-center h-7', {
               'mb-2': labelPosition === 'top',
               'ml-2': labelPosition === 'right',
             })}
