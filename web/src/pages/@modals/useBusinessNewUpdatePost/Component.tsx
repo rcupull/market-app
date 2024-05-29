@@ -98,19 +98,12 @@ export const Component = ({
 
   const { routeName, postFormFields = [] } = business;
 
-  const handleInputFocus = (event : React.FocusEvent<HTMLInputElement>) => {
-    if(event.target.value === '0'){
-      event.target.value = "";
-    }else{
-      event.target.select();
-    }
-  }
 
   const productForm = (
     <Formux<PostFormState>
       value={{
         name: '',
-        price: 0,
+        price: undefined,
         currency: 'CUP',
         details: '',
         description: '',
@@ -223,7 +216,6 @@ export const Component = ({
                     name="price"
                     label="Precio"
                     type="number"
-                    onFocus={handleInputFocus}
                     className="mt-6 w-full"
                   />
 
