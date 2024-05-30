@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { queryToSearch, searchToQuery } from './utils';
+import { getParamsFromPathname, queryToSearch, searchToQuery } from './utils';
 
 import { Query } from 'types/api';
 import { AnyRecord } from 'types/general';
@@ -12,44 +12,6 @@ import {
   getShoppingRoute,
 } from 'utils/business';
 import { getFlattenJson } from 'utils/general';
-
-const getParamsFromPathname = (
-  pathname: string,
-): {
-  routeName?: string;
-  postId?: string;
-  shoppingId?: string;
-} => {
-  let routeName = undefined;
-  let postId = undefined;
-  let shoppingId = undefined;
-
-  const sections = pathname.split('/');
-
-  const businessIndex = sections.findIndex((section) => section === 'b' || section === 'business');
-  if (businessIndex >= 0) {
-    routeName = sections[businessIndex + 1];
-  }
-  ///////////////////////////////////////////////////////////////////////////
-  const postsIndex = sections.findIndex((section) => section === 'posts');
-
-  if (postsIndex >= 0) {
-    postId = sections[postsIndex + 1];
-  }
-  ///////////////////////////////////////////////////////////////////////////
-  const shoppingIndex = sections.findIndex((section) => section === 'shopping');
-
-  if (shoppingIndex >= 0) {
-    shoppingId = sections[shoppingIndex + 1];
-  }
-
-  ///////////////////////////////////////////////////////////////////////////
-  return {
-    routeName,
-    postId,
-    shoppingId,
-  };
-};
 
 interface UseRouterReturn {
   pushRoute: (
