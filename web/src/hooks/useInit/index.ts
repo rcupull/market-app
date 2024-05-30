@@ -14,7 +14,7 @@ import { useRouter } from 'hooks/useRouter';
 export const useInit = () => {
   const { isAuthenticated, onRefreshAuthUser } = useAuth();
   const { pushRoute } = useRouter();
-  //
+
   const allUserBusiness = useAllUserBusiness();
 
   const debouncer = useDebouncer();
