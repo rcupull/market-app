@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { queryToSearch, searchToQuery } from './utils';
 
@@ -12,6 +12,44 @@ import {
   getShoppingRoute,
 } from 'utils/business';
 import { getFlattenJson } from 'utils/general';
+
+const getParamsFromPathname = (
+  pathname: string,
+): {
+  routeName?: string;
+  postId?: string;
+  shoppingId?: string;
+} => {
+  let routeName = undefined;
+  let postId = undefined;
+  let shoppingId = undefined;
+
+  const sections = pathname.split('/');
+
+  const businessIndex = sections.findIndex((section) => section === 'b' || section === 'business');
+  if (businessIndex >= 0) {
+    routeName = sections[businessIndex + 1];
+  }
+  ///////////////////////////////////////////////////////////////////////////
+  const postsIndex = sections.findIndex((section) => section === 'posts');
+
+  if (postsIndex >= 0) {
+    postId = sections[postsIndex + 1];
+  }
+  ///////////////////////////////////////////////////////////////////////////
+  const shoppingIndex = sections.findIndex((section) => section === 'shopping');
+
+  if (shoppingIndex >= 0) {
+    shoppingId = sections[shoppingIndex + 1];
+  }
+
+  ///////////////////////////////////////////////////////////////////////////
+  return {
+    routeName,
+    postId,
+    shoppingId,
+  };
+};
 
 interface UseRouterReturn {
   pushRoute: (
@@ -50,7 +88,9 @@ interface UseRouterReturn {
 export const useRouter = (): UseRouterReturn => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
-  const params = useParams();
+
+  const params = getParamsFromPathname(pathname);
+
   const query = searchToQuery(search.slice(1)) as Query;
 
   const onChangeQuery: UseRouterReturn['onChangeQuery'] = (newQuery, options) => {
@@ -78,7 +118,7 @@ export const useRouter = (): UseRouterReturn => {
   const isAdminPage = pathname.startsWith('/admin');
 
   return {
-    isBusinessPage: !!routeName && pathname.startsWith(getBusinessRoute({ routeName })),
+    isBusinessPage: pathname.startsWith(getBusinessRoute()),
     isShoppingPage: !!routeName && pathname.startsWith(getShoppingRoute({ routeName })),
     isPostPage: !!routeName && pathname.startsWith(getPostsRoute({ routeName })),
     isThisPostPage: ({ routeName, postId }) => {

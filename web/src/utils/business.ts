@@ -35,22 +35,26 @@ export const getOnePostRoute = (args: { routeName: string; postId: string }) => 
 };
 
 export const getPostsRoute = (args: { routeName: string }) => {
-  return `${getBusinessRoute({ routeName: args.routeName })}/posts`;
+  return `${getOneBusinessRoute({ routeName: args.routeName })}/posts`;
 };
 
 export const getShoppingRoute = (args: { routeName: string }) => {
-  return `${getBusinessRoute({ routeName: args.routeName })}/shopping`;
+  return `${getOneBusinessRoute({ routeName: args.routeName })}/shopping`;
 };
 export const getOneShoppingRoute = (args: { routeName: string; shoppingId: string }) => {
-  return `${getBusinessRoute({ routeName: args.routeName })}/shopping/${args.shoppingId}`;
+  return `${getOneBusinessRoute({ routeName: args.routeName })}/shopping/${args.shoppingId}`;
 };
 
-export const getBusinessRoute = (args: { routeName: string }) => {
-  return `/b/${args.routeName}`;
+export const getOneBusinessRoute = (args: { routeName: string }) => {
+  return `${getBusinessRoute()}/${args.routeName}`;
+};
+
+export const getBusinessRoute = () => {
+  return `/b`;
 };
 
 export const getBusinessAboutUsRoute = (args: { routeName: string }) => {
-  return `${getBusinessRoute({ routeName: args.routeName })}/about-us`;
+  return `${getOneBusinessRoute({ routeName: args.routeName })}/about-us`;
 };
 
 export const getDashboardBusinessRoute = (args: { routeName: string }) => {

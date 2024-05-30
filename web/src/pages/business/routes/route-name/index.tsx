@@ -7,7 +7,7 @@ import { useRouter } from 'hooks/useRouter';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useShopping } from 'pages/@hooks/useShopping';
-import { getBusinessRoute } from 'utils/business';
+import { getOneBusinessRoute } from 'utils/business';
 import { dynamic } from 'utils/makeLazy';
 
 const Posts = dynamic(() => import('./routes/posts').then((m) => m));
@@ -66,7 +66,7 @@ export const RouteName = () => {
 
       <Route path="posts/*" element={<Posts routeName={routeName} />} />
 
-      <Route path="*" element={<Navigate to={getBusinessRoute({ routeName })} />} />
+      <Route path="*" element={<Navigate to={getOneBusinessRoute({ routeName })} />} />
     </Routes>
   );
 };

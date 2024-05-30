@@ -11,7 +11,7 @@ import { StepPostsSections } from './steps/step-posts-sections';
 import { StepShopping } from './steps/step-shopping';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { getBusinessRoute } from 'utils/business';
+import { getOneBusinessRoute } from 'utils/business';
 
 export const Component = () => {
   const { onClose } = useModal();
@@ -24,7 +24,7 @@ export const Component = () => {
       label="Ir a la página del negocio"
       onClick={() => {
         onClose();
-        business && pushRoute(getBusinessRoute({ routeName: business.routeName }));
+        business && pushRoute(getOneBusinessRoute({ routeName: business.routeName }));
       }}
     />
   );

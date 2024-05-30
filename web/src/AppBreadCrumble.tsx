@@ -8,8 +8,8 @@ import { useShoppingIdPersistent } from 'pages/@hooks/useShoppingIdPersistent';
 import { StyleProps } from 'types/general';
 import {
   getBusinessAboutUsRoute,
-  getBusinessRoute,
   getDashboardRoute,
+  getOneBusinessRoute,
   getOnePostRoute,
   getOneShoppingRoute,
   getShoppingRoute,
@@ -49,7 +49,7 @@ export const AppBreadCrumble = ({ className }: AppBreadCrumbleProps): JSX.Elemen
         isBusinessPage &&
           business && {
             label: business.name,
-            route: getBusinessRoute({ routeName: business.routeName }),
+            route: getOneBusinessRoute({ routeName: business.routeName }),
           },
         business &&
           isShoppingPage && {
