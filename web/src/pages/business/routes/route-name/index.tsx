@@ -17,7 +17,7 @@ const Home = dynamic(() => import('./routes/home').then((m) => m));
 
 const AboutUs = dynamic(() => import('./routes/about-us').then((m) => m));
 
-export const BusinessRouteName = () => {
+export const RouteName = () => {
   const { params } = useRouter();
   const { isAuthenticated } = useAuth();
   const { routeName } = params;

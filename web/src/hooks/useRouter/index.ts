@@ -4,7 +4,13 @@ import { queryToSearch, searchToQuery } from './utils';
 
 import { Query } from 'types/api';
 import { AnyRecord } from 'types/general';
-import { getOnePostRoute } from 'utils/business';
+import {
+  getBusinessAboutUsRoute,
+  getBusinessRoute,
+  getOnePostRoute,
+  getPostsRoute,
+  getShoppingRoute,
+} from 'utils/business';
 import { getFlattenJson } from 'utils/general';
 
 interface UseRouterReturn {
@@ -70,15 +76,17 @@ export const useRouter = (): UseRouterReturn => {
   const isDashboardPage = pathname.startsWith('/dashboard');
 
   const isAdminPage = pathname.startsWith('/admin');
+
   return {
-    isBusinessPage: pathname.startsWith(`/${routeName}`),
-    isShoppingPage: pathname.startsWith(`/${routeName}/shopping`),
-    isPostPage: pathname.startsWith(`/${routeName}/posts`),
+    isBusinessPage: !!routeName && pathname.startsWith(getBusinessRoute({ routeName })),
+    isShoppingPage: !!routeName && pathname.startsWith(getShoppingRoute({ routeName })),
+    isPostPage: !!routeName && pathname.startsWith(getPostsRoute({ routeName })),
     isThisPostPage: ({ routeName, postId }) => {
       return pathname.startsWith(getOnePostRoute({ postId, routeName }));
     },
     isAboutUsPage: pathname.startsWith(`/about-us`),
-    isBusinessAboutUsPage: pathname.startsWith(`/${routeName}/about-us`),
+    isBusinessAboutUsPage:
+      !!routeName && pathname.startsWith(getBusinessAboutUsRoute({ routeName })),
     isDashboardPage,
     isAdminPage,
     isHomePage: pathname === '/',

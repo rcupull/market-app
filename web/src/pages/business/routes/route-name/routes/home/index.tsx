@@ -5,7 +5,7 @@ import { useRouter } from 'hooks/useRouter';
 import { LayoutPage } from 'pages/@common/layout-page';
 import { UpdateSomethingContainer } from 'pages/@common/update-something-container';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { Banner } from 'pages/business-route-name/components/banner';
+import { Banner } from 'pages/business/routes/route-name/components/banner';
 
 interface HomeProps {
   routeName: string;

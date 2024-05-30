@@ -43,13 +43,12 @@ export const Navbar = ({ className }: NavbarProps) => {
   const { isAdmin, isUser, isAuthenticated, authData, onRefreshAuthUser } = useAuth();
   const { authSignOut } = useAuthSignOut();
   const { user } = authData || {};
-  const { isBusinessPage, params, isAuthenticatedPage } = useRouter();
+  const { isBusinessPage, params, isAuthenticatedPage, pushRoute } = useRouter();
   const { routeName } = params;
   const { business } = useBusiness();
   const authChangePasswordModal = useAuthChangePasswordModal();
   const aboutUsPage = business?.aboutUsPage || {};
   const { pushModal } = useModal();
-  const { pushRoute } = useRouter();
 
   const authSignInModal = useAuthSignInModal();
   const authSignUpModal = useAuthSignUpModal();

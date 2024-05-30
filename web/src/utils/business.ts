@@ -31,22 +31,26 @@ export const getInitials = (fullname: string) => {
 };
 
 export const getOnePostRoute = (args: { routeName: string; postId: string }) => {
-  return `/${args.routeName}/posts/${args.postId}`;
+  return `${getPostsRoute({ routeName: args.routeName })}/${args.postId}`;
+};
+
+export const getPostsRoute = (args: { routeName: string }) => {
+  return `${getBusinessRoute({ routeName: args.routeName })}/posts`;
 };
 
 export const getShoppingRoute = (args: { routeName: string }) => {
-  return `/${args.routeName}/shopping`;
+  return `${getBusinessRoute({ routeName: args.routeName })}/shopping`;
 };
 export const getOneShoppingRoute = (args: { routeName: string; shoppingId: string }) => {
-  return `/${args.routeName}/shopping/${args.shoppingId}`;
+  return `${getBusinessRoute({ routeName: args.routeName })}/shopping/${args.shoppingId}`;
 };
 
 export const getBusinessRoute = (args: { routeName: string }) => {
-  return `/${args.routeName}`;
+  return `/b/${args.routeName}`;
 };
 
 export const getBusinessAboutUsRoute = (args: { routeName: string }) => {
-  return `/${args.routeName}/about-us`;
+  return `${getBusinessRoute({ routeName: args.routeName })}/about-us`;
 };
 
 export const getDashboardBusinessRoute = (args: { routeName: string }) => {

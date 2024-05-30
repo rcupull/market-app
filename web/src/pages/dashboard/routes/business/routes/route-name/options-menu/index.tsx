@@ -24,7 +24,7 @@ import { useRouter } from 'hooks/useRouter';
 import { KpiCredit, KpiTelegram, KpiToPay } from 'pages/@common/kpis-business';
 import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewModal';
 import { Business } from 'types/business';
-import { getDashboardBusinessRoute } from 'utils/business';
+import { getBusinessRoute,getDashboardBusinessRoute  } from 'utils/business';
 
 export interface OptionsMenuProps {
   business: Business;
@@ -167,7 +167,9 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
         },
         {
           label: 'Ver la página de este negocio',
-          onClick: () => pushRoute(`/${routeName}`),
+          onClick: () => {
+            pushRoute(getBusinessRoute({ routeName }));
+          },
           svg: IconView,
         },
         {
@@ -205,7 +207,7 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
       <IconButtonView
         title="Ver la página de este negocio"
         onClick={() => {
-          pushRoute(`/${routeName}`);
+          pushRoute(getBusinessRoute({ routeName }));
         }}
       />
     </div>
