@@ -24,7 +24,7 @@ import { useRouter } from 'hooks/useRouter';
 import { KpiCredit, KpiTelegram, KpiToPay } from 'pages/@common/kpis-business';
 import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewModal';
 import { Business } from 'types/business';
-import { getBusinessRoute,getDashboardBusinessRoute  } from 'utils/business';
+import { getBusinessRoute, getDashboardBusinessRoute } from 'utils/business';
 
 export interface OptionsMenuProps {
   business: Business;

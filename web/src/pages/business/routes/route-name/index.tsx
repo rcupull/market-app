@@ -71,4 +71,4 @@ export const RouteName = () => {
   );
 };
 
-export default BusinessRouteName;
+export default RouteName;
