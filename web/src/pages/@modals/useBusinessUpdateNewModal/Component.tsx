@@ -1,43 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { Badge } from 'components/badge';
 import { Button } from 'components/button';
-import { ButtonClose } from 'components/button-close';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInput } from 'components/field-input';
 import { Formux } from 'components/formux';
-import { Modal } from 'components/modal';
 
 import { useAddOneBusiness } from 'features/api/business/useAddOneBusiness';
 import { useGetAllBusiness } from 'features/api/business/useGetAllBusiness';
-import { useGetOneBusiness } from 'features/api/business/useGetOneBusiness';
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
-import { useModal } from 'features/modal/useModal';
 
-import { CallAfarResources, useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useDebouncer } from 'hooks/useDebouncer';
-import { usePortal } from 'hooks/usePortal';
+import { Portal } from 'hooks/usePortal';
 
 import { FieldBusinessCategoriesSelect } from './FieldBusinessCategoriesSelect';
 
 import { FormRouteName } from 'pages/@common/form-route-name';
-import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useBusinessOnboardingModal } from 'pages/@modals/useBusinessOnboardingModal';
 import { Business } from 'types/business';
 import { getRouteName } from 'utils/business';
 import { getRequiredLabel } from 'utils/form';
 
-export interface BusinessNewProps {
-  callAfarResources?: CallAfarResources;
-  routeName?: string;
+export interface ComponentProps {
+  portal: Portal;
+  onAfterSuccess: (response: Business | void) => void;
+  business?: Business;
 }
 
-export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) => {
-  const { onClose } = useModal();
-
-  const businessData = useBusiness();
-  const { onCallAfar } = useCallFromAfar();
-
+export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) => {
   const [continueWithOnboarding, setContinueWithOnboarding] = useState(false);
 
   const { getAllBusiness } = useGetAllBusiness();
@@ -45,24 +33,11 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
   const { addOneBusiness } = useAddOneBusiness();
   const { updateOneBusiness } = useUpdateOneBusiness();
 
-  const { getOneBusiness } = useGetOneBusiness();
-
-  const businessOnboardingModal = useBusinessOnboardingModal();
-  const business = getOneBusiness.data;
-
-  useEffect(() => {
-    if (routeName) {
-      getOneBusiness.fetch({ routeName });
-    }
-  }, []);
-
   const debouncer = useDebouncer();
-
-  const portal = usePortal();
 
   const routeValidationErrorMessage = 'Ese nombre de negocio ya existe.';
 
-  const newPostForm = (
+  return (
     <>
       <Formux<Pick<Business, 'categories' | 'name'>>
         value={{
@@ -117,7 +92,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
                 label={getRequiredLabel('Nombre del negocio')}
               />
 
-              {!routeName && (
+              {!business && (
                 <>
                   <FormRouteName
                     routeName={getRouteName(value.name)}
@@ -150,15 +125,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
                           },
                         },
                         {
-                          onAfterSuccess: () => {
-                            onClose();
-                            onCallAfar(callAfarResources, {
-                              // TODO the service not return the updated value
-                              ...business,
-                              name,
-                              routeName: getRouteName(name),
-                            });
-                          },
+                          onAfterSuccess,
                         },
                       );
                     } else {
@@ -171,15 +138,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
                           routeName: getRouteName(name),
                         },
                         {
-                          onAfterSuccess: (response) => {
-                            onClose();
-                            onCallAfar(callAfarResources, response);
-
-                            if (continueWithOnboarding) {
-                              businessData.onReset();
-                              businessOnboardingModal.open();
-                            }
-                          },
+                          onAfterSuccess,
                         },
                       );
                     }
@@ -193,7 +152,7 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
         }}
       </Formux>
 
-      {!routeName && (
+      {!business && (
         <div className="flex flex-col bg-red-100 mt-10 p-5 rounded-sm">
           <span className="text-sm">
             Cada emprendedor requiere en su negocio de una configuración básica inicial para sus
@@ -211,17 +170,6 @@ export const BusinessNew = ({ callAfarResources, routeName }: BusinessNewProps) 
       )}
     </>
   );
-
-  return (
-    <Modal
-      title={business ? 'Editar negocio' : 'Crear negocio'}
-      content={newPostForm}
-      badge={<Badge variant="info" />}
-      primaryBtn={<div ref={portal.ref} />}
-      isBusy={getOneBusiness.status.isBusy}
-      secondaryBtn={<ButtonClose />}
-    />
-  );
 };
 
-export default BusinessNew;
+export default Component;
