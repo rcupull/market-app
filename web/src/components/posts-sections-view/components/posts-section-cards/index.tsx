@@ -5,7 +5,7 @@ import { Swiper } from 'components/swiper';
 import { Business, PostsLayoutSection } from 'types/business';
 import { StyleProps } from 'types/general';
 import { Post } from 'types/post';
-import { getBusinessRoute, getOnePostRoute } from 'utils/business';
+import { getOneBusinessRoute, getOnePostRoute } from 'utils/business';
 
 export interface PostsSectionCardsProps extends StyleProps {
   posts: Array<Post> | null;
@@ -42,7 +42,7 @@ export const PostsSectionCards = ({
       }
 
       if (type === 'business') {
-        return getBusinessRoute({ routeName: value });
+        return getOneBusinessRoute({ routeName: value });
       }
 
       return '#';

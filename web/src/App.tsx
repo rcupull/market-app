@@ -18,7 +18,7 @@ const Admin = dynamic(() => import('pages/admin').then((m) => m));
 const Docs = dynamic(() => import('pages/docs').then((m) => m));
 
 const AboutUs = dynamic(() => import('pages/about-us').then((m) => m));
-const BusinessRouteName = dynamic(() => import('pages/business-route-name').then((m) => m));
+const Business = dynamic(() => import('pages/business').then((m) => m));
 
 const Price = dynamic(() => import('pages/price').then((m) => m));
 const NotFound = dynamic(() => import('pages/not-found').then((m) => m));
@@ -54,7 +54,7 @@ export const App = (): JSX.Element => {
         element={withPageProviders(<Dashboard />, AuthenticatedUser, LayoutMain)}
       />
 
-      <Route path="/:routeName/*" element={withPageProviders(<BusinessRouteName />, LayoutMain)} />
+      <Route path="/b/*" element={withPageProviders(<Business />, LayoutMain)} />
     </Routes>
   );
 };

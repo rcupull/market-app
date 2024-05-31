@@ -10,7 +10,7 @@ import { PurchaseOrderSuccess } from './sub-components/purchase-order-success';
 import { ShoppingCart } from './sub-components/shooping-cart';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { getBusinessRoute } from 'utils/business';
+import { getOneBusinessRoute } from 'utils/business';
 
 export const Component = () => {
   const { onClose } = useModal();
@@ -23,7 +23,7 @@ export const Component = () => {
       label="Finalizar"
       onClick={() => {
         onClose();
-        business && pushRoute(getBusinessRoute({ routeName: business.routeName }));
+        business && pushRoute(getOneBusinessRoute({ routeName: business.routeName }));
       }}
     />
   );
