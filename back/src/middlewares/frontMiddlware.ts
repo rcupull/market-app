@@ -9,6 +9,7 @@ import { combineMiddleware } from "../utils/general";
 import { HtmlMeta } from "../types/general";
 import { businessServices } from "../features/business/services";
 import { ServerResponse } from "http";
+import { postServices } from "../features/post/services";
 
 const defaultMeta: HtmlMeta = {
   title: "Asere Market - Comercio para todos",
@@ -78,13 +79,64 @@ const injectBusinessMetaMiddlware: RequestHandler = async (req, res, next) => {
 
     if (business instanceof ServerResponse) return business;
 
+    const getImageSrc = () => {
+      const src = business.logo?.src;
+
+      if (!src) {
+        return defaultMeta.image;
+      }
+
+      return `${hostname}${business.logo?.src}`;
+    };
+
+    const getBusinessUrl = () => {
+      return `${hostname}/b/${business.routeName}`;
+    };
+
     req.htmlMeta = {
       description: "Emprendimiento cubano la plataforma Asere Market", //TODO
       title: `${business.name}`,
-      image: business.logo?.src
-        ? `${hostname}${business.logo?.src}`
-        : defaultMeta.image,
-      url: `${hostname}/${business.routeName}`,
+      image: getImageSrc(),
+      url: getBusinessUrl(),
+    };
+  }
+
+  injectMetaService(req, res, next);
+};
+
+const injectPostMetaMiddlware: RequestHandler = async (req, res, next) => {
+  const { params } = req;
+  const { routeName, postId } = params;
+  req.htmlMeta = defaultMeta;
+
+  if (postId) {
+    const post = await postServices.getOne({
+      res,
+      req,
+      postId,
+    });
+
+    if (post instanceof ServerResponse) return post;
+
+    const getImageSrc = () => {
+      const src = post.images?.[0]?.src;
+
+      if (!src) {
+        return defaultMeta.image;
+      }
+
+      return src.startsWith("http") ? src : `${hostname}${src}`;
+    };
+
+    const getPostUrl = () => {
+      return `${hostname}/b/${routeName}/posts/${postId}`;
+    };
+
+    req.htmlMeta = {
+      description: `${post.description}`,
+      title: `${post.name}`,
+      image: getImageSrc(),
+      url: getPostUrl(),
     };
   }
 
@@ -98,30 +150,7 @@ export const frontMiddlware = combineMiddleware(
     /\/*(.png|.css|.js)/,
     express.static(join(process.cwd(), appFrontDir))
   ),
-  (req, res, next) => {
-    const noBusinessRoutes = [
-      "/price",
-      "/validate",
-      "/forgot-password",
-      "/dashboard",
-      "/admin",
-      "/about-us",
-      "/docs",
-    ];
-
-    const isNotBusinessRoute =
-      noBusinessRoutes
-        .map((noBusinessRoute) => req.url.startsWith(noBusinessRoute))
-        .some(Boolean) || req.path === "/";
-
-    logger.info("frontMiddlware");
-    logger.info(isNotBusinessRoute);
-    logger.info(req.url);
-
-    if (isNotBusinessRoute) {
-      injectDefaultMetaMiddlware(req, res, next);
-    } else {
-      router.get("/:routeName", injectBusinessMetaMiddlware);
-    }
-  }
+  router.get("/b/:routeName/posts/:postId", injectPostMetaMiddlware),
+  router.get("/b/:routeName*", injectBusinessMetaMiddlware),
+  injectDefaultMetaMiddlware
 );
