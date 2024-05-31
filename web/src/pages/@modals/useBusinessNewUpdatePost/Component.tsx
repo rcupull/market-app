@@ -98,11 +98,12 @@ export const Component = ({
 
   const { routeName, postFormFields = [] } = business;
 
+
   const productForm = (
     <Formux<PostFormState>
       value={{
         name: '',
-        price: 0,
+        price: undefined,
         currency: 'CUP',
         details: '',
         description: '',
@@ -127,6 +128,12 @@ export const Component = ({
           customCb: (value) => value?.length,
           message: 'Debe seleccionar al menos una categoría',
         },
+        {
+          field: 'price',
+          type: 'custom',
+          customCb: (priceVal) => isNaN(priceVal) || priceVal > 0,
+          message: 'El precio debe ser un número mayor que 0'
+        }
       ]}
     >
       {({ value, isValid }) => {
@@ -203,7 +210,7 @@ export const Component = ({
               postFormFields.includes('discount') ||
               postFormFields.includes('stockAmount')) && (
               <>
-                <div className="flex flex-col sm:flex-row items-center gap-6">
+                <div className="flex flex-col sm:flex-row justify-center gap-6">
                   <FieldInput
                     id="post_price"
                     name="price"
