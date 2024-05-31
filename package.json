@@ -13,17 +13,21 @@
     "serve:server": "cd ./back && pnpm serve",
     "install:server": "cd ./back && pnpm install",
     "<<<<<<Both>>>>>>": "",
-    "start": "NODE_ENV=development DB_ENV=development concurrently \"pnpm start:client\" \"pnpm start:server\"",
-    "start:prod": "NODE_ENV=development DB_ENV=production concurrently \"pnpm start:client\" \"pnpm start:server\"",
-    "stage": "NODE_ENV=development DB_ENV=development concurrently \"pnpm build:client\" \"pnpm build:server\" && pnpm serve",
-    "build": "NODE_ENV=production DB_ENV=production concurrently \"pnpm build:client\" \"pnpm build:server\"",
-    "install:all": "concurrently \"pnpm install:client\" \"pnpm install:server\"",
-    "serve": "NODE_ENV=development DB_ENV=development pnpm serve:server"
+    "start": "cross-env NODE_ENV=development DB_ENV=development concurrently \"pnpm start:client\" \"pnpm start:server\"",
+    "start:prod": "cross-env NODE_ENV=development DB_ENV=production concurrently \"pnpm start:client\" \"pnpm start:server\"",
+    "stage": "cross-env NODE_ENV=development DB_ENV=development concurrently \"pnpm build:client\" \"pnpm build:server\" && pnpm serve",
+    "build": "cross-env NODE_ENV=production DB_ENV=production concurrently \"pnpm build:client\" \"pnpm build:server\"",
+    "serve": "cross-env NODE_ENV=development DB_ENV=development pnpm serve:server"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3"
+  },
+  "dependencies": {
+    "optional": "^0.1.4",
+    "sharp": "^0.33.4"
   }
 }
