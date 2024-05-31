@@ -15,13 +15,16 @@ import { Menu } from 'components/menu';
 
 import { useRemoveOneBusiness } from 'features/api/business/useRemoveOneBusiness';
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
+import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
 import { useModal } from 'features/modal/useModal';
 
 import { callAfarIds, useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
 
 import { KpiCredit, KpiTelegram, KpiToPay } from 'pages/@common/kpis-business';
+import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewModal';
 import { Business } from 'types/business';
+import { getDashboardBusinessRoute, getOneBusinessRoute } from 'utils/business';
 
 export interface OptionsMenuProps {
   business: Business;
@@ -30,6 +33,8 @@ export interface OptionsMenuProps {
 
 export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
   const { routeName, hidden } = business;
+  const businessUpdateNewModal = useBusinessUpdateNewModal();
+  const allUserBusiness = useAllUserBusiness();
 
   const { pushModal } = useModal();
   const { pushRoute } = useRouter();
@@ -148,19 +153,23 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
         {
           label: 'Editar el negocio',
           onClick: () => {
-            pushModal('BusinessNew', {
-              routeName,
-              callAfarResources: [
-                callAfarIds.getAllUserBussiness,
-                callAfarIds.redirect_to_dashboard_business_routename,
-              ],
+            businessUpdateNewModal.open({
+              onAfterSucess: (newBussiness) => {
+                if (newBussiness) {
+                  const { routeName } = newBussiness;
+                  pushRoute(getDashboardBusinessRoute({ routeName }), {}, { timeout: 100 });
+                  allUserBusiness.init();
+                }
+              },
             });
           },
           svg: IconUpdate,
         },
         {
           label: 'Ver la página de este negocio',
-          onClick: () => pushRoute(`/${routeName}`),
+          onClick: () => {
+            pushRoute(getOneBusinessRoute({ routeName }));
+          },
           svg: IconView,
         },
         {
@@ -185,12 +194,12 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
       <IconButtonUpdate
         title="Editar el negocio"
         onClick={() => {
-          pushModal('BusinessNew', {
+          businessUpdateNewModal.open({
             routeName,
-            callAfarResources: [
-              callAfarIds.getAllUserBussiness,
-              callAfarIds.redirect_to_dashboard_business_routename,
-            ],
+            onAfterSucess: () => {
+              pushRoute(getDashboardBusinessRoute({ routeName }), {}, { timeout: 100 });
+              allUserBusiness.init();
+            },
           });
         }}
       />
@@ -198,7 +207,7 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
       <IconButtonView
         title="Ver la página de este negocio"
         onClick={() => {
-          pushRoute(`/${routeName}`);
+          pushRoute(getOneBusinessRoute({ routeName }));
         }}
       />
     </div>

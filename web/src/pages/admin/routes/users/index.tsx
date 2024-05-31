@@ -54,3 +54,5 @@ export const Users = () => {
     </LayoutPageSection>
   );
 };
+
+export default Users;

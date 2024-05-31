@@ -33,9 +33,9 @@ import { useAuthSignUpModal } from 'pages/@modals/useAuthSignUpModal';
 import { StyleProps } from 'types/general';
 import {
   getBusinessAboutUsRoute,
-  getBusinessRoute,
   getDashboardBusinessRoute,
   getDashboardRoute,
+  getOneBusinessRoute,
 } from 'utils/business';
 
 export interface NavbarProps extends StyleProps {}
@@ -43,13 +43,12 @@ export const Navbar = ({ className }: NavbarProps) => {
   const { isAdmin, isUser, isAuthenticated, authData, onRefreshAuthUser } = useAuth();
   const { authSignOut } = useAuthSignOut();
   const { user } = authData || {};
-  const { isBusinessPage, params, isAuthenticatedPage } = useRouter();
+  const { isBusinessPage, params, isAuthenticatedPage, pushRoute } = useRouter();
   const { routeName } = params;
   const { business } = useBusiness();
   const authChangePasswordModal = useAuthChangePasswordModal();
   const aboutUsPage = business?.aboutUsPage || {};
   const { pushModal } = useModal();
-  const { pushRoute } = useRouter();
 
   const authSignInModal = useAuthSignInModal();
   const authSignUpModal = useAuthSignUpModal();
@@ -69,7 +68,7 @@ export const Navbar = ({ className }: NavbarProps) => {
       }
       items={[
         isBusinessPage &&
-          !!routeName && { name: 'Publicaciones', href: getBusinessRoute({ routeName }) },
+          !!routeName && { name: 'Publicaciones', href: getOneBusinessRoute({ routeName }) },
         isBusinessPage &&
           aboutUsPage?.visible &&
           !!aboutUsPage.title &&

@@ -147,3 +147,5 @@ export const CatalogsSearchImage = ({ onSelected, multi }: CatalogsSearchImagePr
     />
   );
 };
+
+export default CatalogsSearchImage;

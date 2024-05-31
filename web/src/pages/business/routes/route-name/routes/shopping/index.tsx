@@ -2,12 +2,10 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { useAuth } from 'features/api-slices/useAuth';
 
-import { getBusinessRoute } from 'utils/business';
+import { getOneBusinessRoute } from 'utils/business';
 import { dynamic } from 'utils/makeLazy';
-const Home = dynamic(() => import('./routes/home').then((m) => ({ default: m.Home })));
-const ShoppingId = dynamic(() =>
-  import('./routes/shoppingId').then((m) => ({ default: m.ShoppingId })),
-);
+const Home = dynamic(() => import('./routes/home').then((m) => m));
+const ShoppingId = dynamic(() => import('./routes/shoppingId').then((m) => m));
 
 export interface ShoppingProps {
   routeName: string;
@@ -17,7 +15,7 @@ export const Shopping = ({ routeName }: ShoppingProps) => {
   const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
-    return <Navigate to={getBusinessRoute({ routeName })} />;
+    return <Navigate to={getOneBusinessRoute({ routeName })} />;
   }
 
   return (
@@ -27,3 +25,5 @@ export const Shopping = ({ routeName }: ShoppingProps) => {
     </Routes>
   );
 };
+
+export default Shopping;

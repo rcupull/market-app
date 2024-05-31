@@ -124,3 +124,4 @@ export const ProfileUpdate = ({ userId, callAfarResources }: ProfileUpdateProps)
     />
   );
 };
+export default ProfileUpdate;

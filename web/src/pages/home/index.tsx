@@ -17,7 +17,7 @@ import { LayoutPageSection } from 'pages/@common/layout-page-section';
 import { useInfinityScrolling } from 'pages/dashboard/routes/business/routes/route-name/products/useInfinityScrolling';
 import { GetAllBusinessQuery } from 'types/api';
 import { getImageEndpoint } from 'utils/api';
-import { getBusinessRoute } from 'utils/business';
+import { getOneBusinessRoute } from 'utils/business';
 
 export const Home = () => {
   const { getAllBusinessSummary } = useGetAllBusinessSummary();
@@ -54,7 +54,7 @@ export const Home = () => {
                 <BusinessCardSimple
                   key={index}
                   businessSummary={businessSummary}
-                  href={getBusinessRoute({ routeName: businessSummary.routeName })}
+                  href={getOneBusinessRoute({ routeName: businessSummary.routeName })}
                   getImageSrc={getImageEndpoint}
                 />
               );
@@ -65,3 +65,5 @@ export const Home = () => {
     </LayoutPage>
   );
 };
+
+export default Home;

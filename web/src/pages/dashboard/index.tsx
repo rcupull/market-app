@@ -6,17 +6,9 @@ import { useAuth } from 'features/api-slices/useAuth';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { dynamic } from 'utils/makeLazy';
 
-const Business = dynamic(() =>
-  import('./routes/business').then((m) => ({
-    default: m.Business,
-  })),
-);
+const Business = dynamic(() => import('./routes/business').then((m) => m));
 
-const Settings = dynamic(() =>
-  import('./routes/settings').then((m) => ({
-    default: m.Settings,
-  })),
-);
+const Settings = dynamic(() => import('./routes/settings').then((m) => m));
 
 export const Dashboard = () => {
   const { isUser } = useAuth();
@@ -43,3 +35,5 @@ export const Dashboard = () => {
     </Routes>
   );
 };
+
+export default Dashboard;

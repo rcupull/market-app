@@ -8,3 +8,5 @@ export interface ComponentProps {
 export const Component = ({ shopping }: ComponentProps) => {
   return <ShoppingDetails shopping={shopping} />;
 };
+
+export default Component;

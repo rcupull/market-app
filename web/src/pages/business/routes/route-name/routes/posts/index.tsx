@@ -2,8 +2,8 @@ import { Route, Routes } from 'react-router-dom';
 
 import { dynamic } from 'utils/makeLazy';
 
-const Home = dynamic(() => import('./routes/home').then((m) => ({ default: m.Home })));
-const PostId = dynamic(() => import('./routes/postId').then((m) => ({ default: m.PostId })));
+const Home = dynamic(() => import('./routes/home').then((m) => m));
+const PostId = dynamic(() => import('./routes/postId').then((m) => m));
 
 export interface PostsProps {
   routeName: string;
@@ -17,3 +17,5 @@ export const Posts = ({ routeName }: PostsProps) => {
     </Routes>
   );
 };
+
+export default Posts;

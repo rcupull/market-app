@@ -7,25 +7,17 @@ import { useRouter } from 'hooks/useRouter';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useShopping } from 'pages/@hooks/useShopping';
-import { getBusinessRoute } from 'utils/business';
+import { getOneBusinessRoute } from 'utils/business';
 import { dynamic } from 'utils/makeLazy';
 
-const Posts = dynamic(() => import('./routes/posts').then((m) => ({ default: m.Posts })));
-const Shopping = dynamic(() => import('./routes/shopping').then((m) => ({ default: m.Shopping })));
+const Posts = dynamic(() => import('./routes/posts').then((m) => m));
+const Shopping = dynamic(() => import('./routes/shopping').then((m) => m));
 
-const Home = dynamic(() =>
-  import('./routes/home').then((m) => ({
-    default: m.Home,
-  })),
-);
+const Home = dynamic(() => import('./routes/home').then((m) => m));
 
-const AboutUs = dynamic(() =>
-  import('./routes/about-us').then((m) => ({
-    default: m.AboutUs,
-  })),
-);
+const AboutUs = dynamic(() => import('./routes/about-us').then((m) => m));
 
-export const BusinessRouteName = () => {
+export const RouteName = () => {
   const { params } = useRouter();
   const { isAuthenticated } = useAuth();
   const { routeName } = params;
@@ -74,7 +66,9 @@ export const BusinessRouteName = () => {
 
       <Route path="posts/*" element={<Posts routeName={routeName} />} />
 
-      <Route path="*" element={<Navigate to={getBusinessRoute({ routeName })} />} />
+      <Route path="*" element={<Navigate to={getOneBusinessRoute({ routeName })} />} />
     </Routes>
   );
 };
+
+export default RouteName;

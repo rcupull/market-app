@@ -9,3 +9,5 @@ export const Emergent = ({ useProps }: EmergentProps) => {
 
   return <Modal content="<Some message>" {...props} />;
 };
+
+export default Emergent;

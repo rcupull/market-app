@@ -98,7 +98,6 @@ export const Component = ({
 
   const { routeName, postFormFields = [] } = business;
 
-
   const productForm = (
     <Formux<PostFormState>
       value={{
@@ -132,8 +131,8 @@ export const Component = ({
           field: 'price',
           type: 'custom',
           customCb: (priceVal) => isNaN(priceVal) || priceVal > 0,
-          message: 'El precio debe ser un número mayor que 0'
-        }
+          message: 'El precio debe ser un número mayor que 0',
+        },
       ]}
     >
       {({ value, isValid }) => {
@@ -532,3 +531,5 @@ export const Component = ({
 
   return postType === 'product' ? productForm : linkForm;
 };
+
+export default Component;

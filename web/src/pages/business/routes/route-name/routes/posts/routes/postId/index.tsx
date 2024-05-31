@@ -103,3 +103,5 @@ export const PostId = ({ routeName }: PostIdProps) => {
     </UpdateSomethingContainer>
   );
 };
+
+export default PostId;

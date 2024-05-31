@@ -213,3 +213,5 @@ export const Component = ({ portal }: ComponentProps) => {
     </div>
   );
 };
+
+export default Component;

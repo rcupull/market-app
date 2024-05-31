@@ -227,3 +227,5 @@ export const ComponentProduct = ({
     </Formux>
   );
 };
+
+export default ComponentProduct;

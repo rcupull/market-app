@@ -36,3 +36,5 @@ export const AboutUs = ({ routeName }: AboutUsProps) => {
     </UpdateSomethingContainer>
   );
 };
+
+export default AboutUs;
