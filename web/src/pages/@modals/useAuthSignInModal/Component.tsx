@@ -180,3 +180,5 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
     </div>
   );
 };
+
+export default Component;

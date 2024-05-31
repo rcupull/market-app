@@ -3,15 +3,15 @@ import { Navigate } from 'react-router-dom';
 import { ButtonNew } from 'components/button-new';
 
 import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
-import { useModal } from 'features/modal/useModal';
 
-import { callAfarIds } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
+
+import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewModal';
 
 export const Home = () => {
   const allUserBusiness = useAllUserBusiness();
+  const businessUpdateNewModal = useBusinessUpdateNewModal();
 
-  const { pushModal } = useModal();
   const { pathname } = useRouter();
   const firstBusiness = allUserBusiness.data?.[0];
 
@@ -27,10 +27,18 @@ export const Home = () => {
       <ButtonNew
         className="mt-6"
         label="Crear mi primer negocio"
-        onClick={() =>
-          pushModal('BusinessNew', { callAfarResources: callAfarIds.getAllUserBussiness })
-        }
+        onClick={() => {
+          businessUpdateNewModal.open({
+            onAfterSucess: (newBussiness) => {
+              if (newBussiness) {
+                allUserBusiness.init();
+              }
+            },
+          });
+        }}
       />
     </div>
   );
 };
+
+export default Home;

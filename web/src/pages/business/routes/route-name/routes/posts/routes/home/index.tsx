@@ -1,11 +1,13 @@
 import { Navigate } from 'react-router-dom';
 
-import { getBusinessRoute } from 'utils/business';
+import { getOneBusinessRoute } from 'utils/business';
 
 export interface HomeProps {
   routeName: string;
 }
 
 export const Home = ({ routeName }: HomeProps) => {
-  return <Navigate to={getBusinessRoute({ routeName })} />;
+  return <Navigate to={getOneBusinessRoute({ routeName })} />;
 };
+
+export default Home;

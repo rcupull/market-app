@@ -1,10 +1,16 @@
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import { queryToSearch, searchToQuery } from './utils';
+import { getParamsFromPathname, queryToSearch, searchToQuery } from './utils';
 
 import { Query } from 'types/api';
 import { AnyRecord } from 'types/general';
-import { getOnePostRoute } from 'utils/business';
+import {
+  getBusinessAboutUsRoute,
+  getBusinessRoute,
+  getOnePostRoute,
+  getPostsRoute,
+  getShoppingRoute,
+} from 'utils/business';
 import { getFlattenJson } from 'utils/general';
 
 interface UseRouterReturn {
@@ -44,7 +50,9 @@ interface UseRouterReturn {
 export const useRouter = (): UseRouterReturn => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
-  const params = useParams();
+
+  const params = getParamsFromPathname(pathname);
+
   const query = searchToQuery(search.slice(1)) as Query;
 
   const onChangeQuery: UseRouterReturn['onChangeQuery'] = (newQuery, options) => {
@@ -70,15 +78,17 @@ export const useRouter = (): UseRouterReturn => {
   const isDashboardPage = pathname.startsWith('/dashboard');
 
   const isAdminPage = pathname.startsWith('/admin');
+
   return {
-    isBusinessPage: pathname.startsWith(`/${routeName}`),
-    isShoppingPage: pathname.startsWith(`/${routeName}/shopping`),
-    isPostPage: pathname.startsWith(`/${routeName}/posts`),
+    isBusinessPage: pathname.startsWith(getBusinessRoute()),
+    isShoppingPage: !!routeName && pathname.startsWith(getShoppingRoute({ routeName })),
+    isPostPage: !!routeName && pathname.startsWith(getPostsRoute({ routeName })),
     isThisPostPage: ({ routeName, postId }) => {
       return pathname.startsWith(getOnePostRoute({ postId, routeName }));
     },
     isAboutUsPage: pathname.startsWith(`/about-us`),
-    isBusinessAboutUsPage: pathname.startsWith(`/${routeName}/about-us`),
+    isBusinessAboutUsPage:
+      !!routeName && pathname.startsWith(getBusinessAboutUsRoute({ routeName })),
     isDashboardPage,
     isAdminPage,
     isHomePage: pathname === '/',

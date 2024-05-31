@@ -2,17 +2,9 @@ import { Route, Routes } from 'react-router-dom';
 
 import { dynamic } from 'utils/makeLazy';
 
-const Home = dynamic(() =>
-  import('./routes/home').then((m) => ({
-    default: m.Home,
-  })),
-);
+const Home = dynamic(() => import('./routes/home').then((m) => m));
 
-const RouteName = dynamic(() =>
-  import('./routes/route-name').then((m) => ({
-    default: m.RouteName,
-  })),
-);
+const RouteName = dynamic(() => import('./routes/route-name').then((m) => m));
 
 export const Business = () => {
   return (
@@ -22,3 +14,5 @@ export const Business = () => {
     </Routes>
   );
 };
+
+export default Business;

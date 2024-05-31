@@ -28,3 +28,5 @@ export const Confirmation = ({ useProps }: ConfirmationProps) => {
 
   return <Emergent useProps={useEmergentProps} />;
 };
+
+export default Confirmation;

@@ -6,3 +6,5 @@ export const Home = () => {
    */
   return <Navigate to="/admin/users" />;
 };
+
+export default Home;

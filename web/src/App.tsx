@@ -10,23 +10,19 @@ import { LayoutMain } from 'pages/@common/layout-main';
 import { withPageProviders } from 'pages/@common/with-page-providers';
 import { dynamic } from 'utils/makeLazy';
 
-const Dashboard = dynamic(() => import('pages/dashboard').then((m) => ({ default: m.Dashboard })));
-const Validate = dynamic(() => import('pages/validate').then((m) => ({ default: m.Validate })));
-const ForgotPassword = dynamic(() =>
-  import('pages/forgot-password').then((m) => ({ default: m.ForgotPassword })),
-);
+const Dashboard = dynamic(() => import('pages/dashboard').then((m) => m));
+const Validate = dynamic(() => import('pages/validate').then((m) => m));
+const ForgotPassword = dynamic(() => import('pages/forgot-password').then((m) => m));
 
-const Admin = dynamic(() => import('pages/admin').then((m) => ({ default: m.Admin })));
-const Docs = dynamic(() => import('pages/docs').then((m) => ({ default: m.Docs })));
+const Admin = dynamic(() => import('pages/admin').then((m) => m));
+const Docs = dynamic(() => import('pages/docs').then((m) => m));
 
-const AboutUs = dynamic(() => import('pages/about-us').then((m) => ({ default: m.AboutUs })));
-const BusinessRouteName = dynamic(() =>
-  import('pages/business-route-name').then((m) => ({ default: m.BusinessRouteName })),
-);
+const AboutUs = dynamic(() => import('pages/about-us').then((m) => m));
+const Business = dynamic(() => import('pages/business').then((m) => m));
 
-const Price = dynamic(() => import('pages/price').then((m) => ({ default: m.Price })));
-const NotFound = dynamic(() => import('pages/not-found').then((m) => ({ default: m.NotFound })));
-const Home = dynamic(() => import('pages/home').then((m) => ({ default: m.Home })));
+const Price = dynamic(() => import('pages/price').then((m) => m));
+const NotFound = dynamic(() => import('pages/not-found').then((m) => m));
+const Home = dynamic(() => import('pages/home').then((m) => m));
 
 export const App = (): JSX.Element => {
   useInit();
@@ -58,7 +54,7 @@ export const App = (): JSX.Element => {
         element={withPageProviders(<Dashboard />, AuthenticatedUser, LayoutMain)}
       />
 
-      <Route path="/:routeName/*" element={withPageProviders(<BusinessRouteName />, LayoutMain)} />
+      <Route path="/b/*" element={withPageProviders(<Business />, LayoutMain)} />
     </Routes>
   );
 };

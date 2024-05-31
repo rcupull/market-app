@@ -38,3 +38,4 @@ export const Home = ({ routeName }: HomeProps) => {
     </LayoutPageSection>
   );
 };
+export default Home;

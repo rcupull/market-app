@@ -181,3 +181,5 @@ export const ComponentLink = ({
     </Formux>
   );
 };
+
+export default ComponentLink;

@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { dynamic } from 'utils/makeLazy';
-const Home = dynamic(() => import('./routes/home').then((m) => ({ default: m.Home })));
-const Users = dynamic(() => import('./routes/users').then((m) => ({ default: m.Users })));
+const Home = dynamic(() => import('./routes/home').then((m) => m));
+const Users = dynamic(() => import('./routes/users').then((m) => m));
 
 export const Admin = () => {
   return (
@@ -12,3 +12,5 @@ export const Admin = () => {
     </Routes>
   );
 };
+
+export default Admin;

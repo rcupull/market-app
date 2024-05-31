@@ -115,3 +115,5 @@ export const Component = ({ portal, options }: ComponentProps) => {
     </Formux>
   );
 };
+
+export default Component;
