@@ -11,7 +11,7 @@ const DOC = process.env.DOC;
 
 export const app = express();
 
-if (DOC === "true") {
+//if (DOC === "true") {
   app.use(
     "/api-docs",
     swaggerUiExpress.serve,
@@ -19,7 +19,7 @@ if (DOC === "true") {
       explorer: true,
     })
   );
-}
+//}
 
 app.use(cors({ origin: "*", optionsSuccessStatus: 200 }));
 

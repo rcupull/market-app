@@ -399,6 +399,28 @@ const bulk_action_update: () => RequestHandler = () => {
   };
 };
 
+const post_make_review: () => RequestHandler = () => {
+  return async (req, res) => {
+    const {user} = req;
+    const {postId} = req.params;
+    const {value} = req.body;
+
+    if(value < 1 || value > 5){
+      return res.status(400).json({message: "Invalid review value"})
+    }
+    const filterQuery = { _id: postId};
+    const updateData = { $inc: {[`reviews.${value-1}`]:1}}    
+    const out = await postServices.updateOne({
+      res, 
+      req, 
+      query: filterQuery, 
+      update: updateData
+    });
+
+    return res.status(200).json({message: "Review was send correctly"})
+  }
+}
+
 export const postHandles = {
   get_posts,
   post_posts,
@@ -410,4 +432,5 @@ export const postHandles = {
   //
   bulk_action_delete,
   bulk_action_update,
+  post_make_review
 };

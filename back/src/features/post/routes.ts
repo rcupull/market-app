@@ -59,6 +59,17 @@ router
     postHandles.delete_posts_postId()
   );
 
+//////////////////////////////////////////////////////////////////
+
+router
+  .route("/posts/:postId/review")
+  .post(
+    validators.param("postId").notEmpty(),
+    validators.body("value").notEmpty(),
+    validators.handle,
+    isLogged,
+    postHandles.post_make_review()
+  )
 /////////////////////////////////////////////////////////////////
 
 router
