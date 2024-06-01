@@ -64,8 +64,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 classNameContainer="max-h-[50vh]"
                 description={
                   <div>
-                    Describe la funcionalidad del negocio, permite incorporar imágenes y otros
-                    formatos de texto.
+                    Describe la funcionalidad del negocio.
                   </div>
                 }
               />
