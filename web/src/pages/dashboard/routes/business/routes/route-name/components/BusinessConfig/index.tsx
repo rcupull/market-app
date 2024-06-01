@@ -65,7 +65,7 @@ export const BusinessConfig = ({ business }: BusinessConfigProps) => {
     return () => {
       interval.cancel();
     };
-  }, []);
+  }, [business.routeName]);
 
   return <></>;
 };
