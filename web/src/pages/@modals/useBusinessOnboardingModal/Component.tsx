@@ -9,11 +9,19 @@ import { StepBanner } from './steps/step-banner';
 import { StepPost } from './steps/step-post';
 import { StepPostsSections } from './steps/step-posts-sections';
 import { StepShopping } from './steps/step-shopping';
+import { BusinessOnboardingSteps } from './types';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { getOneBusinessRoute } from 'utils/business';
+import { compact } from 'utils/general';
 
-export const Component = () => {
+export interface ComponentProps {
+  steps?: Array<BusinessOnboardingSteps>;
+}
+
+export const Component = ({
+  steps = ['banner', 'products', 'shopping', 'section'],
+}: ComponentProps) => {
   const { onClose } = useModal();
   const { pushRoute } = useRouter();
   const { business } = useBusiness();
@@ -21,7 +29,7 @@ export const Component = () => {
   const finishButton = (
     <Button
       variant="link"
-      label="Ir a la página del negocio"
+      label="Ver la página del negocio"
       onClick={() => {
         onClose();
         business && pushRoute(getOneBusinessRoute({ routeName: business.routeName }));
@@ -29,26 +37,53 @@ export const Component = () => {
     />
   );
 
+  const compactSteps: Array<BusinessOnboardingSteps> = compact([
+    steps.includes('shopping') && 'shopping',
+    steps.includes('section') && 'section',
+    steps.includes('products') && 'products',
+    steps.includes('banner') && 'banner',
+  ]);
+
+  const lastStep = compactSteps[compactSteps.length - 1];
+
   return (
     <Stepper
-      //Enable stepper navigation only in development
-      disabledStepNavigation={!DEVELOPMENT}
       items={[
-        {
+        compactSteps.includes('shopping') && {
           label: 'Datos básicos para la venta',
-          render: (props) => <StepShopping {...props} finishButton={finishButton} />,
+          render: (props) => (
+            <StepShopping
+              {...props}
+              {...(lastStep === 'shopping' ? { nextButton: finishButton } : {})}
+            />
+          ),
         },
-        {
+        compactSteps.includes('section') && {
           label: 'Agregue su primera sección de productos',
-          render: (props) => <StepPostsSections {...props} finishButton={finishButton} />,
+          render: (props) => (
+            <StepPostsSections
+              {...props}
+              {...(lastStep === 'section' ? { nextButton: finishButton } : {})}
+            />
+          ),
         },
-        {
+        compactSteps.includes('products') && {
           label: 'Agregue su primer producto',
-          render: (props) => <StepPost {...props} finishButton={finishButton} />,
+          render: (props) => (
+            <StepPost
+              {...props}
+              {...(lastStep === 'products' ? { nextButton: finishButton } : {})}
+            />
+          ),
         },
-        {
+        compactSteps.includes('banner') && {
           label: 'Banner publicitario',
-          render: (props) => <StepBanner {...props} finishButton={finishButton} />,
+          render: (props) => (
+            <StepBanner
+              {...props}
+              {...(lastStep === 'banner' ? { nextButton: finishButton } : {})}
+            />
+          ),
         },
       ]}
     />

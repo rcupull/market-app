@@ -135,7 +135,7 @@ export const Component = ({
         },
       ]}
     >
-      {({ value, isValid }) => {
+      {({ value, isValid, hasChange }) => {
         return (
           <form className={className}>
             {/** ALWAYS VISIBLE */}
@@ -308,6 +308,7 @@ export const Component = ({
                 label="Guardar"
                 isBusy={addOnePost.status.isBusy || updateOnePost.status.isBusy}
                 disabled={!isValid}
+                hasChange={hasChange}
                 onClick={() => {
                   const {
                     images,

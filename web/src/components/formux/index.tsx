@@ -19,8 +19,7 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
   const [errors, setErrors] = useState<FormErrors<Value>>({});
   const [touched, setTouched] = useState<FormTouched<Value>>({});
   const [isValid, setIsValid] = useState<boolean>(true);
-  const initialValue = useMemo(()=>deepJsonCopy(value),[])
-
+  const initialValue = useMemo(() => deepJsonCopy(value), []);
 
   useEffect(() => {
     setFormState(value);

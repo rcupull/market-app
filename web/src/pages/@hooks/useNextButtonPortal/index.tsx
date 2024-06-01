@@ -17,14 +17,17 @@ export const useNextButtonPortal = (
     portal: {
       ...portal,
       getPortal: (node: React.ReactElement) => {
-        const { onClick, disabled, isBusy } = node.props;
-        return portal.getPortal(
-          cloneElement(nextButton, {
-            onClick,
-            disabled,
-            isBusy,
-          }),
-        );
+        const { onClick, disabled, isBusy, hasChange } = node.props;
+
+        const el = hasChange
+          ? cloneElement(nextButton, {
+              onClick,
+              disabled,
+              isBusy,
+            })
+          : nextButton;
+
+        return portal.getPortal(el);
       },
     },
   };
