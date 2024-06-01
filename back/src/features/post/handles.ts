@@ -9,6 +9,7 @@ import {
 } from "../../utils/server-response";
 import { isEmpty, isEqual } from "../../utils/general";
 import { Post } from "../../types/post";
+import { makeReshaper } from "../../utils/makeReshaper";
 
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
@@ -182,7 +183,25 @@ const put_posts_postId: () => RequestHandler = () => {
         query: {
           _id: post._id,
         },
-        update: body,
+        update: makeReshaper<Partial<Post>, Partial<Post>>({
+          clothingSizes: "clothingSizes",
+          colors: "colors",
+          details: "details",
+          highlights: "highlights",
+          images: "images",
+          name: "name",
+          price: "price",
+          reviews: "reviews",
+          currency: "currency",
+          description: "description",
+          hidden: "hidden",
+          hiddenBusiness: "hiddenBusiness",
+          postCategoriesTags: "postCategoriesTags",
+          discount: "discount",
+          postPageLayout: "postPageLayout",
+          stockAmount: "stockAmount",
+          postLink: "postLink",
+        })(body),
       });
 
       if (out instanceof ServerResponse) return;

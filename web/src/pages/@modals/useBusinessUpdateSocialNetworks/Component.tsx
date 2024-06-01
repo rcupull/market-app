@@ -67,14 +67,14 @@ export const Component = ({ portal, options }: ComponentProps) => {
               <FieldInput label="Instagram" name="instagram" className="w-full mt-4" />,
               value.instagram,
             )}
-            {renderFieldLink(
+            {/* {renderFieldLink(
               <FieldInput label="Twitter" name="twitter" className="w-full mt-4" />,
               value.twitter,
             )}
             {renderFieldLink(
               <FieldInput label="Linkedin" name="linkedin" className="w-full mt-4" />,
               value.linkedin,
-            )}
+            )} */}
 
             {portal.getPortal(
               <Button

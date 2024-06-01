@@ -243,30 +243,9 @@ const addOne: QueryHandle<
 
 const updateOne: QueryHandle<{
   query: FilterQuery<Post>;
-  update: Partial<Post>;
+  update: UpdateQuery<Post>;
 }> = async ({ query, update }) => {
-  await PostModel.updateOne(
-    query,
-    makeReshaper<Partial<Post>, Partial<Post>>({
-      clothingSizes: "clothingSizes",
-      colors: "colors",
-      details: "details",
-      highlights: "highlights",
-      images: "images",
-      name: "name",
-      price: "price",
-      reviews: "reviews",
-      currency: "currency",
-      description: "description",
-      hidden: "hidden",
-      hiddenBusiness: "hiddenBusiness",
-      postCategoriesTags: "postCategoriesTags",
-      discount: "discount",
-      postPageLayout: "postPageLayout",
-      stockAmount: "stockAmount",
-      postLink: "postLink",
-    })(update)
-  );
+  await PostModel.updateOne(query, update);
 };
 
 const updateStockAmount: QueryHandle<

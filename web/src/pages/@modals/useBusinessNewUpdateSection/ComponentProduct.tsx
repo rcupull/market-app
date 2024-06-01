@@ -74,7 +74,7 @@ export const ComponentProduct = ({
         },
       ]}
     >
-      {({ value, isValid }) => {
+      {({ value, isValid, hasChange }) => {
         return (
           <form className={className}>
             <FieldRadioGroup<{
@@ -199,6 +199,7 @@ export const ComponentProduct = ({
               <ButtonSave
                 isBusy={addBusinessSection.status.isBusy || updateBusinessSection.status.isBusy}
                 disabled={!isValid}
+                hasChange={hasChange}
                 onClick={() => {
                   if (!business) return;
                   section
