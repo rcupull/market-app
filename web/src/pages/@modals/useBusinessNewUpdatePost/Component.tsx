@@ -130,7 +130,7 @@ export const Component = ({
         {
           field: 'price',
           type: 'custom',
-          customCb: (priceVal) => isNaN(priceVal) || priceVal > 0,
+          customCb: (priceVal) => !isNaN(priceVal) && priceVal !== undefined && priceVal > 0,
           message: 'El precio debe ser un número mayor que 0',
         },
       ]}
