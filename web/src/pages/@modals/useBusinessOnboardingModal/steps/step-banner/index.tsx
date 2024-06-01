@@ -8,8 +8,8 @@ import { Component } from 'pages/@modals/useBusinessUpdateBanner/Component';
 
 export interface StepBannerProps extends OnboardingStepProps {}
 
-export const StepBanner = ({ backButton, finishButton }: StepBannerProps) => {
-  const { nextAction, portal, rightButton } = useNextButtonPortal(finishButton);
+export const StepBanner = ({ backButton, nextButton }: StepBannerProps) => {
+  const { nextAction, portal, rightButton } = useNextButtonPortal(nextButton);
   const { business, onFetch } = useBusiness();
 
   return (

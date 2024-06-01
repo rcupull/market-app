@@ -25,6 +25,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   svg?: ButtonSvg;
   stopPropagation?: boolean;
   preventDefault?: boolean;
+  hasChange?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
