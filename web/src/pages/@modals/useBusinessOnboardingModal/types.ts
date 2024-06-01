@@ -1,5 +1,5 @@
 import { StepProps } from 'components/stepper';
 
-export interface OnboardingStepProps extends StepProps {
-  finishButton: React.ReactElement;
-}
+export interface OnboardingStepProps extends StepProps {}
+
+export type BusinessOnboardingSteps = 'shopping' | 'section' | 'products' | 'banner';

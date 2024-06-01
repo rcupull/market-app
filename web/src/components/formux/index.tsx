@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { FormContext } from './context';
 import { ContextState, FormErrors, FormProps, FormTouched } from './types';
 import { useGetFormErrors } from './useGetFormErrors';
 
 import { AnyRecord } from 'types/general';
-import { getFlattenJson, isEmpty } from 'utils/general';
+import { deepJsonCopy, getFlattenJson, isEmpty, isEqual } from 'utils/general';
 
 export const Formux = <Value extends AnyRecord = AnyRecord>({
   validate,
@@ -19,6 +19,7 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
   const [errors, setErrors] = useState<FormErrors<Value>>({});
   const [touched, setTouched] = useState<FormTouched<Value>>({});
   const [isValid, setIsValid] = useState<boolean>(true);
+  const initialValue = useMemo(() => deepJsonCopy(value), []);
 
   useEffect(() => {
     setFormState(value);
@@ -49,6 +50,7 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
 
   const state: ContextState<Value> = {
     value: formState,
+    hasChange: !isEqual(initialValue, formState),
     isValid,
     errors: getErrors(),
     setErrors,
@@ -56,7 +58,7 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
     touched,
     setValue: setFormState,
     resetForm: () => {
-      setFormState(value);
+      setFormState(initialValue);
       setErrors({});
       setTouched({});
       setIsValid(true);

@@ -1,7 +1,4 @@
-import { useState } from 'react';
-
 import { Button } from 'components/button';
-import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInput } from 'components/field-input';
 import { Formux } from 'components/formux';
 
@@ -26,8 +23,6 @@ export interface ComponentProps {
 }
 
 export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) => {
-  const [continueWithOnboarding, setContinueWithOnboarding] = useState(false);
-
   const { getAllBusiness } = useGetAllBusiness();
 
   const { addOneBusiness } = useAddOneBusiness();
@@ -151,23 +146,6 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
           );
         }}
       </Formux>
-
-      {!business && (
-        <div className="flex flex-col bg-red-100 mt-10 p-5 rounded-sm">
-          <span className="text-sm">
-            Cada emprendedor requiere en su negocio de una configuración básica inicial para sus
-            primeras publicaciones, le recomendamos continuar con nosotros marcando la casilla
-            siguiente:
-          </span>
-          <FieldCheckbox
-            label="Continuar con la configuración básica del negocio."
-            noUseFormik
-            value={continueWithOnboarding}
-            onChange={(e) => setContinueWithOnboarding(e.target.checked)}
-            className="mt-4"
-          />
-        </div>
-      )}
     </>
   );
 };

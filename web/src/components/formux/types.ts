@@ -15,6 +15,8 @@ export interface ContextState<Value extends AnyRecord = AnyRecord> {
   //
   isValid: boolean;
   resetForm: () => void;
+  //
+  hasChange: boolean;
 }
 
 export type FormErrors<Value extends AnyRecord = AnyRecord> = Partial<Record<keyof Value, string>>;

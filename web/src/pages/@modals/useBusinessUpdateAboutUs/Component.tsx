@@ -48,10 +48,9 @@ export const Component = ({ portal }: ComponentProps) => {
                 name="visible"
                 description={
                   <div>
-                    La página de presentacion se muestra en conjunto con la de las publicaciones y
-                    tiene como objetivo personalizar una descripcion, comentarios o reseñas que
-                    usted necesite mostrar sobre su negocio. Si no necesita de este espacio
-                    desactive este campo para no mostrar la página.
+                    La página de presentación se muestra en conjunto con la de publicaciones con el
+                    objetivo de personalizar una descripción, comentarios o reseñas sobre su
+                    negocio. Puede desactivar este campo.
                   </div>
                 }
               />
@@ -65,8 +64,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 classNameContainer="max-h-[50vh]"
                 description={
                   <div>
-                    En este módulo usted puede formular un texto enriquecido que se mostrará en la
-                    página de presentacion.
+                    Describe la  funcionalidad del negocio, permite incorporar imágenes y otros formatos de texto.
                     <br />
                     <br />
                     <span className="italic">

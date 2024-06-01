@@ -32,10 +32,12 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
 
   const { bannerImages, routeName } = business || {};
 
-  const [state, setState] = useState<State>({
+  const initialState: State = {
     bannerImages: bannerImages || [],
     bannerLayoutType: business?.layouts?.banner?.type || 'none',
-  });
+  };
+
+  const [state, setState] = useState<State>(initialState);
 
   const { updateOneBusiness } = useUpdateOneBusiness();
   const { addManyImages } = useAddManyImages();
@@ -56,7 +58,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
           : undefined
       }
     >
-      {({ value, isValid }) => {
+      {({ value, isValid, hasChange }) => {
         return (
           <form>
             <FieldRadioGroup<{
@@ -100,6 +102,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                 label="Guardar"
                 isBusy={updateOneBusiness.status.isBusy || addManyImages.status.isBusy}
                 disabled={!isValid}
+                hasChange={hasChange}
                 onClick={() => {
                   if (!business) return;
 
