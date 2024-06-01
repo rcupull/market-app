@@ -408,8 +408,14 @@ const post_make_review: () => RequestHandler = () => {
     if(value < 1 || value > 5){
       return res.status(400).json({message: "Invalid review value"})
     }
-    const filterQuery = { _id: postId};
-    const updateData = { $inc: {[`reviews.${value-1}`]:1}}    
+    const filterQuery = { 
+      _id: postId,
+      reviewsUserIds: { $nin: [user]}
+    };
+    const updateData = { 
+      $inc: {[`reviews.${value-1}`]:1},
+      $push: { reviewsUserIds: user}
+    }    
     const out = await postServices.updateOne({
       res, 
       req, 
