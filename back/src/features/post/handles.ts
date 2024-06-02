@@ -4,6 +4,8 @@ import { GetAllArgs, postServices } from "./services";
 import { ServerResponse } from "http";
 import { imagesServices } from "../images/services";
 import {
+  get200Response,
+  get400Response,
   getPostNotFoundResponse,
   getUserNotFoundResponse,
 } from "../../utils/server-response";
@@ -406,10 +408,11 @@ const post_make_review: () => RequestHandler = () => {
     const {value} = req.body;
 
     if(value < 1 || value > 5){
-      return res.status(400).json({message: "Invalid review value"})
+      return get400Response({res, json: {message: "Invalid review value"}})
     }
     const filterQuery = { 
       _id: postId,
+      createdBy: { $ne: user},
       reviewsUserIds: { $nin: [user]}
     };
     const updateData = { 
@@ -423,7 +426,7 @@ const post_make_review: () => RequestHandler = () => {
       update: updateData
     });
 
-    return res.status(200).json({message: "Review was send correctly"})
+    return get200Response({res, json: {message: "Review was send correctly"}})
   }
 }
 
