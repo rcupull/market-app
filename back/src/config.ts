@@ -1,5 +1,5 @@
-import { join } from "path";
-const appConfig = require("../../app-config.js");
+import { join } from 'path';
+const appConfig = require('../../app-config.js');
 
 export const serviceAccount = appConfig.googleApplicationCredentials;
 export const dbUrl = appConfig.dbUrl;

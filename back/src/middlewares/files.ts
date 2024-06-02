@@ -1,6 +1,6 @@
-import multer from "multer";
-import fs from "fs";
-import { getAssetsImageDir } from "../config";
+import multer from 'multer';
+import fs from 'fs';
+import { getAssetsImageDir } from '../config';
 
 const imageStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -22,4 +22,4 @@ export const uploadImageMiddleware = multer({
   //     done(null, false);
   //   }
   // },
-}).single("image");
+}).single('image');

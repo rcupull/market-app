@@ -1,16 +1,12 @@
-import { FilterQuery, PaginateOptions, Schema, UpdateQuery } from "mongoose";
-import { QueryHandle } from "../../types/general";
-import { PostModel } from "../../schemas/post";
-import { Post, PostType } from "../../types/post";
-import { PaginateResult } from "../../middlewares/pagination";
-import { imagesServices } from "../images/services";
-import { ServerResponse } from "http";
-import {
-  get404Response,
-  getPostNotFoundResponse,
-} from "../../utils/server-response";
-import { isNumber } from "../../utils/general";
-import { makeReshaper } from "../../utils/makeReshaper";
+import { FilterQuery, PaginateOptions, Schema, UpdateQuery } from 'mongoose';
+import { QueryHandle } from '../../types/general';
+import { PostModel } from '../../schemas/post';
+import { Post, PostType } from '../../types/post';
+import { PaginateResult } from '../../middlewares/pagination';
+import { imagesServices } from '../images/services';
+import { ServerResponse } from 'http';
+import { get404Response, getPostNotFoundResponse } from '../../utils/server-response';
+import { isNumber } from '../../utils/general';
 
 export interface GetAllArgs {
   paginateOptions?: PaginateOptions;
@@ -22,7 +18,7 @@ export interface GetAllArgs {
   createdBy?: string;
   //
   postCategoriesTags?: Array<string>;
-  postCategoriesMethod?: "some" | "every";
+  postCategoriesMethod?: 'some' | 'every';
   postType?: PostType;
 }
 
@@ -43,16 +39,16 @@ const getAll: QueryHandle<GetAllArgs, PaginateResult<Post>> = async ({
   ///////////////////////////////////////////////////////////////////
 
   if (search) {
-    filterQuery.name = { $regex: new RegExp(search), $options: "i" };
+    filterQuery.name = { $regex: new RegExp(search), $options: 'i' };
   }
 
   if (postCategoriesTags) {
     switch (postCategoriesMethod) {
-      case "every": {
+      case 'every': {
         filterQuery.postCategoriesTags = { $all: postCategoriesTags };
         break;
       }
-      case "some": {
+      case 'some': {
         filterQuery.postCategoriesTags = { $in: postCategoriesTags };
         break;
       }
@@ -101,9 +97,7 @@ const getAll: QueryHandle<GetAllArgs, PaginateResult<Post>> = async ({
   return out as unknown as PaginateResult<Post>;
 };
 
-const getAllWithOutPagination: QueryHandle<GetAllArgs, Array<Post>> = async (
-  args
-) => {
+const getAllWithOutPagination: QueryHandle<GetAllArgs, Array<Post>> = async (args) => {
   const out = await getAll({
     ...args,
     paginateOptions: {
@@ -138,7 +132,7 @@ const getOne: QueryHandle<
   if (!out) {
     return get404Response({
       res,
-      json: { message: "Post not found or you are not access to this post" },
+      json: { message: 'Post not found or you are not access to this post' },
     });
   }
 
@@ -149,7 +143,7 @@ const deleteMany: QueryHandle<{
   routeName: string;
   postIds?: Array<string>;
 }> = async ({ res, req, routeName, postIds: postIdsT }) => {
-  let postIds: Array<string> = postIdsT || [];
+  const postIds: Array<string> = postIdsT || [];
 
   let postToRemove: Array<Post> = [];
 
@@ -213,24 +207,24 @@ const deleteOne: QueryHandle<{
 const addOne: QueryHandle<
   Pick<
     Post,
-    | "currency"
-    | "hidden"
-    | "hiddenBusiness"
-    | "description"
-    | "images"
-    | "price"
-    | "routeName"
-    | "name"
-    | "clothingSizes"
-    | "colors"
-    | "details"
-    | "highlights"
-    | "createdBy"
-    | "postPageLayout"
-    | "postCategoriesTags"
-    | "stockAmount"
-    | "postType"
-    | "postLink"
+    | 'currency'
+    | 'hidden'
+    | 'hiddenBusiness'
+    | 'description'
+    | 'images'
+    | 'price'
+    | 'routeName'
+    | 'name'
+    | 'clothingSizes'
+    | 'colors'
+    | 'details'
+    | 'highlights'
+    | 'createdBy'
+    | 'postPageLayout'
+    | 'postCategoriesTags'
+    | 'stockAmount'
+    | 'postType'
+    | 'postLink'
   >,
   Post
 > = async ({ res, req, ...args }) => {
@@ -246,6 +240,18 @@ const updateOne: QueryHandle<{
   update: UpdateQuery<Post>;
 }> = async ({ query, update }) => {
   await PostModel.updateOne(query, update);
+};
+
+const findOneAndUpdate: QueryHandle<
+  {
+    query: FilterQuery<Post>;
+    update: UpdateQuery<Post>;
+  },
+  Post | null
+> = async ({ query, update }) => {
+  const out = await PostModel.findOneAndUpdate(query, update);
+
+  return out;
 };
 
 const updateStockAmount: QueryHandle<
@@ -321,4 +327,5 @@ export const postServices = {
   updateMany,
   deleteOne,
   updateStockAmount,
+  findOneAndUpdate,
 };

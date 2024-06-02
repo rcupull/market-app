@@ -1,7 +1,6 @@
-import { Request, RequestHandler, Send } from "express";
-import { PaginationParameters } from "mongoose-paginate-v2";
-import { AnyRecord } from "../types/general";
-import { PaginateOptions } from "mongoose";
+import { RequestHandler } from 'express';
+import { PaginationParameters } from 'mongoose-paginate-v2';
+import { PaginateOptions } from 'mongoose';
 
 export interface PaginateResult<T> {
   data: T[];
@@ -19,16 +18,16 @@ export interface PaginateResult<T> {
   [customLabel: string]: T[] | number | boolean | null | undefined;
 }
 
-export const paginationCustomLabels: PaginateOptions["customLabels"] = {
-  totalDocs: "dataCount",
-  docs: "data",
-  limit: "limit",
-  page: "page",
-  nextPage: "nextPage",
-  prevPage: "prevPage",
-  totalPages: "pageCount",
-  pagingCounter: "pagingCounter",
-  meta: "paginator",
+export const paginationCustomLabels: PaginateOptions['customLabels'] = {
+  totalDocs: 'dataCount',
+  docs: 'data',
+  limit: 'limit',
+  page: 'page',
+  nextPage: 'nextPage',
+  prevPage: 'prevPage',
+  totalPages: 'pageCount',
+  pagingCounter: 'pagingCounter',
+  meta: 'paginator',
 };
 
 export const pagination: RequestHandler = (req, res, next) => {
@@ -37,7 +36,7 @@ export const pagination: RequestHandler = (req, res, next) => {
 
   const parameters = new PaginationParameters(req);
 
-  let paginateOptions = parameters.getOptions();
+  const paginateOptions = parameters.getOptions();
 
   paginateOptions.customLabels = paginationCustomLabels;
 

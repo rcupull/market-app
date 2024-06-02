@@ -1,15 +1,13 @@
-import { AnyRecord } from "../types/general";
-import { Path } from "../types/paths";
-import { set } from "./general";
-import mongose, { Schema } from "mongoose";
-import jwt from "jsonwebtoken";
-import { secretAccessToken } from "../config";
+import { AnyRecord } from '../types/general';
+import { Path } from '../types/paths';
+import { set } from './general';
+import mongose, { Schema } from 'mongoose';
+import jwt from 'jsonwebtoken';
+import { secretAccessToken } from '../config';
 
-const dbTestUrl = "mongodb://127.0.0.1:27017/community_test_db";
+const dbTestUrl = 'mongodb://127.0.0.1:27017/community_test_db';
 
-export const setAnyString = <T extends AnyRecord = AnyRecord>(
-  ...paths: Array<Path<T>>
-) => {
+export const setAnyString = <T extends AnyRecord = AnyRecord>(...paths: Array<Path<T>>) => {
   //@ts-expect-error ignore
   const out: T = {};
   paths.forEach((path) => {

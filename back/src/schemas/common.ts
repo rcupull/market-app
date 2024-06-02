@@ -1,50 +1,49 @@
-import { Schema } from "mongoose";
+import { Schema } from 'mongoose';
 import {
   PostCardLayout,
   PostLayoutShoppingMethod,
   PostPageLayout,
   PostsLayout,
   PostsLayoutSection,
-} from "../types/business";
-import { SchemaDefinition } from "../types/general";
+} from '../types/business';
+import { SchemaDefinition } from '../types/general';
 
-const PostLayoutShoppingMethodDefinition: SchemaDefinition<PostLayoutShoppingMethod> =
-  {
-    type: String,
-    enum: ["none", "shoppingCart"],
-  };
+const PostLayoutShoppingMethodDefinition: SchemaDefinition<PostLayoutShoppingMethod> = {
+  type: String,
+  enum: ['none', 'shoppingCart'],
+};
 
 export const PostCardLayoutSchema = new Schema<PostCardLayout>({
   images: {
     type: String,
-    enum: ["static", "hoverZoom", "slider", "switch", "rounded"],
-    default: "static",
+    enum: ['static', 'hoverZoom', 'slider', 'switch', 'rounded'],
+    default: 'static',
   },
   size: {
     type: String,
-    enum: ["small", "medium", "long"],
-    default: "medium",
+    enum: ['small', 'medium', 'long'],
+    default: 'medium',
   },
   metaLayout: {
     type: String,
-    enum: ["basic", "verticalCentered"],
-    default: "basic",
+    enum: ['basic', 'verticalCentered'],
+    default: 'basic',
   },
   name: {
     type: String,
-    enum: ["none", "basic"],
+    enum: ['none', 'basic'],
     required: true,
-    default: "basic",
+    default: 'basic',
   },
   price: {
     type: String,
-    enum: ["none", "basic", "smallerCurrency", "usdCurrencySymbol"],
-    default: "basic",
+    enum: ['none', 'basic', 'smallerCurrency', 'usdCurrencySymbol'],
+    default: 'basic',
   },
   discount: {
     type: String,
-    enum: ["none", "savedPercent", "savedMoney"],
-    default: "none",
+    enum: ['none', 'savedPercent', 'savedMoney'],
+    default: 'none',
   },
   shoppingMethod: PostLayoutShoppingMethodDefinition,
 });
@@ -59,40 +58,40 @@ export const PostsLayoutSectionSchema = new Schema<PostsLayoutSection>({
   searchLayout: {
     type: String,
     enum: [
-      "none",
-      "left",
-      "center",
-      "right",
-      "postCategories",
-      "postCategoriesScrollable",
-      "postCategoriesExcluded",
-      "postCategoriesExcludedScrollable",
+      'none',
+      'left',
+      'center',
+      'right',
+      'postCategories',
+      'postCategoriesScrollable',
+      'postCategoriesExcluded',
+      'postCategoriesExcludedScrollable',
     ],
-    default: "none",
+    default: 'none',
   },
   postCategoriesTags: { type: [String] },
   showIn: {
     type: [
       {
         type: String,
-        enum: ["businessPage", "postPage"],
+        enum: ['businessPage', 'postPage'],
       },
     ],
     default: [],
   },
   type: {
     type: String,
-    enum: ["grid", "oneRowSlider"],
-    default: "grid",
+    enum: ['grid', 'oneRowSlider'],
+    default: 'grid',
   },
   postCardLayout: {
     type: PostCardLayoutSchema,
   },
   postType: {
     type: String,
-    enum: ["product", "link"],
+    enum: ['product', 'link'],
     required: true,
-    default: "product",
+    default: 'product',
   },
 });
 

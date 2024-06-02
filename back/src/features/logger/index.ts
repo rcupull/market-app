@@ -1,11 +1,11 @@
-import { createLogger, transports, format } from "winston";
-import "winston-daily-rotate-file";
+import { createLogger, transports, format } from 'winston';
+import 'winston-daily-rotate-file';
 
-import fs from "fs";
+import fs from 'fs';
 const { combine, timestamp, label, printf, colorize } = format;
 
-if (!fs.existsSync("./logs")) {
-  fs.mkdirSync("./logs");
+if (!fs.existsSync('./logs')) {
+  fs.mkdirSync('./logs');
 }
 
 const myFormat = printf(({ level, message, label, timestamp }) => {
@@ -14,11 +14,11 @@ const myFormat = printf(({ level, message, label, timestamp }) => {
 
 const devLogger = () => {
   return createLogger({
-    level: "debug",
+    level: 'debug',
     format: combine(
       colorize(),
-      label({ label: "dev" }),
-      timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+      label({ label: 'dev' }),
+      timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
       myFormat
     ),
     transports: [
@@ -29,31 +29,25 @@ const devLogger = () => {
 
 const productionsLogger = () => {
   return createLogger({
-    level: "info",
+    level: 'info',
     transports: [
       new transports.DailyRotateFile({
-        filename: "./logs/%DATE%-info.log",
-        datePattern: "YYYY-MM-DD",
+        filename: './logs/%DATE%-info.log',
+        datePattern: 'YYYY-MM-DD',
         zippedArchive: true,
-        format: format.combine(
-          format.timestamp({ format: "HH:mm:ss" }),
-          format.json()
-        ),
-        level: "info",
+        format: format.combine(format.timestamp({ format: 'HH:mm:ss' }), format.json()),
+        level: 'info',
       }),
       new transports.DailyRotateFile({
-        filename: "./logs/%DATE%-error.log",
-        datePattern: "YYYY-MM-DD",
+        filename: './logs/%DATE%-error.log',
+        datePattern: 'YYYY-MM-DD',
         zippedArchive: true,
-        level: "error",
-        format: format.combine(
-          format.timestamp({ format: "HH:mm:ss" }),
-          format.json()
-        ),
+        level: 'error',
+        format: format.combine(format.timestamp({ format: 'HH:mm:ss' }), format.json()),
       }),
     ],
   });
 };
 
-const isProduction = process.env.NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === 'production';
 export const logger = isProduction ? productionsLogger() : devLogger();

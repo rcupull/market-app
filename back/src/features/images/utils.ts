@@ -1,7 +1,7 @@
-import { getAssetsImageDir } from "../../config";
-import fs from "fs";
-import { join, resolve } from "path";
-import { logger } from "../logger";
+import { getAssetsImageDir } from '../../config';
+import fs from 'fs';
+import { join, resolve } from 'path';
+import { logger } from '../logger';
 
 export const getFullFileNameToSave = (args: {
   routeName?: string;
@@ -23,12 +23,12 @@ export const getFileNameToSave = (args: {
   const { routeName, postId, userId } = args;
 
   if (!userId) {
-    logger.info("no userId found");
+    logger.info('no userId found');
     return null;
   }
 
   if (postId && !routeName) {
-    logger.info("no routeName found");
+    logger.info('no routeName found');
     return null;
   }
 
@@ -45,10 +45,7 @@ export const getFileNameToSave = (args: {
   return filename;
 };
 
-export const deleteDirFilesUsingStartPattern = (
-  start: string,
-  dirPath: string
-) => {
+export const deleteDirFilesUsingStartPattern = (start: string, dirPath: string) => {
   fs.readdir(resolve(dirPath), (err, fileNames) => {
     if (err) throw err;
 

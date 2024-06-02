@@ -1,12 +1,9 @@
-import { RequestHandler } from "../../types/general";
-import { withTryCatch } from "../../utils/error";
-import { ServerResponse } from "http";
-import { RequestWithUser } from "../../middlewares/verify";
-import { imagesServices } from "../images/services";
-import { userServices } from "./services";
-import { User } from "../../types/user";
-import { UserModel } from "../../schemas/user";
-import { getUserNotFoundResponse } from "../../utils/server-response";
+import { RequestHandler } from '../../types/general';
+import { withTryCatch } from '../../utils/error';
+import { ServerResponse } from 'http';
+import { imagesServices } from '../images/services';
+import { userServices } from './services';
+import { User } from '../../types/user';
 
 const get_users_userId: () => RequestHandler = () => {
   return (req, res) => {

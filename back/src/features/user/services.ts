@@ -1,9 +1,9 @@
-import { QueryHandle } from "../../types/general";
-import { User } from "../../types/user";
-import { UserModel } from "../../schemas/user";
-import { get401Response, get404Response } from "../../utils/server-response";
-import { FilterQuery, ProjectionType, UpdateQuery } from "mongoose";
-import { UpdateOptions } from "mongodb";
+import { QueryHandle } from '../../types/general';
+import { User } from '../../types/user';
+import { UserModel } from '../../schemas/user';
+import { get401Response, get404Response } from '../../utils/server-response';
+import { FilterQuery, ProjectionType, UpdateQuery } from 'mongoose';
+import { UpdateOptions } from 'mongodb';
 
 const addOne: QueryHandle<
   {
@@ -20,8 +20,8 @@ const addOne: QueryHandle<
     return get401Response({
       res,
       json: {
-        message: "Ese email ya fue registrado",
-        reazon: "EMAIL_ALREADY_REGISTERED",
+        message: 'Ese email ya fue registrado',
+        reazon: 'EMAIL_ALREADY_REGISTERED',
       },
     });
   }
@@ -52,7 +52,7 @@ const getOne: QueryHandle<
     return get404Response({
       res,
       json: {
-        message: "User not found",
+        message: 'User not found',
       },
     });
   }

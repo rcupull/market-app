@@ -1,34 +1,30 @@
-import { Router } from "express";
-import { validators } from "../../middlewares/express-validator";
-import {
-  addPostToReq,
-  isLogged,
-  isUserThisBusinessOwner,
-} from "../../middlewares/verify";
+import { Router } from 'express';
+import { validators } from '../../middlewares/express-validator';
+import { addPostToReq, isLogged, isUserThisBusinessOwner } from '../../middlewares/verify';
 
-import { shoppingHandles } from "./handles";
+import { shoppingHandles } from './handles';
 
 export const router = Router();
 
 /////////////////////////////////////////////////////////////////
 
 router
-  .route("/shopping")
+  .route('/shopping')
   .get(
-    validators.query("routeName").notEmpty(),
+    validators.query('routeName').notEmpty(),
     validators.handle,
     isLogged,
     shoppingHandles.get_shopping()
   )
   .post(
-    validators.body("postId").notEmpty(),
+    validators.body('postId').notEmpty(),
     validators.handle,
     isLogged,
     addPostToReq,
     shoppingHandles.post_shopping()
   )
   .delete(
-    validators.body("routeName").notEmpty(),
+    validators.body('routeName').notEmpty(),
     validators.handle,
     isLogged,
     addPostToReq,
@@ -36,9 +32,9 @@ router
   );
 
 router
-  .route("/shopping/owner")
+  .route('/shopping/owner')
   .get(
-    validators.query("routeName").notEmpty(),
+    validators.query('routeName').notEmpty(),
     validators.handle,
     isLogged,
     isUserThisBusinessOwner,
@@ -46,28 +42,28 @@ router
   );
 
 router
-  .route("/shopping/:shoppingId")
+  .route('/shopping/:shoppingId')
   .get(
-    validators.param("shoppingId").notEmpty(),
+    validators.param('shoppingId').notEmpty(),
     validators.handle,
     isLogged,
     shoppingHandles.get_shopping_shoppingId()
   );
 
 router
-  .route("/shopping/:shoppingId/makeOrder")
+  .route('/shopping/:shoppingId/makeOrder')
   .post(
-    validators.param("shoppingId").notEmpty(),
+    validators.param('shoppingId').notEmpty(),
     validators.handle,
     isLogged,
     shoppingHandles.post_shopping_shoppingId_make_order()
   );
 
 router
-  .route("/shopping/:shoppingId/changeState")
+  .route('/shopping/:shoppingId/changeState')
   .post(
-    validators.param("shoppingId").notEmpty(),
-    validators.body("state").notEmpty(),
+    validators.param('shoppingId').notEmpty(),
+    validators.body('state').notEmpty(),
     validators.handle,
     isLogged,
     shoppingHandles.post_shopping_shoppingId_change_state()

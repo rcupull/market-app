@@ -1,6 +1,6 @@
-import { BaseIdentity, Image } from "./general";
+import { BaseIdentity, Image } from './general';
 
-export type UserRole = "user" | "admin";
+export type UserRole = 'user' | 'admin';
 
 export interface User extends BaseIdentity {
   name: string;

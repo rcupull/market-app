@@ -4,36 +4,33 @@ import {
   ProjectionType,
   UpdateQuery,
   UpdateWithAggregationPipeline,
-} from "mongoose";
-import { QueryHandle } from "../../types/general";
-import { Business, BusinessCategory } from "../../types/business";
-import { BusinessModel } from "../../schemas/business";
-import { postServices } from "../post/services";
-import {
-  PaginateResult,
-  paginationCustomLabels,
-} from "../../middlewares/pagination";
-import { ServerResponse } from "http";
-import { imagesServices } from "../images/services";
-import { get400Response, get404Response } from "../../utils/server-response";
-import { UpdateOptions } from "mongodb";
+} from 'mongoose';
+import { QueryHandle } from '../../types/general';
+import { Business } from '../../types/business';
+import { BusinessModel } from '../../schemas/business';
+import { postServices } from '../post/services';
+import { PaginateResult, paginationCustomLabels } from '../../middlewares/pagination';
+import { ServerResponse } from 'http';
+import { imagesServices } from '../images/services';
+import { get400Response, get404Response } from '../../utils/server-response';
+import { UpdateOptions } from 'mongodb';
 
 type UpdateQueryBusiness =
   | UpdateQuery<
       Partial<
         Pick<
           Business,
-          | "hidden"
-          | "socialLinks"
-          | "bannerImages"
-          | "name"
-          | "routeName"
-          | "logo"
-          | "layouts"
-          | "postCategories"
-          | "aboutUsPage"
-          | "aboutUsPage"
-          | "telegramBotChat"
+          | 'hidden'
+          | 'socialLinks'
+          | 'bannerImages'
+          | 'name'
+          | 'routeName'
+          | 'logo'
+          | 'layouts'
+          | 'postCategories'
+          | 'aboutUsPage'
+          | 'aboutUsPage'
+          | 'telegramBotChat'
         >
       >
     >
@@ -47,9 +44,7 @@ interface GetAllArgs {
   hidden?: boolean;
 }
 
-const getAll: QueryHandle<GetAllArgs, PaginateResult<Business>> = async (
-  query
-) => {
+const getAll: QueryHandle<GetAllArgs, PaginateResult<Business>> = async (query) => {
   const { paginateOptions = {}, createdBy, routeNames, search, hidden } = query;
   const filterQuery: FilterQuery<Business> = {};
 
@@ -65,7 +60,7 @@ const getAll: QueryHandle<GetAllArgs, PaginateResult<Business>> = async (
   ///////////////////////////////////////////////////////////////////
 
   if (search) {
-    filterQuery.name = { $regex: new RegExp(search), $options: "i" };
+    filterQuery.name = { $regex: new RegExp(search), $options: 'i' };
   }
   ///////////////////////////////////////////////////////////////////
 
@@ -80,7 +75,7 @@ const getAll: QueryHandle<GetAllArgs, PaginateResult<Business>> = async (
 };
 
 const getAllWithoutPagination: QueryHandle<
-  Omit<GetAllArgs, "paginateOptions">,
+  Omit<GetAllArgs, 'paginateOptions'>,
   Array<Business>
 > = async (args) => {
   const out = await getAll({
@@ -97,17 +92,14 @@ const getAllWithoutPagination: QueryHandle<
 };
 
 const addOne: QueryHandle<
-  Pick<
-    Business,
-    "categories" | "createdBy" | "routeName" | "name" | "postCategories"
-  >,
+  Pick<Business, 'categories' | 'createdBy' | 'routeName' | 'name' | 'postCategories'>,
   Business
 > = async ({ categories, createdBy, routeName, name, res, postCategories }) => {
   const routeNameExists = await BusinessModel.findOne({ routeName });
   if (routeNameExists) {
     return get400Response({
       res,
-      json: { message: "Route name already exists" },
+      json: { message: 'Route name already exists' },
     });
   }
 
@@ -136,7 +128,7 @@ const findOne: QueryHandle<
   if (!out) {
     return get404Response({
       res,
-      json: { message: "Business not found" },
+      json: { message: 'Business not found' },
     });
   }
 

@@ -1,17 +1,17 @@
-import { join } from "path";
-import { NotificationToUpdatePayload } from "../../types/notifications";
-import firebase from "firebase-admin";
-import { userServices } from "../user/services";
-import { QueryHandle } from "../../types/general";
-import { ServerResponse } from "http";
-import { compact } from "../../utils/general";
-import { serviceAccount } from "../../config";
+import { join } from 'path';
+import { NotificationToUpdatePayload } from '../../types/notifications';
+import firebase from 'firebase-admin';
+import { userServices } from '../user/services';
+import { QueryHandle } from '../../types/general';
+import { ServerResponse } from 'http';
+import { compact } from '../../utils/general';
+import { serviceAccount } from '../../config';
 
 const init = () => {
   firebase.initializeApp({
     credential: firebase.credential.cert(serviceAccount),
   });
-  console.info("Initialized Firebase SDK");
+  console.info('Initialized Firebase SDK');
 };
 
 const sendNotification = async (args: { title: string; message: string }) => {};

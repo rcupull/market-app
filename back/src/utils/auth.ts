@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
-import { secretAccessToken, secretRefreshToken } from "../config";
+import jwt from 'jsonwebtoken';
+import { secretAccessToken, secretRefreshToken } from '../config';
 
 export const generateAccessJWT = ({ id }: { id: string }): string => {
   return jwt.sign(
@@ -8,7 +8,7 @@ export const generateAccessJWT = ({ id }: { id: string }): string => {
     },
     secretAccessToken,
     {
-      expiresIn: "30m",
+      expiresIn: '30m',
     }
   );
 };
@@ -20,7 +20,7 @@ export const generateRefreshJWT = ({ id }: { id: string }): string => {
     },
     secretRefreshToken,
     {
-      expiresIn: "30d",
+      expiresIn: '30d',
     }
   );
 };

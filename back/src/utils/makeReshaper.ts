@@ -1,6 +1,6 @@
-import { AnyRecord } from "../types/general";
-import { Path } from "../types/paths";
-import { get, set } from "./general";
+import { AnyRecord } from '../types/general';
+import { Path } from '../types/paths';
+import { get, set } from './general';
 
 /*
  * Returns  a function that takes an object and returns an
@@ -40,46 +40,34 @@ import { get, set } from "./general";
  * any properties you want to add to the resulting object that are not from the original.
  * Most commonly, this will be used to add a `type` property to the object.
  */
-type MakeReshaperReturn<
-  I extends AnyRecord = AnyRecord,
-  O extends AnyRecord = AnyRecord
-> = (obj: I) => Partial<O>;
+type MakeReshaperReturn<I extends AnyRecord = AnyRecord, O extends AnyRecord = AnyRecord> = (
+  obj: I
+) => Partial<O>;
 
-export type ReshapeRules<
-  I extends AnyRecord = AnyRecord,
-  O extends AnyRecord = AnyRecord
-> = {
+export type ReshapeRules<I extends AnyRecord = AnyRecord, O extends AnyRecord = AnyRecord> = {
   [K in Path<O>]?: Path<I> | ((val: I) => any);
 };
 
-export const makeReshaper = <
-  I extends AnyRecord = AnyRecord,
-  O extends AnyRecord = AnyRecord
->(
+export const makeReshaper = <I extends AnyRecord = AnyRecord, O extends AnyRecord = AnyRecord>(
   reshapeRules?: ReshapeRules<I, O> | false | null,
   propsToAdd: AnyRecord = {}
 ): MakeReshaperReturn<I, O> => {
-  if (!reshapeRules || typeof reshapeRules !== "object") {
+  if (!reshapeRules || typeof reshapeRules !== 'object') {
     return () => ({});
   }
 
-  //@ts-ignore
   return (oldObj) => {
-    const reshaped = Object.entries(reshapeRules).reduce(
-      //@ts-ignore
-      (newObj, [newKey, oldKey]) => {
-        const newValue =
-          typeof oldKey === "function"
-            ? oldKey(oldObj)
-            : //@ts-ignore
-              get(oldObj, oldKey as string);
+    const reshaped = Object.entries(reshapeRules).reduce((newObj, [newKey, oldKey]) => {
+      const newValue =
+        typeof oldKey === 'function'
+          ? oldKey(oldObj)
+          : //@ts-expect-error the type of get is not generic
+            get(oldObj, oldKey as string);
 
-        //@ts-ignore
-        set(newObj, newKey, newValue);
-        return newObj;
-      },
-      {}
-    );
+      //@ts-expect-error type of set is not generic
+      set(newObj, newKey, newValue);
+      return newObj;
+    }, {});
 
     return {
       ...propsToAdd,
@@ -94,23 +82,20 @@ export const makeInvestedReshaper = <
 >(
   reshapeRules?: ReshapeRules<I, O> | false | null
 ): MakeReshaperReturn<O, I> => {
-  if (!reshapeRules || typeof reshapeRules !== "object") {
+  if (!reshapeRules || typeof reshapeRules !== 'object') {
     return () => ({});
   }
 
-  const investedRules = Object.entries(reshapeRules).reduce(
-    (acc, [newKey, oldKey]) => {
-      if (typeof oldKey === "function") {
-        throw new Error("This fearure is imposible using functions");
-      }
+  const investedRules = Object.entries(reshapeRules).reduce((acc, [newKey, oldKey]) => {
+    if (typeof oldKey === 'function') {
+      throw new Error('This fearure is imposible using functions');
+    }
 
-      return {
-        ...acc,
-        [oldKey as string]: newKey,
-      };
-    },
-    {} as ReshapeRules<O, I>
-  );
+    return {
+      ...acc,
+      [oldKey as string]: newKey,
+    };
+  }, {} as ReshapeRules<O, I>);
 
   return makeReshaper<O, I>(investedRules);
 };
