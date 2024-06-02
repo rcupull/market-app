@@ -6,12 +6,12 @@ const endpointsFiles = ["./src/router.ts"];
 swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, {
   info: {
     version: "v1.0.0",
-    title: "elocality",
-    description: "elocality-apis",
+    title: "Asere Market",
+    description: "Asere Market API",
   },
   servers: [
     {
-      url: "http://localhost:4009",
+      url: "http://localhost/api-services",
       description: "",
     },
   ],
@@ -20,7 +20,9 @@ swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, {
       bearerAuth: {
         type: "http",
         scheme: "bearer",
+        bearerFormat: "JWT",
       },
     },
   },
+  security: [{ bearerAuth: [] }],
 });

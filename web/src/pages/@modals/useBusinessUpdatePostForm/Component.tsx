@@ -38,12 +38,11 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
       <div className="flex flex-col md:flex-row items-center my-4">
         <Badge variant="info" />
         <span className="text-gray-600 ml-0  md:ml-4 mt-4 md:mt-0">
-          Estos son los campos del formulario de publicaciones que estarán disponibles a completar
-          durante la creación o edición de una publicación. Los campos{' '}
+          Campos del formulario de publicaciones que estarán disponibles para completar durante la
+          creación o edición de una publicación. Los campos{' '}
           <span className="font-bold">Nombre del producto</span> ,{' '}
           <span className="font-bold">Categorías</span> e{' '}
-          <span className="font-bold">Imágenes</span> no son mostrados porque son obligatorios y
-          siempre estarán en el formulario.
+          <span className="font-bold">Imágenes</span> no se muestran porque son obligatorios.
         </span>
       </div>
 

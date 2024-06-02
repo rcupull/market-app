@@ -11,4 +11,5 @@ export const FormContext = createContext<ContextState>({
   touched: {},
   setTouched: () => {},
   resetForm: () => {},
+  hasChange: false,
 });

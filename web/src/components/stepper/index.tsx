@@ -5,7 +5,8 @@ import { Tabs, TabsProps } from 'components/tabs';
 
 import SvgAngleLeftSolid from 'icons/AngleLeftSolid';
 import SvgAngleRightSolid from 'icons/AngleRightSolid';
-import { cn } from 'utils/general';
+import { Nullable } from 'types/general';
+import { cn, compact } from 'utils/general';
 
 export interface StepProps {
   backButton: React.ReactElement;
@@ -13,7 +14,7 @@ export interface StepProps {
 }
 export interface StepperProps
   extends Pick<TabsProps, 'contentClassName' | 'disabledStepNavigation'> {
-  items: Array<{ label: string; render: (props: StepProps) => React.ReactNode }>;
+  items: Array<Nullable<{ label: string; render: (props: StepProps) => React.ReactNode }>>;
 }
 
 export const Stepper = ({
@@ -78,7 +79,7 @@ export const Stepper = ({
             {selected && <div className={cn('text-center font-semibold ml-4')}>{label}</div>}
           </div>
         )}
-        items={items.map(({ label, render }) => {
+        items={compact(items).map(({ label, render }) => {
           return {
             label,
             content: render({

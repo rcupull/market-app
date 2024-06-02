@@ -1,5 +1,7 @@
 import { useModal } from 'features/modal/useModal';
 
+import { BusinessOnboardingSteps } from './types';
+
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { dynamic } from 'utils/makeLazy';
 
@@ -10,15 +12,16 @@ export const useBusinessOnboardingModal = () => {
   const { pushModal } = useModal();
 
   return {
-    open: () => {
+    open: (args?: { steps?: Array<BusinessOnboardingSteps> }) => {
       pushModal(
         'Emergent',
         {
           useProps: () => {
             const { status } = useBusiness();
+            const { steps } = args || {};
 
             return {
-              content: <Component />,
+              content: <Component steps={steps} />,
               className: '!w-[80vw]',
               isBusy: status.isBusy,
             };

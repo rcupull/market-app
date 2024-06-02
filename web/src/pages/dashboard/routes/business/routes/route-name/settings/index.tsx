@@ -75,7 +75,7 @@ export const Settings = () => {
       <SettingsLayout
         title="Formulario de publicaciones"
         svg={SvgWpforms}
-        description="No necesita ver los datos que no poseen sus productos. Personalice su formulario de las publicaciones."
+        description="Personalice su formulario de  publicaciones."
         onClick={() =>
           businessUpdatePostForm.open({
             onAfterSuccess: () => {

@@ -6,6 +6,7 @@ import { Tabs } from 'components/tabs';
 
 import { useRouter } from 'hooks/useRouter';
 
+import { BusinessConfig } from './components/BusinessConfig';
 import { Links } from './links';
 import { OptionsMenu } from './options-menu';
 import { PostsSections } from './posts-sections';
@@ -56,63 +57,66 @@ export const RouteName = () => {
   const { name, hidden } = business;
 
   return (
-    <LayoutSection
-      title={name}
-      topRightHeader={
-        <div className="flex items-center gap-6">
-          <KpiTelegram className="hidden sm:flex" />
+    <>
+      <BusinessConfig business={business} />
+      <LayoutSection
+        title={name}
+        topRightHeader={
+          <div className="flex items-center gap-6">
+            <KpiTelegram className="hidden sm:flex" />
 
-          <KpiCredit className="hidden sm:flex" />
+            <KpiCredit className="hidden sm:flex" />
 
-          <KpiToPay className="hidden sm:flex" />
+            <KpiToPay className="hidden sm:flex" />
 
-          {hidden && (
-            <div className="text-red-500 ring-1 ring-red-400 rounded-3xl px-2 py-1/2 text-sm sm:text-lg">
-              Oculto
-            </div>
-          )}
+            {hidden && (
+              <div className="text-red-500 ring-1 ring-red-400 rounded-3xl px-2 py-1/2 text-sm sm:text-lg">
+                Oculto
+              </div>
+            )}
 
-          <OptionsMenu
-            business={business}
-            onRefresh={() => businessOwnerData.onFetch({ routeName })}
-          />
-        </div>
-      }
-    >
-      <Tabs
-        className="mt-4 shadow-lg"
-        contentClassName="w-full overflow-y-auto h-[calc(100vh-12rem)]"
-        onSelect={(businessTab) => onChangeQuery({ businessTab })}
-        selected={query.businessTab as number | undefined}
-        items={[
-          {
-            label: 'Productos',
-            content: <Products />,
-            svg: SvgAddressCard,
-          },
-          {
-            label: 'Enlaces',
-            content: <Links />,
-            svg: SvgLinkSolid,
-          },
-          {
-            label: 'Secciones',
-            content: <PostsSections />,
-            svg: SvgLayerGroupSolid,
-          },
-          {
-            label: 'Órdenes de compras',
-            content: <PurchaseOrders />,
-            svg: SvgShoppingCartSolid,
-          },
-          {
-            label: 'Configuración',
-            svg: SvgCogSolid,
-            content: <Settings />,
-          },
-        ]}
-      />
-    </LayoutSection>
+            <OptionsMenu
+              business={business}
+              onRefresh={() => businessOwnerData.onFetch({ routeName })}
+            />
+          </div>
+        }
+      >
+        <Tabs
+          className="mt-4 shadow-lg"
+          contentClassName="w-full overflow-y-auto h-[calc(100vh-12rem)]"
+          onSelect={(businessTab) => onChangeQuery({ businessTab })}
+          selected={query.businessTab as number | undefined}
+          items={[
+            {
+              label: 'Productos',
+              content: <Products />,
+              svg: SvgAddressCard,
+            },
+            {
+              label: 'Enlaces',
+              content: <Links />,
+              svg: SvgLinkSolid,
+            },
+            {
+              label: 'Secciones',
+              content: <PostsSections />,
+              svg: SvgLayerGroupSolid,
+            },
+            {
+              label: 'Órdenes de compras',
+              content: <PurchaseOrders />,
+              svg: SvgShoppingCartSolid,
+            },
+            {
+              label: 'Configuración',
+              svg: SvgCogSolid,
+              content: <Settings />,
+            },
+          ]}
+        />
+      </LayoutSection>
+    </>
   );
 };
 
