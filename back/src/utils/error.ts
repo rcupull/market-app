@@ -1,11 +1,11 @@
-import { Request, Response } from "express";
-import { get500Response } from "./server-response";
-import { logger } from "../features/logger";
+import { Request, Response } from 'express';
+import { get500Response } from './server-response';
+import { logger } from '../features/logger';
 
 export const withTryCatch = async (
   req: Request,
   res: Response,
-  callback: () => Promise<any> | any
+  callback: () => Promise<any> | any,
 ) => {
   const { originalUrl, method } = req;
 
@@ -14,7 +14,7 @@ export const withTryCatch = async (
   try {
     await callback();
   } catch (error) {
-    console.error("Error:", tag, error);
+    console.error('Error:', tag, error);
 
     logger.error(`Error: ${error}`);
 

@@ -1,58 +1,53 @@
-import { RequestHandler, Router } from "express";
-import { join } from "path";
-import { appFrontDir, hostname } from "../config";
-import express from "express";
-import fs from "fs";
-import { get404Response } from "../utils/server-response";
-import { logger } from "../features/logger";
-import { combineMiddleware } from "../utils/general";
-import { HtmlMeta } from "../types/general";
-import { businessServices } from "../features/business/services";
-import { ServerResponse } from "http";
-import { postServices } from "../features/post/services";
+import { RequestHandler, Router } from 'express';
+import { join } from 'path';
+import { appFrontDir, hostname } from '../config';
+import express from 'express';
+import fs from 'fs';
+import { get404Response } from '../utils/server-response';
+import { logger } from '../features/logger';
+import { combineMiddleware } from '../utils/general';
+import { HtmlMeta } from '../types/general';
+import { businessServices } from '../features/business/services';
+import { ServerResponse } from 'http';
+import { postServices } from '../features/post/services';
 
 const defaultMeta: HtmlMeta = {
-  title: "Asere Market - Comercio para todos",
-  description:
-    "Un proyecto B2B para desarrollar el comercio electrónico en Cuba.",
-  url: "http://www.aseremarket.net/",
-  image: "/logo.png",
+  title: 'Asere Market - Comercio para todos',
+  description: 'Un proyecto B2B para desarrollar el comercio electrónico en Cuba.',
+  url: 'http://www.aseremarket.net/',
+  image: '/logo.png',
 };
 
 const injectMeta = (html: string, meta: HtmlMeta) => {
   const { description, image, title, url } = meta;
 
   return html
-    .replace("__META_TW_TITLE__", title)
-    .replace("__META_TW_DESCR__", description)
-    .replace("__META_TW_IMAGE__", image)
-    .replace("__META_TW_SITE__", url)
-    .replace("__META_OG_TITLE__", title)
-    .replace("__META_OG_DESCR__", description)
-    .replace("__META_OG_IMAGE__", image)
-    .replace("__META_OG_URL__", url)
-    .replace("__META_DES__", description);
+    .replace('__META_TW_TITLE__', title)
+    .replace('__META_TW_DESCR__', description)
+    .replace('__META_TW_IMAGE__', image)
+    .replace('__META_TW_SITE__', url)
+    .replace('__META_OG_TITLE__', title)
+    .replace('__META_OG_DESCR__', description)
+    .replace('__META_OG_IMAGE__', image)
+    .replace('__META_OG_URL__', url)
+    .replace('__META_DES__', description);
 };
 
 const injectMetaService: RequestHandler = (req, res, next) => {
   const { htmlMeta } = req;
 
   if (htmlMeta) {
-    fs.readFile(
-      join(process.cwd(), appFrontDir, "index.html"),
-      "utf8",
-      (err, htmlData) => {
-        if (err) {
-          logger.error("Error during file reading", err);
+    fs.readFile(join(process.cwd(), appFrontDir, 'index.html'), 'utf8', (err, htmlData) => {
+      if (err) {
+        logger.error('Error during file reading', err);
 
-          return get404Response({
-            res,
-            json: { message: "Html file not found" },
-          });
-        }
-        res.send(injectMeta(htmlData, htmlMeta));
+        return get404Response({
+          res,
+          json: { message: 'Html file not found' },
+        });
       }
-    );
+      res.send(injectMeta(htmlData, htmlMeta));
+    });
   } else {
     next();
   }
@@ -94,7 +89,7 @@ const injectBusinessMetaMiddlware: RequestHandler = async (req, res, next) => {
     };
 
     req.htmlMeta = {
-      description: "Emprendimiento cubano la plataforma Asere Market", //TODO
+      description: 'Emprendimiento cubano la plataforma Asere Market', //TODO
       title: `${business.name}`,
       image: getImageSrc(),
       url: getBusinessUrl(),
@@ -125,7 +120,7 @@ const injectPostMetaMiddlware: RequestHandler = async (req, res, next) => {
         return defaultMeta.image;
       }
 
-      return src.startsWith("http") ? src : `${hostname}${src}`;
+      return src.startsWith('http') ? src : `${hostname}${src}`;
     };
 
     const getPostUrl = () => {
@@ -146,11 +141,8 @@ const injectPostMetaMiddlware: RequestHandler = async (req, res, next) => {
 const router = Router();
 
 export const frontMiddlware = combineMiddleware(
-  router.get(
-    /\/*(.png|.css|.js)/,
-    express.static(join(process.cwd(), appFrontDir))
-  ),
-  router.get("/b/:routeName/posts/:postId", injectPostMetaMiddlware),
-  router.get("/b/:routeName*", injectBusinessMetaMiddlware),
-  injectDefaultMetaMiddlware
+  router.get(/\/*(.png|.css|.js)/, express.static(join(process.cwd(), appFrontDir))),
+  router.get('/b/:routeName/posts/:postId', injectPostMetaMiddlware),
+  router.get('/b/:routeName*', injectBusinessMetaMiddlware),
+  injectDefaultMetaMiddlware,
 );

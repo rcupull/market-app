@@ -65,7 +65,7 @@ describe('makeReshaper()', () => {
   it('should be able to introduce entirely new properties', async () => {
     const reshaper = makeReshaper(
       { 'x.y': 'a', b: 'm.n', type: 'm' },
-      { type: 'test', epic: true }
+      { type: 'test', epic: true },
     );
 
     expect(reshaper({ a: true, m: { n: 2 } })).toEqual({

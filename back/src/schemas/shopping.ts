@@ -1,8 +1,8 @@
-import { PaginateModel, Schema, SchemaDefinition, model } from "mongoose";
-import { createdAtSchemaDefinition } from "../utils/schemas";
-import { Shopping } from "../types/shopping";
-import { PostSchema } from "./post";
-import { PostPurshaseNotes } from "../types/post";
+import { Schema, SchemaDefinition, model } from 'mongoose';
+import { createdAtSchemaDefinition } from '../utils/schemas';
+import { Shopping } from '../types/shopping';
+import { PostSchema } from './post';
+import { PostPurshaseNotes } from '../types/post';
 
 const purshaseNotesSchemaDefinition: SchemaDefinition<PostPurshaseNotes> = {
   interestedByClothingSizes: {
@@ -36,7 +36,7 @@ const ShoppingSchema = new Schema<Shopping>({
   routeName: { type: String, required: true },
   state: {
     type: String,
-    enum: ["CONSTRUCTION", "REQUESTED", "DELIVERED", "CANCELED", "REJECTED"],
+    enum: ['CONSTRUCTION', 'REQUESTED', 'DELIVERED', 'CANCELED', 'REJECTED'],
     required: true,
   },
   history: {
@@ -44,13 +44,7 @@ const ShoppingSchema = new Schema<Shopping>({
       {
         state: {
           type: String,
-          enum: [
-            "CONSTRUCTION",
-            "REQUESTED",
-            "DELIVERED",
-            "CANCELED",
-            "REJECTED",
-          ],
+          enum: ['CONSTRUCTION', 'REQUESTED', 'DELIVERED', 'CANCELED', 'REJECTED'],
           required: true,
         },
         lastUpdatedDate: {
@@ -61,8 +55,4 @@ const ShoppingSchema = new Schema<Shopping>({
   },
 });
 
-export const ShoppingModel = model<Shopping>(
-  "Shopping",
-  ShoppingSchema,
-  "shopping"
-);
+export const ShoppingModel = model<Shopping>('Shopping', ShoppingSchema, 'shopping');

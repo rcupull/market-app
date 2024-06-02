@@ -1,10 +1,10 @@
-import passport from "passport";
-import { Strategy as LocalStrategy } from "passport-local";
-import bcrypt from "bcrypt";
-import { UserModel } from "../schemas/user";
-import passportJWT from "passport-jwt";
-import { secretAccessToken } from "../config";
-import { logger } from "../features/logger";
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import bcrypt from 'bcrypt';
+import { UserModel } from '../schemas/user';
+import passportJWT from 'passport-jwt';
+import { secretAccessToken } from '../config';
+import { logger } from '../features/logger';
 
 const { Strategy: JWTStrategy, ExtractJwt } = passportJWT;
 /////////////////////////////////////////////////////////////////
@@ -12,11 +12,11 @@ const { Strategy: JWTStrategy, ExtractJwt } = passportJWT;
 passport.use(
   new LocalStrategy(async (email: string, password: string, done) => {
     try {
-      const user = await UserModel.findOne({ email }).select("+password");
+      const user = await UserModel.findOne({ email }).select('+password');
 
       if (!user) {
         return done(null, false, {
-          message: "Incorrect username or password.",
+          message: 'Incorrect username or password.',
         });
       }
 
@@ -24,7 +24,7 @@ passport.use(
 
       if (!isPasswordValid) {
         return done(null, false, {
-          message: "Incorrect username or password.",
+          message: 'Incorrect username or password.',
         });
       }
 
@@ -34,7 +34,7 @@ passport.use(
     } catch (err) {
       return done(err);
     }
-  })
+  }),
 );
 
 passport.use(
@@ -50,20 +50,20 @@ passport.use(
         })
         .catch((err) => {
           return done(err, false, {
-            message: "Token not matched.",
+            message: 'Token not matched.',
           });
         });
-    }
-  )
+    },
+  ),
 );
 
-export const autenticationMiddleware = passport.authenticate("local", {
+export const autenticationMiddleware = passport.authenticate('local', {
   session: false,
 });
 
 export const passportMiddlewareInitialize = passport.initialize();
 
-export const passportJwtMiddleware = passport.authenticate("jwt", {
+export const passportJwtMiddleware = passport.authenticate('jwt', {
   session: false,
 });
 

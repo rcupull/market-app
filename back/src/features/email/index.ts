@@ -1,11 +1,11 @@
-import nodemailer from "nodemailer";
-import { hostname } from "../../config";
+import nodemailer from 'nodemailer';
+import { hostname } from '../../config';
 
-const user = "aseremarket@gmail.com";
-const pass = "apxb pupn lhex catp";
+const user = 'aseremarket@gmail.com';
+const pass = 'apxb pupn lhex catp';
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  service: 'gmail',
   auth: {
     user,
     pass,
@@ -32,9 +32,9 @@ export const sendValidationCodeToEmail = ({
       {
         from: user,
         to: email,
-        subject: "Verificación de la cuenta",
+        subject: 'Verificación de la cuenta',
         text: `No debe responde a este correo. De click al siguiente link para validar su cuenta en Asere Market ${getValidationCodeRoute(
-          code
+          code,
         )}`,
       },
       (error: any, info: any) => {
@@ -43,7 +43,7 @@ export const sendValidationCodeToEmail = ({
         } else {
           resolve(info);
         }
-      }
+      },
     );
   });
 };
@@ -60,9 +60,9 @@ export const sendForgotPasswordCodeToEmail = ({
       {
         from: user,
         to: email,
-        subject: "Recuperación de la cuenta",
+        subject: 'Recuperación de la cuenta',
         text: `No debe responde a este correo. De click al siguiente link para recuperar su cuenta en Asere Market ${getForgotPasswordCodeRoute(
-          code
+          code,
         )}`,
       },
       (error: any, info: any) => {
@@ -71,7 +71,7 @@ export const sendForgotPasswordCodeToEmail = ({
         } else {
           resolve(info);
         }
-      }
+      },
     );
   });
 };

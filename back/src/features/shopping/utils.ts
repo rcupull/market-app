@@ -1,5 +1,5 @@
-import { Shopping } from "../../types/shopping";
-import { logger } from "../logger";
+import { Shopping } from '../../types/shopping';
+import { logger } from '../logger';
 
 export const computePay = ({
   order,
@@ -17,8 +17,8 @@ export const computePay = ({
       return amount;
     }
 
-    if (post.currency !== "CUP") {
-      logger.info("not cup"); //TODO not cup
+    if (post.currency !== 'CUP') {
+      logger.info('not cup'); //TODO not cup
       return amount;
     }
 

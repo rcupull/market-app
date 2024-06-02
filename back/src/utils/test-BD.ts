@@ -1,7 +1,7 @@
-import { BusinessModel } from "../schemas/business";
-import { UserModel } from "../schemas/user";
-import { Business } from "../types/business";
-import { User } from "../types/user";
+import { BusinessModel } from '../schemas/business';
+import { UserModel } from '../schemas/user';
+import { Business } from '../types/business';
+import { User } from '../types/user';
 
 export const fillBD = async (args?: {
   overrideUser1?: Partial<User>;
@@ -10,20 +10,20 @@ export const fillBD = async (args?: {
   const { overrideUser1 = {}, overrideBusiness1User1 = {} } = args || {};
 
   const admin = new UserModel({
-    name: "admin",
-    email: "admin@gmail.com",
-    password: "password_123_admin",
-    passwordVerbose: "password_123_admin",
-    role: "admin",
+    name: 'admin',
+    email: 'admin@gmail.com',
+    password: 'password_123_admin',
+    passwordVerbose: 'password_123_admin',
+    role: 'admin',
   });
   await admin.save();
 
   //////////////////////////////////////////////////////////////////////////////////
   const user1 = new UserModel({
-    name: "user1",
-    email: "user1@gmail.com",
-    password: "password_123_user1",
-    passwordVerbose: "password_123_user1",
+    name: 'user1',
+    email: 'user1@gmail.com',
+    password: 'password_123_user1',
+    passwordVerbose: 'password_123_user1',
     validated: true,
     canCreateBusiness: true,
     ...overrideUser1,
@@ -31,8 +31,8 @@ export const fillBD = async (args?: {
   await user1.save();
   //
   const business1User1 = new BusinessModel({
-    name: "business1User1",
-    routeName: "business1User1",
+    name: 'business1User1',
+    routeName: 'business1User1',
     createdBy: user1._id,
     validated: true,
     ...overrideBusiness1User1,
@@ -40,16 +40,16 @@ export const fillBD = async (args?: {
   await business1User1.save();
 
   const business2User1 = new BusinessModel({
-    name: "business2User1",
-    routeName: "business2User1",
+    name: 'business2User1',
+    routeName: 'business2User1',
     createdBy: user1.id,
     validated: true,
   });
   await business2User1.save();
 
   const hiddenBusinessUser1 = new BusinessModel({
-    name: "hiddenBusinessUser1",
-    routeName: "hiddenBusinessUser1",
+    name: 'hiddenBusinessUser1',
+    routeName: 'hiddenBusinessUser1',
     createdBy: user1.id,
     validated: true,
     hidden: true,
@@ -60,30 +60,30 @@ export const fillBD = async (args?: {
   //////////////////////////////////////////////////////////////////////////////////
 
   const user2 = new UserModel({
-    name: "user2",
-    email: "user2@gmail.com",
-    password: "password_123_user2",
-    passwordVerbose: "password_123_user2",
+    name: 'user2',
+    email: 'user2@gmail.com',
+    password: 'password_123_user2',
+    passwordVerbose: 'password_123_user2',
   });
   await user2.save();
   //
   const business1User2 = new BusinessModel({
-    name: "business1User2",
-    routeName: "business1User2",
+    name: 'business1User2',
+    routeName: 'business1User2',
     createdBy: user2.id,
   });
   await business1User2.save();
   //
   const business2User2 = new BusinessModel({
-    name: "business2User2",
-    routeName: "business2User2",
+    name: 'business2User2',
+    routeName: 'business2User2',
     createdBy: user2.id,
   });
   await business2User2.save();
 
   const hiddenBusinessUser2 = new BusinessModel({
-    name: "hiddenBusinessUser2",
-    routeName: "hiddenBusinessUser2",
+    name: 'hiddenBusinessUser2',
+    routeName: 'hiddenBusinessUser2',
     createdBy: user2.id,
     validated: true,
     hidden: true,

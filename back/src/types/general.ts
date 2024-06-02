@@ -1,9 +1,5 @@
-import {
-  Request,
-  Response,
-  RequestHandler as ExpressRequestHandler,
-} from "express";
-import { ServerResponse } from "http";
+import { Request, Response, RequestHandler as ExpressRequestHandler } from 'express';
+import { ServerResponse } from 'http';
 import {
   ApplySchemaOptions,
   DefaultSchemaOptions,
@@ -11,11 +7,11 @@ import {
   PaginateOptions,
   ResolveSchemaOptions,
   Schema,
-} from "mongoose";
+} from 'mongoose';
 
-import { Post } from "./post";
-import { Business } from "./business";
-import { User as UserApp } from "./user";
+import { Post } from './post';
+import { Business } from './business';
+import { User as UserApp } from './user';
 
 export type AnyRecord = Record<string, any>;
 
@@ -41,11 +37,11 @@ export interface RequestHandler<
   ResBody = any,
   ReqBody = any,
   ReqQuery = AnyRecord,
-  Locals extends Record<string, any> = Record<string, any>
+  Locals extends Record<string, any> = Record<string, any>,
 > extends ExpressRequestHandler<P, ResBody, ReqBody, ReqQuery, Locals> {}
 
 export type QueryHandle<Args extends AnyRecord = AnyRecord, R = void> = (
-  args: Args & { res: Response; req: Request }
+  args: Args & { res: Response; req: Request },
 ) => Promise<R | ServerResponse>;
 
 export interface Image {
@@ -61,9 +57,7 @@ export type SchemaDefinition<Type = any> = ApplySchemaOptions<
 >;
 
 type EmptyObject<T> = { [K in keyof T]?: never };
-export type EmptyObjectOf<T> = EmptyObject<T> extends T
-  ? EmptyObject<T>
-  : never;
+export type EmptyObjectOf<T> = EmptyObject<T> extends T ? EmptyObject<T> : never;
 
 export type Nullable<T> = T | false | null | undefined;
 

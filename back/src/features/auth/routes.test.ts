@@ -1,37 +1,34 @@
-import supertest from "supertest";
-import { app } from "../../server";
-import {
-  dropTestDbConnectionAsync,
-  setAnyString,
-} from "../../utils/test-utils";
-import { User } from "../../types/user";
-import { fillBD } from "../../utils/test-BD";
+import supertest from 'supertest';
+import { app } from '../../server';
+import { dropTestDbConnectionAsync, setAnyString } from '../../utils/test-utils';
+import { User } from '../../types/user';
+import { fillBD } from '../../utils/test-BD';
 
-describe("/auth/sign-in", () => {
+describe('/auth/sign-in', () => {
   afterEach(async () => {
     await dropTestDbConnectionAsync();
   });
 
-  it("POST should fail when user is not validated", async () => {
+  it('POST should fail when user is not validated', async () => {
     await fillBD({ overrideUser1: { validated: false } });
 
     await supertest(app)
       .post(`/auth/sign-in`)
       .send({
-        username: "user1@gmail.com",
-        password: "password_123_user1",
+        username: 'user1@gmail.com',
+        password: 'password_123_user1',
       })
       .expect(401);
   });
 
-  it("POST", async () => {
+  it('POST', async () => {
     await fillBD();
 
     await supertest(app)
       .post(`/auth/sign-in`)
       .send({
-        username: "user1@gmail.com",
-        password: "password_123_user1",
+        username: 'user1@gmail.com',
+        password: 'password_123_user1',
       })
       .expect(200)
       .then((response) => {
@@ -39,7 +36,7 @@ describe("/auth/sign-in", () => {
         expect(token).toBeTruthy();
 
         expect(user).toMatchInlineSnapshot(
-          setAnyString<User>("_id", "createdAt"),
+          setAnyString<User>('_id', 'createdAt'),
           `
 {
   "__v": 0,
@@ -53,7 +50,7 @@ describe("/auth/sign-in", () => {
   "shoppingCart": null,
   "validated": true,
 }
-`
+`,
         );
       });
   });

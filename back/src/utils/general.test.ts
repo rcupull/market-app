@@ -1,8 +1,8 @@
-import { movRow } from "./general";
+import { movRow } from './general';
 
-describe("movRow()", () => {
-  it("should return a right value 1", async () => {
-    expect(movRow(["a", "b", "c", "d", "e"], 1, 2)).toMatchInlineSnapshot(`
+describe('movRow()', () => {
+  it('should return a right value 1', async () => {
+    expect(movRow(['a', 'b', 'c', 'd', 'e'], 1, 2)).toMatchInlineSnapshot(`
 [
   "a",
   "c",
@@ -13,8 +13,8 @@ describe("movRow()", () => {
 `);
   });
 
-  it("should return a right value 1", async () => {
-    expect(movRow(["a", "b", "c", "d", "e"], 1, 4)).toMatchInlineSnapshot(`
+  it('should return a right value 1', async () => {
+    expect(movRow(['a', 'b', 'c', 'd', 'e'], 1, 4)).toMatchInlineSnapshot(`
 [
   "a",
   "c",

@@ -1,6 +1,6 @@
-import { RequestHandler } from "../../types/general";
-import { withTryCatch } from "../../utils/error";
-import { GOOGLE_IMG_SCRAP } from "google-img-scrap";
+import { RequestHandler } from '../../types/general';
+import { withTryCatch } from '../../utils/error';
+import { GOOGLE_IMG_SCRAP } from 'google-img-scrap';
 
 /**
  * https://www.npmjs.com/package/google-img-scrap

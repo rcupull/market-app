@@ -1,92 +1,80 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import { validators } from "../../middlewares/express-validator";
-import { authHandles } from "./handles";
-import { autenticationMiddleware } from "../../middlewares/passport";
-import { isLogged } from "../../middlewares/verify";
+import { validators } from '../../middlewares/express-validator';
+import { authHandles } from './handles';
+import { autenticationMiddleware } from '../../middlewares/passport';
+import { isLogged } from '../../middlewares/verify';
 
 export const router = Router();
 /////////////////////////////////////////////////////////////////
 
 router
-  .route("/auth/sign-in")
+  .route('/auth/sign-in')
   .post(
-    validators.body("username").notEmpty(),
-    validators.body("password").notEmpty(),
+    validators.body('username').notEmpty(),
+    validators.body('password').notEmpty(),
     validators.handle,
     autenticationMiddleware,
-    authHandles.post_signIn()
+    authHandles.post_signIn(),
   );
 
 router
-  .route("/auth/refresh")
+  .route('/auth/refresh')
+  .post(validators.body('refreshToken').notEmpty(), validators.handle, authHandles.post_refresh());
+/////////////////////////////////////////////////////////////////
+
+router
+  .route('/auth/sign-out')
+  .post(validators.body('refreshToken').notEmpty(), validators.handle, authHandles.post_signOut());
+/////////////////////////////////////////////////////////////////
+
+router
+  .route('/auth/sign-up')
   .post(
-    validators.body("refreshToken").notEmpty(),
+    validators.body('email').notEmpty().isEmail(),
+    validators.body('password').notEmpty(),
+    validators.body('name').notEmpty(),
+    validators.body('canCreateBusiness').notEmpty(),
     validators.handle,
-    authHandles.post_refresh()
+    authHandles.post_signUp(),
   );
 /////////////////////////////////////////////////////////////////
 
 router
-  .route("/auth/sign-out")
-  .post(
-    validators.body("refreshToken").notEmpty(),
-    validators.handle,
-    authHandles.post_signOut()
-  );
-/////////////////////////////////////////////////////////////////
+  .route('/auth/validate')
+  .post(validators.body('code').notEmpty(), validators.handle, authHandles.post_validate());
 
 router
-  .route("/auth/sign-up")
+  .route('/auth/forgot-password-request')
   .post(
-    validators.body("email").notEmpty().isEmail(),
-    validators.body("password").notEmpty(),
-    validators.body("name").notEmpty(),
-    validators.body("canCreateBusiness").notEmpty(),
+    validators.body('email').notEmpty(),
     validators.handle,
-    authHandles.post_signUp()
-  );
-/////////////////////////////////////////////////////////////////
-
-router
-  .route("/auth/validate")
-  .post(
-    validators.body("code").notEmpty(),
-    validators.handle,
-    authHandles.post_validate()
+    authHandles.post_forgot_password_request(),
   );
 
 router
-  .route("/auth/forgot-password-request")
+  .route('/auth/forgot-password-validate')
   .post(
-    validators.body("email").notEmpty(),
+    validators.body('newPassword').notEmpty(),
+    validators.body('code').notEmpty(),
     validators.handle,
-    authHandles.post_forgot_password_request()
+    authHandles.post_forgot_password_validate(),
   );
 
 router
-  .route("/auth/forgot-password-validate")
+  .route('/auth/change-password')
   .post(
-    validators.body("newPassword").notEmpty(),
-    validators.body("code").notEmpty(),
-    validators.handle,
-    authHandles.post_forgot_password_validate()
-  );
-
-router
-  .route("/auth/change-password")
-  .post(
-    validators.body("newPassword").notEmpty(),
+    validators.body('newPassword').notEmpty(),
     validators.handle,
     isLogged,
-    authHandles.post_change_password()
+    authHandles.post_change_password(),
   );
 
 router
-  .route("/auth/firebase/token")
+  .route('/auth/firebase/token')
   .put(
-    validators.body("firebaseToken").notEmpty(),
+    validators.body('firebaseToken').notEmpty(),
     validators.handle,
     isLogged,
-    authHandles.put_firebase_token()
+    authHandles.put_firebase_token(),
   );

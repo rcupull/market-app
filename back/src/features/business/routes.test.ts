@@ -1,19 +1,14 @@
-import supertest from "supertest";
-import { app } from "../../server";
-import {
-  dropTestDbConnectionAsync,
-  generateToken,
-  setAnyString,
-} from "../../utils/test-utils";
-import { Business } from "../../types/business";
-import { fillBD } from "../../utils/test-BD";
-import { query } from "express";
+import supertest from 'supertest';
+import { app } from '../../server';
+import { dropTestDbConnectionAsync, generateToken, setAnyString } from '../../utils/test-utils';
+import { Business } from '../../types/business';
+import { fillBD } from '../../utils/test-BD';
 
-describe("/business", () => {
+describe('/business', () => {
   afterEach(async () => {
     await dropTestDbConnectionAsync();
   });
-  it("GET", async () => {
+  it('GET', async () => {
     await fillBD();
 
     await supertest(app)
@@ -21,7 +16,7 @@ describe("/business", () => {
       .expect(200)
       .then((response) => {
         expect(response.body.data[0]).toMatchInlineSnapshot(
-          setAnyString<Business>("_id", "createdAt", "createdBy"),
+          setAnyString<Business>('_id', 'createdAt', 'createdBy'),
           `
 {
   "__v": 0,
@@ -49,7 +44,7 @@ describe("/business", () => {
   "postCategories": [],
   "routeName": "business1User1",
 }
-`
+`,
         );
 
         expect(response.body.paginator).toMatchInlineSnapshot(`
@@ -69,7 +64,7 @@ describe("/business", () => {
       });
   });
 
-  it("GET should no return hidden business", async () => {
+  it('GET should no return hidden business', async () => {
     await fillBD();
 
     await supertest(app)
@@ -80,7 +75,7 @@ describe("/business", () => {
       });
   });
 
-  it("GET should return all business", async () => {
+  it('GET should return all business', async () => {
     await fillBD();
 
     await supertest(app)
@@ -91,8 +86,8 @@ describe("/business", () => {
       });
   });
 
-  it("POST should fail if the user can not create a business", async () => {
-    const { user1, business1User1 } = await fillBD({
+  it('POST should fail if the user can not create a business', async () => {
+    const { user1 } = await fillBD({
       overrideUser1: {
         canCreateBusiness: false,
       },
@@ -101,64 +96,64 @@ describe("/business", () => {
     await supertest(app)
       .post(`/business`)
       .send({
-        name: "newBusiness",
-        routeName: "newBusiness",
-        category: "clothing",
+        name: 'newBusiness',
+        routeName: 'newBusiness',
+        category: 'clothing',
       })
-      .auth(generateToken(user1._id), { type: "bearer" })
+      .auth(generateToken(user1._id), { type: 'bearer' })
       .expect(401);
   });
 
-  it("POST should fail if the business already exists", async () => {
+  it('POST should fail if the business already exists', async () => {
     const { user1, business1User1 } = await fillBD();
 
     await supertest(app)
       .post(`/business`)
       .send({
-        name: "newBusiness",
+        name: 'newBusiness',
         routeName: business1User1.routeName, // exiting bussiness
-        category: "clothing",
+        category: 'clothing',
       })
-      .auth(generateToken(user1._id), { type: "bearer" })
+      .auth(generateToken(user1._id), { type: 'bearer' })
       .expect(400);
   });
 
-  it("POST", async () => {
+  it('POST', async () => {
     const { user1 } = await fillBD();
 
     await supertest(app)
       .post(`/business`)
       .send({
-        name: "newBusiness",
-        routeName: "newBusiness",
-        category: "clothing",
+        name: 'newBusiness',
+        routeName: 'newBusiness',
+        category: 'clothing',
       })
-      .auth(generateToken(user1._id), { type: "bearer" })
+      .auth(generateToken(user1._id), { type: 'bearer' })
       .expect(200);
 
     await supertest(app).get(`/business/newBusiness`).expect(200);
   });
 
-  it("POST should fail if not autenticated", async () => {
+  it('POST should fail if not autenticated', async () => {
     await fillBD();
 
     await supertest(app)
       .post(`/business`)
       .send({
-        name: "newBusiness",
-        routeName: "newBusiness",
-        category: "clothing",
+        name: 'newBusiness',
+        routeName: 'newBusiness',
+        category: 'clothing',
       })
       .expect(401);
   });
 });
 
-describe("/business/:routeName", () => {
+describe('/business/:routeName', () => {
   afterEach(async () => {
     await dropTestDbConnectionAsync();
   });
 
-  it("GET", async () => {
+  it('GET', async () => {
     const { business1User1 } = await fillBD();
 
     await supertest(app)
@@ -166,7 +161,7 @@ describe("/business/:routeName", () => {
       .expect(200)
       .then((response) => {
         expect(response.body).toMatchInlineSnapshot(
-          setAnyString<Business>("_id", "createdAt", "createdBy"),
+          setAnyString<Business>('_id', 'createdAt', 'createdBy'),
           `
 {
   "__v": 0,
@@ -194,7 +189,7 @@ describe("/business/:routeName", () => {
   "postCategories": [],
   "routeName": "business1User1",
 }
-`
+`,
         );
       });
   });

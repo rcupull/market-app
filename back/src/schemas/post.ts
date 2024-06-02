@@ -1,19 +1,19 @@
-import { Schema, model, PaginateModel } from "mongoose";
-import { Post } from "../types/post";
-import mongoosePaginate from "mongoose-paginate-v2";
-import { createdAtSchemaDefinition } from "../utils/schemas";
-import { BusinessModel } from "./business";
-import { PostPageLayoutSchema } from "./common";
+import { Schema, model, PaginateModel } from 'mongoose';
+import { Post } from '../types/post';
+import mongoosePaginate from 'mongoose-paginate-v2';
+import { createdAtSchemaDefinition } from '../utils/schemas';
+import { BusinessModel } from './business';
+import { PostPageLayoutSchema } from './common';
 
 export const PostSchema = new Schema<Post>({
   ...createdAtSchemaDefinition,
   routeName: { type: String, required: true },
-  currency: { type: String, enum: ["CUP", "MLC", "USD"] },
+  currency: { type: String, enum: ['CUP', 'MLC', 'USD'] },
   description: { type: String },
   details: { type: String },
   hidden: { type: Boolean, default: false },
   hiddenBusiness: { type: Boolean, default: false },
-  createdBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   postCategoriesTags: { type: [String] },
   images: {
     type: [
@@ -27,28 +27,28 @@ export const PostSchema = new Schema<Post>({
   clothingSizes: [
     {
       type: String,
-      enum: ["XXS", "XS", "S", "M", "L", "XL", "2XL", "3XL"],
+      enum: ['XXS', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'],
     },
   ],
   colors: [
     {
       type: String,
       enum: [
-        "white",
-        "gray",
-        "black",
-        "blue",
-        "red",
-        "green",
-        "purple",
-        "orange",
-        "yellow",
-        "slate",
-        "pink",
-        "fuchsia",
-        "violet",
-        "cyan",
-        "teal",
+        'white',
+        'gray',
+        'black',
+        'blue',
+        'red',
+        'green',
+        'purple',
+        'orange',
+        'yellow',
+        'slate',
+        'pink',
+        'fuchsia',
+        'violet',
+        'cyan',
+        'teal',
       ],
       required: true,
     },
@@ -64,14 +64,14 @@ export const PostSchema = new Schema<Post>({
   },
   postType: {
     type: String,
-    enum: ["product", "link"],
+    enum: ['product', 'link'],
     required: true,
-    default: "product",
+    default: 'product',
   },
   postLink: {
     type: {
       type: String,
-      enum: ["business", "external"],
+      enum: ['business', 'external'],
     },
     value: { type: String },
   },
@@ -79,7 +79,7 @@ export const PostSchema = new Schema<Post>({
 
 PostSchema.plugin(mongoosePaginate);
 
-PostSchema.pre("save", async function (next) {
+PostSchema.pre('save', async function (next) {
   try {
     const out = await BusinessModel.findOne({
       routeName: this.routeName,
@@ -90,8 +90,4 @@ PostSchema.pre("save", async function (next) {
   }
 });
 
-export const PostModel = model<Post, PaginateModel<Post>>(
-  "Post",
-  PostSchema,
-  "posts"
-);
+export const PostModel = model<Post, PaginateModel<Post>>('Post', PostSchema, 'posts');
