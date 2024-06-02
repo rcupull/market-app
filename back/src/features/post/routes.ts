@@ -22,7 +22,7 @@ router
     isLogged,
     isUserBusinessOwner,
     isUserThisBusinessOwner,
-    postHandles.post_posts(),
+    postHandles.post_posts()
   );
 
 router
@@ -33,7 +33,7 @@ router
     isLogged,
     isUserBusinessOwner,
     isUserThisPostOwner,
-    postHandles.post_posts_postId_duplicate(),
+    postHandles.post_posts_postId_duplicate()
   );
 ///////////////////////////////////////////////////////////////////////////
 
@@ -45,16 +45,27 @@ router
     validators.handle,
     isLogged,
     isUserThisPostOwner,
-    postHandles.put_posts_postId(),
+    postHandles.put_posts_postId()
   )
   .delete(
     validators.param('postId').notEmpty(),
     validators.handle,
     isLogged,
     isUserThisPostOwner,
-    postHandles.delete_posts_postId(),
+    postHandles.delete_posts_postId()
   );
 
+//////////////////////////////////////////////////////////////////
+
+router
+  .route('/posts/:postId/review')
+  .post(
+    validators.param('postId').notEmpty(),
+    validators.body('value').notEmpty(),
+    validators.handle,
+    isLogged,
+    postHandles.post_make_review()
+  );
 /////////////////////////////////////////////////////////////////
 
 router
@@ -64,7 +75,7 @@ router
     validators.handle,
     isLogged,
     isUserThisBusinessOwner,
-    postHandles.bulk_action_delete(),
+    postHandles.bulk_action_delete()
   );
 
 router
@@ -75,5 +86,5 @@ router
     validators.handle,
     isLogged,
     isUserThisBusinessOwner,
-    postHandles.bulk_action_update(),
+    postHandles.bulk_action_update()
   );

@@ -67,7 +67,7 @@ describe('GET: /business', () => {
               "requests": [],
             },
           }
-        `,
+        `
         );
 
         expect(response.body.paginator).toMatchInlineSnapshot(`
@@ -217,7 +217,7 @@ describe('GET: /business/:routeName', () => {
               "requests": [],
             },
           }
-        `,
+        `
         );
       });
   });

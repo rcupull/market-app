@@ -45,6 +45,7 @@ export interface Post extends BaseIdentity {
   discount?: number;
   currency?: PostCurrency;
   reviews?: PostReviews;
+  reviewsUserIds?: Array<Schema.Types.ObjectId>;
   colors?: Array<PostColor>;
   highlights?: Array<string>;
   hidden?: boolean;

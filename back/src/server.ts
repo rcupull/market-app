@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'development') {
     swaggerUiExpress.serve,
     swaggerUiExpress.setup(swaggerjson, {
       explorer: true,
-    }),
+    })
   );
 }
 

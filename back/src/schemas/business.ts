@@ -176,7 +176,7 @@ BusinessSchema.pre('updateOne', async function (next) {
       },
       {
         hiddenBusiness: hidden,
-      },
+      }
     );
   }
 
@@ -186,5 +186,5 @@ BusinessSchema.pre('updateOne', async function (next) {
 export const BusinessModel = model<Business, PaginateModel<Business>>(
   'Business',
   BusinessSchema,
-  'business',
+  'business'
 );

@@ -3,7 +3,12 @@ import { withTryCatch } from '../../utils/error';
 import { GetAllArgs, postServices } from './services';
 import { ServerResponse } from 'http';
 import { imagesServices } from '../images/services';
-import { getPostNotFoundResponse, getUserNotFoundResponse } from '../../utils/server-response';
+import {
+  get200Response,
+  get400Response,
+  getPostNotFoundResponse,
+  getUserNotFoundResponse,
+} from '../../utils/server-response';
 import { isEmpty, isEqual } from '../../utils/general';
 import { Post } from '../../types/post';
 import { makeReshaper } from '../../utils/makeReshaper';
@@ -390,6 +395,41 @@ const bulk_action_update: () => RequestHandler = () => {
   };
 };
 
+const post_make_review: () => RequestHandler = () => {
+  return async (req, res) => {
+    const { user } = req;
+    const { postId } = req.params;
+    const { value } = req.body;
+
+    if (value < 1 || value > 5) {
+      return get400Response({ res, json: { message: 'Invalid review value' } });
+    }
+
+    const out = await postServices.findOneAndUpdate({
+      res,
+      req,
+      query: {
+        _id: postId,
+        createdBy: { $ne: user },
+        reviewsUserIds: { $nin: [user] },
+      },
+      update: {
+        $inc: { [`reviews.${value - 1}`]: 1 },
+        $push: { reviewsUserIds: user },
+      },
+    });
+
+    if (!out) {
+      return get400Response({
+        res,
+        json: { message: 'El post no existe o el usuario no puede hacer el review' },
+      });
+    }
+
+    return get200Response({ res, json: { message: 'Review was send correctly' } });
+  };
+};
+
 export const postHandles = {
   get_posts,
   post_posts,
@@ -401,4 +441,5 @@ export const postHandles = {
   //
   bulk_action_delete,
   bulk_action_update,
+  post_make_review,
 };

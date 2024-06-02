@@ -1,4 +1,5 @@
 import { BusinessModel } from '../schemas/business';
+import { PostModel } from '../schemas/post';
 import { UserModel } from '../schemas/user';
 import { Business } from '../types/business';
 import { User } from '../types/user';
@@ -57,6 +58,16 @@ export const fillBD = async (args?: {
 
   await hiddenBusinessUser1.save();
 
+  const productPost1Business1User1 = new PostModel({
+    name: 'chancletas',
+    routeName: business1User1.routeName,
+    createdBy: user1.id,
+    price: '10',
+    currency: 'CUP',
+    postCategoriesTags: ['cat1', 'cat2', 'cat3'],
+  });
+  await productPost1Business1User1.save();
+
   //////////////////////////////////////////////////////////////////////////////////
 
   const user2 = new UserModel({
@@ -92,11 +103,24 @@ export const fillBD = async (args?: {
 
   //////////////////////////////////////////////////////////////////////////////////
 
+  //////////////////////////////////////////////////////////////////////////////////
+  const user3 = new UserModel({
+    name: 'user3',
+    email: 'user3@gmail.com',
+    password: 'password_123_user3',
+    passwordVerbose: 'password_123_user3',
+    validated: true,
+  });
+
+  await user3.save();
+
   return {
     user1,
     user2,
+    user3,
     business1User1,
     business2User1,
+    productPost1Business1User1,
     //
     business1User2,
     business2User2,
