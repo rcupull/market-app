@@ -18,7 +18,7 @@ router
     validators.handle,
     isLogged,
     isUserBusinessOwner,
-    businessHandles.post_business(),
+    businessHandles.post_business()
   );
 
 router.route('/business/summary').get(pagination, businessHandles.get_business_summary());
@@ -30,14 +30,14 @@ router
   .get(
     validators.param('routeName').notEmpty(),
     validators.handle,
-    businessHandles.get_business_routeName(),
+    businessHandles.get_business_routeName()
   )
   .put(
     validators.param('routeName').notEmpty(),
     validators.handle,
     isLogged,
     isUserThisBusinessOwner,
-    businessHandles.put_business_routeName(),
+    businessHandles.put_business_routeName()
   )
   .delete(
     validators.param('routeName').notEmpty(),
@@ -45,7 +45,7 @@ router
     isLogged,
     isUserBusinessOwner,
     isUserThisBusinessOwner,
-    businessHandles.delete_business_routeName(),
+    businessHandles.delete_business_routeName()
   );
 
 ////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@ router
     isLogged,
     isUserBusinessOwner,
     isUserThisBusinessOwner,
-    businessHandles.update_business_post_categories(),
+    businessHandles.update_business_post_categories()
   );
 
 router
@@ -68,7 +68,7 @@ router
     validators.handle,
     isLogged,
     isUserThisBusinessOwner,
-    businessHandles.post_business_routeName_sections(),
+    businessHandles.post_business_routeName_sections()
   );
 
 router
@@ -80,7 +80,7 @@ router
     validators.handle,
     isLogged,
     isUserThisBusinessOwner,
-    businessHandles.put_business_section_reorder(),
+    businessHandles.put_business_section_reorder()
   );
 
 router
@@ -91,7 +91,7 @@ router
     validators.handle,
     isLogged,
     isUserThisBusinessOwner,
-    businessHandles.put_business_routeName_sections_sectionId(),
+    businessHandles.put_business_routeName_sections_sectionId()
   )
   .delete(
     validators.param('routeName').notEmpty(),
@@ -99,7 +99,7 @@ router
     validators.handle,
     isLogged,
     isUserThisBusinessOwner,
-    businessHandles.del_business_routeName_sections_sectionId(),
+    businessHandles.del_business_routeName_sections_sectionId()
   );
 
 router
@@ -110,5 +110,5 @@ router
     validators.handle,
     isLogged,
     isUserThisBusinessOwner,
-    businessHandles.post_business_routeName_chatbot_validate(),
+    businessHandles.post_business_routeName_chatbot_validate()
   );

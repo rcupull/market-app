@@ -404,21 +404,27 @@ const post_make_review: () => RequestHandler = () => {
     if (value < 1 || value > 5) {
       return get400Response({ res, json: { message: 'Invalid review value' } });
     }
-    const filterQuery = {
-      _id: postId,
-      createdBy: { $ne: user },
-      reviewsUserIds: { $nin: [user] },
-    };
-    const updateData = {
-      $inc: { [`reviews.${value - 1}`]: 1 },
-      $push: { reviewsUserIds: user },
-    };
-    const out = await postServices.updateOne({
+
+    const out = await postServices.findOneAndUpdate({
       res,
       req,
-      query: filterQuery,
-      update: updateData,
+      query: {
+        _id: postId,
+        createdBy: { $ne: user },
+        reviewsUserIds: { $nin: [user] },
+      },
+      update: {
+        $inc: { [`reviews.${value - 1}`]: 1 },
+        $push: { reviewsUserIds: user },
+      },
     });
+
+    if (!out) {
+      return get400Response({
+        res,
+        json: { message: 'El post no existe o el usuario no puede hacer el review' },
+      });
+    }
 
     return get200Response({ res, json: { message: 'Review was send correctly' } });
   };

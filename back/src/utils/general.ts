@@ -8,7 +8,7 @@ export const replaceAll = (value: string, match: string, replace: string): strin
 
 export const isEqualIds = (
   id1: string | Schema.Types.ObjectId,
-  id2: string | Schema.Types.ObjectId,
+  id2: string | Schema.Types.ObjectId
 ): boolean => {
   const id1Str = typeof id1 === 'string' ? id1 : id1.toString();
   const id2Str = typeof id2 === 'string' ? id2 : id2.toString();
@@ -65,7 +65,7 @@ export const combineMiddleware = (...mids: Array<RequestHandler>) => {
 };
 
 export const isEmpty = <T = object>(
-  value: T | null | undefined,
+  value: T | null | undefined
 ): value is EmptyObjectOf<T> | null | undefined => {
   if (!value) return true;
 
@@ -112,7 +112,7 @@ export const compact = <T = any>(value: Array<Nullable<T>>): Array<T> => {
 export const addRow = <T = any>(
   data: Array<T>,
   rowData: T,
-  position: 'start' | 'end' = 'end',
+  position: 'start' | 'end' = 'end'
 ): Array<T> => {
   const newData = [...data];
 
@@ -127,7 +127,7 @@ export const movRow = <T = any>(data: Array<T>, fromIndex: number, toIndex: numb
 
 export const addStringToUniqueArray = <T extends string = string>(
   array: Array<T>,
-  value: T,
+  value: T
 ): Array<T> => {
   return array.includes(value) ? array : addRow(array, value);
 };

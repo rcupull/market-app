@@ -21,7 +21,7 @@ router.use(
   catalogsRouter,
   imagesRouter,
   shoppingRouter,
-  generalRouter,
+  generalRouter
 );
 
 export default router;

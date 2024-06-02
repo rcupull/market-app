@@ -144,5 +144,5 @@ export const frontMiddlware = combineMiddleware(
   router.get(/\/*(.png|.css|.js)/, express.static(join(process.cwd(), appFrontDir))),
   router.get('/b/:routeName/posts/:postId', injectPostMetaMiddlware),
   router.get('/b/:routeName*', injectBusinessMetaMiddlware),
-  injectDefaultMetaMiddlware,
+  injectDefaultMetaMiddlware
 );

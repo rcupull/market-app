@@ -13,7 +13,7 @@ const get_users: () => RequestHandler = () => {
         {
           role: 'user',
         },
-        paginateOptions,
+        paginateOptions
       );
 
       res.send(out);
