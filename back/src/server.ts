@@ -18,6 +18,7 @@ if (process.env.NODE_ENV === "development") {
       explorer: true,
     })
   );
+}
 
 app.use(cors({ origin: "*", optionsSuccessStatus: 200 }));
 
