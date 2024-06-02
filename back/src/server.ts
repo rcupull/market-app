@@ -7,7 +7,6 @@ import { commaSeparateQuery } from './middlewares/comma-separate-query';
 import { frontMiddlware } from './middlewares/frontMiddlware';
 import { join } from 'path';
 import { appAssetsDir } from './config';
-import swaggerjson from '../swagger_output.json';
 
 export const app = express();
 
@@ -15,9 +14,9 @@ if (process.env.NODE_ENV === 'development') {
   app.use(
     '/api-docs',
     swaggerUiExpress.serve,
-    swaggerUiExpress.setup(swaggerjson, {
+    swaggerUiExpress.setup(require('../swagger_output.json'), {
       explorer: true,
-    })
+    }),
   );
 }
 
