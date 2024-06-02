@@ -7,11 +7,10 @@ import { commaSeparateQuery } from "./middlewares/comma-separate-query";
 import { frontMiddlware } from "./middlewares/frontMiddlware";
 import { join } from "path";
 import { appAssetsDir } from "./config";
-const DOC = process.env.DOC;
 
 export const app = express();
 
-if (DOC === "true") {
+if (process.env.NODE_ENV === "development") {
   app.use(
     "/api-docs",
     swaggerUiExpress.serve,
