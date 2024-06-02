@@ -29,7 +29,7 @@ import { StyleProps } from 'types/general';
 import { Post, PostCurrency, PostFormState, PostType } from 'types/post';
 import { getImageEndpoint } from 'utils/api';
 import { getRequiredLabel } from 'utils/form';
-import { addStringToUniqueArray } from 'utils/general';
+import { addStringToUniqueArray, isNumber } from 'utils/general';
 
 export interface ComponentProps extends StyleProps {
   portal: Portal;
@@ -127,11 +127,11 @@ export const Component = ({
           customCb: (value) => value?.length,
           message: 'Debe seleccionar al menos una categoría',
         },
-        {
+        postFormFields.includes('price') && {
           field: 'price',
           type: 'custom',
-          customCb: (priceVal) => isNaN(priceVal) || priceVal > 0,
-          message: 'El precio debe ser un número mayor que 0',
+          customCb: (priceVal) => isNumber(priceVal) && priceVal > 0,
+          message: 'Precio inválido',
         },
       ]}
     >
@@ -213,7 +213,7 @@ export const Component = ({
                   <FieldInput
                     id="post_price"
                     name="price"
-                    label="Precio"
+                    label={getRequiredLabel('Precio')}
                     type="number"
                     className="mt-6 w-full"
                   />
@@ -423,7 +423,7 @@ export const Component = ({
       {({ value, isValid }) => {
         return (
           <form className={className}>
-            <FieldInput name="name" label="Nombre del enlace" />
+            <FieldInput name="name" label={getRequiredLabel('Nombre del enlace')} />
             <Divider />
 
             <FieldRadioGroup<{ label: string; value: string }>

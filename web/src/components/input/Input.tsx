@@ -38,5 +38,21 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     );
   }
 
+  if (type === 'number') {
+    return renderInput({
+      ...props,
+      onChange: (e) => {
+        props?.onChange?.({
+          ...e,
+          target: {
+            ...e.target,
+            //@ts-expect-error ignore this error, it is necessary for now
+            value: Number(e.target.value),
+          },
+        });
+      },
+    });
+  }
+
   return renderInput(props);
 });

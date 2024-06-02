@@ -2,8 +2,8 @@ import { useRef } from 'react';
 
 import { FormErrors } from './types';
 
-import { AnyRecord } from 'types/general';
-import { getFlattenJson, isNullOrUndefinedOrEmptyString } from 'utils/general';
+import { AnyRecord, Nullable } from 'types/general';
+import { compact, getFlattenJson, isNullOrUndefinedOrEmptyString } from 'utils/general';
 
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
@@ -31,7 +31,7 @@ interface Validation<V extends AnyRecord, F extends keyof V = keyof V> {
 }
 
 export type FormValidations<V extends AnyRecord, F extends keyof V = keyof V> = Array<
-  Validation<V, F>
+  Nullable<Validation<V, F>>
 >;
 
 export type GetFormErrors<V extends AnyRecord, F extends keyof V = keyof V> = (
@@ -56,7 +56,7 @@ export const useGetFormErrors = <V extends AnyRecord, F extends keyof V = keyof 
 
       const fieldValue = value[field];
 
-      if (type !== 'equal' && refValues.current?.[field] === fieldValue) {
+      if (type !== 'equal' && refValues.current && refValues.current[field] === fieldValue) {
         /**
          * // return de same error if has not change the value
          * if type = 'equal' the validation depends of two values. It is necessary ignore this rule
@@ -94,7 +94,7 @@ export const useGetFormErrors = <V extends AnyRecord, F extends keyof V = keyof 
       }
     };
 
-    const validationPromises = validations.map(getValidationPromise);
+    const validationPromises = compact(validations).map(getValidationPromise);
 
     await Promise.all(validationPromises);
 
