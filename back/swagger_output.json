@@ -2,12 +2,12 @@
   "openapi": "3.0.0",
   "info": {
     "version": "v1.0.0",
-    "title": "elocality",
-    "description": "elocality-apis"
+    "title": "Asere Market",
+    "description": "Asere Market API"
   },
   "servers": [
     {
-      "url": "http://localhost:4009",
+      "url": "http://localhost/api-services",
       "description": ""
     }
   ],
@@ -1317,8 +1317,14 @@
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
-        "scheme": "bearer"
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
-  }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
 }
