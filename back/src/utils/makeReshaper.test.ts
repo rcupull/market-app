@@ -43,7 +43,7 @@ describe('makeReshaper()', () => {
   });
 
   it('should be able to pass array indices in the rules', async () => {
-    const reshaper = makeReshaper({ 'x.y': 'a[1].foo', b: 'm.n', 'c[0].field': 'a[0]' });
+    const reshaper = makeReshaper({ 'x.y': 'a.1.foo', b: 'm.n', 'c.0.field': 'a.0' });
 
     expect(reshaper({ a: [{ foo: 2 }, { foo: 4 }], m: { n: 2 } })).toEqual({
       x: { y: 4 },
@@ -112,7 +112,7 @@ describe('makeInvestedReshaper()', () => {
   });
 
   it('should be able to pass array indices in the rules', async () => {
-    const reshaper = makeInvestedReshaper({ 'a[1].foo': 'x.y', 'm.n': 'b', 'a[0]': 'c[0].field' });
+    const reshaper = makeInvestedReshaper({ 'a.1.foo': 'x.y', 'm.n': 'b', 'a.0': 'c.0.field' });
 
     expect(reshaper({ a: [{ foo: 2 }, { foo: 4 }], m: { n: 2 } })).toEqual({
       x: { y: 4 },
