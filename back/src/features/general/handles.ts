@@ -1,6 +1,6 @@
-import { withTryCatch } from "../../utils/error";
-import { RequestHandler } from "../../types/general";
-import { businessCategoryLabels, businessCategoryTree } from "./constants";
+import { withTryCatch } from '../../utils/error';
+import { RequestHandler } from '../../types/general';
+import { businessCategoryLabels, businessCategoryTree } from './constants';
 
 const get_business_categories: () => RequestHandler = () => {
   return (req, res) => {

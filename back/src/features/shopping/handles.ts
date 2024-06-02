@@ -1,23 +1,23 @@
-import { AnyRecord, RequestHandler } from "../../types/general";
-import { withTryCatch } from "../../utils/error";
-import { ServerResponse } from "http";
+import { AnyRecord, RequestHandler } from '../../types/general';
+import { withTryCatch } from '../../utils/error';
+import { ServerResponse } from 'http';
 import {
   getBusinessNotFoundResponse,
   getPostNotFoundResponse,
   getShoppingNotFoundResponse,
   getUserNotFoundResponse,
-} from "../../utils/server-response";
-import { shoppingServices } from "./services";
-import { postServices } from "../post/services";
-import { isEqualIds, isNumber } from "../../utils/general";
-import { notificationsServices } from "../notifications";
-import { businessServices } from "../business/services";
-import { computePay } from "./utils";
-import { logger } from "../logger";
-import { PostPurshaseNotes } from "../../types/post";
-import { ShoppingModel } from "../../schemas/shopping";
-import { Business } from "../../types/business";
-import { telegramServices } from "../telegram";
+} from '../../utils/server-response';
+import { shoppingServices } from './services';
+import { postServices } from '../post/services';
+import { isEqualIds, isNumber } from '../../utils/general';
+import { notificationsServices } from '../notifications';
+import { businessServices } from '../business/services';
+import { computePay } from './utils';
+import { logger } from '../logger';
+import { PostPurshaseNotes } from '../../types/post';
+import { ShoppingModel } from '../../schemas/shopping';
+import { Business } from '../../types/business';
+import { telegramServices } from '../telegram';
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -35,7 +35,7 @@ const get_shopping: () => RequestHandler = () => {
         res,
         query: {
           purchaserId: user._id,
-          "posts.post.routeName": routeName,
+          'posts.post.routeName': routeName,
         },
       });
 
@@ -62,7 +62,7 @@ const get_shopping_owner: () => RequestHandler = () => {
         req,
         res,
         query: {
-          "posts.post.routeName": routeName,
+          'posts.post.routeName': routeName,
           ...(states ? { state: { $in: states } } : {}),
         },
       });
@@ -145,8 +145,7 @@ const post_shopping: () => RequestHandler<
        * updateStockResponse is null if the stock amount fearure is not enabled
        */
 
-      const { amountAddedToPost, currentStockAmount } =
-        updateStockResponse || {};
+      const { amountAddedToPost, currentStockAmount } = updateStockResponse || {};
 
       if (isNumber(amountAddedToPost) && isNumber(currentStockAmount)) {
         await shoppingServices.updateOrAddOne({
@@ -162,7 +161,7 @@ const post_shopping: () => RequestHandler<
           res,
           req,
           payload: {
-            type: "POST_AMOUNT_STOCK_CHANGE",
+            type: 'POST_AMOUNT_STOCK_CHANGE',
             stockAmount: currentStockAmount,
             postId: post._id.toString(),
           },
@@ -171,7 +170,7 @@ const post_shopping: () => RequestHandler<
         if (amountAddedToPost !== amountToAdd) {
           return res.send({
             message:
-              "Por falta de disponibilidad en el stock no se han podido agregar la cantidad solicitada. Se han agregado solamente las cantidades disponibles.",
+              'Por falta de disponibilidad en el stock no se han podido agregar la cantidad solicitada. Se han agregado solamente las cantidades disponibles.',
           });
         }
 
@@ -214,19 +213,19 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
           purchaserId: user._id,
         },
         update: {
-          state: "REQUESTED",
+          state: 'REQUESTED',
         },
       });
 
       if (order instanceof ServerResponse) return order;
 
       if (!order) {
-        logger.error("It is weird, maybe there is a bug");
+        logger.error('It is weird, maybe there is a bug');
         return res.send({});
       }
 
       const business:
-        | Pick<Business, "shoppingPayment" | "name" | "telegramBotChat">
+        | Pick<Business, 'shoppingPayment' | 'name' | 'telegramBotChat'>
         | ServerResponse = await businessServices.findOne({
         res,
         req,
@@ -257,9 +256,9 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
           routeName: order.routeName,
         },
         update: {
-          "shoppingPayment.credit": newCredit,
+          'shoppingPayment.credit': newCredit,
           $push: {
-            "shoppingPayment.requests": {
+            'shoppingPayment.requests': {
               shoppingId: order._id,
               fromCredit,
               toPay,
@@ -278,9 +277,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
           `Una nueva orden de compra ha sido solicitada en su negocio "${business.name}" de nuestra plataforma Asere Market. Puede ver los detalles en la sección de órdenes de compras.`
         );
       } else {
-        logger.warn(
-          `the business ${business.name} has not a activated telegram account`
-        );
+        logger.warn(`the business ${business.name} has not a activated telegram account`);
       }
 
       res.send({});
@@ -352,14 +349,14 @@ const delete_shopping: () => RequestHandler = () => {
           res,
           req,
           query: {
-            state: "CONSTRUCTION",
+            state: 'CONSTRUCTION',
             routeName,
             purchaserId: user._id,
           },
           update: {
             $pull: {
               posts: {
-                "post._id": postId,
+                'post._id': postId,
               },
             },
           },
@@ -406,7 +403,7 @@ const delete_shopping: () => RequestHandler = () => {
             res,
             req,
             payload: {
-              type: "POST_AMOUNT_STOCK_CHANGE",
+              type: 'POST_AMOUNT_STOCK_CHANGE',
               stockAmount: updateStockResponse.currentStockAmount,
               postId,
             },
@@ -423,7 +420,7 @@ const delete_shopping: () => RequestHandler = () => {
         res,
         req,
         query: {
-          state: "CONSTRUCTION",
+          state: 'CONSTRUCTION',
           routeName,
         },
       });
@@ -431,56 +428,54 @@ const delete_shopping: () => RequestHandler = () => {
       if (oldShopping instanceof ServerResponse) return oldShopping;
 
       if (oldShopping) {
-        const promises = oldShopping.posts.map(
-          ({ post: { _id: postId }, count }) => {
-            return new Promise((resolve) => {
-              postServices
-                .getOne({
-                  res,
-                  req,
-                  postId,
-                })
-                .then((post) => {
-                  if (post instanceof ServerResponse) {
-                    return resolve(post);
-                  }
+        const promises = oldShopping.posts.map(({ post: { _id: postId }, count }) => {
+          return new Promise((resolve) => {
+            postServices
+              .getOne({
+                res,
+                req,
+                postId,
+              })
+              .then((post) => {
+                if (post instanceof ServerResponse) {
+                  return resolve(post);
+                }
 
-                  req.post = post;
-                  postServices
-                    .updateStockAmount({
-                      req,
-                      res,
-                      amountToAdd: count,
-                    })
-                    .then((updateStockResponse) => {
-                      if (updateStockResponse instanceof ServerResponse) {
-                        return resolve(updateStockResponse);
-                      }
+                req.post = post;
+                postServices
+                  .updateStockAmount({
+                    req,
+                    res,
+                    amountToAdd: count,
+                  })
+                  .then((updateStockResponse) => {
+                    if (updateStockResponse instanceof ServerResponse) {
+                      return resolve(updateStockResponse);
+                    }
 
-                      if (updateStockResponse) {
-                        const { currentStockAmount } = updateStockResponse;
+                    if (updateStockResponse) {
+                      const { currentStockAmount } = updateStockResponse;
 
-                        notificationsServices
-                          .sendNotificationToUpdate({
-                            req,
-                            res,
-                            payload: {
-                              type: "POST_AMOUNT_STOCK_CHANGE",
-                              stockAmount: currentStockAmount,
-                              postId: post._id.toString(),
-                            },
-                          })
-                          .then(() => {
-                            resolve(null);
-                          });
-                      }
+                      notificationsServices
+                        .sendNotificationToUpdate({
+                          req,
+                          res,
+                          payload: {
+                            type: 'POST_AMOUNT_STOCK_CHANGE',
+                            stockAmount: currentStockAmount,
+                            postId: post._id.toString(),
+                          },
+                        })
+                        .then(() => {
+                          resolve(null);
+                        });
+                    }
 
-                      resolve(null);
-                    });
-                });
-            });
-          }
-        );
+                    resolve(null);
+                  });
+              });
+          });
+        });
 
         await Promise.all(promises);
       }

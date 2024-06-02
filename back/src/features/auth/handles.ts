@@ -1,15 +1,12 @@
-import { RequestHandler } from "../../types/general";
-import { withTryCatch } from "../../utils/error";
-import { ServerResponse } from "http";
-import { v4 as uuid } from "uuid";
-import { AuthSessionModel, ValidationCodeModel } from "../../schemas/auth";
-import { userServices } from "../user/services";
-import jwt from "jsonwebtoken";
+import { RequestHandler } from '../../types/general';
+import { withTryCatch } from '../../utils/error';
+import { ServerResponse } from 'http';
+import { v4 as uuid } from 'uuid';
+import { AuthSessionModel, ValidationCodeModel } from '../../schemas/auth';
+import { userServices } from '../user/services';
+import jwt from 'jsonwebtoken';
 
-import {
-  sendForgotPasswordCodeToEmail,
-  sendValidationCodeToEmail,
-} from "../email";
+import { sendForgotPasswordCodeToEmail, sendValidationCodeToEmail } from '../email';
 import {
   get200Response,
   get201Response,
@@ -17,10 +14,10 @@ import {
   get404Response,
   getSessionNotFoundResponse,
   getUserNotFoundResponse,
-} from "../../utils/server-response";
-import { secretRefreshToken } from "../../config";
-import { generateAccessJWT, generateRefreshJWT } from "../../utils/auth";
-import { logger } from "../logger";
+} from '../../utils/server-response';
+import { secretRefreshToken } from '../../config';
+import { generateAccessJWT, generateRefreshJWT } from '../../utils/auth';
+import { logger } from '../logger';
 
 const post_signIn: () => RequestHandler = () => {
   return (req, res) => {
@@ -35,7 +32,7 @@ const post_signIn: () => RequestHandler = () => {
       if (!validated) {
         return get401Response({
           res,
-          json: { message: "The user is no validated" },
+          json: { message: 'The user is no validated' },
         });
       }
       //@ts-expect-error ignore
@@ -76,34 +73,30 @@ const post_refresh: () => RequestHandler = () => {
         return getSessionNotFoundResponse({ res });
       }
 
-      jwt.verify(
-        refreshToken,
-        secretRefreshToken,
-        (err: any, jwt_payload: any) => {
-          if (err) {
-            logger.error(`Error refreshing token ${err}`);
+      jwt.verify(refreshToken, secretRefreshToken, (err: any, jwt_payload: any) => {
+        if (err) {
+          logger.error(`Error refreshing token ${err}`);
 
-            /**
-             * Cuando falla la verificación del token de refresco, se elimina la sesión
-             */
-            return AuthSessionModel.deleteOne({ refreshToken }).then(() => {
-              get401Response({
-                res,
-                json: {
-                  message: "Error refreshing token",
-                },
-              });
+          /**
+           * Cuando falla la verificación del token de refresco, se elimina la sesión
+           */
+          return AuthSessionModel.deleteOne({ refreshToken }).then(() => {
+            get401Response({
+              res,
+              json: {
+                message: 'Error refreshing token',
+              },
             });
-          }
-
-          get200Response({
-            res,
-            json: {
-              accessToken: generateAccessJWT({ id: jwt_payload.id }),
-            },
           });
         }
-      );
+
+        get200Response({
+          res,
+          json: {
+            accessToken: generateAccessJWT({ id: jwt_payload.id }),
+          },
+        });
+      });
     });
   };
 };
@@ -117,7 +110,7 @@ const post_signOut: () => RequestHandler = () => {
 
       return get200Response({
         res,
-        json: { message: "the session was closed successfully" },
+        json: { message: 'the session was closed successfully' },
       });
     });
   };
@@ -151,7 +144,7 @@ const post_signUp: () => RequestHandler = () => {
 
       get201Response({
         res,
-        json: { message: "User registered successfully" },
+        json: { message: 'User registered successfully' },
       });
     });
   };
@@ -170,8 +163,7 @@ const post_validate: () => RequestHandler = () => {
         return get404Response({
           res,
           json: {
-            message:
-              "Este codigo de validación no existe o ya el usuario fue validado",
+            message: 'Este codigo de validación no existe o ya el usuario fue validado',
           },
         });
       }
@@ -191,14 +183,14 @@ const post_validate: () => RequestHandler = () => {
 
       get201Response({
         res,
-        json: { message: "User validated successfully", email: user.email },
+        json: { message: 'User validated successfully', email: user.email },
       });
     });
   };
 };
 
 const post_change_password: () => RequestHandler = () => {
-  return (req, res, next) => {
+  return (req, res) => {
     withTryCatch(req, res, async () => {
       const { user, body } = req;
 
@@ -216,7 +208,7 @@ const post_change_password: () => RequestHandler = () => {
 
       get200Response({
         res,
-        json: { message: "password changed successfully" },
+        json: { message: 'password changed successfully' },
       });
     });
   };
@@ -235,8 +227,7 @@ const post_forgot_password_validate: () => RequestHandler = () => {
         return get404Response({
           res,
           json: {
-            message:
-              "Este codigo de validación no existe o ya la cuenta fue recuperada",
+            message: 'Este codigo de validación no existe o ya la cuenta fue recuperada',
           },
         });
       }
@@ -262,7 +253,7 @@ const post_forgot_password_validate: () => RequestHandler = () => {
       get201Response({
         res,
         json: {
-          message: "The password was changes successfully",
+          message: 'The password was changes successfully',
           email: user.email,
         },
       });
@@ -296,14 +287,14 @@ const post_forgot_password_request: () => RequestHandler = () => {
 
       get201Response({
         res,
-        json: { message: "Forgot password request sent" },
+        json: { message: 'Forgot password request sent' },
       });
     });
   };
 };
 
 const put_firebase_token: () => RequestHandler = () => {
-  return (req, res, next) => {
+  return (req, res) => {
     withTryCatch(req, res, async () => {
       const { user, body } = req;
 

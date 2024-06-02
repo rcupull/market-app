@@ -1,9 +1,8 @@
-import TelegramBot from "node-telegram-bot-api";
-import { telegram_token_bot } from "../../config";
-import { ValidationCodeModel } from "../../schemas/auth";
-import { v4 as uuid } from "uuid";
-import { TelegramBotChat } from "../../types/business";
-import { getRandomHash } from "../../utils/general";
+import TelegramBot from 'node-telegram-bot-api';
+import { telegram_token_bot } from '../../config';
+import { ValidationCodeModel } from '../../schemas/auth';
+import { TelegramBotChat } from '../../types/business';
+import { getRandomHash } from '../../utils/general';
 
 let bot: TelegramBot;
 
@@ -14,7 +13,7 @@ export const telegramServices = {
   init: () => {
     bot = new TelegramBot(telegram_token_bot, { polling: true });
 
-    bot.onText(/\/start/, async (msg, match) => {
+    bot.onText(/\/start/, async (msg) => {
       const code = getRandomHash().slice(-6);
       const { id, first_name, username } = msg.chat;
 
@@ -31,15 +30,12 @@ export const telegramServices = {
 
       await validationCode.save();
 
-      bot.sendMessage(
-        meta.chatId,
-        `Use el siguiente código de activación ${code}`
-      );
+      bot.sendMessage(meta.chatId, `Use el siguiente código de activación ${code}`);
     });
 
-    bot.on("message", (msg) => {
+    bot.on('message', (msg) => {
       const chatId = msg.chat.id;
-      bot.sendMessage(chatId, "Procesando su mensaje");
+      bot.sendMessage(chatId, 'Procesando su mensaje');
     });
   },
 };

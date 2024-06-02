@@ -1,37 +1,29 @@
-import { Schema } from "mongoose";
-import { BaseIdentity, Image } from "./general";
-import { PostPageLayout } from "./business";
+import { Schema } from 'mongoose';
+import { BaseIdentity, Image } from './general';
+import { PostPageLayout } from './business';
 
-export type PostType = "product" | "link"; // el tipo de publicaciones que posee
+export type PostType = 'product' | 'link'; // el tipo de publicaciones que posee
 
-export type PostCurrency = "CUP" | "MLC" | "USD";
+export type PostCurrency = 'CUP' | 'MLC' | 'USD';
 
 export type PostColor =
-  | "white"
-  | "gray"
-  | "black"
-  | "blue"
-  | "red"
-  | "green"
-  | "purple"
-  | "orange"
-  | "yellow"
-  | "slate"
-  | "pink"
-  | "fuchsia"
-  | "violet"
-  | "cyan"
-  | "teal";
+  | 'white'
+  | 'gray'
+  | 'black'
+  | 'blue'
+  | 'red'
+  | 'green'
+  | 'purple'
+  | 'orange'
+  | 'yellow'
+  | 'slate'
+  | 'pink'
+  | 'fuchsia'
+  | 'violet'
+  | 'cyan'
+  | 'teal';
 
-export type PostClothingSize =
-  | "XXS"
-  | "XS"
-  | "S"
-  | "M"
-  | "L"
-  | "XL"
-  | "2XL"
-  | "3XL";
+export type PostClothingSize = 'XXS' | 'XS' | 'S' | 'M' | 'L' | 'XL' | '2XL' | '3XL';
 
 export type PostReviews = [number, number, number, number, number];
 
@@ -40,7 +32,7 @@ export interface PostPurshaseNotes {
   interestedByClothingSizes?: Array<PostClothingSize>;
 }
 
-export type PostLinkType = "business" | "external";
+export type PostLinkType = 'business' | 'external';
 
 export interface Post extends BaseIdentity {
   images?: Array<Image>;
@@ -53,6 +45,7 @@ export interface Post extends BaseIdentity {
   discount?: number;
   currency?: PostCurrency;
   reviews?: PostReviews;
+  reviewsUserIds?: Array<Schema.Types.ObjectId>;
   colors?: Array<PostColor>;
   highlights?: Array<string>;
   hidden?: boolean;

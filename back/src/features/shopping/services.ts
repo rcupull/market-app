@@ -1,18 +1,15 @@
-import { QueryHandle } from "../../types/general";
-import {
-  getPostNotFoundResponse,
-  getUserNotFoundResponse,
-} from "../../utils/server-response";
-import { FilterQuery, UpdateQuery } from "mongoose";
-import { UpdateOptions } from "mongodb";
-import { ShoppingModel } from "../../schemas/shopping";
-import { Shopping } from "../../types/shopping";
-import { Post, PostPurshaseNotes } from "../../types/post";
-import { isEqualIds } from "../../utils/general";
+import { QueryHandle } from '../../types/general';
+import { getPostNotFoundResponse, getUserNotFoundResponse } from '../../utils/server-response';
+import { FilterQuery, UpdateQuery } from 'mongoose';
+import { UpdateOptions } from 'mongodb';
+import { ShoppingModel } from '../../schemas/shopping';
+import { Shopping } from '../../types/shopping';
+import { PostPurshaseNotes } from '../../types/post';
+import { isEqualIds } from '../../utils/general';
 
 const updateOrAddOne: QueryHandle<
   {
-    amountToAdd?: Number;
+    amountToAdd?: number;
     purshaseNotes?: PostPurshaseNotes;
   },
   void
@@ -31,7 +28,7 @@ const updateOrAddOne: QueryHandle<
 
   const existInConstruction = await ShoppingModel.findOne({
     purchaserId: user._id,
-    state: "CONSTRUCTION",
+    state: 'CONSTRUCTION',
     routeName: routeName,
   });
 
@@ -47,16 +44,16 @@ const updateOrAddOne: QueryHandle<
         },
         {
           $set: {
-            "posts.$[p].lastUpdatedDate": new Date(),
+            'posts.$[p].lastUpdatedDate': new Date(),
           },
           $inc: {
-            "posts.$[p].count": amountToAdd,
+            'posts.$[p].count': amountToAdd,
           },
         },
         {
           arrayFilters: [
             {
-              "p.post._id": postId,
+              'p.post._id': postId,
             },
           ],
         }
@@ -78,7 +75,7 @@ const updateOrAddOne: QueryHandle<
         {
           arrayFilters: [
             {
-              "p.post._id": postId,
+              'p.post._id': postId,
             },
           ],
         }
@@ -86,7 +83,7 @@ const updateOrAddOne: QueryHandle<
     }
   } else {
     const newShopping = new ShoppingModel({
-      state: "CONSTRUCTION",
+      state: 'CONSTRUCTION',
       purchaserId: user._id,
       purchaserName: user.name,
       routeName,
@@ -109,7 +106,7 @@ const getAll: QueryHandle<
     query: FilterQuery<Shopping>;
   },
   Array<Shopping>
-> = async ({ query, res }) => {
+> = async ({ query }) => {
   const out = await ShoppingModel.find(query);
 
   return out;

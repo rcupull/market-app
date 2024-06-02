@@ -1,59 +1,57 @@
-import supertest from "supertest";
-import { app } from "../../server";
-import {
-  dropTestDbConnectionAsync,
-  setAnyString,
-} from "../../utils/test-utils";
-import { User } from "../../types/user";
-import { fillBD } from "../../utils/test-BD";
+import supertest from 'supertest';
+import { app } from '../../server';
+import { dropTestDbConnectionAsync, setAnyString } from '../../utils/test-utils';
+import { User } from '../../types/user';
+import { fillBD } from '../../utils/test-BD';
 
-describe("/auth/sign-in", () => {
+describe('POST /auth/sign-in', () => {
   afterEach(async () => {
     await dropTestDbConnectionAsync();
   });
 
-  it("POST should fail when user is not validated", async () => {
+  it('should fail if the user is not validated', async () => {
     await fillBD({ overrideUser1: { validated: false } });
 
     await supertest(app)
-      .post(`/auth/sign-in`)
+      .post(`/api-services/auth/sign-in`)
       .send({
-        username: "user1@gmail.com",
-        password: "password_123_user1",
+        username: 'user1@gmail.com',
+        password: 'password_123_user1',
       })
       .expect(401);
   });
 
-  it("POST", async () => {
+  it('should sign in', async () => {
     await fillBD();
 
     await supertest(app)
-      .post(`/auth/sign-in`)
+      .post(`/api-services/auth/sign-in`)
       .send({
-        username: "user1@gmail.com",
-        password: "password_123_user1",
+        username: 'user1@gmail.com',
+        password: 'password_123_user1',
       })
       .expect(200)
       .then((response) => {
-        const { user, token } = response.body;
-        expect(token).toBeTruthy();
+        const { user, accessToken, refreshToken } = response.body;
+
+        expect(accessToken).toBeTruthy();
+        expect(refreshToken).toBeTruthy();
 
         expect(user).toMatchInlineSnapshot(
-          setAnyString<User>("_id", "createdAt"),
+          setAnyString<User>('_id', 'createdAt'),
           `
-{
-  "__v": 0,
-  "_id": Anything,
-  "canCreateBusiness": true,
-  "createdAt": Anything,
-  "email": "user1@gmail.com",
-  "name": "user1",
-  "profileImage": null,
-  "role": "user",
-  "shoppingCart": null,
-  "validated": true,
-}
-`
+          {
+            "__v": 0,
+            "_id": Anything,
+            "canCreateBusiness": true,
+            "createdAt": Anything,
+            "email": "user1@gmail.com",
+            "name": "user1",
+            "profileImage": null,
+            "role": "user",
+            "validated": true,
+          }
+        `
         );
       });
   });

@@ -1,15 +1,17 @@
-import { AnyRecord, RequestHandler } from "../../types/general";
-import { withTryCatch } from "../../utils/error";
-import { GetAllArgs, postServices } from "./services";
-import { ServerResponse } from "http";
-import { imagesServices } from "../images/services";
+import { AnyRecord, RequestHandler } from '../../types/general';
+import { withTryCatch } from '../../utils/error';
+import { GetAllArgs, postServices } from './services';
+import { ServerResponse } from 'http';
+import { imagesServices } from '../images/services';
 import {
+  get200Response,
+  get400Response,
   getPostNotFoundResponse,
   getUserNotFoundResponse,
-} from "../../utils/server-response";
-import { isEmpty, isEqual } from "../../utils/general";
-import { Post } from "../../types/post";
-import { makeReshaper } from "../../utils/makeReshaper";
+} from '../../utils/server-response';
+import { isEmpty, isEqual } from '../../utils/general';
+import { Post } from '../../types/post';
+import { makeReshaper } from '../../utils/makeReshaper';
 
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
@@ -144,8 +146,8 @@ const post_posts_postId_duplicate: () => RequestHandler = () => {
       if (post instanceof ServerResponse) return post;
 
       //these are omitted fields
-      const { _id, createdAt, createdBy, reviews, images, ...propsToUse } =
-        post;
+      //eslint-disable-next-line
+      const { _id, createdAt, createdBy, reviews, images, ...propsToUse } = post;
 
       req.body = propsToUse;
       req.body.name = `${req.body.name} (copy)`;
@@ -184,23 +186,23 @@ const put_posts_postId: () => RequestHandler = () => {
           _id: post._id,
         },
         update: makeReshaper<Partial<Post>, Partial<Post>>({
-          clothingSizes: "clothingSizes",
-          colors: "colors",
-          details: "details",
-          highlights: "highlights",
-          images: "images",
-          name: "name",
-          price: "price",
-          reviews: "reviews",
-          currency: "currency",
-          description: "description",
-          hidden: "hidden",
-          hiddenBusiness: "hiddenBusiness",
-          postCategoriesTags: "postCategoriesTags",
-          discount: "discount",
-          postPageLayout: "postPageLayout",
-          stockAmount: "stockAmount",
-          postLink: "postLink",
+          clothingSizes: 'clothingSizes',
+          colors: 'colors',
+          details: 'details',
+          highlights: 'highlights',
+          images: 'images',
+          name: 'name',
+          price: 'price',
+          reviews: 'reviews',
+          currency: 'currency',
+          description: 'description',
+          hidden: 'hidden',
+          hiddenBusiness: 'hiddenBusiness',
+          postCategoriesTags: 'postCategoriesTags',
+          discount: 'discount',
+          postPageLayout: 'postPageLayout',
+          stockAmount: 'stockAmount',
+          postLink: 'postLink',
         })(body),
       });
 
@@ -247,10 +249,7 @@ const bulk_action_delete: () => RequestHandler = () => {
         ids?: Array<string>;
         all?: boolean;
         routeName: string;
-        query?: Pick<
-          GetAllArgs,
-          "postCategoriesMethod" | "postCategoriesTags" | "search"
-        >;
+        query?: Pick<GetAllArgs, 'postCategoriesMethod' | 'postCategoriesTags' | 'search'>;
       };
 
       if (ids?.length) {
@@ -322,10 +321,7 @@ const bulk_action_update: () => RequestHandler = () => {
         update: {
           hidden: boolean;
         };
-        query?: Pick<
-          GetAllArgs,
-          "postCategoriesMethod" | "postCategoriesTags" | "search"
-        >;
+        query?: Pick<GetAllArgs, 'postCategoriesMethod' | 'postCategoriesTags' | 'search'>;
       };
 
       const { hidden } = update || {};
@@ -399,6 +395,41 @@ const bulk_action_update: () => RequestHandler = () => {
   };
 };
 
+const post_make_review: () => RequestHandler = () => {
+  return async (req, res) => {
+    const { user } = req;
+    const { postId } = req.params;
+    const { value } = req.body;
+
+    if (value < 1 || value > 5) {
+      return get400Response({ res, json: { message: 'Invalid review value' } });
+    }
+
+    const out = await postServices.findOneAndUpdate({
+      res,
+      req,
+      query: {
+        _id: postId,
+        createdBy: { $ne: user },
+        reviewsUserIds: { $nin: [user] },
+      },
+      update: {
+        $inc: { [`reviews.${value - 1}`]: 1 },
+        $push: { reviewsUserIds: user },
+      },
+    });
+
+    if (!out) {
+      return get400Response({
+        res,
+        json: { message: 'El post no existe o el usuario no puede hacer el review' },
+      });
+    }
+
+    return get200Response({ res, json: { message: 'Review was send correctly' } });
+  };
+};
+
 export const postHandles = {
   get_posts,
   post_posts,
@@ -410,4 +441,5 @@ export const postHandles = {
   //
   bulk_action_delete,
   bulk_action_update,
+  post_make_review,
 };

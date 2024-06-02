@@ -1,8 +1,8 @@
-import { RequestHandler } from "../../types/general";
-import { withTryCatch } from "../../utils/error";
-import { UserModel } from "../../schemas/user";
-import { imagesServices } from "../images/services";
-import { ServerResponse } from "http";
+import { RequestHandler } from '../../types/general';
+import { withTryCatch } from '../../utils/error';
+import { UserModel } from '../../schemas/user';
+import { imagesServices } from '../images/services';
+import { ServerResponse } from 'http';
 
 const get_users: () => RequestHandler = () => {
   return (req, res) => {
@@ -11,7 +11,7 @@ const get_users: () => RequestHandler = () => {
 
       const out = await UserModel.paginate(
         {
-          role: "user",
+          role: 'user',
         },
         paginateOptions
       );

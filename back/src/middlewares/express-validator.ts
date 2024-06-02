@@ -1,23 +1,13 @@
-import { Request, Response, NextFunction, RequestHandler } from "express";
-import {
-  validationResult,
-  query,
-  param,
-  body,
-  header,
-} from "express-validator";
-import { AnyRecord } from "../types/general";
-import { get422Response } from "../utils/server-response";
+import { Request, Response, NextFunction, RequestHandler } from 'express';
+import { validationResult, query, param, body, header } from 'express-validator';
+import { AnyRecord } from '../types/general';
+import { get422Response } from '../utils/server-response';
 
-const handle: RequestHandler = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const handle: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    let error: AnyRecord = {};
+    const error: AnyRecord = {};
     errors.array().forEach((err) => {
       //@ts-expect-error ignore
       error[`${req.method} ${req.originalUrl} ${err.path}`] = err.msg;

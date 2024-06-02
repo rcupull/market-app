@@ -1,23 +1,23 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import { pagination } from "../../middlewares/pagination";
-import { validators } from "../../middlewares/express-validator";
-import { postHandles } from "./handles";
+import { pagination } from '../../middlewares/pagination';
+import { validators } from '../../middlewares/express-validator';
+import { postHandles } from './handles';
 import {
   isLogged,
   isUserBusinessOwner,
   isUserThisBusinessOwner,
   isUserThisPostOwner,
-} from "../../middlewares/verify";
+} from '../../middlewares/verify';
 
 export const router = Router();
 
 router
-  .route("/posts")
+  .route('/posts')
   .get(pagination, postHandles.get_posts())
   .post(
-    validators.body("routeName").notEmpty(),
-    validators.body("name").notEmpty(),
+    validators.body('routeName').notEmpty(),
+    validators.body('name').notEmpty(),
     validators.handle,
     isLogged,
     isUserBusinessOwner,
@@ -26,9 +26,9 @@ router
   );
 
 router
-  .route("/posts/:postId/duplicate")
+  .route('/posts/:postId/duplicate')
   .post(
-    validators.param("postId").notEmpty(),
+    validators.param('postId').notEmpty(),
     validators.handle,
     isLogged,
     isUserBusinessOwner,
@@ -38,33 +38,40 @@ router
 ///////////////////////////////////////////////////////////////////////////
 
 router
-  .route("/posts/:postId")
-  .get(
-    validators.param("postId").notEmpty(),
-    validators.handle,
-    postHandles.get_posts_postId()
-  )
+  .route('/posts/:postId')
+  .get(validators.param('postId').notEmpty(), validators.handle, postHandles.get_posts_postId())
   .put(
-    validators.param("postId").notEmpty(),
+    validators.param('postId').notEmpty(),
     validators.handle,
     isLogged,
     isUserThisPostOwner,
     postHandles.put_posts_postId()
   )
   .delete(
-    validators.param("postId").notEmpty(),
+    validators.param('postId').notEmpty(),
     validators.handle,
     isLogged,
     isUserThisPostOwner,
     postHandles.delete_posts_postId()
   );
 
+//////////////////////////////////////////////////////////////////
+
+router
+  .route('/posts/:postId/review')
+  .post(
+    validators.param('postId').notEmpty(),
+    validators.body('value').notEmpty(),
+    validators.handle,
+    isLogged,
+    postHandles.post_make_review()
+  );
 /////////////////////////////////////////////////////////////////
 
 router
-  .route("/posts/bulkActions/delete")
+  .route('/posts/bulkActions/delete')
   .delete(
-    validators.body("routeName").notEmpty(),
+    validators.body('routeName').notEmpty(),
     validators.handle,
     isLogged,
     isUserThisBusinessOwner,
@@ -72,10 +79,10 @@ router
   );
 
 router
-  .route("/posts/bulkActions/update")
+  .route('/posts/bulkActions/update')
   .put(
-    validators.body("routeName").notEmpty(),
-    validators.body("update").notEmpty(),
+    validators.body('routeName').notEmpty(),
+    validators.body('update').notEmpty(),
     validators.handle,
     isLogged,
     isUserThisBusinessOwner,

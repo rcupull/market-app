@@ -1,15 +1,15 @@
-import { RequestHandler } from "../../types/general";
-import { uploadImageMiddleware } from "../../middlewares/files";
-import { isNumber } from "../../utils/general";
-import { withTryCatch } from "../../utils/error";
-import { imagesServices } from "./services";
-import { ServerResponse } from "http";
-import { get200Response, get400Response } from "../../utils/server-response";
-import { getAssetsDir } from "../../config";
-import sharp from "sharp";
-import { getFullFileNameToSave } from "./utils";
-import path from "path";
-import fs from "fs";
+import { RequestHandler } from '../../types/general';
+import { uploadImageMiddleware } from '../../middlewares/files';
+import { isNumber } from '../../utils/general';
+import { withTryCatch } from '../../utils/error';
+import { imagesServices } from './services';
+import { ServerResponse } from 'http';
+import { get200Response, get400Response } from '../../utils/server-response';
+import { getAssetsDir } from '../../config';
+import sharp from 'sharp';
+import { getFullFileNameToSave } from './utils';
+import path from 'path';
+import fs from 'fs';
 
 const save_image: () => RequestHandler = () => {
   return (req, res) => {
@@ -30,7 +30,7 @@ const save_image: () => RequestHandler = () => {
         if (!filename) {
           return get400Response({
             res,
-            json: { message: "has not filename" },
+            json: { message: 'has not filename' },
           });
         }
 
@@ -39,29 +39,23 @@ const save_image: () => RequestHandler = () => {
         if (!file) {
           return get400Response({
             res,
-            json: { message: "Has not file" },
+            json: { message: 'Has not file' },
           });
         }
 
-        const webImagePathNameFilename = `${filename}-${
-          path.parse(file.path).name
-        }.web`;
+        const webImagePathNameFilename = `${filename}-${path.parse(file.path).name}.web`;
 
-        const realWidth =
-          width && isNumber(Number(width)) ? Number(width) : undefined;
-        const realHeight =
-          height && isNumber(Number(height)) ? Number(height) : undefined;
+        const realWidth = width && isNumber(Number(width)) ? Number(width) : undefined;
+        const realHeight = height && isNumber(Number(height)) ? Number(height) : undefined;
 
-        await sharp(file.path)
-          .resize(realWidth, realHeight)
-          .toFile(webImagePathNameFilename);
+        await sharp(file.path).resize(realWidth, realHeight).toFile(webImagePathNameFilename);
 
         fs.unlinkSync(file.path);
 
         return get200Response({
           res,
           json: {
-            imageSrc: webImagePathNameFilename.replace(getAssetsDir(), ""),
+            imageSrc: webImagePathNameFilename.replace(getAssetsDir(), ''),
           },
         });
       });
