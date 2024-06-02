@@ -16,11 +16,12 @@ import { useAuthSignUpModal } from '../useAuthSignUpModal';
 import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
 import { getAdminRoute, getDashboardRoute } from 'utils/business';
 import { getRequiredLabel } from 'utils/form';
+import { isString } from 'utils/general';
 
 export interface ComponentProps {
   portal: Portal;
   email?: string;
-  redirect?: string;
+  redirect?: string | false;
 }
 
 export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
@@ -86,8 +87,10 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                 { email, password },
                 {
                   onAfterSuccess: ({ user }) => {
-                    if (redirect) {
+                    if (isString(redirect)) {
                       pushRoute(redirect);
+                    } else if (redirect === false) {
+                      //NOP
                     } else if (getIsUser(user)) {
                       pushRoute(getDashboardRoute());
                     } else if (getIsAdmin(user)) {

@@ -9,20 +9,31 @@ import { dynamic } from 'utils/makeLazy';
 //eslint-disable-next-line
 const Component = dynamic(() => import('./Component').then((m) => m));
 
-export const useAuthSignInModal = () => {
+export const usePostMakeReviewModal = () => {
   const { pushModal } = useModal();
 
   return {
-    open: (args?: { email?: string; redirect?: string | false }) => {
+    open: (args: { postId: string; onAfterSuccess: () => void }) => {
       pushModal(
         'Emergent',
         {
           useProps: () => {
-            const { email, redirect } = args || {};
+            const { onAfterSuccess, postId } = args || {};
             const portal = usePortal();
+            const { onClose } = useModal();
 
             return {
-              content: <Component portal={portal} email={email} redirect={redirect} />,
+              title: 'Reseña',
+              content: (
+                <Component
+                  portal={portal}
+                  onAfterSuccess={() => {
+                    onAfterSuccess?.();
+                    onClose();
+                  }}
+                  postId={postId}
+                />
+              ),
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,
               className: '!w-[30rem]',
