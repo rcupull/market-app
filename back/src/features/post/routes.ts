@@ -58,14 +58,14 @@ router
 //////////////////////////////////////////////////////////////////
 
 router
-  .route("/posts/:postId/review")
+  .route('/posts/:postId/review')
   .post(
-    validators.param("postId").notEmpty(),
-    validators.body("value").notEmpty(),
+    validators.param('postId').notEmpty(),
+    validators.body('value').notEmpty(),
     validators.handle,
     isLogged,
-    postHandles.post_make_review()
-  )
+    postHandles.post_make_review(),
+  );
 /////////////////////////////////////////////////////////////////
 
 router
