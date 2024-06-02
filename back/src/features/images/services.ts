@@ -1,8 +1,8 @@
-import { Image, QueryHandle } from "../../types/general";
-import fs from "fs";
-import { get400Response } from "../../utils/server-response";
-import { getAssetsDir, getAssetsImageDir } from "../../config";
-import { deleteDirFilesUsingStartPattern, getFileNameToSave } from "./utils";
+import { Image, QueryHandle } from '../../types/general';
+import fs from 'fs';
+import { get400Response } from '../../utils/server-response';
+import { getAssetsDir, getAssetsImageDir } from '../../config';
+import { deleteDirFilesUsingStartPattern, getFileNameToSave } from './utils';
 
 const deleteOne: QueryHandle<{
   src: string;
@@ -14,7 +14,7 @@ const deleteOne: QueryHandle<{
       if (err) {
         return get400Response({
           res,
-          json: { message: "Error deleting the image" },
+          json: { message: 'Error deleting the image' },
         });
       }
     });
@@ -42,7 +42,7 @@ const deleteDir: QueryHandle<{
         return get400Response({
           res,
           json: {
-            message: "Error deleting the folder",
+            message: 'Error deleting the folder',
           },
         });
       }
@@ -55,7 +55,7 @@ const deleteOldImages: QueryHandle<{
   oldImagesSrcs: Array<Image> | undefined;
 }> = async ({ newImagesSrcs = [], oldImagesSrcs = [], res, req }) => {
   const imagesToRemove = oldImagesSrcs.filter(
-    ({ src }) => !newImagesSrcs.map(({ src }) => src).includes(src)
+    ({ src }) => !newImagesSrcs.map(({ src }) => src).includes(src),
   );
 
   imagesToRemove.forEach(({ src }) => {

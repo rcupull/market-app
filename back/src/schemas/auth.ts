@@ -1,18 +1,18 @@
-import { Schema, model } from "mongoose";
-import { AuthSession, ValidationCode } from "../types/auth";
-import { createdAtSchemaDefinition } from "../utils/schemas";
+import { Schema, model } from 'mongoose';
+import { AuthSession, ValidationCode } from '../types/auth';
+import { createdAtSchemaDefinition } from '../utils/schemas';
 
 const ValidationCodeShema = new Schema<ValidationCode>({
   ...createdAtSchemaDefinition,
   code: { type: String, required: true, unique: true },
-  userId: { type: Schema.Types.ObjectId, ref: "User" },
+  userId: { type: Schema.Types.ObjectId, ref: 'User' },
   meta: { type: Schema.Types.Mixed },
 });
 
 export const ValidationCodeModel = model<ValidationCode>(
-  "ValidationCode",
+  'ValidationCode',
   ValidationCodeShema,
-  "validation_codes"
+  'validation_codes',
 );
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -20,11 +20,11 @@ export const ValidationCodeModel = model<ValidationCode>(
 const AuthSessionShema = new Schema<AuthSession>({
   ...createdAtSchemaDefinition,
   refreshToken: { type: String, required: true },
-  userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
 });
 
 export const AuthSessionModel = model<AuthSession>(
-  "AuthSession",
+  'AuthSession',
   AuthSessionShema,
-  "auth_sessions"
+  'auth_sessions',
 );

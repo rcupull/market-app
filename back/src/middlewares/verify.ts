@@ -1,17 +1,13 @@
-import { Request, RequestHandler } from "express";
-import { withTryCatch } from "../utils/error";
-import { User } from "../types/user";
-import { AnyRecord } from "../types/general";
-import { ServerResponse } from "http";
-import { postServices } from "../features/post/services";
-import { isEqualIds } from "../utils/general";
-import { passportJwtMiddleware } from "./passport";
-import {
-  get401Response,
-  get404Response,
-  getUserNotFoundResponse,
-} from "../utils/server-response";
-import { businessServices } from "../features/business/services";
+import { Request, RequestHandler } from 'express';
+import { withTryCatch } from '../utils/error';
+import { User } from '../types/user';
+import { AnyRecord } from '../types/general';
+import { ServerResponse } from 'http';
+import { postServices } from '../features/post/services';
+import { isEqualIds } from '../utils/general';
+import { passportJwtMiddleware } from './passport';
+import { get401Response, get404Response, getUserNotFoundResponse } from '../utils/server-response';
+import { businessServices } from '../features/business/services';
 
 export const isLogged = passportJwtMiddleware;
 
@@ -22,9 +18,9 @@ const getFieldInReqData = (req: Request, field: string) => {
 export const isAdmin: RequestHandler = (req, res, next) => {
   const user = req.user;
 
-  if (user?.role == "admin") return next();
+  if (user?.role == 'admin') return next();
 
-  get401Response({ res, json: { message: "The user is not an admin" } });
+  get401Response({ res, json: { message: 'The user is not an admin' } });
 };
 
 export const isUserIdAccessible: RequestHandler = (req, res, next) => {
@@ -39,7 +35,7 @@ export const isUserIdAccessible: RequestHandler = (req, res, next) => {
   if (!userId) {
     return get404Response({
       res,
-      json: { message: "UserId not found" },
+      json: { message: 'UserId not found' },
     });
   }
 
@@ -47,7 +43,7 @@ export const isUserIdAccessible: RequestHandler = (req, res, next) => {
 
   get401Response({
     res,
-    json: { message: "The user has not access to this data" },
+    json: { message: 'The user has not access to this data' },
   });
 };
 
@@ -57,7 +53,7 @@ export const isUserBusinessOwner: RequestHandler = async (req, res, next) => {
   if (!user) {
     return get404Response({
       res,
-      json: { message: "user not found" },
+      json: { message: 'user not found' },
     });
   }
 
@@ -67,29 +63,25 @@ export const isUserBusinessOwner: RequestHandler = async (req, res, next) => {
 
   return get401Response({
     res,
-    json: { message: "The user is not business owner" },
+    json: { message: 'The user is not business owner' },
   });
 };
 
-export const isUserThisBusinessOwner: RequestHandler = async (
-  req,
-  res,
-  next
-) => {
+export const isUserThisBusinessOwner: RequestHandler = async (req, res, next) => {
   const { user } = req;
-  const routeName = getFieldInReqData(req, "routeName");
+  const routeName = getFieldInReqData(req, 'routeName');
 
   if (!user) {
     return get404Response({
       res,
-      json: { message: "user not found" },
+      json: { message: 'user not found' },
     });
   }
 
   if (!routeName) {
     return get404Response({
       res,
-      json: { message: "routeName not found" },
+      json: { message: 'routeName not found' },
     });
   }
 
@@ -104,13 +96,13 @@ export const isUserThisBusinessOwner: RequestHandler = async (
   if (business instanceof ServerResponse) return business;
 
   if (user._id.toString() === business.createdBy.toString()) {
-    req["business"] = business;
+    req['business'] = business;
     return next();
   }
 
   get401Response({
     res,
-    json: { message: "The user has not access to this business" },
+    json: { message: 'The user has not access to this business' },
   });
 };
 
@@ -123,7 +115,7 @@ export const getBusinessMiddleware: RequestHandler = async (req, res, next) => {
     return next();
   }
 
-  const routeName = getFieldInReqData(req, "routeName");
+  const routeName = getFieldInReqData(req, 'routeName');
 
   if (!routeName) {
     return next();
@@ -139,7 +131,7 @@ export const getBusinessMiddleware: RequestHandler = async (req, res, next) => {
 
   if (business instanceof ServerResponse) return next();
 
-  req["business"] = business;
+  req['business'] = business;
   return next();
 };
 
@@ -155,7 +147,7 @@ export const isUserThisPostOwner: RequestHandler = async (req, res, next) => {
   if (!postId) {
     return get404Response({
       res,
-      json: { message: "routeName not found" },
+      json: { message: 'routeName not found' },
     });
   }
 
@@ -174,7 +166,7 @@ export const isUserThisPostOwner: RequestHandler = async (req, res, next) => {
 
   get401Response({
     res,
-    json: { message: "The user has not access to this post" },
+    json: { message: 'The user has not access to this post' },
   });
 };
 
@@ -202,7 +194,7 @@ export type RequestWithUser<
   ResBody = any,
   ReqBody = any,
   ReqQuery = AnyRecord,
-  Locals extends Record<string, any> = Record<string, any>
+  Locals extends Record<string, any> = Record<string, any>,
 > = Request<P, ResBody, ReqBody, ReqQuery, Locals> & {
   user: User;
 };
@@ -218,7 +210,7 @@ export const verifyPost: RequestHandler = (req, res, next) => {
     if (!user) {
       return res
         .sendStatus(404)
-        .json({ message: "We should have some value in user in this point" });
+        .json({ message: 'We should have some value in user in this point' });
     }
 
     const postId = req.params.postId as string | undefined;
@@ -226,7 +218,7 @@ export const verifyPost: RequestHandler = (req, res, next) => {
     if (!postId) {
       return res
         .sendStatus(404)
-        .json({ message: "We should have some value in postId in this point" });
+        .json({ message: 'We should have some value in postId in this point' });
     }
 
     const out = await postServices.getOne({
@@ -240,9 +232,7 @@ export const verifyPost: RequestHandler = (req, res, next) => {
     const { createdBy } = out;
 
     if (!isEqualIds(createdBy, user._id)) {
-      return res
-        .sendStatus(401)
-        .json({ message: "Have not access to this post" });
+      return res.sendStatus(401).json({ message: 'Have not access to this post' });
     }
 
     next();

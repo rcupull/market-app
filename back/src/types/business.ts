@@ -1,30 +1,30 @@
-import { BaseIdentity, Image } from "./general";
-import { Schema } from "mongoose";
-import { Post, PostType } from "./post";
-import { Path } from "./paths";
-import { businessCategoryTree } from "../features/general/constants";
+import { BaseIdentity, Image } from './general';
+import { Schema } from 'mongoose';
+import { Post, PostType } from './post';
+import { Path } from './paths';
+import { businessCategoryTree } from '../features/general/constants';
 
 export type BusinessCategory = Path<typeof businessCategoryTree>;
 
-export type PostsLayoutSectionType = "grid" | "oneRowSlider";
+export type PostsLayoutSectionType = 'grid' | 'oneRowSlider';
 
-export type BannerLayoutType = "none" | "static" | "swipableClassic";
+export type BannerLayoutType = 'none' | 'static' | 'swipableClassic';
 export type SearchLayoutType =
-  | "none"
-  | "left"
-  | "center"
-  | "right"
-  | "postCategories"
-  | "postCategoriesScrollable"
-  | "postCategoriesExcluded"
-  | "postCategoriesExcludedScrollable";
+  | 'none'
+  | 'left'
+  | 'center'
+  | 'right'
+  | 'postCategories'
+  | 'postCategoriesScrollable'
+  | 'postCategoriesExcluded'
+  | 'postCategoriesExcludedScrollable';
 
-export type FooterLayoutType = "none" | "basic";
+export type FooterLayoutType = 'none' | 'basic';
 
 export interface PostsLayoutSection {
   _id: string;
   name: string;
-  showIn?: Array<"businessPage" | "postPage">;
+  showIn?: Array<'businessPage' | 'postPage'>;
   //
   postType: PostType;
   //
@@ -45,26 +45,17 @@ export interface PostPageLayout {
   postsSectionsBelowIds?: Array<string>;
 }
 
-export type PostCardLayoutImages =
-  | "static"
-  | "hoverZoom"
-  | "slider"
-  | "switch"
-  | "rounded";
+export type PostCardLayoutImages = 'static' | 'hoverZoom' | 'slider' | 'switch' | 'rounded';
 
-export type PostCardSize = "small" | "medium" | "long";
-export type PostCardLayoutName = "none" | "basic";
-export type PostCardLayoutPrice =
-  | "none"
-  | "basic"
-  | "smallerCurrency"
-  | "usdCurrencySymbol";
-export type PostCardLayoutDiscount = "none" | "savedPercent" | "savedMoney";
-export type PostLayoutShoppingMethod = "none" | "shoppingCart";
+export type PostCardSize = 'small' | 'medium' | 'long';
+export type PostCardLayoutName = 'none' | 'basic';
+export type PostCardLayoutPrice = 'none' | 'basic' | 'smallerCurrency' | 'usdCurrencySymbol';
+export type PostCardLayoutDiscount = 'none' | 'savedPercent' | 'savedMoney';
+export type PostLayoutShoppingMethod = 'none' | 'shoppingCart';
 
-export type PostLayoutShoppingCart = "none" | "added_whatsApp";
+export type PostLayoutShoppingCart = 'none' | 'added_whatsApp';
 
-export type PostCardLayoutMetaLayout = "basic" | "verticalCentered";
+export type PostCardLayoutMetaLayout = 'basic' | 'verticalCentered';
 
 export interface PostCardLayout {
   images?: PostCardLayoutImages;
@@ -157,23 +148,22 @@ export interface Business extends BaseIdentity {
   postFormFields?: Array<
     Extract<
       Post,
-      | "name"
-      | "currency"
-      | "clothingSizes"
-      | "colors"
-      | "description"
-      | "price"
-      | "details"
-      | "postCategoriesTags"
-      | "discount"
-      | "stockAmount"
-      | "images"
+      | 'name'
+      | 'currency'
+      | 'clothingSizes'
+      | 'colors'
+      | 'description'
+      | 'price'
+      | 'details'
+      | 'postCategoriesTags'
+      | 'discount'
+      | 'stockAmount'
+      | 'images'
     >
   >;
 }
 
-export interface BusinessSummary
-  extends Pick<Business, "_id" | "name" | "routeName"> {
+export interface BusinessSummary extends Pick<Business, '_id' | 'name' | 'routeName'> {
   mostSelledProductsImages: Array<Image>;
   bestDiscount: number; // percent
   salesAmount: number; // ammount

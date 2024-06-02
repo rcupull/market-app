@@ -1,10 +1,8 @@
-import { PaginateModel, Schema, model } from "mongoose";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import { User } from "../types/user";
-import { createdAtSchemaDefinition } from "../utils/schemas";
-import mongoosePaginate from "mongoose-paginate-v2";
-import { secretAccessToken } from "../config";
+import { PaginateModel, Schema, model } from 'mongoose';
+import bcrypt from 'bcrypt';
+import { User } from '../types/user';
+import { createdAtSchemaDefinition } from '../utils/schemas';
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 const UserSchema = new Schema<User>({
   ...createdAtSchemaDefinition,
@@ -13,7 +11,7 @@ const UserSchema = new Schema<User>({
   password: { type: String, required: true, select: false },
   passwordVerbose: { type: String, required: true, select: false },
   firebaseToken: { type: String, select: false },
-  role: { type: String, enum: ["user", "admin"], default: "user" },
+  role: { type: String, enum: ['user', 'admin'], default: 'user' },
   canCreateBusiness: { type: Boolean, required: true, default: false },
   validated: { type: Boolean, default: false },
   profileImage: {
@@ -44,10 +42,10 @@ const updateUserPassword = (user: User): Promise<void> => {
 
 UserSchema.plugin(mongoosePaginate);
 
-UserSchema.pre("save", async function (next) {
+UserSchema.pre('save', async function (next) {
   const user = this;
 
-  if (user.isModified("password")) {
+  if (user.isModified('password')) {
     try {
       await updateUserPassword(user);
     } catch (err: any) {
@@ -58,8 +56,4 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
-export const UserModel = model<User, PaginateModel<User>>(
-  "User",
-  UserSchema,
-  "users"
-);
+export const UserModel = model<User, PaginateModel<User>>('User', UserSchema, 'users');

@@ -1,21 +1,21 @@
-import session from "express-session";
-import connectMongoSession from "connect-mongodb-session";
-import { dbUrl, secretAccessToken } from "../config";
+import session from 'express-session';
+import connectMongoSession from 'connect-mongodb-session';
+import { dbUrl, secretAccessToken } from '../config';
 
 const MongoDBStore = connectMongoSession(session);
 
 const store = new MongoDBStore(
   {
     uri: dbUrl,
-    databaseName: "asere-market-stage",
-    collection: "sessions",
+    databaseName: 'asere-market-stage',
+    collection: 'sessions',
   },
-  function (error) {
+  function () {
     // Should have gotten an error
-  }
+  },
 );
 
-store.on("error", function (error) {
+store.on('error', function () {
   // Also get an error here
 });
 

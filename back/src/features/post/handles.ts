@@ -1,15 +1,12 @@
-import { AnyRecord, RequestHandler } from "../../types/general";
-import { withTryCatch } from "../../utils/error";
-import { GetAllArgs, postServices } from "./services";
-import { ServerResponse } from "http";
-import { imagesServices } from "../images/services";
-import {
-  getPostNotFoundResponse,
-  getUserNotFoundResponse,
-} from "../../utils/server-response";
-import { isEmpty, isEqual } from "../../utils/general";
-import { Post } from "../../types/post";
-import { makeReshaper } from "../../utils/makeReshaper";
+import { AnyRecord, RequestHandler } from '../../types/general';
+import { withTryCatch } from '../../utils/error';
+import { GetAllArgs, postServices } from './services';
+import { ServerResponse } from 'http';
+import { imagesServices } from '../images/services';
+import { getPostNotFoundResponse, getUserNotFoundResponse } from '../../utils/server-response';
+import { isEmpty, isEqual } from '../../utils/general';
+import { Post } from '../../types/post';
+import { makeReshaper } from '../../utils/makeReshaper';
 
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
@@ -144,8 +141,8 @@ const post_posts_postId_duplicate: () => RequestHandler = () => {
       if (post instanceof ServerResponse) return post;
 
       //these are omitted fields
-      const { _id, createdAt, createdBy, reviews, images, ...propsToUse } =
-        post;
+      //eslint-disable-next-line
+      const { _id, createdAt, createdBy, reviews, images, ...propsToUse } = post;
 
       req.body = propsToUse;
       req.body.name = `${req.body.name} (copy)`;
@@ -184,23 +181,23 @@ const put_posts_postId: () => RequestHandler = () => {
           _id: post._id,
         },
         update: makeReshaper<Partial<Post>, Partial<Post>>({
-          clothingSizes: "clothingSizes",
-          colors: "colors",
-          details: "details",
-          highlights: "highlights",
-          images: "images",
-          name: "name",
-          price: "price",
-          reviews: "reviews",
-          currency: "currency",
-          description: "description",
-          hidden: "hidden",
-          hiddenBusiness: "hiddenBusiness",
-          postCategoriesTags: "postCategoriesTags",
-          discount: "discount",
-          postPageLayout: "postPageLayout",
-          stockAmount: "stockAmount",
-          postLink: "postLink",
+          clothingSizes: 'clothingSizes',
+          colors: 'colors',
+          details: 'details',
+          highlights: 'highlights',
+          images: 'images',
+          name: 'name',
+          price: 'price',
+          reviews: 'reviews',
+          currency: 'currency',
+          description: 'description',
+          hidden: 'hidden',
+          hiddenBusiness: 'hiddenBusiness',
+          postCategoriesTags: 'postCategoriesTags',
+          discount: 'discount',
+          postPageLayout: 'postPageLayout',
+          stockAmount: 'stockAmount',
+          postLink: 'postLink',
         })(body),
       });
 
@@ -247,10 +244,7 @@ const bulk_action_delete: () => RequestHandler = () => {
         ids?: Array<string>;
         all?: boolean;
         routeName: string;
-        query?: Pick<
-          GetAllArgs,
-          "postCategoriesMethod" | "postCategoriesTags" | "search"
-        >;
+        query?: Pick<GetAllArgs, 'postCategoriesMethod' | 'postCategoriesTags' | 'search'>;
       };
 
       if (ids?.length) {
@@ -322,10 +316,7 @@ const bulk_action_update: () => RequestHandler = () => {
         update: {
           hidden: boolean;
         };
-        query?: Pick<
-          GetAllArgs,
-          "postCategoriesMethod" | "postCategoriesTags" | "search"
-        >;
+        query?: Pick<GetAllArgs, 'postCategoriesMethod' | 'postCategoriesTags' | 'search'>;
       };
 
       const { hidden } = update || {};

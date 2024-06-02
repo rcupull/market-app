@@ -1,23 +1,22 @@
-import { withTryCatch } from "../../utils/error";
-import { businessServices } from "./services";
-import { ServerResponse } from "http";
+import { withTryCatch } from '../../utils/error';
+import { businessServices } from './services';
+import { ServerResponse } from 'http';
 import {
   get200Response,
   get400Response,
   get404Response,
   getBusinessNotFoundResponse,
   getUserNotFoundResponse,
-} from "../../utils/server-response";
-import { Business, BusinessSummary, PostCategory } from "../../types/business";
-import { postServices } from "../post/services";
-import { User } from "../../types/user";
-import { RequestHandler } from "../../types/general";
-import { makeReshaper } from "../../utils/makeReshaper";
-import { getPostCategoriesFromBusinessCategories } from "./utils";
-import { imagesServices } from "../images/services";
-import { isEqualIds, movRow } from "../../utils/general";
-import { PaginateResult } from "../../middlewares/pagination";
-import { ValidationCodeModel } from "../../schemas/auth";
+} from '../../utils/server-response';
+import { Business, BusinessSummary, PostCategory } from '../../types/business';
+import { postServices } from '../post/services';
+import { RequestHandler } from '../../types/general';
+import { makeReshaper } from '../../utils/makeReshaper';
+import { getPostCategoriesFromBusinessCategories } from './utils';
+import { imagesServices } from '../images/services';
+import { isEqualIds, movRow } from '../../utils/general';
+import { PaginateResult } from '../../middlewares/pagination';
+import { ValidationCodeModel } from '../../schemas/auth';
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {
@@ -121,9 +120,7 @@ const update_business_post_categories: () => RequestHandler = () => {
 
       let out = undefined;
 
-      const currentPostCategoriesTags = business.postCategories?.map(
-        ({ tag }) => tag
-      );
+      const currentPostCategoriesTags = business.postCategories?.map(({ tag }) => tag);
       const postCategoriesTags = postCategories.map(({ tag }) => tag);
 
       const missingTags = currentPostCategoriesTags?.reduce((acc, tag) => {
@@ -155,14 +152,13 @@ const update_business_post_categories: () => RequestHandler = () => {
           },
           update: {
             $pullAll: {
-              "layouts.posts.sections.$[sectionToClean].postCategoriesTags":
-                missingTags,
+              'layouts.posts.sections.$[sectionToClean].postCategoriesTags': missingTags,
             },
           },
           options: {
             arrayFilters: [
               {
-                "sectionToClean.postCategoriesTags": { $in: missingTags },
+                'sectionToClean.postCategoriesTags': { $in: missingTags },
               },
             ],
           },
@@ -256,17 +252,17 @@ const put_business_routeName: () => RequestHandler = () => {
           createdBy: user._id,
         },
         update: makeReshaper<Business, Business>({
-          name: "name",
-          categories: "categories",
-          hidden: "hidden",
-          socialLinks: "socialLinks",
-          bannerImages: "bannerImages",
-          logo: "logo",
-          layouts: "layouts",
-          aboutUsPage: "aboutUsPage",
-          whatsAppPhoneNumber: "whatsAppPhoneNumber",
-          postFormFields: "postFormFields",
-          shoppingMeta: "shoppingMeta",
+          name: 'name',
+          categories: 'categories',
+          hidden: 'hidden',
+          socialLinks: 'socialLinks',
+          bannerImages: 'bannerImages',
+          logo: 'logo',
+          layouts: 'layouts',
+          aboutUsPage: 'aboutUsPage',
+          whatsAppPhoneNumber: 'whatsAppPhoneNumber',
+          postFormFields: 'postFormFields',
+          shoppingMeta: 'shoppingMeta',
         })(body),
       });
 
@@ -324,7 +320,7 @@ const put_business_section_reorder: () => RequestHandler = () => {
         return get400Response({
           res,
           json: {
-            message: "Invalid fromIndex/toIndex",
+            message: 'Invalid fromIndex/toIndex',
           },
         });
       }
@@ -337,11 +333,7 @@ const put_business_section_reorder: () => RequestHandler = () => {
         },
         update: {
           $set: {
-            "layouts.posts.sections": movRow(
-              businessSections,
-              fromIndex,
-              toIndex
-            ),
+            'layouts.posts.sections': movRow(businessSections, fromIndex, toIndex),
           },
         },
       });
@@ -368,7 +360,7 @@ const post_business_routeName_sections: () => RequestHandler = () => {
         },
         update: {
           $push: {
-            "layouts.posts.sections": body,
+            'layouts.posts.sections': body,
           },
         },
       });
@@ -392,9 +384,8 @@ const put_business_routeName_sections_sectionId: () => RequestHandler = () => {
       }
 
       const currentSection =
-        business.layouts?.posts?.sections?.find((section) =>
-          isEqualIds(sectionId, section._id)
-        ) || {};
+        business.layouts?.posts?.sections?.find((section) => isEqualIds(sectionId, section._id)) ||
+        {};
 
       await businessServices.updateOne({
         res,
@@ -404,7 +395,7 @@ const put_business_routeName_sections_sectionId: () => RequestHandler = () => {
         },
         update: {
           $set: {
-            "layouts.posts.sections.$[section]": {
+            'layouts.posts.sections.$[section]': {
               ...currentSection,
               ...body,
             },
@@ -413,7 +404,7 @@ const put_business_routeName_sections_sectionId: () => RequestHandler = () => {
         options: {
           arrayFilters: [
             {
-              "section._id": sectionId,
+              'section._id': sectionId,
             },
           ],
         },
@@ -430,7 +421,7 @@ const put_business_routeName_sections_sectionId: () => RequestHandler = () => {
 const del_business_routeName_sections_sectionId: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const { params, body } = req;
+      const { params } = req;
       const { routeName, sectionId } = params;
 
       await businessServices.updateOne({
@@ -441,7 +432,7 @@ const del_business_routeName_sections_sectionId: () => RequestHandler = () => {
         },
         update: {
           $pull: {
-            "layouts.posts.sections": {
+            'layouts.posts.sections': {
               _id: sectionId,
             },
           },
@@ -475,7 +466,7 @@ const post_business_routeName_chatbot_validate: () => RequestHandler = () => {
           res,
           json: {
             message:
-              "Este codigo de validación no existe o ya el bot fue verificado con este código",
+              'Este codigo de validación no existe o ya el bot fue verificado con este código',
           },
         });
       }
@@ -486,8 +477,7 @@ const post_business_routeName_chatbot_validate: () => RequestHandler = () => {
         return get404Response({
           res,
           json: {
-            message:
-              "No hay metadatos disponibles en este codigo de validación del bot",
+            message: 'No hay metadatos disponibles en este codigo de validación del bot',
           },
         });
       }
