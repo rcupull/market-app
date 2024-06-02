@@ -27,7 +27,7 @@ describe('GET: /admin/users', () => {
       .then((response) => {
         expect(response.body.paginator).toMatchInlineSnapshot(`
           {
-            "dataCount": 2,
+            "dataCount": 3,
             "hasNextPage": false,
             "hasPrevPage": false,
             "limit": 10,

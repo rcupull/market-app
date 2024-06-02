@@ -274,7 +274,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
       if (business.telegramBotChat) {
         telegramServices.sendMessage(
           business.telegramBotChat.chatId,
-          `Una nueva orden de compra ha sido solicitada en su negocio "${business.name}" de nuestra plataforma Asere Market. Puede ver los detalles en la sección de órdenes de compras.`,
+          `Una nueva orden de compra ha sido solicitada en su negocio "${business.name}" de nuestra plataforma Asere Market. Puede ver los detalles en la sección de órdenes de compras.`
         );
       } else {
         logger.warn(`the business ${business.name} has not a activated telegram account`);

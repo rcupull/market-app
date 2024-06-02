@@ -242,6 +242,18 @@ const updateOne: QueryHandle<{
   await PostModel.updateOne(query, update);
 };
 
+const findOneAndUpdate: QueryHandle<
+  {
+    query: FilterQuery<Post>;
+    update: UpdateQuery<Post>;
+  },
+  Post | null
+> = async ({ query, update }) => {
+  const out = await PostModel.findOneAndUpdate(query, update);
+
+  return out;
+};
+
 const updateStockAmount: QueryHandle<
   {
     amountToAdd: number;
@@ -271,7 +283,7 @@ const updateStockAmount: QueryHandle<
         },
         {
           stockAmount: newStockAmount,
-        },
+        }
       );
 
       return {
@@ -286,7 +298,7 @@ const updateStockAmount: QueryHandle<
       },
       {
         stockAmount: newStockAmount,
-      },
+      }
     );
 
     return {
@@ -315,4 +327,5 @@ export const postServices = {
   updateMany,
   deleteOne,
   updateStockAmount,
+  findOneAndUpdate,
 };
