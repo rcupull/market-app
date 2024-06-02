@@ -62,11 +62,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 name="description"
                 className="mt-6"
                 classNameContainer="max-h-[50vh]"
-                description={
-                  <div>
-                    Describe la funcionalidad del negocio.
-                  </div>
-                }
+                description={<div>Describe la funcionalidad del negocio.</div>}
               />
 
               {portal.getPortal(
