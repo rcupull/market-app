@@ -12,13 +12,17 @@ import { ProductImages2 } from 'components/product/images/product-images-2';
 import { ProductPrice1 } from 'components/product/price/product-price-1';
 import { Review } from 'components/review';
 
+import { useAuth } from 'features/api-slices/useAuth';
+
 import { useRouter } from 'hooks/useRouter';
 
 import { LayoutPage } from 'pages/@common/layout-page';
 import { UpdateSomethingContainer } from 'pages/@common/update-something-container';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { usePostIdPersistent } from 'pages/@hooks/usePostIdPersistent';
+import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
+import { usePostMakeReviewModal } from 'pages/@modals/usePostMakeReviewModal';
 import { PostsLayoutSection } from 'types/business';
 
 export interface PostIdProps {
@@ -31,6 +35,9 @@ export const PostId = ({ routeName }: PostIdProps) => {
 
   const postIdPersistent = usePostIdPersistent();
   const businessPageData = useBusiness();
+  const { isAuthenticated } = useAuth();
+  const authSignInModal = useAuthSignInModal();
+  const postMakeReviewModal = usePostMakeReviewModal();
 
   useEffect(() => {
     if (postId) {
@@ -85,7 +92,23 @@ export const PostId = ({ routeName }: PostIdProps) => {
           render={{
             images: (props) => <ProductImages2 {...props} />,
             price: (props) => <ProductPrice1 {...props} />,
-            review: (props) => <Review {...props} />,
+            review: (props) => (
+              <Review
+                {...props}
+                onClickToSubmit={() => {
+                  if (!isAuthenticated) {
+                    authSignInModal.open({ redirect: false });
+                    return;
+                  }
+                  postMakeReviewModal.open({
+                    postId: post._id,
+                    onAfterSuccess: () => {
+                      postIdPersistent.fetch({ id: post._id });
+                    },
+                  });
+                }}
+              />
+            ),
             colors: (props) => <FieldColorSelect {...props} />,
             clothingSize: (props) => <FieldClothingSizeSelect {...props} />,
             description: (props) => <ProductDescription1 {...props} />,
