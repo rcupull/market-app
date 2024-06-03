@@ -42,7 +42,7 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
   const allUserBusiness = useAllUserBusiness();
 
   const { pushModal } = useModal();
-  const { pushRoute , onChangeQuery} = useRouter();
+  const { pushRoute, onChangeQuery } = useRouter();
   const { onCallAfar } = useCallFromAfar();
 
   const handleShowHide = () => {
@@ -185,27 +185,27 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
         },
         {
           label: 'Productos',
-          onClick: ()=>onChangeQuery({businessTab: 'products'}),
+          onClick: () => onChangeQuery({ businessTab: 'products' }),
           svg: SvgAddressCard,
         },
         {
           label: 'Enlaces',
-          onClick: ()=>onChangeQuery({businessTab: 'links'}),
+          onClick: () => onChangeQuery({ businessTab: 'links' }),
           svg: SvgLinkSolid,
         },
         {
           label: 'Secciones',
-          onClick: ()=>onChangeQuery({businessTab: 'sections'}),
+          onClick: () => onChangeQuery({ businessTab: 'sections' }),
           svg: SvgLayerGroupSolid,
         },
         {
           label: 'Órdenes de compras',
-          onClick: ()=>onChangeQuery({businessTab: 'shopping'}),
+          onClick: () => onChangeQuery({ businessTab: 'shopping' }),
           svg: SvgShoppingCartSolid,
         },
         {
           label: 'Configuración',
-          onClick: ()=>onChangeQuery({businessTab: 'settings'}),
+          onClick: () => onChangeQuery({ businessTab: 'settings' }),
           svg: SvgCogSolid,
         },
       ]}

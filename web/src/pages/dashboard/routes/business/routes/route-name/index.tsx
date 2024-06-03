@@ -62,7 +62,7 @@ export const RouteName = () => {
       q: 'products',
       label: 'Productos',
       content: <Products />,
-      svg: SvgAddressCard,//
+      svg: SvgAddressCard,
     },
     {
       q: 'links',
