@@ -1,16 +1,14 @@
 import { Menu as MenuBase, Transition } from '@headlessui/react';
 import { Float } from '@headlessui-float/react';
 import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
 
 import { Divider } from 'components/divider';
 
 import { Nullable, StyleProps } from 'types/general';
 import { cn, compact } from 'utils/general';
 
-interface MenuItem {
+interface MenuItem extends StyleProps {
   label: string;
-  href?: string;
   svg?: React.FunctionComponent<StyleProps>;
   onClick?: () => void;
   divider?: boolean;
@@ -59,31 +57,11 @@ export const Menu = ({
               {topElement}
             </MenuBase.Item>
 
-            {compact(items).map(({ label, href, onClick, svg: Svg, divider }, index) => (
+            {compact(items).map(({ label, onClick, svg: Svg, divider, className }, index) => (
               <MenuBase.Item key={label}>
                 {({ active }) => {
-                  const svgNode = Svg && <Svg className={cn('h-5 w-5', { ['mr-2']: label })} />;
-                  if (href) {
-                    return (
-                      <Link
-                        key={index}
-                        to={href}
-                        className={cn(
-                          {
-                            'bg-gray-100': active,
-                          },
-                          'px-4 py-2 text-sm text-gray-700 flex items-center',
-                        )}
-                      >
-                        {svgNode}
-
-                        {label}
-                      </Link>
-                    );
-                  }
-
                   return (
-                    <div key={index}>
+                    <div key={index} className={className}>
                       <div
                         onClick={onClick}
                         className={cn(
@@ -93,11 +71,11 @@ export const Menu = ({
                           },
                         )}
                       >
-                        {svgNode}
+                        {Svg && <Svg className={cn('h-5 w-5', { ['mr-2']: label })} />}
 
                         {label}
                       </div>
-                      {divider && <Divider className='!my-2'/>}
+                      {divider && <Divider className="!my-2" />}
                     </div>
                   );
                 }}
