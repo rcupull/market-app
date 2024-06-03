@@ -21,6 +21,11 @@ import { useModal } from 'features/modal/useModal';
 import { callAfarIds, useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
 
+import SvgAddressCard from 'icons/AddressCard';
+import SvgCogSolid from 'icons/CogSolid';
+import SvgLayerGroupSolid from 'icons/LayerGroupSolid';
+import SvgLinkSolid from 'icons/LinkSolid';
+import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { KpiCredit, KpiTelegram, KpiToPay } from 'pages/@common/kpis-business';
 import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewModal';
 import { Business } from 'types/business';
@@ -37,7 +42,7 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
   const allUserBusiness = useAllUserBusiness();
 
   const { pushModal } = useModal();
-  const { pushRoute } = useRouter();
+  const { pushRoute , onChangeQuery} = useRouter();
   const { onCallAfar } = useCallFromAfar();
 
   const handleShowHide = () => {
@@ -176,6 +181,32 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
           label: 'Eliminar el negocio',
           onClick: handleDelete,
           svg: IconRemove,
+          divider: true,
+        },
+        {
+          label: 'Productos',
+          onClick: ()=>onChangeQuery({businessTab: 'products'}),
+          svg: SvgAddressCard,
+        },
+        {
+          label: 'Enlaces',
+          onClick: ()=>onChangeQuery({businessTab: 'links'}),
+          svg: SvgLinkSolid,
+        },
+        {
+          label: 'Secciones',
+          onClick: ()=>onChangeQuery({businessTab: 'sections'}),
+          svg: SvgLayerGroupSolid,
+        },
+        {
+          label: 'Órdenes de compras',
+          onClick: ()=>onChangeQuery({businessTab: 'shopping'}),
+          svg: SvgShoppingCartSolid,
+        },
+        {
+          label: 'Configuración',
+          onClick: ()=>onChangeQuery({businessTab: 'settings'}),
+          svg: SvgCogSolid,
         },
       ]}
     />

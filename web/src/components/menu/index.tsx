@@ -3,6 +3,8 @@ import { Float } from '@headlessui-float/react';
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
+import { Divider } from 'components/divider';
+
 import { Nullable, StyleProps } from 'types/general';
 import { cn, compact } from 'utils/general';
 
@@ -11,6 +13,7 @@ interface MenuItem {
   href?: string;
   svg?: React.FunctionComponent<StyleProps>;
   onClick?: () => void;
+  divider?: boolean;
 }
 
 export interface MenuProps extends StyleProps {
@@ -56,7 +59,7 @@ export const Menu = ({
               {topElement}
             </MenuBase.Item>
 
-            {compact(items).map(({ label, href, onClick, svg: Svg }, index) => (
+            {compact(items).map(({ label, href, onClick, svg: Svg, divider }, index) => (
               <MenuBase.Item key={label}>
                 {({ active }) => {
                   const svgNode = Svg && <Svg className={cn('h-5 w-5', { ['mr-2']: label })} />;
@@ -80,19 +83,21 @@ export const Menu = ({
                   }
 
                   return (
-                    <div
-                      key={index}
-                      onClick={onClick}
-                      className={cn(
-                        'cursor-pointer px-4 py-2 text-sm text-gray-700 flex items-center',
-                        {
-                          'bg-gray-100': active,
-                        },
-                      )}
-                    >
-                      {svgNode}
+                    <div key={index}>
+                      <div
+                        onClick={onClick}
+                        className={cn(
+                          'cursor-pointer px-4 py-2 text-sm text-gray-700 flex items-center',
+                          {
+                            'bg-gray-100': active,
+                          },
+                        )}
+                      >
+                        {svgNode}
 
-                      {label}
+                        {label}
+                      </div>
+                      {divider && <Divider className='!my-2'/>}
                     </div>
                   );
                 }}
