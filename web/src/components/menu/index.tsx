@@ -12,6 +12,7 @@ interface MenuItem extends StyleProps {
   svg?: React.FunctionComponent<StyleProps>;
   onClick?: () => void;
   divider?: boolean;
+  active?: boolean;
 }
 
 export interface MenuProps extends StyleProps {
@@ -57,9 +58,9 @@ export const Menu = ({
               {topElement}
             </MenuBase.Item>
 
-            {compact(items).map(({ label, onClick, svg: Svg, divider, className }, index) => (
+            {compact(items).map(({ label, onClick, svg: Svg, divider, className, active }, index) => (
               <MenuBase.Item key={label}>
-                {({ active }) => {
+                {() => {
                   return (
                     <div key={index} className={className}>
                       <div

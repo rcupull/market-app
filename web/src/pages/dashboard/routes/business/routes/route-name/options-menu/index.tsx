@@ -36,7 +36,7 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
   const { routeName, hidden } = business;
 
   const { pushModal } = useModal();
-  const { pushRoute, onChangeQuery } = useRouter();
+  const { pushRoute, onChangeQuery, query } = useRouter();
   const { onCallAfar } = useCallFromAfar();
 
   const handleShowHide = () => {
@@ -166,26 +166,31 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
           label: 'Productos',
           onClick: () => onChangeQuery({ businessTab: 'products' }),
           svg: SvgAddressCard,
+          active: query.businessTab === 'products',
         },
         {
           label: 'Enlaces',
           onClick: () => onChangeQuery({ businessTab: 'links' }),
           svg: SvgLinkSolid,
+          active: query.businessTab === 'links',
         },
         {
           label: 'Secciones',
           onClick: () => onChangeQuery({ businessTab: 'sections' }),
           svg: SvgLayerGroupSolid,
+          active: query.businessTab === 'sections',
         },
         {
           label: 'Órdenes de compras',
           onClick: () => onChangeQuery({ businessTab: 'shopping' }),
           svg: SvgShoppingCartSolid,
+          active: query.businessTab === 'shopping',
         },
         {
           label: 'Configuración',
           onClick: () => onChangeQuery({ businessTab: 'settings' }),
           svg: SvgCogSolid,
+          active: query.businessTab === 'settings',
         },
       ]}
     />
