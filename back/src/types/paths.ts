@@ -15,9 +15,9 @@ type JoinPathsInline<K, P> = K extends JSONObjectKey
 export type Path<T extends any, D extends number = 5> = D extends never
   ? never
   : T extends JSONObject
-  ? {
-      [K in keyof T]-?: K extends JSONObjectKey
-        ? `${K}` | JoinPathsInline<K, Path<T[K], Prev[D]>>
-        : never;
-    }[keyof T]
-  : never;
+    ? {
+        [K in keyof T]-?: K extends JSONObjectKey
+          ? `${K}` | JoinPathsInline<K, Path<T[K], Prev[D]>>
+          : never;
+      }[keyof T]
+    : never;

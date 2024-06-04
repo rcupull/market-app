@@ -140,37 +140,23 @@ const getOne: QueryHandle<
 };
 
 const deleteMany: QueryHandle<{
-  routeName: string;
+  routeName?: string;
   postIds?: Array<string>;
-}> = async ({ res, req, routeName, postIds: postIdsT }) => {
-  const postIds: Array<string> = postIdsT || [];
-
-  let postToRemove: Array<Post> = [];
-
-  if (postIds.length) {
-    postToRemove = await PostModel.find({
-      _id: { $in: postIds },
-    });
-  } else {
-    postToRemove = await PostModel.find({
+}> = async ({ routeName, postIds }) => {
+  if (routeName) {
+    await PostModel.deleteMany({
       routeName,
     });
+
+    return;
   }
 
   if (postIds?.length) {
-    const promises = postToRemove.map((post) => {
-      return deleteOne({
-        res,
-        //@ts-expect-error ignore
-        req: {
-          ...req,
-          post,
-        },
-        postId: post._id.toString(),
-      });
+    await PostModel.deleteMany({
+      _id: { $in: postIds },
     });
 
-    await Promise.all(promises);
+    return;
   }
 };
 
@@ -283,7 +269,7 @@ const updateStockAmount: QueryHandle<
         },
         {
           stockAmount: newStockAmount,
-        }
+        },
       );
 
       return {
@@ -298,7 +284,7 @@ const updateStockAmount: QueryHandle<
       },
       {
         stockAmount: newStockAmount,
-      }
+      },
     );
 
     return {

@@ -194,7 +194,7 @@ export type RequestWithUser<
   ResBody = any,
   ReqBody = any,
   ReqQuery = AnyRecord,
-  Locals extends Record<string, any> = Record<string, any>
+  Locals extends Record<string, any> = Record<string, any>,
 > = Request<P, ResBody, ReqBody, ReqQuery, Locals> & {
   user: User;
 };

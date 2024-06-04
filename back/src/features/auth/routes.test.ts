@@ -51,7 +51,7 @@ describe('POST /auth/sign-in', () => {
             "role": "user",
             "validated": true,
           }
-        `
+        `,
         );
       });
   });
