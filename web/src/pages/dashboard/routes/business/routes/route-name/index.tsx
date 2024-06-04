@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import { SpinnerEllipsis } from 'components/spinner-ellipsis';
-import { Tabs } from 'components/tabs';
+import { TabItem, Tabs } from 'components/tabs';
 
 import { useRouter } from 'hooks/useRouter';
 
@@ -22,6 +22,7 @@ import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { KpiCredit, KpiTelegram, KpiToPay } from 'pages/@common/kpis-business';
 import { LayoutSection } from 'pages/@common/layout-section';
 import { useBusiness } from 'pages/@hooks/useBusiness';
+import { isString } from 'utils/general';
 
 export const RouteName = () => {
   const { params, query, onChangeQuery } = useRouter();
@@ -56,6 +57,46 @@ export const RouteName = () => {
 
   const { name, hidden } = business;
 
+  const tabsItems: Array<TabItem & { q: string }> = [
+    {
+      q: 'products',
+      label: 'Productos',
+      content: <Products />,
+      svg: SvgAddressCard,
+    },
+    {
+      q: 'links',
+      label: 'Enlaces',
+      content: <Links />,
+      svg: SvgLinkSolid,
+    },
+    {
+      q: 'sections',
+      label: 'Secciones',
+      content: <PostsSections />,
+      svg: SvgLayerGroupSolid,
+    },
+    {
+      q: 'shopping',
+      label: 'Órdenes de compras',
+      content: <PurchaseOrders />,
+      svg: SvgShoppingCartSolid,
+    },
+    {
+      q: 'settings',
+      label: 'Configuración',
+      svg: SvgCogSolid,
+      content: <Settings />,
+    },
+  ];
+
+  const tabIndexToQuery = (tabIndex: number) => {
+    return tabsItems[tabIndex]?.q;
+  };
+  const tabQueryToIndex = (tabQuery: string) => {
+    return tabsItems.findIndex(({ q }) => tabQuery === q);
+  };
+
   return (
     <>
       <BusinessConfig business={business} />
@@ -83,37 +124,11 @@ export const RouteName = () => {
         }
       >
         <Tabs
-          className="mt-4 shadow-lg"
+          className="mt-4 shadow-lg hidden sm:flex"
           contentClassName="w-full overflow-y-auto h-[calc(100vh-12rem)]"
-          onSelect={(businessTab) => onChangeQuery({ businessTab })}
-          selected={query.businessTab as number | undefined}
-          items={[
-            {
-              label: 'Productos',
-              content: <Products />,
-              svg: SvgAddressCard,
-            },
-            {
-              label: 'Enlaces',
-              content: <Links />,
-              svg: SvgLinkSolid,
-            },
-            {
-              label: 'Secciones',
-              content: <PostsSections />,
-              svg: SvgLayerGroupSolid,
-            },
-            {
-              label: 'Órdenes de compras',
-              content: <PurchaseOrders />,
-              svg: SvgShoppingCartSolid,
-            },
-            {
-              label: 'Configuración',
-              svg: SvgCogSolid,
-              content: <Settings />,
-            },
-          ]}
+          onSelect={(tabIndex) => onChangeQuery({ businessTab: tabIndexToQuery(tabIndex) })}
+          selected={isString(query.businessTab) ? tabQueryToIndex(query.businessTab) : undefined}
+          items={tabsItems}
         />
       </LayoutSection>
     </>

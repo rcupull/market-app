@@ -12,7 +12,7 @@ const ValidationCodeShema = new Schema<ValidationCode>({
 export const ValidationCodeModel = model<ValidationCode>(
   'ValidationCode',
   ValidationCodeShema,
-  'validation_codes'
+  'validation_codes',
 );
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -26,5 +26,5 @@ const AuthSessionShema = new Schema<AuthSession>({
 export const AuthSessionModel = model<AuthSession>(
   'AuthSession',
   AuthSessionShema,
-  'auth_sessions'
+  'auth_sessions',
 );

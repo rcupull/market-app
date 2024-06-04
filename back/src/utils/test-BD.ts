@@ -68,6 +68,16 @@ export const fillBD = async (args?: {
   });
   await productPost1Business1User1.save();
 
+  const productPost2Business1User1 = new PostModel({
+    name: 'zapatos',
+    routeName: business1User1.routeName,
+    createdBy: user1.id,
+    price: '20',
+    currency: 'CUP',
+    postCategoriesTags: ['cat1', 'cat2', 'cat3', 'cat4'],
+  });
+  await productPost2Business1User1.save();
+
   //////////////////////////////////////////////////////////////////////////////////
 
   const user2 = new UserModel({

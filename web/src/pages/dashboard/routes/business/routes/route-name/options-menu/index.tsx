@@ -5,26 +5,27 @@ import { Divider } from 'components/divider';
 import { IconButtonOptionsBars } from 'components/icon-button-options-bars';
 import { IconButtonRemove } from 'components/icon-button-remove';
 import { IconButtonShowHide } from 'components/icon-button-show-hide';
-import { IconButtonUpdate } from 'components/icon-button-update';
 import { IconButtonView } from 'components/icon-button-view';
 import { IconRemove } from 'components/icon-remove';
 import { IconShowHide } from 'components/icon-show-hide';
-import { IconUpdate } from 'components/icon-update';
 import { IconView } from 'components/icon-view';
 import { Menu } from 'components/menu';
 
 import { useRemoveOneBusiness } from 'features/api/business/useRemoveOneBusiness';
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
-import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
 import { useModal } from 'features/modal/useModal';
 
 import { callAfarIds, useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
 
+import SvgAddressCard from 'icons/AddressCard';
+import SvgCogSolid from 'icons/CogSolid';
+import SvgLayerGroupSolid from 'icons/LayerGroupSolid';
+import SvgLinkSolid from 'icons/LinkSolid';
+import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { KpiCredit, KpiTelegram, KpiToPay } from 'pages/@common/kpis-business';
-import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewModal';
 import { Business } from 'types/business';
-import { getDashboardBusinessRoute, getOneBusinessRoute } from 'utils/business';
+import { getOneBusinessRoute } from 'utils/business';
 
 export interface OptionsMenuProps {
   business: Business;
@@ -33,11 +34,9 @@ export interface OptionsMenuProps {
 
 export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
   const { routeName, hidden } = business;
-  const businessUpdateNewModal = useBusinessUpdateNewModal();
-  const allUserBusiness = useAllUserBusiness();
 
   const { pushModal } = useModal();
-  const { pushRoute } = useRouter();
+  const { pushRoute, onChangeQuery, query } = useRouter();
   const { onCallAfar } = useCallFromAfar();
 
   const handleShowHide = () => {
@@ -146,26 +145,6 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
       }
       items={[
         {
-          label: `${hidden ? 'Mostrar' : 'Ocultar'} este negocio`,
-          onClick: handleShowHide,
-          svg: ({ className }) => <IconShowHide hidden={hidden} className={className} />,
-        },
-        {
-          label: 'Editar el negocio',
-          onClick: () => {
-            businessUpdateNewModal.open({
-              onAfterSucess: (newBussiness) => {
-                if (newBussiness) {
-                  const { routeName } = newBussiness;
-                  pushRoute(getDashboardBusinessRoute({ routeName }), {}, { timeout: 100 });
-                  allUserBusiness.init();
-                }
-              },
-            });
-          },
-          svg: IconUpdate,
-        },
-        {
           label: 'Ver la página de este negocio',
           onClick: () => {
             pushRoute(getOneBusinessRoute({ routeName }));
@@ -173,9 +152,45 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
           svg: IconView,
         },
         {
+          label: `${hidden ? 'Mostrar' : 'Ocultar'} este negocio`,
+          onClick: handleShowHide,
+          svg: ({ className }) => <IconShowHide hidden={hidden} className={className} />,
+        },
+        {
           label: 'Eliminar el negocio',
           onClick: handleDelete,
           svg: IconRemove,
+          divider: true,
+        },
+        {
+          label: 'Productos',
+          onClick: () => onChangeQuery({ businessTab: 'products' }),
+          svg: SvgAddressCard,
+          active: query.businessTab === 'products',
+        },
+        {
+          label: 'Enlaces',
+          onClick: () => onChangeQuery({ businessTab: 'links' }),
+          svg: SvgLinkSolid,
+          active: query.businessTab === 'links',
+        },
+        {
+          label: 'Secciones',
+          onClick: () => onChangeQuery({ businessTab: 'sections' }),
+          svg: SvgLayerGroupSolid,
+          active: query.businessTab === 'sections',
+        },
+        {
+          label: 'Órdenes de compras',
+          onClick: () => onChangeQuery({ businessTab: 'shopping' }),
+          svg: SvgShoppingCartSolid,
+          active: query.businessTab === 'shopping',
+        },
+        {
+          label: 'Configuración',
+          onClick: () => onChangeQuery({ businessTab: 'settings' }),
+          svg: SvgCogSolid,
+          active: query.businessTab === 'settings',
         },
       ]}
     />
@@ -189,19 +204,6 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
         hidden={hidden}
         title={`${hidden ? 'Mostrar' : 'Ocultar'} este negocio`}
         onClick={handleShowHide}
-      />
-
-      <IconButtonUpdate
-        title="Editar el negocio"
-        onClick={() => {
-          businessUpdateNewModal.open({
-            routeName,
-            onAfterSucess: () => {
-              pushRoute(getDashboardBusinessRoute({ routeName }), {}, { timeout: 100 });
-              allUserBusiness.init();
-            },
-          });
-        }}
       />
 
       <IconButtonView

@@ -21,6 +21,7 @@ export const useBusinessOnboardingModal = () => {
             const { steps } = args || {};
 
             return {
+              title: 'Configuración básica del negocio',
               content: <Component steps={steps} />,
               className: '!w-[80vw]',
               isBusy: status.isBusy,
