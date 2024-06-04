@@ -1,11 +1,13 @@
-import { Popover } from '@headlessui/react';
+import { Popover, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
+
+import { useAuth } from 'features/api-slices/useAuth';
 
 import { useRouter } from 'hooks/useRouter';
 
 import { Footer } from './footer';
 import { SideBar } from './side-bar';
 
-import { BusinessLogo } from 'pages/@common/business-logo';
 import { Navbar } from 'pages/@common/nav-bar';
 import { ChildrenProp } from 'types/general';
 import { cn } from 'utils/general';
@@ -14,6 +16,7 @@ export interface LayoutMainProps extends ChildrenProp {}
 
 export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
   const { isDashboardPage, isAdminPage } = useRouter();
+  const { isAuthenticated } = useAuth();
 
   const smSideBar = (
     <div
@@ -27,20 +30,35 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
 
   const xsSideBar = (
     <Popover className={cn('relative sm:hidden')}>
-      {({ close }) => {
+      {({ close, open }) => {
         return (
           <>
-            <Popover.Button as="div" className="absolute -top-14 z-10">
-              <div className="flex w-14 cursor-pointer">
-                <BusinessLogo className="ml-auto !h-12" />
-              </div>
-            </Popover.Button>
+            {!open && (
+              <Popover.Button as="div" className="absolute -top-3 z-10">
+                <div className="flex w-14 cursor-pointer">
+                  <div className="relative text-nowrap bg-indigo-600 text-gray-100 px-2 rounded-tr-3xl rounded-br-3xl">
+                    Mis panel
+                  </div>
+                </div>
+              </Popover.Button>
+            )}
 
-            <Popover.Panel className="absolute z-10">
-              <div className="min-w-64 h-screen" onClick={() => close()}>
-                <SideBar />
-              </div>
-            </Popover.Panel>
+            <Transition
+              show={open}
+              as={Fragment}
+              enter="ease-out duration-200"
+              enterFrom="opacity-0 scale-x-95"
+              enterTo="opacity-100 scale-x-100"
+              leave="ease-in duration-100"
+              leaveFrom="opacity-100 scale-x-100"
+              leaveTo="opacity-0 scale-x-95"
+            >
+              <Popover.Panel className="absolute z-10">
+                <div className="min-w-64 h-screen" onClick={() => close()}>
+                  <SideBar />
+                </div>
+              </Popover.Panel>
+            </Transition>
           </>
         );
       }}
@@ -58,15 +76,17 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
             },
           )}
         >
-          {/* <AppBreadCrumble className="my-2 ml-4" /> */}
-
           <div className="p-3">{children}</div>
 
           <Footer className="mt-auto flex-shrink-0" />
         </div>
 
-        {xsSideBar}
-        {smSideBar}
+        {isAuthenticated && (
+          <>
+            {xsSideBar}
+            {smSideBar}
+          </>
+        )}
       </div>
 
       <Navbar className="flex-shrink-0 fixed top-0" />

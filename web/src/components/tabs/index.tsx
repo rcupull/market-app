@@ -4,7 +4,7 @@ import { Fragment } from 'react';
 import { Nullable, StyleProps } from 'types/general';
 import { cn, compact } from 'utils/general';
 
-interface TabItem<L extends string = string> {
+export interface TabItem<L extends string = string> {
   label: L;
   svg?: React.FunctionComponent<StyleProps>;
   content: React.ReactNode;

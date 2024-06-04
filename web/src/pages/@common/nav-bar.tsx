@@ -17,6 +17,7 @@ import { ShoppingCartMenu } from './shopping-cart-menu';
 
 import SvgBarsSolid from 'icons/BarsSolid';
 import SvgCogSolid from 'icons/CogSolid';
+import SvgDollarSignSolid from 'icons/DollarSignSolid';
 import SvgHomeSolid from 'icons/HomeSolid';
 import SvgKeySolid from 'icons/KeySolid';
 import SvgSignInAltSolid from 'icons/SignInAltSolid';
@@ -37,6 +38,7 @@ import {
   getDashboardRoute,
   getOneBusinessRoute,
 } from 'utils/business';
+import { cn } from 'utils/general';
 
 export interface NavbarProps extends StyleProps {}
 export const Navbar = ({ className }: NavbarProps) => {
@@ -56,14 +58,108 @@ export const Navbar = ({ className }: NavbarProps) => {
   const callAfarResourcesRefreshUser = 'callAfarResourcesRefreshUser';
   useCallFromAfar(callAfarResourcesRefreshUser, onRefreshAuthUser);
 
+  const navBarMenu = (
+    <Menu
+      buttonElement={
+        isAuthenticated ? <UserAvatar /> : <IconButton svg={<SvgBarsSolid className="!size-7" />} />
+      }
+      topElement={
+        <>
+          {user ? (
+            <div className="px-2 py-3 flex flex-col items-center border">
+              <span className="text-sm border px-2 py-1 rounded-2xl">{user.name}</span>
+              <span className="text-xs mt-2">{user.email}</span>
+            </div>
+          ) : (
+            <div className="w-64 m-2 rounded-md px-4 py-3 border flex items-center justify-center">
+              <span className="text-center">
+                Haz crecer tu negocio online en Cuba y usa{' '}
+                <span className="font-bold">Asere Market</span> para enganchar a tus clientes
+              </span>
+            </div>
+          )}
+        </>
+      }
+      items={[
+        {
+          label: 'Inicio',
+          onClick: () => pushRoute('/'),
+          svg: SvgHomeSolid,
+          className: cn('sm:hidden', {
+            '!block': isBusinessPage,
+          }),
+        },
+        {
+          label: 'Precios',
+          onClick: () => pushRoute('/price'),
+          svg: SvgDollarSignSolid,
+          className: cn('sm:hidden', {
+            '!block': isBusinessPage,
+          }),
+        },
+        {
+          label: '¿Que es Asere Market?',
+          onClick: () => pushRoute('/about-us'),
+          svg: SvgUsersSolid,
+          className: cn('sm:hidden', {
+            '!block': isBusinessPage,
+          }),
+          divider: true,
+        },
+        user && {
+          label: 'Editar perfil',
+          onClick: () => {
+            pushModal('ProfileUpdate', {
+              userId: user._id,
+              callAfarResources: callAfarResourcesRefreshUser,
+            });
+          },
+          svg: IconUpdate,
+        },
+        !isAuthenticated && {
+          label: 'Iniciar sesión',
+          onClick: () => authSignInModal.open(),
+          svg: SvgSignInAltSolid,
+        },
+        !isAuthenticated && {
+          label: 'Créate una cuenta',
+          onClick: () => authSignUpModal.open(),
+          svg: SvgUserPlusSolid,
+        },
+        !isAuthenticated && {
+          label: 'Recupera tu cuenta olvidada',
+          onClick: () => authForgotPasswordRequestModal.open(),
+          svg: SvgUserCircleSolid,
+        },
+        isAuthenticated && {
+          label: 'Cerrar sesión',
+          onClick: () => {
+            if (isAuthenticatedPage) {
+              pushRoute('/');
+            }
+            setTimeout(() => authSignOut.fetch(), 500);
+          },
+          svg: SvgSignOutAltSolid,
+        },
+        isAuthenticated && {
+          label: 'Cambiar contraseña',
+          onClick: () => {
+            authChangePasswordModal.open();
+          },
+          svg: SvgKeySolid,
+        },
+      ]}
+      className="flex-shrink-0"
+    />
+  );
+
   return (
     <NavBarBase
       className={className}
       preContent={
         <>
           <BusinessLogo className="hidden sm:block flex-shrink-0" />
-          <BusinessName className="ml-10 sm:ml-0 mr-auto flex-shrink-0" />
-          <div className="w-px h-3/6 bg-gray-400 hidden sm:block flex-shrink-0" />
+          <BusinessName className="flex-shrink-0 ml-12 sm:ml-0" />
         </>
       }
       items={[
@@ -90,19 +186,13 @@ export const Navbar = ({ className }: NavbarProps) => {
               title="Administración"
               svg={<SvgCogSolid className="!size-7" />}
               onClick={() => pushRoute('/admin')}
-            />
-          )}
-          {isBusinessPage && (
-            <IconButton
-              title="Página inicial"
-              svg={<SvgHomeSolid className="!size-7" />}
-              onClick={() => pushRoute('/')}
+              className="hidden sm:block"
             />
           )}
           {isBusinessPage && <ShoppingCartMenu />}
           {isUser && (
             <IconButton
-              title="Mis tiendas"
+              title="Mi panel"
               svg={<SvgStoreSolid className="!size-7" />}
               onClick={() => {
                 if (routeName) {
@@ -114,79 +204,7 @@ export const Navbar = ({ className }: NavbarProps) => {
               className="hidden sm:block"
             />
           )}
-          <Menu
-            buttonElement={
-              isAuthenticated ? (
-                <UserAvatar />
-              ) : (
-                <IconButton svg={<SvgBarsSolid className="!size-7" />} />
-              )
-            }
-            topElement={
-              <>
-                {user ? (
-                  <div className="px-2 py-3 flex flex-col items-center border">
-                    <span className="text-sm border px-2 py-1 rounded-2xl">{user.name}</span>
-                    <span className="text-xs mt-2">{user.email}</span>
-                  </div>
-                ) : (
-                  <div className="w-64 m-2 rounded-md px-4 py-3 border flex items-center justify-center">
-                    <span className="text-center">
-                      Haz crecer tu negocio online en Cuba y usa{' '}
-                      <span className="font-bold">Asere Market</span> para enganchar a tus clientes
-                    </span>
-                  </div>
-                )}
-              </>
-            }
-            items={[
-              { label: 'Inicio', href: '/', svg: SvgHomeSolid },
-              user && {
-                label: 'Editar perfil',
-                onClick: () => {
-                  pushModal('ProfileUpdate', {
-                    userId: user._id,
-                    callAfarResources: callAfarResourcesRefreshUser,
-                  });
-                },
-                svg: IconUpdate,
-              },
-              !isAuthenticated && {
-                label: 'Iniciar sesión',
-                onClick: () => authSignInModal.open(),
-                svg: SvgSignInAltSolid,
-              },
-              !isAuthenticated && {
-                label: 'Créate una cuenta',
-                onClick: () => authSignUpModal.open(),
-                svg: SvgUserPlusSolid,
-              },
-              !isAuthenticated && {
-                label: 'Recupera tu cuenta olvidada',
-                onClick: () => authForgotPasswordRequestModal.open(),
-                svg: SvgUserCircleSolid,
-              },
-              isAuthenticated && {
-                label: 'Cerrar sesión',
-                onClick: () => {
-                  if (isAuthenticatedPage) {
-                    pushRoute('/');
-                  }
-                  setTimeout(() => authSignOut.fetch(), 500);
-                },
-                svg: SvgSignOutAltSolid,
-              },
-              isAuthenticated && {
-                label: 'Cambiar contraseña',
-                onClick: () => {
-                  authChangePasswordModal.open();
-                },
-                svg: SvgKeySolid,
-              },
-              { label: 'Saber más sobre nosotros', href: '/about-us', svg: SvgUsersSolid },
-            ]}
-            className="flex-shrink-0"
-          />
+          {navBarMenu}
         </>
       }
     />
