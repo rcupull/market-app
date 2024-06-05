@@ -6,6 +6,7 @@ import { CheckEditorToolbarItem } from './types';
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { StyleProps } from 'types/general';
+import { getEndpoint } from 'utils/api';
 
 export interface CheckEditorProps extends StyleProps {
   onBlur?: (args: { event: any; editor: ClassicEditor; data: string }) => void;
@@ -56,12 +57,16 @@ export const CheckEditor = ({
               'bold',
               'italic',
               '|',
+              'imageInsert',
               'link',
               'numberedList',
               'bulletedList',
             ] as Array<CheckEditorToolbarItem>,
             shouldNotGroupWhenFull: true,
           },
+          ckfinder: {
+            uploadUrl: getEndpoint({path: '/images-checkededitor', query: {userId: '1'}}),
+          }
         }}
         data={value}
         onReady={(editor) => {
