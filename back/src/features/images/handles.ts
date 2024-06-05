@@ -63,6 +63,60 @@ const save_image: () => RequestHandler = () => {
   };
 };
 
+const save_image_checkeditor: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      uploadImageMiddleware(req, res, async (err) => {
+        if (err) {
+          return get400Response({ res, json: { message: err.message } });
+        }
+
+        const filename = getFullFileNameToSave({
+          userId: req.query.userId,
+          postId: req.query.postId,
+          routeName: req.query.routeName,
+        });
+
+        const { width, height } = req.query;
+
+        if (!filename) {
+          return get400Response({
+            res,
+            json: { message: 'has not filename' },
+          });
+        }
+
+        const { file } = req;
+
+        if (!file) {
+          return get400Response({
+            res,
+            json: { message: 'Has not file', uploaded: 0 },
+          });
+        }
+
+        const webImagePathNameFilename = `${filename}-${path.parse(file.path).name}.web`;
+
+        const realWidth = width && isNumber(Number(width)) ? Number(width) : undefined;
+        const realHeight = height && isNumber(Number(height)) ? Number(height) : undefined;
+
+        await sharp(file.path).resize(realWidth, realHeight).toFile(webImagePathNameFilename);
+
+        fs.unlinkSync(file.path);
+
+        return get200Response({
+          res,
+          json: {
+            url: webImagePathNameFilename.replace(getAssetsDir(), ''),
+            uploaded: 1,
+            filename: `${path.parse(file.path).name}.web`,
+          },
+        });
+      });
+    });
+  };
+};
+
 const delete_one_image: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
@@ -82,5 +136,6 @@ const delete_one_image: () => RequestHandler = () => {
 
 export const imageHandles = {
   save_image,
+  save_image_checkeditor,
   delete_one_image,
 };

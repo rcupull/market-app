@@ -22,4 +22,4 @@ export const uploadImageMiddleware = multer({
   //     done(null, false);
   //   }
   // },
-}).single('image');
+}).single('upload');
