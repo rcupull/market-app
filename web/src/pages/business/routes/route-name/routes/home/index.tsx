@@ -6,6 +6,7 @@ import { LayoutPage } from 'pages/@common/layout-page';
 import { UpdateSomethingContainer } from 'pages/@common/update-something-container';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { Banner } from 'pages/business/routes/route-name/components/banner';
+import { getDashboardBusinessRoute } from 'utils/business';
 
 interface HomeProps {
   routeName: string;
@@ -18,7 +19,7 @@ export const Home = ({ routeName }: HomeProps) => {
   return (
     <UpdateSomethingContainer
       title="Editar este negocio"
-      onClick={() => pushRoute(`/dashboard/business/${routeName}`)}
+      onClick={() => pushRoute(getDashboardBusinessRoute({routeName}))}
     >
       <LayoutPage>
         <Banner className="hidden sm:block" />
