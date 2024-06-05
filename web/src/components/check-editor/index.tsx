@@ -14,6 +14,7 @@ export interface CheckEditorProps extends StyleProps {
   onReady?: (editor: ClassicEditor) => void;
   value?: string;
   classNameContainer?: string;
+  getUploadAdapter: (loader: any) => any;
 }
 
 export const CheckEditor = ({
@@ -24,6 +25,7 @@ export const CheckEditor = ({
   value,
   className,
   classNameContainer,
+  getUploadAdapter,
 }: CheckEditorProps) => {
   const addStylesToContainer = () => {
     const [element] = document.getElementsByClassName('ck-editor__editable_inline');
@@ -56,6 +58,7 @@ export const CheckEditor = ({
               'bold',
               'italic',
               '|',
+              'imageInsert',
               'link',
               'numberedList',
               'bulletedList',
@@ -69,6 +72,11 @@ export const CheckEditor = ({
            * Add custom clases to container
            */
           addStylesToContainer();
+
+          // getted from https://stackoverflow.com/questions/52873321/add-custom-headers-to-upload-image
+          editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
+            return getUploadAdapter(loader);
+          };
 
           onReady?.(editor);
         }}

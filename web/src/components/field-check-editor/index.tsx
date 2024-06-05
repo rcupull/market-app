@@ -1,4 +1,4 @@
-import { CheckEditor } from 'components/check-editor';
+import { CheckEditor, CheckEditorProps } from 'components/check-editor';
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
 import { useFormField } from 'components/formux/useFormField';
 
@@ -7,10 +7,11 @@ export interface FieldCheckEditorProps extends StyleProps, FormFieldWrapperProps
   onChange?: (e: React.ChangeEvent) => void;
   classNameContainer?: string;
   name?: string;
+  getUploadAdapter: CheckEditorProps['getUploadAdapter'];
 }
 
 export const FieldCheckEditor = (props: FieldCheckEditorProps) => {
-  const { label, className, classNameContainer, description } = props;
+  const { label, className, classNameContainer, description, getUploadAdapter } = props;
 
   const { field, error } = useFormField(props);
   const { value } = field;
@@ -31,6 +32,7 @@ export const FieldCheckEditor = (props: FieldCheckEditorProps) => {
             },
           });
         }}
+        getUploadAdapter={getUploadAdapter}
       />
     </FormFieldWrapper>
   );

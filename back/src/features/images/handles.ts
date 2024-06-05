@@ -4,7 +4,11 @@ import { isNumber } from '../../utils/general';
 import { withTryCatch } from '../../utils/error';
 import { imagesServices } from './services';
 import { ServerResponse } from 'http';
-import { get200Response, get400Response } from '../../utils/server-response';
+import {
+  get200Response,
+  get400Response,
+  getUserNotFoundResponse,
+} from '../../utils/server-response';
 import { getAssetsDir } from '../../config';
 import sharp from 'sharp';
 import { getFullFileNameToSave } from './utils';
@@ -70,11 +74,17 @@ const save_image_checkeditor: () => RequestHandler = () => {
         if (err) {
           return get400Response({ res, json: { message: err.message } });
         }
+        const { query, user } = req;
+        if (!user) {
+          return getUserNotFoundResponse({ res });
+        }
+
+        const { postId, routeName, endpoint } = query;
 
         const filename = getFullFileNameToSave({
-          userId: req.query.userId,
-          postId: req.query.postId,
-          routeName: req.query.routeName,
+          userId: user._id.toString(),
+          postId,
+          routeName,
         });
 
         const { width, height } = req.query;
@@ -107,7 +117,7 @@ const save_image_checkeditor: () => RequestHandler = () => {
         return get200Response({
           res,
           json: {
-            url: webImagePathNameFilename.replace(getAssetsDir(), ''),
+            url: `${endpoint}${webImagePathNameFilename.replace(getAssetsDir(), '')}`,
             uploaded: 1,
             filename: `${path.parse(file.path).name}.web`,
           },
