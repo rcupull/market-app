@@ -8,10 +8,12 @@ export interface FieldCheckEditorProps extends StyleProps, FormFieldWrapperProps
   classNameContainer?: string;
   name?: string;
   getUploadAdapter: CheckEditorProps['getUploadAdapter'];
+  onChangeUtils?: CheckEditorProps['onChangeUtils'];
 }
 
 export const FieldCheckEditor = (props: FieldCheckEditorProps) => {
-  const { label, className, classNameContainer, description, getUploadAdapter } = props;
+  const { label, className, classNameContainer, description, getUploadAdapter, onChangeUtils } =
+    props;
 
   const { field, error } = useFormField(props);
   const { value } = field;
@@ -33,6 +35,7 @@ export const FieldCheckEditor = (props: FieldCheckEditorProps) => {
           });
         }}
         getUploadAdapter={getUploadAdapter}
+        onChangeUtils={onChangeUtils}
       />
     </FormFieldWrapper>
   );

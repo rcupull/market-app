@@ -6,7 +6,8 @@ export class CheckEditorUploadAdapter {
   uploadUrl: string;
   loader: any;
 
-  constructor(loader: any, uploadUrl: string) {
+  constructor(args: { loader: any; uploadUrl: string }) {
+    const { loader, uploadUrl } = args;
     this.loader = loader;
     this.uploadUrl = uploadUrl;
   }

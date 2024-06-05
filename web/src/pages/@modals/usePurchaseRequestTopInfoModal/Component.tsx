@@ -1,4 +1,6 @@
 import { Button } from 'components/button';
+import { CheckEditorUploadAdapter } from 'components/check-editor/CheckEditorUploadAdapter';
+import { getCheckEditorUploadUrl } from 'components/check-editor/utils';
 import { FieldCheckEditor } from 'components/field-check-editor';
 import { Formux } from 'components/formux';
 
@@ -42,6 +44,12 @@ export const Component = ({ portal }: ComponentProps) => {
                 name="purchaseRequestTopInfo"
                 className="mt-6"
                 classNameContainer="max-h-[50vh]"
+                getUploadAdapter={(args) => {
+                  return new CheckEditorUploadAdapter({
+                    ...args,
+                    uploadUrl: getCheckEditorUploadUrl({ routeName }),
+                  });
+                }}
               />
 
               {portal.getPortal(
