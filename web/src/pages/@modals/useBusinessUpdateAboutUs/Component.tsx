@@ -1,4 +1,6 @@
 import { Button } from 'components/button';
+import { CheckEditorUploadAdapter } from 'components/check-editor/CheckEditorUploadAdapter';
+import { getCheckEditorUploadUrl } from 'components/check-editor/utils';
 import { FieldCheckEditor } from 'components/field-check-editor';
 import { FieldInput } from 'components/field-input';
 import { FieldToggleButton } from 'components/field-toggle-button';
@@ -63,6 +65,9 @@ export const Component = ({ portal }: ComponentProps) => {
                 className="mt-6"
                 classNameContainer="max-h-[50vh]"
                 description={<div>Describe la funcionalidad del negocio.</div>}
+                getUploadAdapter={(loader) => {
+                  return new CheckEditorUploadAdapter(loader, getCheckEditorUploadUrl());
+                }}
               />
 
               {portal.getPortal(

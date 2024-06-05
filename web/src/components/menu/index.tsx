@@ -58,30 +58,32 @@ export const Menu = ({
               {topElement}
             </MenuBase.Item>
 
-            {compact(items).map(({ label, onClick, svg: Svg, divider, className, active }, index) => (
-              <MenuBase.Item key={label}>
-                {() => {
-                  return (
-                    <div key={index} className={className}>
-                      <div
-                        onClick={onClick}
-                        className={cn(
-                          'cursor-pointer px-4 py-2 text-sm text-gray-700 flex items-center',
-                          {
-                            'bg-gray-100': active,
-                          },
-                        )}
-                      >
-                        {Svg && <Svg className={cn('h-5 w-5', { ['mr-2']: label })} />}
+            {compact(items).map(
+              ({ label, onClick, svg: Svg, divider, className, active }, index) => (
+                <MenuBase.Item key={label}>
+                  {() => {
+                    return (
+                      <div key={index} className={className}>
+                        <div
+                          onClick={onClick}
+                          className={cn(
+                            'cursor-pointer px-4 py-2 text-sm text-gray-700 flex items-center',
+                            {
+                              'bg-gray-100': active,
+                            },
+                          )}
+                        >
+                          {Svg && <Svg className={cn('h-5 w-5', { ['mr-2']: label })} />}
 
-                        {label}
+                          {label}
+                        </div>
+                        {divider && <Divider className="!my-2" />}
                       </div>
-                      {divider && <Divider className="!my-2" />}
-                    </div>
-                  );
-                }}
-              </MenuBase.Item>
-            ))}
+                    );
+                  }}
+                </MenuBase.Item>
+              ),
+            )}
 
             <MenuBase.Item key="bottomElement" as="div">
               {bottomElement}

@@ -6,7 +6,6 @@ import { CheckEditorToolbarItem } from './types';
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { StyleProps } from 'types/general';
-import { getEndpoint } from 'utils/api';
 
 export interface CheckEditorProps extends StyleProps {
   onBlur?: (args: { event: any; editor: ClassicEditor; data: string }) => void;
@@ -15,6 +14,7 @@ export interface CheckEditorProps extends StyleProps {
   onReady?: (editor: ClassicEditor) => void;
   value?: string;
   classNameContainer?: string;
+  getUploadAdapter: (loader: any) => any;
 }
 
 export const CheckEditor = ({
@@ -25,6 +25,7 @@ export const CheckEditor = ({
   value,
   className,
   classNameContainer,
+  getUploadAdapter,
 }: CheckEditorProps) => {
   const addStylesToContainer = () => {
     const [element] = document.getElementsByClassName('ck-editor__editable_inline');
@@ -64,9 +65,6 @@ export const CheckEditor = ({
             ] as Array<CheckEditorToolbarItem>,
             shouldNotGroupWhenFull: true,
           },
-          ckfinder: {
-            uploadUrl: getEndpoint({path: '/images-checkededitor', query: {userId: '1'}}),
-          }
         }}
         data={value}
         onReady={(editor) => {
@@ -74,6 +72,11 @@ export const CheckEditor = ({
            * Add custom clases to container
            */
           addStylesToContainer();
+
+          // getted from https://stackoverflow.com/questions/52873321/add-custom-headers-to-upload-image
+          editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
+            return getUploadAdapter(loader);
+          };
 
           onReady?.(editor);
         }}
