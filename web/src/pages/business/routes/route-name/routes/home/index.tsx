@@ -19,7 +19,7 @@ export const Home = ({ routeName }: HomeProps) => {
   return (
     <UpdateSomethingContainer
       title="Editar este negocio"
-      onClick={() => pushRoute(getDashboardBusinessRoute({routeName}))}
+      onClick={() => pushRoute(getDashboardBusinessRoute({ routeName }))}
     >
       <LayoutPage>
         <Banner className="hidden sm:block" />

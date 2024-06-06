@@ -20,3 +20,8 @@ router
     isAdmin,
     adminHandles.del_users_userId(),
   );
+
+router
+  .route('/admin/admin-config')
+  .get(adminHandles.get_admin_admin_config())
+  .put(isLogged, isAdmin, adminHandles.put_admin_admin_config());
