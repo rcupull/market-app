@@ -19,6 +19,7 @@ const Docs = dynamic(() => import('pages/docs').then((m) => m));
 
 const AboutUs = dynamic(() => import('pages/about-us').then((m) => m));
 const Business = dynamic(() => import('pages/business').then((m) => m));
+const TermsAndConditions = dynamic(() => import('pages/terms-and-conditions').then((m) => m));
 
 const Price = dynamic(() => import('pages/price').then((m) => m));
 const NotFound = dynamic(() => import('pages/not-found').then((m) => m));
@@ -33,6 +34,7 @@ export const App = (): JSX.Element => {
 
       <Route path="/not-found" element={withPageProviders(<NotFound />, LayoutMain)} />
       <Route path="/about-us" element={withPageProviders(<AboutUs />, LayoutMain)} />
+      <Route path="/terms-and-conditions" element={withPageProviders(<TermsAndConditions />, LayoutMain)} />
 
       <Route path="/price" element={withPageProviders(<Price />, LayoutMain)} />
 

@@ -41,7 +41,7 @@ export const FieldCheckbox = forwardRef<HTMLInputElement, FieldCheckboxProps>((a
     <FormikWrapper {...props}>
       {({ error, field }) => {
         const { className, label, description, ...omittedProps } = props;
-        const { value = '', ...restField } = field;
+        const { value, onChange } = field;
 
         return (
           <FormFieldWrapper
@@ -56,8 +56,16 @@ export const FieldCheckbox = forwardRef<HTMLInputElement, FieldCheckboxProps>((a
               type="checkbox"
               className={cn('block w-5 h-5 rounded-md')}
               {...omittedProps}
-              value={value}
-              {...restField}
+              {...field}
+              checked={value}
+              onChange={(e)=>{
+                onChange({
+                  target: {
+                    name: field.name,
+                    value: e.target.checked
+                  }
+                })
+              }}
             />
           </FormFieldWrapper>
         );

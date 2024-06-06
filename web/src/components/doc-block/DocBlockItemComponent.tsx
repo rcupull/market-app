@@ -25,7 +25,7 @@ export const DocBlockItemComponent = ({
       {renderList(
         items.map((item, index) => {
           return (
-            <li key={index} className="text-sm my-1">
+            <li key={index} className="text-sm mb-1 mt-3">
               {item}
             </li>
           );

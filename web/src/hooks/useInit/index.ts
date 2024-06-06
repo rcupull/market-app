@@ -32,13 +32,15 @@ export const useInit = () => {
   const init = () => {
     getAllUserBussinessRefresh();
     onRefreshAuthUser();
-    adminConfig.init();
   };
 
   const reset = () => {
     allUserBusiness.reset();
-    adminConfig.reset();
   };
+
+  useEffect(() => {
+    adminConfig.init();
+  }, []);
 
   useEffect(() => {
     if (isAuthenticated) {
