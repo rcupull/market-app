@@ -50,6 +50,14 @@ export const SideBar = ({ className }: SideBarProps) => {
             svg: SvgUsersSolid,
             className: 'pl-10',
           },
+          isAuthenticated &&
+          isAdmin && {
+            // ADMIN
+            label: 'Configuración',
+            href: '/admin/settings',
+            svg: SvgCogSolid,
+            className: 'pl-10',
+          },
         isAuthenticated &&
           isUser && {
             // BUSINESS

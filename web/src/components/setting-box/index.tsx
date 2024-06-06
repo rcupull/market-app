@@ -3,20 +3,20 @@ import { Button } from 'components/button';
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
-export interface SettingsLayoutProps extends StyleProps {
+export interface SettingBoxProps extends StyleProps {
   title: React.ReactNode;
   description?: React.ReactNode;
   onClick?: () => void;
   svg: React.FunctionComponent<StyleProps>;
 }
 
-export const SettingsLayout = ({
+export const SettingBox = ({
   title,
   className,
   onClick,
   description,
   svg: Svg,
-}: SettingsLayoutProps): JSX.Element => {
+}: SettingBoxProps): JSX.Element => {
   return (
     <div
       className={cn(
