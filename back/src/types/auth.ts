@@ -1,6 +1,5 @@
 import { Schema } from 'mongoose';
-import { BaseIdentity } from './general';
-import { AnyRecord } from 'dns';
+import { AnyRecord, BaseIdentity } from './general';
 
 export interface AuthSession extends BaseIdentity {
   refreshToken: string;

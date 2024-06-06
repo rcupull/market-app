@@ -10,8 +10,8 @@ import { Modal } from 'components/modal';
 
 import { useAddOneBusiness } from 'features/api/business/useAddOneBusiness';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
-import { useGetOneUser } from 'features/api/useGetOneUser';
-import { useUpdateOneUser } from 'features/api/useUpdateOneUser';
+import { useGetOneUser } from 'features/api/user/useGetOneUser';
+import { useUpdateOneUser } from 'features/api/user/useUpdateOneUser';
 import { useModal } from 'features/modal/useModal';
 
 import { CallAfarResources, useCallFromAfar } from 'hooks/useCallFromAfar';

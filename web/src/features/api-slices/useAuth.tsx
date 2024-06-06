@@ -1,5 +1,5 @@
 import { useAuthSignIn } from 'features/api/auth/useAuthSignIn';
-import { useGetOneUser } from 'features/api/useGetOneUser';
+import { useGetOneUser } from 'features/api/user/useGetOneUser';
 import { useCookies } from 'features/cookies/useCookies';
 import { useApiPersistent } from 'features/slices/useApiPersistent';
 

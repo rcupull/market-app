@@ -12,5 +12,6 @@ export const slices = {
   emergentModals: createSimpleSlice<Array<any>>('emergentModals', []),
   //
   useAllUserBusiness: createSimpleSlice<null>('useAllUserBusiness', null),
+  useAdminConfig: createSimpleSlice<null>('useAdminConfig', null),
   useAuth: createSimpleSlice<null>('useAuth', null),
 };
