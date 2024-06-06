@@ -1,4 +1,3 @@
-
 import { SettingBox } from 'components/setting-box';
 
 import SvgBootstrap from 'icons/Bootstrap';

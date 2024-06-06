@@ -11,9 +11,7 @@ export const Settings = () => {
       <SettingBox
         title="Términos y condiciones"
         svg={SvgFileInvoiceSolid}
-        onClick={() =>
-          adminConfigUpdateTermsAndConditions.open()
-        }
+        onClick={() => adminConfigUpdateTermsAndConditions.open()}
       />
     </div>
   );
