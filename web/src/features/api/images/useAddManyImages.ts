@@ -28,7 +28,7 @@ export const useAddManyImages = (): {
           return new Promise<Image>((resolve) => {
             if (image.src instanceof File) {
               const form = new FormData();
-              form.append('image', image.src);
+              form.append('upload', image.src);
 
               fetch[2](
                 {

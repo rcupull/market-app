@@ -1,53 +1,47 @@
 import { Button } from 'components/button';
 import { CheckEditorUploadAdapter } from 'components/check-editor/CheckEditorUploadAdapter';
-import { getCheckEditorUploadUrl } from 'components/check-editor/utils';
 import { FieldCheckEditor } from 'components/field-check-editor';
 import { Formux } from 'components/formux';
 
-import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
+import { useUpdateAdminConfig } from 'features/api/admin/useUpdateAdminConfig';
+import { useAdminConfig } from 'features/api-slices/useAdminConfig';
 import { useModal } from 'features/modal/useModal';
 
 import { Portal } from 'hooks/usePortal';
 
-import { useBusiness } from '../../@hooks/useBusiness';
+import { AdminConfig } from 'types/admin';
 
-interface State {
-  purchaseRequestTopInfo: string;
-}
+interface State extends Pick<AdminConfig, 'termsAndConditions'> {}
 
 export interface ComponentProps {
   portal: Portal;
 }
+
 export const Component = ({ portal }: ComponentProps) => {
-  const { business, onFetch } = useBusiness();
+  const { data, init } = useAdminConfig();
+  const { updateAdminConfig } = useUpdateAdminConfig();
   const { onClose } = useModal();
-
-  const { updateOneBusiness } = useUpdateOneBusiness();
-
-  if (!business) {
-    return <></>;
-  }
-
-  const { routeName, shoppingMeta = {} } = business;
 
   return (
     <>
       <Formux<State>
         value={{
-          purchaseRequestTopInfo: shoppingMeta.purchaseRequestTopInfo || '',
+          termsAndConditions: data?.termsAndConditions || '',
         }}
       >
         {({ value, isValid }) => {
           return (
             <form className="w-full">
               <FieldCheckEditor
-                name="purchaseRequestTopInfo"
+                name="termsAndConditions"
                 className="mt-6"
                 classNameContainer="max-h-[50vh]"
+                description={<div>Describe la funcionalidad del negocio.</div>}
+                // this prop should be optional
                 getUploadAdapter={(args) => {
                   return new CheckEditorUploadAdapter({
                     ...args,
-                    uploadUrl: getCheckEditorUploadUrl({ routeName }),
+                    uploadUrl: '', //TODO remove this prop, showul be optional
                   });
                 }}
               />
@@ -55,23 +49,17 @@ export const Component = ({ portal }: ComponentProps) => {
               {portal.getPortal(
                 <Button
                   label="Guardar"
-                  isBusy={updateOneBusiness.status.isBusy}
+                  isBusy={updateAdminConfig.status.isBusy}
                   disabled={!isValid}
                   onClick={() => {
-                    const { purchaseRequestTopInfo } = value;
-                    updateOneBusiness.fetch(
+                    const { termsAndConditions } = value;
+                    updateAdminConfig.fetch(
                       {
-                        update: {
-                          shoppingMeta: {
-                            ...shoppingMeta,
-                            purchaseRequestTopInfo,
-                          },
-                        },
-                        routeName,
+                        termsAndConditions,
                       },
                       {
                         onAfterSuccess: () => {
-                          onFetch({ routeName });
+                          init();
                           onClose();
                         },
                       },

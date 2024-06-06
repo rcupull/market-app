@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import { useAuthRefresh } from 'features/api/auth/useAuthRefresh';
 import { useAuthSignOut } from 'features/api/auth/useAuthSignOut';
+import { useAdminConfig } from 'features/api-slices/useAdminConfig';
 import { useAuth } from 'features/api-slices/useAuth';
 import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
 import { useCookies } from 'features/cookies/useCookies';
@@ -16,6 +17,7 @@ export const useInit = () => {
   const { pushRoute } = useRouter();
 
   const allUserBusiness = useAllUserBusiness();
+  const adminConfig = useAdminConfig();
 
   const debouncer = useDebouncer();
 
@@ -27,10 +29,6 @@ export const useInit = () => {
     pushRoute(`/dashboard/business/${routeName}`, undefined, { timeout: 100 });
   });
 
-  useCallFromAfar(callAfarIds.redirect_to_routename, ({ routeName }) => {
-    pushRoute(`/${routeName}`, undefined, { timeout: 100 });
-  });
-
   const init = () => {
     getAllUserBussinessRefresh();
     onRefreshAuthUser();
@@ -39,6 +37,10 @@ export const useInit = () => {
   const reset = () => {
     allUserBusiness.reset();
   };
+
+  useEffect(() => {
+    adminConfig.init();
+  }, []);
 
   useEffect(() => {
     if (isAuthenticated) {

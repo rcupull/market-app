@@ -26,6 +26,7 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    "react/no-unescaped-entities": 'off',
     "simple-import-sort/imports": [
       "error",
       {

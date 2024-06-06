@@ -1,3 +1,7 @@
+import { Link } from 'react-router-dom';
+
+import { HtmlTextContainer } from 'components/html-text-container';
+
 import {
   SocialNetworkFace,
   SocialNetworkIg,
@@ -37,12 +41,14 @@ export const Footer = ({ className, socialLinks }: FooterProps) => {
   };
   return (
     <footer className={cn('shadow-lg -scale-y-100', className)}>
-      <div
+      <HtmlTextContainer
         className={cn(
           '-scale-y-100 flex flex-col items-center bg-white shadow-xl text-center text-gray-700',
         )}
       >
         <div className="container px-6 pt-6">
+          <Link to="/terms-and-conditions">Términos y Condiciones</Link>
+
           <div className="mb-6 flex justify-center">
             {renderSocialNetworkLink(SocialNetworkFace, face)}
             {renderSocialNetworkLink(SocialNetworkIg, instagram)}
@@ -208,7 +214,7 @@ export const Footer = ({ className, socialLinks }: FooterProps) => {
         </div>
 
         <div className="w-full p-4 text-center">© 2024 Todo los derechos reservados</div>
-      </div>
+      </HtmlTextContainer>
     </footer>
   );
 };

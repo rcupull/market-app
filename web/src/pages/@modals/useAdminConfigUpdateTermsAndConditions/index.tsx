@@ -9,7 +9,7 @@ import { dynamic } from 'utils/makeLazy';
 //eslint-disable-next-line
 const Component = dynamic(() => import('./Component').then((m) => m));
 
-export const useBusinessUpdateAboutUs = () => {
+export const useAdminConfigUpdateTermsAndConditions = () => {
   const { pushModal } = useModal();
 
   return {
@@ -21,7 +21,7 @@ export const useBusinessUpdateAboutUs = () => {
             const portal = usePortal();
 
             return {
-              title: 'Presentación del negocio',
+              title: 'Términos y condiciones',
               content: <Component portal={portal} />,
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,
