@@ -10,9 +10,11 @@ import { useModal } from 'features/modal/useModal';
 import { Portal } from 'hooks/usePortal';
 
 import { useAuthSignInModal } from '../useAuthSignInModal';
+import { useTermsAndConditionsModal } from '../useTermsAndConditionsModal';
 
 import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
 import { getRequiredLabel } from 'utils/form';
+import { cn } from 'utils/general';
 import { getStrongPasswordTracking } from 'utils/password';
 
 export interface ComponentProps {
@@ -23,6 +25,7 @@ export const Component = ({ portal }: ComponentProps) => {
   const { authSignUp } = useAuthSignUp();
   const authSignInModal = useAuthSignInModal();
   const { onClose, pushModal } = useModal();
+  const termsAndConditionsModal = useTermsAndConditionsModal();
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-2 lg:px-8">
@@ -43,6 +46,7 @@ export const Component = ({ portal }: ComponentProps) => {
             confirmPassword: '',
             name: '',
             canCreateBusiness: false,
+            termsAndConditionsAccepted: false,
           }}
           validate={[
             {
@@ -76,6 +80,12 @@ export const Component = ({ portal }: ComponentProps) => {
               type: 'equal',
               equalField: 'password',
               message: 'Las dos contraseña deben ser iguales',
+            },
+            {
+              field: 'termsAndConditionsAccepted',
+              type: 'custom',
+              customCb: (value) => value,
+              message: 'Debe aceptar los Términos y Condiciones',
             },
           ]}
         >
@@ -138,6 +148,23 @@ export const Component = ({ portal }: ComponentProps) => {
                     className="mt-2"
                   />
                 </div>
+
+                <FieldCheckbox
+                  name="termsAndConditionsAccepted"
+                  label={
+                    <>
+                      Acepto los{' '}
+                      <Button
+                        variant="link"
+                        preventDefault
+                        onClick={() => termsAndConditionsModal.open()}
+                        label="Términos y Condiciones"
+                        className={cn("!inline-block")}
+                      />
+                    </>
+                  }
+                  className="mt-6"
+                />
 
                 {portal.getPortal(
                   <Button
