@@ -1,12 +1,17 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
+import { useEffect, useRef } from 'react';
 
 import { HtmlTextContainer } from 'components/html-text-container';
 
 import { CheckEditorToolbarItem } from './types';
+import { getImagesToRemove } from './utils';
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { StyleProps } from 'types/general';
 
+export interface CheckEditorUtils {
+  getImageSrcToRemvove: (initialData: string | undefined) => Array<string>;
+}
 export interface CheckEditorProps extends StyleProps {
   onBlur?: (args: { event: any; editor: ClassicEditor; data: string }) => void;
   onFocus?: (args: { event: any; editor: ClassicEditor; data: string }) => void;
@@ -14,6 +19,8 @@ export interface CheckEditorProps extends StyleProps {
   onReady?: (editor: ClassicEditor) => void;
   value?: string;
   classNameContainer?: string;
+  getUploadAdapter: (args: { loader: any }) => any;
+  onChangeUtils?: (utils: CheckEditorUtils) => void;
 }
 
 export const CheckEditor = ({
@@ -24,6 +31,8 @@ export const CheckEditor = ({
   value,
   className,
   classNameContainer,
+  getUploadAdapter,
+  onChangeUtils,
 }: CheckEditorProps) => {
   const addStylesToContainer = () => {
     const [element] = document.getElementsByClassName('ck-editor__editable_inline');
@@ -41,6 +50,18 @@ export const CheckEditor = ({
     }
   };
 
+  const refEditor = useRef<ClassicEditor>();
+
+  useEffect(() => {
+    onChangeUtils?.({
+      getImageSrcToRemvove: (initialData) => {
+        if (!refEditor.current) return [];
+
+        return getImagesToRemove(refEditor.current, initialData);
+      },
+    });
+  }, []);
+
   return (
     <HtmlTextContainer className={className}>
       <CKEditor
@@ -56,6 +77,7 @@ export const CheckEditor = ({
               'bold',
               'italic',
               '|',
+              'imageInsert',
               'link',
               'numberedList',
               'bulletedList',
@@ -70,9 +92,15 @@ export const CheckEditor = ({
            */
           addStylesToContainer();
 
+          // getted from https://stackoverflow.com/questions/52873321/add-custom-headers-to-upload-image
+          editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
+            return getUploadAdapter({ loader });
+          };
+
           onReady?.(editor);
         }}
         onChange={(event, editor) => {
+          refEditor.current = editor;
           const data = editor.getData();
           onChange?.({ event, editor, data });
         }}

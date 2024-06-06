@@ -3,6 +3,8 @@ import { withTryCatch } from '../../utils/error';
 import { UserModel } from '../../schemas/user';
 import { imagesServices } from '../images/services';
 import { ServerResponse } from 'http';
+import { AdminConfigModel } from '../../schemas/admin';
+import { get400Response } from '../../utils/server-response';
 
 const get_users: () => RequestHandler = () => {
   return (req, res) => {
@@ -45,7 +47,52 @@ const del_users_userId: () => RequestHandler = () => {
   };
 };
 
+const get_admin_admin_config: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const config = await AdminConfigModel.findOne({});
+
+      if (!config) {
+        return get400Response({
+          res,
+          json: { message: 'No se ecuentra la configuracion principal' },
+        });
+      }
+
+      res.send(config);
+    });
+  };
+};
+
+const put_admin_admin_config: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { body } = req;
+      const { termsAndConditions } = body;
+
+      const config = await AdminConfigModel.findOne({});
+
+      if (!config) {
+        return get400Response({
+          res,
+          json: { message: 'No se ecuentra la configuracion principal' },
+        });
+      }
+
+      if (termsAndConditions) {
+        config.termsAndConditions = termsAndConditions;
+      }
+
+      await config.save();
+
+      res.send(config);
+    });
+  };
+};
+
 export const adminHandles = {
   get_users,
   del_users_userId,
+  put_admin_admin_config,
+  get_admin_admin_config,
 };

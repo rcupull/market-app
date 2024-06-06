@@ -2,7 +2,7 @@ import { Badge } from 'components/badge';
 import { ButtonRemove } from 'components/button-remove';
 import { IconButtonRemove } from 'components/icon-button-remove';
 
-import { useRemoveOneAdminUser } from 'features/api/useRemoveOneAdminUser';
+import { useRemoveOneAdminUser } from 'features/api/admin/useRemoveOneAdminUser';
 import { useModal } from 'features/modal/useModal';
 
 import { CallAfarResources, useCallFromAfar } from 'hooks/useCallFromAfar';

@@ -6,6 +6,7 @@ import { LayoutPage } from 'pages/@common/layout-page';
 import { UpdateSomethingContainer } from 'pages/@common/update-something-container';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useBusinessUpdateAboutUs } from 'pages/@modals/useBusinessUpdateAboutUs';
+import { getOneBusinessRoute } from 'utils/business';
 
 export interface AboutUsProps {
   routeName: string;
@@ -13,14 +14,18 @@ export interface AboutUsProps {
 
 export const AboutUs = ({ routeName }: AboutUsProps) => {
   const { business } = useBusiness();
-  const { aboutUsPage } = business || {};
+  const businessUpdateAboutUs = useBusinessUpdateAboutUs();
+
+  if (!business) {
+    return <></>;
+  }
+
+  const { aboutUsPage } = business;
 
   const { description, title, visible } = aboutUsPage || {};
 
-  const businessUpdateAboutUs = useBusinessUpdateAboutUs();
-
   if (!visible) {
-    return <Navigate to={`/${routeName}`} />;
+    return <Navigate to={getOneBusinessRoute({ routeName })} />;
   }
 
   return (

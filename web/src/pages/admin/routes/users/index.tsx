@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { ButtonRefresh } from 'components/button-refresh';
 import { Table } from 'components/table';
 
-import { useGetAllAdminUsers } from 'features/api/useGetAllAdminUsers';
+import { useGetAllAdminUsers } from 'features/api/admin/useGetAllAdminUsers';
 
 import { callAfarIds, useCallFromAfar } from 'hooks/useCallFromAfar';
 

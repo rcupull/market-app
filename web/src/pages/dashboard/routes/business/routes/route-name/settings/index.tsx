@@ -1,4 +1,4 @@
-import { SettingsLayout } from './SettingsLayout';
+import { SettingBox } from 'components/setting-box';
 
 import SvgBootstrap from 'icons/Bootstrap';
 import SvgFighterJetSolid from 'icons/FighterJetSolid';
@@ -33,7 +33,7 @@ export const Settings = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
       {DEVELOPMENT && (
-        <SettingsLayout
+        <SettingBox
           title="Configuración rápida(DEV)"
           description={
             <>
@@ -46,7 +46,7 @@ export const Settings = () => {
         />
       )}
 
-      <SettingsLayout
+      <SettingBox
         title="Gestión de ventas"
         description="Optimice las ventas de su negocio como mejor desee."
         svg={SvgShoppingCartSolid}
@@ -59,7 +59,7 @@ export const Settings = () => {
         }
       />
 
-      <SettingsLayout
+      <SettingBox
         title="Redes sociales"
         svg={SvgShareAltSolid}
         description="No dejes de lado tus redes sociales y compártelas con tus clientes."
@@ -72,7 +72,7 @@ export const Settings = () => {
         }
       />
 
-      <SettingsLayout
+      <SettingBox
         title="Formulario de publicaciones"
         svg={SvgWpforms}
         description="Personalice su formulario de  publicaciones."
@@ -85,7 +85,7 @@ export const Settings = () => {
         }
       />
 
-      <SettingsLayout
+      <SettingBox
         title="Banner"
         svg={SvgBootstrap}
         description="Personaliza tu mejores ofertas con tu banner promocional."
@@ -98,14 +98,14 @@ export const Settings = () => {
         }
       />
 
-      <SettingsLayout
+      <SettingBox
         title="Logo"
         description="Representa tu negocio con tu logo personalizado."
         svg={SvgMedrt}
         onClick={() => businessUpdateLogo.open()}
       />
 
-      <SettingsLayout
+      <SettingBox
         title="Categorías"
         svg={SvgTagsSolid}
         description="Categoriza tus productos y mejorarás tus ventas."
@@ -116,7 +116,7 @@ export const Settings = () => {
         }
       />
 
-      <SettingsLayout
+      <SettingBox
         title="Presentación del negocio"
         description="Aprobecha este espacio para comunicarle a tus clientes los matices de tu negocio."
         svg={SvgUsersSolid}
