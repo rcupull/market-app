@@ -8,7 +8,7 @@ import { Component } from 'pages/@modals/useBusinessUpdateTelegramBot/Component'
 
 export interface StepShoppingProps extends OnboardingStepProps {}
 
-export const StepShopping = ({ nextButton }: StepShoppingProps) => {
+export const StepTelegramBot = ({ nextButton }: StepShoppingProps) => {
   const { nextAction, portal, rightButton } = useNextButtonPortal(nextButton);
   const { onFetch, business } = useBusiness();
 

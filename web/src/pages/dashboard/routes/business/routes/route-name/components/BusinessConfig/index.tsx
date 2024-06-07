@@ -33,7 +33,7 @@ export const BusinessConfig = ({ business }: BusinessConfigProps) => {
     const out: Array<BusinessOnboardingSteps> = [];
 
     if (!b?.telegramBotChat) {
-      out.push('shopping');
+      out.push('telegramBot');
     }
     if (!b?.layouts?.banner) {
       out.push('banner');
