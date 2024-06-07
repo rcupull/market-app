@@ -27,7 +27,6 @@ router
     validators.body('routeName').notEmpty(),
     validators.handle,
     isLogged,
-    addPostToReq,
     shoppingHandles.delete_shopping(),
   );
 

@@ -8,7 +8,12 @@ export interface TermsAndConditionsProps extends StyleProps {}
 
 export const TermsAndConditions = ({ className }: TermsAndConditionsProps) => {
   const { data } = useAdminConfig();
-  return <HtmlTextContainer dangerouslySetInnerHTML={{ __html: data?.termsAndConditions || '' }} className={className}/>;
+  return (
+    <HtmlTextContainer
+      dangerouslySetInnerHTML={{ __html: data?.termsAndConditions || '' }}
+      className={className}
+    />
+  );
 };
 
 export default TermsAndConditions;

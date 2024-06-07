@@ -25,7 +25,6 @@ export const KpiTotalDebit = ({ className }: StyleProps) => {
   );
 };
 
-
 export const KpiTelegram = ({ className }: StyleProps) => {
   const { business, onFetch } = useBusiness();
   const businessUpdateShopping = useBusinessUpdateShopping();

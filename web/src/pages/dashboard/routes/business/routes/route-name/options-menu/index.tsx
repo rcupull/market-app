@@ -23,7 +23,7 @@ import SvgCogSolid from 'icons/CogSolid';
 import SvgLayerGroupSolid from 'icons/LayerGroupSolid';
 import SvgLinkSolid from 'icons/LinkSolid';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
-import { KpiTelegram,KpiTotalDebit } from 'pages/@common/kpis-business';
+import { KpiTelegram, KpiTotalDebit } from 'pages/@common/kpis-business';
 import { Business } from 'types/business';
 import { getOneBusinessRoute } from 'utils/business';
 
@@ -139,7 +139,6 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
           <KpiTelegram className="flex sm:hidden" />
 
           <KpiTotalDebit className="flex sm:hidden" />
-
         </div>
       }
       items={[

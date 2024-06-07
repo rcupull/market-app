@@ -1,17 +1,33 @@
 import { BusinessModel } from '../schemas/business';
 import { PostModel } from '../schemas/post';
-import { ShoppingModel } from '../schemas/shopping';
 import { UserModel } from '../schemas/user';
 import { Business } from '../types/business';
 import { Post } from '../types/post';
 import { User } from '../types/user';
+
+export interface TestBDContent {
+  user1: User;
+  user2: User;
+  user3: User;
+  //
+  business1User1: Business;
+  business2User1: Business;
+  //
+  productPost1Business1User1: Post;
+  productPost2Business1User1: Post;
+  //
+  business1User2: Business;
+  business2User2: Business;
+  //
+  admin: User;
+}
 
 export const fillBD = async (args?: {
   overrideUser1?: Partial<User>;
   overrideBusiness1User1?: Partial<Business>;
   overrideProductPost1Business1User1?: Partial<Post>;
   overrideProductPost2Business1User1?: Partial<Post>;
-}) => {
+}): Promise<TestBDContent> => {
   const {
     overrideUser1 = {},
     overrideBusiness1User1 = {},

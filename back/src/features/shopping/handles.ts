@@ -9,15 +9,14 @@ import {
 } from '../../utils/server-response';
 import { shoppingServices } from './services';
 import { postServices } from '../post/services';
-import { isEqualIds, isNumber } from '../../utils/general';
-import { notificationsServices } from '../notifications/services';
+import { isNumber } from '../../utils/general';
 import { businessServices } from '../business/services';
-import { getDebitFromOrder } from './utils';
+import { deleteOnePostFromShopping, deleteShopping, getDebitFromOrder } from './utils';
 import { logger } from '../logger';
 import { PostPurshaseNotes } from '../../types/post';
 import { ShoppingModel } from '../../schemas/shopping';
 import { sendNewOrderTelegramMessage } from '../telegram/handles';
-import { sendNewOrderPushMessage } from '../notifications/handles';
+import { sendNewOrderPushMessage, sendUpdateStockAmountMessage } from '../notifications/handles';
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -134,6 +133,7 @@ const post_shopping: () => RequestHandler<
         req,
         res,
         amountToAdd: -amountToAdd,
+        post,
       });
 
       if (updateStockResponse instanceof ServerResponse) {
@@ -157,15 +157,7 @@ const post_shopping: () => RequestHandler<
         /**
          * send notification to update the post. TODO maybe we need some conditions
          */
-        await notificationsServices.sendNotificationToUpdate({
-          res,
-          req,
-          payload: {
-            type: 'POST_AMOUNT_STOCK_CHANGE',
-            stockAmount: currentStockAmount,
-            postId: post._id.toString(),
-          },
-        });
+        sendUpdateStockAmountMessage({ req, res, postId: post._id.toString(), currentStockAmount });
 
         if (amountAddedToPost !== amountToAdd) {
           return res.send({
@@ -320,153 +312,17 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
 const delete_shopping: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const { user } = req;
+      const { user, body } = req;
 
       if (!user) {
         return getUserNotFoundResponse({ res });
       }
 
-      const { body } = req;
-
       const { routeName, postId } = body;
 
-      if (postId) {
-        const oldShopping = await shoppingServices.findAndUpdateOne({
-          res,
-          req,
-          query: {
-            state: 'CONSTRUCTION',
-            routeName,
-            purchaserId: user._id,
-          },
-          update: {
-            $pull: {
-              posts: {
-                'post._id': postId,
-              },
-            },
-          },
-        });
-
-        if (oldShopping instanceof ServerResponse) return oldShopping;
-
-        if (!oldShopping) {
-          return res.send({});
-        }
-
-        if (oldShopping.posts.length === 1) {
-          /**
-           * si tenia 1 elemento, el cual ya fuel eliminado en el paso anterior entonces debe ser eliminada la shooping
-           */
-          await shoppingServices.deleteOne({
-            res,
-            req,
-            query: {
-              _id: oldShopping._id,
-            },
-          });
-        }
-
-        const shoppingPostToUpdate = oldShopping.posts.find((p) => {
-          return isEqualIds(p.post._id, postId);
-        });
-
-        const updateStockResponse = await postServices.updateStockAmount({
-          req,
-          res,
-          amountToAdd: shoppingPostToUpdate?.count ?? 0,
-        });
-
-        if (updateStockResponse instanceof ServerResponse) {
-          return updateStockResponse;
-        }
-
-        /**
-         * push Notification to update the stock in  the front
-         */
-        if (updateStockResponse) {
-          await notificationsServices.sendNotificationToUpdate({
-            res,
-            req,
-            payload: {
-              type: 'POST_AMOUNT_STOCK_CHANGE',
-              stockAmount: updateStockResponse.currentStockAmount,
-              postId,
-            },
-          });
-        }
-
-        return res.send({});
-      }
-
-      /**
-       * Delete the whole shopping
-       */
-      const oldShopping = await shoppingServices.findOneAndDelete({
-        res,
-        req,
-        query: {
-          state: 'CONSTRUCTION',
-          routeName,
-        },
-      });
-
-      if (oldShopping instanceof ServerResponse) return oldShopping;
-
-      if (oldShopping) {
-        const promises = oldShopping.posts.map(({ post: { _id: postId }, count }) => {
-          return new Promise((resolve) => {
-            postServices
-              .getOne({
-                res,
-                req,
-                postId,
-              })
-              .then((post) => {
-                if (post instanceof ServerResponse) {
-                  return resolve(post);
-                }
-
-                req.post = post;
-                postServices
-                  .updateStockAmount({
-                    req,
-                    res,
-                    amountToAdd: count,
-                  })
-                  .then((updateStockResponse) => {
-                    if (updateStockResponse instanceof ServerResponse) {
-                      return resolve(updateStockResponse);
-                    }
-
-                    if (updateStockResponse) {
-                      const { currentStockAmount } = updateStockResponse;
-
-                      notificationsServices
-                        .sendNotificationToUpdate({
-                          req,
-                          res,
-                          payload: {
-                            type: 'POST_AMOUNT_STOCK_CHANGE',
-                            stockAmount: currentStockAmount,
-                            postId: post._id.toString(),
-                          },
-                        })
-                        .then(() => {
-                          resolve(null);
-                        });
-                    }
-
-                    resolve(null);
-                  });
-              });
-          });
-        });
-
-        await Promise.all(promises);
-      }
-
-      res.send({});
+      postId
+        ? deleteOnePostFromShopping({ req, res, postId, routeName, user })
+        : deleteShopping({ req, res, routeName, user });
     });
   };
 };
