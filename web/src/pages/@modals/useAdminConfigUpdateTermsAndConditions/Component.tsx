@@ -36,7 +36,6 @@ export const Component = ({ portal }: ComponentProps) => {
                 name="termsAndConditions"
                 className="mt-6"
                 classNameContainer="max-h-[50vh]"
-                description={<div>Describe la funcionalidad del negocio.</div>}
                 // this prop should be optional
                 getUploadAdapter={(args) => {
                   return new CheckEditorUploadAdapter({

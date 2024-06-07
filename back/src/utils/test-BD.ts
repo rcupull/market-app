@@ -2,13 +2,38 @@ import { BusinessModel } from '../schemas/business';
 import { PostModel } from '../schemas/post';
 import { UserModel } from '../schemas/user';
 import { Business } from '../types/business';
+import { Post } from '../types/post';
 import { User } from '../types/user';
+
+export interface TestBDContent {
+  user1: User;
+  user2: User;
+  user3: User;
+  //
+  business1User1: Business;
+  business2User1: Business;
+  //
+  productPost1Business1User1: Post;
+  productPost2Business1User1: Post;
+  //
+  business1User2: Business;
+  business2User2: Business;
+  //
+  admin: User;
+}
 
 export const fillBD = async (args?: {
   overrideUser1?: Partial<User>;
   overrideBusiness1User1?: Partial<Business>;
-}) => {
-  const { overrideUser1 = {}, overrideBusiness1User1 = {} } = args || {};
+  overrideProductPost1Business1User1?: Partial<Post>;
+  overrideProductPost2Business1User1?: Partial<Post>;
+}): Promise<TestBDContent> => {
+  const {
+    overrideUser1 = {},
+    overrideBusiness1User1 = {},
+    overrideProductPost1Business1User1 = {},
+    overrideProductPost2Business1User1 = {},
+  } = args || {};
 
   const admin = new UserModel({
     name: 'admin',
@@ -65,6 +90,7 @@ export const fillBD = async (args?: {
     price: '10',
     currency: 'CUP',
     postCategoriesTags: ['cat1', 'cat2', 'cat3'],
+    ...overrideProductPost1Business1User1,
   });
   await productPost1Business1User1.save();
 
@@ -75,6 +101,7 @@ export const fillBD = async (args?: {
     price: '20',
     currency: 'CUP',
     postCategoriesTags: ['cat1', 'cat2', 'cat3', 'cat4'],
+    ...overrideProductPost2Business1User1,
   });
   await productPost2Business1User1.save();
 
@@ -124,6 +151,8 @@ export const fillBD = async (args?: {
 
   await user3.save();
 
+  //////////////////////////////////////////////////////////////////////////////////
+
   return {
     user1,
     user2,
@@ -131,6 +160,7 @@ export const fillBD = async (args?: {
     business1User1,
     business2User1,
     productPost1Business1User1,
+    productPost2Business1User1,
     //
     business1User2,
     business2User2,

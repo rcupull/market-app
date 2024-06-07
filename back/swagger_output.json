@@ -1064,8 +1064,8 @@
       "delete": {
         "description": "",
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": ""
           }
         },
         "requestBody": {
@@ -1074,10 +1074,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "postId": {
+                  "routeName": {
                     "example": "any"
                   },
-                  "routeName": {
+                  "postId": {
                     "example": "any"
                   }
                 }

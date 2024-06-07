@@ -159,7 +159,7 @@ export const Component = ({ portal }: ComponentProps) => {
                         preventDefault
                         onClick={() => termsAndConditionsModal.open()}
                         label="Términos y Condiciones"
-                        className={cn("!inline-block")}
+                        className={cn('!inline-block')}
                       />
                     </>
                   }

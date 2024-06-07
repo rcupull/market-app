@@ -66,10 +66,9 @@ describe('GET: /business', () => {
             ],
             "routeName": "business1User1",
             "shoppingPayment": {
-              "credit": 500,
               "history": [],
-              "initialCredit": 500,
               "requests": [],
+              "totalDebit": 0,
             },
           }
         `,
@@ -244,10 +243,9 @@ describe('GET: /business/:routeName', () => {
             ],
             "routeName": "business1User1",
             "shoppingPayment": {
-              "credit": 500,
               "history": [],
-              "initialCredit": 500,
               "requests": [],
+              "totalDebit": 0,
             },
           }
         `,

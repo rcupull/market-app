@@ -58,13 +58,13 @@ export const FieldCheckbox = forwardRef<HTMLInputElement, FieldCheckboxProps>((a
               {...omittedProps}
               {...field}
               checked={value}
-              onChange={(e)=>{
+              onChange={(e) => {
                 onChange({
                   target: {
                     name: field.name,
-                    value: e.target.checked
-                  }
-                })
+                    value: e.target.checked,
+                  },
+                });
               }}
             />
           </FormFieldWrapper>
