@@ -5,6 +5,17 @@ import { createdAtSchemaDefinition } from '../utils/schemas';
 import { PostModel } from './post';
 import { PostLayoutSchema } from './common';
 
+const PaymentRequestSchema = {
+  type: [
+    {
+      _id: false,
+      shoppingId: { type: Schema.Types.ObjectId, ref: 'Shopping' },
+      shoppingDebit: { type: Number },
+    },
+  ],
+  default: [],
+};
+
 const BusinessSchema = new Schema<Business>({
   ...createdAtSchemaDefinition,
   name: { type: String, required: true },
@@ -98,28 +109,14 @@ const BusinessSchema = new Schema<Business>({
     purchaseRequestTopInfo: { type: String },
   },
   shoppingPayment: {
-    initialCredit: { type: Number, default: 500 },
-    credit: { type: Number, default: 500 },
-    requests: {
-      type: [
-        {
-          _id: false,
-          shoppingId: { type: Schema.Types.ObjectId, ref: 'Shopping' },
-          fromCredit: { type: Number },
-          toPay: { type: Number },
-        },
-      ],
-      default: [],
-    },
+    totalDebit: { type: Number, default: 0 },
+    requests: PaymentRequestSchema,
     history: {
       type: [
         {
           _id: false,
-          credit: { type: Number },
-          initialCredit: { type: Number },
-          shoppingId: { type: Schema.Types.ObjectId, ref: 'Shopping' },
-          fromCredit: { type: Number },
-          toPay: { type: Number },
+          requests: PaymentRequestSchema,
+          paymendDate: { type: Date, required: true },
         },
       ],
       default: [],

@@ -243,18 +243,13 @@ const findOneAndUpdate: QueryHandle<
 const updateStockAmount: QueryHandle<
   {
     amountToAdd: number;
+    post: Post;
   },
   {
     amountAddedToPost: number;
     currentStockAmount: number;
   } | null
-> = async ({ amountToAdd, req, res }) => {
-  const { post } = req;
-
-  if (!post) {
-    return getPostNotFoundResponse({ res });
-  }
-
+> = async ({ amountToAdd, post }) => {
   if (isNumber(post.stockAmount)) {
     /**
      * Enabled stock amount feature

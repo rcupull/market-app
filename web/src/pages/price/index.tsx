@@ -12,7 +12,7 @@ export const Price = () => {
         </p>
         <ol className="mt-4">
           <li className="my-2">
-            El cobro de los servicios será el 2% del monto registrado por las órdenes de compra en
+            El cobro de los servicios será el 1% del monto registrado por las órdenes de compra en
             cada negocio.
           </li>
           <li className="my-2">

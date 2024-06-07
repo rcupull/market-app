@@ -34,7 +34,10 @@ export const App = (): JSX.Element => {
 
       <Route path="/not-found" element={withPageProviders(<NotFound />, LayoutMain)} />
       <Route path="/about-us" element={withPageProviders(<AboutUs />, LayoutMain)} />
-      <Route path="/terms-and-conditions" element={withPageProviders(<TermsAndConditions />, LayoutMain)} />
+      <Route
+        path="/terms-and-conditions"
+        element={withPageProviders(<TermsAndConditions />, LayoutMain)}
+      />
 
       <Route path="/price" element={withPageProviders(<Price />, LayoutMain)} />
 
