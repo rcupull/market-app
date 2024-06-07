@@ -99,13 +99,12 @@ export interface BusinessAboutUsPage {
 
 export interface BusinessPaymentRequest {
   shoppingId: string;
-  fromCredit: number;
-  toPay: number;
+  shoppingDebit: number;
 }
 
-export interface BusinessPaymentRequestHistory extends BusinessPaymentRequest {
-  credit: number;
-  initialCredit: number;
+export interface BusinessPaymentRequestHistory {
+  requests: BusinessPaymentRequest;
+  paymendDate: Date;
 }
 
 export interface TelegramBotChat {
@@ -138,10 +137,8 @@ export interface Business extends BaseIdentity {
     purchaseRequestTopInfo?: string;
   };
   shoppingPayment: {
-    //El credito inicial que el sistema le pone al usuario todos los meses. No es acumulable
-    initialCredit: number;
-    //el credito actual. irá decrementando cada vez que se realice un pedido
-    credit: number;
+    //debit not payed by the user
+    totalDebit: number;
     requests: Array<BusinessPaymentRequest>;
     history: Array<BusinessPaymentRequestHistory>;
   };

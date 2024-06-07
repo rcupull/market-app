@@ -6,12 +6,14 @@ import { useAuthUpdateFirebaseToken } from 'features/api/auth/useAuthUpdateFireb
 import { useAuth } from 'features/api-slices/useAuth';
 
 import { useCallFromAfar } from 'hooks/useCallFromAfar';
+import { useRouter } from 'hooks/useRouter';
 
-import { NotificationToUpdatePayload } from '../../types/notifications';
+import { NotificationPayload } from '../../types/notifications';
 import { firebaseVapidKey, getFirebaseMessaging, renderNotificationsContent } from './utils';
 
 //eslint-disable-next-line
 import { getToken, isSupported, MessagePayload, Messaging, onMessage } from 'firebase/messaging';
+import { useBusiness } from 'pages/@hooks/useBusiness';
 import { ChildrenProp } from 'types/general';
 
 interface State {
@@ -26,6 +28,8 @@ export const NotificationsContext = createContext<State>({
 
 export const NotificationsProvider = ({ children }: ChildrenProp) => {
   const { isAuthenticated } = useAuth();
+  const { isDashboardPage } = useRouter();
+  const { onFetch, business } = useBusiness();
   const { authUpdateFirebaseToken } = useAuthUpdateFirebaseToken();
 
   const { onCallAfar } = useCallFromAfar();
@@ -36,7 +40,7 @@ export const NotificationsProvider = ({ children }: ChildrenProp) => {
   const handleUpdateNotification = (payload: MessagePayload) => {
     const { data } = payload;
     const notificationPayload =
-      data?.payload && (JSON.parse(data.payload) as NotificationToUpdatePayload | undefined);
+      data?.payload && (JSON.parse(data.payload) as NotificationPayload | undefined);
 
     if (notificationPayload) {
       const { type } = notificationPayload;
@@ -46,6 +50,14 @@ export const NotificationsProvider = ({ children }: ChildrenProp) => {
           const { postId, stockAmount } = notificationPayload;
 
           onCallAfar('updatePostAmount', { postId, stockAmount });
+          return;
+        }
+        case 'NEW_ORDER_WAS_CREATED': {
+          const { routeName } = notificationPayload;
+
+          if (isAuthenticated && isDashboardPage && business && business.routeName === routeName) {
+            onFetch({ routeName });
+          }
           return;
         }
         default: {

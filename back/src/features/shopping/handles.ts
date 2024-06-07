@@ -10,14 +10,14 @@ import {
 import { shoppingServices } from './services';
 import { postServices } from '../post/services';
 import { isEqualIds, isNumber } from '../../utils/general';
-import { notificationsServices } from '../notifications';
+import { notificationsServices } from '../notifications/services';
 import { businessServices } from '../business/services';
-import { computePay } from './utils';
+import { getDebitFromOrder } from './utils';
 import { logger } from '../logger';
 import { PostPurshaseNotes } from '../../types/post';
 import { ShoppingModel } from '../../schemas/shopping';
-import { Business } from '../../types/business';
-import { telegramServices } from '../telegram';
+import { sendNewOrderTelegramMessage } from '../telegram/handles';
+import { sendNewOrderPushMessage } from '../notifications/handles';
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -224,18 +224,11 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
         return res.send({});
       }
 
-      const business:
-        | Pick<Business, 'shoppingPayment' | 'name' | 'telegramBotChat'>
-        | ServerResponse = await businessServices.findOne({
+      const business = await businessServices.findOne({
         res,
         req,
         query: {
           routeName: order.routeName,
-        },
-        projection: {
-          shoppingPayment: 1,
-          telegramBotChat: 1,
-          name: 1,
         },
       });
 
@@ -244,10 +237,8 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
       /**
        * compute payment and reduce de credit with this product
        */
-      const { fromCredit, toPay, newCredit } = computePay({
-        currentCredit: business.shoppingPayment.credit,
-        order,
-      });
+
+      const { debit: shoppingDebit } = getDebitFromOrder({ order });
 
       await businessServices.updateOne({
         res,
@@ -256,29 +247,24 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
           routeName: order.routeName,
         },
         update: {
-          'shoppingPayment.credit': newCredit,
+          $inc: {
+            'shoppingPayment.totalDebit': shoppingDebit,
+          },
           $push: {
             'shoppingPayment.requests': {
               shoppingId: order._id,
-              fromCredit,
-              toPay,
+              shoppingDebit,
             },
           },
         },
       });
 
       /**
-       * send whatsapp message
+       * send Telegram message
        */
 
-      if (business.telegramBotChat) {
-        telegramServices.sendMessage(
-          business.telegramBotChat.chatId,
-          `Una nueva orden de compra ha sido solicitada en su negocio "${business.name}" de nuestra plataforma Asere Market. Puede ver los detalles en la sección de órdenes de compras.`,
-        );
-      } else {
-        logger.warn(`the business ${business.name} has not a activated telegram account`);
-      }
+      sendNewOrderTelegramMessage({ business, order });
+      sendNewOrderPushMessage({ business, req, res, order });
 
       res.send({});
     });

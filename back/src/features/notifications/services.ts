@@ -1,11 +1,13 @@
 import { join } from 'path';
-import { NotificationToUpdatePayload } from '../../types/notifications';
+import { NotificationPayload } from '../../types/notifications';
 import firebase from 'firebase-admin';
 import { userServices } from '../user/services';
 import { QueryHandle } from '../../types/general';
 import { ServerResponse } from 'http';
 import { compact } from '../../utils/general';
 import { serviceAccount } from '../../config';
+
+export const firebaseInstance = firebase;
 
 const init = () => {
   firebase.initializeApp({
@@ -17,7 +19,7 @@ const init = () => {
 const sendNotification = async (args: { title: string; message: string }) => {};
 
 const sendNotificationToUpdate: QueryHandle<{
-  payload: NotificationToUpdatePayload;
+  payload: NotificationPayload;
 }> = async ({ payload, res, req }) => {
   const users = await userServices.find({
     res,
