@@ -7,7 +7,8 @@ import { CheckEditorToolbarItem } from './types';
 import { getImagesToRemove } from './utils';
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { StyleProps } from 'types/general';
+import { Nullable, StyleProps } from 'types/general';
+import { compact } from 'utils/general';
 
 export interface CheckEditorUtils {
   getImageSrcToRemvove: (initialData: string | undefined) => Array<string>;
@@ -19,7 +20,7 @@ export interface CheckEditorProps extends StyleProps {
   onReady?: (editor: ClassicEditor) => void;
   value?: string;
   classNameContainer?: string;
-  getUploadAdapter: (args: { loader: any }) => any;
+  getUploadAdapter?: (args: { loader: any }) => any;
   onChangeUtils?: (utils: CheckEditorUtils) => void;
 }
 
@@ -62,26 +63,31 @@ export const CheckEditor = ({
     });
   }, []);
 
+  const getItems = (): Array<CheckEditorToolbarItem> => {
+    const out: Array<Nullable<CheckEditorToolbarItem>> = [
+      'undo',
+      'redo',
+      '|',
+      'heading',
+      '|',
+      'bold',
+      'italic',
+      '|',
+      getUploadAdapter && 'imageInsert',
+      'link',
+      'numberedList',
+      'bulletedList',
+    ];
+    return compact(out);
+  };
+
   return (
     <HtmlTextContainer className={className}>
       <CKEditor
         editor={ClassicEditor}
         config={{
           toolbar: {
-            items: [
-              'undo',
-              'redo',
-              '|',
-              'heading',
-              '|',
-              'bold',
-              'italic',
-              '|',
-              'imageInsert',
-              'link',
-              'numberedList',
-              'bulletedList',
-            ] as Array<CheckEditorToolbarItem>,
+            items: getItems(),
             shouldNotGroupWhenFull: true,
           },
         }}
@@ -92,10 +98,12 @@ export const CheckEditor = ({
            */
           addStylesToContainer();
 
-          // getted from https://stackoverflow.com/questions/52873321/add-custom-headers-to-upload-image
-          editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
-            return getUploadAdapter({ loader });
-          };
+          if (getUploadAdapter) {
+            // getted from https://stackoverflow.com/questions/52873321/add-custom-headers-to-upload-image
+            editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
+              return getUploadAdapter({ loader });
+            };
+          }
 
           onReady?.(editor);
         }}

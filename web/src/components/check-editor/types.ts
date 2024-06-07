@@ -37,4 +37,5 @@ export type CheckEditorToolbarItem =
   | 'insertTable'
   | 'tableColumn'
   | 'tableRow'
-  | 'mergeTableCells';
+  | 'mergeTableCells'
+  | '|';

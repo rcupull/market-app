@@ -7,7 +7,7 @@ export interface FieldCheckEditorProps extends StyleProps, FormFieldWrapperProps
   onChange?: (e: React.ChangeEvent) => void;
   classNameContainer?: string;
   name?: string;
-  getUploadAdapter: CheckEditorProps['getUploadAdapter'];
+  getUploadAdapter?: CheckEditorProps['getUploadAdapter'];
   onChangeUtils?: CheckEditorProps['onChangeUtils'];
 }
 
