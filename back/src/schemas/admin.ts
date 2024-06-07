@@ -8,6 +8,7 @@ import { AdminConfig } from '../types/admin';
 const AdmiinConfigShema = new Schema<AdminConfig>({
   ...createdAtSchemaDefinition,
   termsAndConditions: { type: String },
+  privacyPolicy: { type: String },
 });
 
 export const AdminConfigModel = model<AdminConfig>(

@@ -46,8 +46,11 @@ export const Footer = ({ className, socialLinks }: FooterProps) => {
           '-scale-y-100 flex flex-col items-center bg-white shadow-xl text-center text-gray-700',
         )}
       >
-        <div className="container px-6 pt-6">
-          <Link to="/terms-and-conditions">Términos y Condiciones</Link>
+        <div className="container px-6 pt-6 flex">
+          <div className="flex flex-col">
+            <Link to="/terms-and-conditions">Términos y Condiciones</Link>
+            <Link to="/privacy-policy">Política de Privacidad</Link>
+          </div>
 
           <div className="mb-6 flex justify-center">
             {renderSocialNetworkLink(SocialNetworkFace, face)}
