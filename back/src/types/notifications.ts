@@ -1,9 +1,11 @@
-export type NotificationType = 'POST_AMOUNT_STOCK_CHANGE';
+export type NotificationType = 'POST_AMOUNT_STOCK_CHANGE' | 'NEW_ORDER_WAS_CREATED';
 
-export interface NotificationToUpdatePayload {
+export interface NotificationPayload {
   type: NotificationType;
   //
   postId?: string;
+  shoopingId?: string;
   stockAmount?: number;
+  routeName?: string;
   //
 }

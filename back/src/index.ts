@@ -1,11 +1,11 @@
 import { connectDB } from './db';
 import { logger } from './features/logger';
-import { notificationsServices } from './features/notifications';
+import { notificationsServices } from './features/notifications/services';
 import { app } from './server';
 import fs from 'fs';
 import https from 'https';
 import http from 'http';
-import { telegramServices } from './features/telegram';
+import { telegramServices } from './features/telegram/services';
 
 connectDB();
 
