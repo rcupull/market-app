@@ -68,7 +68,7 @@ const put_admin_admin_config: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
       const { body } = req;
-      const { termsAndConditions } = body;
+      const { termsAndConditions, privacyPolicy } = body;
 
       const config = await AdminConfigModel.findOne({});
 
@@ -81,6 +81,10 @@ const put_admin_admin_config: () => RequestHandler = () => {
 
       if (termsAndConditions) {
         config.termsAndConditions = termsAndConditions;
+      }
+
+      if (privacyPolicy) {
+        config.privacyPolicy = privacyPolicy;
       }
 
       await config.save();
