@@ -30,8 +30,6 @@ const get_shopping: () => RequestHandler = () => {
       const { routeName } = query;
 
       const out = await shoppingServices.getAll({
-        req,
-        res,
         query: {
           purchaserId: user._id,
           'posts.post.routeName': routeName,
@@ -58,8 +56,6 @@ const get_shopping_owner: () => RequestHandler = () => {
       const { states } = query;
 
       const out = await shoppingServices.getAll({
-        req,
-        res,
         query: {
           'posts.post.routeName': routeName,
           ...(states ? { state: { $in: states } } : {}),
@@ -85,8 +81,6 @@ const get_shopping_shoppingId: () => RequestHandler = () => {
       const { shoppingId } = params;
 
       const out = await shoppingServices.getOne({
-        req,
-        res,
         query: {
           _id: shoppingId,
           purchaserId: user._id,
@@ -130,8 +124,6 @@ const post_shopping: () => RequestHandler<
        * this service return the amount added to the post and the current stock
        */
       const updateStockResponse = await postServices.updateStockAmount({
-        req,
-        res,
         amountToAdd: -amountToAdd,
         post,
       });
@@ -149,15 +141,15 @@ const post_shopping: () => RequestHandler<
 
       if (isNumber(amountAddedToPost) && isNumber(currentStockAmount)) {
         await shoppingServices.updateOrAddOne({
-          req,
-          res,
           amountToAdd: -amountAddedToPost,
+          post,
+          user,
         });
 
         /**
          * send notification to update the post. TODO maybe we need some conditions
          */
-        sendUpdateStockAmountMessage({ req, res, postId: post._id.toString(), currentStockAmount });
+        sendUpdateStockAmountMessage({ postId: post._id.toString(), currentStockAmount });
 
         if (amountAddedToPost !== amountToAdd) {
           return res.send({
@@ -173,10 +165,10 @@ const post_shopping: () => RequestHandler<
        * The purshaseNotes is added only when the purshase is created
        */
       await shoppingServices.updateOrAddOne({
-        req,
-        res,
         amountToAdd,
         purshaseNotes,
+        post,
+        user,
       });
 
       res.send({});
@@ -198,8 +190,6 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
       const { shoppingId } = params;
 
       const order = await shoppingServices.findAndUpdateOne({
-        req,
-        res,
         query: {
           _id: shoppingId,
           purchaserId: user._id,
@@ -217,14 +207,16 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
       }
 
       const business = await businessServices.findOne({
-        res,
-        req,
         query: {
           routeName: order.routeName,
         },
       });
 
       if (business instanceof ServerResponse) return business;
+
+      if (!business) {
+        return getBusinessNotFoundResponse({ res });
+      }
 
       /**
        * compute payment and reduce de credit with this product
@@ -233,8 +225,6 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
       const { debit: shoppingDebit } = getDebitFromOrder({ order });
 
       await businessServices.updateOne({
-        res,
-        req,
         query: {
           routeName: order.routeName,
         },
@@ -256,7 +246,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
        */
 
       sendNewOrderTelegramMessage({ business, order });
-      sendNewOrderPushMessage({ business, req, res, order });
+      sendNewOrderPushMessage({ business, order });
 
       res.send({});
     });
@@ -321,8 +311,10 @@ const delete_shopping: () => RequestHandler = () => {
       const { routeName, postId } = body;
 
       postId
-        ? deleteOnePostFromShopping({ req, res, postId, routeName, user })
-        : deleteShopping({ req, res, routeName, user });
+        ? await deleteOnePostFromShopping({ routeName, user, postId })
+        : await deleteShopping({ routeName, user });
+
+      res.send({});
     });
   };
 };

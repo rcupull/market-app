@@ -4,6 +4,7 @@ import { ServerResponse } from 'http';
 import { imagesServices } from '../images/services';
 import { userServices } from './services';
 import { User } from '../../types/user';
+import { getUserNotFoundResponse } from '../../utils/server-response';
 
 const get_users_userId: () => RequestHandler = () => {
   return (req, res) => {
@@ -13,8 +14,6 @@ const get_users_userId: () => RequestHandler = () => {
       const { userId } = params;
 
       const out = await userServices.getOne({
-        res,
-        req,
         query: {
           _id: userId,
         },
@@ -44,16 +43,16 @@ const put_users_userId: () => RequestHandler = () => {
           query: {
             _id: userId,
           },
-          res,
-          req,
         });
 
         if (currentUser instanceof ServerResponse) return currentUser;
 
+        if (!currentUser) {
+          return getUserNotFoundResponse({ res });
+        }
+
         if (currentUser.profileImage) {
           await imagesServices.deleteOldImages({
-            res,
-            req,
             newImagesSrcs: [profileImage],
             oldImagesSrcs: [currentUser.profileImage],
           });
@@ -64,8 +63,6 @@ const put_users_userId: () => RequestHandler = () => {
        * Update
        */
       const out = await userServices.updateOne({
-        res,
-        req,
         query: {
           _id: userId,
         },

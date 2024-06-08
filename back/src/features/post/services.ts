@@ -5,7 +5,7 @@ import { Post, PostType } from '../../types/post';
 import { PaginateResult } from '../../middlewares/pagination';
 import { imagesServices } from '../images/services';
 import { ServerResponse } from 'http';
-import { get404Response, getPostNotFoundResponse } from '../../utils/server-response';
+import { getPostNotFoundResponse } from '../../utils/server-response';
 import { isNumber } from '../../utils/general';
 
 export interface GetAllArgs {
@@ -115,8 +115,8 @@ const getOne: QueryHandle<
     postId: string | Schema.Types.ObjectId;
     hidden?: boolean;
   },
-  Post
-> = async ({ postId, res, hidden }) => {
+  Post | null
+> = async ({ postId, hidden }) => {
   const filterQuery: FilterQuery<Post> = {};
 
   if (postId) {
@@ -129,14 +129,7 @@ const getOne: QueryHandle<
 
   const out = await PostModel.findOne(filterQuery);
 
-  if (!out) {
-    return get404Response({
-      res,
-      json: { message: 'Post not found or you are not access to this post' },
-    });
-  }
-
-  return out.toJSON();
+  return out;
 };
 
 const deleteMany: QueryHandle<{
@@ -162,31 +155,24 @@ const deleteMany: QueryHandle<{
 
 const deleteOne: QueryHandle<{
   postId: string;
-}> = async ({ postId, res, req }) => {
-  const { post } = req;
+}> = async ({ postId }) => {
+  /**
+   * Removing the post
+   */
+  const post = await PostModel.findOneAndDelete({
+    _id: postId,
+  });
 
   if (!post) {
-    return getPostNotFoundResponse({
-      res,
-    });
+    return;
   }
-
   /**
    * Remove all images of post
    */
   await imagesServices.deleteImagesBy({
-    res,
-    req,
     userId: post.createdBy.toString(),
     postId,
     routeName: post.routeName,
-  });
-
-  /**
-   * Removing the post
-   */
-  await PostModel.deleteOne({
-    _id: postId,
   });
 };
 
@@ -213,7 +199,7 @@ const addOne: QueryHandle<
     | 'postLink'
   >,
   Post
-> = async ({ res, req, ...args }) => {
+> = async (args) => {
   const newPost = new PostModel(args);
 
   await newPost.save();
@@ -264,7 +250,7 @@ const updateStockAmount: QueryHandle<
         },
         {
           stockAmount: newStockAmount,
-        },
+        }
       );
 
       return {
@@ -279,7 +265,7 @@ const updateStockAmount: QueryHandle<
       },
       {
         stockAmount: newStockAmount,
-      },
+      }
     );
 
     return {

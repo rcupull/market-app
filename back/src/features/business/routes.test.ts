@@ -16,7 +16,7 @@ describe('GET: /business', () => {
       .get(
         getTestingRoute({
           path: '/business',
-        }),
+        })
       )
       .expect(200)
       .then((response) => {
@@ -71,7 +71,7 @@ describe('GET: /business', () => {
               "totalDebit": 0,
             },
           }
-        `,
+        `
         );
 
         expect(response.body.paginator).toMatchInlineSnapshot(`
@@ -108,7 +108,7 @@ describe('POST: /business', () => {
       .post(
         getTestingRoute({
           path: '/business',
-        }),
+        })
       )
       .send({
         name: 'newBusiness',
@@ -126,7 +126,7 @@ describe('POST: /business', () => {
       .post(
         getTestingRoute({
           path: '/business',
-        }),
+        })
       )
       .send({
         name: 'newBusiness',
@@ -144,7 +144,7 @@ describe('POST: /business', () => {
       .post(
         getTestingRoute({
           path: '/business',
-        }),
+        })
       )
       .send({
         name: 'newBusiness',
@@ -159,7 +159,7 @@ describe('POST: /business', () => {
         getTestingRoute({
           path: '/business/:newBusiness',
           urlParams: { newBusiness: 'newBusiness' },
-        }),
+        })
       )
       .expect(200);
   });
@@ -171,7 +171,7 @@ describe('POST: /business', () => {
       .post(
         getTestingRoute({
           path: '/business',
-        }),
+        })
       )
       .send({
         name: 'newBusiness',
@@ -195,7 +195,7 @@ describe('GET: /business/:routeName', () => {
         getTestingRoute({
           path: '/business/:routeName',
           urlParams: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .expect(200)
       .then((response) => {
@@ -248,7 +248,7 @@ describe('GET: /business/:routeName', () => {
               "totalDebit": 0,
             },
           }
-        `,
+        `
         );
       });
   });
@@ -259,7 +259,7 @@ describe('DELETE: /business/:routeName', () => {
     await dropTestDbConnectionAsync();
   });
 
-  it('should remove all posts and busieness', async () => {
+  it('should remove all posts and business', async () => {
     const { business1User1, user1 } = await fillBD();
 
     await supertest(app)
@@ -267,7 +267,7 @@ describe('DELETE: /business/:routeName', () => {
         getTestingRoute({
           path: '/business/:routeName',
           urlParams: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .expect(200)
       .then((response) => {
@@ -280,7 +280,7 @@ describe('DELETE: /business/:routeName', () => {
         getTestingRoute({
           path: '/posts',
           query: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .expect(200)
       .then((response) => {
@@ -293,7 +293,7 @@ describe('DELETE: /business/:routeName', () => {
         getTestingRoute({
           path: '/business/:routeName',
           urlParams: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .auth(generateToken(user1._id), { type: 'bearer' })
       .expect(200);
@@ -304,7 +304,7 @@ describe('DELETE: /business/:routeName', () => {
         getTestingRoute({
           path: '/posts',
           query: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .expect(200)
       .then((response) => {
@@ -316,7 +316,7 @@ describe('DELETE: /business/:routeName', () => {
         getTestingRoute({
           path: '/business/:routeName',
           urlParams: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .expect(404)
       .then((response) => {
@@ -333,7 +333,7 @@ describe('DELETE: /business/:routeName', () => {
         getTestingRoute({
           path: '/business/:routeName',
           urlParams: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .expect(401);
   });
@@ -347,7 +347,7 @@ describe('DELETE: /business/:routeName', () => {
         getTestingRoute({
           path: '/business/:routeName',
           urlParams: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .auth(generateToken(user2._id), { type: 'bearer' })
       .expect(401);

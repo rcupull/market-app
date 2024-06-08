@@ -6,7 +6,13 @@ import { ServerResponse } from 'http';
 import { postServices } from '../features/post/services';
 import { isEqualIds } from '../utils/general';
 import { passportJwtMiddleware } from './passport';
-import { get401Response, get404Response, getUserNotFoundResponse } from '../utils/server-response';
+import {
+  get401Response,
+  get404Response,
+  getBusinessNotFoundResponse,
+  getPostNotFoundResponse,
+  getUserNotFoundResponse,
+} from '../utils/server-response';
 import { businessServices } from '../features/business/services';
 
 export const isLogged = passportJwtMiddleware;
@@ -86,14 +92,17 @@ export const isUserThisBusinessOwner: RequestHandler = async (req, res, next) =>
   }
 
   const business = await businessServices.findOne({
-    res,
-    req,
     query: {
       routeName,
     },
   });
 
-  if (business instanceof ServerResponse) return business;
+  if (business instanceof ServerResponse) {
+    return business;
+  }
+  if (!business) {
+    return getBusinessNotFoundResponse({ res });
+  }
 
   if (user._id.toString() === business.createdBy.toString()) {
     req['business'] = business;
@@ -122,14 +131,18 @@ export const getBusinessMiddleware: RequestHandler = async (req, res, next) => {
   }
 
   const business = await businessServices.findOne({
-    res,
-    req,
     query: {
       routeName,
     },
   });
 
-  if (business instanceof ServerResponse) return next();
+  if (business instanceof ServerResponse) {
+    return next();
+  }
+
+  if (!business) {
+    return next();
+  }
 
   req['business'] = business;
   return next();
@@ -152,12 +165,16 @@ export const isUserThisPostOwner: RequestHandler = async (req, res, next) => {
   }
 
   const post = await postServices.getOne({
-    res,
-    req,
     postId,
   });
 
-  if (post instanceof ServerResponse) return post;
+  if (post instanceof ServerResponse) {
+    return post;
+  }
+
+  if (!post) {
+    return getPostNotFoundResponse({ res });
+  }
 
   if (user._id.toString() === post.createdBy.toString()) {
     req.post = post;
@@ -178,12 +195,15 @@ export const addPostToReq: RequestHandler = async (req, res, next) => {
   }
 
   const post = await postServices.getOne({
-    res,
-    req,
     postId,
   });
 
-  if (post instanceof ServerResponse) return post;
+  if (post instanceof ServerResponse) {
+    return post;
+  }
+  if (!post) {
+    return getPostNotFoundResponse({ res });
+  }
 
   req.post = post;
   return next();
@@ -194,7 +214,7 @@ export type RequestWithUser<
   ResBody = any,
   ReqBody = any,
   ReqQuery = AnyRecord,
-  Locals extends Record<string, any> = Record<string, any>,
+  Locals extends Record<string, any> = Record<string, any>
 > = Request<P, ResBody, ReqBody, ReqQuery, Locals> & {
   user: User;
 };
@@ -222,12 +242,16 @@ export const verifyPost: RequestHandler = (req, res, next) => {
     }
 
     const out = await postServices.getOne({
-      res,
-      req,
       postId,
     });
 
-    if (out instanceof ServerResponse) return out;
+    if (out instanceof ServerResponse) {
+      return out;
+    }
+
+    if (!out) {
+      return getPostNotFoundResponse({ res });
+    }
 
     const { createdBy } = out;
 

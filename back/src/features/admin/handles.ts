@@ -15,7 +15,7 @@ const get_users: () => RequestHandler = () => {
         {
           role: 'user',
         },
-        paginateOptions,
+        paginateOptions
       );
 
       res.send(out);
@@ -33,8 +33,6 @@ const del_users_userId: () => RequestHandler = () => {
        * Remove all business images
        */
       const out = await imagesServices.deleteImagesBy({
-        res,
-        req,
         userId,
       });
 

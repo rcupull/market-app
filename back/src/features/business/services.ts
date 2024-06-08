@@ -93,14 +93,12 @@ const getAllWithoutPagination: QueryHandle<
 
 const addOne: QueryHandle<
   Pick<Business, 'categories' | 'createdBy' | 'routeName' | 'name' | 'postCategories'>,
-  Business
-> = async ({ categories, createdBy, routeName, name, res, postCategories }) => {
+  Business | null
+> = async ({ categories, createdBy, routeName, name, postCategories }) => {
   const routeNameExists = await BusinessModel.findOne({ routeName });
+
   if (routeNameExists) {
-    return get400Response({
-      res,
-      json: { message: 'Route name already exists' },
-    });
+    return null;
   }
 
   const out = new BusinessModel({
@@ -121,30 +119,21 @@ const findOne: QueryHandle<
     query: FilterQuery<Business>;
     projection?: ProjectionType<Business>;
   },
-  Business
-> = async ({ query, res, projection }) => {
+  Business | null
+> = async ({ query, projection }) => {
   const out = await BusinessModel.findOne(query, projection);
 
-  if (!out) {
-    return get404Response({
-      res,
-      json: { message: 'Business not found' },
-    });
-  }
-
-  return out.toJSON();
+  return out;
 };
 
 const deleteOne: QueryHandle<{
   routeName: string;
   userId: string;
-}> = async ({ routeName, res, req, userId }) => {
+}> = async ({ routeName, userId }) => {
   /**
    * Remove all business images
    */
   await imagesServices.deleteImagesBy({
-    res,
-    req,
     userId,
     routeName,
   });
@@ -156,8 +145,6 @@ const deleteOne: QueryHandle<{
 
   const out = await postServices.deleteMany({
     routeName,
-    res,
-    req,
   });
 
   return out;

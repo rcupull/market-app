@@ -29,8 +29,6 @@ const get_posts: () => RequestHandler = () => {
       } = query;
 
       const out = await postServices.getAll({
-        res,
-        req,
         paginateOptions,
         postsIds,
         routeNames,
@@ -56,9 +54,7 @@ const get_posts_postId: () => RequestHandler = () => {
       const { postId } = params;
 
       const out = await postServices.getOne({
-        res,
         postId,
-        req,
       });
 
       if (out instanceof ServerResponse) return;
@@ -119,8 +115,6 @@ const post_posts: () => RequestHandler<AnyRecord, any, Post> = () => {
         createdBy: user._id,
         postType,
         postLink,
-        res,
-        req,
       });
 
       if (out instanceof ServerResponse) return;
@@ -139,11 +133,13 @@ const post_posts_postId_duplicate: () => RequestHandler = () => {
 
       const post = await postServices.getOne({
         postId,
-        res,
-        req,
       });
 
       if (post instanceof ServerResponse) return post;
+
+      if (!post) {
+        return getPostNotFoundResponse({ res });
+      }
 
       //these are omitted fields
       //eslint-disable-next-line
@@ -172,16 +168,12 @@ const put_posts_postId: () => RequestHandler = () => {
 
       if (!isEqual(body.images, post.images)) {
         await imagesServices.deleteOldImages({
-          res,
-          req,
           newImagesSrcs: body.images,
           oldImagesSrcs: post.images,
         });
       }
 
       const out = await postServices.updateOne({
-        res,
-        req,
         query: {
           _id: post._id,
         },
@@ -228,8 +220,6 @@ const delete_posts_postId: () => RequestHandler = () => {
        * Removing the post
        */
       const out = await postServices.deleteOne({
-        res,
-        req,
         postId,
       });
 
@@ -256,8 +246,6 @@ const bulk_action_delete: () => RequestHandler = () => {
         // delete selected posts
 
         const out = await postServices.deleteMany({
-          res,
-          req,
           postIds: ids,
           routeName,
         });
@@ -267,8 +255,6 @@ const bulk_action_delete: () => RequestHandler = () => {
         const { postCategoriesMethod, postCategoriesTags, search } = query;
 
         const posts = await postServices.getAllWithOutPagination({
-          res,
-          req,
           routeNames: [routeName],
           postCategoriesMethod,
           postCategoriesTags,
@@ -278,8 +264,6 @@ const bulk_action_delete: () => RequestHandler = () => {
         if (posts instanceof ServerResponse) return posts;
 
         const out = await postServices.deleteMany({
-          res,
-          req,
           postIds: posts.map((post) => post._id.toString()),
           routeName,
         });
@@ -288,16 +272,12 @@ const bulk_action_delete: () => RequestHandler = () => {
       } else {
         // get all post
         const posts = await postServices.getAllWithOutPagination({
-          res,
-          req,
           routeNames: [routeName],
         });
 
         if (posts instanceof ServerResponse) return posts;
 
         const out = await postServices.deleteMany({
-          res,
-          req,
           postIds: posts.map((post) => post._id.toString()),
           routeName,
         });
@@ -328,8 +308,6 @@ const bulk_action_update: () => RequestHandler = () => {
 
       if (ids?.length) {
         const out = await postServices.updateMany({
-          res,
-          req,
           query: {
             _id: { $in: ids },
           },
@@ -344,8 +322,6 @@ const bulk_action_update: () => RequestHandler = () => {
         const { postCategoriesMethod, postCategoriesTags, search } = query;
 
         const posts = await postServices.getAllWithOutPagination({
-          res,
-          req,
           routeNames: [routeName],
           postCategoriesMethod,
           postCategoriesTags,
@@ -355,8 +331,6 @@ const bulk_action_update: () => RequestHandler = () => {
         if (posts instanceof ServerResponse) return posts;
 
         const out = await postServices.updateMany({
-          res,
-          req,
           query: {
             _id: { $in: posts.map(({ _id }) => _id) },
           },
@@ -369,16 +343,12 @@ const bulk_action_update: () => RequestHandler = () => {
       } else {
         // get all posts
         const posts = await postServices.getAllWithOutPagination({
-          res,
-          req,
           routeNames: [routeName],
         });
 
         if (posts instanceof ServerResponse) return posts;
 
         const out = await postServices.updateMany({
-          res,
-          req,
           query: {
             _id: { $in: posts.map(({ _id }) => _id) },
           },
@@ -406,8 +376,6 @@ const post_make_review: () => RequestHandler = () => {
     }
 
     const out = await postServices.findOneAndUpdate({
-      res,
-      req,
       query: {
         _id: postId,
         createdBy: { $ne: user },
