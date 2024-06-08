@@ -26,7 +26,7 @@ const handleAddPostsToOrder = async ({
     .post(
       getTestingRoute({
         path: '/shopping',
-      }),
+      })
     )
     .send({
       postId: productPost1Business1User1._id,
@@ -40,7 +40,7 @@ const handleAddPostsToOrder = async ({
     .post(
       getTestingRoute({
         path: '/shopping',
-      }),
+      })
     )
     .send({
       postId: productPost2Business1User1._id,
@@ -63,7 +63,7 @@ describe('GET: /shopping', () => {
         getTestingRoute({
           path: '/shopping',
           query: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .expect(401);
   });
@@ -75,7 +75,7 @@ describe('GET: /shopping', () => {
       .post(
         getTestingRoute({
           path: '/shopping',
-        }),
+        })
       )
       .send({
         postId: productPost1Business1User1._id,
@@ -88,7 +88,7 @@ describe('GET: /shopping', () => {
         getTestingRoute({
           path: '/shopping',
           query: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .auth(generateToken(user1._id), { type: 'bearer' })
       .expect(200)
@@ -118,7 +118,7 @@ describe('POST: /shopping', () => {
       .post(
         getTestingRoute({
           path: '/shopping',
-        }),
+        })
       )
       .send({
         postId: productPost1Business1User1._id,
@@ -147,7 +147,7 @@ describe('POST: /shopping', () => {
       .get(
         getTestingRoute({
           path: '/posts',
-        }),
+        })
       )
       .expect(200)
       .then((response) => {
@@ -166,7 +166,7 @@ describe('POST: /shopping', () => {
         getTestingRoute({
           path: '/shopping',
           query: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .auth(generateToken(user1._id), { type: 'bearer' })
       .expect(200)
@@ -191,7 +191,7 @@ describe('POST: /shopping', () => {
       .get(
         getTestingRoute({
           path: '/posts',
-        }),
+        })
       )
       .expect(200)
       .then((response) => {
@@ -203,12 +203,12 @@ describe('POST: /shopping', () => {
 
     expect(sendUpdateStockAmountMessage.mock.calls[0][0].currentStockAmount).toEqual(15);
     expect(sendUpdateStockAmountMessage.mock.calls[0][0].postId).toEqual(
-      productPost1Business1User1._id.toString(),
+      productPost1Business1User1._id.toString()
     );
 
     expect(sendUpdateStockAmountMessage.mock.calls[1][0].currentStockAmount).toEqual(20);
     expect(sendUpdateStockAmountMessage.mock.calls[1][0].postId).toEqual(
-      productPost2Business1User1._id.toString(),
+      productPost2Business1User1._id.toString()
     );
   });
 });
@@ -225,7 +225,7 @@ describe('DELETE: /shopping', () => {
       .del(
         getTestingRoute({
           path: '/shopping',
-        }),
+        })
       )
       .send({
         routeName: business1User1.routeName,
@@ -257,7 +257,7 @@ describe('DELETE: /shopping', () => {
       .del(
         getTestingRoute({
           path: '/shopping',
-        }),
+        })
       )
       .send({
         routeName: business1User1.routeName,
@@ -271,7 +271,7 @@ describe('DELETE: /shopping', () => {
         getTestingRoute({
           path: '/shopping',
           query: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .auth(generateToken(user1._id), { type: 'bearer' })
       .expect(200)
@@ -284,7 +284,7 @@ describe('DELETE: /shopping', () => {
       .get(
         getTestingRoute({
           path: '/posts',
-        }),
+        })
       )
       .expect(200)
       .then((response) => {
@@ -296,12 +296,12 @@ describe('DELETE: /shopping', () => {
 
     expect(sendUpdateStockAmountMessage.mock.calls[2][0].currentStockAmount).toEqual(20);
     expect(sendUpdateStockAmountMessage.mock.calls[2][0].postId).toEqual(
-      productPost1Business1User1._id.toString(),
+      productPost1Business1User1._id.toString()
     );
 
     expect(sendUpdateStockAmountMessage.mock.calls[3][0].currentStockAmount).toEqual(30);
     expect(sendUpdateStockAmountMessage.mock.calls[3][0].postId).toEqual(
-      productPost2Business1User1._id.toString(),
+      productPost2Business1User1._id.toString()
     );
   });
 
@@ -329,7 +329,7 @@ describe('DELETE: /shopping', () => {
       .del(
         getTestingRoute({
           path: '/shopping',
-        }),
+        })
       )
       .send({
         routeName: business1User1.routeName,
@@ -344,7 +344,7 @@ describe('DELETE: /shopping', () => {
         getTestingRoute({
           path: '/shopping',
           query: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .auth(generateToken(user1._id), { type: 'bearer' })
       .expect(200)
@@ -368,7 +368,7 @@ describe('DELETE: /shopping', () => {
       .get(
         getTestingRoute({
           path: '/posts',
-        }),
+        })
       )
       .expect(200)
       .then((response) => {
@@ -380,7 +380,7 @@ describe('DELETE: /shopping', () => {
 
     expect(sendUpdateStockAmountMessage.mock.calls[2][0].currentStockAmount).toEqual(20);
     expect(sendUpdateStockAmountMessage.mock.calls[2][0].postId).toEqual(
-      productPost1Business1User1._id.toString(),
+      productPost1Business1User1._id.toString()
     );
 
     expect(sendUpdateStockAmountMessage.mock.calls[3]).toEqual(undefined);

@@ -20,10 +20,8 @@ const sendNotification = async (args: { title: string; message: string }) => {};
 
 const sendNotificationToUpdate: QueryHandle<{
   payload: NotificationPayload;
-}> = async ({ payload, res, req }) => {
+}> = async ({ payload }) => {
   const users = await userServices.find({
-    res,
-    req,
     query: {},
     projection: {
       firebaseToken: 1,

@@ -34,7 +34,7 @@ export const sendValidationCodeToEmail = ({
         to: email,
         subject: 'Verificación de la cuenta',
         text: `No debe responde a este correo. De click al siguiente link para validar su cuenta en Asere Market ${getValidationCodeRoute(
-          code,
+          code
         )}`,
       },
       (error: any, info: any) => {
@@ -43,7 +43,7 @@ export const sendValidationCodeToEmail = ({
         } else {
           resolve(info);
         }
-      },
+      }
     );
   });
 };
@@ -62,7 +62,7 @@ export const sendForgotPasswordCodeToEmail = ({
         to: email,
         subject: 'Recuperación de la cuenta',
         text: `No debe responde a este correo. De click al siguiente link para recuperar su cuenta en Asere Market ${getForgotPasswordCodeRoute(
-          code,
+          code
         )}`,
       },
       (error: any, info: any) => {
@@ -71,7 +71,7 @@ export const sendForgotPasswordCodeToEmail = ({
         } else {
           resolve(info);
         }
-      },
+      }
     );
   });
 };

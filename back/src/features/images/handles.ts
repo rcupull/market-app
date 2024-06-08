@@ -132,7 +132,7 @@ const delete_one_image: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { imageSrc } = req.body;
 
-      const out = await imagesServices.deleteOne({ src: imageSrc, res, req });
+      const out = await imagesServices.deleteOne({ src: imageSrc });
 
       if (out instanceof ServerResponse) return out;
 

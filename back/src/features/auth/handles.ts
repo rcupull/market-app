@@ -126,11 +126,11 @@ const post_signUp: () => RequestHandler = () => {
         name,
         password,
         canCreateBusiness,
-        res,
-        req,
       });
 
       if (newUser instanceof ServerResponse) return;
+
+      if (!newUser) return getUserNotFoundResponse({ res });
 
       // send validation code by email
       const code = uuid();
@@ -169,8 +169,6 @@ const post_validate: () => RequestHandler = () => {
       }
 
       const user = await userServices.findOneAndUpdate({
-        res,
-        req,
         query: { _id: validationCode.userId },
         update: { validated: true },
       });
@@ -233,8 +231,6 @@ const post_forgot_password_validate: () => RequestHandler = () => {
       }
 
       const user = await userServices.getOne({
-        res,
-        req,
         query: { _id: validationCode.userId },
       });
 
@@ -267,14 +263,14 @@ const post_forgot_password_request: () => RequestHandler = () => {
       const { email } = req.body;
 
       const user = await userServices.getOne({
-        res,
-        req,
         query: {
           email,
         },
       });
 
       if (user instanceof ServerResponse) return user;
+
+      if (!user) return getUserNotFoundResponse({ res });
 
       const code = uuid();
 
@@ -305,8 +301,6 @@ const put_firebase_token: () => RequestHandler = () => {
       const { firebaseToken } = body;
 
       await userServices.updateOne({
-        res,
-        req,
         query: {
           _id: user._id,
         },

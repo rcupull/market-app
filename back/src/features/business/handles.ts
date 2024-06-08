@@ -26,8 +26,6 @@ const get_business: () => RequestHandler = () => {
       const { routeNames, search, userId, includeHidden } = query;
 
       const out = await businessServices.getAll({
-        res,
-        req,
         paginateOptions,
         routeNames,
         search,
@@ -50,8 +48,6 @@ const get_business_summary: () => RequestHandler = () => {
       const { routeNames, search, userId, includeHidden } = query;
 
       const business = await businessServices.getAll({
-        res,
-        req,
         paginateOptions,
         routeNames,
         search,
@@ -85,14 +81,16 @@ const get_business_routeName: () => RequestHandler = () => {
       const { routeName } = params;
 
       const out = await businessServices.findOne({
-        res,
-        req,
         query: {
           routeName,
         },
       });
 
       if (out instanceof ServerResponse) return;
+
+      if (!out) {
+        return getBusinessNotFoundResponse({ res });
+      }
 
       res.send(out);
     });
@@ -109,14 +107,14 @@ const update_business_post_categories: () => RequestHandler = () => {
       };
 
       const business = await businessServices.findOne({
-        res,
-        req,
         query: {
           routeName,
         },
       });
 
       if (business instanceof ServerResponse) return business;
+
+      if (!business) return getBusinessNotFoundResponse({ res });
 
       let out = undefined;
 
@@ -130,8 +128,6 @@ const update_business_post_categories: () => RequestHandler = () => {
       if (missingTags?.length) {
         //
         out = await postServices.updateMany({
-          res,
-          req,
           query: {
             routeName,
           },
@@ -145,8 +141,6 @@ const update_business_post_categories: () => RequestHandler = () => {
 
         //
         out = await businessServices.updateOne({
-          res,
-          req,
           query: {
             routeName,
           },
@@ -167,8 +161,6 @@ const update_business_post_categories: () => RequestHandler = () => {
       }
 
       out = await businessServices.updateOne({
-        res,
-        req,
         query: {
           routeName,
         },
@@ -209,11 +201,13 @@ const post_business: () => RequestHandler = () => {
         routeName,
         createdBy: user._id,
         postCategories: getPostCategoriesFromBusinessCategories(categories),
-        res,
-        req,
       });
 
       if (out instanceof ServerResponse) return;
+
+      if (!out) {
+        return get400Response({ res, json: { message: 'the business exist already' } });
+      }
 
       res.send(out);
     });
@@ -238,15 +232,11 @@ const put_business_routeName: () => RequestHandler = () => {
 
       if (body.logo === null && business.logo) {
         await imagesServices.deleteOldImages({
-          res,
-          req,
           newImagesSrcs: [],
           oldImagesSrcs: [business.logo],
         });
       }
       const out = await businessServices.updateOne({
-        res,
-        req,
         query: {
           routeName,
           createdBy: user._id,
@@ -286,8 +276,6 @@ const delete_business_routeName: () => RequestHandler = () => {
       const { routeName } = params;
 
       const out = await businessServices.deleteOne({
-        res,
-        req,
         routeName,
         userId: user._id.toString(),
       });
@@ -326,8 +314,6 @@ const put_business_section_reorder: () => RequestHandler = () => {
       }
 
       await businessServices.updateOne({
-        res,
-        req,
         query: {
           routeName,
         },
@@ -353,8 +339,6 @@ const post_business_routeName_sections: () => RequestHandler = () => {
       const { routeName } = params;
 
       await businessServices.updateOne({
-        res,
-        req,
         query: {
           routeName,
         },
@@ -388,8 +372,6 @@ const put_business_routeName_sections_sectionId: () => RequestHandler = () => {
         {};
 
       await businessServices.updateOne({
-        res,
-        req,
         query: {
           routeName,
         },
@@ -425,8 +407,6 @@ const del_business_routeName_sections_sectionId: () => RequestHandler = () => {
       const { routeName, sectionId } = params;
 
       await businessServices.updateOne({
-        res,
-        req,
         query: {
           routeName,
         },
@@ -483,8 +463,6 @@ const post_business_routeName_chatbot_validate: () => RequestHandler = () => {
       }
 
       await businessServices.updateOne({
-        res,
-        req,
         query: {
           _id: business._id,
         },

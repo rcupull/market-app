@@ -3,7 +3,11 @@ import { join } from 'path';
 import { appFrontDir, hostname } from '../config';
 import express from 'express';
 import fs from 'fs';
-import { get404Response } from '../utils/server-response';
+import {
+  get404Response,
+  getBusinessNotFoundResponse,
+  getPostNotFoundResponse,
+} from '../utils/server-response';
 import { logger } from '../features/logger';
 import { combineMiddleware } from '../utils/general';
 import { HtmlMeta } from '../types/general';
@@ -65,14 +69,18 @@ const injectBusinessMetaMiddlware: RequestHandler = async (req, res, next) => {
 
   if (routeName) {
     const business = await businessServices.findOne({
-      res,
-      req,
       query: {
         routeName,
       },
     });
 
-    if (business instanceof ServerResponse) return business;
+    if (business instanceof ServerResponse) {
+      return business;
+    }
+
+    if (!business) {
+      return getBusinessNotFoundResponse({ res });
+    }
 
     const getImageSrc = () => {
       const src = business.logo?.src;
@@ -106,12 +114,16 @@ const injectPostMetaMiddlware: RequestHandler = async (req, res, next) => {
 
   if (postId) {
     const post = await postServices.getOne({
-      res,
-      req,
       postId,
     });
 
-    if (post instanceof ServerResponse) return post;
+    if (post instanceof ServerResponse) {
+      return post;
+    }
+
+    if (!post) {
+      return getPostNotFoundResponse({ res });
+    }
 
     const getImageSrc = () => {
       const src = post.images?.[0]?.src;
@@ -144,5 +156,5 @@ export const frontMiddlware = combineMiddleware(
   router.get(/\/*(.png|.css|.js)/, express.static(join(process.cwd(), appFrontDir))),
   router.get('/b/:routeName/posts/:postId', injectPostMetaMiddlware),
   router.get('/b/:routeName*', injectBusinessMetaMiddlware),
-  injectDefaultMetaMiddlware,
+  injectDefaultMetaMiddlware
 );

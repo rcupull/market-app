@@ -1,29 +1,21 @@
 import { QueryHandle } from '../../types/general';
-import { getPostNotFoundResponse, getUserNotFoundResponse } from '../../utils/server-response';
 import { FilterQuery, UpdateQuery } from 'mongoose';
 import { UpdateOptions } from 'mongodb';
 import { ShoppingModel } from '../../schemas/shopping';
 import { Shopping } from '../../types/shopping';
-import { PostPurshaseNotes } from '../../types/post';
+import { Post, PostPurshaseNotes } from '../../types/post';
 import { isEqualIds } from '../../utils/general';
+import { User } from '../../types/user';
 
 const updateOrAddOne: QueryHandle<
   {
     amountToAdd?: number;
     purshaseNotes?: PostPurshaseNotes;
+    user: User;
+    post: Post;
   },
   void
-> = async ({ amountToAdd = 1, req, res, purshaseNotes }) => {
-  const { user, post } = req;
-
-  if (!user) {
-    return getUserNotFoundResponse({ res });
-  }
-
-  if (!post) {
-    return getPostNotFoundResponse({ res });
-  }
-
+> = async ({ amountToAdd = 1, purshaseNotes, user, post }) => {
   const { _id: postId, routeName } = post;
 
   const existInConstruction = await ShoppingModel.findOne({
@@ -56,7 +48,7 @@ const updateOrAddOne: QueryHandle<
               'p.post._id': postId,
             },
           ],
-        },
+        }
       );
     } else {
       await ShoppingModel.updateOne(
@@ -78,7 +70,7 @@ const updateOrAddOne: QueryHandle<
               'p.post._id': postId,
             },
           ],
-        },
+        }
       );
     }
   } else {

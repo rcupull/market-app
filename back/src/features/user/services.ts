@@ -12,18 +12,12 @@ const addOne: QueryHandle<
     name: string;
     canCreateBusiness: boolean;
   },
-  User
-> = async ({ email, res, password, name, canCreateBusiness }) => {
+  User | null
+> = async ({ email, password, name, canCreateBusiness }) => {
   // Check if the email is already registered
   const existingUser = await UserModel.findOne({ email });
   if (existingUser) {
-    return get401Response({
-      res,
-      json: {
-        message: 'Ese email ya fue registrado',
-        reazon: 'EMAIL_ALREADY_REGISTERED',
-      },
-    });
+    return null;
   }
 
   // Create a new user
@@ -45,17 +39,9 @@ const getOne: QueryHandle<
     query: FilterQuery<User>;
     projection?: ProjectionType<User>;
   },
-  User
-> = async ({ query, res, projection }) => {
+  User | null
+> = async ({ query, projection }) => {
   const user = await UserModel.findOne(query, projection);
-  if (!user) {
-    return get404Response({
-      res,
-      json: {
-        message: 'User not found',
-      },
-    });
-  }
 
   return user;
 };
