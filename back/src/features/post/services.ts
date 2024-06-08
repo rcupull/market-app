@@ -1,11 +1,10 @@
 import { FilterQuery, PaginateOptions, Schema, UpdateQuery } from 'mongoose';
-import { QueryHandle } from '../../types/general';
+import { ModelDocument, QueryHandle } from '../../types/general';
 import { PostModel } from '../../schemas/post';
 import { Post, PostType } from '../../types/post';
 import { PaginateResult } from '../../middlewares/pagination';
 import { imagesServices } from '../images/services';
 import { ServerResponse } from 'http';
-import { getPostNotFoundResponse } from '../../utils/server-response';
 import { isNumber } from '../../utils/general';
 
 export interface GetAllArgs {
@@ -115,7 +114,7 @@ const getOne: QueryHandle<
     postId: string | Schema.Types.ObjectId;
     hidden?: boolean;
   },
-  Post | null
+  ModelDocument<Post> | null
 > = async ({ postId, hidden }) => {
   const filterQuery: FilterQuery<Post> = {};
 
@@ -250,7 +249,7 @@ const updateStockAmount: QueryHandle<
         },
         {
           stockAmount: newStockAmount,
-        }
+        },
       );
 
       return {
@@ -265,7 +264,7 @@ const updateStockAmount: QueryHandle<
       },
       {
         stockAmount: newStockAmount,
-      }
+      },
     );
 
     return {
