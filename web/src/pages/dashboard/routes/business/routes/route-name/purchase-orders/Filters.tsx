@@ -28,36 +28,36 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
   };
 
   return (
-      <RadioGroup<{ label: string; value: Value }>
-        onChange={handleChange}
-        value={getValue()}
-        renderOption={({ checked, item }) => (
-          <FieldCheckbox noUseFormik value={checked} label={item.label} />
-        )}
-        optionToValue={({ value }) => value}
-        items={[
-          {
-            label: 'Solicitados',
-            value: 'REQUESTED',
-          },
-          {
-            label: 'Cancelados',
-            value: 'CANCELED',
-          },
-          {
-            label: 'Entregados',
-            value: 'DELIVERED',
-          },
-          {
-            label: 'Rechazadas',
-            value: 'REJECTED',
-          },
-          {
-            label: 'Todas',
-            value: 'ALL',
-          },
-        ]}
-        className={cn("flex items-center gap-4 mb-5 flex-wrap", className)}
-      />
+    <RadioGroup<{ label: string; value: Value }>
+      onChange={handleChange}
+      value={getValue()}
+      renderOption={({ checked, item }) => (
+        <FieldCheckbox noUseFormik value={checked} label={item.label} />
+      )}
+      optionToValue={({ value }) => value}
+      items={[
+        {
+          label: 'Solicitados',
+          value: 'REQUESTED',
+        },
+        {
+          label: 'Cancelados',
+          value: 'CANCELED',
+        },
+        {
+          label: 'Entregados',
+          value: 'DELIVERED',
+        },
+        {
+          label: 'Rechazadas',
+          value: 'REJECTED',
+        },
+        {
+          label: 'Todas',
+          value: 'ALL',
+        },
+      ]}
+      className={cn('flex items-center gap-4 mb-5 flex-wrap', className)}
+    />
   );
 };
