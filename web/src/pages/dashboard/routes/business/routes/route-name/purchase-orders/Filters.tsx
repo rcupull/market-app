@@ -21,9 +21,9 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
 
   const handleChange = (state: Value) => {
     if (state === 'ALL') {
-      return onChange?.({ states: allStatesQuery });
+      return onChange?.({ page: 1, states: allStatesQuery });
     }
-    onChange?.({ states: [state] });
+    onChange?.({ page: 1, states: [state] });
   };
 
   return (

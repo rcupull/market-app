@@ -134,7 +134,7 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
   const xsContent = (
     <div className="flex items-center">
       {query.businessTab && (
-        <span className="font-bold mr-2">
+        <span className="font-bold mr-2 sm:hidden">
           {getBusinessTabLabel(query.businessTab as BusinessTab)}
         </span>
       )}

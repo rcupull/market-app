@@ -1,11 +1,12 @@
 import { QueryHandle } from '../../types/general';
-import { FilterQuery, UpdateQuery } from 'mongoose';
+import { FilterQuery, PaginateOptions, UpdateQuery } from 'mongoose';
 import { UpdateOptions } from 'mongodb';
 import { ShoppingModel } from '../../schemas/shopping';
 import { Shopping } from '../../types/shopping';
 import { Post, PostPurshaseNotes } from '../../types/post';
 import { isEqualIds } from '../../utils/general';
 import { User } from '../../types/user';
+import { PaginateResult } from '../../middlewares/pagination';
 
 const updateOrAddOne: QueryHandle<
   {
@@ -95,13 +96,14 @@ const updateOrAddOne: QueryHandle<
 
 const getAll: QueryHandle<
   {
+    paginateOptions?: PaginateOptions;
     query: FilterQuery<Shopping>;
   },
-  Array<Shopping>
-> = async ({ query }) => {
-  const out = await ShoppingModel.find(query);
+  PaginateResult<Shopping>
+> = async ({ query, paginateOptions = {} }) => {
+  const out = await ShoppingModel.paginate(query, paginateOptions);
 
-  return out;
+  return out as unknown as PaginateResult<Shopping>;
 };
 
 const getOne: QueryHandle<

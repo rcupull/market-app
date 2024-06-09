@@ -36,6 +36,11 @@ export const RouteName = () => {
   useEffect(() => {
     if (routeName) {
       businessOwnerData.onFetch({ routeName });
+
+      if (!query.businessTab) {
+        const businessTab: BusinessTab = 'products';
+        onChangeQuery({ businessTab });
+      }
     }
   }, [routeName]);
 
@@ -58,10 +63,9 @@ export const RouteName = () => {
     return <></>;
   }
 
-  const { name, hidden } = business;
+  const { hidden } = business;
 
   const tabsItems: Array<TabItem & { q: BusinessTab }> = [
-    //
     {
       q: 'products',
       label: getBusinessTabLabel('products'),
@@ -111,7 +115,6 @@ export const RouteName = () => {
     <>
       <BusinessConfig business={business} />
       <LayoutSection
-        title={name}
         topRightHeader={
           <div className="flex items-center gap-6">
             <KpiTelegram className="hidden sm:flex" />

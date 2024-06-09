@@ -1,17 +1,18 @@
 import { useFetch } from 'hooks/useFetch';
 
-import { FetchResource } from 'types/api';
+import { FetchResourceWithPagination, PaginatedData } from 'types/api';
 import { Shopping } from 'types/shopping';
 import { getEndpoint } from 'utils/api';
+import { getPaginationResources } from 'utils/pagination';
 
-export const useGetShopping = (): {
-  getShopping: FetchResource<{ routeName: string }, Array<Shopping>>;
+export const useGetAllShopping = (): {
+  getAllShopping: FetchResourceWithPagination<{ routeName: string }, Shopping>;
 } => {
-  const fetch = useFetch<Array<Shopping>>();
+  const fetch = useFetch<PaginatedData<Shopping>>();
 
   return {
-    getShopping: {
-      data: fetch[0],
+    getAllShopping: {
+      ...getPaginationResources(fetch[0]),
       status: fetch[1],
       fetch: (query, options = {}) => {
         fetch[2](

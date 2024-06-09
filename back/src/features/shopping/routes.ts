@@ -3,6 +3,7 @@ import { validators } from '../../middlewares/express-validator';
 import { addPostToReq, isLogged, isUserThisBusinessOwner } from '../../middlewares/verify';
 
 import { shoppingHandles } from './handles';
+import { pagination } from '../../middlewares/pagination';
 
 export const router = Router();
 
@@ -14,6 +15,7 @@ router
     validators.query('routeName').notEmpty(),
     validators.handle,
     isLogged,
+    pagination,
     shoppingHandles.get_shopping()
   )
   .post(
@@ -36,6 +38,7 @@ router
     validators.query('routeName').notEmpty(),
     validators.handle,
     isLogged,
+    pagination,
     isUserThisBusinessOwner,
     shoppingHandles.get_shopping_owner()
   );

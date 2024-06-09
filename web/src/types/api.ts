@@ -108,7 +108,13 @@ export type GetAllBillsQuery = {
   page?: number;
 };
 
-export type GetAllShoppingQuery = { routeName: string; states?: Array<ShoppingState> };
+export type GetAllShoppingQuery = {
+  routeName: string;
+  states?: Array<ShoppingState>;
+  //
+  limit?: number;
+  page?: number;
+};
 
 export type GetAllBusinessQuery = {
   routeNames?: Array<string>;

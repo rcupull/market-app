@@ -37,7 +37,7 @@ export const PurchaseOrders = () => {
   }, [business?.routeName]);
 
   const onRefreshForce = () => {
-    filters.onMergeFilters({}, { forceFetch: true });
+    filters.onMergeFilters({ page: 1 }, { forceFetch: true });
   };
 
   return (
