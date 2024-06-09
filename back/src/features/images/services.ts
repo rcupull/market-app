@@ -7,9 +7,9 @@ import { logger } from '../logger';
 const deleteOne: QueryHandle<{
   src: string;
 }> = async ({ src }) => {
-  const fullPath = `${getAssetsDir()}\\${src}`;
+  const fullPath = `${getAssetsDir()}/${src}`;
 
-  console.log(fullPath)
+  //console.log(fullPath)
 
   if (fs.existsSync(fullPath)) {
     fs.unlink(fullPath, (err) => {
@@ -53,7 +53,7 @@ const deleteOldImages: QueryHandle<{
   );
 
   imagesToRemove.forEach(({ src }) => {
-    console.log(src);
+    //console.log(src);
     deleteOne({ src });
   });
 };
@@ -62,8 +62,8 @@ const deleteManyImages: QueryHandle<{
   imagesUrls: Array<string> | undefined;
 }> = async ({imagesUrls = []}) =>{
   console.log(imagesUrls)
-  imagesUrls.map((url) => `app-images\\${url}`).forEach((url) =>{
-    console.log(url)
+  imagesUrls.map((url) => `app-images/${url}`).forEach((url) =>{
+    //console.log(url)
     deleteOne({src : url});
   });
 }

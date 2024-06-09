@@ -9,7 +9,6 @@ import {
   get400Response,
   getUserNotFoundResponse,
 } from '../../utils/server-response';
-import { Image } from '../../types/general';
 import { getAssetsDir } from '../../config';
 import sharp from 'sharp';
 import { getFullFileNameToSave } from './utils';
