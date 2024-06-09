@@ -22,8 +22,8 @@ export const useDeleteUnusedImages = (): {
             method: 'delete',
             url: getEndpoint({
               path: '/images-checkeditor/delete-unused',
-              query: { urls },
             }),
+            data: urls
           },
           options,
         );
