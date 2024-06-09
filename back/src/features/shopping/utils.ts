@@ -7,8 +7,6 @@ import { shoppingServices } from './services';
 import { isEqualIds } from '../../utils/general';
 import { postServices } from '../post/services';
 import { sendUpdateStockAmountMessage } from '../notifications/handles';
-import { addPostToReq } from '../../middlewares/verify';
-import { Post } from '../../types/post';
 
 export const getDebitFromOrder = ({
   order,

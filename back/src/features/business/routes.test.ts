@@ -325,7 +325,7 @@ describe('DELETE: /business/:routeName', () => {
   });
 
   it('should not remove if not autehticated', async () => {
-    const { business1User1, user1 } = await fillBD();
+    const { business1User1 } = await fillBD();
 
     //delete business
     await supertest(app)

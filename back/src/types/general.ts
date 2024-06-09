@@ -1,4 +1,4 @@
-import { Request, Response, RequestHandler as ExpressRequestHandler } from 'express';
+import { RequestHandler as ExpressRequestHandler } from 'express';
 import { ServerResponse } from 'http';
 import {
   ApplySchemaOptions,
@@ -69,4 +69,4 @@ export interface HtmlMeta {
   image: string;
 }
 
-export type ModelDocument<T extends AnyRecord = AnyRecord> = Document<unknown, {}, T> & T;
+export type ModelDocument<T extends AnyRecord = AnyRecord> = Document<unknown, AnyRecord, T> & T;

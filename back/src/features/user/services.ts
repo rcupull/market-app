@@ -1,7 +1,6 @@
 import { QueryHandle } from '../../types/general';
 import { User } from '../../types/user';
 import { UserModel } from '../../schemas/user';
-import { get401Response, get404Response } from '../../utils/server-response';
 import { FilterQuery, ProjectionType, UpdateQuery } from 'mongoose';
 import { UpdateOptions } from 'mongodb';
 

@@ -1,4 +1,5 @@
 import { join } from 'path';
+//eslint-disable-next-line
 const appConfig = require('../../app-config.js');
 
 export const serviceAccount = appConfig.googleApplicationCredentials;

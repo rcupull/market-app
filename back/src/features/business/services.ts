@@ -12,7 +12,6 @@ import { postServices } from '../post/services';
 import { PaginateResult, paginationCustomLabels } from '../../middlewares/pagination';
 import { ServerResponse } from 'http';
 import { imagesServices } from '../images/services';
-import { get400Response, get404Response } from '../../utils/server-response';
 import { UpdateOptions } from 'mongodb';
 
 type UpdateQueryBusiness =

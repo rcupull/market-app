@@ -5,12 +5,10 @@ import { TestBDContent, fillBD } from '../../utils/test-BD';
 import { getTestingRoute } from '../../utils/api';
 import { Shopping } from '../../types/shopping';
 import { Post } from '../../types/post';
-import { notificationsServices } from '../notifications/services';
 import * as notificationsHanldlesAll from '../notifications/handles';
 
 jest.mock('../notifications/services', () => ({
   notificationsServices: {
-    sendNotification: jest.fn(),
     init: jest.fn(),
     sendNotificationToUpdate: jest.fn(),
   },
@@ -112,7 +110,7 @@ describe('POST: /shopping', () => {
   });
 
   it('should fail post if the user is not autenticated', async () => {
-    const { productPost1Business1User1, user1, business1User1 } = await fillBD();
+    const { productPost1Business1User1 } = await fillBD();
 
     await supertest(app)
       .post(
@@ -219,7 +217,7 @@ describe('DELETE: /shopping', () => {
   });
 
   it('should fail if the user is not autenticated', async () => {
-    const { productPost1Business1User1, user1, business1User1 } = await fillBD();
+    const { business1User1 } = await fillBD();
 
     await supertest(app)
       .del(
