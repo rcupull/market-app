@@ -149,6 +149,7 @@ const delete_unused_images: () => RequestHandler = () =>{
     withTryCatch(req, res, async () =>{
       const {urls} = req.body
       const imagesUrls = urls as string[] | undefined
+
       const out = await imagesServices.deleteManyImages({ imagesUrls: imagesUrls })
 
       get200Response({
