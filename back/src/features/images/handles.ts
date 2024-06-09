@@ -9,6 +9,7 @@ import {
   get400Response,
   getUserNotFoundResponse,
 } from '../../utils/server-response';
+import { Image } from '../../types/general';
 import { getAssetsDir } from '../../config';
 import sharp from 'sharp';
 import { getFullFileNameToSave } from './utils';
@@ -144,8 +145,24 @@ const delete_one_image: () => RequestHandler = () => {
   };
 };
 
+const delete_unused_images: () => RequestHandler = () =>{
+  return (req, res) => {
+    withTryCatch(req, res, async () =>{
+      const {urls} = req.body
+      const imagesUrls = urls as string[] | undefined
+      const out = await imagesServices.deleteManyImages({ imagesUrls: imagesUrls })
+
+      get200Response({
+        res,
+        json: {},
+      });
+    })
+  }
+}
+
 export const imageHandles = {
   save_image,
   save_image_checkeditor,
   delete_one_image,
+  delete_unused_images,
 };

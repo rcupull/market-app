@@ -17,5 +17,12 @@ router
     isLogged,
     imageHandles.save_image_checkeditor()
   );
-
+router
+  .route('/images-checkeditor/delete-unused')
+  .delete(
+    validators.body('urls'), 
+    validators.handle, 
+    isLogged,
+    imageHandles.delete_unused_images()
+  )
 /////////////////////////////////////////////////////////////////
