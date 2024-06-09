@@ -3,6 +3,7 @@ import { FetchOptions } from 'hooks/useFetch';
 import { BillState } from './billing';
 import { AnyRecord } from './general';
 import { PostType } from './post';
+import { ShoppingState } from './shopping';
 
 //eslint-disable-next-line
 import { ParsedQuery } from 'query-string';
@@ -106,6 +107,8 @@ export type GetAllBillsQuery = {
   limit?: number;
   page?: number;
 };
+
+export type GetAllShoppingQuery = { routeName: string; states?: Array<ShoppingState> };
 
 export type GetAllBusinessQuery = {
   routeNames?: Array<string>;

@@ -60,7 +60,8 @@ export const RouteName = () => {
 
   const { name, hidden } = business;
 
-  const tabsItems: Array<TabItem & { q: BusinessTab }> = [//
+  const tabsItems: Array<TabItem & { q: BusinessTab }> = [
+    //
     {
       q: 'products',
       label: getBusinessTabLabel('products'),

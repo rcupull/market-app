@@ -133,7 +133,11 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
 
   const xsContent = (
     <div className="flex items-center">
-      {query.businessTab && <span className='font-bold mr-2'>{getBusinessTabLabel(query.businessTab as BusinessTab)}</span>}
+      {query.businessTab && (
+        <span className="font-bold mr-2">
+          {getBusinessTabLabel(query.businessTab as BusinessTab)}
+        </span>
+      )}
       <Menu
         className="sm:hidden"
         buttonElement={<IconButtonOptionsBars />}
