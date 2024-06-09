@@ -1,5 +1,6 @@
 import { FetchOptions } from 'hooks/useFetch';
 
+import { BillState } from './billing';
 import { AnyRecord } from './general';
 import { PostType } from './post';
 
@@ -96,6 +97,14 @@ export type GetAllPostsQuery = {
   limit?: number;
   page?: number;
   postType?: PostType;
+};
+
+export type GetAllBillsQuery = {
+  routeName: string;
+  states?: Array<BillState>;
+  //
+  limit?: number;
+  page?: number;
 };
 
 export type GetAllBusinessQuery = {

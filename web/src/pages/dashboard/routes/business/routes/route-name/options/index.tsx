@@ -18,21 +18,24 @@ import { useModal } from 'features/modal/useModal';
 import { callAfarIds, useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
 
+import { BusinessTab, getBusinessTabLabel } from '../utils';
+
 import SvgAddressCard from 'icons/AddressCard';
 import SvgCogSolid from 'icons/CogSolid';
 import SvgLayerGroupSolid from 'icons/LayerGroupSolid';
 import SvgLinkSolid from 'icons/LinkSolid';
+import SvgMoneyBillAltSolid from 'icons/MoneyBillAltSolid';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { KpiTelegram, KpiTotalDebit } from 'pages/@common/kpis-business';
 import { Business } from 'types/business';
 import { getOneBusinessRoute } from 'utils/business';
 
-export interface OptionsMenuProps {
+export interface OptionsProps {
   business: Business;
   onRefresh: () => void;
 }
 
-export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
+export const Options = ({ business, onRefresh }: OptionsProps) => {
   const { routeName, hidden } = business;
 
   const { pushModal } = useModal();
@@ -129,69 +132,78 @@ export const OptionsMenu = ({ business, onRefresh }: OptionsMenuProps) => {
   };
 
   const xsContent = (
-    <Menu
-      className="sm:hidden"
-      buttonElement={<IconButtonOptionsBars />}
-      bottomElement={
-        <div className="flex flex-col items-center gap-2 p-2">
-          <Divider className="!m-0" />
+    <div className="flex items-center">
+      {query.businessTab && <span className='font-bold mr-2'>{getBusinessTabLabel(query.businessTab as BusinessTab)}</span>}
+      <Menu
+        className="sm:hidden"
+        buttonElement={<IconButtonOptionsBars />}
+        bottomElement={
+          <div className="flex flex-col items-center gap-2 p-2">
+            <Divider className="!m-0" />
 
-          <KpiTelegram className="flex sm:hidden" />
+            <KpiTelegram className="flex sm:hidden" />
 
-          <KpiTotalDebit className="flex sm:hidden" />
-        </div>
-      }
-      items={[
-        {
-          label: 'Ver la página de este negocio',
-          onClick: () => {
-            pushRoute(getOneBusinessRoute({ routeName }));
+            <KpiTotalDebit className="flex sm:hidden" />
+          </div>
+        }
+        items={[
+          {
+            label: 'Ver la página de este negocio',
+            onClick: () => {
+              pushRoute(getOneBusinessRoute({ routeName }));
+            },
+            svg: IconView,
           },
-          svg: IconView,
-        },
-        {
-          label: `${hidden ? 'Mostrar' : 'Ocultar'} este negocio`,
-          onClick: handleShowHide,
-          svg: ({ className }) => <IconShowHide hidden={hidden} className={className} />,
-        },
-        {
-          label: 'Eliminar el negocio',
-          onClick: handleDelete,
-          svg: IconRemove,
-          divider: true,
-        },
-        {
-          label: 'Productos',
-          onClick: () => onChangeQuery({ businessTab: 'products' }),
-          svg: SvgAddressCard,
-          active: query.businessTab === 'products',
-        },
-        {
-          label: 'Enlaces',
-          onClick: () => onChangeQuery({ businessTab: 'links' }),
-          svg: SvgLinkSolid,
-          active: query.businessTab === 'links',
-        },
-        {
-          label: 'Secciones',
-          onClick: () => onChangeQuery({ businessTab: 'sections' }),
-          svg: SvgLayerGroupSolid,
-          active: query.businessTab === 'sections',
-        },
-        {
-          label: 'Órdenes de compras',
-          onClick: () => onChangeQuery({ businessTab: 'shopping' }),
-          svg: SvgShoppingCartSolid,
-          active: query.businessTab === 'shopping',
-        },
-        {
-          label: 'Configuración',
-          onClick: () => onChangeQuery({ businessTab: 'settings' }),
-          svg: SvgCogSolid,
-          active: query.businessTab === 'settings',
-        },
-      ]}
-    />
+          {
+            label: `${hidden ? 'Mostrar' : 'Ocultar'} este negocio`,
+            onClick: handleShowHide,
+            svg: ({ className }) => <IconShowHide hidden={hidden} className={className} />,
+          },
+          {
+            label: 'Eliminar el negocio',
+            onClick: handleDelete,
+            svg: IconRemove,
+            divider: true,
+          },
+          {
+            label: getBusinessTabLabel('products'),
+            onClick: () => onChangeQuery({ businessTab: 'products' }),
+            svg: SvgAddressCard,
+            active: query.businessTab === 'products',
+          },
+          {
+            label: getBusinessTabLabel('links'),
+            onClick: () => onChangeQuery({ businessTab: 'links' }),
+            svg: SvgLinkSolid,
+            active: query.businessTab === 'links',
+          },
+          {
+            label: getBusinessTabLabel('sections'),
+            onClick: () => onChangeQuery({ businessTab: 'sections' }),
+            svg: SvgLayerGroupSolid,
+            active: query.businessTab === 'sections',
+          },
+          {
+            label: getBusinessTabLabel('shopping'),
+            onClick: () => onChangeQuery({ businessTab: 'shopping' }),
+            svg: SvgShoppingCartSolid,
+            active: query.businessTab === 'shopping',
+          },
+          {
+            label: getBusinessTabLabel('billing'),
+            onClick: () => onChangeQuery({ businessTab: 'billing' }),
+            svg: SvgMoneyBillAltSolid,
+            active: query.businessTab === 'billing',
+          },
+          {
+            label: getBusinessTabLabel('settings'),
+            onClick: () => onChangeQuery({ businessTab: 'settings' }),
+            svg: SvgCogSolid,
+            active: query.businessTab === 'settings',
+          },
+        ]}
+      />
+    </div>
   );
 
   const smContent = (
