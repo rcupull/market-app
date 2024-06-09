@@ -6,6 +6,7 @@ import { allStatesQuery } from './utils';
 import { GetAllShoppingQuery } from 'types/api';
 import { StyleProps } from 'types/general';
 import { ShoppingState } from 'types/shopping';
+import { cn } from 'utils/general';
 
 type Value = ShoppingState | 'ALL';
 
@@ -27,7 +28,6 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
   };
 
   return (
-    <div className={className}>
       <RadioGroup<{ label: string; value: Value }>
         onChange={handleChange}
         value={getValue()}
@@ -57,8 +57,7 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
             value: 'ALL',
           },
         ]}
-        className="flex items-center gap-2 mb-5"
+        className={cn("flex items-center gap-4 mb-5 flex-wrap", className)}
       />
-    </div>
   );
 };
