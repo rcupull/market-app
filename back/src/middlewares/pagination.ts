@@ -30,8 +30,9 @@ export const paginationCustomLabels: PaginateOptions['customLabels'] = {
   meta: 'paginator',
 };
 
-export const pagination: RequestHandler = (req, res, next) => {
+export const pagination: RequestHandler = (req, _, next) => {
   // destructuring to see the query in swagger
+  //eslint-disable-next-line
   const { limit, page, offset, pagination } = req.query as PaginateOptions;
 
   const parameters = new PaginationParameters(req);

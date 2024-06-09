@@ -9,7 +9,7 @@ import { getUserNotFoundResponse } from '../../utils/server-response';
 const get_users_userId: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const { params, cookies } = req;
+      const { params } = req;
 
       const { userId } = params;
 

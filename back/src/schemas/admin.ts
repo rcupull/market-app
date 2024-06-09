@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-import { AuthSession, ValidationCode } from '../types/auth';
 import { createdAtSchemaDefinition } from '../utils/schemas';
 import { AdminConfig } from '../types/admin';
 

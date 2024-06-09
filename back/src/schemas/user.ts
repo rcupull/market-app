@@ -43,6 +43,7 @@ const updateUserPassword = (user: User): Promise<void> => {
 UserSchema.plugin(mongoosePaginate);
 
 UserSchema.pre('save', async function (next) {
+  //eslint-disable-next-line
   const user = this;
 
   if (user.isModified('password')) {
