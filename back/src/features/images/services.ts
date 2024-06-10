@@ -47,7 +47,7 @@ const deleteOldImages: QueryHandle<{
   oldImagesSrcs: Array<Image> | undefined;
 }> = async ({ newImagesSrcs = [], oldImagesSrcs = [] }) => {
   const imagesToRemove = oldImagesSrcs.filter(
-    ({ src }) => !newImagesSrcs.map(({ src }) => src).includes(src)
+    ({ src }) => !newImagesSrcs.map(({ src }) => src).includes(src),
   );
 
   imagesToRemove.forEach(({ src }) => {
@@ -55,11 +55,11 @@ const deleteOldImages: QueryHandle<{
   });
 };
 
-const deleteManyImages: QueryHandle<{
-  imagesUrls: Array<string> | undefined;
-}> = async ({ imagesUrls = [] }) => {
-  imagesUrls.forEach((url) => {
-    deleteOne({ src: url });
+const deleteMany: QueryHandle<{
+  srcs: Array<string> | undefined;
+}> = async ({ srcs = [] }) => {
+  srcs.forEach((src) => {
+    deleteOne({ src });
   });
 };
 
@@ -84,5 +84,5 @@ export const imagesServices = {
   deleteOldImages,
   deleteDir,
   deleteImagesBy,
-  deleteManyImages,
+  deleteMany,
 };
