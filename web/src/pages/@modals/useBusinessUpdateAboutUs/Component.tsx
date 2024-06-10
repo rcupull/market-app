@@ -1,9 +1,6 @@
-import { useRef } from 'react';
-
 import { Button } from 'components/button';
-import { CheckEditorUtils } from 'components/check-editor';
 import { CheckEditorUploadAdapter } from 'components/check-editor/CheckEditorUploadAdapter';
-import { getCheckEditorUploadUrl } from 'components/check-editor/utils';
+import { getCheckEditorUploadUrl, getImagesToRemove } from 'components/check-editor/utils';
 import { FieldCheckEditor } from 'components/field-check-editor';
 import { FieldInput } from 'components/field-input';
 import { FieldToggleButton } from 'components/field-toggle-button';
@@ -31,7 +28,6 @@ export const Component = ({ portal }: ComponentProps) => {
   const { onClose } = useModal();
 
   const { updateOneBusiness } = useUpdateOneBusiness();
-  const refCheckEditorUtils = useRef<CheckEditorUtils>();
 
   const { deleteImages } = useDeleteImages();
 
@@ -45,6 +41,13 @@ export const Component = ({ portal }: ComponentProps) => {
     visible: business?.aboutUsPage?.visible || false,
     title: business?.aboutUsPage?.title || '',
     description: business?.aboutUsPage?.description || '',
+  };
+
+  const handleRemoveImageSrc = (urls: Array<string>) => {
+    if (!urls.length) return;
+
+    const srcs = urls.map((url) => url.replace(getEndpointUrl(), ''));
+    deleteImages.fetch({ srcs });
   };
 
   return (
@@ -79,8 +82,16 @@ export const Component = ({ portal }: ComponentProps) => {
                     uploadUrl: getCheckEditorUploadUrl({ routeName }),
                   });
                 }}
-                onChangeUtils={(utils) => {
-                  refCheckEditorUtils.current = utils;
+                onChange={(newValue) => {
+                  /**
+                   * remove all images added and remove excluding the initial images
+                   */
+                  const imagesToRemove = getImagesToRemove({
+                    newData: newValue,
+                    currentData: value.description,
+                    exclude: business?.aboutUsPage?.description,
+                  });
+                  handleRemoveImageSrc(imagesToRemove);
                 }}
               />
 
@@ -90,15 +101,15 @@ export const Component = ({ portal }: ComponentProps) => {
                   isBusy={updateOneBusiness.status.isBusy}
                   disabled={!isValid}
                   onClick={() => {
-                    const handleRemoveImagesFromCheckEditor = () => {
-                      const imagesSrcToRemove = refCheckEditorUtils.current
-                        ?.getImageSrcToRemvove(initialValue.description)
-                        .map((o) => o.replace(getEndpointUrl(), ''));
+                    /**
+                     * remove all images added and remove according initial images
+                     */
+                    const imagesToRemove = getImagesToRemove({
+                      newData: value.description || '',
+                      currentData: business?.aboutUsPage?.description,
+                    });
 
-                      if (imagesSrcToRemove?.length) {
-                        deleteImages.fetch({ srcs: imagesSrcToRemove });
-                      }
-                    };
+                    handleRemoveImageSrc(imagesToRemove);
 
                     updateOneBusiness.fetch(
                       {
@@ -109,8 +120,6 @@ export const Component = ({ portal }: ComponentProps) => {
                       },
                       {
                         onAfterSuccess: () => {
-                          handleRemoveImagesFromCheckEditor();
-
                           onFetch({ routeName });
                           onClose();
                         },

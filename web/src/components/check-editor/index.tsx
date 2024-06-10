@@ -1,18 +1,13 @@
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import { useEffect, useRef } from 'react';
 
 import { HtmlTextContainer } from 'components/html-text-container';
 
 import { CheckEditorToolbarItem } from './types';
-import { getImagesToRemove } from './utils';
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Nullable, StyleProps } from 'types/general';
 import { compact } from 'utils/general';
 
-export interface CheckEditorUtils {
-  getImageSrcToRemvove: (initialData: string | undefined) => Array<string>;
-}
 export interface CheckEditorProps extends StyleProps {
   onBlur?: (args: { event: any; editor: ClassicEditor; data: string }) => void;
   onFocus?: (args: { event: any; editor: ClassicEditor; data: string }) => void;
@@ -21,7 +16,6 @@ export interface CheckEditorProps extends StyleProps {
   value?: string;
   classNameContainer?: string;
   getUploadAdapter?: (args: { loader: any }) => any;
-  onChangeUtils?: (utils: CheckEditorUtils) => void;
 }
 
 export const CheckEditor = ({
@@ -33,7 +27,6 @@ export const CheckEditor = ({
   className,
   classNameContainer,
   getUploadAdapter,
-  onChangeUtils,
 }: CheckEditorProps) => {
   const addStylesToContainer = () => {
     const [element] = document.getElementsByClassName('ck-editor__editable_inline');
@@ -50,18 +43,6 @@ export const CheckEditor = ({
       }
     }
   };
-
-  const refEditor = useRef<ClassicEditor>();
-
-  useEffect(() => {
-    onChangeUtils?.({
-      getImageSrcToRemvove: (initialData) => {
-        if (!refEditor.current) return [];
-
-        return getImagesToRemove(refEditor.current, initialData);
-      },
-    });
-  }, []);
 
   const getItems = (): Array<CheckEditorToolbarItem> => {
     const out: Array<Nullable<CheckEditorToolbarItem>> = [
@@ -108,8 +89,8 @@ export const CheckEditor = ({
           onReady?.(editor);
         }}
         onChange={(event, editor) => {
-          refEditor.current = editor;
           const data = editor.getData();
+
           onChange?.({ event, editor, data });
         }}
         onBlur={(event, editor) => {

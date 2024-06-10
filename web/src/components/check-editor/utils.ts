@@ -1,4 +1,3 @@
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Query } from 'types/api';
 import { getEndpoint, getEndpointUrl } from 'utils/api';
 import { compact } from 'utils/general';
@@ -18,18 +17,23 @@ export const getImagesSrcFromValue = (data: string) => {
   return compact(out);
 };
 
-export const getImagesToRemove = (editor: ClassicEditor, currentData: string | undefined) => {
+export const getImagesToRemove = (args: {
+  newData: string;
+  currentData?: string;
+  exclude?: string;
+}) => {
+  const { newData, exclude = '', currentData = '' } = args;
   const out: Array<string> = [];
-  if (currentData) {
-    const editorImagesSrc = getImagesSrcFromValue(editor.getData());
-    const currentImagesSrc = getImagesSrcFromValue(currentData);
+  const newSrcs = getImagesSrcFromValue(newData);
+  const currentDataSrcs = getImagesSrcFromValue(currentData);
+  const excludeSrcs = getImagesSrcFromValue(exclude);
 
-    currentImagesSrc.forEach((src) => {
-      if (!editorImagesSrc.includes(src)) {
-        out.push(src);
-      }
-    });
-  }
+  currentDataSrcs.forEach((src) => {
+    if (newSrcs.includes(src)) return;
+    if (excludeSrcs.includes(src)) return;
+
+    out.push(src);
+  });
 
   return out;
 };
