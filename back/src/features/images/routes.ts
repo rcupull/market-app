@@ -20,9 +20,9 @@ router
 router
   .route('/images-checkeditor/delete-unused')
   .delete(
-    validators.body('urls'), 
-    validators.handle, 
+    validators.body('urls'),
+    validators.handle,
     isLogged,
     imageHandles.delete_unused_images()
-  )
+  );
 /////////////////////////////////////////////////////////////////

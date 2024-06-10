@@ -57,11 +57,11 @@ const deleteOldImages: QueryHandle<{
 
 const deleteManyImages: QueryHandle<{
   imagesUrls: Array<string> | undefined;
-}> = async ({imagesUrls = []}) =>{
-  imagesUrls.forEach((url) =>{
-    deleteOne({src : url});
+}> = async ({ imagesUrls = [] }) => {
+  imagesUrls.forEach((url) => {
+    deleteOne({ src: url });
   });
-}
+};
 
 const deleteImagesBy: QueryHandle<{
   routeName?: string;

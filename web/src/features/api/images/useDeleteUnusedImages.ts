@@ -1,10 +1,10 @@
-import { useFetch } from "hooks/useFetch";
+import { useFetch } from 'hooks/useFetch';
 
-import { FetchResource } from "types/api";
-import { getEndpoint } from "utils/api";
+import { FetchResource } from 'types/api';
+import { getEndpoint } from 'utils/api';
 
 export interface UseDeleteUnusedImagesResponse {
-  message: string
+  message: string;
 }
 
 export const useDeleteUnusedImages = (): {
@@ -13,7 +13,7 @@ export const useDeleteUnusedImages = (): {
   const fetch = useFetch();
 
   return {
-    deleteUnusedImages:{
+    deleteUnusedImages: {
       data: fetch[0],
       status: fetch[1],
       fetch: ({ urls }, options = {}) => {
@@ -23,12 +23,12 @@ export const useDeleteUnusedImages = (): {
             url: getEndpoint({
               path: '/images-checkeditor/delete-unused',
             }),
-            data: { urls }
+            data: { urls },
           },
           options,
         );
       },
       reset: fetch[3],
-    }
-  }
-}
+    },
+  };
+};

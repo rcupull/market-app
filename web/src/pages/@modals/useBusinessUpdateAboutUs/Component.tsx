@@ -33,7 +33,7 @@ export const Component = ({ portal }: ComponentProps) => {
   const { updateOneBusiness } = useUpdateOneBusiness();
   const refCheckEditorUtils = useRef<CheckEditorUtils>();
 
-  const {deleteUnusedImages} = useDeleteUnusedImages()
+  const { deleteUnusedImages } = useDeleteUnusedImages();
 
   if (!business) {
     return <></>;
@@ -96,7 +96,7 @@ export const Component = ({ portal }: ComponentProps) => {
                         .map((o) => o.replace(getEndpointUrl(), ''));
 
                       if (imagesSrcToRemove?.length) {
-                        deleteUnusedImages.fetch({urls: imagesSrcToRemove});
+                        deleteUnusedImages.fetch({ urls: imagesSrcToRemove });
                       }
                     };
 
