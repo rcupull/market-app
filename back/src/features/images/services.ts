@@ -55,6 +55,14 @@ const deleteOldImages: QueryHandle<{
   });
 };
 
+const deleteMany: QueryHandle<{
+  srcs: Array<string> | undefined;
+}> = async ({ srcs = [] }) => {
+  srcs.forEach((src) => {
+    deleteOne({ src });
+  });
+};
+
 const deleteImagesBy: QueryHandle<{
   routeName?: string;
   postId?: string;
@@ -76,4 +84,5 @@ export const imagesServices = {
   deleteOldImages,
   deleteDir,
   deleteImagesBy,
+  deleteMany,
 };

@@ -7,7 +7,10 @@ export const router = Router();
 
 /////////////////////////////////////////////////////////////////
 
-router.route('/images').post(isLogged, imageHandles.save_image());
+router
+  .route('/images')
+  .post(isLogged, imageHandles.post_images())
+  .delete(validators.body('srcs'), validators.handle, isLogged, imageHandles.delete_images());
 
 router
   .route('/images-checkeditor')
@@ -15,7 +18,5 @@ router
     validators.query('endpoint').notEmpty(),
     validators.handle,
     isLogged,
-    imageHandles.save_image_checkeditor()
+    imageHandles.post_image_checkeditor()
   );
-
-/////////////////////////////////////////////////////////////////

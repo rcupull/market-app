@@ -15,7 +15,7 @@ import { getFullFileNameToSave } from './utils';
 import path from 'path';
 import fs from 'fs';
 
-const save_image: () => RequestHandler = () => {
+const post_images: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
       uploadImageMiddleware(req, res, async (err) => {
@@ -67,7 +67,7 @@ const save_image: () => RequestHandler = () => {
   };
 };
 
-const save_image_checkeditor: () => RequestHandler = () => {
+const post_image_checkeditor: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
       uploadImageMiddleware(req, res, async (err) => {
@@ -144,8 +144,25 @@ const delete_one_image: () => RequestHandler = () => {
   };
 };
 
+const delete_images: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { srcs } = req.body;
+
+      await imagesServices.deleteMany({ srcs });
+
+      get200Response({
+        res,
+        json: {},
+      });
+    });
+  };
+};
+
 export const imageHandles = {
-  save_image,
-  save_image_checkeditor,
+  post_images,
   delete_one_image,
+  //
+  post_image_checkeditor,
+  delete_images,
 };

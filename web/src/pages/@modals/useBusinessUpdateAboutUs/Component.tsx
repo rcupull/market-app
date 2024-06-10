@@ -10,6 +10,7 @@ import { FieldToggleButton } from 'components/field-toggle-button';
 import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
+import { useDeleteImages } from 'features/api/images/useDeleteImages';
 import { useModal } from 'features/modal/useModal';
 
 import { Portal } from 'hooks/usePortal';
@@ -31,6 +32,8 @@ export const Component = ({ portal }: ComponentProps) => {
 
   const { updateOneBusiness } = useUpdateOneBusiness();
   const refCheckEditorUtils = useRef<CheckEditorUtils>();
+
+  const { deleteImages } = useDeleteImages();
 
   if (!business) {
     return <></>;
@@ -93,9 +96,7 @@ export const Component = ({ portal }: ComponentProps) => {
                         .map((o) => o.replace(getEndpointUrl(), ''));
 
                       if (imagesSrcToRemove?.length) {
-                        /**
-                         * TODO use imagesSrcToRemove to remove the deleted images in checkEditor
-                         */
+                        deleteImages.fetch({ srcs: imagesSrcToRemove });
                       }
                     };
 
