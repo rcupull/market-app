@@ -21,7 +21,7 @@ import { sendNewOrderPushMessage, sendUpdateStockAmountMessage } from '../notifi
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const { query, user } = req;
+      const { query, user, paginateOptions } = req;
 
       if (!user) {
         return getUserNotFoundResponse({ res });
@@ -30,6 +30,7 @@ const get_shopping: () => RequestHandler = () => {
       const { routeName } = query;
 
       const out = await shoppingServices.getAll({
+        paginateOptions,
         query: {
           purchaserId: user._id,
           'posts.post.routeName': routeName,
@@ -46,7 +47,7 @@ const get_shopping: () => RequestHandler = () => {
 const get_shopping_owner: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const { business, query } = req;
+      const { business, query, paginateOptions } = req;
 
       if (!business) {
         return getBusinessNotFoundResponse({ res });
@@ -56,6 +57,7 @@ const get_shopping_owner: () => RequestHandler = () => {
       const { states } = query;
 
       const out = await shoppingServices.getAll({
+        paginateOptions,
         query: {
           'posts.post.routeName': routeName,
           ...(states ? { state: { $in: states } } : {}),

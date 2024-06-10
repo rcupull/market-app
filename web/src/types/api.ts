@@ -1,7 +1,9 @@
 import { FetchOptions } from 'hooks/useFetch';
 
+import { BillState } from './billing';
 import { AnyRecord } from './general';
 import { PostType } from './post';
+import { ShoppingState } from './shopping';
 
 //eslint-disable-next-line
 import { ParsedQuery } from 'query-string';
@@ -96,6 +98,22 @@ export type GetAllPostsQuery = {
   limit?: number;
   page?: number;
   postType?: PostType;
+};
+
+export type GetAllBillsQuery = {
+  routeName: string;
+  states?: Array<BillState>;
+  //
+  limit?: number;
+  page?: number;
+};
+
+export type GetAllShoppingQuery = {
+  routeName: string;
+  states?: Array<ShoppingState>;
+  //
+  limit?: number;
+  page?: number;
 };
 
 export type GetAllBusinessQuery = {
