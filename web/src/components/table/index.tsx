@@ -56,15 +56,15 @@ export const Table = <RowData extends AnyRecord = AnyRecord>({
 
     let arg = remapRowsIndex.xs;
     if (breakpoints.xs) handleRemap(arg);
-    arg = remapRowsIndex.sm ? remapRowsIndex.sm : arg
+    arg = remapRowsIndex.sm ? remapRowsIndex.sm : arg;
     if (breakpoints.sm) handleRemap(arg);
-    arg = remapRowsIndex.md ? remapRowsIndex.md : arg
+    arg = remapRowsIndex.md ? remapRowsIndex.md : arg;
     if (breakpoints.md) handleRemap(arg);
-    arg = remapRowsIndex.lg ? remapRowsIndex.lg : arg
+    arg = remapRowsIndex.lg ? remapRowsIndex.lg : arg;
     if (breakpoints.lg) handleRemap(arg);
-    arg = remapRowsIndex.xl ? remapRowsIndex.xl : arg
+    arg = remapRowsIndex.xl ? remapRowsIndex.xl : arg;
     if (breakpoints.xl) handleRemap(arg);
-    arg = remapRowsIndex.xxl ? remapRowsIndex.xxl : arg
+    arg = remapRowsIndex.xxl ? remapRowsIndex.xxl : arg;
     if (breakpoints.xxl) handleRemap(arg);
   }
 
