@@ -1,8 +1,6 @@
-import { Navigate } from 'react-router-dom';
-
 export const Home = () => {
   /**
-   * TODO en esta pagina se mostraran estadisticas del uso de la plataforma y de los planes y usuarios
+   * TODO en esta pagina se mostraran todos los negocios con posibles estadisticas y ordenados por algun requisito
    */
-  return <Navigate to="/admin/users" />;
+  return <>Render all business</>
 };
