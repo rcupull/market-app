@@ -31,7 +31,6 @@ export const PurchaseOrders = () => {
         });
     },
   });
-
   useEffect(() => {
     filters.onMergeFilters({ states: ['REQUESTED'] });
   }, [business?.routeName]);
@@ -55,7 +54,12 @@ export const PurchaseOrders = () => {
         />
       </TopActions>
       <Table<Shopping>
-        heads={[null, 'Cliente', 'Estado', 'Unidades', 'Precio total', 'Fecha de creación']}
+        remapRowsIndex={{
+          xs: [[0, 1, 2, 3, 4]],
+          md: [[0], [1, 2], [3, 4]],
+          lg: 'none',
+        }}
+        heads={['Acciones', 'Cliente', 'Estado', 'Unidades', 'Precio total', 'Fecha de creación']}
         getRowProps={(rowData) => {
           const { createdAt, purchaserName } = rowData;
 

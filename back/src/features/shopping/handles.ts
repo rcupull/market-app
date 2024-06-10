@@ -258,7 +258,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
 const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const user = req.user;
+      const { user } = req;
 
       if (!user) {
         return getUserNotFoundResponse({ res });
@@ -271,7 +271,6 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
 
       const currentOrder = await ShoppingModel.findOne({
         _id: shoppingId,
-        purchaserId: user._id,
       });
 
       if (!currentOrder) {

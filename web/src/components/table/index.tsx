@@ -3,30 +3,20 @@ import { useRef } from 'react';
 import { SpinnerBox } from 'components/spinner-box';
 import { SpinnerEllipsis } from 'components/spinner-ellipsis';
 
+import { useBreakpoints } from 'hooks/useBreakpoints';
 import { useScrollBottom } from 'hooks/useScrollBottom';
 
 import { ReorderContainer } from './reorder-container';
-import { TableRow, TableRowProps } from './table-row';
+import { TableRow } from './table-row';
+import { RemapRowsIndexValue, TableProps } from './types';
+import { getRemapedProps } from './utils';
 
-import { AnyRecord, StyleProps } from 'types/general';
+import { AnyRecord } from 'types/general';
 import { cn } from 'utils/general';
-
-export interface TableProps<RowData extends AnyRecord = AnyRecord> extends StyleProps {
-  heads: Array<React.ReactNode>;
-  getRowProps: (rowData: RowData, rowIndex: number) => TableRowProps;
-  data: Array<RowData> | null;
-  isBusy?: boolean;
-  //
-  onScrollBottom?: () => void;
-  isBusyBottom?: boolean;
-
-  onReorder?: (args: { fromIndex: number; toIndex: number }) => void;
-  enabledReorder?: boolean;
-}
 
 export const Table = <RowData extends AnyRecord = AnyRecord>({
   heads: headsProp,
-  getRowProps,
+  getRowProps: getRowPropsProp,
   data,
   className,
   //
@@ -37,12 +27,47 @@ export const Table = <RowData extends AnyRecord = AnyRecord>({
   //
   enabledReorder,
   onReorder,
+  remapRowsIndex,
 }: TableProps<RowData>) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const { onScroll } = useScrollBottom(ref, () => onScrollBottom?.());
 
   let heads = headsProp;
+  let getRowProps = getRowPropsProp;
+
+  const breakpoints = useBreakpoints();
+
+  if (remapRowsIndex) {
+    const handleRemap = (remapIndex: RemapRowsIndexValue | undefined): void => {
+      if (!remapIndex) {
+        return;
+      }
+
+      const remapedProps = getRemapedProps<RowData>({
+        remapIndex,
+        heads,
+        getRowProps,
+      });
+
+      getRowProps = remapedProps.getRowProps;
+      heads = remapedProps.heads;
+    };
+
+    let arg = remapRowsIndex.xs;
+    if (breakpoints.xs) handleRemap(arg);
+    arg = remapRowsIndex.sm ? remapRowsIndex.sm : arg
+    if (breakpoints.sm) handleRemap(arg);
+    arg = remapRowsIndex.md ? remapRowsIndex.md : arg
+    if (breakpoints.md) handleRemap(arg);
+    arg = remapRowsIndex.lg ? remapRowsIndex.lg : arg
+    if (breakpoints.lg) handleRemap(arg);
+    arg = remapRowsIndex.xl ? remapRowsIndex.xl : arg
+    if (breakpoints.xl) handleRemap(arg);
+    arg = remapRowsIndex.xxl ? remapRowsIndex.xxl : arg
+    if (breakpoints.xxl) handleRemap(arg);
+  }
+
   if (heads && enabledReorder) {
     heads = [null, ...heads];
   }
