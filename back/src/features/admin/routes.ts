@@ -18,7 +18,7 @@ router
     validators.handle,
     isLogged,
     isAdmin,
-    adminHandles.del_users_userId(),
+    adminHandles.del_users_userId()
   );
 
 router

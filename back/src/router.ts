@@ -8,6 +8,7 @@ import { router as catalogsRouter } from './features/catalogs/routes';
 import { router as imagesRouter } from './features/images/routes';
 import { router as shoppingRouter } from './features/shopping/routes';
 import { router as generalRouter } from './features/general/routes';
+import { router as billingRouter } from './features/billing/routes';
 
 export const router = Router();
 
@@ -22,6 +23,7 @@ router.use(
   imagesRouter,
   shoppingRouter,
   generalRouter,
+  billingRouter
 );
 
 export default router;

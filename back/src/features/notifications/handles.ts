@@ -3,20 +3,18 @@ import { Business } from '../../types/business';
 import { QueryHandle } from '../../types/general';
 import { userServices } from '../user/services';
 import { Shopping } from '../../types/shopping';
-import { withTryCatch } from '../../utils/error';
 import { firebaseInstance } from './services';
 import { NotificationPayload } from '../../types/notifications';
 import { compact } from '../../utils/general';
+import { logger } from '../logger';
 
 export const sendNewOrderPushMessage: QueryHandle<{
   business: Business;
   order: Shopping;
-}> = async ({ business, res, req, order }) => {
-  withTryCatch(req, res, async () => {
+}> = async ({ business, order }) => {
+  try {
     const { createdBy, routeName } = business;
     const user = await userServices.getOne({
-      res,
-      req,
       query: {
         _id: createdBy,
       },
@@ -26,6 +24,8 @@ export const sendNewOrderPushMessage: QueryHandle<{
     });
 
     if (user instanceof ServerResponse) return user;
+
+    if (!user) return;
 
     if (user.firebaseToken) {
       const payload: NotificationPayload = {
@@ -39,17 +39,17 @@ export const sendNewOrderPushMessage: QueryHandle<{
         tokens: [user.firebaseToken],
       });
     }
-  });
+  } catch (e) {
+    logger.error(e);
+  }
 };
 
 export const sendUpdateStockAmountMessage: QueryHandle<{
   currentStockAmount: number;
   postId: string;
-}> = async ({ postId, res, req, currentStockAmount }) => {
-  withTryCatch(req, res, async () => {
+}> = async ({ postId, currentStockAmount }) => {
+  try {
     const users = await userServices.find({
-      res,
-      req,
       query: {},
       projection: {
         firebaseToken: 1,
@@ -71,5 +71,7 @@ export const sendUpdateStockAmountMessage: QueryHandle<{
       data: { payload: JSON.stringify(payload) },
       tokens,
     });
-  });
+  } catch (e) {
+    logger.error(e);
+  }
 };

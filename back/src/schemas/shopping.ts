@@ -1,8 +1,9 @@
-import { Schema, SchemaDefinition, model } from 'mongoose';
+import { PaginateModel, Schema, SchemaDefinition, model } from 'mongoose';
 import { createdAtSchemaDefinition } from '../utils/schemas';
 import { Shopping } from '../types/shopping';
 import { PostSchema } from './post';
 import { PostPurshaseNotes } from '../types/post';
+import mongoosePaginate from 'mongoose-paginate-v2';
 
 const purshaseNotesSchemaDefinition: SchemaDefinition<PostPurshaseNotes> = {
   interestedByClothingSizes: {
@@ -55,4 +56,10 @@ const ShoppingSchema = new Schema<Shopping>({
   },
 });
 
-export const ShoppingModel = model<Shopping>('Shopping', ShoppingSchema, 'shopping');
+ShoppingSchema.plugin(mongoosePaginate);
+
+export const ShoppingModel = model<Shopping, PaginateModel<Shopping>>(
+  'Shopping',
+  ShoppingSchema,
+  'shopping'
+);

@@ -41,7 +41,6 @@ describe('POST /auth/sign-in', () => {
           setAnyString<User>('_id', 'createdAt'),
           `
           {
-            "__v": 0,
             "_id": Anything,
             "canCreateBusiness": true,
             "createdAt": Anything,
@@ -51,7 +50,7 @@ describe('POST /auth/sign-in', () => {
             "role": "user",
             "validated": true,
           }
-        `,
+        `
         );
       });
   });

@@ -2,12 +2,10 @@ import { Badge } from 'components/badge';
 import { ButtonRemove } from 'components/button-remove';
 import { ButtonSave } from 'components/button-save';
 import { IconButtonDuplicate } from 'components/icon-button-duplicate';
-import { IconButtonOptionsBars } from 'components/icon-button-options-bars';
 import { IconButtonRemove } from 'components/icon-button-remove';
 import { IconButtonShowHide } from 'components/icon-button-show-hide';
 import { IconButtonUpdate } from 'components/icon-button-update';
 import { IconButtonView } from 'components/icon-button-view';
-import { Menu } from 'components/menu';
 
 import { useDuplicateOnePost } from 'features/api/posts/useDuplicateOnePost';
 import { useRemoveOnePost } from 'features/api/posts/useRemoveOnePost';
@@ -141,44 +139,19 @@ export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
   };
 
   return (
-    <>
-      <Menu
-        buttonElement={<IconButtonOptionsBars />}
-        items={[
-          { label: 'Eliminar', onClick: handleDelete },
-          {
-            label: rowData.hidden ? 'Mostrar' : 'Ocultar',
-            onClick: () => handleShowHide(!rowData.hidden),
-          },
-          { label: 'Editar', onClick: handleUpdate },
-          { label: 'Duplicar', onClick: handleDuplicate },
-          {
-            label: 'Ver',
-            onClick: () =>
-              business &&
-              pushRoute(getOnePostRoute({ routeName: business.routeName, postId: rowData._id })),
-          },
-        ]}
-        className="sm:hidden"
+    <RowActionsContainer>
+      <IconButtonRemove onClick={handleDelete} />
+      <IconButtonShowHide hidden={rowData.hidden} onClick={() => handleShowHide(!rowData.hidden)} />
+      <IconButtonUpdate onClick={handleUpdate} />
+      <IconButtonDuplicate onClick={handleDuplicate} isBusy={duplicateOnePost.status.isBusy} />
+
+      <IconButtonView
+        stopPropagation
+        onClick={() =>
+          business &&
+          pushRoute(getOnePostRoute({ routeName: business.routeName, postId: rowData._id }))
+        }
       />
-
-      <RowActionsContainer className="hidden sm:block">
-        <IconButtonRemove onClick={handleDelete} />
-        <IconButtonShowHide
-          hidden={rowData.hidden}
-          onClick={() => handleShowHide(!rowData.hidden)}
-        />
-        <IconButtonUpdate onClick={handleUpdate} />
-        <IconButtonDuplicate onClick={handleDuplicate} isBusy={duplicateOnePost.status.isBusy} />
-
-        <IconButtonView
-          stopPropagation
-          onClick={() =>
-            business &&
-            pushRoute(getOnePostRoute({ routeName: business.routeName, postId: rowData._id }))
-          }
-        />
-      </RowActionsContainer>
-    </>
+    </RowActionsContainer>
   );
 };

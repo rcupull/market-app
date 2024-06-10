@@ -6,18 +6,21 @@ import { TabItem, Tabs } from 'components/tabs';
 
 import { useRouter } from 'hooks/useRouter';
 
+import { Billing } from './billing';
 import { BusinessConfig } from './components/BusinessConfig';
 import { Links } from './links';
-import { OptionsMenu } from './options-menu';
+import { Options } from './options';
 import { PostsSections } from './posts-sections';
 import { Products } from './products';
 import { PurchaseOrders } from './purchase-orders';
 import { Settings } from './settings';
+import { BusinessTab, getBusinessTabLabel } from './utils';
 
 import SvgAddressCard from 'icons/AddressCard';
 import SvgCogSolid from 'icons/CogSolid';
 import SvgLayerGroupSolid from 'icons/LayerGroupSolid';
 import SvgLinkSolid from 'icons/LinkSolid';
+import SvgMoneyBillAltSolid from 'icons/MoneyBillAltSolid';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { KpiTelegram, KpiTotalDebit } from 'pages/@common/kpis-business';
 import { LayoutSection } from 'pages/@common/layout-section';
@@ -33,6 +36,11 @@ export const RouteName = () => {
   useEffect(() => {
     if (routeName) {
       businessOwnerData.onFetch({ routeName });
+
+      if (!query.businessTab) {
+        const businessTab: BusinessTab = 'products';
+        onChangeQuery({ businessTab });
+      }
     }
   }, [routeName]);
 
@@ -55,36 +63,42 @@ export const RouteName = () => {
     return <></>;
   }
 
-  const { name, hidden } = business;
+  const { hidden } = business;
 
-  const tabsItems: Array<TabItem & { q: string }> = [
+  const tabsItems: Array<TabItem & { q: BusinessTab }> = [
     {
       q: 'products',
-      label: 'Productos',
+      label: getBusinessTabLabel('products'),
       content: <Products />,
       svg: SvgAddressCard,
     },
     {
       q: 'links',
-      label: 'Enlaces',
+      label: getBusinessTabLabel('links'),
       content: <Links />,
       svg: SvgLinkSolid,
     },
     {
       q: 'sections',
-      label: 'Secciones',
+      label: getBusinessTabLabel('sections'),
       content: <PostsSections />,
       svg: SvgLayerGroupSolid,
     },
     {
       q: 'shopping',
-      label: 'Órdenes de compras',
+      label: getBusinessTabLabel('shopping'),
       content: <PurchaseOrders />,
       svg: SvgShoppingCartSolid,
     },
     {
+      q: 'billing',
+      label: getBusinessTabLabel('billing'),
+      content: <Billing />,
+      svg: SvgMoneyBillAltSolid,
+    },
+    {
       q: 'settings',
-      label: 'Configuración',
+      label: getBusinessTabLabel('settings'),
       svg: SvgCogSolid,
       content: <Settings />,
     },
@@ -101,7 +115,6 @@ export const RouteName = () => {
     <>
       <BusinessConfig business={business} />
       <LayoutSection
-        title={name}
         topRightHeader={
           <div className="flex items-center gap-6">
             <KpiTelegram className="hidden sm:flex" />
@@ -114,7 +127,7 @@ export const RouteName = () => {
               </div>
             )}
 
-            <OptionsMenu
+            <Options
               business={business}
               onRefresh={() => businessOwnerData.onFetch({ routeName })}
             />

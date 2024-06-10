@@ -134,6 +134,10 @@ export const Products = () => {
 
             <Table
               className="!max-h-[calc(100vh-25rem)]"
+              remapRowsIndex={{
+                xs: [[0, 1, 2, 3, 4]],
+                lg: 'none',
+              }}
               heads={getBulkHeaderNodes([
                 'Acciones',
                 'Nombre',

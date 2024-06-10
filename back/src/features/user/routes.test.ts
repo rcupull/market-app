@@ -32,7 +32,7 @@ describe('GET: /user/:userId', () => {
             "role": "user",
             "validated": true,
           }
-        `,
+        `
         );
       });
   });
@@ -97,7 +97,7 @@ describe('PUT: /user/:userId', () => {
             "role": "user",
             "validated": true,
           }
-        `,
+        `
         );
       });
   });

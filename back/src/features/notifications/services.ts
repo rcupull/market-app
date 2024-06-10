@@ -1,4 +1,3 @@
-import { join } from 'path';
 import { NotificationPayload } from '../../types/notifications';
 import firebase from 'firebase-admin';
 import { userServices } from '../user/services';
@@ -16,14 +15,10 @@ const init = () => {
   console.info('Initialized Firebase SDK');
 };
 
-const sendNotification = async (args: { title: string; message: string }) => {};
-
 const sendNotificationToUpdate: QueryHandle<{
   payload: NotificationPayload;
-}> = async ({ payload, res, req }) => {
+}> = async ({ payload }) => {
   const users = await userServices.find({
-    res,
-    req,
     query: {},
     projection: {
       firebaseToken: 1,
@@ -42,7 +37,6 @@ const sendNotificationToUpdate: QueryHandle<{
 };
 
 export const notificationsServices = {
-  sendNotification,
   sendNotificationToUpdate,
   init,
 };

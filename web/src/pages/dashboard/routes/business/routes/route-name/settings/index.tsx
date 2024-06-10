@@ -15,8 +15,8 @@ import { useBusinessUpdateBanner } from 'pages/@modals/useBusinessUpdateBanner';
 import { useBusinessUpdateLogo } from 'pages/@modals/useBusinessUpdateLogo';
 import { useBusinessUpdatePostCategories } from 'pages/@modals/useBusinessUpdatePostCategories';
 import { useBusinessUpdatePostForm } from 'pages/@modals/useBusinessUpdatePostForm';
-import { useBusinessUpdateShopping } from 'pages/@modals/useBusinessUpdateShopping';
 import { useBusinessUpdateSocialNetworks } from 'pages/@modals/useBusinessUpdateSocialNetworks';
+import { useBusinessUpdateTelegramBot } from 'pages/@modals/useBusinessUpdateTelegramBot';
 
 export const Settings = () => {
   const businessUpdateSocialNetworks = useBusinessUpdateSocialNetworks();
@@ -26,7 +26,7 @@ export const Settings = () => {
   const businessUpdateLogo = useBusinessUpdateLogo();
   const businessUpdatePostCategories = useBusinessUpdatePostCategories();
   const businessUpdatePostForm = useBusinessUpdatePostForm();
-  const businessUpdateShopping = useBusinessUpdateShopping();
+  const businessUpdateTelegramBot = useBusinessUpdateTelegramBot();
 
   const { onFetch, business } = useBusiness();
 
@@ -47,11 +47,11 @@ export const Settings = () => {
       )}
 
       <SettingBox
-        title="Gestión de ventas"
-        description="Optimice las ventas de su negocio como mejor desee."
+        title="Bot de Telegram"
+        description="Reciba las notificaciones por Telegram en tiempo real."
         svg={SvgShoppingCartSolid}
         onClick={() =>
-          businessUpdateShopping.open({
+          businessUpdateTelegramBot.open({
             onAfterSuccess: () => {
               business && onFetch({ routeName: business?.routeName });
             },

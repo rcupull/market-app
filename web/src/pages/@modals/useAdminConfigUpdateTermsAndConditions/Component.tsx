@@ -1,5 +1,4 @@
 import { Button } from 'components/button';
-import { CheckEditorUploadAdapter } from 'components/check-editor/CheckEditorUploadAdapter';
 import { FieldCheckEditor } from 'components/field-check-editor';
 import { Formux } from 'components/formux';
 
@@ -36,13 +35,6 @@ export const Component = ({ portal }: ComponentProps) => {
                 name="termsAndConditions"
                 className="mt-6"
                 classNameContainer="max-h-[50vh]"
-                // this prop should be optional
-                getUploadAdapter={(args) => {
-                  return new CheckEditorUploadAdapter({
-                    ...args,
-                    uploadUrl: '', //TODO remove this prop, showul be optional
-                  });
-                }}
               />
 
               {portal.getPortal(
