@@ -9,7 +9,7 @@ import { dynamic } from 'utils/makeLazy';
 //eslint-disable-next-line
 const Component = dynamic(() => import('./Component').then((m) => m));
 
-export const useBusinessUpdateShopping = () => {
+export const useBusinessUpdateTelegramBot = () => {
   const { pushModal } = useModal();
 
   return {
@@ -23,7 +23,7 @@ export const useBusinessUpdateShopping = () => {
             const portal = usePortal();
 
             return {
-              title: 'Gestión de ventas',
+              title: 'Bot de Telegram',
               content: (
                 <Component
                   portal={portal}

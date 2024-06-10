@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useGetShopping } from 'features/api/shopping/useGetShopping';
+import { useGetAllShopping } from 'features/api/shopping/useGetAllShopping';
 
 import { useRouter } from 'hooks/useRouter';
 
@@ -13,17 +13,17 @@ export interface HomeProps {
 }
 
 export const Home = ({ routeName }: HomeProps) => {
-  const { getShopping } = useGetShopping();
+  const { getAllShopping } = useGetAllShopping();
   const { pushRoute } = useRouter();
 
   useEffect(() => {
-    getShopping.fetch({ routeName });
+    getAllShopping.fetch({ routeName });
   }, []);
 
   return (
     <LayoutPageSection title="Tus compras">
       <div className="flex flex-col items-center gap-4">
-        {getShopping.data?.map((shopping, index) => {
+        {getAllShopping.data?.map((shopping, index) => {
           return (
             <ShoppingDetails
               key={index}

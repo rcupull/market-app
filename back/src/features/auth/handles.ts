@@ -18,6 +18,8 @@ import {
 import { secretRefreshToken } from '../../config';
 import { generateAccessJWT, generateRefreshJWT } from '../../utils/auth';
 import { logger } from '../logger';
+import { makeReshaper } from '../../utils/makeReshaper';
+import { User } from '../../types/user';
 
 const post_signIn: () => RequestHandler = () => {
   return (req, res) => {
@@ -35,8 +37,6 @@ const post_signIn: () => RequestHandler = () => {
           json: { message: 'The user is no validated' },
         });
       }
-      //@ts-expect-error ignore
-      const { password: ommited, ...userData } = user.toJSON();
 
       const accessToken = generateAccessJWT({ id: user._id.toString() });
       const refreshToken = generateRefreshJWT({ id: user._id.toString() });
@@ -53,7 +53,16 @@ const post_signIn: () => RequestHandler = () => {
         json: {
           accessToken,
           refreshToken,
-          user: userData,
+          user: makeReshaper<User, User>({
+            _id: '_id',
+            createdAt: 'createdAt',
+            name: 'name',
+            email: 'email',
+            role: 'role',
+            validated: 'validated',
+            canCreateBusiness: 'canCreateBusiness',
+            profileImage: 'profileImage',
+          })(user),
         },
       });
     });
@@ -126,11 +135,11 @@ const post_signUp: () => RequestHandler = () => {
         name,
         password,
         canCreateBusiness,
-        res,
-        req,
       });
 
       if (newUser instanceof ServerResponse) return;
+
+      if (!newUser) return getUserNotFoundResponse({ res });
 
       // send validation code by email
       const code = uuid();
@@ -169,8 +178,6 @@ const post_validate: () => RequestHandler = () => {
       }
 
       const user = await userServices.findOneAndUpdate({
-        res,
-        req,
         query: { _id: validationCode.userId },
         update: { validated: true },
       });
@@ -233,8 +240,6 @@ const post_forgot_password_validate: () => RequestHandler = () => {
       }
 
       const user = await userServices.getOne({
-        res,
-        req,
         query: { _id: validationCode.userId },
       });
 
@@ -267,14 +272,14 @@ const post_forgot_password_request: () => RequestHandler = () => {
       const { email } = req.body;
 
       const user = await userServices.getOne({
-        res,
-        req,
         query: {
           email,
         },
       });
 
       if (user instanceof ServerResponse) return user;
+
+      if (!user) return getUserNotFoundResponse({ res });
 
       const code = uuid();
 
@@ -305,8 +310,6 @@ const put_firebase_token: () => RequestHandler = () => {
       const { firebaseToken } = body;
 
       await userServices.updateOne({
-        res,
-        req,
         query: {
           _id: user._id,
         },

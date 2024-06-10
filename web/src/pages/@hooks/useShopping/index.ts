@@ -1,7 +1,7 @@
-import { useGetShopping } from 'features/api/shopping/useGetShopping';
-import { useApiPersistent } from 'features/slices/useApiPersistent';
+import { useGetAllShopping } from 'features/api/shopping/useGetAllShopping';
+import { useApiPersistentPaginated } from 'features/slices/useApiPersistentPaginated';
 
-import { FetchResource, FetchStatus } from 'types/api';
+import { FetchResourceWithPagination, FetchStatus } from 'types/api';
 import { Shopping } from 'types/shopping';
 
 interface UseShoppingReturn {
@@ -13,14 +13,14 @@ interface UseShoppingReturn {
   constructionShoppingProductsCount: number;
   //
   status: FetchStatus;
-  onFetch: FetchResource<{ routeName: string }, Array<Shopping>>['fetch'];
+  onFetch: FetchResourceWithPagination<{ routeName: string }, Shopping>['fetch'];
   onReset: () => void;
 }
 
 export const useShopping = (): UseShoppingReturn => {
-  const { getShopping } = useGetShopping();
+  const { getAllShopping } = useGetAllShopping();
 
-  const { data, status, reset, fetch } = useApiPersistent('useShopping', getShopping);
+  const { data, status, reset, fetch } = useApiPersistentPaginated('useShopping', getAllShopping);
 
   const shopping = data || [];
   const shoppingCount = shopping.length;

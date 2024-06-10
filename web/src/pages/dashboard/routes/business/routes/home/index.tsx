@@ -4,19 +4,17 @@ import { ButtonNew } from 'components/button-new';
 
 import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
 
-import { useRouter } from 'hooks/useRouter';
-
 import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewModal';
+import { getDashboardBusinessRoute } from 'utils/business';
 
 export const Home = () => {
   const allUserBusiness = useAllUserBusiness();
   const businessUpdateNewModal = useBusinessUpdateNewModal();
 
-  const { pathname } = useRouter();
   const firstBusiness = allUserBusiness.data?.[0];
 
   if (firstBusiness) {
-    return <Navigate to={`${pathname}/${firstBusiness.routeName}`} />;
+    return <Navigate to={getDashboardBusinessRoute({ routeName: firstBusiness.routeName })} />;
   }
 
   return (

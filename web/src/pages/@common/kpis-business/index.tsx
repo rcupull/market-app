@@ -4,7 +4,7 @@ import { LabelValuePair } from 'components/label-value-pair';
 import SvgCheckCircleSolid from 'icons/CheckCircleSolid';
 import SvgTimesCircleSolid from 'icons/TimesCircleSolid';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useBusinessUpdateShopping } from 'pages/@modals/useBusinessUpdateShopping';
+import { useBusinessUpdateTelegramBot } from 'pages/@modals/useBusinessUpdateTelegramBot';
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
@@ -27,7 +27,7 @@ export const KpiTotalDebit = ({ className }: StyleProps) => {
 
 export const KpiTelegram = ({ className }: StyleProps) => {
   const { business, onFetch } = useBusiness();
-  const businessUpdateShopping = useBusinessUpdateShopping();
+  const businessUpdateTelegramBot = useBusinessUpdateTelegramBot();
 
   if (!business) {
     return <></>;
@@ -48,7 +48,7 @@ export const KpiTelegram = ({ className }: StyleProps) => {
                 label="Activar"
                 variant="link"
                 onClick={() => {
-                  businessUpdateShopping.open({
+                  businessUpdateTelegramBot.open({
                     onAfterSuccess: () => {
                       business && onFetch({ routeName: business?.routeName });
                     },

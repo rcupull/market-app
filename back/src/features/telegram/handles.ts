@@ -5,6 +5,7 @@ import { telegramServices } from './services';
 
 export const sendNewOrderTelegramMessage = ({
   business,
+  //eslint-disable-next-line
   order,
 }: {
   business: Business;
@@ -12,7 +13,6 @@ export const sendNewOrderTelegramMessage = ({
 }) => {
   try {
     const { telegramBotChat, name } = business;
-    const { _id } = order;
 
     if (!telegramBotChat) {
       return logger.warn(`the business ${business.name} has not a activated telegram account`);
@@ -22,7 +22,7 @@ export const sendNewOrderTelegramMessage = ({
 
     telegramServices.sendMessage(
       chatId,
-      `Una nueva orden de compra ha sido generada en su negocio "${name}" de nuestra plataforma Asere Market. Puede ver los detalles en la sección de órdenes de compras.`,
+      `Una nueva orden de compra ha sido generada en su negocio "${name}" de nuestra plataforma Asere Market. Puede ver los detalles en la sección de órdenes de compras.`
     );
   } catch (error) {
     logger.error(`Error: ${error}`);

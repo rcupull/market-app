@@ -49,6 +49,10 @@ export const PostsSections = () => {
         <ButtonRefresh onClick={() => business && onFetch({ routeName: business.routeName })} />
       </TopActions>
       <Table<PostsLayoutSection>
+        remapRowsIndex={{
+          xs: [[0, 1, 2, 3]],
+          lg: 'none',
+        }}
         enabledReorder
         onReorder={({ fromIndex, toIndex }) => {
           if (!business) return;

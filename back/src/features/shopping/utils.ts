@@ -7,7 +7,6 @@ import { shoppingServices } from './services';
 import { isEqualIds } from '../../utils/general';
 import { postServices } from '../post/services';
 import { sendUpdateStockAmountMessage } from '../notifications/handles';
-import { addPostToReq } from '../../middlewares/verify';
 
 export const getDebitFromOrder = ({
   order,
@@ -40,19 +39,22 @@ export const deleteOnePostFromShopping: QueryHandle<{
   routeName: string;
   postId: string;
   user: User;
-}> = async ({ postId, res, req, routeName, user }) => {
+}> = async ({ postId, routeName, user }) => {
   const post = await postServices.getOne({
-    req,
-    res,
     postId,
   });
 
-  if (post instanceof ServerResponse) return post;
+  if (post instanceof ServerResponse) {
+    return post;
+  }
+
+  if (!post) {
+    logger.info('post not found');
+    return;
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////
   const oldShopping = await shoppingServices.findAndUpdateOne({
-    res,
-    req,
     query: {
       state: 'CONSTRUCTION',
       routeName,
@@ -70,7 +72,8 @@ export const deleteOnePostFromShopping: QueryHandle<{
   if (oldShopping instanceof ServerResponse) return oldShopping;
 
   if (!oldShopping) {
-    return res.send({});
+    logger.info('oldShopping not found');
+    return;
   }
 
   if (oldShopping.posts.length === 1) {
@@ -78,8 +81,6 @@ export const deleteOnePostFromShopping: QueryHandle<{
      * si tenia 1 elemento, el cual ya fuel eliminado en el paso anterior entonces debe ser eliminada la shooping
      */
     await shoppingServices.deleteOne({
-      res,
-      req,
       query: {
         _id: oldShopping._id,
       },
@@ -91,8 +92,6 @@ export const deleteOnePostFromShopping: QueryHandle<{
   });
 
   const updateStockResponse = await postServices.updateStockAmount({
-    req,
-    res,
     amountToAdd: shoppingPostToUpdate?.count ?? 0,
     post,
   });
@@ -106,19 +105,15 @@ export const deleteOnePostFromShopping: QueryHandle<{
    */
   if (updateStockResponse) {
     const { currentStockAmount } = updateStockResponse;
-    sendUpdateStockAmountMessage({ req, res, postId, currentStockAmount });
+    sendUpdateStockAmountMessage({ postId, currentStockAmount });
   }
-
-  return res.send({});
 };
 
 export const deleteShopping: QueryHandle<{
   routeName: string;
   user: User;
-}> = async ({ res, req, routeName }) => {
+}> = async ({ routeName }) => {
   const oldShopping = await shoppingServices.findOneAndDelete({
-    res,
-    req,
     query: {
       state: 'CONSTRUCTION',
       routeName,
@@ -132,8 +127,6 @@ export const deleteShopping: QueryHandle<{
       return new Promise((resolve) => {
         postServices
           .getOne({
-            res,
-            req,
             postId,
           })
           .then((post) => {
@@ -141,11 +134,12 @@ export const deleteShopping: QueryHandle<{
               return resolve(post);
             }
 
-            req.post = post;
+            if (!post) {
+              return resolve(null);
+            }
+
             postServices
               .updateStockAmount({
-                req,
-                res,
                 amountToAdd: count,
                 post,
               })
@@ -157,8 +151,6 @@ export const deleteShopping: QueryHandle<{
                 if (updateStockResponse) {
                   const { currentStockAmount } = updateStockResponse;
                   sendUpdateStockAmountMessage({
-                    req,
-                    res,
                     postId: post._id.toString(),
                     currentStockAmount,
                   });
@@ -172,6 +164,4 @@ export const deleteShopping: QueryHandle<{
 
     await Promise.all(promises);
   }
-
-  res.send({});
 };

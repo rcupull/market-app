@@ -5,12 +5,10 @@ import { TestBDContent, fillBD } from '../../utils/test-BD';
 import { getTestingRoute } from '../../utils/api';
 import { Shopping } from '../../types/shopping';
 import { Post } from '../../types/post';
-import { notificationsServices } from '../notifications/services';
 import * as notificationsHanldlesAll from '../notifications/handles';
 
 jest.mock('../notifications/services', () => ({
   notificationsServices: {
-    sendNotification: jest.fn(),
     init: jest.fn(),
     sendNotificationToUpdate: jest.fn(),
   },
@@ -26,7 +24,7 @@ const handleAddPostsToOrder = async ({
     .post(
       getTestingRoute({
         path: '/shopping',
-      }),
+      })
     )
     .send({
       postId: productPost1Business1User1._id,
@@ -40,7 +38,7 @@ const handleAddPostsToOrder = async ({
     .post(
       getTestingRoute({
         path: '/shopping',
-      }),
+      })
     )
     .send({
       postId: productPost2Business1User1._id,
@@ -63,7 +61,7 @@ describe('GET: /shopping', () => {
         getTestingRoute({
           path: '/shopping',
           query: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .expect(401);
   });
@@ -75,7 +73,7 @@ describe('GET: /shopping', () => {
       .post(
         getTestingRoute({
           path: '/shopping',
-        }),
+        })
       )
       .send({
         postId: productPost1Business1User1._id,
@@ -88,12 +86,12 @@ describe('GET: /shopping', () => {
         getTestingRoute({
           path: '/shopping',
           query: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .auth(generateToken(user1._id), { type: 'bearer' })
       .expect(200)
       .then((response) => {
-        const shopping: Shopping = response.body[0];
+        const shopping: Shopping = response.body.data[0];
 
         expect(shopping.history).toEqual([]);
         expect(shopping.purchaserId).toEqual(user1._id.toString());
@@ -112,13 +110,13 @@ describe('POST: /shopping', () => {
   });
 
   it('should fail post if the user is not autenticated', async () => {
-    const { productPost1Business1User1, user1, business1User1 } = await fillBD();
+    const { productPost1Business1User1 } = await fillBD();
 
     await supertest(app)
       .post(
         getTestingRoute({
           path: '/shopping',
-        }),
+        })
       )
       .send({
         postId: productPost1Business1User1._id,
@@ -147,7 +145,7 @@ describe('POST: /shopping', () => {
       .get(
         getTestingRoute({
           path: '/posts',
-        }),
+        })
       )
       .expect(200)
       .then((response) => {
@@ -166,12 +164,12 @@ describe('POST: /shopping', () => {
         getTestingRoute({
           path: '/shopping',
           query: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .auth(generateToken(user1._id), { type: 'bearer' })
       .expect(200)
       .then((response) => {
-        const shopping: Shopping = response.body[0];
+        const shopping: Shopping = response.body.data[0];
 
         expect(shopping.history).toEqual([]);
         expect(shopping.purchaserId).toEqual(user1._id.toString());
@@ -191,7 +189,7 @@ describe('POST: /shopping', () => {
       .get(
         getTestingRoute({
           path: '/posts',
-        }),
+        })
       )
       .expect(200)
       .then((response) => {
@@ -203,12 +201,12 @@ describe('POST: /shopping', () => {
 
     expect(sendUpdateStockAmountMessage.mock.calls[0][0].currentStockAmount).toEqual(15);
     expect(sendUpdateStockAmountMessage.mock.calls[0][0].postId).toEqual(
-      productPost1Business1User1._id.toString(),
+      productPost1Business1User1._id.toString()
     );
 
     expect(sendUpdateStockAmountMessage.mock.calls[1][0].currentStockAmount).toEqual(20);
     expect(sendUpdateStockAmountMessage.mock.calls[1][0].postId).toEqual(
-      productPost2Business1User1._id.toString(),
+      productPost2Business1User1._id.toString()
     );
   });
 });
@@ -219,13 +217,13 @@ describe('DELETE: /shopping', () => {
   });
 
   it('should fail if the user is not autenticated', async () => {
-    const { productPost1Business1User1, user1, business1User1 } = await fillBD();
+    const { business1User1 } = await fillBD();
 
     await supertest(app)
       .del(
         getTestingRoute({
           path: '/shopping',
-        }),
+        })
       )
       .send({
         routeName: business1User1.routeName,
@@ -257,7 +255,7 @@ describe('DELETE: /shopping', () => {
       .del(
         getTestingRoute({
           path: '/shopping',
-        }),
+        })
       )
       .send({
         routeName: business1User1.routeName,
@@ -271,12 +269,12 @@ describe('DELETE: /shopping', () => {
         getTestingRoute({
           path: '/shopping',
           query: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .auth(generateToken(user1._id), { type: 'bearer' })
       .expect(200)
       .then((response) => {
-        expect(response.body.length).toEqual(0);
+        expect(response.body.data.length).toEqual(0);
       });
 
     // checking the current stock amount in both posts
@@ -284,7 +282,7 @@ describe('DELETE: /shopping', () => {
       .get(
         getTestingRoute({
           path: '/posts',
-        }),
+        })
       )
       .expect(200)
       .then((response) => {
@@ -296,12 +294,12 @@ describe('DELETE: /shopping', () => {
 
     expect(sendUpdateStockAmountMessage.mock.calls[2][0].currentStockAmount).toEqual(20);
     expect(sendUpdateStockAmountMessage.mock.calls[2][0].postId).toEqual(
-      productPost1Business1User1._id.toString(),
+      productPost1Business1User1._id.toString()
     );
 
     expect(sendUpdateStockAmountMessage.mock.calls[3][0].currentStockAmount).toEqual(30);
     expect(sendUpdateStockAmountMessage.mock.calls[3][0].postId).toEqual(
-      productPost2Business1User1._id.toString(),
+      productPost2Business1User1._id.toString()
     );
   });
 
@@ -329,7 +327,7 @@ describe('DELETE: /shopping', () => {
       .del(
         getTestingRoute({
           path: '/shopping',
-        }),
+        })
       )
       .send({
         routeName: business1User1.routeName,
@@ -344,12 +342,12 @@ describe('DELETE: /shopping', () => {
         getTestingRoute({
           path: '/shopping',
           query: { routeName: business1User1.routeName },
-        }),
+        })
       )
       .auth(generateToken(user1._id), { type: 'bearer' })
       .expect(200)
       .then((response) => {
-        const shopping: Shopping = response.body[0];
+        const shopping: Shopping = response.body.data[0];
 
         expect(shopping.history).toEqual([]);
         expect(shopping.purchaserId).toEqual(user1._id.toString());
@@ -368,7 +366,7 @@ describe('DELETE: /shopping', () => {
       .get(
         getTestingRoute({
           path: '/posts',
-        }),
+        })
       )
       .expect(200)
       .then((response) => {
@@ -380,7 +378,7 @@ describe('DELETE: /shopping', () => {
 
     expect(sendUpdateStockAmountMessage.mock.calls[2][0].currentStockAmount).toEqual(20);
     expect(sendUpdateStockAmountMessage.mock.calls[2][0].postId).toEqual(
-      productPost1Business1User1._id.toString(),
+      productPost1Business1User1._id.toString()
     );
 
     expect(sendUpdateStockAmountMessage.mock.calls[3]).toEqual(undefined);

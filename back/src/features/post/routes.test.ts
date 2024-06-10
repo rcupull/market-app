@@ -2,7 +2,6 @@ import supertest from 'supertest';
 import { app } from '../../server';
 import { dropTestDbConnectionAsync, generateToken } from '../../utils/test-utils';
 import { fillBD } from '../../utils/test-BD';
-import { body } from 'express-validator';
 
 describe('POST: /posts/:postId/review', () => {
   afterEach(async () => {
