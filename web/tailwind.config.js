@@ -1,4 +1,21 @@
 /** @type {import('tailwindcss').Config} */
+
+const getCheckEditorMaxHClasses = () => {
+  const hs = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
+
+  return hs.reduce(
+    (acc, h) => ({
+      ...acc,
+      [`.check-editor-max-h-${h}vh`]: {
+        '.ck .ck-content': {
+          maxHeight: `${h}vh`,
+        },
+      },
+    }),
+    {},
+  );
+};
+
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
@@ -53,6 +70,7 @@ export default {
         '.no-preflight li span': {
           display: 'inline !important',
         },
+        ...getCheckEditorMaxHClasses(),
       });
     }),
   ],

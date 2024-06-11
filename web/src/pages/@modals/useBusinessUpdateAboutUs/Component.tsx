@@ -74,14 +74,16 @@ export const Component = ({ portal }: ComponentProps) => {
                 label="Descripción"
                 name="description"
                 className="mt-6"
-                classNameContainer="max-h-[50vh]"
-                description={<div>Describe la funcionalidad del negocio.</div>}
-                getUploadAdapter={(args) => {
-                  return new CheckEditorUploadAdapter({
-                    ...args,
-                    uploadUrl: getCheckEditorUploadUrl({ routeName }),
-                  });
+                checkEditorProps={{
+                  className:'check-editor-max-h-50vh',
+                  getUploadAdapter:(args) => {
+                    return new CheckEditorUploadAdapter({
+                      ...args,
+                      uploadUrl: getCheckEditorUploadUrl({ routeName }),
+                    });
+                  }
                 }}
+                description={<div>Describe la funcionalidad del negocio.</div>}
                 onChange={(newValue) => {
                   /**
                    * remove all images added and remove excluding the initial images

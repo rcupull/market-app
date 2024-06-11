@@ -5,13 +5,12 @@ import { useFormField } from 'components/formux/useFormField';
 import { StyleProps } from 'types/general';
 export interface FieldCheckEditorProps extends StyleProps, FormFieldWrapperProps {
   onChange?: (value: string) => void;
-  classNameContainer?: string;
   name?: string;
-  getUploadAdapter?: CheckEditorProps['getUploadAdapter'];
+  checkEditorProps?: Partial<CheckEditorProps>;
 }
 
 export const FieldCheckEditor = (props: FieldCheckEditorProps) => {
-  const { label, className, classNameContainer, description, getUploadAdapter, onChange } = props;
+  const { label, className, description, onChange, checkEditorProps = {} } = props;
 
   const { field, error } = useFormField(props);
   const { value } = field;
@@ -20,7 +19,6 @@ export const FieldCheckEditor = (props: FieldCheckEditorProps) => {
     <FormFieldWrapper label={label} error={error} className={className} description={description}>
       <CheckEditor
         value={value}
-        classNameContainer={classNameContainer}
         onBlur={() => {
           field.onBlur({ target: { name: field.name } });
         }}
@@ -34,7 +32,7 @@ export const FieldCheckEditor = (props: FieldCheckEditorProps) => {
             },
           });
         }}
-        getUploadAdapter={getUploadAdapter}
+        {...checkEditorProps}
       />
     </FormFieldWrapper>
   );
