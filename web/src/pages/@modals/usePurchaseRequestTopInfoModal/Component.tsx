@@ -43,12 +43,14 @@ export const Component = ({ portal }: ComponentProps) => {
               <FieldCheckEditor
                 name="purchaseRequestTopInfo"
                 className="mt-6"
-                classNameContainer="max-h-[50vh]"
-                getUploadAdapter={(args) => {
-                  return new CheckEditorUploadAdapter({
-                    ...args,
-                    uploadUrl: getCheckEditorUploadUrl({ routeName }),
-                  });
+                checkEditorProps={{
+                  className:'check-editor-max-h-50vh',
+                  getUploadAdapter:(args) => {
+                    return new CheckEditorUploadAdapter({
+                      ...args,
+                      uploadUrl: getCheckEditorUploadUrl({ routeName }),
+                    });
+                  }
                 }}
               />
 

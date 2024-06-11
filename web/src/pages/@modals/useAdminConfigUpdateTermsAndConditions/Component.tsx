@@ -34,7 +34,9 @@ export const Component = ({ portal }: ComponentProps) => {
               <FieldCheckEditor
                 name="termsAndConditions"
                 className="mt-6"
-                classNameContainer="max-h-[50vh]"
+                checkEditorProps={{
+                  className:'check-editor-max-h-50vh'
+                }}
               />
 
               {portal.getPortal(
