@@ -14,4 +14,5 @@ export const slices = {
   useAllUserBusiness: createSimpleSlice<null>('useAllUserBusiness', null),
   useAdminConfig: createSimpleSlice<null>('useAdminConfig', null),
   useAuth: createSimpleSlice<null>('useAuth', null),
+  useSignOut: createSimpleSlice<null>('useSignOut', null),
 };

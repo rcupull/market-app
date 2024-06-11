@@ -1,4 +1,3 @@
-import { useAuth } from 'features/api-slices/useAuth';
 import { useCookies } from 'features/cookies/useCookies';
 
 import { useFetch } from 'hooks/useFetch';
@@ -9,8 +8,6 @@ import { getEndpoint } from 'utils/api';
 export const useAuthSignOut = (): {
   authSignOut: FetchResource<void, void>;
 } => {
-  const { authSignIn } = useAuth();
-
   const { getCookie } = useCookies();
   const fetch = useFetch();
 
@@ -27,13 +24,7 @@ export const useAuthSignOut = (): {
             url: getEndpoint({ path: '/auth/sign-out' }),
             data: { refreshToken },
           },
-          {
-            ...options,
-            onAfterSuccess: () => {
-              authSignIn.reset();
-              options?.onAfterSuccess?.();
-            },
-          },
+          options,
         );
       },
       reset: fetch[3],

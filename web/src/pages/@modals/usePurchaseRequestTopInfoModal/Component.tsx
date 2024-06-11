@@ -44,13 +44,13 @@ export const Component = ({ portal }: ComponentProps) => {
                 name="purchaseRequestTopInfo"
                 className="mt-6"
                 checkEditorProps={{
-                  className:'check-editor-max-h-50vh',
-                  getUploadAdapter:(args) => {
+                  className: 'check-editor-max-h-50vh',
+                  getUploadAdapter: (args) => {
                     return new CheckEditorUploadAdapter({
                       ...args,
                       uploadUrl: getCheckEditorUploadUrl({ routeName }),
                     });
-                  }
+                  },
                 }}
               />
 
