@@ -14,7 +14,6 @@ export interface CheckEditorProps extends StyleProps {
   onChange?: (args: { event: any; editor: ClassicEditor; data: string }) => void;
   onReady?: (editor: ClassicEditor) => void;
   value?: string;
-  classNameContainer?: string;
   getUploadAdapter?: (args: { loader: any }) => any;
 }
 
@@ -25,24 +24,8 @@ export const CheckEditor = ({
   onReady,
   value,
   className,
-  classNameContainer,
   getUploadAdapter,
 }: CheckEditorProps) => {
-  const addStylesToContainer = () => {
-    const [element] = document.getElementsByClassName('ck-editor__editable_inline');
-
-    if (!element) return;
-
-    element.classList.add('overflow-auto');
-
-    if (classNameContainer) {
-      if (element) {
-        classNameContainer.split(' ').forEach((className) => {
-          element.classList.add(className);
-        });
-      }
-    }
-  };
 
   const getItems = (): Array<CheckEditorToolbarItem> => {
     const out: Array<Nullable<CheckEditorToolbarItem>> = [
@@ -77,7 +60,7 @@ export const CheckEditor = ({
           /**
            * Add custom clases to container
            */
-          addStylesToContainer();
+          // addStylesToContainer();
 
           if (getUploadAdapter) {
             // getted from https://stackoverflow.com/questions/52873321/add-custom-headers-to-upload-image
