@@ -50,6 +50,8 @@ export const DevSwitchSession = () => {
         label: email,
         active: authData?.user?.email === email,
         onClick: () => {
+          if (authData?.user?.email === email) return;
+
           if (isAuthenticated) {
             pushRoute('/');
 

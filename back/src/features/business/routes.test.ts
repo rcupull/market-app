@@ -5,26 +5,27 @@ import { Business } from '../../types/business';
 import { fillBD } from '../../utils/test-BD';
 import { getTestingRoute } from '../../utils/api';
 
-describe('GET: /business', () => {
-  afterEach(async () => {
-    await dropTestDbConnectionAsync();
-  });
-  it('should return all visible business the business', async () => {
-    await fillBD();
+describe('business', () => {
+  describe('GET: /business', () => {
+    afterEach(async () => {
+      await dropTestDbConnectionAsync();
+    });
+    it('should return all visible business the business', async () => {
+      await fillBD();
 
-    await supertest(app)
-      .get(
-        getTestingRoute({
-          path: '/business',
-        })
-      )
-      .expect(200)
-      .then((response) => {
-        expect(response.body.data.length).toEqual(4);
+      await supertest(app)
+        .get(
+          getTestingRoute({
+            path: '/business',
+          })
+        )
+        .expect(200)
+        .then((response) => {
+          expect(response.body.data.length).toEqual(4);
 
-        expect(response.body.data[0]).toMatchInlineSnapshot(
-          setAnyString<Business>('_id', 'createdAt', 'createdBy'),
-          `
+          expect(response.body.data[0]).toMatchInlineSnapshot(
+            setAnyString<Business>('_id', 'createdAt', 'createdBy'),
+            `
           {
             "__v": 0,
             "_id": Anything,
@@ -72,9 +73,9 @@ describe('GET: /business', () => {
             },
           }
         `
-        );
+          );
 
-        expect(response.body.paginator).toMatchInlineSnapshot(`
+          expect(response.body.paginator).toMatchInlineSnapshot(`
           {
             "dataCount": 4,
             "hasNextPage": false,
@@ -88,120 +89,120 @@ describe('GET: /business', () => {
             "prevPage": null,
           }
         `);
-      });
-  });
-});
-
-describe('POST: /business', () => {
-  afterEach(async () => {
-    await dropTestDbConnectionAsync();
+        });
+    });
   });
 
-  it('should fail if the user can not create a business', async () => {
-    const { user1 } = await fillBD({
-      overrideUser1: {
-        canCreateBusiness: false,
-      },
+  describe('POST: /business', () => {
+    afterEach(async () => {
+      await dropTestDbConnectionAsync();
     });
 
-    await supertest(app)
-      .post(
-        getTestingRoute({
-          path: '/business',
+    it('should fail if the user can not create a business', async () => {
+      const { user1 } = await fillBD({
+        overrideUser1: {
+          canCreateBusiness: false,
+        },
+      });
+
+      await supertest(app)
+        .post(
+          getTestingRoute({
+            path: '/business',
+          })
+        )
+        .send({
+          name: 'newBusiness',
+          routeName: 'newBusiness',
+          categories: ['clothing'],
         })
-      )
-      .send({
-        name: 'newBusiness',
-        routeName: 'newBusiness',
-        categories: ['clothing'],
-      })
-      .auth(generateToken(user1._id), { type: 'bearer' })
-      .expect(401);
+        .auth(generateToken(user1._id), { type: 'bearer' })
+        .expect(401);
+    });
+
+    it('should fail if the business already exists', async () => {
+      const { user1, business1User1 } = await fillBD();
+
+      await supertest(app)
+        .post(
+          getTestingRoute({
+            path: '/business',
+          })
+        )
+        .send({
+          name: 'newBusiness',
+          routeName: business1User1.routeName, // exiting bussiness
+          categories: ['clothing'],
+        })
+        .auth(generateToken(user1._id), { type: 'bearer' })
+        .expect(400);
+    });
+
+    it('should add a new business', async () => {
+      const { user1 } = await fillBD();
+
+      await supertest(app)
+        .post(
+          getTestingRoute({
+            path: '/business',
+          })
+        )
+        .send({
+          name: 'newBusiness',
+          routeName: 'newBusiness',
+          categories: ['clothing'],
+        })
+        .auth(generateToken(user1._id), { type: 'bearer' })
+        .expect(200);
+
+      await supertest(app)
+        .get(
+          getTestingRoute({
+            path: '/business/:newBusiness',
+            urlParams: { newBusiness: 'newBusiness' },
+          })
+        )
+        .expect(200);
+    });
+
+    it('should fail if not autenticated', async () => {
+      await fillBD();
+
+      await supertest(app)
+        .post(
+          getTestingRoute({
+            path: '/business',
+          })
+        )
+        .send({
+          name: 'newBusiness',
+          routeName: 'newBusiness',
+          categories: ['clothing'],
+        })
+        .expect(401);
+    });
   });
 
-  it('should fail if the business already exists', async () => {
-    const { user1, business1User1 } = await fillBD();
+  describe('GET: /business/:routeName', () => {
+    afterEach(async () => {
+      await dropTestDbConnectionAsync();
+    });
 
-    await supertest(app)
-      .post(
-        getTestingRoute({
-          path: '/business',
-        })
-      )
-      .send({
-        name: 'newBusiness',
-        routeName: business1User1.routeName, // exiting bussiness
-        categories: ['clothing'],
-      })
-      .auth(generateToken(user1._id), { type: 'bearer' })
-      .expect(400);
-  });
+    it('should return the business', async () => {
+      const { business1User1 } = await fillBD();
 
-  it('should add a new business', async () => {
-    const { user1 } = await fillBD();
-
-    await supertest(app)
-      .post(
-        getTestingRoute({
-          path: '/business',
-        })
-      )
-      .send({
-        name: 'newBusiness',
-        routeName: 'newBusiness',
-        categories: ['clothing'],
-      })
-      .auth(generateToken(user1._id), { type: 'bearer' })
-      .expect(200);
-
-    await supertest(app)
-      .get(
-        getTestingRoute({
-          path: '/business/:newBusiness',
-          urlParams: { newBusiness: 'newBusiness' },
-        })
-      )
-      .expect(200);
-  });
-
-  it('should fail if not autenticated', async () => {
-    await fillBD();
-
-    await supertest(app)
-      .post(
-        getTestingRoute({
-          path: '/business',
-        })
-      )
-      .send({
-        name: 'newBusiness',
-        routeName: 'newBusiness',
-        categories: ['clothing'],
-      })
-      .expect(401);
-  });
-});
-
-describe('GET: /business/:routeName', () => {
-  afterEach(async () => {
-    await dropTestDbConnectionAsync();
-  });
-
-  it('should return the business', async () => {
-    const { business1User1 } = await fillBD();
-
-    await supertest(app)
-      .get(
-        getTestingRoute({
-          path: '/business/:routeName',
-          urlParams: { routeName: business1User1.routeName },
-        })
-      )
-      .expect(200)
-      .then((response) => {
-        expect(response.body).toMatchInlineSnapshot(
-          setAnyString<Business>('_id', 'createdAt', 'createdBy'),
-          `
+      await supertest(app)
+        .get(
+          getTestingRoute({
+            path: '/business/:routeName',
+            urlParams: { routeName: business1User1.routeName },
+          })
+        )
+        .expect(200)
+        .then((response) => {
+          expect(response.body).toMatchInlineSnapshot(
+            setAnyString<Business>('_id', 'createdAt', 'createdBy'),
+            `
           {
             "__v": 0,
             "_id": Anything,
@@ -249,107 +250,108 @@ describe('GET: /business/:routeName', () => {
             },
           }
         `
-        );
-      });
-  });
-});
-
-describe('DELETE: /business/:routeName', () => {
-  afterEach(async () => {
-    await dropTestDbConnectionAsync();
+          );
+        });
+    });
   });
 
-  it('should remove all posts and business', async () => {
-    const { business1User1, user1 } = await fillBD();
+  describe('DELETE: /business/:routeName', () => {
+    afterEach(async () => {
+      await dropTestDbConnectionAsync();
+    });
 
-    await supertest(app)
-      .get(
-        getTestingRoute({
-          path: '/business/:routeName',
-          urlParams: { routeName: business1User1.routeName },
-        })
-      )
-      .expect(200)
-      .then((response) => {
-        expect(response.body.routeName).toEqual(business1User1.routeName);
-      });
+    it('should remove all posts and business', async () => {
+      const { business1User1, user1 } = await fillBD();
 
-    //get business posts
-    await supertest(app)
-      .get(
-        getTestingRoute({
-          path: '/posts',
-          query: { routeName: business1User1.routeName },
-        })
-      )
-      .expect(200)
-      .then((response) => {
-        expect(response.body.data.length).toEqual(2);
-      });
+      await supertest(app)
+        .get(
+          getTestingRoute({
+            path: '/business/:routeName',
+            urlParams: { routeName: business1User1.routeName },
+          })
+        )
+        .expect(200)
+        .then((response) => {
+          expect(response.body.routeName).toEqual(business1User1.routeName);
+        });
 
-    //delete business
-    await supertest(app)
-      .del(
-        getTestingRoute({
-          path: '/business/:routeName',
-          urlParams: { routeName: business1User1.routeName },
-        })
-      )
-      .auth(generateToken(user1._id), { type: 'bearer' })
-      .expect(200);
+      //get business posts
+      await supertest(app)
+        .get(
+          getTestingRoute({
+            path: '/posts',
+            query: { routeName: business1User1.routeName },
+          })
+        )
+        .expect(200)
+        .then((response) => {
+          expect(response.body.data.length).toEqual(2);
+        });
 
-    //get business posts(should be 0)
-    await supertest(app)
-      .get(
-        getTestingRoute({
-          path: '/posts',
-          query: { routeName: business1User1.routeName },
-        })
-      )
-      .expect(200)
-      .then((response) => {
-        expect(response.body.data.length).toEqual(0);
-      });
+      //delete business
+      await supertest(app)
+        .del(
+          getTestingRoute({
+            path: '/business/:routeName',
+            urlParams: { routeName: business1User1.routeName },
+          })
+        )
+        .auth(generateToken(user1._id), { type: 'bearer' })
+        .expect(200);
 
-    await supertest(app)
-      .get(
-        getTestingRoute({
-          path: '/business/:routeName',
-          urlParams: { routeName: business1User1.routeName },
-        })
-      )
-      .expect(404)
-      .then((response) => {
-        expect(response.body.routeName).toEqual(undefined);
-      });
-  });
+      //get business posts(should be 0)
+      await supertest(app)
+        .get(
+          getTestingRoute({
+            path: '/posts',
+            query: { routeName: business1User1.routeName },
+          })
+        )
+        .expect(200)
+        .then((response) => {
+          expect(response.body.data.length).toEqual(0);
+        });
 
-  it('should not remove if not autehticated', async () => {
-    const { business1User1 } = await fillBD();
+      await supertest(app)
+        .get(
+          getTestingRoute({
+            path: '/business/:routeName',
+            urlParams: { routeName: business1User1.routeName },
+          })
+        )
+        .expect(404)
+        .then((response) => {
+          expect(response.body.routeName).toEqual(undefined);
+        });
+    });
 
-    //delete business
-    await supertest(app)
-      .del(
-        getTestingRoute({
-          path: '/business/:routeName',
-          urlParams: { routeName: business1User1.routeName },
-        })
-      )
-      .expect(401);
-  });
+    it('should not remove if not autehticated', async () => {
+      const { business1User1 } = await fillBD();
 
-  it('should not remove if the user has not access to this business', async () => {
-    const { business1User1, user2 } = await fillBD();
+      //delete business
+      await supertest(app)
+        .del(
+          getTestingRoute({
+            path: '/business/:routeName',
+            urlParams: { routeName: business1User1.routeName },
+          })
+        )
+        .expect(401);
+    });
 
-    //delete business
-    await supertest(app)
-      .del(
-        getTestingRoute({
-          path: '/business/:routeName',
-          urlParams: { routeName: business1User1.routeName },
-        })
-      )
-      .auth(generateToken(user2._id), { type: 'bearer' })
-      .expect(401);
+    it('should not remove if the user has not access to this business', async () => {
+      const { business1User1, user2 } = await fillBD();
+
+      //delete business
+      await supertest(app)
+        .del(
+          getTestingRoute({
+            path: '/business/:routeName',
+            urlParams: { routeName: business1User1.routeName },
+          })
+        )
+        .auth(generateToken(user2._id), { type: 'bearer' })
+        .expect(401);
+    });
   });
 });

@@ -4,6 +4,7 @@ import { ButtonRefresh } from 'components/button-refresh';
 import { Table } from 'components/table';
 
 import { useGetAllShoppingAdmin } from 'features/api/admin/useGetAllShoppingAdmin';
+import { useGetAllBusinessSummary } from 'features/api/business/useGetAllBusinessSummary';
 
 import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 
@@ -12,12 +13,15 @@ import { RowActions } from './RowActions';
 
 import { TopActions } from 'pages/@common/top-actions';
 import { GetAllShoppingAdminQuery } from 'types/api';
+import { BusinessSummary } from 'types/business';
 import { Shopping } from 'types/shopping';
 import { getDateString } from 'utils/date';
+import { cn } from 'utils/general';
 import { getShoppingData } from 'utils/shopping';
 
 export const PurchaseOrders = () => {
   const { getAllShoppingAdmin } = useGetAllShoppingAdmin();
+  const { getAllBusinessSummary } = useGetAllBusinessSummary();
 
   const filters = useFiltersVolatile<GetAllShoppingAdminQuery>({
     onChange: (filters) => {
@@ -31,7 +35,12 @@ export const PurchaseOrders = () => {
 
   useEffect(() => {
     onRefreshForce();
+    getAllBusinessSummary.fetch({ pagination: false });
   }, []);
+
+  const getBusinessSummary = (routeName: string): BusinessSummary | undefined => {
+    return getAllBusinessSummary.data?.find((sum) => sum.routeName === routeName);
+  };
 
   return (
     <>
@@ -53,15 +62,28 @@ export const PurchaseOrders = () => {
           md: [[0], [1, 2], [3, 4]],
           lg: 'none',
         }}
-        heads={['Acciones', 'Cliente', 'Estado', 'Unidades', 'Precio total', 'Fecha de creación']}
+        heads={[
+          'Acciones',
+          'Negocio/RouteName',
+          'Cliente',
+          'Estado',
+          'Unidades',
+          'Precio total',
+          'Fecha de creación',
+        ]}
         getRowProps={(rowData) => {
-          const { createdAt, purchaserName, state } = rowData;
+          const { createdAt, purchaserName, state, routeName } = rowData;
 
           const { totalPrice, totalProducts } = getShoppingData(rowData);
 
+          const { name } = getBusinessSummary(routeName) || {};
           return {
             nodes: [
               <RowActions key="RowActions" rowData={rowData} />,
+              <span key="routeName" className={cn("text-nowrap", { 'text-red-500': !name })}>
+                {name || 'unknown'}{' / '}
+                {routeName}
+              </span>,
               purchaserName,
               state,
               totalProducts,
