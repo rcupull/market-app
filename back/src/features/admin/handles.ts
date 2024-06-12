@@ -4,7 +4,9 @@ import { UserModel } from '../../schemas/user';
 import { imagesServices } from '../images/services';
 import { ServerResponse } from 'http';
 import { AdminConfigModel } from '../../schemas/admin';
-import { get400Response } from '../../utils/server-response';
+import { get200Response, get400Response } from '../../utils/server-response';
+import { specialAccessRecord } from './utils';
+import { userServices } from '../user/services';
 
 const get_users: () => RequestHandler = () => {
   return (req, res) => {
@@ -13,7 +15,7 @@ const get_users: () => RequestHandler = () => {
 
       const out = await UserModel.paginate(
         {
-          role: 'user',
+          role: { $in: ['user', 'admin'] },
         },
         paginateOptions
       );
@@ -92,9 +94,48 @@ const put_admin_admin_config: () => RequestHandler = () => {
   };
 };
 
+const get_admin_access: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      get200Response({
+        res,
+        json: {
+          specialAccess: Object.keys(specialAccessRecord),
+        },
+      });
+    });
+  };
+};
+
+const put_admin_users_userId_access: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { body, params } = req;
+
+      const { specialAccess = [] } = body;
+      const { userId } = params;
+
+      await userServices.updateOne({
+        query: {
+          _id: userId,
+        },
+        update: {
+          specialAccess,
+        },
+      });
+
+      get200Response({ res, json: {} });
+    });
+  };
+};
+
 export const adminHandles = {
   get_users,
   del_users_userId,
   put_admin_admin_config,
   get_admin_admin_config,
+  //
+  get_admin_access,
+  put_admin_users_userId_access,
+  //
 };
