@@ -3,6 +3,7 @@ import { useGetOneUser } from 'features/api/user/useGetOneUser';
 import { useCookies } from 'features/cookies/useCookies';
 import { useApiPersistent } from 'features/slices/useApiPersistent';
 
+import { Access } from 'types/admin';
 import { FetchResource } from 'types/api';
 import { AuthData, User } from 'types/auth';
 import { wait } from 'utils/general';
@@ -17,6 +18,7 @@ type UseAuthMeta = {
   isBasicUser: boolean;
   isAuthenticated: boolean;
   onRefreshAuthUser: () => void;
+  getHasSomeAccess: (...access: Array<Access>) => boolean;
 };
 
 export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
@@ -39,6 +41,13 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
   };
 
   return {
+    getHasSomeAccess: (...access) => {
+      const { specialAccess } = authData?.user || {};
+
+      const hasAccess = access.map((val) => specialAccess?.includes(val)).some(Boolean);
+
+      return hasAccess || !!specialAccess?.includes('full');
+    },
     onRefreshAuthUser: () => {
       if (!authData) return;
 

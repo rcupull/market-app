@@ -4,8 +4,8 @@ import { Menu } from 'components/menu';
 import { NavBar as NavBarBase } from 'components/nav-bar';
 import { UserAvatar } from 'components/user-avatar';
 
-import { useAuthSignOut } from 'features/api/auth/useAuthSignOut';
 import { useAuth } from 'features/api-slices/useAuth';
+import { useSignOut } from 'features/api-slices/useSignOut';
 import { useModal } from 'features/modal/useModal';
 
 import { useCallFromAfar } from 'hooks/useCallFromAfar';
@@ -43,7 +43,7 @@ import { cn } from 'utils/general';
 export interface NavbarProps extends StyleProps {}
 export const Navbar = ({ className }: NavbarProps) => {
   const { isAdmin, isUser, isAuthenticated, authData, onRefreshAuthUser } = useAuth();
-  const { authSignOut } = useAuthSignOut();
+  const { signOut } = useSignOut();
   const { user } = authData || {};
   const { isBusinessPage, params, isAuthenticatedPage, pushRoute } = useRouter();
   const { routeName } = params;
@@ -137,7 +137,7 @@ export const Navbar = ({ className }: NavbarProps) => {
             if (isAuthenticatedPage) {
               pushRoute('/');
             }
-            setTimeout(() => authSignOut.fetch(), 500);
+            setTimeout(() => signOut.fetch(), 200);
           },
           svg: SvgSignOutAltSolid,
         },

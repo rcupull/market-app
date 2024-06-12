@@ -1,21 +1,24 @@
 import { Badge } from 'components/badge';
 import { ButtonRemove } from 'components/button-remove';
+import { IconButton } from 'components/icon-button';
 import { IconButtonRemove } from 'components/icon-button-remove';
 
 import { useRemoveOneAdminUser } from 'features/api/admin/useRemoveOneAdminUser';
 import { useModal } from 'features/modal/useModal';
 
-import { CallAfarResources, useCallFromAfar } from 'hooks/useCallFromAfar';
-
+import SvgKeySolid from 'icons/KeySolid';
 import { RowActionsContainer } from 'pages/@common/row-actions-container';
+import { useAdminUpdateUserAccessModal } from 'pages/@modals/useAdminUpdateUserAccessModal';
 import { User } from 'types/auth';
 
 export interface RowActionsProps {
   rowData: User;
-  callAfarResources?: CallAfarResources;
+  onRefresh: () => void;
 }
-export const RowActions = ({ rowData, callAfarResources }: RowActionsProps) => {
+export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
   const { pushModal } = useModal();
+
+  const adminUpdateUserAccessModal = useAdminUpdateUserAccessModal();
 
   const handleDelete = () => {
     pushModal(
@@ -24,7 +27,6 @@ export const RowActions = ({ rowData, callAfarResources }: RowActionsProps) => {
         useProps: () => {
           const { removeOneAdminUser } = useRemoveOneAdminUser();
           const { onClose } = useModal();
-          const { onCallAfar } = useCallFromAfar();
           return {
             content: (
               <div>
@@ -42,7 +44,7 @@ export const RowActions = ({ rowData, callAfarResources }: RowActionsProps) => {
                       onAfterSuccess: () => {
                         onClose();
 
-                        onCallAfar(callAfarResources);
+                        onRefresh();
                       },
                     },
                   )
@@ -59,6 +61,13 @@ export const RowActions = ({ rowData, callAfarResources }: RowActionsProps) => {
   return (
     <RowActionsContainer>
       <IconButtonRemove onClick={handleDelete} />
+
+      <IconButton
+        svg={SvgKeySolid}
+        onClick={() =>
+          adminUpdateUserAccessModal.open({ user: rowData, onAfterSuccess: () => onRefresh() })
+        }
+      />
     </RowActionsContainer>
   );
 };

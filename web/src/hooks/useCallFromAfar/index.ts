@@ -7,7 +7,6 @@ export const callAfarIds = {
   side_bar_redirect_to_last_created_business: 'side_bar_redirect_to_last_created_business',
   getAllUserBussiness: 'getAllUserBussiness',
   redirect_to_dashboard_business_routename: 'redirect_to_dashboard_business_routename',
-  getAllAdminUsers: 'getAllAdminUsers',
 };
 
 export type CallAfarResources = string | Array<string>;

@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 
 import { useAuthRefresh } from 'features/api/auth/useAuthRefresh';
-import { useAuthSignOut } from 'features/api/auth/useAuthSignOut';
 import { useAdminConfig } from 'features/api-slices/useAdminConfig';
 import { useAuth } from 'features/api-slices/useAuth';
 import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
+import { useSignOut } from 'features/api-slices/useSignOut';
 import { useCookies } from 'features/cookies/useCookies';
 
 import { callAfarIds, useCallFromAfar } from 'hooks/useCallFromAfar';
@@ -53,7 +53,7 @@ export const useInit = () => {
   ////////////////////////////////////////////////////////////////////////
   const { authRefresh } = useAuthRefresh();
   const refreshInterval = useInterval({ startCalling: true });
-  const { authSignOut } = useAuthSignOut();
+  const { signOut } = useSignOut();
   const { setCookie } = useCookies();
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export const useInit = () => {
               setCookie('accessToken', accessToken);
             },
             onAfterFailed: () => {
-              authSignOut.fetch();
+              signOut.fetch();
             },
           });
         },

@@ -17,8 +17,17 @@ describe('GET: /admin/users', () => {
       .expect(401);
   });
 
-  it('should return all users', async () => {
+  it('should fail when has not full access', async () => {
     const { admin } = await fillBD();
+
+    await supertest(app)
+      .get(`/api-services/admin/users`)
+      .auth(generateToken(admin._id), { type: 'bearer' })
+      .expect(401);
+  });
+
+  it('should return all users', async () => {
+    const { admin } = await fillBD({ overrideAdmin: { specialAccess: ['full'] } });
 
     await supertest(app)
       .get(`/api-services/admin/users`)
@@ -27,7 +36,7 @@ describe('GET: /admin/users', () => {
       .then((response) => {
         expect(response.body.paginator).toMatchInlineSnapshot(`
           {
-            "dataCount": 3,
+            "dataCount": 4,
             "hasNextPage": false,
             "hasPrevPage": false,
             "limit": 10,

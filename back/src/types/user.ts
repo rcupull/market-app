@@ -1,3 +1,4 @@
+import { Access } from './admin';
 import { BaseIdentity, Image } from './general';
 
 export type UserRole = 'user' | 'admin';
@@ -12,4 +13,5 @@ export interface User extends BaseIdentity {
   canCreateBusiness: boolean;
   profileImage?: Image;
   firebaseToken?: string;
+  specialAccess?: Array<Access>;
 }

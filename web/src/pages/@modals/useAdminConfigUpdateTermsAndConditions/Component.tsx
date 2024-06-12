@@ -35,7 +35,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 name="termsAndConditions"
                 className="mt-6"
                 checkEditorProps={{
-                  className:'check-editor-max-h-50vh'
+                  className: 'check-editor-max-h-50vh',
                 }}
               />
 

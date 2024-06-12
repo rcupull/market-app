@@ -15,7 +15,7 @@ export interface SideBarProps extends StyleProps {}
 
 export const SideBar = ({ className }: SideBarProps) => {
   const allUserBusiness = useAllUserBusiness();
-  const { isAdmin, isAuthenticated, isUser, isBasicUser } = useAuth();
+  const { isAdmin, isAuthenticated, isUser, isBasicUser, getHasSomeAccess } = useAuth(); //
 
   const business = allUserBusiness.data || [];
 
@@ -43,7 +43,8 @@ export const SideBar = ({ className }: SideBarProps) => {
             svg: SvgCogSolid,
           },
         isAuthenticated &&
-          isAdmin && {
+          isAdmin &&
+          getHasSomeAccess('user__read') && {
             // ADMIN
             label: 'Usuarios',
             href: '/admin/users',

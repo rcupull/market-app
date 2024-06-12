@@ -24,6 +24,7 @@ export interface TestBDContent {
 
 export const fillBD = async (args?: {
   overrideUser1?: Partial<User>;
+  overrideAdmin?: Partial<User>;
   overrideBusiness1User1?: Partial<Business>;
   overrideProductPost1Business1User1?: Partial<Post>;
   overrideProductPost2Business1User1?: Partial<Post>;
@@ -33,6 +34,7 @@ export const fillBD = async (args?: {
     overrideBusiness1User1 = {},
     overrideProductPost1Business1User1 = {},
     overrideProductPost2Business1User1 = {},
+    overrideAdmin = {},
   } = args || {};
 
   const admin = new UserModel({
@@ -41,6 +43,7 @@ export const fillBD = async (args?: {
     password: 'password_123_admin',
     passwordVerbose: 'password_123_admin',
     role: 'admin',
+    ...overrideAdmin,
   });
   await admin.save();
 

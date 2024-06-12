@@ -1,7 +1,6 @@
-import { FilterQuery, PaginateOptions, Schema, UpdateQuery } from 'mongoose';
-import { ModelDocument, QueryHandle } from '../../types/general';
+import { FilterQuery, PaginateOptions } from 'mongoose';
+import { QueryHandle } from '../../types/general';
 import { PaginateResult } from '../../middlewares/pagination';
-import { isNumber } from '../../utils/general';
 import { Bill, BillState } from '../../types/billing';
 import { BillingModel } from '../../schemas/billing';
 
