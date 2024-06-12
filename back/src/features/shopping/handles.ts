@@ -59,8 +59,8 @@ const get_shopping_owner: () => RequestHandler = () => {
       const out = await shoppingServices.getAll({
         paginateOptions,
         query: {
-          'posts.post.routeName': routeName,
-          ...(states ? { state: { $in: states } } : {}),
+          routeName,
+          states,
         },
       });
 
