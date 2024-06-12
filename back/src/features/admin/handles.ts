@@ -7,6 +7,7 @@ import { AdminConfigModel } from '../../schemas/admin';
 import { get200Response, get400Response } from '../../utils/server-response';
 import { specialAccessRecord } from './utils';
 import { userServices } from '../user/services';
+import { shoppingServices } from '../shopping/services';
 
 const get_users: () => RequestHandler = () => {
   return (req, res) => {
@@ -129,6 +130,28 @@ const put_admin_users_userId_access: () => RequestHandler = () => {
   };
 };
 
+const get_admin_shopping: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { query, paginateOptions } = req;
+
+      const { routeNames, states } = query;
+
+      const out = await shoppingServices.getAll({
+        paginateOptions,
+        query: {
+          routeNames,
+          states,
+        },
+      });
+
+      if (out instanceof ServerResponse) return out;
+
+      res.send(out);
+    });
+  };
+};
+
 export const adminHandles = {
   get_users,
   del_users_userId,
@@ -138,4 +161,5 @@ export const adminHandles = {
   get_admin_access,
   put_admin_users_userId_access,
   //
+  get_admin_shopping,
 };

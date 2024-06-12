@@ -116,6 +116,14 @@ export type GetAllShoppingQuery = {
   page?: number;
 };
 
+export type GetAllShoppingAdminQuery = {
+  routeNames?: Array<string>;
+  states?: Array<ShoppingState>;
+  //
+  limit?: number;
+  page?: number;
+};
+
 export type GetAllBusinessQuery = {
   routeNames?: Array<string>;
   search?: string;

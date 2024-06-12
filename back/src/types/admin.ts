@@ -13,4 +13,8 @@ export type Access =
   //
   | 'user__remove'
   | 'user__read'
-  | 'user__write';
+  | 'user__write'
+  //
+  | 'shopping__read'
+  | 'shopping__write'
+  | 'shopping__remove';
