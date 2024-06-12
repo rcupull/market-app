@@ -23,6 +23,7 @@ const UserSchema = new Schema<User>({
     },
     default: null,
   },
+  specialAccess: { type: [String], default: [] },
 });
 
 const updateUserPassword = (user: User): Promise<void> => {

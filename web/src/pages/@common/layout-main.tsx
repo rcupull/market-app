@@ -1,7 +1,10 @@
 import { Popover, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
+import { SpinnerEllipsis } from 'components/spinner-ellipsis';
+
 import { useAuth } from 'features/api-slices/useAuth';
+import { useSignOut } from 'features/api-slices/useSignOut';
 
 import { useRouter } from 'hooks/useRouter';
 
@@ -17,6 +20,7 @@ export interface LayoutMainProps extends ChildrenProp {}
 export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
   const { isDashboardPage, isAdminPage } = useRouter();
   const { isAuthenticated } = useAuth();
+  const { signOut } = useSignOut();
 
   const smSideBar = (
     <div
@@ -90,6 +94,12 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
       </div>
 
       <Navbar className="flex-shrink-0 fixed top-0" />
+
+      {signOut.status.isBusy && (
+        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-gray-200 opacity-70">
+          <SpinnerEllipsis />
+        </div>
+      )}
     </div>
   );
 };

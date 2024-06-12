@@ -14,6 +14,7 @@ import {
   getUserNotFoundResponse,
 } from '../utils/server-response';
 import { businessServices } from '../features/business/services';
+import { Access } from '../types/admin';
 
 export const isLogged = passportJwtMiddleware;
 
@@ -22,12 +23,24 @@ const getFieldInReqData = (req: Request, field: string) => {
 };
 
 export const isAdmin: RequestHandler = (req, res, next) => {
-  const user = req.user;
+  const { user } = req;
 
   if (user?.role == 'admin') return next();
 
   get401Response({ res, json: { message: 'The user is not an admin' } });
 };
+
+export const hasAccess =
+  (...access: Array<Access>): RequestHandler =>
+  (req, res, next) => {
+    const { user } = req;
+
+    const hasAccess = access.map((val) => user?.specialAccess?.includes(val)).some(Boolean);
+
+    if (hasAccess || user?.specialAccess?.includes('full')) return next();
+
+    get401Response({ res, json: { message: 'The user has not access to this data' } });
+  };
 
 export const isUserIdAccessible: RequestHandler = (req, res, next) => {
   const { user } = req;

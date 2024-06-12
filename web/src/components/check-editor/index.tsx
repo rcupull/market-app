@@ -26,7 +26,6 @@ export const CheckEditor = ({
   className,
   getUploadAdapter,
 }: CheckEditorProps) => {
-
   const getItems = (): Array<CheckEditorToolbarItem> => {
     const out: Array<Nullable<CheckEditorToolbarItem>> = [
       'undo',

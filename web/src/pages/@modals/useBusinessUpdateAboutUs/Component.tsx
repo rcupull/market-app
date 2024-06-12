@@ -75,13 +75,13 @@ export const Component = ({ portal }: ComponentProps) => {
                 name="description"
                 className="mt-6"
                 checkEditorProps={{
-                  className:'check-editor-max-h-50vh',
-                  getUploadAdapter:(args) => {
+                  className: 'check-editor-max-h-50vh',
+                  getUploadAdapter: (args) => {
                     return new CheckEditorUploadAdapter({
                       ...args,
                       uploadUrl: getCheckEditorUploadUrl({ routeName }),
                     });
-                  }
+                  },
                 }}
                 description={<div>Describe la funcionalidad del negocio.</div>}
                 onChange={(newValue) => {

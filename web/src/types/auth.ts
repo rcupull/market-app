@@ -1,3 +1,4 @@
+import { Access } from './admin';
 import { BaseIdentity, Image } from './general';
 
 export type UserRole = 'user' | 'admin';
@@ -10,6 +11,7 @@ export interface User extends BaseIdentity {
   validated: boolean;
   profileImage?: Image | null;
   canCreateBusiness: boolean;
+  specialAccess?: Array<Access>;
 }
 
 export type UserData = User | null;

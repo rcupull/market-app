@@ -30,6 +30,7 @@ describe('GET: /user/:userId', () => {
             "name": "user1",
             "profileImage": null,
             "role": "user",
+            "specialAccess": [],
             "validated": true,
           }
         `
@@ -95,6 +96,7 @@ describe('PUT: /user/:userId', () => {
               "width": 300,
             },
             "role": "user",
+            "specialAccess": [],
             "validated": true,
           }
         `
