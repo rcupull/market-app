@@ -1,7 +1,7 @@
 import { isEmpty, isNullOrUndefined } from './general';
 
 type Query = Record<string, string | number>;
-type UrlParams = Record<string, string>;
+type UrlParams = Record<string, string | undefined>;
 
 export const paramsSerializer = (query: Query): string => {
   return Object.keys(query).reduce((acc, key, index) => {

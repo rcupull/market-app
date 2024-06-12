@@ -48,20 +48,6 @@ const handleAddPostsToOrder = async ({
     .expect(200);
 };
 
-const handleAddNewShopping = async ({ productPost1Business1User1, user1 }: TestBDContent) => {
-  await supertest(app)
-    .post(
-      getTestingRoute({
-        path: '/shopping',
-      })
-    )
-    .send({
-      postId: productPost1Business1User1._id,
-    })
-    .auth(generateToken(user1._id), { type: 'bearer' })
-    .expect(200);
-};
-
 describe('shopping', () => {
   describe('GET: /shopping', () => {
     afterEach(async () => {
@@ -82,11 +68,7 @@ describe('shopping', () => {
     });
 
     it('should return a new shopping', async () => {
-      const bd = await fillBD();
-
-      const { productPost1Business1User1, user1, business1User1 } = bd;
-
-      await handleAddNewShopping(bd);
+      const { productPost1Business1User1, user1, business1User1 } = await fillBD();
 
       await supertest(app)
         .get(
@@ -105,7 +87,7 @@ describe('shopping', () => {
           expect(shopping.purchaserName).toEqual(user1.name);
           expect(shopping.routeName).toEqual(business1User1.routeName);
           expect(shopping.state).toEqual('CONSTRUCTION');
-          expect(shopping.posts[0].count).toEqual(1);
+          expect(shopping.posts[0].count).toEqual(5);
           expect(shopping.posts[0].post._id).toContain(productPost1Business1User1._id.toString());
         });
     });
@@ -148,8 +130,6 @@ describe('shopping', () => {
 
       const { productPost1Business1User1, user1, business1User1 } = bd;
 
-      await handleAddNewShopping(bd);
-
       await supertest(app)
         .get(
           getTestingRoute({
@@ -167,7 +147,7 @@ describe('shopping', () => {
           expect(shopping.purchaserName).toEqual(user1.name);
           expect(shopping.routeName).toEqual(business1User1.routeName);
           expect(shopping.state).toEqual('CONSTRUCTION');
-          expect(shopping.posts[0].count).toEqual(1);
+          expect(shopping.posts[0].count).toEqual(5);
           expect(shopping.posts[0].post._id).toContain(productPost1Business1User1._id.toString());
         });
     });
@@ -199,6 +179,7 @@ describe('shopping', () => {
         .mockImplementation(jest.fn());
 
       const bd = await fillBD({
+        noCreateInitialShopping: true,
         overrideProductPost1Business1User1: {
           stockAmount: 20,
         },
@@ -306,6 +287,7 @@ describe('shopping', () => {
         .mockImplementation(jest.fn());
 
       const bd = await fillBD({
+        noCreateInitialShopping: true,
         overrideProductPost1Business1User1: {
           stockAmount: 20,
         },
@@ -378,6 +360,7 @@ describe('shopping', () => {
         .mockImplementation(jest.fn());
 
       const bd = await fillBD({
+        noCreateInitialShopping: true,
         overrideProductPost1Business1User1: {
           stockAmount: 20,
         },
@@ -451,6 +434,192 @@ describe('shopping', () => {
       );
 
       expect(sendUpdateStockAmountMessage.mock.calls[3]).toEqual(undefined);
+    });
+  });
+
+  describe('POST: /shopping/:shoppingId/changeState', () => {
+    afterEach(async () => {
+      await dropTestDbConnectionAsync();
+    });
+
+    it('should change the state to READY_TO_DELIVER', async () => {
+      const { user1, shopping1Business1User1 } = await fillBD();
+
+      if (!shopping1Business1User1) return;
+
+      // checking the state
+      expect(shopping1Business1User1.state).toEqual('CONSTRUCTION');
+
+      // change the state
+      await supertest(app)
+        .post(
+          getTestingRoute({
+            path: '/shopping/:shoppingId/changeState',
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
+          })
+        )
+        .auth(generateToken(user1._id), { type: 'bearer' })
+        .send({
+          state: 'READY_TO_DELIVER',
+        })
+        .expect(200);
+
+      // checking the state
+      await supertest(app)
+        .get(
+          getTestingRoute({
+            path: '/shopping/:shoppingId',
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
+          })
+        )
+        .auth(generateToken(user1._id), { type: 'bearer' })
+        .expect(200)
+        .then((response) => {
+          const shopping: Shopping = response.body;
+          expect(shopping.state).toEqual('READY_TO_DELIVER');
+        });
+    });
+
+    it('should not change the state to PAID', async () => {
+      const { user1, shopping1Business1User1 } = await fillBD();
+
+      if (!shopping1Business1User1) return;
+
+      // change the state
+      await supertest(app)
+        .post(
+          getTestingRoute({
+            path: '/shopping/:shoppingId/changeState',
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
+          })
+        )
+        .auth(generateToken(user1._id), { type: 'bearer' })
+        .send({
+          state: 'PAID',
+        })
+        .expect(400);
+
+      // checking the state
+      await supertest(app)
+        .get(
+          getTestingRoute({
+            path: '/shopping/:shoppingId',
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
+          })
+        )
+        .auth(generateToken(user1._id), { type: 'bearer' })
+        .expect(200)
+        .then((response) => {
+          const shopping: Shopping = response.body;
+          expect(shopping.state).toEqual('CONSTRUCTION');
+        });
+    });
+
+    it('should not change the state from PAID', async () => {
+      const { user1, shopping1Business1User1 } = await fillBD({
+        overrideShopping1Business1User1: { state: 'PAID' },
+      });
+
+      if (!shopping1Business1User1) return;
+
+      // change the state
+      await supertest(app)
+        .post(
+          getTestingRoute({
+            path: '/shopping/:shoppingId/changeState',
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
+          })
+        )
+        .auth(generateToken(user1._id), { type: 'bearer' })
+        .send({
+          state: 'READY_TO_DELIVER',
+        })
+        .expect(400);
+
+      // checking the state
+      await supertest(app)
+        .get(
+          getTestingRoute({
+            path: '/shopping/:shoppingId',
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
+          })
+        )
+        .auth(generateToken(user1._id), { type: 'bearer' })
+        .expect(200)
+        .then((response) => {
+          const shopping: Shopping = response.body;
+          expect(shopping.state).toEqual('PAID');
+        });
+    });
+
+    it('should not change the state to INVOICED', async () => {
+      const { user1, shopping1Business1User1 } = await fillBD();
+      if (!shopping1Business1User1) return;
+
+      // change the state
+      await supertest(app)
+        .post(
+          getTestingRoute({
+            path: '/shopping/:shoppingId/changeState',
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
+          })
+        )
+        .auth(generateToken(user1._id), { type: 'bearer' })
+        .send({
+          state: 'INVOICED',
+        })
+        .expect(400);
+
+      // checking the state
+      await supertest(app)
+        .get(
+          getTestingRoute({
+            path: '/shopping/:shoppingId',
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
+          })
+        )
+        .auth(generateToken(user1._id), { type: 'bearer' })
+        .expect(200)
+        .then((response) => {
+          const shopping: Shopping = response.body;
+          expect(shopping.state).toEqual('CONSTRUCTION');
+        });
+    });
+
+    it('should not change the state from INVOICED', async () => {
+      const { user1, shopping1Business1User1 } = await fillBD({
+        overrideShopping1Business1User1: { state: 'INVOICED' },
+      });
+      if (!shopping1Business1User1) return;
+
+      // change the state
+      await supertest(app)
+        .post(
+          getTestingRoute({
+            path: '/shopping/:shoppingId/changeState',
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
+          })
+        )
+        .auth(generateToken(user1._id), { type: 'bearer' })
+        .send({
+          state: 'READY_TO_DELIVER',
+        })
+        .expect(400);
+
+      // checking the state
+      await supertest(app)
+        .get(
+          getTestingRoute({
+            path: '/shopping/:shoppingId',
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
+          })
+        )
+        .auth(generateToken(user1._id), { type: 'bearer' })
+        .expect(200)
+        .then((response) => {
+          const shopping: Shopping = response.body;
+          expect(shopping.state).toEqual('INVOICED');
+        });
     });
   });
 });

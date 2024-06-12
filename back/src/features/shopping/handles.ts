@@ -2,6 +2,7 @@ import { AnyRecord, RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
 import { ServerResponse } from 'http';
 import {
+  get400Response,
   getBusinessNotFoundResponse,
   getPostNotFoundResponse,
   getShoppingNotFoundResponse,
@@ -17,6 +18,7 @@ import { PostPurshaseNotes } from '../../types/post';
 import { ShoppingModel } from '../../schemas/shopping';
 import { sendNewOrderTelegramMessage } from '../telegram/handles';
 import { sendNewOrderPushMessage, sendUpdateStockAmountMessage } from '../notifications/handles';
+import { ShoppingState } from '../../types/shopping';
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -269,12 +271,22 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
       const { shoppingId } = params;
       const { state } = body;
 
+      const inmobileStates: Array<ShoppingState> = ['PAID', 'INVOICED'];
+
+      if (inmobileStates.includes(state)) {
+        return get400Response({ res, json: { message: 'Cannot change to this state' } });
+      }
+
       const currentOrder = await ShoppingModel.findOne({
         _id: shoppingId,
       });
 
       if (!currentOrder) {
         return getShoppingNotFoundResponse({ res });
+      }
+
+      if (inmobileStates.includes(currentOrder.state)) {
+        return get400Response({ res, json: { message: 'Cannot change from this state' } });
       }
 
       if (currentOrder?.history) {

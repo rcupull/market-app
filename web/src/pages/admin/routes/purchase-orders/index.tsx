@@ -80,8 +80,9 @@ export const PurchaseOrders = () => {
           return {
             nodes: [
               <RowActions key="RowActions" rowData={rowData} />,
-              <span key="routeName" className={cn("text-nowrap", { 'text-red-500': !name })}>
-                {name || 'unknown'}{' / '}
+              <span key="routeName" className={cn('text-nowrap', { 'text-red-500': !name })}>
+                {name || 'unknown'}
+                {' / '}
                 {routeName}
               </span>,
               purchaserName,

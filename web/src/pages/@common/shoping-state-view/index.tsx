@@ -92,7 +92,7 @@ export const ShoppingStateView = ({
     >
       {() => {
         return (
-          <form className="w-40">
+          <form className="w-52">
             <FieldSelect<{ value: ShoppingState; label: string; colorsClassName: string }>
               name="state"
               optionToValue={({ value }) => value}
@@ -107,6 +107,16 @@ export const ShoppingStateView = ({
                   value: 'REQUESTED',
                   label: 'Solicitada',
                   colorsClassName: 'bg-yellow-500 text-white',
+                },
+                {
+                  value: 'IN_PROGRESS',
+                  label: 'En Progreso',
+                  colorsClassName: 'bg-indigo-500 text-white',
+                },
+                {
+                  value: 'READY_TO_DELIVER',
+                  label: 'Lista para entrega',
+                  colorsClassName: 'bg-green-200 text-gray-700',
                 },
                 {
                   value: 'DELIVERED',

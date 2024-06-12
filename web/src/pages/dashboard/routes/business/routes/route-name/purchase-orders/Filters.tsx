@@ -41,6 +41,14 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
           value: 'REQUESTED',
         },
         {
+          label: 'En progreso',
+          value: 'IN_PROGRESS',
+        },
+        {
+          label: 'Listo para entregar',
+          value: 'READY_TO_DELIVER',
+        },
+        {
           label: 'Cancelados',
           value: 'CANCELED',
         },
