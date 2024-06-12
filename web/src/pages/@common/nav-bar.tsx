@@ -1,3 +1,4 @@
+import { DevSwitchSession } from 'components/dev-switch-session';
 import { IconButton } from 'components/icon-button';
 import { IconUpdate } from 'components/icon-update';
 import { Menu } from 'components/menu';
@@ -181,6 +182,8 @@ export const Navbar = ({ className }: NavbarProps) => {
       ]}
       postContent={
         <>
+          <DevSwitchSession />
+
           {isAdmin && (
             <IconButton
               title="Administración"
