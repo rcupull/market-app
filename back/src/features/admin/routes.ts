@@ -9,7 +9,9 @@ export const router = Router();
 
 /////////////////////////////////////////////////////////////////
 
-router.route('/admin/users').get(isLogged, isAdmin, pagination, adminHandles.get_users());
+router
+  .route('/admin/users')
+  .get(isLogged, isAdmin, hasAccess('user__read'), pagination, adminHandles.get_users());
 
 router
   .route('/admin/users/:userId')

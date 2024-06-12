@@ -5,4 +5,12 @@ export interface AdminConfig extends BaseIdentity {
   privacyPolicy?: string;
 }
 
-export type Access = 'access__read' | 'user_access__write' | 'user__remove';
+export type Access =
+  | 'full'
+  //
+  | 'access__read'
+  | 'user_access__write'
+  //
+  | 'user__remove'
+  | 'user__read'
+  | 'user__write';

@@ -35,9 +35,9 @@ export const hasAccess =
   (req, res, next) => {
     const { user } = req;
 
-    const hasAccess = user?.specialAccess?.reduce((acc, val) => acc || access.includes(val), true);
+    const hasAccess = access.map((val) => user?.specialAccess?.includes(val)).some(Boolean);
 
-    if (hasAccess || user?.email === 'rcupull@gmail.com') return next();
+    if (hasAccess || user?.specialAccess?.includes('full')) return next();
 
     get401Response({ res, json: { message: 'The user has not access to this data' } });
   };
