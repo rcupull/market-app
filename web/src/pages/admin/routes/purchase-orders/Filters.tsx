@@ -5,6 +5,7 @@ import { GetAllShoppingAdminQuery } from 'types/api';
 import { StyleProps } from 'types/general';
 import { ShoppingState } from 'types/shopping';
 import { cn } from 'utils/general';
+import { getShoppingStateLabel } from 'utils/shopping';
 
 type Value = ShoppingState | 'ALL';
 
@@ -26,37 +27,35 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
   };
 
   return (
-    <RadioGroup<{ label: string; value: Value }>
+    <RadioGroup<{ value: Value }>
       onChange={handleChange}
       value={getValue()}
       renderOption={({ checked, item }) => (
-        <FieldCheckbox noUseFormik value={checked} label={item.label} />
+        <FieldCheckbox
+          noUseFormik
+          value={checked}
+          label={item.value === 'ALL' ? 'Todas' : getShoppingStateLabel(item.value)}
+        />
       )}
       optionToValue={({ value }) => value}
       items={[
         {
-          label: 'En construcción',
+          value: 'ALL',
+        },
+        {
           value: 'CONSTRUCTION',
         },
         {
-          label: 'Solicitados',
           value: 'REQUESTED',
         },
         {
-          label: 'Cancelados',
-          value: 'CANCELED',
-        },
-        {
-          label: 'Facturados',
           value: 'INVOICED',
         },
         {
-          label: 'Rechazadas',
-          value: 'REJECTED',
+          value: 'CANCELED',
         },
         {
-          label: 'Todas',
-          value: 'ALL',
+          value: 'REJECTED',
         },
       ]}
       className={cn('flex items-center gap-4 mb-5 flex-wrap', className)}

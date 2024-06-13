@@ -11,6 +11,7 @@ import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 import { Filters } from './Filters';
 import { RowActions } from './RowActions';
 
+import { ShoppingStateLabel } from 'pages/@common/shopping-state-label';
 import { TopActions } from 'pages/@common/top-actions';
 import { GetAllShoppingAdminQuery } from 'types/api';
 import { BusinessSummary } from 'types/business';
@@ -64,7 +65,7 @@ export const PurchaseOrders = () => {
         }}
         heads={[
           'Acciones',
-          'Negocio/RouteName',
+          <span key='headBusiness'>Negocio <br/> <span className='text-gray-400'>RouteName</span></span>,
           'Cliente',
           'Estado',
           'Unidades',
@@ -80,13 +81,12 @@ export const PurchaseOrders = () => {
           return {
             nodes: [
               <RowActions key="RowActions" rowData={rowData} />,
-              <span key="routeName" className={cn('text-nowrap', { 'text-red-500': !name })}>
-                {name || 'unknown'}
-                {' / '}
-                {routeName}
-              </span>,
+              <div key="routeName" className={cn('text-nowrap flex flex-col', { 'text-red-500': !name })}>
+                <span>{name || 'unknown'}</span>
+                <span className='text-gray-400'>{routeName}</span>
+              </div>,
               purchaserName,
-              state,
+              <ShoppingStateLabel key="state" state={state} className='text-nowrap' />,
               totalProducts,
               <span key="price" className="text-nowrap">{`${totalPrice} CUP`}</span>,
               getDateString({ date: createdAt, showTime: true }),
