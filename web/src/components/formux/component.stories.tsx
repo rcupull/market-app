@@ -31,7 +31,7 @@ export const Default = (): JSX.Element => {
                 className="mt-6"
                 items={[
                   {
-                    value: 'DELIVERED',
+                    value: 'CONSTRUCTION',
                     label: 'Entregado',
                   },
                   {
@@ -63,7 +63,7 @@ export const Default = (): JSX.Element => {
                 className="mt-6"
                 items={[
                   {
-                    value: 'DELIVERED',
+                    value: 'CONSTRUCTION',
                     label: 'Entregado',
                   },
                   {

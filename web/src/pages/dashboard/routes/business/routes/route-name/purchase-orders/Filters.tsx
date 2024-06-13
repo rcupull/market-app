@@ -37,33 +37,38 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
       optionToValue={({ value }) => value}
       items={[
         {
+          label: 'Todas',
+          value: 'ALL',
+        },
+        {
           label: 'Solicitados',
           value: 'REQUESTED',
         },
         {
-          label: 'En progreso',
-          value: 'IN_PROGRESS',
+          label: 'En proceso',
+          value: 'PROCESSING',
         },
         {
-          label: 'Listo para entregar',
+          label: 'Listos para entregar',
           value: 'READY_TO_DELIVER',
-        },
-        {
-          label: 'Cancelados',
-          value: 'CANCELED',
         },
         {
           label: 'Entregados',
           value: 'DELIVERED',
         },
         {
+          label: 'Cancelados',
+          value: 'CANCELED',
+        },
+        {
           label: 'Rechazadas',
           value: 'REJECTED',
         },
         {
-          label: 'Todas',
-          value: 'ALL',
+          label: 'Facturados',
+          value: 'INVOICED',
         },
+
       ]}
       className={cn('flex items-center gap-4 mb-5 flex-wrap', className)}
     />

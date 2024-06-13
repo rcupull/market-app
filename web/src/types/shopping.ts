@@ -4,7 +4,7 @@ import { Post } from './post';
 export type ShoppingState =
   | 'CONSTRUCTION'
   | 'REQUESTED'
-  | 'IN_PROGRESS'
+  | 'PROCESSING'
   | 'READY_TO_DELIVER'
   | 'DELIVERED'
   //

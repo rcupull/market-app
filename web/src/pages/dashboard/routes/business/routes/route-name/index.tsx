@@ -91,16 +91,16 @@ export const RouteName = () => {
       svg: SvgShoppingCartSolid,
     },
     {
-      q: 'billing',
-      label: getBusinessTabLabel('billing'),
-      content: <Billing />,
-      svg: SvgMoneyBillAltSolid,
-    },
-    {
       q: 'settings',
       label: getBusinessTabLabel('settings'),
       svg: SvgCogSolid,
       content: <Settings />,
+    },
+    {
+      q: 'billing',
+      label: getBusinessTabLabel('billing'),
+      content: <Billing />,
+      svg: SvgMoneyBillAltSolid,
     },
   ];
 

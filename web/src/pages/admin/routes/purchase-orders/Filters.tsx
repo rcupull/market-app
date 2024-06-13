@@ -47,8 +47,8 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
           value: 'CANCELED',
         },
         {
-          label: 'Entregados',
-          value: 'DELIVERED',
+          label: 'Facturados',
+          value: 'INVOICED',
         },
         {
           label: 'Rechazadas',

@@ -40,7 +40,7 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
         },
         {
           label: 'Chequeando Pago',
-          value: 'CHECKING_PAY',
+          value: 'CANCELED',
         },
         {
           label: 'Pagado',

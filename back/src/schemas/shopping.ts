@@ -10,7 +10,7 @@ const shoppingState = {
   enum: [
     'CONSTRUCTION',
     'REQUESTED',
-    'IN_PROGRESS',
+    'PROCESSING',
     'READY_TO_DELIVER',
     'DELIVERED',
     //
@@ -71,5 +71,5 @@ ShoppingSchema.plugin(mongoosePaginate);
 export const ShoppingModel = model<Shopping, PaginateModel<Shopping>>(
   'Shopping',
   ShoppingSchema,
-  'shopping'
+  'shopping',
 );
