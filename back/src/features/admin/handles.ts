@@ -18,7 +18,7 @@ const get_users: () => RequestHandler = () => {
         {
           role: { $in: ['user', 'admin'] },
         },
-        paginateOptions,
+        paginateOptions
       );
 
       res.send(out);

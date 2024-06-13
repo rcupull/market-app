@@ -49,7 +49,7 @@ const updateOrAddOne: QueryHandle<
               'p.post._id': postId,
             },
           ],
-        },
+        }
       );
     } else {
       await ShoppingModel.updateOne(
@@ -71,7 +71,7 @@ const updateOrAddOne: QueryHandle<
               'p.post._id': postId,
             },
           ],
-        },
+        }
       );
     }
   } else {

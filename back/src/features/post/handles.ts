@@ -1,6 +1,6 @@
 import { AnyRecord, RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
-import { GetAllArgs, postServices } from './services';
+import { postServices } from './services';
 
 import { imagesServices } from '../images/services';
 import {
@@ -12,6 +12,7 @@ import {
 import { isEmpty, isEqual } from '../../utils/general';
 import { Post } from '../../types/post';
 import { makeReshaper } from '../../utils/makeReshaper';
+import { GetAllArgs } from './utils';
 
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
