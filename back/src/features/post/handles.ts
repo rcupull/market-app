@@ -1,6 +1,6 @@
 import { AnyRecord, RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
-import { GetAllArgs, postServices } from './services';
+import { postServices } from './services';
 
 import { imagesServices } from '../images/services';
 import {
@@ -12,6 +12,7 @@ import {
 import { isEmpty, isEqual } from '../../utils/general';
 import { Post } from '../../types/post';
 import { makeReshaper } from '../../utils/makeReshaper';
+import { GetAllArgs } from './utils';
 
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
@@ -28,7 +29,7 @@ const get_posts: () => RequestHandler = () => {
         postType,
       } = query;
 
-      const out = await postServices.getAll({
+      const out = await postServices.getAllWithPagination({
         paginateOptions,
         postsIds,
         routeNames,
@@ -240,7 +241,7 @@ const bulk_action_delete: () => RequestHandler = () => {
       } else if (!isEmpty(query)) {
         const { postCategoriesMethod, postCategoriesTags, search } = query;
 
-        const posts = await postServices.getAllWithOutPagination({
+        const posts = await postServices.getAll({
           routeNames: [routeName],
           postCategoriesMethod,
           postCategoriesTags,
@@ -253,7 +254,7 @@ const bulk_action_delete: () => RequestHandler = () => {
         });
       } else {
         // get all post
-        const posts = await postServices.getAllWithOutPagination({
+        const posts = await postServices.getAll({
           routeNames: [routeName],
         });
 
@@ -297,7 +298,7 @@ const bulk_action_update: () => RequestHandler = () => {
         // TODO esto puede ser mejorado en una sola quuery
         const { postCategoriesMethod, postCategoriesTags, search } = query;
 
-        const posts = await postServices.getAllWithOutPagination({
+        const posts = await postServices.getAll({
           routeNames: [routeName],
           postCategoriesMethod,
           postCategoriesTags,
@@ -314,7 +315,7 @@ const bulk_action_update: () => RequestHandler = () => {
         });
       } else {
         // get all posts
-        const posts = await postServices.getAllWithOutPagination({
+        const posts = await postServices.getAll({
           routeNames: [routeName],
         });
 

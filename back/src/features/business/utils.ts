@@ -1,5 +1,14 @@
-import { BusinessCategory, PostCategory } from '../../types/business';
+import { FilterQuery, PaginateOptions } from 'mongoose';
+import { Business, BusinessCategory, PostCategory } from '../../types/business';
 import { addStringToUniqueArray, replaceAll } from '../../utils/general';
+
+export interface GetAllArgs {
+  paginateOptions?: PaginateOptions;
+  createdBy?: string;
+  routeNames?: Array<string>;
+  search?: string;
+  hidden?: boolean;
+}
 
 export const getPostCategoriesFromBusinessCategories = (
   businessCategories: Array<BusinessCategory>
@@ -64,4 +73,35 @@ export const getPostCategoryTag = (label: string): string => {
   out = replaceAll(out, ' ', '_');
   out = out.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // remove accents
   return out;
+};
+
+export const getAllFilterQuery = ({
+  createdBy,
+  routeNames,
+  search,
+  hidden,
+}: Omit<GetAllArgs, 'paginateOptions'>): FilterQuery<Business> => {
+  const filterQuery: FilterQuery<Business> = {};
+
+  ///////////////////////////////////////////////////////////////////
+  if (createdBy) {
+    filterQuery.createdBy = createdBy;
+  }
+  ///////////////////////////////////////////////////////////////////
+
+  if (routeNames?.length) {
+    filterQuery.routeName = { $in: routeNames };
+  }
+  ///////////////////////////////////////////////////////////////////
+
+  if (search) {
+    filterQuery.name = { $regex: new RegExp(search), $options: 'i' };
+  }
+  ///////////////////////////////////////////////////////////////////
+
+  if (hidden !== undefined) {
+    filterQuery.hidden = hidden;
+  }
+
+  return filterQuery;
 };

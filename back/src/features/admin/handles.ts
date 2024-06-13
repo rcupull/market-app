@@ -135,7 +135,7 @@ const get_admin_shopping: () => RequestHandler = () => {
 
       const { routeNames, states } = query;
 
-      const out = await shoppingServices.getAll({
+      const out = await shoppingServices.getAllWithPagination({
         paginateOptions,
         query: {
           routeNames,

@@ -9,7 +9,7 @@ export interface GetAllArgs {
   states?: Array<BillState>;
 }
 
-const getAll: QueryHandle<GetAllArgs, PaginateResult<Bill>> = async ({
+const getAllWithPagination: QueryHandle<GetAllArgs, PaginateResult<Bill>> = async ({
   paginateOptions = {},
   states,
 }) => {
@@ -29,5 +29,5 @@ const getAll: QueryHandle<GetAllArgs, PaginateResult<Bill>> = async ({
 };
 
 export const billingServices = {
-  getAll,
+  getAllWithPagination,
 };
