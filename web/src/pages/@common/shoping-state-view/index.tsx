@@ -9,9 +9,11 @@ import { Formux } from 'components/formux';
 import { useShoppingChangeState } from 'features/api/shopping/useShoppingChangeState';
 import { useModal } from 'features/modal/useModal';
 
+import { ShoppingStateLabel } from '../shopping-state-label';
+
 import { FetchStatus } from 'types/api';
 import { Shopping, ShoppingState } from 'types/shopping';
-import { cn, isEqual } from 'utils/general';
+import { isEqual } from 'utils/general';
 
 interface State {
   state: ShoppingState;
@@ -35,6 +37,23 @@ export const ShoppingStateView = ({
       setFormState({ state });
     }
   }, [fetchStatus.isSuccess]);
+
+  if (state === 'REJECTED' || state === 'CANCELED' || state === 'INVOICED' || state === 'DELIVERED') {
+    return <ShoppingStateLabel state={state} />;
+  }
+
+  const nextStates = (): Array<ShoppingState> => {
+    switch (state) {
+      case 'REQUESTED':
+        return ['REQUESTED', 'PROCESSING', 'REJECTED'];
+      case 'PROCESSING':
+        return ['PROCESSING', 'READY_TO_DELIVER', 'DELIVERED', 'REJECTED'];
+      case 'READY_TO_DELIVER':
+        return ['READY_TO_DELIVER', 'DELIVERED', 'REJECTED'];
+      default:
+        return [];
+    }
+  };
 
   return (
     <Formux<State>
@@ -92,33 +111,15 @@ export const ShoppingStateView = ({
     >
       {() => {
         return (
-          <form className="w-40">
-            <FieldSelect<{ value: ShoppingState; label: string; colorsClassName: string }>
+          <form className="w-52">
+            <FieldSelect<{ value: ShoppingState }>
               name="state"
               optionToValue={({ value }) => value}
-              renderValue={({ label, colorsClassName }) => (
-                <div className={cn('py-0.5 px-2 rounded-2xl', colorsClassName)}>{label}</div>
-              )}
-              renderOption={({ label, colorsClassName }) => (
-                <div className={cn('py-0.5 px-2 rounded-2xl', colorsClassName)}>{label}</div>
-              )}
-              items={[
-                {
-                  value: 'REQUESTED',
-                  label: 'Solicitada',
-                  colorsClassName: 'bg-yellow-500 text-white',
-                },
-                {
-                  value: 'DELIVERED',
-                  label: 'Entregada',
-                  colorsClassName: 'bg-green-500 text-white',
-                },
-                {
-                  value: 'REJECTED',
-                  label: 'Rechazada',
-                  colorsClassName: 'bg-red-500 text-white',
-                },
-              ]}
+              renderValue={({ value }) => <ShoppingStateLabel state={value} />}
+              renderOption={({ value }) => <ShoppingStateLabel state={value} />}
+              items={nextStates().map((value) => ({
+                value,
+              }))}
             />
           </form>
         );

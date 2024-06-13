@@ -1,12 +1,17 @@
 import { FieldCheckbox } from 'components/field-checkbox';
-import { RadioGroup } from 'components/radio-group';
+import { FieldRadioGroup } from 'components/field-radio-group';
+import { FieldSelectAsync } from 'components/field-select-async';
+import { Formux } from 'components/formux';
+
+import { useGetAllBusinessSummary } from 'features/api/business/useGetAllBusinessSummary';
 
 import { GetAllShoppingAdminQuery } from 'types/api';
 import { StyleProps } from 'types/general';
 import { ShoppingState } from 'types/shopping';
 import { cn } from 'utils/general';
+import { getShoppingStateLabel } from 'utils/shopping';
 
-type Value = ShoppingState | 'ALL';
+type ShoppingStateFilter = ShoppingState | 'ALL';
 
 export interface FiltersProps extends StyleProps {
   onChange?: (filters: GetAllShoppingAdminQuery) => void;
@@ -14,52 +19,68 @@ export interface FiltersProps extends StyleProps {
 }
 
 export const Filters = ({ onChange, value, className }: FiltersProps) => {
-  const getValue = (): Value => {
-    return value?.states?.length === 1 ? value.states[0] : 'ALL';
-  };
-
-  const handleChange = (state: Value) => {
-    if (state === 'ALL') {
-      return onChange?.({ page: 1, states: [] });
-    }
-    onChange?.({ page: 1, states: [state] });
-  };
+  const useCall = () => useGetAllBusinessSummary().getAllBusinessSummary;
 
   return (
-    <RadioGroup<{ label: string; value: Value }>
-      onChange={handleChange}
-      value={getValue()}
-      renderOption={({ checked, item }) => (
-        <FieldCheckbox noUseFormik value={checked} label={item.label} />
-      )}
-      optionToValue={({ value }) => value}
-      items={[
-        {
-          label: 'En construcción',
-          value: 'CONSTRUCTION',
-        },
-        {
-          label: 'Solicitados',
-          value: 'REQUESTED',
-        },
-        {
-          label: 'Cancelados',
-          value: 'CANCELED',
-        },
-        {
-          label: 'Entregados',
-          value: 'DELIVERED',
-        },
-        {
-          label: 'Rechazadas',
-          value: 'REJECTED',
-        },
-        {
-          label: 'Todas',
-          value: 'ALL',
-        },
-      ]}
-      className={cn('flex items-center gap-4 mb-5 flex-wrap', className)}
-    />
+    <Formux<{ state: ShoppingStateFilter; routeNames: Array<string> }>
+      value={{
+        state: value?.states?.length === 1 ? value.states[0] : 'ALL',
+        routeNames: value?.routeNames || [],
+      }}
+      onChange={(filters) => {
+        const { state } = filters;
+
+        onChange?.({ ...filters, page: 1, states: state === 'ALL' ? [] : [state] });
+      }}
+    >
+      {() => {
+        return (
+          <form className={cn('mt-10 w-full', className)}>
+            <FieldRadioGroup<{ value: ShoppingStateFilter }>
+              name="state"
+              renderOption={({ checked, item }) => (
+                <FieldCheckbox
+                  noUseFormik
+                  value={checked}
+                  label={item.value === 'ALL' ? 'Todas' : getShoppingStateLabel(item.value)}
+                />
+              )}
+              optionToValue={({ value }) => value}
+              items={[
+                {
+                  value: 'ALL',
+                },
+                {
+                  value: 'CONSTRUCTION',
+                },
+                {
+                  value: 'REQUESTED',
+                },
+                {
+                  value: 'INVOICED',
+                },
+                {
+                  value: 'CANCELED',
+                },
+                {
+                  value: 'REJECTED',
+                },
+              ]}
+              containerClassName="w-full flex item-center flex-wrap gap-4"
+            />
+            <FieldSelectAsync
+              className="mt-6"
+              name="routeNames"
+              multi
+              label="Negocios"
+              useCall={useCall}
+              searchToArgs={(search) => ({ search })}
+              renderOption={({ name }) => name}
+              optionToValue={({ routeName }) => routeName}
+            />
+          </form>
+        );
+      }}
+    </Formux>
   );
 };

@@ -26,7 +26,7 @@ export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => 
         <span>Estado:</span>
         <span
           className={cn('font-bold', {
-            'text-green-500': state === 'DELIVERED',
+            'text-green-500': state === 'INVOICED',
             'text-yellow-500': state === 'REQUESTED',
             'text-gray-300': state === 'CONSTRUCTION',
             'text-red-500': state === 'REJECTED' || state === 'CANCELED',

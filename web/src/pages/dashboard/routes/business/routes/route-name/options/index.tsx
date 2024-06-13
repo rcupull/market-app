@@ -194,16 +194,17 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
             active: query.businessTab === 'shopping',
           },
           {
-            label: getBusinessTabLabel('billing'),
-            onClick: () => onChangeQuery({ businessTab: 'billing' }),
-            svg: SvgMoneyBillAltSolid,
-            active: query.businessTab === 'billing',
-          },
-          {
             label: getBusinessTabLabel('settings'),
             onClick: () => onChangeQuery({ businessTab: 'settings' }),
             svg: SvgCogSolid,
             active: query.businessTab === 'settings',
+            divider: true,
+          },
+          {
+            label: getBusinessTabLabel('billing'),
+            onClick: () => onChangeQuery({ businessTab: 'billing' }),
+            svg: SvgMoneyBillAltSolid,
+            active: query.businessTab === 'billing',
           },
         ]}
       />

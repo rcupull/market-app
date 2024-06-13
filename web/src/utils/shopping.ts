@@ -37,10 +37,14 @@ export const getShoppingData = (
 export const getShoppingStateLabel = (state: ShoppingState): string => {
   const labels: Record<ShoppingState, string> = {
     CONSTRUCTION: 'En construcción', //this state is temporaly and can not handle by the user
-    REQUESTED: 'Solicitada',
-    DELIVERED: 'Entregada',
-    CANCELED: 'Cancelada',
-    REJECTED: 'Rechazada',
+    REQUESTED: 'Solicitado',
+    INVOICED: 'Facturado',
+    CANCELED: 'Cancelado',
+    REJECTED: 'Rechazado',
+    PROCESSING: 'En proceso',
+    DELIVERED: 'Entregado',
+    PAID: 'Pagado',
+    READY_TO_DELIVER: 'Listo para entregar',
   };
 
   return labels[state];

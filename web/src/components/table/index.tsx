@@ -76,7 +76,7 @@ export const Table = <RowData extends AnyRecord = AnyRecord>({
     <ReorderContainer onReorder={onReorder}>
       <div ref={ref} onScroll={onScroll} className={cn('relative max-h-screen', className)}>
         <table className="min-w-full overflow-auto max-h-full table-auto">
-          <thead className="sticky top-0 z-10">
+          <thead className="sticky top-0">
             <tr>
               {heads.map((head, index) => {
                 return (
