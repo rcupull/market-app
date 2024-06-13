@@ -1,6 +1,6 @@
 import { AnyRecord, RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
-import { ServerResponse } from 'http';
+
 import {
   get400Response,
   getBusinessNotFoundResponse,
@@ -39,8 +39,6 @@ const get_shopping: () => RequestHandler = () => {
         },
       });
 
-      if (out instanceof ServerResponse) return out;
-
       res.send(out);
     });
   };
@@ -66,8 +64,6 @@ const get_shopping_owner: () => RequestHandler = () => {
         },
       });
 
-      if (out instanceof ServerResponse) return out;
-
       res.send(out);
     });
   };
@@ -90,8 +86,6 @@ const get_shopping_shoppingId: () => RequestHandler = () => {
           purchaserId: user._id,
         },
       });
-
-      if (out instanceof ServerResponse) return out;
 
       res.send(out);
     });
@@ -131,10 +125,6 @@ const post_shopping: () => RequestHandler<
         amountToAdd: -amountToAdd,
         post,
       });
-
-      if (updateStockResponse instanceof ServerResponse) {
-        return updateStockResponse;
-      }
 
       /**
        * update the shopping with the new amount according to amount added to post.
@@ -203,8 +193,6 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
         },
       });
 
-      if (order instanceof ServerResponse) return order;
-
       if (!order) {
         logger.error('It is weird, maybe there is a bug');
         return res.send({});
@@ -215,8 +203,6 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
           routeName: order.routeName,
         },
       });
-
-      if (business instanceof ServerResponse) return business;
 
       if (!business) {
         return getBusinessNotFoundResponse({ res });

@@ -1,7 +1,6 @@
 import { RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
 import { billingServices } from './services';
-import { ServerResponse } from 'http';
 
 const get_bills: () => RequestHandler = () => {
   return (req, res) => {
@@ -14,8 +13,6 @@ const get_bills: () => RequestHandler = () => {
         paginateOptions,
         states,
       });
-
-      if (out instanceof ServerResponse) return out;
 
       res.send(out);
     });

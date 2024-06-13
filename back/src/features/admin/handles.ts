@@ -2,7 +2,7 @@ import { RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
 import { UserModel } from '../../schemas/user';
 import { imagesServices } from '../images/services';
-import { ServerResponse } from 'http';
+
 import { AdminConfigModel } from '../../schemas/admin';
 import { get200Response, get400Response } from '../../utils/server-response';
 import { specialAccessRecord } from './utils';
@@ -35,11 +35,9 @@ const del_users_userId: () => RequestHandler = () => {
       /**
        * Remove all business images
        */
-      const out = await imagesServices.deleteImagesBy({
+      await imagesServices.deleteImagesBy({
         userId,
       });
-
-      if (out instanceof ServerResponse) return out;
 
       await UserModel.deleteOne({ _id: userId });
 
@@ -144,8 +142,6 @@ const get_admin_shopping: () => RequestHandler = () => {
           states,
         },
       });
-
-      if (out instanceof ServerResponse) return out;
 
       res.send(out);
     });

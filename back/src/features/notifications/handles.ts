@@ -1,4 +1,3 @@
-import { ServerResponse } from 'http';
 import { Business } from '../../types/business';
 import { QueryHandle } from '../../types/general';
 import { userServices } from '../user/services';
@@ -22,8 +21,6 @@ export const sendNewOrderPushMessage: QueryHandle<{
         firebaseToken: 1,
       },
     });
-
-    if (user instanceof ServerResponse) return user;
 
     if (!user) return;
 
@@ -55,8 +52,6 @@ export const sendUpdateStockAmountMessage: QueryHandle<{
         firebaseToken: 1,
       },
     });
-
-    if (users instanceof ServerResponse) return users;
 
     //TODO no deberias mandar a todos los usuario si no a los que tiene abierta la pagina de ese negocio
     const tokens = compact(users.map((user) => user.firebaseToken));

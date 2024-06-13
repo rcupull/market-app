@@ -10,7 +10,7 @@ import { Business } from '../../types/business';
 import { BusinessModel } from '../../schemas/business';
 import { postServices } from '../post/services';
 import { PaginateResult, paginationCustomLabels } from '../../middlewares/pagination';
-import { ServerResponse } from 'http';
+
 import { imagesServices } from '../images/services';
 import { UpdateOptions } from 'mongodb';
 
@@ -84,8 +84,6 @@ const getAllWithoutPagination: QueryHandle<
       customLabels: paginationCustomLabels,
     },
   });
-
-  if (out instanceof ServerResponse) return out;
 
   return out.data;
 };

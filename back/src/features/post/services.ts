@@ -4,7 +4,7 @@ import { PostModel } from '../../schemas/post';
 import { Post, PostType } from '../../types/post';
 import { PaginateResult } from '../../middlewares/pagination';
 import { imagesServices } from '../images/services';
-import { ServerResponse } from 'http';
+
 import { isNumber } from '../../utils/general';
 
 export interface GetAllArgs {
@@ -103,8 +103,6 @@ const getAllWithOutPagination: QueryHandle<GetAllArgs, Array<Post>> = async (arg
       pagination: false,
     },
   });
-
-  if (out instanceof ServerResponse) return out;
 
   return out.data;
 };

@@ -1,4 +1,3 @@
-import { ServerResponse } from 'http';
 import { QueryHandle } from '../../types/general';
 import { Shopping } from '../../types/shopping';
 import { User } from '../../types/user';
@@ -44,10 +43,6 @@ export const deleteOnePostFromShopping: QueryHandle<{
     postId,
   });
 
-  if (post instanceof ServerResponse) {
-    return post;
-  }
-
   if (!post) {
     logger.info('post not found');
     return;
@@ -68,8 +63,6 @@ export const deleteOnePostFromShopping: QueryHandle<{
       },
     },
   });
-
-  if (oldShopping instanceof ServerResponse) return oldShopping;
 
   if (!oldShopping) {
     logger.info('oldShopping not found');
@@ -96,10 +89,6 @@ export const deleteOnePostFromShopping: QueryHandle<{
     post,
   });
 
-  if (updateStockResponse instanceof ServerResponse) {
-    return updateStockResponse;
-  }
-
   /**
    * push Notification to update the stock in  the front
    */
@@ -120,8 +109,6 @@ export const deleteShopping: QueryHandle<{
     },
   });
 
-  if (oldShopping instanceof ServerResponse) return oldShopping;
-
   if (oldShopping) {
     const promises = oldShopping.posts.map(({ post: { _id: postId }, count }) => {
       return new Promise((resolve) => {
@@ -130,10 +117,6 @@ export const deleteShopping: QueryHandle<{
             postId,
           })
           .then((post) => {
-            if (post instanceof ServerResponse) {
-              return resolve(post);
-            }
-
             if (!post) {
               return resolve(null);
             }
@@ -144,10 +127,6 @@ export const deleteShopping: QueryHandle<{
                 post,
               })
               .then((updateStockResponse) => {
-                if (updateStockResponse instanceof ServerResponse) {
-                  return resolve(updateStockResponse);
-                }
-
                 if (updateStockResponse) {
                   const { currentStockAmount } = updateStockResponse;
                   sendUpdateStockAmountMessage({
