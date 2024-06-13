@@ -31,7 +31,7 @@ const get_shopping: () => RequestHandler = () => {
 
       const { routeName } = query;
 
-      const out = await shoppingServices.getAll({
+      const out = await shoppingServices.getAllWithPagination({
         paginateOptions,
         query: {
           purchaserId: user._id,
@@ -56,7 +56,7 @@ const get_shopping_owner: () => RequestHandler = () => {
       const { routeName } = business;
       const { states } = query;
 
-      const out = await shoppingServices.getAll({
+      const out = await shoppingServices.getAllWithPagination({
         paginateOptions,
         query: {
           routeName,

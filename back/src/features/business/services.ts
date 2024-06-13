@@ -43,7 +43,7 @@ interface GetAllArgs {
   hidden?: boolean;
 }
 
-const getAll: QueryHandle<GetAllArgs, PaginateResult<Business>> = async (query) => {
+const getAllWithPagination: QueryHandle<GetAllArgs, PaginateResult<Business>> = async (query) => {
   const { paginateOptions = {}, createdBy, routeNames, search, hidden } = query;
   const filterQuery: FilterQuery<Business> = {};
 
@@ -73,11 +73,8 @@ const getAll: QueryHandle<GetAllArgs, PaginateResult<Business>> = async (query) 
   return out as unknown as PaginateResult<Business>;
 };
 
-const getAllWithoutPagination: QueryHandle<
-  Omit<GetAllArgs, 'paginateOptions'>,
-  Array<Business>
-> = async (args) => {
-  const out = await getAll({
+const getAll: QueryHandle<Omit<GetAllArgs, 'paginateOptions'>, Array<Business>> = async (args) => {
+  const out = await getAllWithPagination({
     ...args,
     paginateOptions: {
       pagination: false,
@@ -163,8 +160,8 @@ const updateMany: QueryHandle<{
 };
 
 export const businessServices = {
+  getAllWithPagination,
   getAll,
-  getAllWithoutPagination,
   addOne,
   findOne,
   deleteOne,

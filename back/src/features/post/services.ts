@@ -21,7 +21,7 @@ export interface GetAllArgs {
   postType?: PostType;
 }
 
-const getAll: QueryHandle<GetAllArgs, PaginateResult<Post>> = async ({
+const getAllWithPagination: QueryHandle<GetAllArgs, PaginateResult<Post>> = async ({
   paginateOptions = {},
   routeNames,
   postsIds,
@@ -96,8 +96,8 @@ const getAll: QueryHandle<GetAllArgs, PaginateResult<Post>> = async ({
   return out as unknown as PaginateResult<Post>;
 };
 
-const getAllWithOutPagination: QueryHandle<GetAllArgs, Array<Post>> = async (args) => {
-  const out = await getAll({
+const getAll: QueryHandle<GetAllArgs, Array<Post>> = async (args) => {
+  const out = await getAllWithPagination({
     ...args,
     paginateOptions: {
       pagination: false,
@@ -247,7 +247,7 @@ const updateStockAmount: QueryHandle<
         },
         {
           stockAmount: newStockAmount,
-        }
+        },
       );
 
       return {
@@ -262,7 +262,7 @@ const updateStockAmount: QueryHandle<
       },
       {
         stockAmount: newStockAmount,
-      }
+      },
     );
 
     return {
@@ -283,8 +283,8 @@ const updateMany: QueryHandle<{
 
 export const postServices = {
   deleteMany,
+  getAllWithPagination,
   getAll,
-  getAllWithOutPagination,
   addOne,
   getOne,
   updateOne,

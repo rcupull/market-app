@@ -28,7 +28,7 @@ const get_posts: () => RequestHandler = () => {
         postType,
       } = query;
 
-      const out = await postServices.getAll({
+      const out = await postServices.getAllWithPagination({
         paginateOptions,
         postsIds,
         routeNames,
@@ -240,7 +240,7 @@ const bulk_action_delete: () => RequestHandler = () => {
       } else if (!isEmpty(query)) {
         const { postCategoriesMethod, postCategoriesTags, search } = query;
 
-        const posts = await postServices.getAllWithOutPagination({
+        const posts = await postServices.getAll({
           routeNames: [routeName],
           postCategoriesMethod,
           postCategoriesTags,
@@ -253,7 +253,7 @@ const bulk_action_delete: () => RequestHandler = () => {
         });
       } else {
         // get all post
-        const posts = await postServices.getAllWithOutPagination({
+        const posts = await postServices.getAll({
           routeNames: [routeName],
         });
 
@@ -297,7 +297,7 @@ const bulk_action_update: () => RequestHandler = () => {
         // TODO esto puede ser mejorado en una sola quuery
         const { postCategoriesMethod, postCategoriesTags, search } = query;
 
-        const posts = await postServices.getAllWithOutPagination({
+        const posts = await postServices.getAll({
           routeNames: [routeName],
           postCategoriesMethod,
           postCategoriesTags,
@@ -314,7 +314,7 @@ const bulk_action_update: () => RequestHandler = () => {
         });
       } else {
         // get all posts
-        const posts = await postServices.getAllWithOutPagination({
+        const posts = await postServices.getAll({
           routeNames: [routeName],
         });
 

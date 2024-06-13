@@ -25,7 +25,7 @@ const get_business: () => RequestHandler = () => {
 
       const { routeNames, search, userId, includeHidden } = query;
 
-      const out = await businessServices.getAll({
+      const out = await businessServices.getAllWithPagination({
         paginateOptions,
         routeNames,
         search,
@@ -45,7 +45,7 @@ const get_business_summary: () => RequestHandler = () => {
 
       const { routeNames, search, userId, includeHidden } = query;
 
-      const business = await businessServices.getAll({
+      const business = await businessServices.getAllWithPagination({
         paginateOptions,
         routeNames,
         search,

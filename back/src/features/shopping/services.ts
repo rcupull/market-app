@@ -49,7 +49,7 @@ const updateOrAddOne: QueryHandle<
               'p.post._id': postId,
             },
           ],
-        }
+        },
       );
     } else {
       await ShoppingModel.updateOne(
@@ -71,7 +71,7 @@ const updateOrAddOne: QueryHandle<
               'p.post._id': postId,
             },
           ],
-        }
+        },
       );
     }
   } else {
@@ -94,7 +94,7 @@ const updateOrAddOne: QueryHandle<
   }
 };
 
-const getAll: QueryHandle<
+const getAllWithPagination: QueryHandle<
   {
     paginateOptions?: PaginateOptions;
     query: FilterQuery<Shopping> & { routeNames?: Array<string>; states?: Array<ShoppingState> };
@@ -172,7 +172,7 @@ export const shoppingServices = {
   getOne,
   updateOne,
   updateOrAddOne,
-  getAll,
+  getAllWithPagination,
   deleteOne,
   findAndUpdateOne,
   findOneAndDelete,

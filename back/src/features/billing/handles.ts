@@ -9,7 +9,7 @@ const get_bills: () => RequestHandler = () => {
 
       const { states } = query;
 
-      const out = await billingServices.getAll({
+      const out = await billingServices.getAllWithPagination({
         paginateOptions,
         states,
       });
