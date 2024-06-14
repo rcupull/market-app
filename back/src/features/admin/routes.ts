@@ -55,3 +55,14 @@ router
     pagination,
     adminHandles.get_admin_shopping()
   );
+///////////////////////////////////////////////////////////////
+router
+  .route('/admin/bills')
+  .post(
+    validators.body('routeName').notEmpty(),
+    validators.body('shoppingIds').notEmpty(),
+    validators.handle,
+    isLogged,
+    hasAccess('full'),
+    adminHandles.post_admin_bills()
+  );

@@ -6,10 +6,10 @@ import { telegramServices } from './services';
 export const sendNewOrderTelegramMessage = ({
   business,
   //eslint-disable-next-line
-  order,
+  shopping,
 }: {
   business: Business;
-  order: Shopping;
+  shopping: Shopping;
 }) => {
   try {
     const { telegramBotChat, name } = business;
@@ -22,7 +22,7 @@ export const sendNewOrderTelegramMessage = ({
 
     telegramServices.sendMessage(
       chatId,
-      `Una nueva orden de compra ha sido generada en su negocio "${name}" de nuestra plataforma Asere Market. Puede ver los detalles en la sección de órdenes de compras.`
+      `Una nueva orden de compra ha sido generada en su negocio "${name}" de nuestra plataforma Asere Market. Puede ver los detalles en la sección de órdenes de compras.`,
     );
   } catch (error) {
     logger.error(`Error: ${error}`);

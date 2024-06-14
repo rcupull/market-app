@@ -12,7 +12,7 @@ import { shoppingServices } from './services';
 import { postServices } from '../post/services';
 import { isNumber } from '../../utils/general';
 import { businessServices } from '../business/services';
-import { deleteOnePostFromShopping, deleteShopping, getDebitFromOrder } from './utils';
+import { deleteOnePostFromShopping, deleteShopping, getShoppingInfo } from './utils';
 import { logger } from '../logger';
 import { PostPurshaseNotes } from '../../types/post';
 import { ShoppingModel } from '../../schemas/shopping';
@@ -183,7 +183,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
 
       const { shoppingId } = params;
 
-      const order = await shoppingServices.findAndUpdateOne({
+      const shopping = await shoppingServices.findAndUpdateOne({
         query: {
           _id: shoppingId,
           purchaserId: user._id,
@@ -193,14 +193,14 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
         },
       });
 
-      if (!order) {
+      if (!shopping) {
         logger.error('It is weird, maybe there is a bug');
         return res.send({});
       }
 
       const business = await businessServices.findOne({
         query: {
-          routeName: order.routeName,
+          routeName: shopping.routeName,
         },
       });
 
@@ -212,11 +212,11 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
        * compute payment and reduce de credit with this product
        */
 
-      const { debit: shoppingDebit } = getDebitFromOrder({ order });
+      const { shoppingDebit } = getShoppingInfo(shopping);
 
       await businessServices.updateOne({
         query: {
-          routeName: order.routeName,
+          routeName: shopping.routeName,
         },
         update: {
           $inc: {
@@ -224,7 +224,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
           },
           $push: {
             'shoppingPayment.requests': {
-              shoppingId: order._id,
+              shoppingId: shopping._id,
               shoppingDebit,
             },
           },
@@ -235,8 +235,8 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
        * send Telegram message
        */
 
-      sendNewOrderTelegramMessage({ business, order });
-      sendNewOrderPushMessage({ business, order });
+      sendNewOrderTelegramMessage({ business, shopping });
+      sendNewOrderPushMessage({ business, shopping });
 
       res.send({});
     });

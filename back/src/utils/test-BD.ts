@@ -117,9 +117,9 @@ export const fillBD = async (args?: {
   });
   await productPost2Business1User1.save();
 
-  const shopping1Business1User1 = undefined;
+  let shopping1Business1User1 = undefined;
   if (!noCreateInitialShopping) {
-    const shopping1Business1User1 = new ShoppingModel({
+    shopping1Business1User1 = new ShoppingModel({
       state: 'CONSTRUCTION',
       purchaserId: user1._id,
       purchaserName: user1.name,
