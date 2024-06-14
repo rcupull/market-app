@@ -7,6 +7,7 @@ import { AddNewBusinessButton } from './AddNewBusinessButton';
 import { SideBarUserHeader } from './SideBarUserHeader';
 
 import SvgCogSolid from 'icons/CogSolid';
+import SvgMoneyBillAltSolid from 'icons/MoneyBillAltSolid';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import SvgStoreSolid from 'icons/StoreSolid';
 import SvgUsersSolid from 'icons/UsersSolid';
@@ -59,6 +60,15 @@ export const SideBar = ({ className }: SideBarProps) => {
             label: 'Órdenes de compra',
             href: '/admin/shopping',
             svg: SvgShoppingCartSolid,
+            className: 'pl-10',
+          },
+        isAuthenticated &&
+          isAdmin &&
+          getHasSomeAccess('bills__read') && {
+            // ADMIN
+            label: 'Facturas',
+            href: '/admin/bills',
+            svg: SvgMoneyBillAltSolid,
             className: 'pl-10',
           },
         isAuthenticated &&

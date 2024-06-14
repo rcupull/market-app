@@ -15,6 +15,10 @@ const sessions: Array<{ email: string; password: string }> = [
     password: 'Qwerty@123',
   },
   {
+    email: 'rcupull+admin2@gmail.com',
+    password: 'Qwerty@123',
+  },
+  {
     email: 'rcupull+comerciante@gmail.com',
     password: 'Qwerty@123',
   },

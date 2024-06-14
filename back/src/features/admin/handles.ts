@@ -8,6 +8,9 @@ import { get200Response, get400Response } from '../../utils/server-response';
 import { specialAccessRecord } from './utils';
 import { userServices } from '../user/services';
 import { shoppingServices } from '../shopping/services';
+import { billingServices } from '../billing/services';
+import { Shopping } from '../../types/shopping';
+import { getShoppingInfo } from '../shopping/utils';
 
 const get_users: () => RequestHandler = () => {
   return (req, res) => {
@@ -148,6 +151,54 @@ const get_admin_shopping: () => RequestHandler = () => {
   };
 };
 
+const post_admin_bills: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { body } = req;
+
+      const { routeName, shoppingIds } = body;
+
+      const shoppingData: Array<Shopping> = await shoppingServices.getAll({
+        query: {
+          _id: { $in: shoppingIds },
+        },
+      });
+
+      const shoppingDebits = shoppingData.reduce(
+        (acc, shopping) => acc + getShoppingInfo(shopping).shoppingDebit,
+        0
+      );
+
+      const out = await billingServices.addOne({
+        routeName,
+        shoppingIds,
+        totalDebit: shoppingDebits,
+        state: 'PENDING_TO_PAY',
+      });
+
+      res.send(out);
+    });
+  };
+};
+
+const get_admin_bills: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { paginateOptions, query } = req;
+
+      const { states, routeNames } = query;
+
+      const bills = await billingServices.getAllWithPagination({
+        paginateOptions,
+        routeNames,
+        states,
+      });
+
+      res.send(bills);
+    });
+  };
+};
+
 export const adminHandles = {
   get_users,
   del_users_userId,
@@ -158,4 +209,7 @@ export const adminHandles = {
   put_admin_users_userId_access,
   //
   get_admin_shopping,
+  //
+  post_admin_bills,
+  get_admin_bills,
 };

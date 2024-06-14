@@ -9,8 +9,8 @@ import { logger } from '../logger';
 
 export const sendNewOrderPushMessage: QueryHandle<{
   business: Business;
-  order: Shopping;
-}> = async ({ business, order }) => {
+  shopping: Shopping;
+}> = async ({ business, shopping }) => {
   try {
     const { createdBy, routeName } = business;
     const user = await userServices.getOne({
@@ -27,7 +27,7 @@ export const sendNewOrderPushMessage: QueryHandle<{
     if (user.firebaseToken) {
       const payload: NotificationPayload = {
         type: 'NEW_ORDER_WAS_CREATED',
-        shoopingId: order._id.toString(),
+        shoopingId: shopping._id.toString(),
         routeName,
       };
 
