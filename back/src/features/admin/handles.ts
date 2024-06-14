@@ -2,11 +2,15 @@ import { RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
 import { UserModel } from '../../schemas/user';
 import { imagesServices } from '../images/services';
-import { ServerResponse } from 'http';
+
 import { AdminConfigModel } from '../../schemas/admin';
 import { get200Response, get400Response } from '../../utils/server-response';
 import { specialAccessRecord } from './utils';
 import { userServices } from '../user/services';
+import { shoppingServices } from '../shopping/services';
+import { billingServices } from '../billing/services';
+import { Shopping } from '../../types/shopping';
+import { getShoppingInfo } from '../shopping/utils';
 
 const get_users: () => RequestHandler = () => {
   return (req, res) => {
@@ -34,11 +38,9 @@ const del_users_userId: () => RequestHandler = () => {
       /**
        * Remove all business images
        */
-      const out = await imagesServices.deleteImagesBy({
+      await imagesServices.deleteImagesBy({
         userId,
       });
-
-      if (out instanceof ServerResponse) return out;
 
       await UserModel.deleteOne({ _id: userId });
 
@@ -129,6 +131,74 @@ const put_admin_users_userId_access: () => RequestHandler = () => {
   };
 };
 
+const get_admin_shopping: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { query, paginateOptions } = req;
+
+      const { routeNames, states } = query;
+
+      const out = await shoppingServices.getAllWithPagination({
+        paginateOptions,
+        query: {
+          routeNames,
+          states,
+        },
+      });
+
+      res.send(out);
+    });
+  };
+};
+
+const post_admin_bills: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { body } = req;
+
+      const { routeName, shoppingIds } = body;
+
+      const shoppingData: Array<Shopping> = await shoppingServices.getAll({
+        query: {
+          _id: { $in: shoppingIds },
+        },
+      });
+
+      const shoppingDebits = shoppingData.reduce(
+        (acc, shopping) => acc + getShoppingInfo(shopping).shoppingDebit,
+        0
+      );
+
+      const out = await billingServices.addOne({
+        routeName,
+        shoppingIds,
+        totalDebit: shoppingDebits,
+        state: 'PENDING_TO_PAY',
+      });
+
+      res.send(out);
+    });
+  };
+};
+
+const get_admin_bills: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { paginateOptions, query } = req;
+
+      const { states, routeNames } = query;
+
+      const bills = await billingServices.getAllWithPagination({
+        paginateOptions,
+        routeNames,
+        states,
+      });
+
+      res.send(bills);
+    });
+  };
+};
+
 export const adminHandles = {
   get_users,
   del_users_userId,
@@ -138,4 +208,8 @@ export const adminHandles = {
   get_admin_access,
   put_admin_users_userId_access,
   //
+  get_admin_shopping,
+  //
+  post_admin_bills,
+  get_admin_bills,
 };

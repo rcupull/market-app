@@ -1,39 +1,19 @@
-import { ServerResponse } from 'http';
 import { QueryHandle } from '../../types/general';
-import { Shopping } from '../../types/shopping';
+import { Shopping, ShoppingPostData, ShoppingState } from '../../types/shopping';
 import { User } from '../../types/user';
 import { logger } from '../logger';
 import { shoppingServices } from './services';
-import { isEqualIds } from '../../utils/general';
+import { isEqualIds, isNumber } from '../../utils/general';
 import { postServices } from '../post/services';
 import { sendUpdateStockAmountMessage } from '../notifications/handles';
+import { makeReshaper } from '../../utils/makeReshaper';
+import { Post } from '../../types/post';
+import { FilterQuery, PaginateOptions } from 'mongoose';
 
-export const getDebitFromOrder = ({
-  order,
-}: {
-  order: Shopping;
-}): {
-  debit: number;
-} => {
-  const orderMoney = order.posts.reduce((amount, { count, post }) => {
-    if (!post.price) {
-      return amount;
-    }
-
-    if (post.currency !== 'CUP') {
-      logger.info('not cup'); //TODO not cup
-      return amount;
-    }
-
-    return amount + post.price * count; //TODO agregar conversion de moneda su es USD
-  }, 0);
-
-  const moneyToPay = orderMoney * 0.01; //el 1% de las ventas es de la app
-
-  return {
-    debit: moneyToPay,
-  };
-};
+export interface GetAllShoppingArgs extends FilterQuery<Shopping> {
+  routeNames?: Array<string>;
+  states?: Array<ShoppingState>;
+}
 
 export const deleteOnePostFromShopping: QueryHandle<{
   routeName: string;
@@ -43,10 +23,6 @@ export const deleteOnePostFromShopping: QueryHandle<{
   const post = await postServices.getOne({
     postId,
   });
-
-  if (post instanceof ServerResponse) {
-    return post;
-  }
 
   if (!post) {
     logger.info('post not found');
@@ -63,13 +39,11 @@ export const deleteOnePostFromShopping: QueryHandle<{
     update: {
       $pull: {
         posts: {
-          'post._id': postId,
+          'postData._id': postId,
         },
       },
     },
   });
-
-  if (oldShopping instanceof ServerResponse) return oldShopping;
 
   if (!oldShopping) {
     logger.info('oldShopping not found');
@@ -88,17 +62,13 @@ export const deleteOnePostFromShopping: QueryHandle<{
   }
 
   const shoppingPostToUpdate = oldShopping.posts.find((p) => {
-    return isEqualIds(p.post._id, postId);
+    return isEqualIds(p.postData._id, postId);
   });
 
   const updateStockResponse = await postServices.updateStockAmount({
     amountToAdd: shoppingPostToUpdate?.count ?? 0,
     post,
   });
-
-  if (updateStockResponse instanceof ServerResponse) {
-    return updateStockResponse;
-  }
 
   /**
    * push Notification to update the stock in  the front
@@ -120,20 +90,14 @@ export const deleteShopping: QueryHandle<{
     },
   });
 
-  if (oldShopping instanceof ServerResponse) return oldShopping;
-
   if (oldShopping) {
-    const promises = oldShopping.posts.map(({ post: { _id: postId }, count }) => {
+    const promises = oldShopping.posts.map(({ postData: { _id: postId }, count }) => {
       return new Promise((resolve) => {
         postServices
           .getOne({
             postId,
           })
           .then((post) => {
-            if (post instanceof ServerResponse) {
-              return resolve(post);
-            }
-
             if (!post) {
               return resolve(null);
             }
@@ -144,10 +108,6 @@ export const deleteShopping: QueryHandle<{
                 post,
               })
               .then((updateStockResponse) => {
-                if (updateStockResponse instanceof ServerResponse) {
-                  return resolve(updateStockResponse);
-                }
-
                 if (updateStockResponse) {
                   const { currentStockAmount } = updateStockResponse;
                   sendUpdateStockAmountMessage({
@@ -164,4 +124,58 @@ export const deleteShopping: QueryHandle<{
 
     await Promise.all(promises);
   }
+};
+
+export const postToShoppingPostDataReshaper = makeReshaper<Post, ShoppingPostData>({
+  _id: '_id',
+  routeName: 'routeName',
+  price: 'price',
+  images: 'images',
+  name: 'name',
+  currency: 'currency',
+});
+
+export const getAllShoppingFilterQuery = (args: GetAllShoppingArgs): FilterQuery<Shopping> => {
+  const { routeNames, states, ...omittedQuery } = args;
+
+  const filterQuery: FilterQuery<Shopping> = omittedQuery;
+
+  if (routeNames?.length) {
+    filterQuery.routeName = { $in: routeNames };
+  }
+
+  if (states?.length) {
+    filterQuery.state = { $in: states };
+  }
+
+  return filterQuery;
+};
+
+export const getShoppingInfo = (
+  shopping: Shopping
+): {
+  totalProducts: number;
+  totalPrice: number;
+  shoppingDebit: number;
+} => {
+  const { posts } = shopping;
+
+  let totalProducts = 0;
+  let totalPrice = 0;
+
+  posts.forEach(({ count, postData }) => {
+    if (!isNumber(postData.price)) {
+      console.log('not price number');
+      return;
+    }
+
+    totalProducts = totalProducts + count;
+    totalPrice = totalPrice + postData.price * count;
+  });
+
+  return {
+    totalProducts,
+    totalPrice,
+    shoppingDebit: totalPrice * 0.01, //el 1% de las ventas es de la app
+  };
 };

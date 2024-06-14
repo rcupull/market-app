@@ -13,19 +13,14 @@ export const getShoppingData = (
   let totalProducts = 0;
   let totalPrice = 0;
 
-  posts.forEach(({ count, post }) => {
-    if (post.currency !== 'CUP') {
-      console.log('not cup'); //TODO not cup
-      return;
-    }
-
-    if (!isNumber(post.price)) {
+  posts.forEach(({ count, postData }) => {
+    if (!isNumber(postData.price)) {
       console.log('not price number');
       return;
     }
 
     totalProducts = totalProducts + count;
-    totalPrice = totalPrice + post.price * count; //TODO add conversion if the currency is not USD
+    totalPrice = totalPrice + postData.price * count; //TODO add conversion if the currency is not USD
   });
 
   return {
@@ -37,10 +32,12 @@ export const getShoppingData = (
 export const getShoppingStateLabel = (state: ShoppingState): string => {
   const labels: Record<ShoppingState, string> = {
     CONSTRUCTION: 'En construcción', //this state is temporaly and can not handle by the user
-    REQUESTED: 'Solicitada',
-    DELIVERED: 'Entregada',
-    CANCELED: 'Cancelada',
-    REJECTED: 'Rechazada',
+    REQUESTED: 'Solicitado',
+    CANCELED: 'Cancelado',
+    REJECTED: 'Rechazado',
+    PROCESSING: 'En proceso',
+    DELIVERED: 'Entregado',
+    READY_TO_DELIVER: 'Listo para entregar',
   };
 
   return labels[state];

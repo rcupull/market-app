@@ -1,4 +1,3 @@
-import { ServerResponse } from 'http';
 import { Business } from '../../types/business';
 import { QueryHandle } from '../../types/general';
 import { userServices } from '../user/services';
@@ -10,8 +9,8 @@ import { logger } from '../logger';
 
 export const sendNewOrderPushMessage: QueryHandle<{
   business: Business;
-  order: Shopping;
-}> = async ({ business, order }) => {
+  shopping: Shopping;
+}> = async ({ business, shopping }) => {
   try {
     const { createdBy, routeName } = business;
     const user = await userServices.getOne({
@@ -23,14 +22,12 @@ export const sendNewOrderPushMessage: QueryHandle<{
       },
     });
 
-    if (user instanceof ServerResponse) return user;
-
     if (!user) return;
 
     if (user.firebaseToken) {
       const payload: NotificationPayload = {
         type: 'NEW_ORDER_WAS_CREATED',
-        shoopingId: order._id.toString(),
+        shoopingId: shopping._id.toString(),
         routeName,
       };
 
@@ -55,8 +52,6 @@ export const sendUpdateStockAmountMessage: QueryHandle<{
         firebaseToken: 1,
       },
     });
-
-    if (users instanceof ServerResponse) return users;
 
     //TODO no deberias mandar a todos los usuario si no a los que tiene abierta la pagina de ese negocio
     const tokens = compact(users.map((user) => user.firebaseToken));

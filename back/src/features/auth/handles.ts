@@ -1,6 +1,6 @@
 import { RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
-import { ServerResponse } from 'http';
+
 import { v4 as uuid } from 'uuid';
 import { AuthSessionModel, ValidationCodeModel } from '../../schemas/auth';
 import { userServices } from '../user/services';
@@ -137,8 +137,6 @@ const post_signUp: () => RequestHandler = () => {
         canCreateBusiness,
       });
 
-      if (newUser instanceof ServerResponse) return;
-
       if (!newUser) return getUserNotFoundResponse({ res });
 
       // send validation code by email
@@ -181,8 +179,6 @@ const post_validate: () => RequestHandler = () => {
         query: { _id: validationCode.userId },
         update: { validated: true },
       });
-
-      if (user instanceof ServerResponse) return user;
 
       if (!user) {
         return getUserNotFoundResponse({ res });
@@ -243,8 +239,6 @@ const post_forgot_password_validate: () => RequestHandler = () => {
         query: { _id: validationCode.userId },
       });
 
-      if (user instanceof ServerResponse) return user;
-
       if (!user) {
         return getUserNotFoundResponse({ res });
       }
@@ -276,8 +270,6 @@ const post_forgot_password_request: () => RequestHandler = () => {
           email,
         },
       });
-
-      if (user instanceof ServerResponse) return user;
 
       if (!user) return getUserNotFoundResponse({ res });
 

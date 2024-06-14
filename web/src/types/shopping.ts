@@ -1,11 +1,24 @@
 import { BaseIdentity } from './general';
 import { Post } from './post';
 
-export type ShoppingState = 'CONSTRUCTION' | 'REQUESTED' | 'DELIVERED' | 'CANCELED' | 'REJECTED';
+export type ShoppingState =
+  | 'CONSTRUCTION'
+  | 'REQUESTED'
+  | 'PROCESSING'
+  | 'READY_TO_DELIVER'
+  | 'DELIVERED'
+  //
+  | 'CANCELED'
+  | 'REJECTED';
+
+export type ShoppingPostData = Pick<
+  Post,
+  '_id' | 'price' | 'images' | 'name' | 'currency' | 'routeName'
+>;
 
 export interface Shopping extends BaseIdentity {
   posts: Array<{
-    post: Post;
+    postData: ShoppingPostData;
     count: number;
     lastUpdatedDate: Date;
   }>;

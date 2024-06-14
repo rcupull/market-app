@@ -20,7 +20,7 @@ type ButtonSvg = React.FunctionComponent<StyleProps> | React.ReactElement<StyleP
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'outlined' | 'error' | 'link' | 'sublined' | 'transparent';
   svgPosition?: 'left' | 'right';
-  label?: string;
+  label?: React.ReactNode;
   isBusy?: boolean;
   svg?: ButtonSvg;
   stopPropagation?: boolean;

@@ -1,8 +1,11 @@
+import { postToShoppingPostDataReshaper } from '../features/shopping/utils';
 import { BusinessModel } from '../schemas/business';
 import { PostModel } from '../schemas/post';
+import { ShoppingModel } from '../schemas/shopping';
 import { UserModel } from '../schemas/user';
 import { Business } from '../types/business';
 import { Post } from '../types/post';
+import { Shopping } from '../types/shopping';
 import { User } from '../types/user';
 
 export interface TestBDContent {
@@ -19,6 +22,8 @@ export interface TestBDContent {
   business1User2: Business;
   business2User2: Business;
   //
+  shopping1Business1User1?: Shopping;
+  //
   admin: User;
 }
 
@@ -28,6 +33,8 @@ export const fillBD = async (args?: {
   overrideBusiness1User1?: Partial<Business>;
   overrideProductPost1Business1User1?: Partial<Post>;
   overrideProductPost2Business1User1?: Partial<Post>;
+  overrideShopping1Business1User1?: Partial<Shopping>;
+  noCreateInitialShopping?: boolean;
 }): Promise<TestBDContent> => {
   const {
     overrideUser1 = {},
@@ -35,6 +42,8 @@ export const fillBD = async (args?: {
     overrideProductPost1Business1User1 = {},
     overrideProductPost2Business1User1 = {},
     overrideAdmin = {},
+    overrideShopping1Business1User1 = {},
+    noCreateInitialShopping,
   } = args || {};
 
   const admin = new UserModel({
@@ -108,6 +117,27 @@ export const fillBD = async (args?: {
   });
   await productPost2Business1User1.save();
 
+  let shopping1Business1User1 = undefined;
+  if (!noCreateInitialShopping) {
+    shopping1Business1User1 = new ShoppingModel({
+      state: 'CONSTRUCTION',
+      purchaserId: user1._id,
+      purchaserName: user1.name,
+      routeName: business1User1.routeName,
+      posts: [
+        {
+          postData: postToShoppingPostDataReshaper(productPost1Business1User1),
+          purshaseNotes: {},
+          count: 5,
+          lastUpdatedDate: new Date(),
+        },
+      ],
+      ...overrideShopping1Business1User1,
+    });
+
+    await shopping1Business1User1.save();
+  }
+
   //////////////////////////////////////////////////////////////////////////////////
 
   const user2 = new UserModel({
@@ -164,6 +194,7 @@ export const fillBD = async (args?: {
     business2User1,
     productPost1Business1User1,
     productPost2Business1User1,
+    shopping1Business1User1,
     //
     business1User2,
     business2User2,

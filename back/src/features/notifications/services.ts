@@ -2,7 +2,7 @@ import { NotificationPayload } from '../../types/notifications';
 import firebase from 'firebase-admin';
 import { userServices } from '../user/services';
 import { QueryHandle } from '../../types/general';
-import { ServerResponse } from 'http';
+
 import { compact } from '../../utils/general';
 import { serviceAccount } from '../../config';
 
@@ -24,8 +24,6 @@ const sendNotificationToUpdate: QueryHandle<{
       firebaseToken: 1,
     },
   });
-
-  if (users instanceof ServerResponse) return users;
 
   //TODO no deberias mandar a todos los usuario si no a los que tiene abierta la pagina de ese negocio
   const tokens = compact(users.map((user) => user.firebaseToken));

@@ -1,7 +1,7 @@
 import { AnyRecord, RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
-import { GetAllArgs, postServices } from './services';
-import { ServerResponse } from 'http';
+import { postServices } from './services';
+
 import { imagesServices } from '../images/services';
 import {
   get200Response,
@@ -12,6 +12,7 @@ import {
 import { isEmpty, isEqual } from '../../utils/general';
 import { Post } from '../../types/post';
 import { makeReshaper } from '../../utils/makeReshaper';
+import { GetAllArgs } from './utils';
 
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
@@ -28,7 +29,7 @@ const get_posts: () => RequestHandler = () => {
         postType,
       } = query;
 
-      const out = await postServices.getAll({
+      const out = await postServices.getAllWithPagination({
         paginateOptions,
         postsIds,
         routeNames,
@@ -39,8 +40,6 @@ const get_posts: () => RequestHandler = () => {
         postCategoriesMethod,
         postType,
       });
-
-      if (out instanceof ServerResponse) return;
 
       res.send(out);
     });
@@ -56,8 +55,6 @@ const get_posts_postId: () => RequestHandler = () => {
       const out = await postServices.getOne({
         postId,
       });
-
-      if (out instanceof ServerResponse) return;
 
       res.send(out);
     });
@@ -117,8 +114,6 @@ const post_posts: () => RequestHandler<AnyRecord, any, Post> = () => {
         postLink,
       });
 
-      if (out instanceof ServerResponse) return;
-
       res.send(out);
     });
   };
@@ -134,8 +129,6 @@ const post_posts_postId_duplicate: () => RequestHandler = () => {
       const post = await postServices.getOne({
         postId,
       });
-
-      if (post instanceof ServerResponse) return post;
 
       if (!post) {
         return getPostNotFoundResponse({ res });
@@ -198,8 +191,6 @@ const put_posts_postId: () => RequestHandler = () => {
         })(body),
       });
 
-      if (out instanceof ServerResponse) return;
-
       // await notificationsServices.sendNotification({
       //   title: "Producto actulizado",
       //   message: `El producto ${currentPost.name} ha sido actualizado`,
@@ -223,8 +214,6 @@ const delete_posts_postId: () => RequestHandler = () => {
         postId,
       });
 
-      if (out instanceof ServerResponse) return out;
-
       res.send(out);
     });
   };
@@ -245,44 +234,34 @@ const bulk_action_delete: () => RequestHandler = () => {
       if (ids?.length) {
         // delete selected posts
 
-        const out = await postServices.deleteMany({
+        await postServices.deleteMany({
           postIds: ids,
           routeName,
         });
-
-        if (out instanceof ServerResponse) return out;
       } else if (!isEmpty(query)) {
         const { postCategoriesMethod, postCategoriesTags, search } = query;
 
-        const posts = await postServices.getAllWithOutPagination({
+        const posts = await postServices.getAll({
           routeNames: [routeName],
           postCategoriesMethod,
           postCategoriesTags,
           search,
         });
 
-        if (posts instanceof ServerResponse) return posts;
-
-        const out = await postServices.deleteMany({
+        await postServices.deleteMany({
           postIds: posts.map((post) => post._id.toString()),
           routeName,
         });
-
-        if (out instanceof ServerResponse) return out;
       } else {
         // get all post
-        const posts = await postServices.getAllWithOutPagination({
+        const posts = await postServices.getAll({
           routeNames: [routeName],
         });
 
-        if (posts instanceof ServerResponse) return posts;
-
-        const out = await postServices.deleteMany({
+        await postServices.deleteMany({
           postIds: posts.map((post) => post._id.toString()),
           routeName,
         });
-
-        if (out instanceof ServerResponse) return out;
       }
 
       res.send();
@@ -307,7 +286,7 @@ const bulk_action_update: () => RequestHandler = () => {
       const { hidden } = update || {};
 
       if (ids?.length) {
-        const out = await postServices.updateMany({
+        await postServices.updateMany({
           query: {
             _id: { $in: ids },
           },
@@ -315,22 +294,18 @@ const bulk_action_update: () => RequestHandler = () => {
             hidden,
           },
         });
-
-        if (out instanceof ServerResponse) return out;
       } else if (!isEmpty(query)) {
         // TODO esto puede ser mejorado en una sola quuery
         const { postCategoriesMethod, postCategoriesTags, search } = query;
 
-        const posts = await postServices.getAllWithOutPagination({
+        const posts = await postServices.getAll({
           routeNames: [routeName],
           postCategoriesMethod,
           postCategoriesTags,
           search,
         });
 
-        if (posts instanceof ServerResponse) return posts;
-
-        const out = await postServices.updateMany({
+        await postServices.updateMany({
           query: {
             _id: { $in: posts.map(({ _id }) => _id) },
           },
@@ -338,17 +313,13 @@ const bulk_action_update: () => RequestHandler = () => {
             hidden,
           },
         });
-
-        if (out instanceof ServerResponse) return out;
       } else {
         // get all posts
-        const posts = await postServices.getAllWithOutPagination({
+        const posts = await postServices.getAll({
           routeNames: [routeName],
         });
 
-        if (posts instanceof ServerResponse) return posts;
-
-        const out = await postServices.updateMany({
+        await postServices.updateMany({
           query: {
             _id: { $in: posts.map(({ _id }) => _id) },
           },
@@ -356,8 +327,6 @@ const bulk_action_update: () => RequestHandler = () => {
             hidden,
           },
         });
-
-        if (out instanceof ServerResponse) return out;
       }
 
       res.send();

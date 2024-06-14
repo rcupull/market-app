@@ -45,3 +45,25 @@ router
 router
   .route('/admin/access')
   .get(isLogged, isAdmin, hasAccess('access__read'), adminHandles.get_admin_access());
+
+router
+  .route('/admin/shopping')
+  .get(
+    isLogged,
+    isAdmin,
+    hasAccess('shopping__read'),
+    pagination,
+    adminHandles.get_admin_shopping()
+  );
+///////////////////////////////////////////////////////////////
+router
+  .route('/admin/bills')
+  .get(isLogged, isAdmin, hasAccess('full'), pagination, adminHandles.get_admin_bills())
+  .post(
+    validators.body('routeName').notEmpty(),
+    validators.body('shoppingIds').notEmpty(),
+    validators.handle,
+    isLogged,
+    hasAccess('full'),
+    adminHandles.post_admin_bills()
+  );

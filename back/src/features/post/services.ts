@@ -1,112 +1,30 @@
-import { FilterQuery, PaginateOptions, Schema, UpdateQuery } from 'mongoose';
+import { FilterQuery, Schema, UpdateQuery } from 'mongoose';
 import { ModelDocument, QueryHandle } from '../../types/general';
 import { PostModel } from '../../schemas/post';
-import { Post, PostType } from '../../types/post';
+import { Post } from '../../types/post';
 import { PaginateResult } from '../../middlewares/pagination';
 import { imagesServices } from '../images/services';
-import { ServerResponse } from 'http';
+
 import { isNumber } from '../../utils/general';
+import { GetAllArgs, getAllFilterQuery } from './utils';
 
-export interface GetAllArgs {
-  paginateOptions?: PaginateOptions;
-  routeNames?: Array<string>;
-  postsIds?: Array<string>;
-  search?: string;
-  hidden?: boolean;
-  hiddenBusiness?: boolean;
-  createdBy?: string;
-  //
-  postCategoriesTags?: Array<string>;
-  postCategoriesMethod?: 'some' | 'every';
-  postType?: PostType;
-}
-
-const getAll: QueryHandle<GetAllArgs, PaginateResult<Post>> = async ({
+const getAllWithPagination: QueryHandle<GetAllArgs, PaginateResult<Post>> = async ({
   paginateOptions = {},
-  routeNames,
-  postsIds,
-  search,
-  hiddenBusiness,
-  hidden,
-  createdBy,
-  postCategoriesTags,
-  postCategoriesMethod,
-  postType,
+  ...omittedprops
 }) => {
-  const filterQuery: FilterQuery<Post> = {};
-
-  ///////////////////////////////////////////////////////////////////
-
-  if (search) {
-    filterQuery.name = { $regex: new RegExp(search), $options: 'i' };
-  }
-
-  if (postCategoriesTags) {
-    switch (postCategoriesMethod) {
-      case 'every': {
-        filterQuery.postCategoriesTags = { $all: postCategoriesTags };
-        break;
-      }
-      case 'some': {
-        filterQuery.postCategoriesTags = { $in: postCategoriesTags };
-        break;
-      }
-      default: {
-        filterQuery.postCategoriesTags = { $all: postCategoriesTags };
-        break;
-      }
-    }
-  }
-
-  if (postType) {
-    filterQuery.postType = postType;
-  }
-  ///////////////////////////////////////////////////////////////////
-
-  if (routeNames?.length) {
-    filterQuery.routeName = { $in: routeNames };
-  }
-
-  if (postsIds?.length) {
-    filterQuery._id = { $in: postsIds };
-  }
-
-  ///////////////////////////////////////////////////////////////////
-
-  if (hidden !== undefined) {
-    filterQuery.hidden = hidden;
-  }
-
-  ///////////////////////////////////////////////////////////////////
-
-  if (hiddenBusiness !== undefined) {
-    filterQuery.hiddenBusiness = hiddenBusiness;
-  }
-
-  ///////////////////////////////////////////////////////////////////
-
-  if (createdBy) {
-    filterQuery.createdBy = createdBy;
-  }
-
-  ///////////////////////////////////////////////////////////////////
+  const filterQuery = getAllFilterQuery(omittedprops);
 
   const out = await PostModel.paginate(filterQuery, paginateOptions);
 
   return out as unknown as PaginateResult<Post>;
 };
 
-const getAllWithOutPagination: QueryHandle<GetAllArgs, Array<Post>> = async (args) => {
-  const out = await getAll({
-    ...args,
-    paginateOptions: {
-      pagination: false,
-    },
-  });
+const getAll: QueryHandle<Omit<GetAllArgs, 'paginateOptions'>, Array<Post>> = async (args) => {
+  const filterQuery = getAllFilterQuery(args);
 
-  if (out instanceof ServerResponse) return out;
+  const out = await PostModel.find(filterQuery);
 
-  return out.data;
+  return out;
 };
 
 const getOne: QueryHandle<
@@ -285,8 +203,8 @@ const updateMany: QueryHandle<{
 
 export const postServices = {
   deleteMany,
+  getAllWithPagination,
   getAll,
-  getAllWithOutPagination,
   addOne,
   getOne,
   updateOne,

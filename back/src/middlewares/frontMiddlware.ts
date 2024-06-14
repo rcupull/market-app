@@ -12,7 +12,7 @@ import { logger } from '../features/logger';
 import { combineMiddleware } from '../utils/general';
 import { HtmlMeta } from '../types/general';
 import { businessServices } from '../features/business/services';
-import { ServerResponse } from 'http';
+
 import { postServices } from '../features/post/services';
 
 const defaultMeta: HtmlMeta = {
@@ -74,10 +74,6 @@ const injectBusinessMetaMiddlware: RequestHandler = async (req, res, next) => {
       },
     });
 
-    if (business instanceof ServerResponse) {
-      return business;
-    }
-
     if (!business) {
       return getBusinessNotFoundResponse({ res });
     }
@@ -116,10 +112,6 @@ const injectPostMetaMiddlware: RequestHandler = async (req, res, next) => {
     const post = await postServices.getOne({
       postId,
     });
-
-    if (post instanceof ServerResponse) {
-      return post;
-    }
 
     if (!post) {
       return getPostNotFoundResponse({ res });

@@ -6,10 +6,10 @@ import { telegramServices } from './services';
 export const sendNewOrderTelegramMessage = ({
   business,
   //eslint-disable-next-line
-  order,
+  shopping,
 }: {
   business: Business;
-  order: Shopping;
+  shopping: Shopping;
 }) => {
   try {
     const { telegramBotChat, name } = business;
