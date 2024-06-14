@@ -1,8 +1,6 @@
 import { useRef } from 'react';
 
 import { BulkActions, BulkActionsProps, BulkMeta } from 'components/bulk-actions';
-import { ButtonDescription } from 'components/button-decription';
-import { HtmlTextContainer } from 'components/html-text-container';
 import { IconButtonOptionsBars } from 'components/icon-button-options-bars';
 import { Menu } from 'components/menu';
 
@@ -58,18 +56,6 @@ export const BulkActionsShopping = ({ onRefresh, ...omittedProps }: BulkActionsS
             <div className="flex items-center">
               <IconButtonOptionsBars />
               <span className="ml-2">Acciones múltiples</span>
-              <ButtonDescription
-                description={
-                  <HtmlTextContainer>
-                    Puede realizar acciones sobre varias publicaciones:
-                    <ol className="text-sm mt-2">
-                      <li>Seleccione la acción a realizar.</li>
-                      <li>Seleccione las publicaciones sobre la cual realizará la acción.</li>
-                      <li>Luego confirme la acción o cancele en el botón correspondiente.</li>
-                    </ol>
-                  </HtmlTextContainer>
-                }
-              />
             </div>
           }
           items={[

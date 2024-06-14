@@ -29,6 +29,8 @@ export interface BulkActionsProps<
     ) => Array<React.ReactNode>;
     getBulkHeaderNodes: (nodes: Array<React.ReactNode>) => Array<React.ReactNode>;
     getBulkTopActionsNode: (node: React.ReactNode) => React.ReactNode;
+    getDisabledOverlay: (node: React.ReactNode) => React.ReactNode;
+    bulkActionNode: React.ReactNode
   }) => React.ReactNode;
 }
 
@@ -53,7 +55,7 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
 
   refMeta.current = { selected, selectedAll, onReset };
 
-  const menuNode = (
+  const bulkActionNode = (
     <div className="flex items-center gap-2">
       {selecting ? (
         <>
@@ -81,10 +83,11 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
     <>
       {children({
         onReset,
+        bulkActionNode,
         getBulkTopActionsNode: (node) => {
           return (
             <div className="flex items-center px-1">
-              {menuNode}
+              {bulkActionNode}
               <div className="ml-auto relative">
                 {node}
                 {selecting && (
@@ -92,6 +95,16 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
                 )}
               </div>
             </div>
+          );
+        },
+        getDisabledOverlay: (node) => {
+          return (
+              <div className="relative">
+                {node}
+                {selecting && (
+                  <div className="absolute inset-0 bg-white opacity-60 rounded-md cursor-not-allowed" />
+                )}
+              </div>
           );
         },
         getBulkHeaderNodes: (nodes) => {

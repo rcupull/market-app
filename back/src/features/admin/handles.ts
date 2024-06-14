@@ -5,12 +5,13 @@ import { imagesServices } from '../images/services';
 
 import { AdminConfigModel } from '../../schemas/admin';
 import { get200Response, get400Response } from '../../utils/server-response';
-import { specialAccessRecord } from './utils';
+import { billDataReshaper, specialAccessRecord } from './utils';
 import { userServices } from '../user/services';
 import { shoppingServices } from '../shopping/services';
 import { billingServices } from '../billing/services';
 import { Shopping } from '../../types/shopping';
 import { getShoppingInfo } from '../shopping/utils';
+import { deepJsonCopy } from '../../utils/general';
 
 const get_users: () => RequestHandler = () => {
   return (req, res) => {
@@ -138,12 +139,25 @@ const get_admin_shopping: () => RequestHandler = () => {
 
       const { routeNames, states } = query;
 
-      const out = await shoppingServices.getAllWithPagination({
+      const allBills = await billingServices.getAll({});
+
+      let out = await shoppingServices.getAllWithPagination({
         paginateOptions,
         query: {
           routeNames,
           states,
         },
+      });
+
+      out = deepJsonCopy(out);
+      out.data = out.data.map((shopping) => {
+        const bill = allBills.find(({ shoppingIds }) => shoppingIds.includes(shopping._id));
+
+        if (bill) {
+          return { ...shopping, billData: billDataReshaper(bill) };
+        }
+
+        return shopping;
       });
 
       res.send(out);

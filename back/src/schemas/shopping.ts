@@ -1,7 +1,6 @@
 import { PaginateModel, Schema, SchemaDefinition, model } from 'mongoose';
 import { createdAtSchemaDefinition } from '../utils/schemas';
 import { Shopping, ShoppingPostData } from '../types/shopping';
-import { PostSchema } from './post';
 import { PostPurshaseNotes } from '../types/post';
 import mongoosePaginate from 'mongoose-paginate-v2';
 

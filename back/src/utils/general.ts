@@ -133,3 +133,7 @@ export const addStringToUniqueArray = <T extends string = string>(
 };
 
 export const getRandomHash = () => `${Date.now()}`;
+
+export const deepJsonCopy = <T extends AnyRecord = AnyRecord>(json: T): T => {
+  return JSON.parse(JSON.stringify(json));
+};
