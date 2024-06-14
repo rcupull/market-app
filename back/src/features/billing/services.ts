@@ -28,9 +28,10 @@ const getAllWithPagination: QueryHandle<GetAllArgs, PaginateResult<Bill>> = asyn
   return out as unknown as PaginateResult<Bill>;
 };
 
-const addOne: QueryHandle<Pick<Bill, 'routeName' | 'shoppingIds' | 'totalDebit'>, Bill> = async (
-  data
-) => {
+const addOne: QueryHandle<
+  Pick<Bill, 'routeName' | 'shoppingIds' | 'totalDebit' | 'state'>,
+  Bill
+> = async (data) => {
   const newbill = new BillingModel(data);
 
   await newbill.save();
