@@ -100,7 +100,7 @@ export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
       }
       topElement={
         <div className="w-96 m-2 rounded-md px-4 py-3 border flex flex-col items-center">
-          {!isShoppingPage && (
+          {!isShoppingPage && isAuthenticated && (
             <Button
               variant="link"
               className="!mb-2"
