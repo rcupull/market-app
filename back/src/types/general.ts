@@ -1,5 +1,5 @@
 import { RequestHandler as ExpressRequestHandler } from 'express';
-import { ServerResponse } from 'http';
+
 import {
   ApplySchemaOptions,
   DefaultSchemaOptions,
@@ -41,9 +41,7 @@ export interface RequestHandler<
   Locals extends Record<string, any> = Record<string, any>
 > extends ExpressRequestHandler<P, ResBody, ReqBody, ReqQuery, Locals> {}
 
-export type QueryHandle<Args extends AnyRecord = AnyRecord, R = void> = (
-  args: Args
-) => Promise<R | ServerResponse>;
+export type QueryHandle<Args extends AnyRecord = AnyRecord, R = void> = (args: Args) => Promise<R>;
 
 export interface Image {
   src: string;

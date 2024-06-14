@@ -1,18 +1,13 @@
-import {
-  FilterQuery,
-  PaginateOptions,
-  ProjectionType,
-  UpdateQuery,
-  UpdateWithAggregationPipeline,
-} from 'mongoose';
+import { FilterQuery, ProjectionType, UpdateQuery, UpdateWithAggregationPipeline } from 'mongoose';
 import { QueryHandle } from '../../types/general';
 import { Business } from '../../types/business';
 import { BusinessModel } from '../../schemas/business';
 import { postServices } from '../post/services';
-import { PaginateResult, paginationCustomLabels } from '../../middlewares/pagination';
-import { ServerResponse } from 'http';
+import { PaginateResult } from '../../middlewares/pagination';
+
 import { imagesServices } from '../images/services';
 import { UpdateOptions } from 'mongodb';
+import { GetAllArgs, getAllFilterQuery } from './utils';
 
 type UpdateQueryBusiness =
   | UpdateQuery<
@@ -35,59 +30,21 @@ type UpdateQueryBusiness =
     >
   | UpdateWithAggregationPipeline;
 
-interface GetAllArgs {
-  paginateOptions?: PaginateOptions;
-  createdBy?: string;
-  routeNames?: Array<string>;
-  search?: string;
-  hidden?: boolean;
-}
-
-const getAll: QueryHandle<GetAllArgs, PaginateResult<Business>> = async (query) => {
-  const { paginateOptions = {}, createdBy, routeNames, search, hidden } = query;
-  const filterQuery: FilterQuery<Business> = {};
-
-  ///////////////////////////////////////////////////////////////////
-  if (createdBy) {
-    filterQuery.createdBy = createdBy;
-  }
-  ///////////////////////////////////////////////////////////////////
-
-  if (routeNames?.length) {
-    filterQuery.routeName = { $in: routeNames };
-  }
-  ///////////////////////////////////////////////////////////////////
-
-  if (search) {
-    filterQuery.name = { $regex: new RegExp(search), $options: 'i' };
-  }
-  ///////////////////////////////////////////////////////////////////
-
-  if (hidden !== undefined) {
-    filterQuery.hidden = hidden;
-  }
-  ///////////////////////////////////////////////////////////////////
+const getAllWithPagination: QueryHandle<GetAllArgs, PaginateResult<Business>> = async (query) => {
+  const { paginateOptions = {}, ...omittedProps } = query;
+  const filterQuery = getAllFilterQuery(omittedProps);
 
   const out = await BusinessModel.paginate(filterQuery, paginateOptions);
 
   return out as unknown as PaginateResult<Business>;
 };
 
-const getAllWithoutPagination: QueryHandle<
-  Omit<GetAllArgs, 'paginateOptions'>,
-  Array<Business>
-> = async (args) => {
-  const out = await getAll({
-    ...args,
-    paginateOptions: {
-      pagination: false,
-      customLabels: paginationCustomLabels,
-    },
-  });
+const getAll: QueryHandle<Omit<GetAllArgs, 'paginateOptions'>, Array<Business>> = async (args) => {
+  const filterQuery = getAllFilterQuery(args);
 
-  if (out instanceof ServerResponse) return out;
+  const out = await BusinessModel.find(filterQuery);
 
-  return out.data;
+  return out;
 };
 
 const addOne: QueryHandle<
@@ -165,8 +122,8 @@ const updateMany: QueryHandle<{
 };
 
 export const businessServices = {
+  getAllWithPagination,
   getAll,
-  getAllWithoutPagination,
   addOne,
   findOne,
   deleteOne,

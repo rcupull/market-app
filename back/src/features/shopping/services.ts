@@ -1,5 +1,5 @@
-import { QueryHandle } from '../../types/general';
-import { FilterQuery, PaginateOptions, UpdateQuery } from 'mongoose';
+import { ModelDocument, QueryHandle } from '../../types/general';
+import { FilterQuery, PaginateOptions, ProjectionType, UpdateQuery } from 'mongoose';
 import { UpdateOptions } from 'mongodb';
 import { ShoppingModel } from '../../schemas/shopping';
 import { Shopping } from '../../types/shopping';
@@ -7,6 +7,11 @@ import { Post, PostPurshaseNotes } from '../../types/post';
 import { isEqualIds } from '../../utils/general';
 import { User } from '../../types/user';
 import { PaginateResult } from '../../middlewares/pagination';
+import {
+  GetAllShoppingArgs,
+  getAllShoppingFilterQuery,
+  postToShoppingPostDataReshaper,
+} from './utils';
 
 const updateOrAddOne: QueryHandle<
   {
@@ -27,7 +32,7 @@ const updateOrAddOne: QueryHandle<
 
   if (existInConstruction) {
     const existePost = existInConstruction.posts.find((e) => {
-      return isEqualIds(e.post._id, postId);
+      return isEqualIds(e.postData._id, postId);
     });
 
     if (existePost) {
@@ -46,7 +51,7 @@ const updateOrAddOne: QueryHandle<
         {
           arrayFilters: [
             {
-              'p.post._id': postId,
+              'p.postData._id': postId,
             },
           ],
         }
@@ -59,7 +64,7 @@ const updateOrAddOne: QueryHandle<
         {
           $push: {
             posts: {
-              post,
+              postData: postToShoppingPostDataReshaper(post),
               count: amountToAdd,
               lastUpdatedDate: new Date(),
             },
@@ -82,7 +87,7 @@ const updateOrAddOne: QueryHandle<
       routeName,
       posts: [
         {
-          post,
+          postData: postToShoppingPostDataReshaper(post),
           purshaseNotes,
           count: amountToAdd,
           lastUpdatedDate: new Date(),
@@ -94,23 +99,39 @@ const updateOrAddOne: QueryHandle<
   }
 };
 
-const getAll: QueryHandle<
+const getAllWithPagination: QueryHandle<
   {
     paginateOptions?: PaginateOptions;
-    query: FilterQuery<Shopping>;
+    query: GetAllShoppingArgs;
   },
   PaginateResult<Shopping>
 > = async ({ query, paginateOptions = {} }) => {
-  const out = await ShoppingModel.paginate(query, paginateOptions);
+  const filterQuery = getAllShoppingFilterQuery(query);
+
+  const out = await ShoppingModel.paginate(filterQuery, paginateOptions);
 
   return out as unknown as PaginateResult<Shopping>;
+};
+
+const getAll: QueryHandle<
+  {
+    query: GetAllShoppingArgs;
+    projection?: ProjectionType<Shopping>;
+  },
+  Array<ModelDocument<Shopping>>
+> = async ({ query, projection }) => {
+  const filterQuery = getAllShoppingFilterQuery(query);
+
+  const out = await ShoppingModel.find(filterQuery, projection);
+
+  return out;
 };
 
 const getOne: QueryHandle<
   {
     query: FilterQuery<Shopping>;
   },
-  Shopping | null
+  ModelDocument<Shopping> | null
 > = async ({ query }) => {
   const out = await ShoppingModel.findOne(query);
 
@@ -160,6 +181,7 @@ export const shoppingServices = {
   getOne,
   updateOne,
   updateOrAddOne,
+  getAllWithPagination,
   getAll,
   deleteOne,
   findAndUpdateOne,

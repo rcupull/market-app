@@ -86,7 +86,13 @@ export type FetchStatus = {
 
 export type FetchData<Data = unknown> = Data | null;
 
-export type GetAllPostsQuery = {
+interface PaginationQuery {
+  limit?: number;
+  page?: number;
+  pagination?: boolean;
+}
+
+export interface GetAllPostsQuery extends PaginationQuery {
   routeNames?: Array<string>;
   postsIds?: Array<string>;
   //
@@ -95,34 +101,32 @@ export type GetAllPostsQuery = {
   search?: string;
   includeHidden?: boolean;
   //
-  limit?: number;
-  page?: number;
   postType?: PostType;
-};
+}
 
-export type GetAllBillsQuery = {
+export interface GetAllBillsQuery extends PaginationQuery {
   routeName: string;
   states?: Array<BillState>;
-  //
-  limit?: number;
-  page?: number;
-};
+}
 
-export type GetAllShoppingQuery = {
+export interface GetAllShoppingQuery extends PaginationQuery {
   routeName: string;
   states?: Array<ShoppingState>;
-  //
-  limit?: number;
-  page?: number;
-};
+}
 
-export type GetAllBusinessQuery = {
+export interface GetAllShoppingAdminQuery extends PaginationQuery {
+  routeNames?: Array<string>;
+  states?: Array<ShoppingState>;
+}
+
+export interface GetAllBillAdminQuery extends PaginationQuery {
+  routeNames?: Array<string>;
+  states?: Array<BillState>;
+}
+
+export interface GetAllBusinessQuery extends PaginationQuery {
   routeNames?: Array<string>;
   search?: string;
   includeHidden?: boolean;
   userId?: string;
-  //
-  limit?: number;
-  page?: number;
-  pagination?: boolean;
-};
+}

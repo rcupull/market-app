@@ -5,11 +5,12 @@ import { useRouter } from 'hooks/useRouter';
 import SvgMehRollingEyes from 'icons/MehRollingEyes';
 import { StyleProps } from 'types/general';
 import { Post } from 'types/post';
+import { ShoppingPostData } from 'types/shopping';
 import { getOnePostRoute } from 'utils/business';
 import { cn } from 'utils/general';
 
 export interface IconButtonViewPostPageProps extends StyleProps {
-  post: Post;
+  post: Post | ShoppingPostData;
 }
 export const IconButtonViewPostPage = ({ post, className }: IconButtonViewPostPageProps) => {
   const { pushRoute, isThisPostPage } = useRouter();

@@ -1,6 +1,6 @@
 import { RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
-import { ServerResponse } from 'http';
+
 import { imagesServices } from '../images/services';
 import { userServices } from './services';
 import { User } from '../../types/user';
@@ -18,8 +18,6 @@ const get_users_userId: () => RequestHandler = () => {
           _id: userId,
         },
       });
-
-      if (out instanceof ServerResponse) return;
 
       res.send(out);
     });
@@ -45,8 +43,6 @@ const put_users_userId: () => RequestHandler = () => {
           },
         });
 
-        if (currentUser instanceof ServerResponse) return currentUser;
-
         if (!currentUser) {
           return getUserNotFoundResponse({ res });
         }
@@ -68,8 +64,6 @@ const put_users_userId: () => RequestHandler = () => {
         },
         update: body,
       });
-
-      if (out instanceof ServerResponse) return out;
 
       res.send(out);
     });

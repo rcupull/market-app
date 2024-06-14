@@ -3,7 +3,7 @@ import { uploadImageMiddleware } from '../../middlewares/files';
 import { isNumber } from '../../utils/general';
 import { withTryCatch } from '../../utils/error';
 import { imagesServices } from './services';
-import { ServerResponse } from 'http';
+
 import {
   get200Response,
   get400Response,
@@ -132,9 +132,7 @@ const delete_one_image: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { imageSrc } = req.body;
 
-      const out = await imagesServices.deleteOne({ src: imageSrc });
-
-      if (out instanceof ServerResponse) return out;
+      await imagesServices.deleteOne({ src: imageSrc });
 
       get200Response({
         res,

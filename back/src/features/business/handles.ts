@@ -1,6 +1,6 @@
 import { withTryCatch } from '../../utils/error';
 import { businessServices } from './services';
-import { ServerResponse } from 'http';
+
 import {
   get200Response,
   get400Response,
@@ -25,15 +25,13 @@ const get_business: () => RequestHandler = () => {
 
       const { routeNames, search, userId, includeHidden } = query;
 
-      const out = await businessServices.getAll({
+      const out = await businessServices.getAllWithPagination({
         paginateOptions,
         routeNames,
         search,
         createdBy: userId,
         hidden: includeHidden ? undefined : false,
       });
-
-      if (out instanceof ServerResponse) return;
 
       res.send(out);
     });
@@ -47,15 +45,13 @@ const get_business_summary: () => RequestHandler = () => {
 
       const { routeNames, search, userId, includeHidden } = query;
 
-      const business = await businessServices.getAll({
+      const business = await businessServices.getAllWithPagination({
         paginateOptions,
         routeNames,
         search,
         createdBy: userId,
         hidden: includeHidden ? undefined : false,
       });
-
-      if (business instanceof ServerResponse) return;
 
       const out: PaginateResult<BusinessSummary> = {
         ...business,
@@ -86,8 +82,6 @@ const get_business_routeName: () => RequestHandler = () => {
         },
       });
 
-      if (out instanceof ServerResponse) return;
-
       if (!out) {
         return getBusinessNotFoundResponse({ res });
       }
@@ -112,11 +106,7 @@ const update_business_post_categories: () => RequestHandler = () => {
         },
       });
 
-      if (business instanceof ServerResponse) return business;
-
       if (!business) return getBusinessNotFoundResponse({ res });
-
-      let out = undefined;
 
       const currentPostCategoriesTags = business.postCategories?.map(({ tag }) => tag);
       const postCategoriesTags = postCategories.map(({ tag }) => tag);
@@ -127,7 +117,7 @@ const update_business_post_categories: () => RequestHandler = () => {
 
       if (missingTags?.length) {
         //
-        out = await postServices.updateMany({
+        await postServices.updateMany({
           query: {
             routeName,
           },
@@ -137,10 +127,8 @@ const update_business_post_categories: () => RequestHandler = () => {
             },
           },
         });
-        if (out instanceof ServerResponse) return out;
-
         //
-        out = await businessServices.updateOne({
+        await businessServices.updateOne({
           query: {
             routeName,
           },
@@ -157,10 +145,9 @@ const update_business_post_categories: () => RequestHandler = () => {
             ],
           },
         });
-        if (out instanceof ServerResponse) return out;
       }
 
-      out = await businessServices.updateOne({
+      await businessServices.updateOne({
         query: {
           routeName,
         },
@@ -169,7 +156,6 @@ const update_business_post_categories: () => RequestHandler = () => {
         },
       });
 
-      if (out instanceof ServerResponse) return out;
       /**
        * actualizar posts y secciones que tiene las tags eliminadas
        */
@@ -202,8 +188,6 @@ const post_business: () => RequestHandler = () => {
         createdBy: user._id,
         postCategories: getPostCategoriesFromBusinessCategories(categories),
       });
-
-      if (out instanceof ServerResponse) return;
 
       if (!out) {
         return get400Response({ res, json: { message: 'the business exist already' } });
@@ -256,8 +240,6 @@ const put_business_routeName: () => RequestHandler = () => {
         })(body),
       });
 
-      if (out instanceof ServerResponse) return;
-
       res.send(out);
     });
   };
@@ -275,12 +257,10 @@ const delete_business_routeName: () => RequestHandler = () => {
 
       const { routeName } = params;
 
-      const out = await businessServices.deleteOne({
+      await businessServices.deleteOne({
         routeName,
         userId: user._id.toString(),
       });
-
-      if (out instanceof ServerResponse) return;
 
       res.send();
     });

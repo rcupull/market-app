@@ -1,7 +1,8 @@
 import { AnyRecord, RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
-import { ServerResponse } from 'http';
+
 import {
+  get400Response,
   getBusinessNotFoundResponse,
   getPostNotFoundResponse,
   getShoppingNotFoundResponse,
@@ -11,12 +12,13 @@ import { shoppingServices } from './services';
 import { postServices } from '../post/services';
 import { isNumber } from '../../utils/general';
 import { businessServices } from '../business/services';
-import { deleteOnePostFromShopping, deleteShopping, getDebitFromOrder } from './utils';
+import { deleteOnePostFromShopping, deleteShopping, getShoppingInfo } from './utils';
 import { logger } from '../logger';
 import { PostPurshaseNotes } from '../../types/post';
 import { ShoppingModel } from '../../schemas/shopping';
 import { sendNewOrderTelegramMessage } from '../telegram/handles';
 import { sendNewOrderPushMessage, sendUpdateStockAmountMessage } from '../notifications/handles';
+import { ShoppingState } from '../../types/shopping';
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -29,15 +31,13 @@ const get_shopping: () => RequestHandler = () => {
 
       const { routeName } = query;
 
-      const out = await shoppingServices.getAll({
+      const out = await shoppingServices.getAllWithPagination({
         paginateOptions,
         query: {
+          routeName,
           purchaserId: user._id,
-          'posts.post.routeName': routeName,
         },
       });
-
-      if (out instanceof ServerResponse) return out;
 
       res.send(out);
     });
@@ -56,15 +56,13 @@ const get_shopping_owner: () => RequestHandler = () => {
       const { routeName } = business;
       const { states } = query;
 
-      const out = await shoppingServices.getAll({
+      const out = await shoppingServices.getAllWithPagination({
         paginateOptions,
         query: {
-          'posts.post.routeName': routeName,
-          ...(states ? { state: { $in: states } } : {}),
+          routeName,
+          states,
         },
       });
-
-      if (out instanceof ServerResponse) return out;
 
       res.send(out);
     });
@@ -88,8 +86,6 @@ const get_shopping_shoppingId: () => RequestHandler = () => {
           purchaserId: user._id,
         },
       });
-
-      if (out instanceof ServerResponse) return out;
 
       res.send(out);
     });
@@ -129,10 +125,6 @@ const post_shopping: () => RequestHandler<
         amountToAdd: -amountToAdd,
         post,
       });
-
-      if (updateStockResponse instanceof ServerResponse) {
-        return updateStockResponse;
-      }
 
       /**
        * update the shopping with the new amount according to amount added to post.
@@ -191,7 +183,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
 
       const { shoppingId } = params;
 
-      const order = await shoppingServices.findAndUpdateOne({
+      const shopping = await shoppingServices.findAndUpdateOne({
         query: {
           _id: shoppingId,
           purchaserId: user._id,
@@ -201,20 +193,16 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
         },
       });
 
-      if (order instanceof ServerResponse) return order;
-
-      if (!order) {
+      if (!shopping) {
         logger.error('It is weird, maybe there is a bug');
         return res.send({});
       }
 
       const business = await businessServices.findOne({
         query: {
-          routeName: order.routeName,
+          routeName: shopping.routeName,
         },
       });
-
-      if (business instanceof ServerResponse) return business;
 
       if (!business) {
         return getBusinessNotFoundResponse({ res });
@@ -224,11 +212,11 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
        * compute payment and reduce de credit with this product
        */
 
-      const { debit: shoppingDebit } = getDebitFromOrder({ order });
+      const { shoppingDebit } = getShoppingInfo(shopping);
 
       await businessServices.updateOne({
         query: {
-          routeName: order.routeName,
+          routeName: shopping.routeName,
         },
         update: {
           $inc: {
@@ -236,7 +224,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
           },
           $push: {
             'shoppingPayment.requests': {
-              shoppingId: order._id,
+              shoppingId: shopping._id,
               shoppingDebit,
             },
           },
@@ -247,8 +235,8 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
        * send Telegram message
        */
 
-      sendNewOrderTelegramMessage({ business, order });
-      sendNewOrderPushMessage({ business, order });
+      sendNewOrderTelegramMessage({ business, shopping });
+      sendNewOrderPushMessage({ business, shopping });
 
       res.send({});
     });

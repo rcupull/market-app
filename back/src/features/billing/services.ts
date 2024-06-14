@@ -7,11 +7,13 @@ import { BillingModel } from '../../schemas/billing';
 export interface GetAllArgs {
   paginateOptions?: PaginateOptions;
   states?: Array<BillState>;
+  routeNames?: Array<string>;
 }
 
-const getAll: QueryHandle<GetAllArgs, PaginateResult<Bill>> = async ({
+const getAllWithPagination: QueryHandle<GetAllArgs, PaginateResult<Bill>> = async ({
   paginateOptions = {},
   states,
+  routeNames,
 }) => {
   const filterQuery: FilterQuery<Bill> = {};
 
@@ -21,6 +23,10 @@ const getAll: QueryHandle<GetAllArgs, PaginateResult<Bill>> = async ({
     filterQuery.state = { $in: states };
   }
 
+  if (routeNames?.length) {
+    filterQuery.routeName = { $in: routeNames };
+  }
+
   ///////////////////////////////////////////////////////////////////
 
   const out = await BillingModel.paginate(filterQuery, paginateOptions);
@@ -28,6 +34,18 @@ const getAll: QueryHandle<GetAllArgs, PaginateResult<Bill>> = async ({
   return out as unknown as PaginateResult<Bill>;
 };
 
+const addOne: QueryHandle<
+  Pick<Bill, 'routeName' | 'shoppingIds' | 'totalDebit' | 'state'>,
+  Bill
+> = async (data) => {
+  const newbill = new BillingModel(data);
+
+  await newbill.save();
+
+  return newbill;
+};
+
 export const billingServices = {
-  getAll,
+  getAllWithPagination,
+  addOne,
 };

@@ -8,11 +8,11 @@ import { StyleProps } from 'types/general';
 export interface FooterProps extends StyleProps {}
 
 export const Footer = ({ ...props }: FooterProps) => {
-  const { isDashboardPage } = useRouter();
+  const { isDashboardPage, isAdminPage } = useRouter();
 
   const { business } = useBusiness();
 
-  if (isDashboardPage) {
+  if (isDashboardPage || isAdminPage) {
     return <></>;
   }
 

@@ -2,7 +2,7 @@ import { Request, RequestHandler } from 'express';
 import { withTryCatch } from '../utils/error';
 import { User } from '../types/user';
 import { AnyRecord } from '../types/general';
-import { ServerResponse } from 'http';
+
 import { postServices } from '../features/post/services';
 import { isEqualIds } from '../utils/general';
 import { passportJwtMiddleware } from './passport';
@@ -110,9 +110,6 @@ export const isUserThisBusinessOwner: RequestHandler = async (req, res, next) =>
     },
   });
 
-  if (business instanceof ServerResponse) {
-    return business;
-  }
   if (!business) {
     return getBusinessNotFoundResponse({ res });
   }
@@ -149,10 +146,6 @@ export const getBusinessMiddleware: RequestHandler = async (req, res, next) => {
     },
   });
 
-  if (business instanceof ServerResponse) {
-    return next();
-  }
-
   if (!business) {
     return next();
   }
@@ -181,10 +174,6 @@ export const isUserThisPostOwner: RequestHandler = async (req, res, next) => {
     postId,
   });
 
-  if (post instanceof ServerResponse) {
-    return post;
-  }
-
   if (!post) {
     return getPostNotFoundResponse({ res });
   }
@@ -211,9 +200,6 @@ export const addPostToReq: RequestHandler = async (req, res, next) => {
     postId,
   });
 
-  if (post instanceof ServerResponse) {
-    return post;
-  }
   if (!post) {
     return getPostNotFoundResponse({ res });
   }
@@ -257,10 +243,6 @@ export const verifyPost: RequestHandler = (req, res, next) => {
     const out = await postServices.getOne({
       postId,
     });
-
-    if (out instanceof ServerResponse) {
-      return out;
-    }
 
     if (!out) {
       return getPostNotFoundResponse({ res });

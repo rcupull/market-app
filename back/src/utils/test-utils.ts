@@ -1,9 +1,10 @@
 import { AnyRecord } from '../types/general';
 import { Path } from '../types/paths';
 import { set } from './general';
-import mongose, { Schema } from 'mongoose';
+import mongose, { PaginateOptions, Schema } from 'mongoose';
 import jwt from 'jsonwebtoken';
 import { secretAccessToken } from '../config';
+import { paginationCustomLabels } from '../middlewares/pagination';
 
 const dbTestUrl = 'mongodb://127.0.0.1:27017/community_test_db';
 
@@ -35,4 +36,10 @@ export const generateToken = (id: string | Schema.Types.ObjectId) => {
     },
     secretAccessToken
   );
+};
+
+export const paginateOptionsForTesting: PaginateOptions = {
+  limit: 10,
+  page: 1,
+  customLabels: paginationCustomLabels,
 };

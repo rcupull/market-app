@@ -26,7 +26,6 @@ export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => 
         <span>Estado:</span>
         <span
           className={cn('font-bold', {
-            'text-green-500': state === 'DELIVERED',
             'text-yellow-500': state === 'REQUESTED',
             'text-gray-300': state === 'CONSTRUCTION',
             'text-red-500': state === 'REJECTED' || state === 'CANCELED',
@@ -37,8 +36,8 @@ export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => 
       </div>
 
       <div className="flex flex-col gap-2 mt-2">
-        {posts.map(({ post, count }, index) => {
-          const { name, currency, price, images } = post;
+        {posts.map(({ postData, count }, index) => {
+          const { name, currency, price, images } = postData;
 
           const mainImage = images?.[0];
 
