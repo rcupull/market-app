@@ -9,10 +9,7 @@ export type ShoppingState =
   | 'DELIVERED'
   //
   | 'CANCELED'
-  | 'REJECTED'
-  //
-  | 'INVOICED'
-  | 'PAID';
+  | 'REJECTED';
 
 export type ShoppingPostData = Pick<
   Post,

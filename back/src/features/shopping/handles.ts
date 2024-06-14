@@ -257,22 +257,12 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
       const { shoppingId } = params;
       const { state } = body;
 
-      const inmobileStates: Array<ShoppingState> = ['PAID', 'INVOICED'];
-
-      if (inmobileStates.includes(state)) {
-        return get400Response({ res, json: { message: 'Cannot change to this state' } });
-      }
-
       const currentOrder = await ShoppingModel.findOne({
         _id: shoppingId,
       });
 
       if (!currentOrder) {
         return getShoppingNotFoundResponse({ res });
-      }
-
-      if (inmobileStates.includes(currentOrder.state)) {
-        return get400Response({ res, json: { message: 'Cannot change from this state' } });
       }
 
       if (currentOrder?.history) {

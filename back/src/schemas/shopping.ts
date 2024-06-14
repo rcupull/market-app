@@ -16,9 +16,6 @@ const shoppingState = {
     //
     'CANCELED',
     'REJECTED',
-    //
-    'INVOICED',
-    'PAID',
   ],
   required: true,
 };

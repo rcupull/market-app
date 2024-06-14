@@ -57,9 +57,6 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
                   value: 'REQUESTED',
                 },
                 {
-                  value: 'INVOICED',
-                },
-                {
                   value: 'CANCELED',
                 },
                 {

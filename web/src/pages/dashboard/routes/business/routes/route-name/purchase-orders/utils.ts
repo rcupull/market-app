@@ -5,7 +5,6 @@ export const allStatesQuery: Array<ShoppingState> = [
   'PROCESSING',
   'CANCELED',
   'REJECTED',
-  'INVOICED',
   'DELIVERED',
   'READY_TO_DELIVER',
   /**

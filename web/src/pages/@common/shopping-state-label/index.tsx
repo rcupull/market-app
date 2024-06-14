@@ -14,7 +14,6 @@ export const ShoppingStateLabel = ({ state, disableColor, className }: ShoppingS
       className={cn(
         'font-bold',
         {
-          'text-gray-500': !disableColor && state === 'INVOICED',
           'text-yellow-500': !disableColor && state === 'REQUESTED',
           'text-indigo-500': !disableColor && state === 'PROCESSING',
           'text-cyan-500': !disableColor && state === 'READY_TO_DELIVER',

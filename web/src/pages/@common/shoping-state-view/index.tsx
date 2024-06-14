@@ -38,12 +38,7 @@ export const ShoppingStateView = ({
     }
   }, [fetchStatus.isSuccess]);
 
-  if (
-    state === 'REJECTED' ||
-    state === 'CANCELED' ||
-    state === 'INVOICED' ||
-    state === 'DELIVERED'
-  ) {
+  if (state === 'REJECTED' || state === 'CANCELED' || state === 'DELIVERED') {
     return <ShoppingStateLabel state={state} />;
   }
 

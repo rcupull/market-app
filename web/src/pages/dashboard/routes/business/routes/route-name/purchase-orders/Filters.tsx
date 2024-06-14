@@ -64,10 +64,6 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
           label: 'Rechazadas',
           value: 'REJECTED',
         },
-        {
-          label: 'Facturados',
-          value: 'INVOICED',
-        },
       ]}
       className={cn('flex items-center gap-4 mb-5 flex-wrap', className)}
     />
