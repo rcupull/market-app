@@ -34,8 +34,8 @@ const get_shopping: () => RequestHandler = () => {
       const out = await shoppingServices.getAllWithPagination({
         paginateOptions,
         query: {
+          routeName,
           purchaserId: user._id,
-          'posts.post.routeName': routeName,
         },
       });
 

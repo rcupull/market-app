@@ -12,10 +12,11 @@ import { IconButtonViewPostPage } from './IconButtonViewPostPage';
 
 import { useShopping } from 'pages/@hooks/useShopping';
 import { Post } from 'types/post';
+import { ShoppingPostData } from 'types/shopping';
 
 export interface PostAddedProps {
   count: number;
-  post: Post;
+  post: Post | ShoppingPostData;
 }
 
 export const PostAdded = ({ count, post }: PostAddedProps) => {

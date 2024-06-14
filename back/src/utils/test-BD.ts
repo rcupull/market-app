@@ -1,3 +1,4 @@
+import { postToShoppingPostDataReshaper } from '../features/shopping/utils';
 import { BusinessModel } from '../schemas/business';
 import { PostModel } from '../schemas/post';
 import { ShoppingModel } from '../schemas/shopping';
@@ -125,7 +126,7 @@ export const fillBD = async (args?: {
       routeName: business1User1.routeName,
       posts: [
         {
-          post: productPost1Business1User1,
+          postData: postToShoppingPostDataReshaper(productPost1Business1User1),
           purshaseNotes: {},
           count: 5,
           lastUpdatedDate: new Date(),

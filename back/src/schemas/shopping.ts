@@ -1,6 +1,6 @@
 import { PaginateModel, Schema, SchemaDefinition, model } from 'mongoose';
 import { createdAtSchemaDefinition } from '../utils/schemas';
-import { Shopping } from '../types/shopping';
+import { Shopping, ShoppingPostData } from '../types/shopping';
 import { PostSchema } from './post';
 import { PostPurshaseNotes } from '../types/post';
 import mongoosePaginate from 'mongoose-paginate-v2';
@@ -34,13 +34,30 @@ const purshaseNotesSchemaDefinition: SchemaDefinition<PostPurshaseNotes> = {
   },
 };
 
+const postDataSchemaDefinition: SchemaDefinition<ShoppingPostData> = {
+  _id: { type: String, required: true },
+  routeName: { type: String, required: true },
+  currency: { type: String, required: true, enum: ['CUP', 'MLC', 'USD'] },
+  images: {
+    type: [
+      {
+        src: { type: String, required: true },
+        width: { type: Number, required: true },
+        height: { type: Number, required: true },
+      },
+    ],
+  },
+  name: { type: String, required: true },
+  price: { type: Number, required: true },
+};
+
 const ShoppingSchema = new Schema<Shopping>({
   ...createdAtSchemaDefinition,
   posts: {
     type: [
       {
         _id: false,
-        post: { type: PostSchema, required: true },
+        postData: { type: postDataSchemaDefinition, required: true },
         count: { type: Number, required: true },
         lastUpdatedDate: { type: Date, required: true },
         purshaseNotes: {

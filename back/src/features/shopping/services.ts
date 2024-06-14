@@ -7,6 +7,7 @@ import { Post, PostPurshaseNotes } from '../../types/post';
 import { isEqualIds } from '../../utils/general';
 import { User } from '../../types/user';
 import { PaginateResult } from '../../middlewares/pagination';
+import { postToShoppingPostDataReshaper } from './utils';
 
 const updateOrAddOne: QueryHandle<
   {
@@ -27,7 +28,7 @@ const updateOrAddOne: QueryHandle<
 
   if (existInConstruction) {
     const existePost = existInConstruction.posts.find((e) => {
-      return isEqualIds(e.post._id, postId);
+      return isEqualIds(e.postData._id, postId);
     });
 
     if (existePost) {
@@ -46,7 +47,7 @@ const updateOrAddOne: QueryHandle<
         {
           arrayFilters: [
             {
-              'p.post._id': postId,
+              'p.postData._id': postId,
             },
           ],
         }
@@ -59,7 +60,7 @@ const updateOrAddOne: QueryHandle<
         {
           $push: {
             posts: {
-              post,
+              postData: postToShoppingPostDataReshaper(post),
               count: amountToAdd,
               lastUpdatedDate: new Date(),
             },
@@ -82,7 +83,7 @@ const updateOrAddOne: QueryHandle<
       routeName,
       posts: [
         {
-          post,
+          postData: postToShoppingPostDataReshaper(post),
           purshaseNotes,
           count: amountToAdd,
           lastUpdatedDate: new Date(),

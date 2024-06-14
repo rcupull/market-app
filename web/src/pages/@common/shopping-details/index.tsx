@@ -37,8 +37,8 @@ export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => 
       </div>
 
       <div className="flex flex-col gap-2 mt-2">
-        {posts.map(({ post, count }, index) => {
-          const { name, currency, price, images } = post;
+        {posts.map(({ postData, count }, index) => {
+          const { name, currency, price, images } = postData;
 
           const mainImage = images?.[0];
 

@@ -14,9 +14,14 @@ export type ShoppingState =
   | 'INVOICED'
   | 'PAID';
 
+export type ShoppingPostData = Pick<
+  Post,
+  '_id' | 'price' | 'images' | 'name' | 'currency' | 'routeName'
+>;
+
 export interface Shopping extends BaseIdentity {
   posts: Array<{
-    post: Post;
+    postData: ShoppingPostData;
     count: number;
     lastUpdatedDate: Date;
   }>;

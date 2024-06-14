@@ -88,7 +88,9 @@ describe('shopping', () => {
           expect(shopping.routeName).toEqual(business1User1.routeName);
           expect(shopping.state).toEqual('CONSTRUCTION');
           expect(shopping.posts[0].count).toEqual(5);
-          expect(shopping.posts[0].post._id).toContain(productPost1Business1User1._id.toString());
+          expect(shopping.posts[0].postData._id).toContain(
+            productPost1Business1User1._id.toString()
+          );
         });
     });
   });
@@ -148,7 +150,9 @@ describe('shopping', () => {
           expect(shopping.routeName).toEqual(business1User1.routeName);
           expect(shopping.state).toEqual('CONSTRUCTION');
           expect(shopping.posts[0].count).toEqual(5);
-          expect(shopping.posts[0].post._id).toContain(productPost1Business1User1._id.toString());
+          expect(shopping.posts[0].postData._id).toContain(
+            productPost1Business1User1._id.toString()
+          );
         });
     });
   });
@@ -228,10 +232,14 @@ describe('shopping', () => {
           expect(shopping.state).toEqual('CONSTRUCTION');
 
           expect(shopping.posts[0].count).toEqual(5);
-          expect(shopping.posts[0].post._id).toContain(productPost1Business1User1._id.toString());
+          expect(shopping.posts[0].postData._id).toContain(
+            productPost1Business1User1._id.toString()
+          );
 
           expect(shopping.posts[1].count).toEqual(10);
-          expect(shopping.posts[1].post._id).toContain(productPost2Business1User1._id.toString());
+          expect(shopping.posts[1].postData._id).toContain(
+            productPost2Business1User1._id.toString()
+          );
         });
 
       // checking the current stock amount in both posts
@@ -410,7 +418,9 @@ describe('shopping', () => {
           expect(shopping.posts.length).toEqual(1);
 
           expect(shopping.posts[0].count).toEqual(10);
-          expect(shopping.posts[0].post._id).toContain(productPost2Business1User1._id.toString());
+          expect(shopping.posts[0].postData._id).toContain(
+            productPost2Business1User1._id.toString()
+          );
         });
 
       // checking the current stock amount in both posts

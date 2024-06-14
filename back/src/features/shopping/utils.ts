@@ -1,11 +1,13 @@
 import { QueryHandle } from '../../types/general';
-import { Shopping } from '../../types/shopping';
+import { Shopping, ShoppingPostData } from '../../types/shopping';
 import { User } from '../../types/user';
 import { logger } from '../logger';
 import { shoppingServices } from './services';
 import { isEqualIds } from '../../utils/general';
 import { postServices } from '../post/services';
 import { sendUpdateStockAmountMessage } from '../notifications/handles';
+import { makeReshaper } from '../../utils/makeReshaper';
+import { Post } from '../../types/post';
 
 export const getDebitFromOrder = ({
   order,
@@ -14,17 +16,16 @@ export const getDebitFromOrder = ({
 }): {
   debit: number;
 } => {
-  const orderMoney = order.posts.reduce((amount, { count, post }) => {
-    if (!post.price) {
+  const orderMoney = order.posts.reduce((amount, { count, postData }) => {
+    if (!postData.price) {
       return amount;
     }
 
-    if (post.currency !== 'CUP') {
-      logger.info('not cup'); //TODO not cup
-      return amount;
-    }
+    /**
+     * Todos los post de la misma orden tendras l misma moneda porque la moneda la establece el negocio
+     */
 
-    return amount + post.price * count; //TODO agregar conversion de moneda su es USD
+    return amount + postData.price * count;
   }, 0);
 
   const moneyToPay = orderMoney * 0.01; //el 1% de las ventas es de la app
@@ -58,7 +59,7 @@ export const deleteOnePostFromShopping: QueryHandle<{
     update: {
       $pull: {
         posts: {
-          'post._id': postId,
+          'postData._id': postId,
         },
       },
     },
@@ -81,7 +82,7 @@ export const deleteOnePostFromShopping: QueryHandle<{
   }
 
   const shoppingPostToUpdate = oldShopping.posts.find((p) => {
-    return isEqualIds(p.post._id, postId);
+    return isEqualIds(p.postData._id, postId);
   });
 
   const updateStockResponse = await postServices.updateStockAmount({
@@ -110,7 +111,7 @@ export const deleteShopping: QueryHandle<{
   });
 
   if (oldShopping) {
-    const promises = oldShopping.posts.map(({ post: { _id: postId }, count }) => {
+    const promises = oldShopping.posts.map(({ postData: { _id: postId }, count }) => {
       return new Promise((resolve) => {
         postServices
           .getOne({
@@ -144,3 +145,12 @@ export const deleteShopping: QueryHandle<{
     await Promise.all(promises);
   }
 };
+
+export const postToShoppingPostDataReshaper = makeReshaper<Post, ShoppingPostData>({
+  _id: '_id',
+  routeName: 'routeName',
+  price: 'price',
+  images: 'images',
+  name: 'name',
+  currency: 'currency',
+});

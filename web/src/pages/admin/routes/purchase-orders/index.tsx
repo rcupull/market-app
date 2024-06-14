@@ -65,7 +65,9 @@ export const PurchaseOrders = () => {
         }}
         heads={[
           'Acciones',
-          <span key='headBusiness'>Negocio <br/> <span className='text-gray-400'>RouteName</span></span>,
+          <span key="headBusiness">
+            Negocio <br /> <span className="text-gray-400">RouteName</span>
+          </span>,
           'Cliente',
           'Estado',
           'Unidades',
@@ -81,12 +83,15 @@ export const PurchaseOrders = () => {
           return {
             nodes: [
               <RowActions key="RowActions" rowData={rowData} />,
-              <div key="routeName" className={cn('text-nowrap flex flex-col', { 'text-red-500': !name })}>
+              <div
+                key="routeName"
+                className={cn('text-nowrap flex flex-col', { 'text-red-500': !name })}
+              >
                 <span>{name || 'unknown'}</span>
-                <span className='text-gray-400'>{routeName}</span>
+                <span className="text-gray-400">{routeName}</span>
               </div>,
               purchaserName,
-              <ShoppingStateLabel key="state" state={state} className='text-nowrap' />,
+              <ShoppingStateLabel key="state" state={state} className="text-nowrap" />,
               totalProducts,
               <span key="price" className="text-nowrap">{`${totalPrice} CUP`}</span>,
               getDateString({ date: createdAt, showTime: true }),
