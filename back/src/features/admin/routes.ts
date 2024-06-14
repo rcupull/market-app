@@ -58,6 +58,7 @@ router
 ///////////////////////////////////////////////////////////////
 router
   .route('/admin/bills')
+  .get(isLogged, isAdmin, hasAccess('full'), pagination, adminHandles.get_admin_bills())
   .post(
     validators.body('routeName').notEmpty(),
     validators.body('shoppingIds').notEmpty(),

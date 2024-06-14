@@ -17,4 +17,8 @@ export type Access =
   //
   | 'shopping__read'
   | 'shopping__write'
-  | 'shopping__remove';
+  | 'shopping__remove'
+  //
+  | 'bills__read'
+  | 'bills__write'
+  | 'bills__remove';

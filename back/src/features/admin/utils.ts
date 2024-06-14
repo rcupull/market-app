@@ -10,4 +10,7 @@ export const specialAccessRecord: Record<Access, any> = {
   shopping__read: {},
   shopping__write: {},
   shopping__remove: {},
+  bills__read: {},
+  bills__write: {},
+  bills__remove: {},
 };

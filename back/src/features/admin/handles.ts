@@ -181,6 +181,24 @@ const post_admin_bills: () => RequestHandler = () => {
   };
 };
 
+const get_admin_bills: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { paginateOptions, query } = req;
+
+      const { states, routeNames } = query;
+
+      const bills = await billingServices.getAllWithPagination({
+        paginateOptions,
+        routeNames,
+        states,
+      });
+
+      res.send(bills);
+    });
+  };
+};
+
 export const adminHandles = {
   get_users,
   del_users_userId,
@@ -193,4 +211,5 @@ export const adminHandles = {
   get_admin_shopping,
   //
   post_admin_bills,
+  get_admin_bills,
 };

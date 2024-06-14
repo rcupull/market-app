@@ -7,11 +7,13 @@ import { BillingModel } from '../../schemas/billing';
 export interface GetAllArgs {
   paginateOptions?: PaginateOptions;
   states?: Array<BillState>;
+  routeNames?: Array<string>;
 }
 
 const getAllWithPagination: QueryHandle<GetAllArgs, PaginateResult<Bill>> = async ({
   paginateOptions = {},
   states,
+  routeNames,
 }) => {
   const filterQuery: FilterQuery<Bill> = {};
 
@@ -19,6 +21,10 @@ const getAllWithPagination: QueryHandle<GetAllArgs, PaginateResult<Bill>> = asyn
 
   if (states?.length) {
     filterQuery.state = { $in: states };
+  }
+
+  if (routeNames?.length) {
+    filterQuery.routeName = { $in: routeNames };
   }
 
   ///////////////////////////////////////////////////////////////////

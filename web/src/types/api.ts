@@ -119,6 +119,11 @@ export interface GetAllShoppingAdminQuery extends PaginationQuery {
   states?: Array<ShoppingState>;
 }
 
+export interface GetAllBillAdminQuery extends PaginationQuery {
+  routeNames?: Array<string>;
+  states?: Array<BillState>;
+}
+
 export interface GetAllBusinessQuery extends PaginationQuery {
   routeNames?: Array<string>;
   search?: string;
