@@ -49,12 +49,7 @@ export const PurchaseOrders = () => {
       <BulkActionsShopping
         onRefresh={() => filters.onMergeFilters({ page: 1 }, { forceFetch: true })}
       >
-        {({
-          getBulkHeaderNodes,
-          getBulkRowNodes,
-          getDisabledOverlay,
-          bulkActionNode,
-        }) => {
+        {({ getBulkHeaderNodes, getBulkRowNodes, getDisabledOverlay, bulkActionNode }) => {
           return (
             <>
               <div className="flex items-center justify-between mb-1">
@@ -101,7 +96,7 @@ export const PurchaseOrders = () => {
                   const { name } = getBusinessSummary(routeName) || {};
                   return {
                     nodes: getBulkRowNodes({ rowData }, [
-                      <RowActions key="RowActions" rowData={rowData} />,
+                      <RowActions key="RowActions" rowData={rowData} onRefresh={onRefreshForce} />,
                       <div
                         key="routeName"
                         className={cn('text-nowrap flex flex-col', { 'text-red-500': !name })}

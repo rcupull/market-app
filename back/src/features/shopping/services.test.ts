@@ -59,6 +59,7 @@ describe('shopping services', () => {
 
       if (!result) return;
 
+      //eslint-disable-next-line
       const { createdAt, _id, ...omitted } = result.toJSON();
 
       expect(omitted).toMatchInlineSnapshot(`

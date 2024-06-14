@@ -6,14 +6,22 @@ import { Path } from '../types/paths';
 export const replaceAll = (value: string, match: string, replace: string): string =>
   value.split(match).join(replace);
 
+export const idToString = (id: string | Schema.Types.ObjectId): string => {
+  return isString(id) ? id : id.toString();
+};
+
 export const isEqualIds = (
   id1: string | Schema.Types.ObjectId,
   id2: string | Schema.Types.ObjectId
 ): boolean => {
-  const id1Str = typeof id1 === 'string' ? id1 : id1.toString();
-  const id2Str = typeof id2 === 'string' ? id2 : id2.toString();
+  return idToString(id1) === idToString(id2);
+};
 
-  return id1Str === id2Str;
+export const includesId = (
+  array: Array<string | Schema.Types.ObjectId>,
+  id: string | Schema.Types.ObjectId
+): boolean => {
+  return array.map(idToString).includes(idToString(id));
 };
 
 export const isEqual = (a: any, b: any): boolean => {

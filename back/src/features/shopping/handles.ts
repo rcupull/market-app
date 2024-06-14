@@ -2,7 +2,6 @@ import { AnyRecord, RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
 
 import {
-  get400Response,
   getBusinessNotFoundResponse,
   getPostNotFoundResponse,
   getShoppingNotFoundResponse,
@@ -18,7 +17,6 @@ import { PostPurshaseNotes } from '../../types/post';
 import { ShoppingModel } from '../../schemas/shopping';
 import { sendNewOrderTelegramMessage } from '../telegram/handles';
 import { sendNewOrderPushMessage, sendUpdateStockAmountMessage } from '../notifications/handles';
-import { ShoppingState } from '../../types/shopping';
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {

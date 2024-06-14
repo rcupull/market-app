@@ -49,6 +49,10 @@ export const getUserNotFoundResponse = ({ res }: { res: Response }) => {
   return get404Response({ res, json: { message: 'User not found' } });
 };
 
+export const getBillNotFoundResponse = ({ res }: { res: Response }) => {
+  return get404Response({ res, json: { message: 'Bill not found' } });
+};
+
 export const getBusinessNotFoundResponse = ({ res }: { res: Response }) => {
   return get404Response({ res, json: { message: 'Business not found' } });
 };

@@ -45,6 +45,7 @@ export const BulkActionsShopping = ({ onRefresh, ...omittedProps }: BulkActionsS
             return {
               label: 'Crear Factura',
               onClick: () => handleNewBill(),
+              isBusy: addOneBillAdmin.status.isBusy,
             };
           default:
             return {};

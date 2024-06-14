@@ -30,7 +30,7 @@ export interface BulkActionsProps<
     getBulkHeaderNodes: (nodes: Array<React.ReactNode>) => Array<React.ReactNode>;
     getBulkTopActionsNode: (node: React.ReactNode) => React.ReactNode;
     getDisabledOverlay: (node: React.ReactNode) => React.ReactNode;
-    bulkActionNode: React.ReactNode
+    bulkActionNode: React.ReactNode;
   }) => React.ReactNode;
 }
 
@@ -99,12 +99,12 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
         },
         getDisabledOverlay: (node) => {
           return (
-              <div className="relative">
-                {node}
-                {selecting && (
-                  <div className="absolute inset-0 bg-white opacity-60 rounded-md cursor-not-allowed" />
-                )}
-              </div>
+            <div className="relative">
+              {node}
+              {selecting && (
+                <div className="absolute inset-0 bg-white opacity-60 rounded-md cursor-not-allowed" />
+              )}
+            </div>
           );
         },
         getBulkHeaderNodes: (nodes) => {
