@@ -69,36 +69,14 @@ describe('shopping services', () => {
           "posts": [
             {
               "count": 5,
-              "lastUpdatedDate": 2024-06-14T04:18:31.128Z,
-              "post": {
-                "__v": 0,
-                "_id": "666bc497b8cbfa9bc9b55978",
-                "clothingSizes": [],
-                "colors": [],
-                "createdAt": 2024-06-14T04:18:30.121Z,
-                "createdBy": "666bc497b8cbfa9bc9b55970",
+              "lastUpdatedDate": 2024-06-15T12:03:15.768Z,
+              "postData": {
+                "_id": "666d83031d53371ebaf581ca",
                 "currency": "CUP",
-                "hidden": false,
-                "hiddenBusiness": false,
                 "images": [],
                 "name": "chancletas",
-                "postCategoriesTags": [
-                  "cat1",
-                  "cat2",
-                  "cat3",
-                ],
-                "postType": "product",
                 "price": 10,
-                "reviews": [
-                  0,
-                  0,
-                  0,
-                  0,
-                  0,
-                ],
-                "reviewsUserIds": [],
                 "routeName": "business1User1",
-                "stockAmount": null,
               },
               "purshaseNotes": {
                 "interestedByClothingSizes": [],
@@ -106,7 +84,7 @@ describe('shopping services', () => {
               },
             },
           ],
-          "purchaserId": "666bc497b8cbfa9bc9b55970",
+          "purchaserId": "666d83031d53371ebaf581c2",
           "purchaserName": "user1",
           "routeName": "business1User1",
           "state": "CONSTRUCTION",
