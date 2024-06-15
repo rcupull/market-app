@@ -67,3 +67,14 @@ router
     hasAccess('full'),
     adminHandles.post_admin_bills()
   );
+
+router
+  .route('/admin/bills/:billId/shopping')
+  .delete(
+    validators.param('billId').notEmpty(),
+    validators.body('shoppingIds').notEmpty(),
+    validators.handle,
+    isLogged,
+    hasAccess('full'),
+    adminHandles.del_admin_bills_billId_shopping()
+  );

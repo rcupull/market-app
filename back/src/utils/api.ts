@@ -1,6 +1,6 @@
 import { isEmpty, isNullOrUndefined } from './general';
 
-type Query = Record<string, string | number>;
+type Query = Record<string, any>;
 type UrlParams = Record<string, string | undefined>;
 
 export const paramsSerializer = (query: Query): string => {

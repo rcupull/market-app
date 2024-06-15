@@ -1,4 +1,6 @@
 import { Access } from '../../types/admin';
+import { Bill } from '../../types/billing';
+import { makeReshaper } from '../../utils/makeReshaper';
 
 export const specialAccessRecord: Record<Access, any> = {
   full: {},
@@ -14,3 +16,5 @@ export const specialAccessRecord: Record<Access, any> = {
   bills__write: {},
   bills__remove: {},
 };
+
+export const billDataReshaper = makeReshaper<Bill, Bill>({ _id: '_id', state: 'state' });

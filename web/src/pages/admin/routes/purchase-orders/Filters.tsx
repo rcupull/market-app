@@ -35,7 +35,7 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
     >
       {() => {
         return (
-          <form className={cn('mt-10 w-full', className)}>
+          <form className={cn('w-full', className)}>
             <FieldRadioGroup<{ value: ShoppingStateFilter }>
               name="state"
               renderOption={({ checked, item }) => (

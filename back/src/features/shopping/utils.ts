@@ -8,7 +8,7 @@ import { postServices } from '../post/services';
 import { sendUpdateStockAmountMessage } from '../notifications/handles';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { Post } from '../../types/post';
-import { FilterQuery, PaginateOptions } from 'mongoose';
+import { FilterQuery } from 'mongoose';
 
 export interface GetAllShoppingArgs extends FilterQuery<Shopping> {
   routeNames?: Array<string>;

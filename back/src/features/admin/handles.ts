@@ -4,13 +4,18 @@ import { UserModel } from '../../schemas/user';
 import { imagesServices } from '../images/services';
 
 import { AdminConfigModel } from '../../schemas/admin';
-import { get200Response, get400Response } from '../../utils/server-response';
-import { specialAccessRecord } from './utils';
+import {
+  get200Response,
+  get400Response,
+  getBillNotFoundResponse,
+} from '../../utils/server-response';
+import { billDataReshaper, specialAccessRecord } from './utils';
 import { userServices } from '../user/services';
 import { shoppingServices } from '../shopping/services';
 import { billingServices } from '../billing/services';
 import { Shopping } from '../../types/shopping';
 import { getShoppingInfo } from '../shopping/utils';
+import { deepJsonCopy, includesId } from '../../utils/general';
 
 const get_users: () => RequestHandler = () => {
   return (req, res) => {
@@ -70,7 +75,7 @@ const put_admin_admin_config: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
       const { body } = req;
-      const { termsAndConditions, privacyPolicy } = body;
+      const { termsAndConditions, privacyPolicy, price } = body;
 
       const config = await AdminConfigModel.findOne({});
 
@@ -87,6 +92,10 @@ const put_admin_admin_config: () => RequestHandler = () => {
 
       if (privacyPolicy) {
         config.privacyPolicy = privacyPolicy;
+      }
+
+      if (price) {
+        config.price = price;
       }
 
       await config.save();
@@ -138,12 +147,25 @@ const get_admin_shopping: () => RequestHandler = () => {
 
       const { routeNames, states } = query;
 
-      const out = await shoppingServices.getAllWithPagination({
+      const allBills = await billingServices.getAll({ query: {} });
+
+      let out = await shoppingServices.getAllWithPagination({
         paginateOptions,
         query: {
           routeNames,
           states,
         },
+      });
+
+      out = deepJsonCopy(out);
+      out.data = out.data.map((shopping) => {
+        const bill = allBills.find(({ shoppingIds }) => shoppingIds.includes(shopping._id));
+
+        if (bill) {
+          return { ...shopping, billData: billDataReshaper(bill) };
+        }
+
+        return shopping;
       });
 
       res.send(out);
@@ -190,11 +212,60 @@ const get_admin_bills: () => RequestHandler = () => {
 
       const bills = await billingServices.getAllWithPagination({
         paginateOptions,
-        routeNames,
-        states,
+        query: {
+          routeNames,
+          states,
+        },
       });
 
       res.send(bills);
+    });
+  };
+};
+
+const del_admin_bills_billId_shopping: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { body, params } = req;
+
+      const { shoppingIds } = body;
+      const { billId } = params;
+
+      const bill = await billingServices.getOne({
+        query: {
+          _id: billId,
+        },
+      });
+
+      if (!bill) {
+        return getBillNotFoundResponse({ res });
+      }
+
+      if (bill.state !== 'PENDING_TO_PAY') {
+        return get400Response({
+          res,
+          json: {
+            message: 'The bill was already paid or canceled',
+          },
+        });
+      }
+
+      const newShoppingIds = bill.shoppingIds.filter((id) => !includesId(shoppingIds, id));
+
+      if (newShoppingIds.length === 0) {
+        /**
+         * if the bil has no more shopping, we can delete it
+         */
+        await bill.deleteOne();
+      } else {
+        /**
+         * Update the bill
+         */
+        bill.shoppingIds = newShoppingIds;
+        await bill.save();
+      }
+
+      res.send({});
     });
   };
 };
@@ -212,4 +283,6 @@ export const adminHandles = {
   //
   post_admin_bills,
   get_admin_bills,
+  //
+  del_admin_bills_billId_shopping,
 };

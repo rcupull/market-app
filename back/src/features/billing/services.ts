@@ -1,37 +1,30 @@
-import { FilterQuery, PaginateOptions } from 'mongoose';
-import { QueryHandle } from '../../types/general';
+import { ModelDocument, QueryHandle } from '../../types/general';
 import { PaginateResult } from '../../middlewares/pagination';
-import { Bill, BillState } from '../../types/billing';
+import { Bill } from '../../types/billing';
 import { BillingModel } from '../../schemas/billing';
+import { GetAllBillsArgs, getAllBillFilterQuery } from './utils';
+import { FilterQuery, PaginateOptions, UpdateQuery } from 'mongoose';
 
-export interface GetAllArgs {
-  paginateOptions?: PaginateOptions;
-  states?: Array<BillState>;
-  routeNames?: Array<string>;
-}
-
-const getAllWithPagination: QueryHandle<GetAllArgs, PaginateResult<Bill>> = async ({
-  paginateOptions = {},
-  states,
-  routeNames,
-}) => {
-  const filterQuery: FilterQuery<Bill> = {};
-
-  ///////////////////////////////////////////////////////////////////
-
-  if (states?.length) {
-    filterQuery.state = { $in: states };
-  }
-
-  if (routeNames?.length) {
-    filterQuery.routeName = { $in: routeNames };
-  }
-
-  ///////////////////////////////////////////////////////////////////
+const getAllWithPagination: QueryHandle<
+  {
+    paginateOptions?: PaginateOptions;
+    query: GetAllBillsArgs;
+  },
+  PaginateResult<Bill>
+> = async ({ paginateOptions = {}, query }) => {
+  const filterQuery = getAllBillFilterQuery(query);
 
   const out = await BillingModel.paginate(filterQuery, paginateOptions);
 
   return out as unknown as PaginateResult<Bill>;
+};
+
+const getAll: QueryHandle<{ query: GetAllBillsArgs }, Array<Bill>> = async ({ query }) => {
+  const filterQuery = getAllBillFilterQuery(query);
+
+  const out = await BillingModel.find(filterQuery);
+
+  return out;
 };
 
 const addOne: QueryHandle<
@@ -45,7 +38,26 @@ const addOne: QueryHandle<
   return newbill;
 };
 
+const updateOne: QueryHandle<{
+  query: FilterQuery<Bill>;
+  update: UpdateQuery<Bill>;
+}> = async ({ query, update }) => {
+  await BillingModel.updateOne(query, update);
+};
+
+const getOne: QueryHandle<
+  {
+    query: FilterQuery<Bill>;
+  },
+  ModelDocument<Bill> | null
+> = async ({ query }) => {
+  return await BillingModel.findOne(query);
+};
+
 export const billingServices = {
   getAllWithPagination,
+  getAll,
   addOne,
+  getOne,
+  updateOne,
 };

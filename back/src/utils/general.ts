@@ -6,14 +6,22 @@ import { Path } from '../types/paths';
 export const replaceAll = (value: string, match: string, replace: string): string =>
   value.split(match).join(replace);
 
+export const idToString = (id: string | Schema.Types.ObjectId): string => {
+  return isString(id) ? id : id.toString();
+};
+
 export const isEqualIds = (
   id1: string | Schema.Types.ObjectId,
   id2: string | Schema.Types.ObjectId
 ): boolean => {
-  const id1Str = typeof id1 === 'string' ? id1 : id1.toString();
-  const id2Str = typeof id2 === 'string' ? id2 : id2.toString();
+  return idToString(id1) === idToString(id2);
+};
 
-  return id1Str === id2Str;
+export const includesId = (
+  array: Array<string | Schema.Types.ObjectId>,
+  id: string | Schema.Types.ObjectId
+): boolean => {
+  return array.map(idToString).includes(idToString(id));
 };
 
 export const isEqual = (a: any, b: any): boolean => {
@@ -133,3 +141,27 @@ export const addStringToUniqueArray = <T extends string = string>(
 };
 
 export const getRandomHash = () => `${Date.now()}`;
+
+export const deepJsonCopy = <T extends AnyRecord = AnyRecord>(json: T): T => {
+  return JSON.parse(JSON.stringify(json));
+};
+
+export const getFlattenJson = <T extends AnyRecord = AnyRecord>(value: T): T => {
+  /**
+   * remove the undefined, null or empty string fields from JSON
+   */
+  return Object.entries(value).reduce(
+    (acc, [k, v]) => (isNullOrUndefinedOrEmptyString(v) ? acc : { ...acc, [k]: v }),
+    {} as T
+  );
+};
+
+export const getFlattenUndefinedJson = <T extends AnyRecord = AnyRecord>(value: T): T => {
+  /**
+   * remove the undefined fields from JSON
+   */
+  return Object.entries(value).reduce(
+    (acc, [k, v]) => (v === undefined ? acc : { ...acc, [k]: v }),
+    {} as T
+  );
+};
