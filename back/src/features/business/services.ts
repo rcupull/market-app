@@ -1,10 +1,4 @@
-import {
-  FilterQuery,
-  PaginateOptions,
-  ProjectionType,
-  UpdateQuery,
-  UpdateWithAggregationPipeline,
-} from 'mongoose';
+import { FilterQuery, PaginateOptions, ProjectionType } from 'mongoose';
 import { QueryHandle } from '../../types/general';
 import { Business } from '../../types/business';
 import { BusinessModel } from '../../schemas/business';

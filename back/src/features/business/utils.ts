@@ -1,8 +1,8 @@
-import { FilterQuery, PaginateOptions, UpdateQuery, UpdateWithAggregationPipeline } from 'mongoose';
+import { FilterQuery, UpdateQuery, UpdateWithAggregationPipeline } from 'mongoose';
 import { Business, BusinessCategory, PostCategory } from '../../types/business';
 import { addStringToUniqueArray, replaceAll } from '../../utils/general';
 
-export interface GetAllBusinessArgs {
+export interface GetAllBusinessArgs extends FilterQuery<Business> {
   createdBy?: string;
   routeNames?: Array<string>;
   search?: string;
@@ -100,8 +100,9 @@ export const getAllFilterQuery = ({
   routeNames,
   search,
   hidden,
+  ...omittedQuery
 }: GetAllBusinessArgs): FilterQuery<Business> => {
-  const filterQuery: FilterQuery<Business> = {};
+  const filterQuery: FilterQuery<Business> = omittedQuery;
 
   ///////////////////////////////////////////////////////////////////
   if (createdBy) {

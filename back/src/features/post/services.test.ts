@@ -18,11 +18,11 @@ describe('services', () => {
 
       const { data, ...omittedProps } = paginatedPosts;
 
-      expect(data.length).toBe(2);
+      expect(data.length).toBe(5);
       expect(omittedProps).toMatchInlineSnapshot(`
         {
           "paginator": {
-            "dataCount": 2,
+            "dataCount": 5,
             "hasNextPage": false,
             "hasPrevPage": false,
             "limit": 10,
@@ -43,7 +43,82 @@ describe('services', () => {
 
       const posts = await postServices.getAll({ query: {} });
 
-      expect(posts.length).toBe(2);
+      expect(posts.length).toBe(5);
+    });
+
+    it('should return filtering by <createdBy>', async () => {
+      const { user1, user2 } = await fillBD();
+
+      const response1 = await postServices.getAll({
+        query: {
+          createdBy: user1._id.toString(),
+        },
+      });
+
+      expect(response1.length).toBe(2);
+
+      //////////////////////////////////////////////
+
+      const response2 = await postServices.getAll({
+        query: {
+          createdBy: user2._id.toString(),
+        },
+      });
+
+      expect(response2.length).toBe(3);
+    });
+
+    it('should return filtering by <postType>', async () => {
+      await fillBD();
+
+      const response1 = await postServices.getAll({
+        query: {
+          postType: 'product',
+        },
+      });
+
+      expect(response1.length).toBe(5);
+
+      //////////////////////////////////////////////
+
+      const response2 = await postServices.getAll({
+        query: {
+          postType: 'link',
+        },
+      });
+
+      expect(response2.length).toBe(0);
+    });
+
+    it('should return filtering by <routeNames>', async () => {
+      const { business1User1, business2User1, business1User2 } = await fillBD();
+
+      const response1 = await postServices.getAll({
+        query: {
+          routeNames: [business1User1.routeName],
+        },
+      });
+
+      expect(response1.length).toBe(2);
+      //////////////////////////////////////////////
+
+      const response2 = await postServices.getAll({
+        query: {
+          routeNames: [business2User1.routeName],
+        },
+      });
+
+      expect(response2.length).toBe(0);
+
+      //////////////////////////////////////////////
+
+      const response3 = await postServices.getAll({
+        query: {
+          routeNames: [business1User2.routeName],
+        },
+      });
+
+      expect(response3.length).toBe(3);
     });
   });
 

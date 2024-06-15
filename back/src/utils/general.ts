@@ -145,3 +145,23 @@ export const getRandomHash = () => `${Date.now()}`;
 export const deepJsonCopy = <T extends AnyRecord = AnyRecord>(json: T): T => {
   return JSON.parse(JSON.stringify(json));
 };
+
+export const getFlattenJson = <T extends AnyRecord = AnyRecord>(value: T): T => {
+  /**
+   * remove the undefined, null or empty string fields from JSON
+   */
+  return Object.entries(value).reduce(
+    (acc, [k, v]) => (isNullOrUndefinedOrEmptyString(v) ? acc : { ...acc, [k]: v }),
+    {} as T
+  );
+};
+
+export const getFlattenUndefinedJson = <T extends AnyRecord = AnyRecord>(value: T): T => {
+  /**
+   * remove the undefined fields from JSON
+   */
+  return Object.entries(value).reduce(
+    (acc, [k, v]) => (v === undefined ? acc : { ...acc, [k]: v }),
+    {} as T
+  );
+};

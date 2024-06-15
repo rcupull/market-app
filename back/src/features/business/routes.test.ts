@@ -280,7 +280,7 @@ describe('business', () => {
         .get(
           getTestingRoute({
             path: '/posts',
-            query: { routeName: business1User1.routeName },
+            query: { routeNames: [business1User1.routeName] },
           })
         )
         .expect(200)
@@ -304,7 +304,7 @@ describe('business', () => {
         .get(
           getTestingRoute({
             path: '/posts',
-            query: { routeName: business1User1.routeName },
+            query: { routeNames: [business1User1.routeName] },
           })
         )
         .expect(200)
