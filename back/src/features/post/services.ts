@@ -170,7 +170,7 @@ const updateStockAmount: QueryHandle<
         },
         {
           stockAmount: newStockAmount,
-        },
+        }
       );
 
       return {
@@ -185,7 +185,7 @@ const updateStockAmount: QueryHandle<
       },
       {
         stockAmount: newStockAmount,
-      },
+      }
     );
 
     return {

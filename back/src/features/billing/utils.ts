@@ -1,10 +1,9 @@
 import { Shopping } from '../../types/shopping';
 
-import { FilterQuery, PaginateOptions } from 'mongoose';
+import { FilterQuery } from 'mongoose';
 import { Bill, BillState } from '../../types/billing';
 
 export interface GetAllBillsArgs extends FilterQuery<Shopping> {
-  paginateOptions?: PaginateOptions;
   states?: Array<BillState>;
   routeNames?: Array<string>;
 }

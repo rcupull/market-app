@@ -3,21 +3,24 @@ import { PaginateResult } from '../../middlewares/pagination';
 import { Bill } from '../../types/billing';
 import { BillingModel } from '../../schemas/billing';
 import { GetAllBillsArgs, getAllBillFilterQuery } from './utils';
-import { FilterQuery, UpdateQuery } from 'mongoose';
+import { FilterQuery, PaginateOptions, UpdateQuery } from 'mongoose';
 
-const getAllWithPagination: QueryHandle<GetAllBillsArgs, PaginateResult<Bill>> = async ({
-  paginateOptions = {},
-  ...omittedArgs
-}) => {
-  const filterQuery = getAllBillFilterQuery(omittedArgs);
+const getAllWithPagination: QueryHandle<
+  {
+    paginateOptions?: PaginateOptions;
+    query: GetAllBillsArgs;
+  },
+  PaginateResult<Bill>
+> = async ({ paginateOptions = {}, query }) => {
+  const filterQuery = getAllBillFilterQuery(query);
 
   const out = await BillingModel.paginate(filterQuery, paginateOptions);
 
   return out as unknown as PaginateResult<Bill>;
 };
 
-const getAll: QueryHandle<Omit<GetAllBillsArgs, 'paginateOptions'>, Array<Bill>> = async (args) => {
-  const filterQuery = getAllBillFilterQuery(args);
+const getAll: QueryHandle<{ query: GetAllBillsArgs }, Array<Bill>> = async ({ query }) => {
+  const filterQuery = getAllBillFilterQuery(query);
 
   const out = await BillingModel.find(filterQuery);
 
