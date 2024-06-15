@@ -1,14 +1,34 @@
-import { FilterQuery, PaginateOptions } from 'mongoose';
+import { FilterQuery, PaginateOptions, UpdateQuery, UpdateWithAggregationPipeline } from 'mongoose';
 import { Business, BusinessCategory, PostCategory } from '../../types/business';
 import { addStringToUniqueArray, replaceAll } from '../../utils/general';
 
-export interface GetAllArgs {
-  paginateOptions?: PaginateOptions;
+export interface GetAllBusinessArgs {
   createdBy?: string;
   routeNames?: Array<string>;
   search?: string;
   hidden?: boolean;
 }
+
+export type UpdateQueryBusiness =
+  | UpdateQuery<
+      Partial<
+        Pick<
+          Business,
+          | 'hidden'
+          | 'socialLinks'
+          | 'bannerImages'
+          | 'name'
+          | 'routeName'
+          | 'logo'
+          | 'layouts'
+          | 'postCategories'
+          | 'aboutUsPage'
+          | 'aboutUsPage'
+          | 'telegramBotChat'
+        >
+      >
+    >
+  | UpdateWithAggregationPipeline;
 
 export const getPostCategoriesFromBusinessCategories = (
   businessCategories: Array<BusinessCategory>
@@ -80,7 +100,7 @@ export const getAllFilterQuery = ({
   routeNames,
   search,
   hidden,
-}: Omit<GetAllArgs, 'paginateOptions'>): FilterQuery<Business> => {
+}: GetAllBusinessArgs): FilterQuery<Business> => {
   const filterQuery: FilterQuery<Business> = {};
 
   ///////////////////////////////////////////////////////////////////

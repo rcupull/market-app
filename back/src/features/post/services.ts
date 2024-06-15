@@ -1,4 +1,4 @@
-import { FilterQuery, Schema, UpdateQuery } from 'mongoose';
+import { FilterQuery, PaginateOptions, Schema, UpdateQuery } from 'mongoose';
 import { ModelDocument, QueryHandle } from '../../types/general';
 import { PostModel } from '../../schemas/post';
 import { Post } from '../../types/post';
@@ -6,21 +6,24 @@ import { PaginateResult } from '../../middlewares/pagination';
 import { imagesServices } from '../images/services';
 
 import { isNumber } from '../../utils/general';
-import { GetAllArgs, getAllFilterQuery } from './utils';
+import { GetAllPostArgs, getAllFilterQuery } from './utils';
 
-const getAllWithPagination: QueryHandle<GetAllArgs, PaginateResult<Post>> = async ({
-  paginateOptions = {},
-  ...omittedprops
-}) => {
-  const filterQuery = getAllFilterQuery(omittedprops);
+const getAllWithPagination: QueryHandle<
+  {
+    paginateOptions?: PaginateOptions;
+    query: GetAllPostArgs;
+  },
+  PaginateResult<Post>
+> = async ({ paginateOptions = {}, query }) => {
+  const filterQuery = getAllFilterQuery(query);
 
   const out = await PostModel.paginate(filterQuery, paginateOptions);
 
   return out as unknown as PaginateResult<Post>;
 };
 
-const getAll: QueryHandle<Omit<GetAllArgs, 'paginateOptions'>, Array<Post>> = async (args) => {
-  const filterQuery = getAllFilterQuery(args);
+const getAll: QueryHandle<{ query: GetAllPostArgs }, Array<Post>> = async ({ query }) => {
+  const filterQuery = getAllFilterQuery(query);
 
   const out = await PostModel.find(filterQuery);
 

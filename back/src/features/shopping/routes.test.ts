@@ -453,12 +453,16 @@ describe('shopping', () => {
     });
 
     it('should change the state to READY_TO_DELIVER', async () => {
-      const { user1, shopping1Business1User1 } = await fillBD();
+      const { user1, shopping1Business1User1 } = await fillBD({
+        overrideShopping1Business1User1: {
+          state: 'REQUESTED',
+        },
+      });
 
       if (!shopping1Business1User1) return;
 
       // checking the state
-      expect(shopping1Business1User1.state).toEqual('CONSTRUCTION');
+      expect(shopping1Business1User1.state).toEqual('REQUESTED');
 
       // change the state
       await supertest(app)

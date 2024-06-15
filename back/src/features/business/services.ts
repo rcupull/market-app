@@ -1,4 +1,10 @@
-import { FilterQuery, ProjectionType, UpdateQuery, UpdateWithAggregationPipeline } from 'mongoose';
+import {
+  FilterQuery,
+  PaginateOptions,
+  ProjectionType,
+  UpdateQuery,
+  UpdateWithAggregationPipeline,
+} from 'mongoose';
 import { QueryHandle } from '../../types/general';
 import { Business } from '../../types/business';
 import { BusinessModel } from '../../schemas/business';
@@ -7,40 +13,29 @@ import { PaginateResult } from '../../middlewares/pagination';
 
 import { imagesServices } from '../images/services';
 import { UpdateOptions } from 'mongodb';
-import { GetAllArgs, getAllFilterQuery } from './utils';
+import { GetAllBusinessArgs, UpdateQueryBusiness, getAllFilterQuery } from './utils';
 
-type UpdateQueryBusiness =
-  | UpdateQuery<
-      Partial<
-        Pick<
-          Business,
-          | 'hidden'
-          | 'socialLinks'
-          | 'bannerImages'
-          | 'name'
-          | 'routeName'
-          | 'logo'
-          | 'layouts'
-          | 'postCategories'
-          | 'aboutUsPage'
-          | 'aboutUsPage'
-          | 'telegramBotChat'
-        >
-      >
-    >
-  | UpdateWithAggregationPipeline;
-
-const getAllWithPagination: QueryHandle<GetAllArgs, PaginateResult<Business>> = async (query) => {
-  const { paginateOptions = {}, ...omittedProps } = query;
-  const filterQuery = getAllFilterQuery(omittedProps);
+const getAllWithPagination: QueryHandle<
+  {
+    paginateOptions?: PaginateOptions;
+    query: GetAllBusinessArgs;
+  },
+  PaginateResult<Business>
+> = async ({ query, paginateOptions = {} }) => {
+  const filterQuery = getAllFilterQuery(query);
 
   const out = await BusinessModel.paginate(filterQuery, paginateOptions);
 
   return out as unknown as PaginateResult<Business>;
 };
 
-const getAll: QueryHandle<Omit<GetAllArgs, 'paginateOptions'>, Array<Business>> = async (args) => {
-  const filterQuery = getAllFilterQuery(args);
+const getAll: QueryHandle<
+  {
+    query: GetAllBusinessArgs;
+  },
+  Array<Business>
+> = async ({ query }) => {
+  const filterQuery = getAllFilterQuery(query);
 
   const out = await BusinessModel.find(filterQuery);
 

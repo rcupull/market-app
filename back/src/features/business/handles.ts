@@ -27,10 +27,12 @@ const get_business: () => RequestHandler = () => {
 
       const out = await businessServices.getAllWithPagination({
         paginateOptions,
-        routeNames,
-        search,
-        createdBy: userId,
-        hidden: includeHidden ? undefined : false,
+        query: {
+          routeNames,
+          search,
+          createdBy: userId,
+          hidden: includeHidden ? undefined : false,
+        },
       });
 
       res.send(out);
@@ -47,10 +49,12 @@ const get_business_summary: () => RequestHandler = () => {
 
       const business = await businessServices.getAllWithPagination({
         paginateOptions,
-        routeNames,
-        search,
-        createdBy: userId,
-        hidden: includeHidden ? undefined : false,
+        query: {
+          routeNames,
+          search,
+          createdBy: userId,
+          hidden: includeHidden ? undefined : false,
+        },
       });
 
       const out: PaginateResult<BusinessSummary> = {

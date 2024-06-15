@@ -143,7 +143,7 @@ const get_admin_shopping: () => RequestHandler = () => {
 
       const { routeNames, states } = query;
 
-      const allBills = await billingServices.getAll({});
+      const allBills = await billingServices.getAll({ query: {} });
 
       let out = await shoppingServices.getAllWithPagination({
         paginateOptions,
@@ -208,8 +208,10 @@ const get_admin_bills: () => RequestHandler = () => {
 
       const bills = await billingServices.getAllWithPagination({
         paginateOptions,
-        routeNames,
-        states,
+        query: {
+          routeNames,
+          states,
+        },
       });
 
       res.send(bills);
