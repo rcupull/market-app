@@ -4,16 +4,16 @@ import { HtmlTextContainer } from 'components/html-text-container';
 
 import { CheckEditorToolbarItem } from './types';
 
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+//import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Editor from 'ckeditor5-custom-build/build/ckeditor'
 import { Nullable, StyleProps } from 'types/general';
 import { compact } from 'utils/general';
 
 export interface CheckEditorProps extends StyleProps {
-  onBlur?: (args: { event: any; editor: ClassicEditor; data: string }) => void;
-  onFocus?: (args: { event: any; editor: ClassicEditor; data: string }) => void;
-  onChange?: (args: { event: any; editor: ClassicEditor; data: string }) => void;
-  onReady?: (editor: ClassicEditor) => void;
+  onBlur?: (args: { event: any; editor: Editor; data: string }) => void;
+  onFocus?: (args: { event: any; editor: Editor; data: string }) => void;
+  onChange?: (args: { event: any; editor: Editor; data: string }) => void;
+  onReady?: (editor: Editor) => void;
   value?: string;
   getUploadAdapter?: (args: { loader: any }) => any;
 }
@@ -48,7 +48,7 @@ export const CheckEditor = ({
   return (
     <HtmlTextContainer className={className}>
       <CKEditor
-        editor={ClassicEditor}
+        editor={Editor}
         config={{
           toolbar: {
             items: getItems(),
