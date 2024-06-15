@@ -5,6 +5,7 @@ import { HtmlTextContainer } from 'components/html-text-container';
 import { CheckEditorToolbarItem } from './types';
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import Editor from 'ckeditor5-custom-build/build/ckeditor'
 import { Nullable, StyleProps } from 'types/general';
 import { compact } from 'utils/general';
 
