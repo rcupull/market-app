@@ -1,8 +1,7 @@
 import { FilterQuery, PaginateOptions } from 'mongoose';
 import { Post, PostType } from '../../types/post';
 
-export interface GetAllArgs {
-  paginateOptions?: PaginateOptions;
+export interface GetAllPostArgs {
   routeNames?: Array<string>;
   postsIds?: Array<string>;
   search?: string;
@@ -24,7 +23,7 @@ export const getAllFilterQuery = ({
   postCategoriesTags,
   postCategoriesMethod,
   postType,
-}: Omit<GetAllArgs, 'paginateOptions'>): FilterQuery<Post> => {
+}: GetAllPostArgs): FilterQuery<Post> => {
   const filterQuery: FilterQuery<Post> = {};
 
   if (search) {

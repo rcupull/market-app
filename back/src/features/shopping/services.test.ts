@@ -1,6 +1,11 @@
-import { dropTestDbConnectionAsync, paginateOptionsForTesting } from '../../utils/test-utils';
+import {
+  dropTestDbConnectionAsync,
+  paginateOptionsForTesting,
+  setAnyString,
+} from '../../utils/test-utils';
 import { fillBD } from '../../utils/test-BD';
 import { shoppingServices } from './services';
+import { Shopping } from '../../types/shopping';
 
 describe('shopping services', () => {
   afterEach(async () => {
@@ -59,19 +64,26 @@ describe('shopping services', () => {
 
       if (!result) return;
 
-      //eslint-disable-next-line
-      const { createdAt, _id, ...omitted } = result.toJSON();
-
-      expect(omitted).toMatchInlineSnapshot(`
+      expect(result.toJSON()).toMatchInlineSnapshot(
+        setAnyString<Shopping>(
+          '_id',
+          'createdAt',
+          'posts.0.postData._id',
+          'posts.0.lastUpdatedDate',
+          'purchaserId'
+        ),
+        `
         {
           "__v": 0,
+          "_id": Anything,
+          "createdAt": Anything,
           "history": [],
           "posts": [
             {
               "count": 5,
-              "lastUpdatedDate": 2024-06-15T12:03:15.768Z,
+              "lastUpdatedDate": Anything,
               "postData": {
-                "_id": "666d83031d53371ebaf581ca",
+                "_id": Anything,
                 "currency": "CUP",
                 "images": [],
                 "name": "chancletas",
@@ -84,12 +96,13 @@ describe('shopping services', () => {
               },
             },
           ],
-          "purchaserId": "666d83031d53371ebaf581c2",
+          "purchaserId": Anything,
           "purchaserName": "user1",
           "routeName": "business1User1",
           "state": "CONSTRUCTION",
         }
-      `);
+      `
+      );
     });
   });
 });
