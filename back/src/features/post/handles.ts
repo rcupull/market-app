@@ -12,7 +12,7 @@ import {
 import { isEmpty, isEqual } from '../../utils/general';
 import { Post } from '../../types/post';
 import { makeReshaper } from '../../utils/makeReshaper';
-import { GetAllArgs } from './utils';
+import { GetAllPostArgs } from './utils';
 
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
@@ -31,14 +31,16 @@ const get_posts: () => RequestHandler = () => {
 
       const out = await postServices.getAllWithPagination({
         paginateOptions,
-        postsIds,
-        routeNames,
-        search,
-        hidden: includeHidden ? undefined : false,
-        hiddenBusiness: includeHidden ? undefined : false,
-        postCategoriesTags,
-        postCategoriesMethod,
-        postType,
+        query: {
+          postsIds,
+          routeNames,
+          search,
+          hidden: includeHidden ? undefined : false,
+          hiddenBusiness: includeHidden ? undefined : false,
+          postCategoriesTags,
+          postCategoriesMethod,
+          postType,
+        },
       });
 
       res.send(out);
@@ -228,7 +230,7 @@ const bulk_action_delete: () => RequestHandler = () => {
         ids?: Array<string>;
         all?: boolean;
         routeName: string;
-        query?: Pick<GetAllArgs, 'postCategoriesMethod' | 'postCategoriesTags' | 'search'>;
+        query?: Pick<GetAllPostArgs, 'postCategoriesMethod' | 'postCategoriesTags' | 'search'>;
       };
 
       if (ids?.length) {
@@ -242,10 +244,12 @@ const bulk_action_delete: () => RequestHandler = () => {
         const { postCategoriesMethod, postCategoriesTags, search } = query;
 
         const posts = await postServices.getAll({
-          routeNames: [routeName],
-          postCategoriesMethod,
-          postCategoriesTags,
-          search,
+          query: {
+            routeNames: [routeName],
+            postCategoriesMethod,
+            postCategoriesTags,
+            search,
+          },
         });
 
         await postServices.deleteMany({
@@ -255,7 +259,9 @@ const bulk_action_delete: () => RequestHandler = () => {
       } else {
         // get all post
         const posts = await postServices.getAll({
-          routeNames: [routeName],
+          query: {
+            routeNames: [routeName],
+          },
         });
 
         await postServices.deleteMany({
@@ -280,7 +286,7 @@ const bulk_action_update: () => RequestHandler = () => {
         update: {
           hidden: boolean;
         };
-        query?: Pick<GetAllArgs, 'postCategoriesMethod' | 'postCategoriesTags' | 'search'>;
+        query?: Pick<GetAllPostArgs, 'postCategoriesMethod' | 'postCategoriesTags' | 'search'>;
       };
 
       const { hidden } = update || {};
@@ -299,10 +305,12 @@ const bulk_action_update: () => RequestHandler = () => {
         const { postCategoriesMethod, postCategoriesTags, search } = query;
 
         const posts = await postServices.getAll({
-          routeNames: [routeName],
-          postCategoriesMethod,
-          postCategoriesTags,
-          search,
+          query: {
+            routeNames: [routeName],
+            postCategoriesMethod,
+            postCategoriesTags,
+            search,
+          },
         });
 
         await postServices.updateMany({
@@ -316,7 +324,9 @@ const bulk_action_update: () => RequestHandler = () => {
       } else {
         // get all posts
         const posts = await postServices.getAll({
-          routeNames: [routeName],
+          query: {
+            routeNames: [routeName],
+          },
         });
 
         await postServices.updateMany({

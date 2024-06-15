@@ -255,33 +255,48 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
       const { params, body } = req;
 
       const { shoppingId } = params;
-      const { state } = body;
 
-      const currentOrder = await ShoppingModel.findOne({
+      const state: ShoppingState = body.state;
+
+      if (state === 'CONSTRUCTION') {
+        return get400Response({
+          res,
+          json: { message: 'Can not change the state to CONSTRUCTION' },
+        });
+      }
+
+      const shopping = await ShoppingModel.findOne({
         _id: shoppingId,
       });
 
-      if (!currentOrder) {
+      if (!shopping) {
         return getShoppingNotFoundResponse({ res });
       }
 
-      if (currentOrder?.history) {
-        currentOrder.history.push({
-          state: currentOrder.state,
+      if (shopping.state === 'CONSTRUCTION') {
+        return get400Response({
+          res,
+          json: { message: 'Can not change the state from CONSTRUCTION' },
+        });
+      }
+
+      if (shopping?.history) {
+        shopping.history.push({
+          state: shopping.state,
           lastUpdatedDate: new Date(),
         });
       } else {
-        currentOrder.history = [
+        shopping.history = [
           {
-            state: currentOrder.state,
+            state: shopping.state,
             lastUpdatedDate: new Date(),
           },
         ];
       }
 
-      currentOrder.state = state;
+      shopping.state = state;
 
-      await currentOrder.save();
+      await shopping.save();
 
       res.send({});
     });

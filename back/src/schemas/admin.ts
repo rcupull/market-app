@@ -8,6 +8,7 @@ const AdmiinConfigShema = new Schema<AdminConfig>({
   ...createdAtSchemaDefinition,
   termsAndConditions: { type: String },
   privacyPolicy: { type: String },
+  price: { type: String },
 });
 
 export const AdminConfigModel = model<AdminConfig>(

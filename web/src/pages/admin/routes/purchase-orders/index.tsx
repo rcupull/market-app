@@ -49,24 +49,27 @@ export const PurchaseOrders = () => {
       <BulkActionsShopping
         onRefresh={() => filters.onMergeFilters({ page: 1 }, { forceFetch: true })}
       >
-        {({ getBulkHeaderNodes, getBulkRowNodes, getBulkTopActionsNode }) => {
+        {({ getBulkHeaderNodes, getBulkRowNodes, getDisabledOverlay, bulkActionNode }) => {
           return (
             <>
-              {getBulkTopActionsNode(
+              <div className="flex items-center justify-between mb-1">
+                {bulkActionNode}
+                {getDisabledOverlay(
+                  <ButtonRefresh
+                    onClick={() => onRefreshForce()}
+                    isBusy={getAllShoppingAdmin.status.isBusy}
+                  />,
+                )}
+              </div>
+
+              {getDisabledOverlay(
                 <TopActions>
                   <Filters
                     onChange={(filtersValue) => filters.onMergeFilters(filtersValue)}
                     value={filters.value}
                   />
-
-                  <ButtonRefresh
-                    onClick={() => onRefreshForce()}
-                    className="ml-auto"
-                    isBusy={getAllShoppingAdmin.status.isBusy}
-                  />
                 </TopActions>,
               )}
-
               <Table<Shopping>
                 remapRowsIndex={{
                   xs: [[0, 1, 2, 3, 4]],
@@ -82,17 +85,18 @@ export const PurchaseOrders = () => {
                   'Estado',
                   'Unidades',
                   'Precio total',
+                  'Facturación',
                   'Fecha de creación',
                 ])}
                 getRowProps={(rowData) => {
-                  const { createdAt, purchaserName, state, routeName } = rowData;
+                  const { createdAt, purchaserName, state, routeName, billData } = rowData;
 
                   const { totalPrice, totalProducts } = getShoppingData(rowData);
 
                   const { name } = getBusinessSummary(routeName) || {};
                   return {
                     nodes: getBulkRowNodes({ rowData }, [
-                      <RowActions key="RowActions" rowData={rowData} />,
+                      <RowActions key="RowActions" rowData={rowData} onRefresh={onRefreshForce} />,
                       <div
                         key="routeName"
                         className={cn('text-nowrap flex flex-col', { 'text-red-500': !name })}
@@ -104,6 +108,7 @@ export const PurchaseOrders = () => {
                       <ShoppingStateLabel key="state" state={state} className="text-nowrap" />,
                       totalProducts,
                       <span key="price" className="text-nowrap">{`${totalPrice} CUP`}</span>,
+                      billData ? billData.state : 'No facturado',
                       getDateString({ date: createdAt, showTime: true }),
                     ]),
                   };

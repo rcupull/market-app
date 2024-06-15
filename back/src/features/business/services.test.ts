@@ -13,6 +13,7 @@ describe('services', () => {
 
       const paginatedPosts = await businessServices.getAllWithPagination({
         paginateOptions: paginateOptionsForTesting,
+        query: {},
       });
 
       const { data, ...omittedProps } = paginatedPosts;
@@ -40,7 +41,7 @@ describe('services', () => {
     it('should return all busines without pagination', async () => {
       await fillBD();
 
-      const response = await businessServices.getAll({});
+      const response = await businessServices.getAll({ query: {} });
 
       expect(response.length).toBe(6);
     });
