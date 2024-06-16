@@ -3,6 +3,7 @@ import { telegram_token_bot } from '../../config';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { TelegramBotChat } from '../../types/business';
 import { getRandomHash } from '../../utils/general';
+import { logger } from '../logger';
 
 let bot: TelegramBot;
 
@@ -23,6 +24,7 @@ export const telegramServices = {
         userName: username,
       };
 
+      logger.info(`Telegram: new chat: ${JSON.stringify(meta)}`);
       const validationCode = new ValidationCodeModel({
         code,
         meta,
