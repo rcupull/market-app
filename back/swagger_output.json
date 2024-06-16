@@ -1138,6 +1138,9 @@
                   },
                   "privacyPolicy": {
                     "example": "any"
+                  },
+                  "price": {
+                    "example": "any"
                   }
                 }
               }
@@ -1313,6 +1316,40 @@
                   "routeName": {
                     "example": "any"
                   },
+                  "shoppingIds": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/bills/{billId}/shopping": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "billId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
                   "shoppingIds": {
                     "example": "any"
                   }

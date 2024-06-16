@@ -38,4 +38,9 @@ export type CheckEditorToolbarItem =
   | 'tableColumn'
   | 'tableRow'
   | 'mergeTableCells'
+  | 'highlight'
+  | 'fontBackgroundColor'
+  | 'fontFamily'
+  | 'fontColor'
+  | 'alignment'
   | '|';
