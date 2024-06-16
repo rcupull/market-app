@@ -4,7 +4,7 @@ import { HtmlTextContainer } from 'components/html-text-container';
 
 import { CheckEditorToolbarItem } from './types';
 
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ClassicEditor from 'ckeditor5-build/build/ckeditor';
 import { Nullable, StyleProps } from 'types/general';
 import { compact } from 'utils/general';
 
@@ -28,18 +28,28 @@ export const CheckEditor = ({
 }: CheckEditorProps) => {
   const getItems = (): Array<CheckEditorToolbarItem> => {
     const out: Array<Nullable<CheckEditorToolbarItem>> = [
-      'undo',
-      'redo',
-      '|',
       'heading',
       '|',
       'bold',
       'italic',
-      '|',
-      getUploadAdapter && 'imageInsert',
       'link',
+      '|',
+      '|',
+      'blockQuote',
+      'insertTable',
+      'mediaEmbed',
+      'undo',
+      'redo',
       'numberedList',
       'bulletedList',
+      'outdent',
+      'indent',
+      getUploadAdapter && 'imageUpload',
+      'highlight',
+      'fontBackgroundColor',
+      'fontFamily',
+      'fontColor',
+      'alignment',
     ];
     return compact(out);
   };
