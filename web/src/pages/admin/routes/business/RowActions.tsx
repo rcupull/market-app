@@ -1,46 +1,41 @@
 import { Badge } from 'components/badge';
 import { ButtonRemove } from 'components/button-remove';
-import { IconButton } from 'components/icon-button';
 import { IconButtonRemove } from 'components/icon-button-remove';
 
-import { useRemoveOneAdminUser } from 'features/api/admin/useRemoveOneAdminUser';
+import { useRemoveOneBusinessAdmin } from 'features/api/admin/useRemoveOneBusinessAdmin';
 import { useModal } from 'features/modal/useModal';
 
-import SvgKeySolid from 'icons/KeySolid';
 import { RowActionsContainer } from 'pages/@common/row-actions-container';
-import { useAdminUpdateUserAccessModal } from 'pages/@modals/useAdminUpdateUserAccessModal';
-import { User } from 'types/auth';
+import { Business } from 'types/business';
 
 export interface RowActionsProps {
-  rowData: User;
+  rowData: Business;
   onRefresh: () => void;
 }
 export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
   const { pushModal } = useModal();
-  const { role } = rowData;
-
-  const adminUpdateUserAccessModal = useAdminUpdateUserAccessModal();
 
   const handleDelete = () => {
     pushModal(
       'Confirmation',
       {
         useProps: () => {
-          const { removeOneAdminUser } = useRemoveOneAdminUser();
+          const { removeOneBusinessAdmin } = useRemoveOneBusinessAdmin();
+
           const { onClose } = useModal();
           return {
             content: (
               <div>
-                <span>Seguro que desea eliminar este usuario?</span>
+                <span>Seguro que desea eliminar este negocio?</span>
               </div>
             ),
             badge: <Badge variant="error" />,
             primaryBtn: (
               <ButtonRemove
-                isBusy={removeOneAdminUser.status.isBusy}
+                isBusy={removeOneBusinessAdmin.status.isBusy}
                 onClick={() =>
-                  removeOneAdminUser.fetch(
-                    { id: rowData._id },
+                  removeOneBusinessAdmin.fetch(
+                    { routeName: rowData.routeName },
                     {
                       onAfterSuccess: () => {
                         onClose();
@@ -62,16 +57,6 @@ export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
   return (
     <RowActionsContainer>
       <IconButtonRemove onClick={handleDelete} />
-
-      {role === 'admin' && (
-        <IconButton
-          svg={SvgKeySolid}
-          title="Accesos Especiales"
-          onClick={() =>
-            adminUpdateUserAccessModal.open({ user: rowData, onAfterSuccess: () => onRefresh() })
-          }
-        />
-      )}
     </RowActionsContainer>
   );
 };

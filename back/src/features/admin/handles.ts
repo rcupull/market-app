@@ -15,9 +15,11 @@ import { shoppingServices } from '../shopping/services';
 import { billingServices } from '../billing/services';
 import { Shopping } from '../../types/shopping';
 import { getShoppingInfo } from '../shopping/utils';
-import { combineMiddleware, deepJsonCopy, includesId } from '../../utils/general';
+import { combineMiddleware, deepJsonCopy, includesId, isEqualIds } from '../../utils/general';
 import { agendashMiddleware } from '../agenda/middlware';
 import { secretAgendaToken } from '../../config';
+import { businessServices } from '../business/services';
+import { User } from '../../types/user';
 
 const get_users: () => RequestHandler = () => {
   return (req, res) => {
@@ -291,6 +293,71 @@ const use_admin_agenda_web: () => RequestHandler = () =>
     }
   }, agendashMiddleware);
 
+const delete_admin_business_routeName: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { params } = req;
+
+      const { routeName } = params;
+
+      await businessServices.deleteOne({
+        routeName,
+      });
+
+      res.send();
+    });
+  };
+};
+
+const get_admin_business: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { paginateOptions, query } = req;
+
+      const { routeNames, search, userId } = query;
+
+      let out = await businessServices.getAllWithPagination({
+        paginateOptions,
+        query: {
+          routeNames,
+          search,
+          createdBy: userId,
+        },
+      });
+
+      const usersData: Array<Pick<User, 'name' | '_id'>> = await userServices.getAll({
+        query: {
+          _id: { $in: out.data.map(({ createdBy }) => createdBy) },
+        },
+        projection: {
+          name: 1,
+          _id: 1,
+        },
+      });
+
+      out = deepJsonCopy(out);
+      out.data = out.data.map((business) => {
+        const { createdBy } = business;
+        const userData = usersData.find((user) => isEqualIds(user._id, createdBy));
+
+        if (userData) {
+          const { name } = userData;
+          return {
+            ...business,
+            userData: {
+              name,
+            },
+          };
+        }
+
+        return business;
+      });
+
+      res.send(out);
+    });
+  };
+};
+
 export const adminHandles = {
   get_users,
   del_users_userId,
@@ -309,4 +376,7 @@ export const adminHandles = {
   //
   get_admin_agenda_token,
   use_admin_agenda_web,
+  //
+  delete_admin_business_routeName,
+  get_admin_business,
 };

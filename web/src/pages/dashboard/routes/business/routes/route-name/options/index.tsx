@@ -1,17 +1,13 @@
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
-import { ButtonRemove } from 'components/button-remove';
 import { Divider } from 'components/divider';
 import { IconButtonOptionsBars } from 'components/icon-button-options-bars';
-import { IconButtonRemove } from 'components/icon-button-remove';
 import { IconButtonShowHide } from 'components/icon-button-show-hide';
 import { IconButtonView } from 'components/icon-button-view';
-import { IconRemove } from 'components/icon-remove';
 import { IconShowHide } from 'components/icon-show-hide';
 import { IconView } from 'components/icon-view';
 import { Menu } from 'components/menu';
 
-import { useRemoveOneBusiness } from 'features/api/business/useRemoveOneBusiness';
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useModal } from 'features/modal/useModal';
 
@@ -86,51 +82,6 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
     );
   };
 
-  const handleDelete = () => {
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { removeOneBusiness } = useRemoveOneBusiness();
-          const { onClose } = useModal();
-
-          return {
-            content: (
-              <div>
-                <span>
-                  Al eliminar este negocio seran borradas todas las imágenes y datos asociados al
-                  mismo de manera <span className="font-bold">permanente</span>. Seguro que desea
-                  eliminar este negocio?
-                </span>
-              </div>
-            ),
-            badge: <Badge variant="error" />,
-            primaryBtn: (
-              <ButtonRemove
-                isBusy={removeOneBusiness.status.isBusy}
-                onClick={() =>
-                  removeOneBusiness.fetch(
-                    { routeName },
-                    {
-                      onAfterSuccess: () => {
-                        onRefresh();
-
-                        onCallAfar(callAfarIds.getAllUserBussiness); // update all the bussiness
-                        pushRoute('/dashboard/business');
-                        onClose();
-                      },
-                    },
-                  )
-                }
-              />
-            ),
-          };
-        },
-      },
-      { emergent: true },
-    );
-  };
-
   const xsContent = (
     <div className="flex items-center">
       {query.businessTab && (
@@ -162,12 +113,6 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
             label: `${hidden ? 'Mostrar' : 'Ocultar'} este negocio`,
             onClick: handleShowHide,
             svg: ({ className }) => <IconShowHide hidden={hidden} className={className} />,
-          },
-          {
-            label: 'Eliminar el negocio',
-            onClick: handleDelete,
-            svg: IconRemove,
-            divider: true,
           },
           {
             label: getBusinessTabLabel('products'),
@@ -213,8 +158,6 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
 
   const smContent = (
     <div className="items-center hidden sm:flex">
-      <IconButtonRemove title="Eliminar el negocio" onClick={handleDelete} />
-
       <IconButtonShowHide
         hidden={hidden}
         title={`${hidden ? 'Mostrar' : 'Ocultar'} este negocio`}

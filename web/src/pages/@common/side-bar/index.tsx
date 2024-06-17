@@ -68,6 +68,15 @@ export const SideBar = ({ className }: SideBarProps) => {
           },
         isAuthenticated &&
           isAdmin &&
+          getHasSomeAccess('business__read') && {
+            // ADMIN
+            label: 'Negocios',
+            href: '/admin/business',
+            svg: SvgStoreSolid,
+            className: 'pl-10',
+          },
+        isAuthenticated &&
+          isAdmin &&
           getHasSomeAccess('bills__read') && {
             // ADMIN
             label: 'Facturas',

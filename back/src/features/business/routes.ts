@@ -38,14 +38,6 @@ router
     isLogged,
     isUserThisBusinessOwner,
     businessHandles.put_business_routeName(),
-  )
-  .delete(
-    validators.param('routeName').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserBusinessOwner,
-    isUserThisBusinessOwner,
-    businessHandles.delete_business_routeName(),
   );
 
 ////////////////////////////////////////////////////////

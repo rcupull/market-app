@@ -249,28 +249,6 @@ const put_business_routeName: () => RequestHandler = () => {
   };
 };
 
-const delete_business_routeName: () => RequestHandler = () => {
-  return (req, res) => {
-    withTryCatch(req, res, async () => {
-      const { user } = req;
-
-      if (!user) {
-        return getUserNotFoundResponse({ res });
-      }
-      const { params } = req;
-
-      const { routeName } = params;
-
-      await businessServices.deleteOne({
-        routeName,
-        userId: user._id.toString(),
-      });
-
-      res.send();
-    });
-  };
-};
-
 const put_business_section_reorder: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
@@ -468,7 +446,6 @@ export const businessHandles = {
   //
   post_business,
   put_business_routeName,
-  delete_business_routeName,
   //
   put_business_section_reorder,
   post_business_routeName_sections,

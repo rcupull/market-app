@@ -84,3 +84,24 @@ router.use('/admin/agenda/web/:token', adminHandles.use_admin_agenda_web());
 router
   .route('/admin/agenda/token')
   .get(isLogged, isAdmin, hasAccess('agenda__full'), adminHandles.get_admin_agenda_token());
+
+router
+  .route('/admin/business')
+  .get(
+    isLogged,
+    isAdmin,
+    hasAccess('business__read'),
+    pagination,
+    adminHandles.get_admin_business(),
+  );
+
+router
+  .route('/admin/business/:routeName')
+  .delete(
+    validators.param('routeName').notEmpty(),
+    validators.handle,
+    isLogged,
+    isAdmin,
+    hasAccess('business__remove'),
+    adminHandles.delete_admin_business_routeName(),
+  );
