@@ -15,7 +15,7 @@ export interface GetAllShoppingArgs extends FilterQuery<Shopping> {
   states?: Array<ShoppingState>;
 }
 
-export const deleteOnePostFromShopping: QueryHandle<{
+export const deleteOnePostFromShoppingInContruction: QueryHandle<{
   routeName: string;
   postId: string;
   user: User;
@@ -79,7 +79,7 @@ export const deleteOnePostFromShopping: QueryHandle<{
   }
 };
 
-export const deleteShopping: QueryHandle<{
+export const deleteShoppingInConstruction: QueryHandle<{
   routeName: string;
   user: User;
 }> = async ({ routeName }) => {
