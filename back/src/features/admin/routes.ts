@@ -21,7 +21,7 @@ router
     isLogged,
     isAdmin,
     hasAccess('user__remove'),
-    adminHandles.del_users_userId()
+    adminHandles.del_users_userId(),
   );
 
 router
@@ -39,7 +39,7 @@ router
     isLogged,
     isAdmin,
     hasAccess('user_access__write'),
-    adminHandles.put_admin_users_userId_access()
+    adminHandles.put_admin_users_userId_access(),
   );
 
 router
@@ -53,7 +53,7 @@ router
     isAdmin,
     hasAccess('shopping__read'),
     pagination,
-    adminHandles.get_admin_shopping()
+    adminHandles.get_admin_shopping(),
   );
 ///////////////////////////////////////////////////////////////
 router
@@ -65,7 +65,7 @@ router
     validators.handle,
     isLogged,
     hasAccess('full'),
-    adminHandles.post_admin_bills()
+    adminHandles.post_admin_bills(),
   );
 
 router
@@ -76,5 +76,11 @@ router
     validators.handle,
     isLogged,
     hasAccess('full'),
-    adminHandles.del_admin_bills_billId_shopping()
+    adminHandles.del_admin_bills_billId_shopping(),
   );
+
+router.use('/admin/agenda/web/:token', adminHandles.use_admin_agenda_web());
+
+router
+  .route('/admin/agenda/token')
+  .get(isLogged, isAdmin, hasAccess('agenda__full'), adminHandles.get_admin_agenda_token());

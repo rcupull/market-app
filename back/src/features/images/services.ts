@@ -47,7 +47,7 @@ const deleteOldImages: QueryHandle<{
   oldImagesSrcs: Array<Image> | undefined;
 }> = async ({ newImagesSrcs = [], oldImagesSrcs = [] }) => {
   const imagesToRemove = oldImagesSrcs.filter(
-    ({ src }) => !newImagesSrcs.map(({ src }) => src).includes(src)
+    ({ src }) => !newImagesSrcs.map(({ src }) => src).includes(src),
   );
 
   imagesToRemove.forEach(({ src }) => {

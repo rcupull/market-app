@@ -67,8 +67,8 @@ export const SideBar = ({ className, items, collapse }: SideBarProps) => {
             ) : (
               <div
                 className={cn(
-                  'flex items-center cursor-pointer w-full h-12 px-3 mt-2 rounded hover:bg-gray-700 hover:text-gray-300 overflow-hidden',
-                  { ['bg-gray-600 text-gray-200']: isActive },
+                  'flex items-center cursor-pointer w-full h-12 px-3 mt-2 rounded hover:bg-gray-300 hover:text-gray-800 overflow-hidden',
+                  { ['bg-gray-200 text-gray-900']: isActive },
                   className,
                 )}
                 onClick={onClick}
