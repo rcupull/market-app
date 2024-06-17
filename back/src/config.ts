@@ -6,6 +6,8 @@ export const serviceAccount = appConfig.googleApplicationCredentials;
 export const dbUrl = appConfig.dbUrl;
 export const secretAccessToken = appConfig.secretAccessToken;
 export const secretRefreshToken = appConfig.secretRefreshToken;
+export const secretAgendaToken = appConfig.secretAgendaToken;
+
 export const appAssetsDir = appConfig.appAssetsDir;
 export const appFrontDir = appConfig.appFrontDir;
 export const hostname = appConfig.hostname;

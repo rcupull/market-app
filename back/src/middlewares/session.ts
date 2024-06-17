@@ -12,7 +12,7 @@ const store = new MongoDBStore(
   },
   function () {
     // Should have gotten an error
-  }
+  },
 );
 
 store.on('error', function () {

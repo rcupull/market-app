@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'development') {
     //eslint-disable-next-line
     swaggerUiExpress.setup(require('../swagger_output.json'), {
       explorer: true,
-    })
+    }),
   );
 }
 
@@ -28,6 +28,7 @@ app.use(passportMiddlewareInitialize);
 app.use(express.json());
 app.use(commaSeparateQuery);
 app.use(express.urlencoded({ extended: false }));
+
 app.use('/api-services', router);
 app.use((req, res, next) => {
   if (req.url.startsWith('/app-images')) {

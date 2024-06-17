@@ -31,14 +31,14 @@ export type UpdateQueryBusiness =
   | UpdateWithAggregationPipeline;
 
 export const getPostCategoriesFromBusinessCategories = (
-  businessCategories: Array<BusinessCategory>
+  businessCategories: Array<BusinessCategory>,
 ): Array<PostCategory> => {
   let allLabels: Array<string> = [];
 
   const ifStartWithThenAdd = (
     businessCategory: BusinessCategory,
     match: BusinessCategory,
-    val: Array<string>
+    val: Array<string>,
   ) => {
     if (businessCategory.startsWith(match)) {
       allLabels = val.reduce((acc, v) => addStringToUniqueArray(acc, v), allLabels);
