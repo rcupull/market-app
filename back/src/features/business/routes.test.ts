@@ -100,7 +100,7 @@ describe('business', () => {
 
     it('should fail if the user can not create a business', async () => {
       const { user1 } = await fillBD({
-        overrideUser1: {
+        user1: {
           canCreateBusiness: false,
         },
       });

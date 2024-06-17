@@ -10,7 +10,7 @@ describe('POST /auth/sign-in', () => {
   });
 
   it('should fail if the user is not validated', async () => {
-    await fillBD({ overrideUser1: { validated: false } });
+    await fillBD({ user1: { validated: false } });
 
     await supertest(app)
       .post(`/api-services/auth/sign-in`)

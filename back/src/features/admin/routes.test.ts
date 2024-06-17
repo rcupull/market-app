@@ -28,7 +28,7 @@ describe('admin', () => {
     });
 
     it('should return all users', async () => {
-      const { admin } = await fillBD({ overrideAdmin: { specialAccess: ['full'] } });
+      const { admin } = await fillBD({ admin: { specialAccess: ['full'] } });
 
       await supertest(app)
         .get(`/api-services/admin/users`)
