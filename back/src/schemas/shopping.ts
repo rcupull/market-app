@@ -84,5 +84,5 @@ ShoppingSchema.plugin(mongoosePaginate);
 export const ShoppingModel = model<Shopping, PaginateModel<Shopping>>(
   'Shopping',
   ShoppingSchema,
-  'shopping'
+  'shopping',
 );

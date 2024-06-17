@@ -18,5 +18,5 @@ router
     validators.query('endpoint').notEmpty(),
     validators.handle,
     isLogged,
-    imageHandles.post_image_checkeditor()
+    imageHandles.post_image_checkeditor(),
   );

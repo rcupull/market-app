@@ -26,7 +26,7 @@ const get_users: () => RequestHandler = () => {
         {
           role: { $in: ['user', 'admin'] },
         },
-        paginateOptions
+        paginateOptions,
       );
 
       res.send(out);
@@ -188,7 +188,7 @@ const post_admin_bills: () => RequestHandler = () => {
 
       const shoppingDebits = shoppingData.reduce(
         (acc, shopping) => acc + getShoppingInfo(shopping).shoppingDebit,
-        0
+        0,
       );
 
       const out = await billingServices.addOne({

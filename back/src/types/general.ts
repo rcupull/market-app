@@ -38,7 +38,7 @@ export interface RequestHandler<
   ResBody = any,
   ReqBody = any,
   ReqQuery = AnyRecord,
-  Locals extends Record<string, any> = Record<string, any>
+  Locals extends Record<string, any> = Record<string, any>,
 > extends ExpressRequestHandler<P, ResBody, ReqBody, ReqQuery, Locals> {}
 
 export type QueryHandle<Args extends AnyRecord = AnyRecord, R = void> = (args: Args) => Promise<R>;
