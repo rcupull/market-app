@@ -17,7 +17,7 @@ describe('business', () => {
         .get(
           getTestingRoute({
             path: '/business',
-          })
+          }),
         )
         .expect(200)
         .then((response) => {
@@ -72,7 +72,7 @@ describe('business', () => {
               "totalDebit": 0,
             },
           }
-        `
+        `,
           );
 
           expect(response.body.paginator).toMatchInlineSnapshot(`
@@ -109,7 +109,7 @@ describe('business', () => {
         .post(
           getTestingRoute({
             path: '/business',
-          })
+          }),
         )
         .send({
           name: 'newBusiness',
@@ -127,7 +127,7 @@ describe('business', () => {
         .post(
           getTestingRoute({
             path: '/business',
-          })
+          }),
         )
         .send({
           name: 'newBusiness',
@@ -145,7 +145,7 @@ describe('business', () => {
         .post(
           getTestingRoute({
             path: '/business',
-          })
+          }),
         )
         .send({
           name: 'newBusiness',
@@ -160,7 +160,7 @@ describe('business', () => {
           getTestingRoute({
             path: '/business/:newBusiness',
             urlParams: { newBusiness: 'newBusiness' },
-          })
+          }),
         )
         .expect(200);
     });
@@ -172,7 +172,7 @@ describe('business', () => {
         .post(
           getTestingRoute({
             path: '/business',
-          })
+          }),
         )
         .send({
           name: 'newBusiness',
@@ -196,7 +196,7 @@ describe('business', () => {
           getTestingRoute({
             path: '/business/:routeName',
             urlParams: { routeName: business1User1.routeName },
-          })
+          }),
         )
         .expect(200)
         .then((response) => {
@@ -249,7 +249,7 @@ describe('business', () => {
               "totalDebit": 0,
             },
           }
-        `
+        `,
           );
         });
     });
@@ -268,7 +268,7 @@ describe('business', () => {
           getTestingRoute({
             path: '/business/:routeName',
             urlParams: { routeName: business1User1.routeName },
-          })
+          }),
         )
         .expect(200)
         .then((response) => {
@@ -280,8 +280,8 @@ describe('business', () => {
         .get(
           getTestingRoute({
             path: '/posts',
-            query: { routeName: business1User1.routeName },
-          })
+            query: { routeNames: [business1User1.routeName] },
+          }),
         )
         .expect(200)
         .then((response) => {
@@ -294,7 +294,7 @@ describe('business', () => {
           getTestingRoute({
             path: '/business/:routeName',
             urlParams: { routeName: business1User1.routeName },
-          })
+          }),
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200);
@@ -304,8 +304,8 @@ describe('business', () => {
         .get(
           getTestingRoute({
             path: '/posts',
-            query: { routeName: business1User1.routeName },
-          })
+            query: { routeNames: [business1User1.routeName] },
+          }),
         )
         .expect(200)
         .then((response) => {
@@ -317,7 +317,7 @@ describe('business', () => {
           getTestingRoute({
             path: '/business/:routeName',
             urlParams: { routeName: business1User1.routeName },
-          })
+          }),
         )
         .expect(404)
         .then((response) => {
@@ -334,7 +334,7 @@ describe('business', () => {
           getTestingRoute({
             path: '/business/:routeName',
             urlParams: { routeName: business1User1.routeName },
-          })
+          }),
         )
         .expect(401);
     });
@@ -348,7 +348,7 @@ describe('business', () => {
           getTestingRoute({
             path: '/business/:routeName',
             urlParams: { routeName: business1User1.routeName },
-          })
+          }),
         )
         .auth(generateToken(user2._id), { type: 'bearer' })
         .expect(401);

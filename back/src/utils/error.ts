@@ -5,7 +5,7 @@ import { logger } from '../features/logger';
 export const withTryCatch = async (
   req: Request,
   res: Response,
-  callback: () => Promise<any> | any
+  callback: () => Promise<any> | any,
 ) => {
   const { originalUrl, method } = req;
 

@@ -18,6 +18,10 @@ export interface TestBDContent {
   //
   productPost1Business1User1: Post;
   productPost2Business1User1: Post;
+  productPost1Business1User2: Post;
+  productPost2Business1User2: Post;
+  productPost3Business1User2: Post;
+
   //
   business1User2: Business;
   business2User2: Business;
@@ -171,6 +175,36 @@ export const fillBD = async (args?: {
   });
   await hiddenBusinessUser2.save();
 
+  const productPost1Business1User2 = new PostModel({
+    name: 'productPost1Business1User2 name',
+    routeName: business1User2.routeName,
+    createdBy: user2.id,
+    price: '10',
+    currency: 'CUP',
+    postCategoriesTags: ['cat1', 'cat2', 'cat3'],
+  });
+  await productPost1Business1User2.save();
+
+  const productPost2Business1User2 = new PostModel({
+    name: 'productPost2Business1User2 name',
+    routeName: business1User2.routeName,
+    createdBy: user2.id,
+    price: '10',
+    currency: 'CUP',
+    postCategoriesTags: ['cat1', 'cat2', 'cat3'],
+  });
+  await productPost2Business1User2.save();
+
+  const productPost3Business1User2 = new PostModel({
+    name: 'productPost3Business1User2 name',
+    routeName: business1User2.routeName,
+    createdBy: user2.id,
+    price: '10',
+    currency: 'CUP',
+    postCategoriesTags: ['cat1', 'cat2', 'cat3'],
+  });
+  await productPost3Business1User2.save();
+
   //////////////////////////////////////////////////////////////////////////////////
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -194,6 +228,11 @@ export const fillBD = async (args?: {
     business2User1,
     productPost1Business1User1,
     productPost2Business1User1,
+    //
+    productPost1Business1User2,
+    productPost2Business1User2,
+    productPost3Business1User2,
+    //
     shopping1Business1User1,
     //
     business1User2,

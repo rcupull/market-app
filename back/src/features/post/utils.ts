@@ -1,18 +1,16 @@
-import { FilterQuery, PaginateOptions } from 'mongoose';
-import { Post, PostType } from '../../types/post';
+import { FilterQuery } from 'mongoose';
+import { Post } from '../../types/post';
+import { getFlattenUndefinedJson } from '../../utils/general';
 
-export interface GetAllArgs {
-  paginateOptions?: PaginateOptions;
+export interface GetAllPostArgs extends FilterQuery<Post> {
   routeNames?: Array<string>;
   postsIds?: Array<string>;
   search?: string;
   hidden?: boolean;
   hiddenBusiness?: boolean;
-  createdBy?: string;
   //
   postCategoriesTags?: Array<string>;
   postCategoriesMethod?: 'some' | 'every';
-  postType?: PostType;
 }
 export const getAllFilterQuery = ({
   routeNames,
@@ -20,12 +18,11 @@ export const getAllFilterQuery = ({
   search,
   hidden,
   hiddenBusiness,
-  createdBy,
   postCategoriesTags,
   postCategoriesMethod,
-  postType,
-}: Omit<GetAllArgs, 'paginateOptions'>): FilterQuery<Post> => {
-  const filterQuery: FilterQuery<Post> = {};
+  ...omittedQuery
+}: GetAllPostArgs): FilterQuery<Post> => {
+  const filterQuery: FilterQuery<Post> = omittedQuery;
 
   if (search) {
     filterQuery.name = { $regex: new RegExp(search), $options: 'i' };
@@ -48,9 +45,6 @@ export const getAllFilterQuery = ({
     }
   }
 
-  if (postType) {
-    filterQuery.postType = postType;
-  }
   ///////////////////////////////////////////////////////////////////
 
   if (routeNames?.length) {
@@ -73,11 +67,5 @@ export const getAllFilterQuery = ({
     filterQuery.hiddenBusiness = hiddenBusiness;
   }
 
-  ///////////////////////////////////////////////////////////////////
-
-  if (createdBy) {
-    filterQuery.createdBy = createdBy;
-  }
-
-  return filterQuery;
+  return getFlattenUndefinedJson(filterQuery);
 };

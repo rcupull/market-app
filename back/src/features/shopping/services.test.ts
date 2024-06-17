@@ -1,6 +1,11 @@
-import { dropTestDbConnectionAsync, paginateOptionsForTesting } from '../../utils/test-utils';
+import {
+  dropTestDbConnectionAsync,
+  paginateOptionsForTesting,
+  setAnyString,
+} from '../../utils/test-utils';
 import { fillBD } from '../../utils/test-BD';
 import { shoppingServices } from './services';
+import { Shopping } from '../../types/shopping';
 
 describe('shopping services', () => {
   afterEach(async () => {
@@ -59,46 +64,31 @@ describe('shopping services', () => {
 
       if (!result) return;
 
-      //eslint-disable-next-line
-      const { createdAt, _id, ...omitted } = result.toJSON();
-
-      expect(omitted).toMatchInlineSnapshot(`
+      expect(result.toJSON()).toMatchInlineSnapshot(
+        setAnyString<Shopping>(
+          '_id',
+          'createdAt',
+          'posts.0.postData._id',
+          'posts.0.lastUpdatedDate',
+          'purchaserId',
+        ),
+        `
         {
           "__v": 0,
+          "_id": Anything,
+          "createdAt": Anything,
           "history": [],
           "posts": [
             {
               "count": 5,
-              "lastUpdatedDate": 2024-06-14T04:18:31.128Z,
-              "post": {
-                "__v": 0,
-                "_id": "666bc497b8cbfa9bc9b55978",
-                "clothingSizes": [],
-                "colors": [],
-                "createdAt": 2024-06-14T04:18:30.121Z,
-                "createdBy": "666bc497b8cbfa9bc9b55970",
+              "lastUpdatedDate": Anything,
+              "postData": {
+                "_id": Anything,
                 "currency": "CUP",
-                "hidden": false,
-                "hiddenBusiness": false,
                 "images": [],
                 "name": "chancletas",
-                "postCategoriesTags": [
-                  "cat1",
-                  "cat2",
-                  "cat3",
-                ],
-                "postType": "product",
                 "price": 10,
-                "reviews": [
-                  0,
-                  0,
-                  0,
-                  0,
-                  0,
-                ],
-                "reviewsUserIds": [],
                 "routeName": "business1User1",
-                "stockAmount": null,
               },
               "purshaseNotes": {
                 "interestedByClothingSizes": [],
@@ -106,12 +96,13 @@ describe('shopping services', () => {
               },
             },
           ],
-          "purchaserId": "666bc497b8cbfa9bc9b55970",
+          "purchaserId": Anything,
           "purchaserName": "user1",
           "routeName": "business1User1",
           "state": "CONSTRUCTION",
         }
-      `);
+      `,
+      );
     });
   });
 });

@@ -15,7 +15,9 @@ import { shoppingServices } from '../shopping/services';
 import { billingServices } from '../billing/services';
 import { Shopping } from '../../types/shopping';
 import { getShoppingInfo } from '../shopping/utils';
-import { deepJsonCopy, includesId } from '../../utils/general';
+import { combineMiddleware, deepJsonCopy, includesId } from '../../utils/general';
+import { agendashMiddleware } from '../agenda/middlware';
+import { secretAgendaToken } from '../../config';
 
 const get_users: () => RequestHandler = () => {
   return (req, res) => {
@@ -26,7 +28,7 @@ const get_users: () => RequestHandler = () => {
         {
           role: { $in: ['user', 'admin'] },
         },
-        paginateOptions
+        paginateOptions,
       );
 
       res.send(out);
@@ -75,7 +77,7 @@ const put_admin_admin_config: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
       const { body } = req;
-      const { termsAndConditions, privacyPolicy } = body;
+      const { termsAndConditions, privacyPolicy, price } = body;
 
       const config = await AdminConfigModel.findOne({});
 
@@ -92,6 +94,10 @@ const put_admin_admin_config: () => RequestHandler = () => {
 
       if (privacyPolicy) {
         config.privacyPolicy = privacyPolicy;
+      }
+
+      if (price) {
+        config.price = price;
       }
 
       await config.save();
@@ -143,7 +149,7 @@ const get_admin_shopping: () => RequestHandler = () => {
 
       const { routeNames, states } = query;
 
-      const allBills = await billingServices.getAll({});
+      const allBills = await billingServices.getAll({ query: {} });
 
       let out = await shoppingServices.getAllWithPagination({
         paginateOptions,
@@ -184,7 +190,7 @@ const post_admin_bills: () => RequestHandler = () => {
 
       const shoppingDebits = shoppingData.reduce(
         (acc, shopping) => acc + getShoppingInfo(shopping).shoppingDebit,
-        0
+        0,
       );
 
       const out = await billingServices.addOne({
@@ -208,8 +214,10 @@ const get_admin_bills: () => RequestHandler = () => {
 
       const bills = await billingServices.getAllWithPagination({
         paginateOptions,
-        routeNames,
-        states,
+        query: {
+          routeNames,
+          states,
+        },
       });
 
       res.send(bills);
@@ -264,6 +272,25 @@ const del_admin_bills_billId_shopping: () => RequestHandler = () => {
   };
 };
 
+const get_admin_agenda_token: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      res.send({ agendaToken: secretAgendaToken });
+    });
+  };
+};
+
+const use_admin_agenda_web: () => RequestHandler = () =>
+  combineMiddleware((req, res, next) => {
+    const token = req.params.token;
+
+    if (token === secretAgendaToken) {
+      next();
+    } else {
+      return get400Response({ res, json: { message: 'Token not exists' } });
+    }
+  }, agendashMiddleware);
+
 export const adminHandles = {
   get_users,
   del_users_userId,
@@ -279,4 +306,7 @@ export const adminHandles = {
   get_admin_bills,
   //
   del_admin_bills_billId_shopping,
+  //
+  get_admin_agenda_token,
+  use_admin_agenda_web,
 };

@@ -19,7 +19,7 @@ const devLogger = () => {
       colorize(),
       label({ label: 'dev' }),
       timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-      myFormat
+      myFormat,
     ),
     transports: [
       new transports.Console(), // ONLY PRINTING LOGS IN TERMINAL

@@ -3,6 +3,7 @@ import { BaseIdentity } from './general';
 export interface AdminConfig extends BaseIdentity {
   termsAndConditions?: string;
   privacyPolicy?: string;
+  price?: string;
 }
 
 export type Access =
@@ -21,4 +22,6 @@ export type Access =
   //
   | 'bills__read'
   | 'bills__write'
-  | 'bills__remove';
+  | 'bills__remove'
+  //
+  | 'agenda__full';

@@ -9,7 +9,7 @@ export const generateAccessJWT = ({ id }: { id: string }): string => {
     secretAccessToken,
     {
       expiresIn: '30m',
-    }
+    },
   );
 };
 
@@ -21,6 +21,6 @@ export const generateRefreshJWT = ({ id }: { id: string }): string => {
     secretRefreshToken,
     {
       expiresIn: '30d',
-    }
+    },
   );
 };

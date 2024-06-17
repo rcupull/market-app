@@ -16,5 +16,5 @@ router
     isUserBusinessOwner,
     isUserThisBusinessOwner,
     pagination,
-    billingHandles.get_bills()
+    billingHandles.get_bills(),
   );
