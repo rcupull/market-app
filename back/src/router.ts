@@ -23,7 +23,7 @@ router.use(
   imagesRouter,
   shoppingRouter,
   generalRouter,
-  billingRouter
+  billingRouter,
 );
 
 export default router;

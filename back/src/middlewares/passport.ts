@@ -34,7 +34,7 @@ passport.use(
     } catch (err) {
       return done(err);
     }
-  })
+  }),
 );
 
 passport.use(
@@ -53,8 +53,8 @@ passport.use(
             message: 'Token not matched.',
           });
         });
-    }
-  )
+    },
+  ),
 );
 
 export const autenticationMiddleware = passport.authenticate('local', {

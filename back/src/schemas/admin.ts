@@ -14,5 +14,5 @@ const AdmiinConfigShema = new Schema<AdminConfig>({
 export const AdminConfigModel = model<AdminConfig>(
   'AdminConfig',
   AdmiinConfigShema,
-  'admin_config'
+  'admin_config',
 );

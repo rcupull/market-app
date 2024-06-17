@@ -3,6 +3,8 @@ import { telegram_token_bot } from '../../config';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { TelegramBotChat } from '../../types/business';
 import { getRandomHash } from '../../utils/general';
+import { logger } from '../logger';
+import { agendaHandles } from '../agenda/handles';
 
 let bot: TelegramBot;
 
@@ -23,6 +25,7 @@ export const telegramServices = {
         userName: username,
       };
 
+      logger.info(`Telegram: new chat: ${JSON.stringify(meta)}`);
       const validationCode = new ValidationCodeModel({
         code,
         meta,
@@ -30,7 +33,15 @@ export const telegramServices = {
 
       await validationCode.save();
 
-      bot.sendMessage(meta.chatId, `Use el siguiente código de activación ${code}`);
+      /**
+       * Remove validation code in 60 seconds if still exists
+       */
+      agendaHandles.removeValidationCode({ code, timeout: 60 });
+
+      bot.sendMessage(
+        meta.chatId,
+        `Tiene 60 segundos para usar el siguiente código de activación: ${code}.`,
+      );
     });
 
     bot.on('message', (msg) => {
