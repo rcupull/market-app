@@ -15,6 +15,7 @@ export const specialAccessRecord: Record<Access, any> = {
   bills__read: {},
   bills__write: {},
   bills__remove: {},
+  agenda__full: {},
 };
 
 export const billDataReshaper = makeReshaper<Bill, Bill>({ _id: '_id', state: 'state' });

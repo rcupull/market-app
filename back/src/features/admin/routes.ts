@@ -78,3 +78,9 @@ router
     hasAccess('full'),
     adminHandles.del_admin_bills_billId_shopping(),
   );
+
+router.use('/admin/agenda/web/:token', adminHandles.use_admin_agenda_web());
+
+router
+  .route('/admin/agenda/token')
+  .get(isLogged, isAdmin, hasAccess('agenda__full'), adminHandles.get_admin_agenda_token());

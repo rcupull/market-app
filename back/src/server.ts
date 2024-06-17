@@ -7,7 +7,6 @@ import { commaSeparateQuery } from './middlewares/comma-separate-query';
 import { frontMiddlware } from './middlewares/frontMiddlware';
 import { join } from 'path';
 import { appAssetsDir } from './config';
-import { agendashMiddleware } from './features/agenda/middlware';
 
 export const app = express();
 
@@ -29,8 +28,6 @@ app.use(passportMiddlewareInitialize);
 app.use(express.json());
 app.use(commaSeparateQuery);
 app.use(express.urlencoded({ extended: false }));
-
-app.use('/agenda', agendashMiddleware);
 
 app.use('/api-services', router);
 app.use((req, res, next) => {

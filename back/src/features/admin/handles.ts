@@ -15,7 +15,9 @@ import { shoppingServices } from '../shopping/services';
 import { billingServices } from '../billing/services';
 import { Shopping } from '../../types/shopping';
 import { getShoppingInfo } from '../shopping/utils';
-import { deepJsonCopy, includesId } from '../../utils/general';
+import { combineMiddleware, deepJsonCopy, includesId } from '../../utils/general';
+import { agendashMiddleware } from '../agenda/middlware';
+import { secretAgendaToken } from '../../config';
 
 const get_users: () => RequestHandler = () => {
   return (req, res) => {
@@ -270,6 +272,25 @@ const del_admin_bills_billId_shopping: () => RequestHandler = () => {
   };
 };
 
+const get_admin_agenda_token: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      res.send({ agendaToken: secretAgendaToken });
+    });
+  };
+};
+
+const use_admin_agenda_web: () => RequestHandler = () =>
+  combineMiddleware((req, res, next) => {
+    const token = req.params.token;
+
+    if (token === secretAgendaToken) {
+      next();
+    } else {
+      return get400Response({ res, json: { message: 'Token not exists' } });
+    }
+  }, agendashMiddleware);
+
 export const adminHandles = {
   get_users,
   del_users_userId,
@@ -285,4 +306,7 @@ export const adminHandles = {
   get_admin_bills,
   //
   del_admin_bills_billId_shopping,
+  //
+  get_admin_agenda_token,
+  use_admin_agenda_web,
 };
