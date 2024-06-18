@@ -15,8 +15,19 @@ router
     isAdmin,
     validators.body('routeName').notEmpty(),
     validators.handle,
-    hasAccess('full'),
+    hasAccess('bills__write'),
     adminBillsHandles.post_admin_bills(),
+  );
+
+router
+  .route('/bills/:billId')
+  .delete(
+    isLogged,
+    isAdmin,
+    validators.param('billId').notEmpty(),
+    validators.handle,
+    hasAccess('bills__remove'),
+    adminBillsHandles.del_admin_bills_billId(),
   );
 
 router

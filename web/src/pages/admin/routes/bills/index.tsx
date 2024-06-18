@@ -59,7 +59,7 @@ export const Bills = () => {
 
           return {
             nodes: [
-              <RowActions key="RowActions" rowData={rowData} />,
+              <RowActions key="RowActions" rowData={rowData} onRefresh={onRefreshForce} />,
               routeName,
               state,
               <span key="price" className="text-nowrap">{`${totalDebit} CUP`}</span>,

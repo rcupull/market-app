@@ -184,6 +184,15 @@ const deleteOne: QueryHandle<
   await ShoppingModel.deleteOne(query);
 };
 
+const deleteMany: QueryHandle<
+  {
+    query: FilterQuery<Shopping>;
+  },
+  void
+> = async ({ query }) => {
+  await ShoppingModel.deleteMany(query);
+};
+
 const findOneAndDelete: QueryHandle<
   {
     query: FilterQuery<Shopping>;
@@ -201,6 +210,7 @@ export const shoppingServices = {
   getAllWithPagination,
   getAll,
   deleteOne,
+  deleteMany,
   findAndUpdateOne,
   findOneAndDelete,
 };

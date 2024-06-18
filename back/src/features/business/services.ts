@@ -8,6 +8,8 @@ import { PaginateResult } from '../../middlewares/pagination';
 import { imagesServices } from '../images/services';
 import { UpdateOptions } from 'mongodb';
 import { GetAllBusinessArgs, UpdateQueryBusiness, getAllFilterQuery } from './utils';
+import { billingServices } from '../billing/services';
+import { shoppingServices } from '../shopping/services';
 
 const getAllWithPagination: QueryHandle<
   {
@@ -74,6 +76,9 @@ const findOne: QueryHandle<
 const deleteOne: QueryHandle<{
   routeName: string;
 }> = async ({ routeName }) => {
+  /**
+   * Removing the business
+   */
   const business = await BusinessModel.findOneAndDelete({
     routeName,
   });
@@ -95,7 +100,29 @@ const deleteOne: QueryHandle<{
    * Remove all business posts
    */
   await postServices.deleteMany({
-    routeName,
+    query: {
+      routeName,
+    },
+  });
+
+  /**
+   * Remove all bills
+   */
+
+  await billingServices.deleteMany({
+    query: {
+      routeName,
+    },
+  });
+
+  /**
+   * Remove all shopping
+   */
+
+  await shoppingServices.deleteMany({
+    query: {
+      routeName,
+    },
   });
 };
 

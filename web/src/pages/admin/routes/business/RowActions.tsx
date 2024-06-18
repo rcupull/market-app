@@ -3,6 +3,7 @@ import { ButtonRemove } from 'components/button-remove';
 import { IconButtonRemove } from 'components/icon-button-remove';
 
 import { useRemoveOneBusinessAdmin } from 'features/api/admin/useRemoveOneBusinessAdmin';
+import { useAuth } from 'features/api-slices/useAuth';
 import { useModal } from 'features/modal/useModal';
 
 import { RowActionsContainer } from 'pages/@common/row-actions-container';
@@ -14,6 +15,7 @@ export interface RowActionsProps {
 }
 export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
   const { pushModal } = useModal();
+  const { getHasSomeAccess } = useAuth();
 
   const handleDelete = () => {
     pushModal(
@@ -56,7 +58,7 @@ export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
 
   return (
     <RowActionsContainer>
-      <IconButtonRemove onClick={handleDelete} />
+      {getHasSomeAccess('business__remove') && <IconButtonRemove onClick={handleDelete} />}
     </RowActionsContainer>
   );
 };

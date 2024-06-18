@@ -2,7 +2,7 @@ import { Button } from 'components/button';
 import { FieldCheckEditor } from 'components/field-check-editor';
 import { Formux } from 'components/formux';
 
-import { useUpdateAdminConfig } from 'features/api/admin/useUpdateAdminConfig';
+import { useUpdateConfigAdmin } from 'features/api/admin/useUpdateConfigAdmin';
 import { useAdminConfig } from 'features/api-slices/useAdminConfig';
 import { useModal } from 'features/modal/useModal';
 
@@ -18,7 +18,7 @@ export interface ComponentProps {
 
 export const Component = ({ portal }: ComponentProps) => {
   const { data, init } = useAdminConfig();
-  const { updateAdminConfig } = useUpdateAdminConfig();
+  const { updateConfigAdmin } = useUpdateConfigAdmin();
   const { onClose } = useModal();
 
   return (
@@ -42,11 +42,11 @@ export const Component = ({ portal }: ComponentProps) => {
               {portal.getPortal(
                 <Button
                   label="Guardar"
-                  isBusy={updateAdminConfig.status.isBusy}
+                  isBusy={updateConfigAdmin.status.isBusy}
                   disabled={!isValid}
                   onClick={() => {
                     const { termsAndConditions } = value;
-                    updateAdminConfig.fetch(
+                    updateConfigAdmin.fetch(
                       {
                         termsAndConditions,
                       },

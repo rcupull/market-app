@@ -237,8 +237,10 @@ const bulk_action_delete: () => RequestHandler = () => {
         // delete selected posts
 
         await postServices.deleteMany({
-          postIds: ids,
-          routeName,
+          query: {
+            postIds: ids,
+            routeName,
+          },
         });
       } else if (!isEmpty(query)) {
         const { postCategoriesMethod, postCategoriesTags, search } = query;
@@ -253,8 +255,10 @@ const bulk_action_delete: () => RequestHandler = () => {
         });
 
         await postServices.deleteMany({
-          postIds: posts.map((post) => post._id.toString()),
-          routeName,
+          query: {
+            postIds: posts.map((post) => post._id.toString()),
+            routeName,
+          },
         });
       } else {
         // get all post
@@ -265,8 +269,10 @@ const bulk_action_delete: () => RequestHandler = () => {
         });
 
         await postServices.deleteMany({
-          postIds: posts.map((post) => post._id.toString()),
-          routeName,
+          query: {
+            postIds: posts.map((post) => post._id.toString()),
+            routeName,
+          },
         });
       }
 
