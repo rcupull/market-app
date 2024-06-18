@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { ButtonRefresh } from 'components/button-refresh';
 import { Table } from 'components/table';
 
-import { useGetAllAdminUsers } from 'features/api/admin/useGetAllAdminUsers';
+import { useGetAllUsersAdmin } from 'features/api/admin/useGetAllUsersAdmin';
 
 import { RowActions } from './RowActions';
 
@@ -13,9 +13,9 @@ import { User } from 'types/auth';
 import { getDateString } from 'utils/date';
 
 export const Users = () => {
-  const { getAllAdminUsers } = useGetAllAdminUsers();
+  const { getAllUsersAdmin } = useGetAllUsersAdmin();
 
-  const onRefresh = () => getAllAdminUsers.fetch(undefined);
+  const onRefresh = () => getAllUsersAdmin.fetch(undefined);
 
   useEffect(() => {
     onRefresh();
@@ -24,7 +24,7 @@ export const Users = () => {
   return (
     <LayoutPageSection title="Usuarios">
       <TopActions className="justify-end mb-2">
-        <ButtonRefresh onClick={onRefresh} isBusy={getAllAdminUsers.status.isBusy} />
+        <ButtonRefresh onClick={onRefresh} isBusy={getAllUsersAdmin.status.isBusy} />
       </TopActions>
 
       <Table<User>
@@ -46,7 +46,7 @@ export const Users = () => {
             ],
           };
         }}
-        data={getAllAdminUsers.data}
+        data={getAllUsersAdmin.data}
       />
     </LayoutPageSection>
   );

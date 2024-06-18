@@ -9,6 +9,10 @@ import { isNumber } from '../../utils/general';
 import { GetAllPostArgs, getAllFilterQuery } from './utils';
 import { ProjectionType } from 'mongoose';
 
+interface DeletePostQuery extends FilterQuery<Post> {
+  postIds?: Array<string>;
+}
+
 const getAllWithPagination: QueryHandle<
   {
     paginateOptions?: PaginateOptions;
@@ -57,24 +61,17 @@ const getOne: QueryHandle<
 };
 
 const deleteMany: QueryHandle<{
-  routeName?: string;
-  postIds?: Array<string>;
-}> = async ({ routeName, postIds }) => {
-  if (routeName) {
-    await PostModel.deleteMany({
-      routeName,
-    });
+  query: DeletePostQuery;
+}> = async ({ query }) => {
+  const { postIds, ...rest } = query;
 
-    return;
-  }
+  const filterQuery: FilterQuery<Post> = rest;
 
   if (postIds?.length) {
-    await PostModel.deleteMany({
-      _id: { $in: postIds },
-    });
-
-    return;
+    filterQuery._id = { $in: postIds };
   }
+
+  await PostModel.deleteMany(filterQuery);
 };
 
 const deleteOne: QueryHandle<{

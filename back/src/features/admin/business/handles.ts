@@ -15,6 +15,9 @@ const delete_admin_business_routeName: () => RequestHandler = () => {
 
       const { routeName } = params;
 
+      /**
+       * Delete the business, business images, posts, and billing
+       */
       await businessServices.deleteOne({
         routeName,
       });

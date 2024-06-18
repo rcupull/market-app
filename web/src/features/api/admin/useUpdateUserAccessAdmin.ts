@@ -4,8 +4,8 @@ import { Access, AdminConfig } from 'types/admin';
 import { FetchResource } from 'types/api';
 import { getEndpoint } from 'utils/api';
 
-export const useUpdateUserSpecialAccess = (): {
-  updateUserSpecialAccess: FetchResource<
+export const useUpdateUserAccessAdmin = (): {
+  updateUserAccessAdmin: FetchResource<
     { userId: string; specialAccess: Array<Access> },
     AdminConfig
   >;
@@ -13,7 +13,7 @@ export const useUpdateUserSpecialAccess = (): {
   const fetch = useFetch<AdminConfig>();
 
   return {
-    updateUserSpecialAccess: {
+    updateUserAccessAdmin: {
       data: fetch[0],
       status: fetch[1],
       fetch: ({ userId, specialAccess }, options = {}) => {

@@ -32,14 +32,14 @@ export const getFileNameToSave = (args: {
     return null;
   }
 
-  let filename = userId;
+  let filename = `${userId}_user`;
 
   if (routeName) {
-    filename = `${filename}-${routeName}`;
+    filename = `${filename}_${routeName}_routeName`;
   }
 
   if (postId) {
-    filename = `${filename}-${postId}`;
+    filename = `${filename}_${postId}_post`;
   }
 
   return filename;
