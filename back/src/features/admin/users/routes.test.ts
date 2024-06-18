@@ -1,7 +1,7 @@
 import supertest from 'supertest';
-import { app } from '../../server';
-import { dropTestDbConnectionAsync, generateToken } from '../../utils/test-utils';
-import { fillBD } from '../../utils/test-BD';
+import { fillBD } from '../../../utils/test-BD';
+import { dropTestDbConnectionAsync, generateToken } from '../../../utils/test-utils';
+import { app } from '../../../server';
 
 describe('admin', () => {
   describe('GET: /admin/users', () => {

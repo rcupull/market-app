@@ -55,7 +55,7 @@ export const FieldRadioGroup = <O extends any = any>(props: FieldRadioGroupProps
             },
           });
         }}
-        value={field.value || null}
+        value={field.value === undefined ? null : field.value}
         className={containerClassName}
       />
     </FormFieldWrapper>

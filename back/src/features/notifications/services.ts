@@ -18,7 +18,7 @@ const init = () => {
 const sendNotificationToUpdate: QueryHandle<{
   payload: NotificationPayload;
 }> = async ({ payload }) => {
-  const users = await userServices.find({
+  const users = await userServices.getAll({
     query: {},
     projection: {
       firebaseToken: 1,

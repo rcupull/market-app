@@ -73,26 +73,30 @@ const findOne: QueryHandle<
 
 const deleteOne: QueryHandle<{
   routeName: string;
-  userId: string;
-}> = async ({ routeName, userId }) => {
+}> = async ({ routeName }) => {
+  const business = await BusinessModel.findOneAndDelete({
+    routeName,
+  });
+
+  if (!business) {
+    return;
+  }
+
   /**
    * Remove all business images
    */
+
   await imagesServices.deleteImagesBy({
-    userId,
+    userId: business.createdBy.toString(),
     routeName,
   });
 
-  await BusinessModel.deleteOne({
-    routeName,
-    createdBy: userId,
-  });
-
-  const out = await postServices.deleteMany({
+  /**
+   * Remove all business posts
+   */
+  await postServices.deleteMany({
     routeName,
   });
-
-  return out;
 };
 
 const updateOne: QueryHandle<{

@@ -13,7 +13,7 @@ import { useInterval } from 'hooks/useInterval';
 import { useRouter } from 'hooks/useRouter';
 
 export const useInit = () => {
-  const { isAuthenticated, onRefreshAuthUser } = useAuth();
+  const { isAuthenticated, onRefreshAuthUser, isUser } = useAuth();
   const { pushRoute } = useRouter();
 
   const allUserBusiness = useAllUserBusiness();
@@ -30,7 +30,7 @@ export const useInit = () => {
   });
 
   const init = () => {
-    getAllUserBussinessRefresh();
+    isUser && getAllUserBussinessRefresh();
     onRefreshAuthUser();
   };
 
