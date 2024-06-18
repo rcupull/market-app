@@ -7,6 +7,7 @@ import { imagesServices } from '../images/services';
 
 import { isNumber } from '../../utils/general';
 import { GetAllPostArgs, getAllFilterQuery } from './utils';
+import { ProjectionType } from 'mongoose';
 
 const getAllWithPagination: QueryHandle<
   {
@@ -22,10 +23,13 @@ const getAllWithPagination: QueryHandle<
   return out as unknown as PaginateResult<Post>;
 };
 
-const getAll: QueryHandle<{ query: GetAllPostArgs }, Array<Post>> = async ({ query }) => {
+const getAll: QueryHandle<
+  { query: GetAllPostArgs; projection?: ProjectionType<Post> },
+  Array<Post>
+> = async ({ query, projection }) => {
   const filterQuery = getAllFilterQuery(query);
 
-  const out = await PostModel.find(filterQuery);
+  const out = await PostModel.find(filterQuery, projection);
 
   return out;
 };
