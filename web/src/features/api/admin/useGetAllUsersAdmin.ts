@@ -5,13 +5,13 @@ import { User } from 'types/auth';
 import { getEndpoint } from 'utils/api';
 import { getPaginationResources } from 'utils/pagination';
 
-export const useGetAllAdminUsers = (): {
-  getAllAdminUsers: FetchResourceWithPagination<undefined, User>;
+export const useGetAllUsersAdmin = (): {
+  getAllUsersAdmin: FetchResourceWithPagination<undefined, User>;
 } => {
   const fetch = useFetch<PaginatedData<User>>();
 
   return {
-    getAllAdminUsers: {
+    getAllUsersAdmin: {
       ...getPaginationResources(fetch[0]),
       status: fetch[1],
       fetch: (_, options = {}) => {

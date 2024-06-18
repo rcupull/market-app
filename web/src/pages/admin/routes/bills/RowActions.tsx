@@ -11,7 +11,7 @@ import { Bill } from 'types/billing';
 
 export interface RowActionsProps {
   rowData: Bill;
-  onRefresh: ()=>void
+  onRefresh: () => void;
 }
 export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
   const { pushModal } = useModal();

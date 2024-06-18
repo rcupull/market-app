@@ -3,7 +3,7 @@ import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldRadioGroup } from 'components/field-radio-group';
 import { Formux } from 'components/formux';
 
-import { useUpdateUserSpecialAccess } from 'features/api/admin/useUpdateUserSpecialAccess';
+import { useUpdateUserAccessAdmin } from 'features/api/admin/useUpdateUserAccessAdmin';
 
 import { Portal } from 'hooks/usePortal';
 
@@ -20,7 +20,7 @@ export interface ComponentProps {
 }
 
 export const Component = ({ portal, user, onAfterSuccess, allSpecialAccess }: ComponentProps) => {
-  const { updateUserSpecialAccess } = useUpdateUserSpecialAccess();
+  const { updateUserAccessAdmin } = useUpdateUserAccessAdmin();
 
   return (
     <>
@@ -49,12 +49,12 @@ export const Component = ({ portal, user, onAfterSuccess, allSpecialAccess }: Co
               {portal.getPortal(
                 <Button
                   label="Guardar"
-                  isBusy={updateUserSpecialAccess.status.isBusy}
+                  isBusy={updateUserAccessAdmin.status.isBusy}
                   disabled={!isValid}
                   onClick={() => {
                     const { specialAccess } = value;
 
-                    updateUserSpecialAccess.fetch(
+                    updateUserAccessAdmin.fetch(
                       {
                         specialAccess,
                         userId: user._id,

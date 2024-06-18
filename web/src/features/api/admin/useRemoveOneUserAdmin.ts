@@ -1,26 +1,25 @@
 import { useFetch } from 'hooks/useFetch';
 
-import { AdminConfig } from 'types/admin';
 import { FetchResource } from 'types/api';
 import { getEndpoint } from 'utils/api';
 
-export const useGetAdminConfig = (): {
-  getAdminConfig: FetchResource<void, AdminConfig>;
+export const useRemoveOneUserAdmin = (): {
+  removeOneUserAdmin: FetchResource<{ id: string }>;
 } => {
-  const fetch = useFetch<AdminConfig>();
+  const fetch = useFetch();
 
   return {
-    getAdminConfig: {
+    removeOneUserAdmin: {
       data: fetch[0],
       status: fetch[1],
-      fetch: (data, options = {}) => {
+      fetch: ({ id }, options = {}) => {
         fetch[2](
           {
-            method: 'get',
+            method: 'delete',
             url: getEndpoint({
-              path: '/admin/admin-config',
+              path: '/admin/users/:id',
+              urlParams: { id },
             }),
-            data,
           },
           options,
         );

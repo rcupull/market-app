@@ -1,4 +1,4 @@
-import { useGetAdminConfig } from 'features/api/admin/useGetAdminConfig';
+import { useGetConfigAdmin } from 'features/api/admin/useGetConfigAdmin';
 import { useApiPersistent } from 'features/slices/useApiPersistent';
 
 import { AdminConfig } from 'types/admin';
@@ -8,9 +8,9 @@ export const useAdminConfig = (): {
   reset: () => void;
   data: AdminConfig | null;
 } => {
-  const { getAdminConfig } = useGetAdminConfig();
+  const { getConfigAdmin } = useGetConfigAdmin();
 
-  const { data, fetch, reset } = useApiPersistent('useAdminConfig', getAdminConfig);
+  const { data, fetch, reset } = useApiPersistent('useAdminConfig', getConfigAdmin);
 
   return {
     reset,

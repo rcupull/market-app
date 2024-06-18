@@ -3,7 +3,7 @@ import { ButtonRemove } from 'components/button-remove';
 import { IconButton } from 'components/icon-button';
 import { IconButtonRemove } from 'components/icon-button-remove';
 
-import { useRemoveOneAdminUser } from 'features/api/admin/useRemoveOneAdminUser';
+import { useRemoveOneUserAdmin } from 'features/api/admin/useRemoveOneUserAdmin';
 import { useModal } from 'features/modal/useModal';
 
 import SvgKeySolid from 'icons/KeySolid';
@@ -26,7 +26,7 @@ export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
       'Confirmation',
       {
         useProps: () => {
-          const { removeOneAdminUser } = useRemoveOneAdminUser();
+          const { removeOneUserAdmin } = useRemoveOneUserAdmin();
           const { onClose } = useModal();
           return {
             content: (
@@ -37,9 +37,9 @@ export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
             badge: <Badge variant="error" />,
             primaryBtn: (
               <ButtonRemove
-                isBusy={removeOneAdminUser.status.isBusy}
+                isBusy={removeOneUserAdmin.status.isBusy}
                 onClick={() =>
-                  removeOneAdminUser.fetch(
+                  removeOneUserAdmin.fetch(
                     { id: rowData._id },
                     {
                       onAfterSuccess: () => {
