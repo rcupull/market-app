@@ -20,10 +20,10 @@ router
 router
   .route('/business/:routeName')
   .delete(
-    validators.param('routeName').notEmpty(),
-    validators.handle,
     isLogged,
     isAdmin,
+    validators.param('routeName').notEmpty(),
+    validators.handle,
     hasAccess('business__remove'),
     adminBusinessHandles.delete_admin_business_routeName(),
   );

@@ -15,10 +15,10 @@ router
 router
   .route('/users/:userId')
   .delete(
-    validators.param('userId').notEmpty(),
-    validators.handle,
     isLogged,
     isAdmin,
+    validators.param('userId').notEmpty(),
+    validators.handle,
     hasAccess('user__remove'),
     adminUsersHandles.del_users_userId(),
   );
@@ -26,11 +26,11 @@ router
 router
   .route('/users/:userId/access')
   .put(
+    isLogged,
+    isAdmin,
     validators.param('userId').notEmpty(),
     validators.body('specialAccess').notEmpty(),
     validators.handle,
-    isLogged,
-    isAdmin,
     hasAccess('user_access__write'),
     adminUsersHandles.put_admin_users_userId_access(),
   );
