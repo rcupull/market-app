@@ -15,6 +15,7 @@ export interface TestBDContent {
   //
   business1User1: Business;
   business2User1: Business;
+  hiddenBusinessUser1: Business;
   //
   productPost1Business1User1: Post;
   productPost2Business1User1: Post;
@@ -25,6 +26,7 @@ export interface TestBDContent {
   //
   business1User2: Business;
   business2User2: Business;
+  hiddenBusinessUser2: Business;
   //
   shopping1Business1User1?: Shopping;
   //
@@ -32,23 +34,26 @@ export interface TestBDContent {
 }
 
 export const fillBD = async (args?: {
-  overrideUser1?: Partial<User>;
-  overrideAdmin?: Partial<User>;
-  overrideBusiness1User1?: Partial<Business>;
-  overrideProductPost1Business1User1?: Partial<Post>;
-  overrideProductPost2Business1User1?: Partial<Post>;
-  overrideShopping1Business1User1?: Partial<Shopping>;
+  user1?: Partial<User>;
+  user2?: Partial<User>;
+  user3?: Partial<User>;
+  business1User1?: Partial<Business>;
+  business2User1?: Partial<Business>;
+  hiddenBusinessUser1?: Partial<Business>;
+  productPost1Business1User1?: Partial<Post>;
+  productPost2Business1User1?: Partial<Post>;
+  productPost1Business1User2?: Partial<Post>;
+  productPost2Business1User2?: Partial<Post>;
+  productPost3Business1User2?: Partial<Post>;
+  business1User2?: Partial<Business>;
+  business2User2?: Partial<Business>;
+  hiddenBusinessUser2?: Partial<Business>;
+  shopping1Business1User1?: Partial<Shopping>;
+  admin?: Partial<User>;
+  //
   noCreateInitialShopping?: boolean;
 }): Promise<TestBDContent> => {
-  const {
-    overrideUser1 = {},
-    overrideBusiness1User1 = {},
-    overrideProductPost1Business1User1 = {},
-    overrideProductPost2Business1User1 = {},
-    overrideAdmin = {},
-    overrideShopping1Business1User1 = {},
-    noCreateInitialShopping,
-  } = args || {};
+  const { noCreateInitialShopping } = args || {};
 
   const admin = new UserModel({
     name: 'admin',
@@ -56,7 +61,7 @@ export const fillBD = async (args?: {
     password: 'password_123_admin',
     passwordVerbose: 'password_123_admin',
     role: 'admin',
-    ...overrideAdmin,
+    ...(args?.admin || {}),
   });
   await admin.save();
 
@@ -68,7 +73,7 @@ export const fillBD = async (args?: {
     passwordVerbose: 'password_123_user1',
     validated: true,
     canCreateBusiness: true,
-    ...overrideUser1,
+    ...(args?.user1 || {}),
   });
   await user1.save();
   //
@@ -77,7 +82,7 @@ export const fillBD = async (args?: {
     routeName: 'business1User1',
     createdBy: user1._id,
     validated: true,
-    ...overrideBusiness1User1,
+    ...(args?.business1User1 || {}),
   });
   await business1User1.save();
 
@@ -86,6 +91,7 @@ export const fillBD = async (args?: {
     routeName: 'business2User1',
     createdBy: user1.id,
     validated: true,
+    ...(args?.business2User1 || {}),
   });
   await business2User1.save();
 
@@ -95,6 +101,7 @@ export const fillBD = async (args?: {
     createdBy: user1.id,
     validated: true,
     hidden: true,
+    ...(args?.hiddenBusinessUser1 || {}),
   });
 
   await hiddenBusinessUser1.save();
@@ -106,7 +113,7 @@ export const fillBD = async (args?: {
     price: '10',
     currency: 'CUP',
     postCategoriesTags: ['cat1', 'cat2', 'cat3'],
-    ...overrideProductPost1Business1User1,
+    ...(args?.productPost1Business1User1 || {}),
   });
   await productPost1Business1User1.save();
 
@@ -117,7 +124,7 @@ export const fillBD = async (args?: {
     price: '20',
     currency: 'CUP',
     postCategoriesTags: ['cat1', 'cat2', 'cat3', 'cat4'],
-    ...overrideProductPost2Business1User1,
+    ...(args?.productPost2Business1User1 || {}),
   });
   await productPost2Business1User1.save();
 
@@ -136,7 +143,7 @@ export const fillBD = async (args?: {
           lastUpdatedDate: new Date(),
         },
       ],
-      ...overrideShopping1Business1User1,
+      ...(args?.shopping1Business1User1 || {}),
     });
 
     await shopping1Business1User1.save();
@@ -149,6 +156,7 @@ export const fillBD = async (args?: {
     email: 'user2@gmail.com',
     password: 'password_123_user2',
     passwordVerbose: 'password_123_user2',
+    ...(args?.user2 || {}),
   });
   await user2.save();
   //
@@ -156,6 +164,7 @@ export const fillBD = async (args?: {
     name: 'business1User2',
     routeName: 'business1User2',
     createdBy: user2.id,
+    ...(args?.business1User2 || {}),
   });
   await business1User2.save();
   //
@@ -163,6 +172,7 @@ export const fillBD = async (args?: {
     name: 'business2User2',
     routeName: 'business2User2',
     createdBy: user2.id,
+    ...(args?.business2User2 || {}),
   });
   await business2User2.save();
 
@@ -172,6 +182,7 @@ export const fillBD = async (args?: {
     createdBy: user2.id,
     validated: true,
     hidden: true,
+    ...(args?.hiddenBusinessUser2 || {}),
   });
   await hiddenBusinessUser2.save();
 
@@ -182,6 +193,7 @@ export const fillBD = async (args?: {
     price: '10',
     currency: 'CUP',
     postCategoriesTags: ['cat1', 'cat2', 'cat3'],
+    ...(args?.productPost1Business1User2 || {}),
   });
   await productPost1Business1User2.save();
 
@@ -192,6 +204,7 @@ export const fillBD = async (args?: {
     price: '10',
     currency: 'CUP',
     postCategoriesTags: ['cat1', 'cat2', 'cat3'],
+    ...(args?.productPost2Business1User2 || {}),
   });
   await productPost2Business1User2.save();
 
@@ -202,6 +215,7 @@ export const fillBD = async (args?: {
     price: '10',
     currency: 'CUP',
     postCategoriesTags: ['cat1', 'cat2', 'cat3'],
+    ...(args?.productPost3Business1User2 || {}),
   });
   await productPost3Business1User2.save();
 
@@ -214,6 +228,7 @@ export const fillBD = async (args?: {
     password: 'password_123_user3',
     passwordVerbose: 'password_123_user3',
     validated: true,
+    ...(args?.user3 || {}),
   });
 
   await user3.save();
@@ -226,6 +241,7 @@ export const fillBD = async (args?: {
     user3,
     business1User1,
     business2User1,
+    hiddenBusinessUser1,
     productPost1Business1User1,
     productPost2Business1User1,
     //
@@ -237,6 +253,8 @@ export const fillBD = async (args?: {
     //
     business1User2,
     business2User2,
+    hiddenBusinessUser2,
+    //
     admin,
   };
 };

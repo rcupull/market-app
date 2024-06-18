@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { AnyRecord } from 'types/general';
-import { isEqualObj } from 'utils/general';
+import { getFlattenUndefinedJson, isEqualObj } from 'utils/general';
 
 export interface UseFiltersArgs<S> {
   onChange?: (state: S) => void;
@@ -24,10 +24,10 @@ export const useFiltersVolatile = <S extends AnyRecord = AnyRecord>(
     onMergeFilters: (partialValue: S, options) => {
       const { forceFetch } = options || {};
 
-      const newFilterValue: S = {
+      const newFilterValue: S = getFlattenUndefinedJson({
         ...filterValue,
         ...partialValue,
-      };
+      });
 
       const hasChanges = !isEqualObj(newFilterValue, filterValue);
 

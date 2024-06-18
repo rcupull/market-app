@@ -12,7 +12,11 @@ import { shoppingServices } from './services';
 import { postServices } from '../post/services';
 import { isNumber } from '../../utils/general';
 import { businessServices } from '../business/services';
-import { deleteOnePostFromShopping, deleteShopping, getShoppingInfo } from './utils';
+import {
+  deleteOnePostFromShoppingInContruction,
+  deleteShoppingInConstruction,
+  getShoppingInfo,
+} from './utils';
 import { logger } from '../logger';
 import { PostPurshaseNotes } from '../../types/post';
 import { ShoppingModel } from '../../schemas/shopping';
@@ -315,8 +319,8 @@ const delete_shopping: () => RequestHandler = () => {
       const { routeName, postId } = body;
 
       postId
-        ? await deleteOnePostFromShopping({ routeName, user, postId })
-        : await deleteShopping({ routeName, user });
+        ? await deleteOnePostFromShoppingInContruction({ routeName, user, postId })
+        : await deleteShoppingInConstruction({ routeName, user });
 
       res.send({});
     });

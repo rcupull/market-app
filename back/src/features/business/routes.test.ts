@@ -100,7 +100,7 @@ describe('business', () => {
 
     it('should fail if the user can not create a business', async () => {
       const { user1 } = await fillBD({
-        overrideUser1: {
+        user1: {
           canCreateBusiness: false,
         },
       });
@@ -252,106 +252,6 @@ describe('business', () => {
         `,
           );
         });
-    });
-  });
-
-  describe('DELETE: /business/:routeName', () => {
-    afterEach(async () => {
-      await dropTestDbConnectionAsync();
-    });
-
-    it('should remove all posts and business', async () => {
-      const { business1User1, user1 } = await fillBD();
-
-      await supertest(app)
-        .get(
-          getTestingRoute({
-            path: '/business/:routeName',
-            urlParams: { routeName: business1User1.routeName },
-          }),
-        )
-        .expect(200)
-        .then((response) => {
-          expect(response.body.routeName).toEqual(business1User1.routeName);
-        });
-
-      //get business posts
-      await supertest(app)
-        .get(
-          getTestingRoute({
-            path: '/posts',
-            query: { routeNames: [business1User1.routeName] },
-          }),
-        )
-        .expect(200)
-        .then((response) => {
-          expect(response.body.data.length).toEqual(2);
-        });
-
-      //delete business
-      await supertest(app)
-        .del(
-          getTestingRoute({
-            path: '/business/:routeName',
-            urlParams: { routeName: business1User1.routeName },
-          }),
-        )
-        .auth(generateToken(user1._id), { type: 'bearer' })
-        .expect(200);
-
-      //get business posts(should be 0)
-      await supertest(app)
-        .get(
-          getTestingRoute({
-            path: '/posts',
-            query: { routeNames: [business1User1.routeName] },
-          }),
-        )
-        .expect(200)
-        .then((response) => {
-          expect(response.body.data.length).toEqual(0);
-        });
-
-      await supertest(app)
-        .get(
-          getTestingRoute({
-            path: '/business/:routeName',
-            urlParams: { routeName: business1User1.routeName },
-          }),
-        )
-        .expect(404)
-        .then((response) => {
-          expect(response.body.routeName).toEqual(undefined);
-        });
-    });
-
-    it('should not remove if not autehticated', async () => {
-      const { business1User1 } = await fillBD();
-
-      //delete business
-      await supertest(app)
-        .del(
-          getTestingRoute({
-            path: '/business/:routeName',
-            urlParams: { routeName: business1User1.routeName },
-          }),
-        )
-        .expect(401);
-    });
-
-    it('should not remove if the user has not access to this business', async () => {
-      const { business1User1, user2 } = await fillBD();
-
-      //delete business
-      await supertest(app)
-        .del(
-          getTestingRoute({
-            path: '/business/:routeName',
-            urlParams: { routeName: business1User1.routeName },
-          }),
-        )
-        .auth(generateToken(user2._id), { type: 'bearer' })
-        .expect(401);
     });
   });
 });

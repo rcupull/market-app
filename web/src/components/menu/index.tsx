@@ -13,6 +13,7 @@ interface MenuItem extends StyleProps {
   onClick?: () => void;
   divider?: boolean;
   active?: boolean;
+  disabled?: boolean;
 }
 
 export interface MenuProps extends StyleProps {
@@ -41,7 +42,7 @@ export const Menu = ({
           allowedPlacements: ['bottom-start', 'bottom-end', 'top-start', 'top-end'],
         }}
       >
-        <MenuBase.Button as="div" className="cursor-pointer">
+        <MenuBase.Button as="div" className="cursor-pointer w-fit">
           {buttonElement}
         </MenuBase.Button>
         <Transition
@@ -59,17 +60,21 @@ export const Menu = ({
             </MenuBase.Item>
 
             {compact(items).map(
-              ({ label, onClick, svg: Svg, divider, className, active }, index) => (
+              ({ label, onClick, svg: Svg, divider, className, active, disabled }, index) => (
                 <MenuBase.Item key={label}>
                   {() => {
                     return (
                       <div key={index} className={className}>
                         <div
-                          onClick={onClick}
+                          onClick={() => {
+                            if (disabled) return;
+                            onClick?.();
+                          }}
                           className={cn(
                             'cursor-pointer px-4 py-2 text-sm text-gray-700 flex items-center',
                             {
                               'bg-gray-100': active,
+                              '!cursor-not-allowed !text-gray-300': disabled,
                             },
                           )}
                         >

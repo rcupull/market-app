@@ -19,7 +19,11 @@ const sessions: Array<{ email: string; password: string }> = [
     password: 'Qwerty@123',
   },
   {
-    email: 'rcupull+comerciante@gmail.com',
+    email: 'rcupull+comerciante1@gmail.com',
+    password: 'Qwerty@123',
+  },
+  {
+    email: 'rcupull+comerciante2@gmail.com',
     password: 'Qwerty@123',
   },
   {

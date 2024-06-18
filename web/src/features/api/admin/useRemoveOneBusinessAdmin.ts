@@ -3,13 +3,13 @@ import { useFetch } from 'hooks/useFetch';
 import { FetchResource } from 'types/api';
 import { getEndpoint } from 'utils/api';
 
-export const useRemoveOneBusiness = (): {
-  removeOneBusiness: FetchResource<{ routeName: string }, void>;
+export const useRemoveOneBusinessAdmin = (): {
+  removeOneBusinessAdmin: FetchResource<{ routeName: string }, void>;
 } => {
   const fetch = useFetch();
 
   return {
-    removeOneBusiness: {
+    removeOneBusinessAdmin: {
       data: fetch[0],
       status: fetch[1],
       fetch: ({ routeName }, options = {}) => {
@@ -17,7 +17,7 @@ export const useRemoveOneBusiness = (): {
           {
             method: 'delete',
             url: getEndpoint({
-              path: '/business/:routeName',
+              path: '/admin/business/:routeName',
               urlParams: { routeName },
             }),
           },

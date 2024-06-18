@@ -22,10 +22,10 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
   const { isAuthenticated } = useAuth();
   const { signOut } = useSignOut();
 
-  const smSideBar = (
+  const sideBar = (
     <div
       className={cn('min-w-64 hidden h-screen', {
-        'sm:block': isDashboardPage || isAdminPage,
+        'md:block': isDashboardPage || isAdminPage,
       })}
     >
       <SideBar />
@@ -33,7 +33,7 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
   );
 
   const xsSideBar = (
-    <Popover className={cn('relative sm:hidden')}>
+    <Popover className={cn('relative md:hidden')}>
       {({ close, open }) => {
         return (
           <>
@@ -76,7 +76,7 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
           className={cn(
             'w-full overflow-auto max-h-[calc(100vh-64px)] min-h-[calc(100vh-64px)] flex flex-col',
             {
-              'sm:w-[calc(100%-16rem)]': isDashboardPage || isAdminPage,
+              'md:w-[calc(100%-16rem)]': isDashboardPage || isAdminPage,
             },
           )}
         >
@@ -88,7 +88,7 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
         {isAuthenticated && (
           <>
             {xsSideBar}
-            {smSideBar}
+            {sideBar}
           </>
         )}
       </div>

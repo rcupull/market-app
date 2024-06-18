@@ -17,6 +17,7 @@ export interface RowActionsProps {
 }
 export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
   const { pushModal } = useModal();
+  const { role } = rowData;
 
   const adminUpdateUserAccessModal = useAdminUpdateUserAccessModal();
 
@@ -62,12 +63,15 @@ export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
     <RowActionsContainer>
       <IconButtonRemove onClick={handleDelete} />
 
-      <IconButton
-        svg={SvgKeySolid}
-        onClick={() =>
-          adminUpdateUserAccessModal.open({ user: rowData, onAfterSuccess: () => onRefresh() })
-        }
-      />
+      {role === 'admin' && (
+        <IconButton
+          svg={SvgKeySolid}
+          title="Accesos Especiales"
+          onClick={() =>
+            adminUpdateUserAccessModal.open({ user: rowData, onAfterSuccess: () => onRefresh() })
+          }
+        />
+      )}
     </RowActionsContainer>
   );
 };

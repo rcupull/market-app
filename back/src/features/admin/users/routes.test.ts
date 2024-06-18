@@ -1,7 +1,7 @@
 import supertest from 'supertest';
-import { app } from '../../server';
-import { dropTestDbConnectionAsync, generateToken } from '../../utils/test-utils';
-import { fillBD } from '../../utils/test-BD';
+import { fillBD } from '../../../utils/test-BD';
+import { dropTestDbConnectionAsync, generateToken } from '../../../utils/test-utils';
+import { app } from '../../../server';
 
 describe('admin', () => {
   describe('GET: /admin/users', () => {
@@ -28,7 +28,7 @@ describe('admin', () => {
     });
 
     it('should return all users', async () => {
-      const { admin } = await fillBD({ overrideAdmin: { specialAccess: ['full'] } });
+      const { admin } = await fillBD({ admin: { specialAccess: ['full'] } });
 
       await supertest(app)
         .get(`/api-services/admin/users`)

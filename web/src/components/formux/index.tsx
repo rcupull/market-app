@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { FormContext } from './context';
 import { ContextState, FormErrors, FormProps, FormTouched } from './types';
@@ -20,12 +20,15 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
   const [touched, setTouched] = useState<FormTouched<Value>>({});
   const [isValid, setIsValid] = useState<boolean>(true);
   const initialValue = useMemo(() => deepJsonCopy(value), []);
+  const refMounted = useRef(false);
 
   useEffect(() => {
     setFormState(value);
   }, [JSON.stringify(value)]);
 
   useEffect(() => {
+    if (!refMounted.current) return;
+
     onChange?.(formState);
   }, [JSON.stringify(formState)]);
 
@@ -40,6 +43,10 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
       setIsValid(true);
     }
   }, [JSON.stringify([formState, validate])]);
+
+  useEffect(() => {
+    refMounted.current = true;
+  }, []);
 
   const getErrors = () => {
     /**

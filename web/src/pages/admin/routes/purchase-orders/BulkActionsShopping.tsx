@@ -6,25 +6,46 @@ import { Menu } from 'components/menu';
 
 import { useAddOneBillAdmin } from 'features/api/admin/useAddOneBillAdmin';
 
+import { GetAllShoppingAdminQuery } from 'types/api';
 import { Shopping } from 'types/shopping';
 
-export interface BulkActionsShoppingProps extends Pick<BulkActionsProps, 'children'> {
+type Actions = 'newBill';
+export interface BulkActionsShoppingProps
+  extends Pick<BulkActionsProps<Actions, Shopping>, 'children'> {
   onRefresh: () => void;
+  filters: GetAllShoppingAdminQuery;
 }
 
-export const BulkActionsShopping = ({ onRefresh, ...omittedProps }: BulkActionsShoppingProps) => {
+export const BulkActionsShopping = ({
+  onRefresh,
+  filters,
+  ...omittedProps
+}: BulkActionsShoppingProps) => {
   //@ts-expect-error ignore this, need complete default values
   const refMeta = useRef<BulkMeta<Shopping>>({});
 
   const { addOneBillAdmin } = useAddOneBillAdmin();
 
   const handleNewBill = () => {
-    const { selected, onReset } = refMeta.current;
+    const { selected, onReset, selectedAll } = refMeta.current;
+    const { dateFrom, dateTo, routeNames, states } = filters;
+
+    if (selectedAll && routeNames?.length === 1) {
+      return addOneBillAdmin.fetch(
+        { routeName: routeNames[0], dateFrom, dateTo, states },
+        {
+          onAfterSuccess: () => {
+            onReset();
+            onRefresh();
+          },
+        },
+      );
+    }
 
     if (selected.length) {
       const { routeName } = selected[0]; // is the same routeName por all selected items
 
-      addOneBillAdmin.fetch(
+      return addOneBillAdmin.fetch(
         { routeName, shoppingIds: selected.map((s) => s._id) },
         {
           onAfterSuccess: () => {
@@ -37,7 +58,7 @@ export const BulkActionsShopping = ({ onRefresh, ...omittedProps }: BulkActionsS
   };
 
   return (
-    <BulkActions<'newBill'>
+    <BulkActions<Actions, Shopping>
       refMeta={refMeta}
       getBulkActionBtnProps={({ action }) => {
         switch (action) {
@@ -63,6 +84,7 @@ export const BulkActionsShopping = ({ onRefresh, ...omittedProps }: BulkActionsS
             {
               label: 'Crear factura',
               onClick: () => setAction('newBill'),
+              disabled: filters.routeNames?.length !== 1,
             },
           ]}
         />
