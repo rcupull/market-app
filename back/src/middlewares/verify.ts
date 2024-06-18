@@ -114,8 +114,8 @@ export const isUserThisBusinessOwner: RequestHandler = async (req, res, next) =>
     return getBusinessNotFoundResponse({ res });
   }
 
-  if (user._id.toString() === business.createdBy.toString()) {
-    req['business'] = business;
+  if (isEqualIds(user._id, business.createdBy)) {
+    req['business'] = business.toJSON();
     return next();
   }
 
@@ -125,35 +125,6 @@ export const isUserThisBusinessOwner: RequestHandler = async (req, res, next) =>
   });
 };
 
-export const getBusinessMiddleware: RequestHandler = async (req, res, next) => {
-  /**
-   * put the business in the req if exists routeName
-   */
-
-  if (req.business) {
-    return next();
-  }
-
-  const routeName = getFieldInReqData(req, 'routeName');
-
-  if (!routeName) {
-    return next();
-  }
-
-  const business = await businessServices.findOne({
-    query: {
-      routeName,
-    },
-  });
-
-  if (!business) {
-    return next();
-  }
-
-  req['business'] = business;
-  return next();
-};
-
 export const isUserThisPostOwner: RequestHandler = async (req, res, next) => {
   const { user } = req;
 
@@ -161,7 +132,7 @@ export const isUserThisPostOwner: RequestHandler = async (req, res, next) => {
     return getUserNotFoundResponse({ res });
   }
 
-  const postId = req.params.postId;
+  const postId = getFieldInReqData(req, 'postId');
 
   if (!postId) {
     return get404Response({
@@ -178,8 +149,8 @@ export const isUserThisPostOwner: RequestHandler = async (req, res, next) => {
     return getPostNotFoundResponse({ res });
   }
 
-  if (user._id.toString() === post.createdBy.toString()) {
-    req.post = post;
+  if (isEqualIds(user._id, post.createdBy)) {
+    req.post = post.toJSON();
     return next();
   }
 

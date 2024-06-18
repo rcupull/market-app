@@ -1,5 +1,5 @@
 import { FilterQuery, PaginateOptions, ProjectionType } from 'mongoose';
-import { QueryHandle } from '../../types/general';
+import { ModelDocument, QueryHandle } from '../../types/general';
 import { Business } from '../../types/business';
 import { BusinessModel } from '../../schemas/business';
 import { postServices } from '../post/services';
@@ -64,7 +64,7 @@ const findOne: QueryHandle<
     query: FilterQuery<Business>;
     projection?: ProjectionType<Business>;
   },
-  Business | null
+  ModelDocument<Business> | null
 > = async ({ query, projection }) => {
   const out = await BusinessModel.findOne(query, projection);
 
