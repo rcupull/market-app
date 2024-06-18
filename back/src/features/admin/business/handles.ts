@@ -1,8 +1,11 @@
+import { Business } from '../../../types/business';
 import { RequestHandler } from '../../../types/general';
+import { Post } from '../../../types/post';
 import { User } from '../../../types/user';
 import { withTryCatch } from '../../../utils/error';
 import { deepJsonCopy, isEqualIds } from '../../../utils/general';
 import { businessServices } from '../../business/services';
+import { postServices } from '../../post/services';
 import { userServices } from '../../user/services';
 
 const delete_admin_business_routeName: () => RequestHandler = () => {
@@ -21,6 +24,10 @@ const delete_admin_business_routeName: () => RequestHandler = () => {
   };
 };
 
+interface BusinessAdminDto extends Business {
+  userData?: Pick<User, 'name'>;
+  postCount?: number;
+}
 const get_admin_business: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
@@ -47,23 +54,43 @@ const get_admin_business: () => RequestHandler = () => {
         },
       });
 
+      const postsData: Array<Pick<Post, 'routeName'>> = await postServices.getAll({
+        query: {
+          routeName: { $in: out.data.map(({ routeName }) => routeName) },
+        },
+        projection: {
+          routeName: 1,
+        },
+      });
+
       out = deepJsonCopy(out);
-      out.data = out.data.map((business) => {
-        const { createdBy } = business;
+
+      const handleResolveBusinessDto = async (business: Business): Promise<BusinessAdminDto> => {
+        const out: BusinessAdminDto = business;
+
+        const { createdBy } = out;
+
         const userData = usersData.find((user) => isEqualIds(user._id, createdBy));
 
         if (userData) {
-          const { name } = userData;
-          return {
-            ...business,
-            userData: {
-              name,
-            },
+          out.userData = {
+            name: userData.name,
           };
         }
 
-        return business;
+        const ownPosts = postsData.filter(({ routeName }) => routeName === out.routeName);
+
+        out.postCount = ownPosts.length;
+        return out;
+      };
+
+      const promises = out.data.map((business) => {
+        return new Promise<BusinessAdminDto>((resolve) => {
+          handleResolveBusinessDto(business).then(resolve);
+        });
       });
+
+      out.data = await Promise.all(promises);
 
       res.send(out);
     });

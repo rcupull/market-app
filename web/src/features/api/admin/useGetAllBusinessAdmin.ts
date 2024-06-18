@@ -8,9 +8,9 @@ import { getPaginationResources } from 'utils/pagination';
 
 interface BusinessDto extends Business {
   userData: {
-    _id: string;
     name: string;
   };
+  postCount: number;
 }
 
 export const useGetAllBusinessAdmin = (): {
