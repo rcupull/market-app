@@ -15,6 +15,7 @@ export interface TestBDContent {
   //
   business1User1: Business;
   business2User1: Business;
+  hiddenBusinessUser1: Business;
   //
   productPost1Business1User1: Post;
   productPost2Business1User1: Post;
@@ -25,6 +26,7 @@ export interface TestBDContent {
   //
   business1User2: Business;
   business2User2: Business;
+  hiddenBusinessUser2: Business;
   //
   shopping1Business1User1?: Shopping;
   //
@@ -37,6 +39,7 @@ export const fillBD = async (args?: {
   user3?: Partial<User>;
   business1User1?: Partial<Business>;
   business2User1?: Partial<Business>;
+  hiddenBusinessUser1?: Partial<Business>;
   productPost1Business1User1?: Partial<Post>;
   productPost2Business1User1?: Partial<Post>;
   productPost1Business1User2?: Partial<Post>;
@@ -44,6 +47,7 @@ export const fillBD = async (args?: {
   productPost3Business1User2?: Partial<Post>;
   business1User2?: Partial<Business>;
   business2User2?: Partial<Business>;
+  hiddenBusinessUser2?: Partial<Business>;
   shopping1Business1User1?: Partial<Shopping>;
   admin?: Partial<User>;
   //
@@ -97,6 +101,7 @@ export const fillBD = async (args?: {
     createdBy: user1.id,
     validated: true,
     hidden: true,
+    ...(args?.hiddenBusinessUser1 || {}),
   });
 
   await hiddenBusinessUser1.save();
@@ -177,6 +182,7 @@ export const fillBD = async (args?: {
     createdBy: user2.id,
     validated: true,
     hidden: true,
+    ...(args?.hiddenBusinessUser2 || {}),
   });
   await hiddenBusinessUser2.save();
 
@@ -235,6 +241,7 @@ export const fillBD = async (args?: {
     user3,
     business1User1,
     business2User1,
+    hiddenBusinessUser1,
     productPost1Business1User1,
     productPost2Business1User1,
     //
@@ -246,6 +253,8 @@ export const fillBD = async (args?: {
     //
     business1User2,
     business2User2,
+    hiddenBusinessUser2,
+    //
     admin,
   };
 };
