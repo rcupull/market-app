@@ -2,6 +2,8 @@
 import { FieldInput } from 'components/field-input';
 import { Formux } from 'components/formux';
 
+import { useDebouncer } from 'hooks/useDebouncer';
+
 import { GetAllBusinessQuery } from 'types/api';
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
@@ -13,6 +15,9 @@ export interface FiltersProps extends StyleProps {
 }
 
 export const Filters = ({ onChange, value, className }: FiltersProps) => {
+
+  const debouncer = useDebouncer();
+
   return (
     <Formux<{ search: string }>
       value={{
@@ -21,7 +26,9 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
       onChange={(filters) => {
         const { search } = filters;
 
-        onChange?.({ ...filters, page: 1, search });
+        debouncer(()=>{
+          onChange?.({ ...filters, page: 1, search });
+        }, 500);
       }}
     >
       {() => {
