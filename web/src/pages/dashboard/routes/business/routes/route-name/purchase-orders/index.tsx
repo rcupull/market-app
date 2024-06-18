@@ -55,8 +55,11 @@ export const PurchaseOrders = () => {
       </TopActions>
       <Table<Shopping>
         remapRowsIndex={{
-          xs: [[0, 1, 2, 3, 4]],
-          lg: [[0], [1, 2], [3, 4]],
+          xs: [[0, 1, 2, 3, 4, 5]],
+          lg: [
+            [0, 1, 2],
+            [3, 4, 5],
+          ],
           xl: 'none',
         }}
         heads={['Acciones', 'Cliente', 'Estado', 'Unidades', 'Precio total', 'Fecha de creación']}

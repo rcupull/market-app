@@ -1,6 +1,7 @@
-import { RemapRowsIndexValue, TableGetRowProps, TableHeads } from './types';
+import { RemapRowsIndexRecord, RemapRowsIndexValue, TableGetRowProps, TableHeads } from './types';
 
 import { AnyRecord } from 'types/general';
+import { isEqual, range } from 'utils/general';
 
 export const getRemapedProps = <RowData extends AnyRecord = AnyRecord>(args: {
   remapIndex: RemapRowsIndexValue;
@@ -44,4 +45,25 @@ export const getRemapedProps = <RowData extends AnyRecord = AnyRecord>(args: {
       };
     },
   };
+};
+
+export const validateRemapIndex = (
+  remapIndex: RemapRowsIndexRecord,
+  headsCount: number,
+): boolean => {
+  const validRange = range(headsCount);
+
+  return Object.keys(remapIndex).reduce((acc, key) => {
+    const value = remapIndex[key as keyof RemapRowsIndexRecord];
+
+    if (value === 'none' || !value) {
+      return acc;
+    }
+
+    const fullArray = value.reduce((acc, group) => {
+      return [...acc, ...group];
+    }, [] as number[]);
+
+    return acc && isEqual(validRange, fullArray.sort());
+  }, true);
 };

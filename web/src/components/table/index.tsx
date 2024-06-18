@@ -9,7 +9,7 @@ import { useScrollBottom } from 'hooks/useScrollBottom';
 import { ReorderContainer } from './reorder-container';
 import { TableRow } from './table-row';
 import { RemapRowsIndexValue, TableProps } from './types';
-import { getRemapedProps } from './utils';
+import { getRemapedProps, validateRemapIndex } from './utils';
 
 import { AnyRecord } from 'types/general';
 import { cn } from 'utils/general';
@@ -39,6 +39,11 @@ export const Table = <RowData extends AnyRecord = AnyRecord>({
   const breakpoints = useBreakpoints();
 
   if (remapRowsIndex) {
+
+    if(!validateRemapIndex(remapRowsIndex, heads.length)){
+      throw new Error('Invalid remapRowsIndex');
+    }
+
     const handleRemap = (remapIndex: RemapRowsIndexValue | undefined): void => {
       if (!remapIndex) {
         return;

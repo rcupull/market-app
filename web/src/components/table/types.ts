@@ -7,16 +7,17 @@ export type TableGetRowProps<RowData> = (rowData: RowData, rowIndex: number) => 
 export type TableHeads = Array<React.ReactNode>;
 
 export type RemapRowsIndexValue = Array<Array<number>> | 'none';
+export interface RemapRowsIndexRecord {
+  xs?: RemapRowsIndexValue;
+  sm?: RemapRowsIndexValue;
+  md?: RemapRowsIndexValue;
+  lg?: RemapRowsIndexValue;
+  xl?: RemapRowsIndexValue;
+  xxl?: RemapRowsIndexValue;
+}
 
 export interface TableProps<RowData extends AnyRecord = AnyRecord> extends StyleProps {
-  remapRowsIndex?: {
-    xs?: RemapRowsIndexValue;
-    sm?: RemapRowsIndexValue;
-    md?: RemapRowsIndexValue;
-    lg?: RemapRowsIndexValue;
-    xl?: RemapRowsIndexValue;
-    xxl?: RemapRowsIndexValue;
-  };
+  remapRowsIndex?: RemapRowsIndexRecord;
   heads: TableHeads;
   getRowProps: TableGetRowProps<RowData>;
   data: Array<RowData> | null;
