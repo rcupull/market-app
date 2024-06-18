@@ -53,6 +53,10 @@ export const Billing = () => {
       </TopActions>
 
       <Table<Bill>
+        remapRowsIndex={{
+          xs: [[0, 1, 2]],
+          lg: 'none',
+        }}
         heads={['Estado', 'Débito Total', 'Fecha']}
         getRowProps={(rowData) => {
           const { createdAt, state, totalDebit } = rowData;

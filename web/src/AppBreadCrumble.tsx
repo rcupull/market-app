@@ -25,7 +25,7 @@ export const AppBreadCrumble = ({ className }: AppBreadCrumbleProps): JSX.Elemen
     isPostPage,
     isBusinessAboutUsPage,
     isHomePage,
-    isBusinessPage,
+    isOneBusinessPage,
     isAboutUsPage,
   } = useRouter();
   const shoppingIdPersistent = useShoppingIdPersistent();
@@ -46,7 +46,7 @@ export const AppBreadCrumble = ({ className }: AppBreadCrumbleProps): JSX.Elemen
           label: 'Dashboard',
           route: getDashboardRoute(),
         },
-        isBusinessPage &&
+        isOneBusinessPage &&
           business && {
             label: business.name,
             route: getOneBusinessRoute({ routeName: business.routeName }),

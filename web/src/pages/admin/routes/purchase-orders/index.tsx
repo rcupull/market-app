@@ -8,6 +8,7 @@ import { useGetAllBusinessSummary } from 'features/api/business/useGetAllBusines
 
 import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 
+import { BillShopping } from './BillShopping';
 import { BulkActionsShopping } from './BulkActionsShopping';
 import { Filters } from './Filters';
 import { RowActions } from './RowActions';
@@ -48,8 +49,9 @@ export const PurchaseOrders = () => {
     <>
       <BulkActionsShopping
         onRefresh={() => filters.onMergeFilters({ page: 1 }, { forceFetch: true })}
+        filters={filters.value}
       >
-        {({ getBulkHeaderNodes, getBulkRowNodes, getDisabledOverlay, bulkActionNode }) => {
+        {({ getDisabledOverlay, bulkActionNode, selectAllNode, tablePropsProcessor }) => {
           return (
             <>
               <div className="flex items-center justify-between mb-1">
@@ -70,13 +72,20 @@ export const PurchaseOrders = () => {
                   />
                 </TopActions>,
               )}
+
+              <div className="mb-2 flex justify-center">{selectAllNode}</div>
+
               <Table<Shopping>
+                propsPreprocessors={[tablePropsProcessor]}
                 remapRowsIndex={{
-                  xs: [[0, 1, 2, 3, 4]],
-                  md: [[0], [1, 2], [3, 4]],
-                  lg: 'none',
+                  xs: [[0, 1, 2, 3, 4, 5, 6, 7]],
+                  lg: [
+                    [0, 1, 2, 3],
+                    [4, 5, 6, 7],
+                  ],
+                  xl: 'none',
                 }}
-                heads={getBulkHeaderNodes([
+                heads={[
                   'Acciones',
                   <span key="headBusiness">
                     Negocio <br /> <span className="text-gray-400">RouteName</span>
@@ -87,15 +96,15 @@ export const PurchaseOrders = () => {
                   'Precio total',
                   'Facturación',
                   'Fecha de creación',
-                ])}
+                ]}
                 getRowProps={(rowData) => {
-                  const { createdAt, purchaserName, state, routeName, billData } = rowData;
+                  const { createdAt, purchaserName, state, routeName } = rowData;
 
                   const { totalPrice, totalProducts } = getShoppingData(rowData);
 
                   const { name } = getBusinessSummary(routeName) || {};
                   return {
-                    nodes: getBulkRowNodes({ rowData }, [
+                    nodes: [
                       <RowActions key="RowActions" rowData={rowData} onRefresh={onRefreshForce} />,
                       <div
                         key="routeName"
@@ -108,9 +117,13 @@ export const PurchaseOrders = () => {
                       <ShoppingStateLabel key="state" state={state} className="text-nowrap" />,
                       totalProducts,
                       <span key="price" className="text-nowrap">{`${totalPrice} CUP`}</span>,
-                      billData ? billData.state : 'No facturado',
+                      <BillShopping
+                        key="BillShopping"
+                        rowData={rowData}
+                        onRefresh={onRefreshForce}
+                      />,
                       getDateString({ date: createdAt, showTime: true }),
-                    ]),
+                    ],
                   };
                 }}
                 data={getAllShoppingAdmin.data}

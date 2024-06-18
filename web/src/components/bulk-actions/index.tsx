@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { Button, ButtonProps } from 'components/button';
 import { FieldCheckbox } from 'components/field-checkbox';
+import { TablePropsPropcessor } from 'components/table/types';
 
 import { AnyRecord, StyleProps } from 'types/general';
 import { removeRow } from 'utils/general';
@@ -12,6 +13,23 @@ export interface BulkMeta<RowData extends AnyRecord = AnyRecord> {
   onReset: () => void;
 }
 
+interface BulkActionArgs<RowData extends AnyRecord = AnyRecord> {
+  tablePropsProcessor: TablePropsPropcessor<RowData>;
+  selectAllNode: React.ReactNode;
+  selecting: boolean;
+  onReset: () => void;
+  getBulkRowNodes: (
+    args: {
+      rowData: RowData;
+    },
+    nodes: Array<React.ReactNode>,
+  ) => Array<React.ReactNode>;
+  getBulkHeaderNodes: (nodes: Array<React.ReactNode>) => Array<React.ReactNode>;
+  getBulkTopActionsNode: (node: React.ReactNode) => React.ReactNode;
+  getDisabledOverlay: (node: React.ReactNode) => React.ReactNode;
+  bulkActionNode: React.ReactNode;
+}
+
 export interface BulkActionsProps<
   Action extends string = string,
   RowData extends AnyRecord = AnyRecord,
@@ -19,19 +37,7 @@ export interface BulkActionsProps<
   renderMenuNode: (args: { setAction: (action: Action) => void }) => React.ReactNode;
   getBulkActionBtnProps: (args: { action: Action }) => Partial<ButtonProps>;
   refMeta: React.MutableRefObject<BulkMeta<RowData>>;
-  children: (args: {
-    onReset: () => void;
-    getBulkRowNodes: (
-      args: {
-        rowData: RowData;
-      },
-      nodes: Array<React.ReactNode>,
-    ) => Array<React.ReactNode>;
-    getBulkHeaderNodes: (nodes: Array<React.ReactNode>) => Array<React.ReactNode>;
-    getBulkTopActionsNode: (node: React.ReactNode) => React.ReactNode;
-    getDisabledOverlay: (node: React.ReactNode) => React.ReactNode;
-    bulkActionNode: React.ReactNode;
-  }) => React.ReactNode;
+  children: (args: BulkActionArgs<RowData>) => React.ReactNode;
 }
 
 export const BulkActions = <E extends string = string, RowData extends AnyRecord = AnyRecord>({
@@ -79,11 +85,69 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
     !!selected.find((p) => isEqualRowData(post, p)) || selectedAll;
   const getIndex = (post: RowData) => selected.findIndex((p) => isEqualRowData(post, p));
 
+  const selectAllNode = selecting && (
+    <FieldCheckbox
+      key="checkboxSelectAll"
+      label="Seleccionar todos"
+      noUseFormik
+      value={selectedAll}
+      onChange={(e) => {
+        setSelected([]);
+        setSelectedAll(e.target.checked);
+      }}
+    />
+  );
+
+  const getBulkHeaderNodes: BulkActionArgs<RowData>['getBulkHeaderNodes'] = (nodes) => {
+    if (!selecting) return nodes;
+
+    return [null, ...nodes];
+  };
+
+  const getBulkRowNodes: BulkActionArgs<RowData>['getBulkRowNodes'] = ({ rowData }, nodes) => {
+    if (!selecting) return nodes;
+
+    return [
+      <FieldCheckbox
+        key="checkbox"
+        noUseFormik
+        value={isSelected(rowData)}
+        onChange={(e) => {
+          if (e.target.checked) {
+            setSelected([...selected, rowData]);
+          } else {
+            setSelected(removeRow(selected, getIndex(rowData)));
+          }
+        }}
+      />,
+      ...nodes.map((node, index) => (
+        <div key={index} className="relative">
+          {node}
+          <div className="absolute inset-0 bg-white opacity-60 rounded-md cursor-not-allowed" />
+        </div>
+      )),
+    ];
+  };
+
   return (
     <>
       {children({
+        selectAllNode,
+        selecting,
         onReset,
         bulkActionNode,
+        tablePropsProcessor: ({ heads, getRowProps }) => ({
+          heads: getBulkHeaderNodes(heads),
+          getRowProps: (rowData, rowIndex) => {
+            const out = getRowProps(rowData, rowIndex);
+
+            return {
+              ...out,
+              nodes: getBulkRowNodes({ rowData }, out.nodes),
+            };
+          },
+          disabledRemapRowsValidation: selecting,
+        }),
         getBulkTopActionsNode: (node) => {
           return (
             <div className="flex items-center px-1">
@@ -107,46 +171,8 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
             </div>
           );
         },
-        getBulkHeaderNodes: (nodes) => {
-          if (!selecting) return nodes;
-
-          return [
-            <FieldCheckbox
-              key="checkbox"
-              noUseFormik
-              value={selectedAll}
-              onChange={(e) => {
-                setSelected([]);
-                setSelectedAll(e.target.checked);
-              }}
-            />,
-            ...nodes,
-          ];
-        },
-        getBulkRowNodes: ({ rowData }, nodes) => {
-          if (!selecting) return nodes;
-
-          return [
-            <FieldCheckbox
-              key="checkbox"
-              noUseFormik
-              value={isSelected(rowData)}
-              onChange={(e) => {
-                if (e.target.checked) {
-                  setSelected([...selected, rowData]);
-                } else {
-                  setSelected(removeRow(selected, getIndex(rowData)));
-                }
-              }}
-            />,
-            ...nodes.map((node, index) => (
-              <div key={index} className="relative">
-                {node}
-                <div className="absolute inset-0 bg-white opacity-60 rounded-md cursor-not-allowed" />
-              </div>
-            )),
-          ];
-        },
+        getBulkHeaderNodes,
+        getBulkRowNodes,
       })}
     </>
   );

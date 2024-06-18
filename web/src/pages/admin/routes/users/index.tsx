@@ -28,7 +28,11 @@ export const Users = () => {
       </TopActions>
 
       <Table<User>
-        heads={[null, 'Nombre', 'Email', 'Validado', 'Fecha de Creación']}
+        remapRowsIndex={{
+          xs: [[0, 1, 2, 3, 4]],
+          xl: 'none',
+        }}
+        heads={['Acciones', 'Nombre', 'Email', 'Validado', 'Fecha de Creación']}
         getRowProps={(rowData) => {
           const { name, createdAt, email, validated } = rowData;
 

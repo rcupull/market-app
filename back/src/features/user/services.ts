@@ -1,4 +1,4 @@
-import { QueryHandle } from '../../types/general';
+import { ModelDocument, QueryHandle } from '../../types/general';
 import { User } from '../../types/user';
 import { UserModel } from '../../schemas/user';
 import { FilterQuery, ProjectionType, UpdateQuery } from 'mongoose';
@@ -45,14 +45,16 @@ const getOne: QueryHandle<
   return user;
 };
 
-const find: QueryHandle<
+const getAll: QueryHandle<
   {
     query: FilterQuery<User>;
     projection?: ProjectionType<User>;
   },
-  Array<User>
+  Array<ModelDocument<User>>
 > = async ({ query, projection }) => {
-  return await UserModel.find(query, projection);
+  const out = await UserModel.find(query, projection);
+
+  return out;
 };
 
 const updateOne: QueryHandle<
@@ -81,5 +83,5 @@ export const userServices = {
   getOne,
   updateOne,
   findOneAndUpdate,
-  find,
+  getAll,
 };

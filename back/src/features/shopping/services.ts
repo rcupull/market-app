@@ -12,6 +12,7 @@ import {
   getAllShoppingFilterQuery,
   postToShoppingPostDataReshaper,
 } from './utils';
+import { getSortQuery } from '../../utils/schemas';
 
 const updateOrAddOne: QueryHandle<
   {
@@ -103,12 +104,16 @@ const getAllWithPagination: QueryHandle<
   {
     paginateOptions?: PaginateOptions;
     query: GetAllShoppingArgs;
+    sort?: string;
   },
   PaginateResult<Shopping>
-> = async ({ query, paginateOptions = {} }) => {
+> = async ({ query, sort, paginateOptions = {} }) => {
   const filterQuery = getAllShoppingFilterQuery(query);
 
-  const out = await ShoppingModel.paginate(filterQuery, paginateOptions);
+  const out = await ShoppingModel.paginate(filterQuery, {
+    ...paginateOptions,
+    sort: getSortQuery(sort),
+  });
 
   return out as unknown as PaginateResult<Shopping>;
 };
@@ -149,6 +154,17 @@ const updateOne: QueryHandle<
   await ShoppingModel.updateOne(query, update, options);
 };
 
+const updateMany: QueryHandle<
+  {
+    query: FilterQuery<Shopping>;
+    update: UpdateQuery<Shopping>;
+    options?: UpdateOptions;
+  },
+  void
+> = async ({ query, update, options }) => {
+  await ShoppingModel.updateMany(query, update, options);
+};
+
 const findAndUpdateOne: QueryHandle<
   {
     query: FilterQuery<Shopping>;
@@ -180,6 +196,7 @@ const findOneAndDelete: QueryHandle<
 export const shoppingServices = {
   getOne,
   updateOne,
+  updateMany,
   updateOrAddOne,
   getAllWithPagination,
   getAll,

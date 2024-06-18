@@ -1,3 +1,4 @@
+import { Schema } from 'mongoose';
 import { BaseIdentity } from './general';
 import { Post, PostPurshaseNotes } from './post';
 
@@ -33,4 +34,6 @@ export interface Shopping extends BaseIdentity {
     state: ShoppingState;
     lastUpdatedDate: Date;
   }>;
+  //
+  billId?: Schema.Types.ObjectId;
 }

@@ -3,7 +3,7 @@ import { Shopping } from '../../types/shopping';
 import { FilterQuery } from 'mongoose';
 import { Bill, BillState } from '../../types/billing';
 
-export interface GetAllBillsArgs extends FilterQuery<Shopping> {
+export interface GetAllBillsArgs extends FilterQuery<Bill> {
   states?: Array<BillState>;
   routeNames?: Array<string>;
 }

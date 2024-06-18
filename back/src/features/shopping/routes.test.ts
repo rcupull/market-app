@@ -184,10 +184,10 @@ describe('shopping', () => {
 
       const bd = await fillBD({
         noCreateInitialShopping: true,
-        overrideProductPost1Business1User1: {
+        productPost1Business1User1: {
           stockAmount: 20,
         },
-        overrideProductPost2Business1User1: {
+        productPost2Business1User1: {
           stockAmount: 30,
         },
       });
@@ -289,17 +289,17 @@ describe('shopping', () => {
         .expect(401);
     });
 
-    it('should remove the whole order if has not postid', async () => {
+    it('should remove the whole shopping if has not postid', async () => {
       const sendUpdateStockAmountMessage = jest
         .spyOn(notificationsHanldlesAll, 'sendUpdateStockAmountMessage')
         .mockImplementation(jest.fn());
 
       const bd = await fillBD({
         noCreateInitialShopping: true,
-        overrideProductPost1Business1User1: {
+        productPost1Business1User1: {
           stockAmount: 20,
         },
-        overrideProductPost2Business1User1: {
+        productPost2Business1User1: {
           stockAmount: 30,
         },
       });
@@ -369,10 +369,10 @@ describe('shopping', () => {
 
       const bd = await fillBD({
         noCreateInitialShopping: true,
-        overrideProductPost1Business1User1: {
+        productPost1Business1User1: {
           stockAmount: 20,
         },
-        overrideProductPost2Business1User1: {
+        productPost2Business1User1: {
           stockAmount: 30,
         },
       });
@@ -454,7 +454,7 @@ describe('shopping', () => {
 
     it('should change the state to READY_TO_DELIVER', async () => {
       const { user1, shopping1Business1User1 } = await fillBD({
-        overrideShopping1Business1User1: {
+        shopping1Business1User1: {
           state: 'REQUESTED',
         },
       });
@@ -496,7 +496,7 @@ describe('shopping', () => {
 
     it('should not change the state to CONSTRUCTION', async () => {
       const { user1, shopping1Business1User1 } = await fillBD({
-        overrideShopping1Business1User1: {
+        shopping1Business1User1: {
           state: 'REQUESTED',
         },
       });

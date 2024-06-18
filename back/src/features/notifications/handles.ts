@@ -46,7 +46,7 @@ export const sendUpdateStockAmountMessage: QueryHandle<{
   postId: string;
 }> = async ({ postId, currentStockAmount }) => {
   try {
-    const users = await userServices.find({
+    const users = await userServices.getAll({
       query: {},
       projection: {
         firebaseToken: 1,

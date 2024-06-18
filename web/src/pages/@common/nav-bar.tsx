@@ -35,6 +35,7 @@ import { useAuthSignUpModal } from 'pages/@modals/useAuthSignUpModal';
 import { StyleProps } from 'types/general';
 import {
   getBusinessAboutUsRoute,
+  getBusinessRoute,
   getDashboardBusinessRoute,
   getDashboardRoute,
   getOneBusinessRoute,
@@ -46,7 +47,7 @@ export const Navbar = ({ className }: NavbarProps) => {
   const { isAdmin, isUser, isAuthenticated, authData, onRefreshAuthUser } = useAuth();
   const { signOut } = useSignOut();
   const { user } = authData || {};
-  const { isBusinessPage, params, isAuthenticatedPage, pushRoute } = useRouter();
+  const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute } = useRouter();
   const { routeName } = params;
   const { business } = useBusiness();
   const authChangePasswordModal = useAuthChangePasswordModal();
@@ -87,7 +88,15 @@ export const Navbar = ({ className }: NavbarProps) => {
           onClick: () => pushRoute('/'),
           svg: SvgHomeSolid,
           className: cn('sm:hidden', {
-            '!block': isBusinessPage,
+            '!block': isOneBusinessPage,
+          }),
+        },
+        {
+          label: 'Todos los negocios',
+          onClick: () => pushRoute(getBusinessRoute()),
+          svg: SvgStoreSolid,
+          className: cn('sm:hidden', {
+            '!block': isOneBusinessPage,
           }),
         },
         {
@@ -95,7 +104,7 @@ export const Navbar = ({ className }: NavbarProps) => {
           onClick: () => pushRoute('/price'),
           svg: SvgDollarSignSolid,
           className: cn('sm:hidden', {
-            '!block': isBusinessPage,
+            '!block': isOneBusinessPage,
           }),
         },
         {
@@ -103,7 +112,7 @@ export const Navbar = ({ className }: NavbarProps) => {
           onClick: () => pushRoute('/about-us'),
           svg: SvgUsersSolid,
           className: cn('sm:hidden', {
-            '!block': isBusinessPage,
+            '!block': isOneBusinessPage,
           }),
           divider: true,
         },
@@ -164,9 +173,9 @@ export const Navbar = ({ className }: NavbarProps) => {
         </>
       }
       items={[
-        isBusinessPage &&
+        isOneBusinessPage &&
           !!routeName && { name: 'Publicaciones', href: getOneBusinessRoute({ routeName }) },
-        isBusinessPage &&
+        isOneBusinessPage &&
           aboutUsPage?.visible &&
           !!aboutUsPage.title &&
           !!routeName && {
@@ -174,10 +183,11 @@ export const Navbar = ({ className }: NavbarProps) => {
             href: getBusinessAboutUsRoute({ routeName }),
           },
         ////////////////////////////////////////////////////////////////////////////////////////////////
-        !isBusinessPage && { name: 'Inicio', href: '/' },
-        !isBusinessPage && { name: 'Precios', href: '/price' },
-        !isBusinessPage && { name: '¿Que es Asere Market?', href: '/about-us' },
-        !isBusinessPage && DEVELOPMENT && { name: 'Documentación', href: '/docs' },
+        !isOneBusinessPage && { name: 'Inicio', href: '/' },
+        !isOneBusinessPage && { name: 'Todos los negocios', href: getBusinessRoute() },
+        !isOneBusinessPage && { name: 'Precios', href: '/price' },
+        !isOneBusinessPage && { name: '¿Que es Asere Market?', href: '/about-us' },
+        !isOneBusinessPage && DEVELOPMENT && { name: 'Documentación', href: '/docs' },
         ////////////////////////////////////////////////////////////////////////////////////////////////
       ]}
       postContent={
@@ -192,7 +202,7 @@ export const Navbar = ({ className }: NavbarProps) => {
               className="hidden sm:block"
             />
           )}
-          {isBusinessPage && <ShoppingCartMenu />}
+          {isOneBusinessPage && <ShoppingCartMenu />}
           {isUser && (
             <IconButton
               title="Mi panel"

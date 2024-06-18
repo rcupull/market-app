@@ -20,7 +20,12 @@ export type Access =
   | 'shopping__write'
   | 'shopping__remove'
   //
+  | 'business__read'
+  | 'business__write'
+  | 'business__remove'
+  //
   | 'bills__read'
   | 'bills__write'
   | 'bills__remove'
+  //
   | 'agenda__full';

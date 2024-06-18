@@ -28,7 +28,7 @@ interface UseRouterReturn {
   search: string;
   params: Record<string, string | undefined>;
   //
-  isBusinessPage: boolean;
+  isOneBusinessPage: boolean;
   isShoppingPage: boolean;
   isPostPage: boolean;
   isThisPostPage: (args: { postId: string; routeName: string }) => boolean;
@@ -80,7 +80,7 @@ export const useRouter = (): UseRouterReturn => {
   const isAdminPage = pathname.startsWith('/admin');
 
   return {
-    isBusinessPage: pathname.startsWith(getBusinessRoute()),
+    isOneBusinessPage: !!routeName && pathname.startsWith(getBusinessRoute()),
     isShoppingPage: !!routeName && pathname.startsWith(getShoppingRoute({ routeName })),
     isPostPage: !!routeName && pathname.startsWith(getPostsRoute({ routeName })),
     isThisPostPage: ({ routeName, postId }) => {
