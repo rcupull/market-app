@@ -289,7 +289,7 @@ describe('shopping', () => {
         .expect(401);
     });
 
-    it('should remove the whole order if has not postid', async () => {
+    it('should remove the whole shopping if has not postid', async () => {
       const sendUpdateStockAmountMessage = jest
         .spyOn(notificationsHanldlesAll, 'sendUpdateStockAmountMessage')
         .mockImplementation(jest.fn());
