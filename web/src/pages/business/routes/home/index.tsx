@@ -1,24 +1,23 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
-import { BusinessCardSimple } from "components/business-card-simple";
-import { CardGroup } from "components/card-group";
+import { BusinessCardSimple } from 'components/business-card-simple';
+import { CardGroup } from 'components/card-group';
 
-import { useGetAllBusinessSummary } from "features/api/business/useGetAllBusinessSummary";
+import { useGetAllBusinessSummary } from 'features/api/business/useGetAllBusinessSummary';
 
-import { useFiltersVolatile } from "hooks/useFiltersVolatile";
-import { useScrollBottom } from "hooks/useScrollBottom";
+import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
+import { useScrollBottom } from 'hooks/useScrollBottom';
 
-import { Filters } from "./Filters";
+import { Filters } from './Filters';
 
-import { LayoutPage } from "pages/@common/layout-page";
-import { LayoutPageSection } from "pages/@common/layout-page-section";
-import { useInfinityScrolling } from "pages/dashboard/routes/business/routes/route-name/links/useInfinityScrolling";
-import { GetAllBusinessQuery } from "types/api";
-import { getImageEndpoint } from "utils/api";
-import { getOneBusinessRoute } from "utils/business";
+import { LayoutPage } from 'pages/@common/layout-page';
+import { LayoutPageSection } from 'pages/@common/layout-page-section';
+import { useInfinityScrolling } from 'pages/dashboard/routes/business/routes/route-name/links/useInfinityScrolling';
+import { GetAllBusinessQuery } from 'types/api';
+import { getImageEndpoint } from 'utils/api';
+import { getOneBusinessRoute } from 'utils/business';
 
 export const Home = () => {
-
   const { getAllBusinessSummary } = useGetAllBusinessSummary();
 
   const filters = useFiltersVolatile<GetAllBusinessQuery>({
@@ -39,7 +38,7 @@ export const Home = () => {
 
   return (
     <LayoutPage title="Todos los negocios">
-      <Filters onChange={(e) =>filters.onMergeFilters(e) }/>
+      <Filters onChange={(e) => filters.onMergeFilters(e)} />
       <LayoutPageSection isBusy={getAllBusinessSummary.status.isBusy} className="mt-20">
         <div ref={refCardContainer} onScroll={onScroll} className="overflow-y-auto max-h-50rem">
           <CardGroup className="mt-6">

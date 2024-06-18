@@ -6,7 +6,6 @@ import { Inspiration } from './components/inspiration';
 import { LayoutPage } from 'pages/@common/layout-page';
 
 export const Home = () => {
-
   return (
     <LayoutPage>
       <HeroSectionCentered />
@@ -14,7 +13,6 @@ export const Home = () => {
       <Inspiration />
 
       <Highlights className="px-10 sm:px-0 my-20" />
-
     </LayoutPage>
   );
 };
