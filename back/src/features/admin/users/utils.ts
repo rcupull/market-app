@@ -1,4 +1,4 @@
-import { Access } from '../../types/admin';
+import { Access } from '../../../types/admin';
 
 export const specialAccessRecord: Record<Access, any> = {
   full: {},
