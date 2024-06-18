@@ -22,6 +22,7 @@ export interface DateTimePickerProps extends StyleProps {
   showPreviewDate?: boolean; // show date in timepicker and  input value in blank
   keepTimeZone?: boolean;
   onTransformPickerChange?: (date: Date) => Date;
+  defaulthours?: 'start' | 'end';
 }
 
 export const DateTimePicker = ({
@@ -34,6 +35,7 @@ export const DateTimePicker = ({
   preview,
   showPreviewDate,
   className,
+  defaulthours = 'start',
 }: DateTimePickerProps): JSX.Element => {
   const allowMinDate =
     allowDaysBeforeNow === undefined ? undefined : addDays(new Date(), -allowDaysBeforeNow);
@@ -50,7 +52,22 @@ export const DateTimePicker = ({
     <Calendar
       date={!!value && realMinDate && showPreviewDate ? realMinDate : value}
       locale={es}
-      onChange={onChange}
+      onChange={(newDate) => {
+        if (value) {
+          /**
+           * keep hours from value
+           */
+          const hours = value.getHours();
+          onChange?.(new Date(newDate.setHours(hours)));
+        } else {
+          /**
+           * set hours to default if value is undefined
+           */
+          const setHoursArgs: [number, number, number] = defaulthours === 'start' ? [0, 0, 0] : [23, 59, 59];
+
+          onChange?.(new Date(newDate.setHours(...setHoursArgs)));
+        }
+      }}
       minDate={realMinDate}
       maxDate={realMaxDate}
       preview={

@@ -26,9 +26,9 @@ export const DateTimePickerCollapsable = ({
     setState(value)
   },[value])
 
-  const handleChange = (value: Date) => {
-    setState(value)
-    onChange?.(value)
+  const handleChange = (newValue: Date) => {
+    setState(newValue)
+    onChange?.(newValue)
   }
 
   return (

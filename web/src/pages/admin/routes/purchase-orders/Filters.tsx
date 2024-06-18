@@ -45,7 +45,7 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
         });
       }}
     >
-      {({value}) => {
+      {({ value }) => {
         return (
           <form className={cn('w-full', className)}>
             <FieldRadioGroup<{ value: ShoppingStateFilter }>
@@ -89,8 +89,13 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
             />
 
             <div className="flex gap-4 mt-6">
-              <FieldDateTimePickerCollapsable name="dateFrom" label="Desde" />
-              <FieldDateTimePickerCollapsable name="dateTo" label="Hasta" minDate={value.dateFrom} />
+              <FieldDateTimePickerCollapsable name="dateFrom" label="Desde" defaulthours="start" />
+              <FieldDateTimePickerCollapsable
+                name="dateTo"
+                label="Hasta"
+                defaulthours="end"
+                minDate={value.dateFrom}
+              />
             </div>
           </form>
         );
