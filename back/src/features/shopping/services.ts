@@ -154,6 +154,17 @@ const updateOne: QueryHandle<
   await ShoppingModel.updateOne(query, update, options);
 };
 
+const updateMany: QueryHandle<
+  {
+    query: FilterQuery<Shopping>;
+    update: UpdateQuery<Shopping>;
+    options?: UpdateOptions;
+  },
+  void
+> = async ({ query, update, options }) => {
+  await ShoppingModel.updateMany(query, update, options);
+};
+
 const findAndUpdateOne: QueryHandle<
   {
     query: FilterQuery<Shopping>;
@@ -185,6 +196,7 @@ const findOneAndDelete: QueryHandle<
 export const shoppingServices = {
   getOne,
   updateOne,
+  updateMany,
   updateOrAddOne,
   getAllWithPagination,
   getAll,

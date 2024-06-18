@@ -1,4 +1,4 @@
-import { Bill } from './billing';
+import { BillState } from './billing';
 import { BaseIdentity } from './general';
 import { Post } from './post';
 
@@ -31,5 +31,6 @@ export interface Shopping extends BaseIdentity {
     state: ShoppingState;
     lastUpdatedDate: string;
   }>;
-  billData?: Pick<Bill, '_id' | 'state'>;
+  billId?: string;
+  billState?: BillState;
 }

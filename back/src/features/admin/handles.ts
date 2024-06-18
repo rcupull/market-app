@@ -9,7 +9,7 @@ import {
   get400Response,
   getBillNotFoundResponse,
 } from '../../utils/server-response';
-import { billDataReshaper, specialAccessRecord } from './utils';
+import { specialAccessRecord } from './utils';
 import { userServices } from '../user/services';
 import { shoppingServices } from '../shopping/services';
 import { billingServices } from '../billing/services';
@@ -149,7 +149,7 @@ const get_admin_shopping: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { query, paginateOptions } = req;
 
-      const { routeNames, states, dateFrom, dateTo, sort = '-createdAt' } = query;
+      const { routeNames, hasBill, states, dateFrom, dateTo, sort = '-createdAt' } = query;
 
       const allBills = await billingServices.getAll({ query: {} });
 
@@ -161,6 +161,7 @@ const get_admin_shopping: () => RequestHandler = () => {
           states,
           dateFrom,
           dateTo,
+          ...(hasBill ? { billId: { $exists: hasBill === 'true' } } : {}),
         },
       });
 
@@ -169,7 +170,7 @@ const get_admin_shopping: () => RequestHandler = () => {
         const bill = allBills.find(({ shoppingIds }) => shoppingIds.includes(shopping._id));
 
         if (bill) {
-          return { ...shopping, billData: billDataReshaper(bill) };
+          return { ...shopping, billState: bill.state };
         }
 
         return shopping;
@@ -187,6 +188,7 @@ const post_admin_bills: () => RequestHandler = () => {
 
       const { routeName, shoppingIds, dateFrom, dateTo, states } = body;
 
+      // get shopping
       const shoppingData: Array<Shopping> = await shoppingServices.getAll({
         query: {
           routeName,
@@ -194,22 +196,35 @@ const post_admin_bills: () => RequestHandler = () => {
           dateFrom,
           dateTo,
           states,
+          billId: { $exists: false },
         },
       });
 
+      // get shopping debits
       const shoppingDebits = shoppingData.reduce(
         (acc, shopping) => acc + getShoppingInfo(shopping).shoppingDebit,
         0,
       );
 
-      const out = await billingServices.addOne({
+      // create new bill
+      const newBill = await billingServices.addOne({
         routeName,
         shoppingIds: shoppingData.map(({ _id }) => _id),
         totalDebit: shoppingDebits,
         state: 'PENDING_TO_PAY',
       });
 
-      res.send(out);
+      // update shopping billId
+      await shoppingServices.updateMany({
+        query: {
+          _id: { $in: shoppingData.map(({ _id }) => _id) },
+        },
+        update: {
+          billId: newBill._id,
+        },
+      });
+
+      res.send(newBill);
     });
   };
 };
@@ -275,6 +290,16 @@ const del_admin_bills_billId_shopping: () => RequestHandler = () => {
         bill.shoppingIds = newShoppingIds;
         await bill.save();
       }
+
+      // update shopping billId
+      await shoppingServices.updateMany({
+        query: {
+          _id: { $in: shoppingIds },
+        },
+        update: {
+          billId: null,
+        },
+      });
 
       res.send({});
     });

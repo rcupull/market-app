@@ -2,7 +2,7 @@ import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldDateTimePickerCollapsable } from 'components/field-date-time-picker-collapsable';
 import { FieldRadioGroup } from 'components/field-radio-group';
 import { FieldSelectAsync } from 'components/field-select-async';
-import { FiltersReset } from 'components/filters-reset';
+import { FiltersContainer } from 'components/filters-container';
 import { Formux } from 'components/formux';
 
 import { useGetAllBusinessSummary } from 'features/api/business/useGetAllBusinessSummary';
@@ -32,14 +32,15 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
   const useCall = () => useGetAllBusinessSummary().getAllBusinessSummary;
 
   return (
-    <FiltersReset
-      onClick={() => {
+    <FiltersContainer
+      onReset={() => {
         onChange?.({
           page: 1,
           dateFrom: undefined,
           dateTo: undefined,
-          states: [],
-          routeNames: [],
+          states: undefined,
+          routeNames: undefined,
+          hasBill: undefined,
         });
       }}
     >
@@ -49,6 +50,7 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
           routeNames: value?.routeNames || [],
           dateFrom: value?.dateFrom,
           dateTo: value?.dateTo,
+          hasBill: value?.hasBill,
         }}
         onChange={(filters) => {
           onChange?.({
@@ -76,16 +78,42 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
                 containerClassName="w-full flex item-center flex-wrap gap-4"
               />
 
-              <FieldSelectAsync
-                className="mt-2"
-                name="routeNames"
-                multi
-                label="Negocios"
-                useCall={useCall}
-                searchToArgs={(search) => ({ search })}
-                renderOption={({ name }) => name}
-                optionToValue={({ routeName }) => routeName}
-              />
+              <div className="w-full flex items-center gap-10">
+                <FieldSelectAsync
+                  className="mt-2 max-w-80 flex-grow"
+                  name="routeNames"
+                  multi
+                  label="Negocios"
+                  useCall={useCall}
+                  searchToArgs={(search) => ({ search })}
+                  renderOption={({ name }) => name}
+                  optionToValue={({ routeName }) => routeName}
+                />
+
+                <FieldRadioGroup<{ value: boolean | null; label: string }>
+                  name="hasBill"
+                  label="Facturada"
+                  renderOption={({ checked, item }) => (
+                    <FieldCheckbox noUseFormik value={checked} label={item.label} />
+                  )}
+                  optionToValue={({ value }) => value}
+                  items={[
+                    {
+                      label: 'Si',
+                      value: true,
+                    },
+                    {
+                      label: 'No',
+                      value: false,
+                    },
+                    {
+                      label: 'Todas',
+                      value: null,
+                    },
+                  ]}
+                  containerClassName="flex item-center flex-wrap gap-4 w-fit"
+                />
+              </div>
 
               <div className="flex gap-4 mt-2 flex-wrap">
                 <FieldDateTimePickerCollapsable
@@ -104,6 +132,6 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
           );
         }}
       </Formux>
-    </FiltersReset>
+    </FiltersContainer>
   );
 };

@@ -8,6 +8,7 @@ import { useGetAllBusinessSummary } from 'features/api/business/useGetAllBusines
 
 import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 
+import { BillShopping } from './BillShopping';
 import { BulkActionsShopping } from './BulkActionsShopping';
 import { Filters } from './Filters';
 import { RowActions } from './RowActions';
@@ -97,7 +98,7 @@ export const PurchaseOrders = () => {
                   'Fecha de creación',
                 ]}
                 getRowProps={(rowData) => {
-                  const { createdAt, purchaserName, state, routeName, billData } = rowData;
+                  const { createdAt, purchaserName, state, routeName } = rowData;
 
                   const { totalPrice, totalProducts } = getShoppingData(rowData);
 
@@ -116,7 +117,11 @@ export const PurchaseOrders = () => {
                       <ShoppingStateLabel key="state" state={state} className="text-nowrap" />,
                       totalProducts,
                       <span key="price" className="text-nowrap">{`${totalPrice} CUP`}</span>,
-                      billData ? billData.state : 'No facturado',
+                      <BillShopping
+                        key="BillShopping"
+                        rowData={rowData}
+                        onRefresh={onRefreshForce}
+                      />,
                       getDateString({ date: createdAt, showTime: true }),
                     ],
                   };
