@@ -117,6 +117,8 @@ export interface GetAllShoppingQuery extends PaginationQuery {
 export interface GetAllShoppingAdminQuery extends PaginationQuery {
   routeNames?: Array<string>;
   states?: Array<ShoppingState>;
+  dateFrom?: string;
+  dateTo?: string;
 }
 
 export interface GetAllBillAdminQuery extends PaginationQuery {

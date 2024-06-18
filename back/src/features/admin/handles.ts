@@ -149,15 +149,18 @@ const get_admin_shopping: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { query, paginateOptions } = req;
 
-      const { routeNames, states } = query;
+      const { routeNames, states, dateFrom, dateTo, sort = '-createdAt' } = query;
 
       const allBills = await billingServices.getAll({ query: {} });
 
       let out = await shoppingServices.getAllWithPagination({
         paginateOptions,
+        sort,
         query: {
           routeNames,
           states,
+          dateFrom,
+          dateTo,
         },
       });
 

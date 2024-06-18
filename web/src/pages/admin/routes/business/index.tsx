@@ -29,10 +29,9 @@ export const BusinessPage = () => {
       <Table
         remapRowsIndex={{
           xs: [[0, 1, 2, 3, 4]],
-          md: [[0], [1, 2], [3, 4]],
-          lg: 'none',
+          xl: 'none',
         }}
-        heads={[null, 'Nombre', 'Usuario', 'Routename', 'Fecha de Creación']}
+        heads={['Acciones', 'Nombre', 'Usuario', 'Routename', 'Fecha de Creación']}
         getRowProps={(rowData) => {
           const { name, createdAt, routeName, userData } = rowData;
 

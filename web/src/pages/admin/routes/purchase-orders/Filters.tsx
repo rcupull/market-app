@@ -1,4 +1,5 @@
 import { FieldCheckbox } from 'components/field-checkbox';
+import { FieldDateTimePickerCollapsable } from 'components/field-date-time-picker-collapsable';
 import { FieldRadioGroup } from 'components/field-radio-group';
 import { FieldSelectAsync } from 'components/field-select-async';
 import { Formux } from 'components/formux';
@@ -22,18 +23,29 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
   const useCall = () => useGetAllBusinessSummary().getAllBusinessSummary;
 
   return (
-    <Formux<{ state: ShoppingStateFilter; routeNames: Array<string> }>
+    <Formux<{
+      state: ShoppingStateFilter;
+      routeNames: Array<string>;
+      dateFrom?: string;
+      dateTo?: string;
+    }>
       value={{
         state: value?.states?.length === 1 ? value.states[0] : 'ALL',
         routeNames: value?.routeNames || [],
+        dateFrom: value?.dateFrom,
+        dateTo: value?.dateTo,
       }}
       onChange={(filters) => {
-        const { state } = filters;
+        const { state, ...ommitedFilters } = filters;
 
-        onChange?.({ ...filters, page: 1, states: state === 'ALL' ? [] : [state] });
+        onChange?.({
+          ...ommitedFilters,
+          page: 1,
+          states: state === 'ALL' ? [] : [state],
+        });
       }}
     >
-      {() => {
+      {({value}) => {
         return (
           <form className={cn('w-full', className)}>
             <FieldRadioGroup<{ value: ShoppingStateFilter }>
@@ -75,6 +87,11 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
               renderOption={({ name }) => name}
               optionToValue={({ routeName }) => routeName}
             />
+
+            <div className="flex gap-4 mt-6">
+              <FieldDateTimePickerCollapsable name="dateFrom" label="Desde" />
+              <FieldDateTimePickerCollapsable name="dateTo" label="Hasta" minDate={value.dateFrom} />
+            </div>
           </form>
         );
       }}

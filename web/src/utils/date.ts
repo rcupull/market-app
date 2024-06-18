@@ -28,3 +28,5 @@ export const getDateString = ({
     ...(showTime ? defaultTimeOptions : {}),
   });
 };
+
+export const isValidStrDate = (strDate: string): boolean => !isNaN(Date.parse(strDate));

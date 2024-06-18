@@ -30,8 +30,7 @@ export const Users = () => {
       <Table<User>
         remapRowsIndex={{
           xs: [[0, 1, 2, 3, 4]],
-          md: [[0], [1, 2], [3, 4]],
-          lg: 'none',
+          xl: 'none',
         }}
         heads={['Acciones', 'Nombre', 'Email', 'Validado', 'Fecha de Creación']}
         getRowProps={(rowData) => {

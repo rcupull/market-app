@@ -41,7 +41,7 @@ export const Menu = ({
           allowedPlacements: ['bottom-start', 'bottom-end', 'top-start', 'top-end'],
         }}
       >
-        <MenuBase.Button as="div" className="cursor-pointer">
+        <MenuBase.Button as="div" className="cursor-pointer w-fit">
           {buttonElement}
         </MenuBase.Button>
         <Transition
