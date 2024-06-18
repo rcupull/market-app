@@ -1,23 +1,30 @@
 import { queryToSearch } from 'hooks/useRouter/utils';
 
-import { deepJsonCopy, replaceAll } from './general';
+import { deepJsonCopy } from './general';
 
 import { Business, SearchLayoutType } from 'types/business';
 import { Post } from 'types/post';
 import { Shopping } from 'types/shopping';
 
+const LETERS_NUMBERS_REGEX = /^[a-zA-Z0-9]*$/;
 export const getRouteName = (name: string): string => {
-  let out = name.trim().toLowerCase();
-  out = replaceAll(out, ' ', '-');
-  out = out.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // remove accents
-  return out;
+  return name
+    .trim()
+    .toLowerCase()
+    .split('')
+    .map((char) => (LETERS_NUMBERS_REGEX.test(char) ? char : '-')) // replace to -
+    .join('')
+    .normalize('NFD');
 };
 
 export const getPostCategoryTag = (label: string): string => {
-  let out = label.trim().toLowerCase();
-  out = replaceAll(out, ' ', '_');
-  out = out.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // remove accents
-  return out;
+  return label
+    .trim()
+    .toLowerCase()
+    .split('')
+    .map((char) => (LETERS_NUMBERS_REGEX.test(char) ? char : '_')) // replace to _
+    .join('')
+    .normalize('NFD');
 };
 
 export const getInitials = (fullname: string) => {
