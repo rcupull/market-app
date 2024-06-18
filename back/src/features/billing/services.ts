@@ -45,6 +45,16 @@ const updateOne: QueryHandle<{
   await BillingModel.updateOne(query, update);
 };
 
+const findOneAndDelete: QueryHandle<
+  {
+    query: FilterQuery<Bill>;
+  },
+  ModelDocument<Bill> | null
+> = async ({ query }) => {
+  const out = await BillingModel.findOneAndDelete(query);
+  return out;
+};
+
 const getOne: QueryHandle<
   {
     query: FilterQuery<Bill>;
@@ -60,4 +70,5 @@ export const billingServices = {
   addOne,
   getOne,
   updateOne,
+  findOneAndDelete,
 };

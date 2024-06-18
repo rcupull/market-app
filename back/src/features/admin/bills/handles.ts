@@ -132,8 +132,42 @@ const del_admin_bills_billId_shopping: () => RequestHandler = () => {
   };
 };
 
+const del_admin_bills_billId: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { params } = req;
+
+      const { billId } = params;
+
+      // remove and get the bill
+      const bill = await billingServices.findOneAndDelete({
+        query: {
+          _id: billId,
+        },
+      });
+
+      if (!bill) {
+        return getBillNotFoundResponse({ res });
+      }
+
+      // update shopping billId
+      await shoppingServices.updateMany({
+        query: {
+          _id: { $in: bill.shoppingIds },
+        },
+        update: {
+          billId: null,
+        },
+      });
+
+      res.send({});
+    });
+  };
+};
+
 export const adminBillsHandles = {
   post_admin_bills,
   get_admin_bills,
   del_admin_bills_billId_shopping,
+  del_admin_bills_billId,
 };
