@@ -63,7 +63,8 @@ export const DateTimePicker = ({
           /**
            * set hours to default if value is undefined
            */
-          const setHoursArgs: [number, number, number] = defaulthours === 'start' ? [0, 0, 0] : [23, 59, 59];
+          const setHoursArgs: [number, number, number] =
+            defaulthours === 'start' ? [0, 0, 0] : [23, 59, 59];
 
           onChange?.(new Date(newDate.setHours(...setHoursArgs)));
         }

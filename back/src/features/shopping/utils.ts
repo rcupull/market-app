@@ -3,16 +3,18 @@ import { Shopping, ShoppingPostData, ShoppingState } from '../../types/shopping'
 import { User } from '../../types/user';
 import { logger } from '../logger';
 import { shoppingServices } from './services';
-import { isEqualIds, isNumber, set } from '../../utils/general';
+import { isEqualIds, isNumber } from '../../utils/general';
 import { postServices } from '../post/services';
 import { sendUpdateStockAmountMessage } from '../notifications/handles';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { Post } from '../../types/post';
 import { FilterQuery } from 'mongoose';
+import { setFilterQueryWithDates } from '../../utils/schemas';
 
 export interface GetAllShoppingArgs extends FilterQuery<Shopping> {
   routeNames?: Array<string>;
   states?: Array<ShoppingState>;
+  shoppingIds?: Array<string>;
   dateFrom?: string;
   dateTo?: string;
 }
@@ -138,9 +140,13 @@ export const postToShoppingPostDataReshaper = makeReshaper<Post, ShoppingPostDat
 });
 
 export const getAllShoppingFilterQuery = (args: GetAllShoppingArgs): FilterQuery<Shopping> => {
-  const { routeNames, states, dateFrom, dateTo, ...omittedQuery } = args;
+  const { routeNames, states, dateFrom, dateTo, shoppingIds, ...omittedQuery } = args;
 
   const filterQuery: FilterQuery<Shopping> = omittedQuery;
+
+  if (shoppingIds?.length) {
+    filterQuery._id = { $in: shoppingIds };
+  }
 
   if (routeNames?.length) {
     filterQuery.routeName = { $in: routeNames };
@@ -150,13 +156,7 @@ export const getAllShoppingFilterQuery = (args: GetAllShoppingArgs): FilterQuery
     filterQuery.state = { $in: states };
   }
 
-  if (dateFrom) {
-    set(filterQuery, 'createdAt.$gte', new Date(dateFrom));
-  }
-
-  if (dateTo) {
-    set(filterQuery, 'createdAt.$lte', new Date(dateTo));
-  }
+  setFilterQueryWithDates({ filterQuery, dateFrom, dateTo });
 
   return filterQuery;
 };

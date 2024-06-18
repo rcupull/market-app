@@ -17,19 +17,18 @@ export interface DateTimePickerCollapsableProps extends DateTimePickerProps {}
 export const DateTimePickerCollapsable = ({
   ...omittedProps
 }: DateTimePickerCollapsableProps): JSX.Element => {
-  const {  value, onChange } = omittedProps
+  const { value, onChange } = omittedProps;
 
   const [state, setState] = useState<Date>();
 
-
-  useEffect(()=>{
-    setState(value)
-  },[value])
+  useEffect(() => {
+    setState(value);
+  }, [value]);
 
   const handleChange = (newValue: Date) => {
-    setState(newValue)
-    onChange?.(newValue)
-  }
+    setState(newValue);
+    onChange?.(newValue);
+  };
 
   return (
     <Menu
@@ -45,7 +44,7 @@ export const DateTimePickerCollapsable = ({
           readOnly={false}
         />
       }
-      topElement={<DateTimePicker {...omittedProps} value={state} onChange={handleChange}/>}
+      topElement={<DateTimePicker {...omittedProps} value={state} onChange={handleChange} />}
     />
   );
 };

@@ -185,11 +185,15 @@ const post_admin_bills: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { body } = req;
 
-      const { routeName, shoppingIds } = body;
+      const { routeName, shoppingIds, dateFrom, dateTo, states } = body;
 
       const shoppingData: Array<Shopping> = await shoppingServices.getAll({
         query: {
-          _id: { $in: shoppingIds },
+          routeName,
+          shoppingIds,
+          dateFrom,
+          dateTo,
+          states,
         },
       });
 
@@ -200,7 +204,7 @@ const post_admin_bills: () => RequestHandler = () => {
 
       const out = await billingServices.addOne({
         routeName,
-        shoppingIds,
+        shoppingIds: shoppingData.map(({ _id }) => _id),
         totalDebit: shoppingDebits,
         state: 'PENDING_TO_PAY',
       });

@@ -16,8 +16,14 @@ export interface RemapRowsIndexRecord {
   xxl?: RemapRowsIndexValue;
 }
 
-export interface TableProps<RowData extends AnyRecord = AnyRecord> extends StyleProps {
+export type TablePropsPropcessor<RowData extends AnyRecord = AnyRecord> = (
+  props: TablePropsBase<RowData>,
+) => Partial<TablePropsBase<RowData>>;
+
+interface TablePropsBase<RowData extends AnyRecord = AnyRecord> extends StyleProps {
   remapRowsIndex?: RemapRowsIndexRecord;
+  disabledRemapRowsValidation?: boolean;
+
   heads: TableHeads;
   getRowProps: TableGetRowProps<RowData>;
   data: Array<RowData> | null;
@@ -28,4 +34,8 @@ export interface TableProps<RowData extends AnyRecord = AnyRecord> extends Style
 
   onReorder?: (args: { fromIndex: number; toIndex: number }) => void;
   enabledReorder?: boolean;
+}
+
+export interface TableProps<RowData extends AnyRecord = AnyRecord> extends TablePropsBase<RowData> {
+  propsPreprocessors?: Array<TablePropsPropcessor<RowData>>;
 }

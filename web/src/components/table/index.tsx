@@ -14,21 +14,29 @@ import { getRemapedProps, validateRemapIndex } from './utils';
 import { AnyRecord } from 'types/general';
 import { cn } from 'utils/general';
 
-export const Table = <RowData extends AnyRecord = AnyRecord>({
-  heads: headsProp,
-  getRowProps: getRowPropsProp,
-  data,
-  className,
-  //
-  isBusy,
-  //
-  onScrollBottom,
-  isBusyBottom,
-  //
-  enabledReorder,
-  onReorder,
-  remapRowsIndex,
-}: TableProps<RowData>) => {
+export const Table = <RowData extends AnyRecord = AnyRecord>(props: TableProps<RowData>) => {
+  const { propsPreprocessors, ...initialProps } = props;
+
+  const {
+    heads: headsProp,
+    getRowProps: getRowPropsProp,
+    data,
+    className,
+    //
+    isBusy,
+    //
+    onScrollBottom,
+    isBusyBottom,
+    //
+    enabledReorder,
+    onReorder,
+    remapRowsIndex,
+    disabledRemapRowsValidation,
+  } = (propsPreprocessors || []).reduce(
+    (acc, propsPreprocessor) => ({ ...acc, ...propsPreprocessor(acc) }),
+    initialProps,
+  );
+
   const ref = useRef<HTMLDivElement>(null);
 
   const { onScroll } = useScrollBottom(ref, () => onScrollBottom?.());
@@ -39,8 +47,7 @@ export const Table = <RowData extends AnyRecord = AnyRecord>({
   const breakpoints = useBreakpoints();
 
   if (remapRowsIndex) {
-
-    if(!validateRemapIndex(remapRowsIndex, heads.length)){
+    if (!disabledRemapRowsValidation && !validateRemapIndex(remapRowsIndex, heads.length)) {
       throw new Error('Invalid remapRowsIndex');
     }
 

@@ -1,5 +1,7 @@
-import { SchemaDefinition } from 'mongoose';
+import { FilterQuery, SchemaDefinition } from 'mongoose';
 import { PostClothingSize } from '../types/post';
+import { set } from './general';
+import { BaseIdentity } from '../types/general';
 
 export const createdAtSchemaDefinition: SchemaDefinition = {
   createdAt: { type: Date, required: true, default: new Date() },
@@ -30,4 +32,24 @@ export const getSortQuery = (sort: string | undefined): Record<string, number> |
   }
 
   return { [field]: direction };
+};
+
+export const setFilterQueryWithDates = <T extends BaseIdentity = BaseIdentity>({
+  filterQuery,
+  dateFrom,
+  dateTo,
+}: {
+  dateFrom?: string;
+  dateTo?: string;
+  filterQuery: FilterQuery<T>;
+}): void => {
+  if (dateFrom) {
+    //@ts-expect-error ts(2345)
+    set(filterQuery, 'createdAt.$gte', new Date(dateFrom));
+  }
+
+  if (dateTo) {
+    //@ts-expect-error ts(2345)
+    set(filterQuery, 'createdAt.$lte', new Date(dateTo));
+  }
 };
