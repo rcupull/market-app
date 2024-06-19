@@ -1,6 +1,4 @@
 import { Button } from 'components/button';
-import { CheckEditorUploadAdapter } from 'components/check-editor/CheckEditorUploadAdapter';
-import { getCheckEditorUploadUrl } from 'components/check-editor/utils';
 import { FieldCheckEditor } from 'components/field-check-editor';
 import { Formux } from 'components/formux';
 
@@ -44,13 +42,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 name="termsAndConditions"
                 className="mt-6"
                 checkEditorProps={{
-                  className: 'check-editor-max-h-50vh',
-                  getUploadAdapter: (args) => {
-                    return new CheckEditorUploadAdapter({
-                      ...args,
-                      uploadUrl: getCheckEditorUploadUrl({ routeName }),
-                    });
-                  },
+                  className: 'check-editor-max-h-50vh check-editor-min-h-40vh',
                 }}
               />
 
