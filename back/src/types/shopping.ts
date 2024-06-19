@@ -1,6 +1,6 @@
 import { Schema } from 'mongoose';
 import { BaseIdentity } from './general';
-import { Post, PostPurshaseNotes } from './post';
+import { Post, PostCurrency, PostPurshaseNotes } from './post';
 
 export type ShoppingState =
   | 'CONSTRUCTION'
@@ -12,10 +12,7 @@ export type ShoppingState =
   | 'CANCELED'
   | 'REJECTED';
 
-export type ShoppingPostData = Pick<
-  Post,
-  '_id' | 'price' | 'images' | 'name' | 'currency' | 'routeName'
->;
+export type ShoppingPostData = Pick<Post, '_id' | 'price' | 'images' | 'name'>;
 
 export interface Shopping extends BaseIdentity {
   posts: Array<{
@@ -29,6 +26,8 @@ export interface Shopping extends BaseIdentity {
   purchaserName: string;
   //
   routeName: string;
+  currency: PostCurrency;
+  //
   state: ShoppingState;
   history?: Array<{
     state: ShoppingState;

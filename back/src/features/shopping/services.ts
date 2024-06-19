@@ -23,7 +23,7 @@ const updateOrAddOne: QueryHandle<
   },
   void
 > = async ({ amountToAdd = 1, purshaseNotes, user, post }) => {
-  const { _id: postId, routeName } = post;
+  const { _id: postId, routeName, currency } = post;
 
   const existInConstruction = await ShoppingModel.findOne({
     purchaserId: user._id,
@@ -86,6 +86,7 @@ const updateOrAddOne: QueryHandle<
       purchaserId: user._id,
       purchaserName: user.name,
       routeName,
+      currency,
       posts: [
         {
           postData: postToShoppingPostDataReshaper(post),

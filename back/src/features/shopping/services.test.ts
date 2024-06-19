@@ -70,13 +70,14 @@ describe('shopping services', () => {
           'createdAt',
           'posts.0.postData._id',
           'posts.0.lastUpdatedDate',
-          'purchaserId',
+          'purchaserId'
         ),
         `
         {
           "__v": 0,
           "_id": Anything,
           "createdAt": Anything,
+          "currency": "CUP",
           "history": [],
           "posts": [
             {
@@ -84,11 +85,9 @@ describe('shopping services', () => {
               "lastUpdatedDate": Anything,
               "postData": {
                 "_id": Anything,
-                "currency": "CUP",
                 "images": [],
                 "name": "chancletas",
                 "price": 10,
-                "routeName": "business1User1",
               },
               "purshaseNotes": {
                 "interestedByClothingSizes": [],
@@ -101,7 +100,7 @@ describe('shopping services', () => {
           "routeName": "business1User1",
           "state": "CONSTRUCTION",
         }
-      `,
+      `
       );
     });
   });

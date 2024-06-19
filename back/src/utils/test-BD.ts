@@ -135,6 +135,7 @@ export const fillBD = async (args?: {
       purchaserId: user1._id,
       purchaserName: user1.name,
       routeName: business1User1.routeName,
+      currency: productPost1Business1User1.currency, // TODO from business later
       posts: [
         {
           postData: postToShoppingPostDataReshaper(productPost1Business1User1),
