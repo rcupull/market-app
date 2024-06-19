@@ -81,7 +81,7 @@ export const fillBD = async (args?: {
     name: 'business1User1',
     routeName: 'business1User1',
     createdBy: user1._id,
-    validated: true,
+    currency: 'CUP',
     ...(args?.business1User1 || {}),
   });
   await business1User1.save();
@@ -90,7 +90,7 @@ export const fillBD = async (args?: {
     name: 'business2User1',
     routeName: 'business2User1',
     createdBy: user1.id,
-    validated: true,
+    currency: 'CUP',
     ...(args?.business2User1 || {}),
   });
   await business2User1.save();
@@ -99,8 +99,8 @@ export const fillBD = async (args?: {
     name: 'hiddenBusinessUser1',
     routeName: 'hiddenBusinessUser1',
     createdBy: user1.id,
-    validated: true,
     hidden: true,
+    currency: 'CUP',
     ...(args?.hiddenBusinessUser1 || {}),
   });
 
@@ -135,6 +135,7 @@ export const fillBD = async (args?: {
       purchaserId: user1._id,
       purchaserName: user1.name,
       routeName: business1User1.routeName,
+      currency: business1User1.currency,
       posts: [
         {
           postData: postToShoppingPostDataReshaper(productPost1Business1User1),
@@ -164,6 +165,7 @@ export const fillBD = async (args?: {
     name: 'business1User2',
     routeName: 'business1User2',
     createdBy: user2.id,
+    currency: 'CUP',
     ...(args?.business1User2 || {}),
   });
   await business1User2.save();
@@ -172,6 +174,7 @@ export const fillBD = async (args?: {
     name: 'business2User2',
     routeName: 'business2User2',
     createdBy: user2.id,
+    currency: 'CUP',
     ...(args?.business2User2 || {}),
   });
   await business2User2.save();
@@ -180,8 +183,8 @@ export const fillBD = async (args?: {
     name: 'hiddenBusinessUser2',
     routeName: 'hiddenBusinessUser2',
     createdBy: user2.id,
-    validated: true,
     hidden: true,
+    currency: 'CUP',
     ...(args?.hiddenBusinessUser2 || {}),
   });
   await hiddenBusinessUser2.save();

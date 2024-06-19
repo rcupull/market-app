@@ -1,10 +1,10 @@
-import { PostCardLayout } from 'types/business';
-import { Post, PostCurrency } from 'types/post';
+import { BusinessCurrency, PostCardLayout } from 'types/business';
+import { Post } from 'types/post';
 import { cn, isNumber } from 'utils/general';
 
 const renderPriceCurrency = (
   price: number,
-  currency: PostCurrency,
+  currency: BusinessCurrency,
   layout: PostCardLayout['price'],
 ) => {
   const priceToRender = price.toFixed(2);
@@ -32,12 +32,13 @@ const renderPriceCurrency = (
 export interface CardPostPriceProps {
   post: Post;
   layout?: PostCardLayout;
+  currency: BusinessCurrency;
 }
 
-export const CardPostPrice = ({ post, layout }: CardPostPriceProps) => {
+export const CardPostPrice = ({ post, layout, currency }: CardPostPriceProps) => {
   const priceLayout = layout?.price;
   const discountLayout = layout?.discount;
-  const { price, currency, discount } = post;
+  const { price, discount } = post;
 
   const hasDiscount = !!discount && !!discountLayout && discountLayout !== 'none';
 

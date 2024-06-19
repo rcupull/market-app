@@ -4,8 +4,6 @@ import { PostPageLayout } from './business';
 
 export type PostType = 'product' | 'link'; // el tipo de publicaciones que posee
 
-export type PostCurrency = 'CUP' | 'MLC' | 'USD';
-
 export type PostColor =
   | 'white'
   | 'gray'
@@ -43,7 +41,6 @@ export interface Post extends BaseIdentity {
   name: string;
   price?: number;
   discount?: number;
-  currency?: PostCurrency;
   reviews?: PostReviews;
   reviewsUserIds?: Array<Schema.Types.ObjectId>;
   colors?: Array<PostColor>;

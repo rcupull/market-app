@@ -11,10 +11,12 @@ import { ReviewProps } from 'components/review';
 
 import { usePortal } from 'hooks/usePortal';
 
+import { BusinessCurrency } from 'types/business';
 import { Post } from 'types/post';
 
 export interface ClothingProductGrid1Props {
   post?: Post | null;
+  currency: BusinessCurrency;
   render: {
     images?: (props: ProductImagesProps) => React.ReactNode;
     price?: (props: ProductPriceProps) => React.ReactNode;
@@ -27,22 +29,12 @@ export interface ClothingProductGrid1Props {
   };
 }
 
-export const ClothingProductGrid1 = ({ post, render }: ClothingProductGrid1Props) => {
+export const ClothingProductGrid1 = ({ post, render, currency }: ClothingProductGrid1Props) => {
   const portal = usePortal();
 
   if (!post) return <></>;
 
-  const {
-    colors,
-    currency,
-    price,
-    description,
-    clothingSizes,
-    details,
-    highlights,
-    reviews,
-    images,
-  } = post;
+  const { colors, price, description, clothingSizes, details, highlights, reviews, images } = post;
 
   return (
     <div className="bg-white w-full">

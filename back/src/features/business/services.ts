@@ -39,9 +39,9 @@ const getAll: QueryHandle<
 };
 
 const addOne: QueryHandle<
-  Pick<Business, 'categories' | 'createdBy' | 'routeName' | 'name' | 'postCategories'>,
+  Pick<Business, 'categories' | 'createdBy' | 'routeName' | 'name' | 'postCategories' | 'currency'>,
   Business | null
-> = async ({ categories, createdBy, routeName, name, postCategories }) => {
+> = async ({ categories, createdBy, routeName, name, postCategories, currency }) => {
   const routeNameExists = await BusinessModel.findOne({ routeName });
 
   if (routeNameExists) {
@@ -54,6 +54,7 @@ const addOne: QueryHandle<
     name,
     routeName,
     postCategories,
+    currency,
   });
 
   await out.save();

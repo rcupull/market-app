@@ -11,7 +11,7 @@ export interface ShoppingDetailsProps {
 }
 
 export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => {
-  const { state, posts } = shopping;
+  const { state, posts, currency } = shopping;
 
   const { totalPrice, totalProducts } = getShoppingData(shopping);
 
@@ -37,7 +37,7 @@ export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => 
 
       <div className="flex flex-col gap-2 mt-2">
         {posts.map(({ postData, count }, index) => {
-          const { name, currency, price, images } = postData;
+          const { name, price, images } = postData;
 
           const mainImage = images?.[0];
 

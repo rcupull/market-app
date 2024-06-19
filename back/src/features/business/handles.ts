@@ -183,7 +183,7 @@ const post_business: () => RequestHandler = () => {
 
       const { body } = req;
 
-      const { name, categories, routeName } = body;
+      const { name, categories, routeName, currency } = body;
 
       const out = await businessServices.addOne({
         categories,
@@ -191,6 +191,7 @@ const post_business: () => RequestHandler = () => {
         routeName,
         createdBy: user._id,
         postCategories: getPostCategoriesFromBusinessCategories(categories),
+        currency,
       });
 
       if (!out) {

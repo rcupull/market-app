@@ -1,5 +1,6 @@
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
+import { FieldSelect } from 'components/field-select';
 import { Formux } from 'components/formux';
 
 import { useAddOneBusiness } from 'features/api/business/useAddOneBusiness';
@@ -12,7 +13,7 @@ import { Portal } from 'hooks/usePortal';
 import { FieldBusinessCategoriesSelect } from './FieldBusinessCategoriesSelect';
 
 import { FormRouteName } from 'pages/@common/form-route-name';
-import { Business } from 'types/business';
+import { Business, BusinessCurrency } from 'types/business';
 import { getRouteName } from 'utils/business';
 import { getRequiredLabel } from 'utils/form';
 
@@ -34,10 +35,11 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
 
   return (
     <>
-      <Formux<Pick<Business, 'categories' | 'name'>>
+      <Formux<Pick<Business, 'categories' | 'name' | 'currency'>>
         value={{
           categories: [],
           name: '',
+          currency: 'CUP',
           ...(business || {}),
         }}
         validate={[
@@ -87,21 +89,39 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                 label={getRequiredLabel('Nombre del negocio')}
               />
 
-              {!business && (
-                <>
-                  <FormRouteName
-                    routeName={getRouteName(value.name)}
-                    error={routeValidationErrorMessage === errors.name}
-                    className="mt-3"
-                  />
+              <>
+                <FormRouteName
+                  routeName={getRouteName(value.name)}
+                  error={routeValidationErrorMessage === errors.name}
+                  className="mt-3"
+                />
 
-                  <FieldBusinessCategoriesSelect
-                    label={getRequiredLabel('Categorías')}
-                    className="mt-6"
-                    name="categories"
-                  />
-                </>
-              )}
+                <FieldSelect<{ currency: BusinessCurrency }>
+                  items={[
+                    {
+                      currency: 'CUP',
+                    },
+                    {
+                      currency: 'MLC',
+                    },
+                    {
+                      currency: 'USD',
+                    },
+                  ]}
+                  renderOption={({ currency }) => currency}
+                  renderValue={({ currency }) => currency}
+                  optionToValue={({ currency }) => currency}
+                  name="currency"
+                  label="Moneda"
+                  className="mt-6 w-full"
+                />
+
+                <FieldBusinessCategoriesSelect
+                  label={getRequiredLabel('Categorías')}
+                  className="mt-6"
+                  name="categories"
+                />
+              </>
 
               {portal.getPortal(
                 <Button
@@ -124,12 +144,13 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                         },
                       );
                     } else {
-                      const { categories, name } = value;
+                      const { categories, name, currency } = value;
 
                       addOneBusiness.fetch(
                         {
                           categories,
                           name,
+                          currency,
                           routeName: getRouteName(name),
                         },
                         {

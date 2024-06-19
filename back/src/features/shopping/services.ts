@@ -13,6 +13,8 @@ import {
   postToShoppingPostDataReshaper,
 } from './utils';
 import { getSortQuery } from '../../utils/schemas';
+import { Business } from '../../types/business';
+import { businessServices } from '../business/services';
 
 const updateOrAddOne: QueryHandle<
   {
@@ -81,11 +83,24 @@ const updateOrAddOne: QueryHandle<
       );
     }
   } else {
+    const businessData: ModelDocument<Pick<Business, 'currency'>> | null =
+      await businessServices.findOne({
+        query: {
+          routeName,
+        },
+        projection: {
+          currency: 1,
+        },
+      });
+
+    if (!businessData) return;
+
     const newShopping = new ShoppingModel({
       state: 'CONSTRUCTION',
       purchaserId: user._id,
       purchaserName: user.name,
       routeName,
+      currency: businessData.currency,
       posts: [
         {
           postData: postToShoppingPostDataReshaper(post),
