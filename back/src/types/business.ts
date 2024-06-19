@@ -5,6 +5,7 @@ import { Path } from './paths';
 import { businessCategoryTree } from '../features/general/constants';
 
 export type BusinessCategory = Path<typeof businessCategoryTree>;
+export type BusinessCurrency = 'CUP' | 'MLC' | 'USD';
 
 export type PostsLayoutSectionType = 'grid' | 'oneRowSlider';
 
@@ -158,6 +159,7 @@ export interface Business extends BaseIdentity {
       | 'images'
     >
   >;
+  currency: BusinessCurrency;
 }
 
 export interface BusinessSummary extends Pick<Business, '_id' | 'name' | 'routeName'> {

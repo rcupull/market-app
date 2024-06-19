@@ -5,7 +5,10 @@ import { Business } from 'types/business';
 import { getEndpoint } from 'utils/api';
 
 export const useAddOneBusiness = (): {
-  addOneBusiness: FetchResource<Pick<Business, 'name' | 'routeName' | 'categories'>, Business>;
+  addOneBusiness: FetchResource<
+    Pick<Business, 'name' | 'routeName' | 'categories' | 'currency'>,
+    Business
+  >;
 } => {
   const fetch = useFetch<Business>();
 

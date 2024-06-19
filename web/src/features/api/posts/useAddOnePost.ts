@@ -13,7 +13,6 @@ export const useAddOnePost = (): {
       | 'routeName'
       | 'clothingSizes'
       | 'colors'
-      | 'currency'
       | 'description'
       | 'details'
       | 'highlights'

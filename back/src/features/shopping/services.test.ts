@@ -77,6 +77,7 @@ describe('shopping services', () => {
           "__v": 0,
           "_id": Anything,
           "createdAt": Anything,
+          "currency": "CUP",
           "history": [],
           "posts": [
             {
@@ -84,11 +85,9 @@ describe('shopping services', () => {
               "lastUpdatedDate": Anything,
               "postData": {
                 "_id": Anything,
-                "currency": "CUP",
                 "images": [],
                 "name": "chancletas",
                 "price": 10,
-                "routeName": "business1User1",
               },
               "purshaseNotes": {
                 "interestedByClothingSizes": [],

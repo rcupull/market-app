@@ -23,7 +23,6 @@ const dummyPost: Post = {
   description: 'Zapatos de mujer de excelente calidad',
   _id: '_id',
   createdAt: new Date().toISOString(),
-  currency: 'CUP',
   price: 256.789,
   discount: 10,
   routeName: 'routeName',
@@ -34,6 +33,13 @@ export interface DummyPostCardProps {
 
 export const DummyPostCard = ({ postCardLayout }: DummyPostCardProps) => {
   return (
-    <CardPost neverUpdate href="/" layout={postCardLayout} post={dummyPost} onRefresh={() => {}} />
+    <CardPost
+      neverUpdate
+      href="/"
+      layout={postCardLayout}
+      post={dummyPost}
+      currency="CUP"
+      onRefresh={() => {}}
+    />
   );
 };

@@ -20,6 +20,7 @@ export const Default = (): JSX.Element => (
   <FormikWrapper>
     <ClothingProductGrid1
       post={dummyPostClothing}
+      currency="CUP"
       render={{
         images: (props) => <ProductImages1 {...props} />,
         price: (props) => <ProductPrice1 {...props} />,

@@ -132,11 +132,9 @@ export const deleteShoppingInConstruction: QueryHandle<{
 
 export const postToShoppingPostDataReshaper = makeReshaper<Post, ShoppingPostData>({
   _id: '_id',
-  routeName: 'routeName',
   price: 'price',
   images: 'images',
   name: 'name',
-  currency: 'currency',
 });
 
 export const getAllShoppingFilterQuery = (args: GetAllShoppingArgs): FilterQuery<Shopping> => {

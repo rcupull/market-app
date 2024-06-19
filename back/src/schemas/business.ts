@@ -21,6 +21,7 @@ const BusinessSchema = new Schema<Business>({
   name: { type: String, required: true },
   routeName: { type: String, required: true },
   hidden: { type: Boolean, default: false },
+  currency: { type: String, enum: ['CUP', 'MLC', 'USD'], required: true },
   categories: { type: [String], required: true },
   createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   postCategories: {

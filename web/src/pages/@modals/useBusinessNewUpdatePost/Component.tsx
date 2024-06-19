@@ -10,7 +10,6 @@ import { FieldPostLink } from 'components/field-post-link';
 import { FieldPostPageLayout } from 'components/field-post-page-layout';
 import { FieldPostStockAmount } from 'components/field-post-stock-amount';
 import { FieldRadioGroup } from 'components/field-radio-group';
-import { FieldSelect } from 'components/field-select';
 import { FieldTextArea } from 'components/field-text-area';
 import { Formux } from 'components/formux';
 
@@ -26,7 +25,7 @@ import { useBusiness } from '../../@hooks/useBusiness';
 
 import { imagesDimensions } from 'constants/posts';
 import { StyleProps } from 'types/general';
-import { Post, PostCurrency, PostFormState, PostType } from 'types/post';
+import { Post, PostFormState, PostType } from 'types/post';
 import { getImageEndpoint } from 'utils/api';
 import { getRequiredLabel } from 'utils/form';
 import { addStringToUniqueArray, isNumber } from 'utils/general';
@@ -103,7 +102,6 @@ export const Component = ({
       value={{
         name: '',
         price: undefined,
-        currency: 'CUP',
         details: '',
         description: '',
         colors: [],
@@ -205,7 +203,6 @@ export const Component = ({
             </>
 
             {(postFormFields.includes('price') ||
-              postFormFields.includes('currency') ||
               postFormFields.includes('discount') ||
               postFormFields.includes('stockAmount')) && (
               <>
@@ -215,26 +212,6 @@ export const Component = ({
                     name="price"
                     label={getRequiredLabel('Precio')}
                     type="number"
-                    className="mt-6 w-full"
-                  />
-
-                  <FieldSelect<{ currency: PostCurrency }>
-                    items={[
-                      {
-                        currency: 'CUP',
-                      },
-                      {
-                        currency: 'MLC',
-                      },
-                      {
-                        currency: 'USD',
-                      },
-                    ]}
-                    renderOption={({ currency }) => currency}
-                    renderValue={({ currency }) => currency}
-                    optionToValue={({ currency }) => currency}
-                    name="currency"
-                    label="Moneda"
                     className="mt-6 w-full"
                   />
 
@@ -312,7 +289,6 @@ export const Component = ({
                 onClick={() => {
                   const {
                     images,
-                    currency,
                     description,
                     name,
                     price,
@@ -342,7 +318,6 @@ export const Component = ({
                             {
                               postId,
                               images,
-                              currency,
                               description,
                               name,
                               price,
@@ -365,7 +340,6 @@ export const Component = ({
                   const handelAddPost = () => {
                     addOnePost.fetch(
                       {
-                        currency,
                         description,
                         name,
                         price,

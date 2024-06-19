@@ -132,34 +132,33 @@ describe('services', () => {
       //eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { _id, createdAt, createdBy, ...rest } = post.toJSON();
       expect(rest).toMatchInlineSnapshot(`
-              {
-                "__v": 0,
-                "clothingSizes": [],
-                "colors": [],
-                "currency": "CUP",
-                "hidden": false,
-                "hiddenBusiness": false,
-                "images": [],
-                "name": "chancletas",
-                "postCategoriesTags": [
-                  "cat1",
-                  "cat2",
-                  "cat3",
-                ],
-                "postType": "product",
-                "price": 10,
-                "reviews": [
-                  0,
-                  0,
-                  0,
-                  0,
-                  0,
-                ],
-                "reviewsUserIds": [],
-                "routeName": "business1User1",
-                "stockAmount": null,
-              }
-          `);
+        {
+          "__v": 0,
+          "clothingSizes": [],
+          "colors": [],
+          "hidden": false,
+          "hiddenBusiness": false,
+          "images": [],
+          "name": "chancletas",
+          "postCategoriesTags": [
+            "cat1",
+            "cat2",
+            "cat3",
+          ],
+          "postType": "product",
+          "price": 10,
+          "reviews": [
+            0,
+            0,
+            0,
+            0,
+            0,
+          ],
+          "reviewsUserIds": [],
+          "routeName": "business1User1",
+          "stockAmount": null,
+        }
+      `);
     });
   });
 });

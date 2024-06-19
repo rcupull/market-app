@@ -11,20 +11,21 @@ import { useModal } from 'features/modal/useModal';
 import { IconButtonViewPostPage } from './IconButtonViewPostPage';
 
 import { useShopping } from 'pages/@hooks/useShopping';
-import { Post } from 'types/post';
-import { ShoppingPostData } from 'types/shopping';
+import { Image } from 'types/general';
 
 export interface PostAddedProps {
   count: number;
-  post: Post | ShoppingPostData;
+  postId: string;
+  postImages?: Array<Image>;
+  postName: string;
+  routeName: string;
 }
 
-export const PostAdded = ({ count, post }: PostAddedProps) => {
+export const PostAdded = ({ count, postId, postImages, postName, routeName }: PostAddedProps) => {
   const { updateAddOneShopping } = useUpdateAddOneShopping();
   const shopping = useShopping();
 
-  const { name, images, _id, routeName } = post;
-  const mainImage = images?.[0];
+  const mainImage = postImages?.[0];
   const { pushModal } = useModal();
 
   return (
@@ -33,18 +34,18 @@ export const PostAdded = ({ count, post }: PostAddedProps) => {
         {mainImage ? <img src={mainImage.src} className="w-8" /> : <EmptyImage className="w-8" />}
       </div>
 
-      {name}
+      {postName}
 
       <div className="ml-auto" />
 
-      <IconButtonViewPostPage post={post} />
+      <IconButtonViewPostPage postId={postId} routeName={routeName} />
 
       <Amount
         value={count}
         isBusy={updateAddOneShopping.status.isBusy}
         onChange={(amount) => {
           updateAddOneShopping.fetch(
-            { postId: _id, routeName, amountToAdd: amount - count },
+            { postId, routeName, amountToAdd: amount - count },
             {
               onAfterSuccess: () => {
                 shopping.onFetch({ routeName });
@@ -75,7 +76,7 @@ export const PostAdded = ({ count, post }: PostAddedProps) => {
                       isBusy={removeShopping.status.isBusy}
                       onClick={() => {
                         removeShopping.fetch(
-                          { postId: _id, routeName },
+                          { postId, routeName },
                           {
                             onAfterSuccess: () => {
                               onClose();

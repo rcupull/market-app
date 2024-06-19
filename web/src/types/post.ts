@@ -1,8 +1,6 @@
 import { PostPageLayout } from './business';
 import { BaseIdentity, Image, ImageFile } from './general';
 
-export type PostCurrency = 'CUP' | 'USD' | 'MLC';
-
 export type PostType = 'product' | 'link'; // el tipo de publicaciones que posee
 
 export type PostReviews = [number, number, number, number, number];
@@ -19,7 +17,6 @@ export interface Post extends BaseIdentity {
   description?: string;
   name: string;
   price?: number;
-  currency?: PostCurrency;
   reviews?: PostReviews;
   colors?: Array<PostColor>;
   highlights?: Array<string>;
@@ -73,7 +70,6 @@ export type PostClothingSize = 'XXS' | 'XS' | 'S' | 'M' | 'L' | 'XL' | '2XL' | '
 export type PostFormState = Pick<
   Post,
   | 'name'
-  | 'currency'
   | 'clothingSizes'
   | 'colors'
   | 'description'
