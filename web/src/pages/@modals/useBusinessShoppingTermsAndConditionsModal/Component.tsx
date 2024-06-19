@@ -12,7 +12,7 @@ import { Portal } from 'hooks/usePortal';
 import { useBusiness } from '../../@hooks/useBusiness';
 
 interface State {
-  purchaseRequestTopInfo: string;
+  termsAndConditions: string;
 }
 
 export interface ComponentProps {
@@ -34,14 +34,14 @@ export const Component = ({ portal }: ComponentProps) => {
     <>
       <Formux<State>
         value={{
-          purchaseRequestTopInfo: shoppingMeta.purchaseRequestTopInfo || '',
+          termsAndConditions: shoppingMeta.termsAndConditions || '',
         }}
       >
         {({ value, isValid }) => {
           return (
             <form className="w-full">
               <FieldCheckEditor
-                name="purchaseRequestTopInfo"
+                name="termsAndConditions"
                 className="mt-6"
                 checkEditorProps={{
                   className: 'check-editor-max-h-50vh',
@@ -60,13 +60,13 @@ export const Component = ({ portal }: ComponentProps) => {
                   isBusy={updateOneBusiness.status.isBusy}
                   disabled={!isValid}
                   onClick={() => {
-                    const { purchaseRequestTopInfo } = value;
+                    const { termsAndConditions } = value;
                     updateOneBusiness.fetch(
                       {
                         update: {
                           shoppingMeta: {
                             ...shoppingMeta,
-                            purchaseRequestTopInfo,
+                            termsAndConditions,
                           },
                         },
                         routeName,

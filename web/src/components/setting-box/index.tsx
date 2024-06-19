@@ -20,7 +20,7 @@ export const SettingBox = ({
   return (
     <div
       className={cn(
-        'w-64 h-72 gap-1 p-2 border border-gray-300 rounded-md flex flex-col',
+        'w-full h-full gap-1 p-2 border border-gray-300 rounded-md flex flex-col',
         className,
       )}
     >
