@@ -1,6 +1,6 @@
-import { PostCurrency } from 'types/post';
+import { BusinessCurrency } from 'types/business';
 
 export interface ProductPriceProps {
   price?: number;
-  currency?: PostCurrency;
+  currency?: BusinessCurrency;
 }

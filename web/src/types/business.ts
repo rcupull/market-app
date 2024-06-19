@@ -2,6 +2,7 @@ import { BaseIdentity, Image } from './general';
 import { PostFormField, PostType } from './post';
 
 export type BusinessCategory = string;
+export type BusinessCurrency = 'CUP' | 'MLC' | 'USD';
 
 export type PostsLayoutSectionType = 'grid' | 'oneRowSlider';
 export type PostsLayoutSectionVisibility = 'businessPage' | 'postPage';
@@ -153,6 +154,7 @@ export interface Business extends BaseIdentity {
     history: Array<BusinessPaymentRequestHistory>;
   };
   postFormFields?: Array<PostFormField>;
+  currency: BusinessCurrency;
 }
 
 export interface BusinessSummary extends Pick<Business, '_id' | 'name' | 'routeName'> {

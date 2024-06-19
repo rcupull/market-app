@@ -88,6 +88,7 @@ export const PostId = ({ routeName }: PostIdProps) => {
         backButton
       >
         <ClothingProductGrid1
+          currency={business.currency}
           post={post}
           render={{
             images: (props) => <ProductImages2 {...props} />,

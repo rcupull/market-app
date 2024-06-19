@@ -10,7 +10,7 @@ import { getCardPostSizes } from './utils';
 
 import { UpdateSomethingContainer } from 'pages/@common/update-something-container';
 import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
-import { PostCardLayout } from 'types/business';
+import { BusinessCurrency, PostCardLayout } from 'types/business';
 import { Post } from 'types/post';
 import { cn } from 'utils/general';
 
@@ -21,6 +21,7 @@ export interface CardPostProps {
   href: string;
   onRefresh: () => void;
   neverUpdate?: boolean;
+  currency: BusinessCurrency;
 }
 
 export const CardPost = ({
@@ -30,6 +31,7 @@ export const CardPost = ({
   layout,
   href,
   onRefresh,
+  currency,
 }: CardPostProps) => {
   const businessNewUpdatePost = useBusinessNewUpdatePost();
   const { size, metaLayout } = layout || {};
@@ -40,7 +42,7 @@ export const CardPost = ({
         <div className="flex items-end flex-shrink-0">
           <div>
             <CardPostName layout={layout} post={post} />
-            <CardPostPrice layout={layout} post={post} />
+            <CardPostPrice layout={layout} post={post} currency={currency} />
             <CardPostStockAmount post={post} />
           </div>
 
@@ -53,7 +55,7 @@ export const CardPost = ({
       return (
         <div className="flex flex-col items-center flex-shrink-0">
           <CardPostName layout={layout} post={post} className="text-center" />
-          <CardPostPrice layout={layout} post={post} />
+          <CardPostPrice layout={layout} post={post} currency={currency} />
 
           <PostShoppingMethod layout={layout?.shoppingMethod} post={post} />
         </div>

@@ -4,7 +4,6 @@ export const dummyPostClothing: Post = {
   name: 'Basic Tee 6-Pack',
   createdBy: '123',
   price: 192,
-  currency: 'USD',
   postType: 'product',
   _id: '123',
   reviews: [200, 45, 7, 1, 1],

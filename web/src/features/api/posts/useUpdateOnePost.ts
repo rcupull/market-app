@@ -13,7 +13,6 @@ export const useUpdateOnePost = (): {
         Post,
         | 'clothingSizes'
         | 'colors'
-        | 'currency'
         | 'description'
         | 'details'
         | 'hidden'

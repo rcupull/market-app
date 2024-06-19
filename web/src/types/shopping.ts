@@ -1,4 +1,5 @@
 import { BillState } from './billing';
+import { BusinessCurrency } from './business';
 import { BaseIdentity } from './general';
 import { Post } from './post';
 
@@ -12,10 +13,7 @@ export type ShoppingState =
   | 'CANCELED'
   | 'REJECTED';
 
-export type ShoppingPostData = Pick<
-  Post,
-  '_id' | 'price' | 'images' | 'name' | 'currency' | 'routeName'
->;
+export type ShoppingPostData = Pick<Post, '_id' | 'price' | 'images' | 'name'>;
 
 export interface Shopping extends BaseIdentity {
   posts: Array<{
@@ -26,6 +24,7 @@ export interface Shopping extends BaseIdentity {
   purchaserId: string;
   purchaserName: string;
   routeName: string;
+  currency: BusinessCurrency;
   state: ShoppingState;
   history?: Array<{
     state: ShoppingState;
