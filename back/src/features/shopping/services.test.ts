@@ -70,7 +70,7 @@ describe('shopping services', () => {
           'createdAt',
           'posts.0.postData._id',
           'posts.0.lastUpdatedDate',
-          'purchaserId'
+          'purchaserId',
         ),
         `
         {
@@ -100,7 +100,7 @@ describe('shopping services', () => {
           "routeName": "business1User1",
           "state": "CONSTRUCTION",
         }
-      `
+      `,
       );
     });
   });

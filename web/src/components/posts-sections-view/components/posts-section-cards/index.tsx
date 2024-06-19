@@ -20,7 +20,7 @@ export const PostsSectionCards = ({
   layout,
   onRefresh,
 }: PostsSectionCardsProps) => {
-  const { routeName } = business;
+  const { routeName, currency } = business;
   const { type, postType } = layout;
 
   const getPostHref = (post: Post): string => {
@@ -60,6 +60,7 @@ export const PostsSectionCards = ({
           return {
             content: (
               <CardPost
+                currency={currency}
                 key={index}
                 post={post}
                 layout={layout.postCardLayout}
@@ -78,6 +79,7 @@ export const PostsSectionCards = ({
       {posts?.map((post, index) => {
         return (
           <CardPost
+            currency={currency}
             key={index}
             post={post}
             layout={layout.postCardLayout}

@@ -1,6 +1,7 @@
 import { Schema } from 'mongoose';
 import { BaseIdentity } from './general';
-import { Post, PostCurrency, PostPurshaseNotes } from './post';
+import { Post, PostPurshaseNotes } from './post';
+import { BusinessCurrency } from './business';
 
 export type ShoppingState =
   | 'CONSTRUCTION'
@@ -26,7 +27,7 @@ export interface Shopping extends BaseIdentity {
   purchaserName: string;
   //
   routeName: string;
-  currency: PostCurrency;
+  currency: BusinessCurrency;
   //
   state: ShoppingState;
   history?: Array<{

@@ -11,7 +11,7 @@ export interface ShoppingDetailsProps {
 }
 
 export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => {
-  const { state, posts, currency} = shopping;
+  const { state, posts, currency } = shopping;
 
   const { totalPrice, totalProducts } = getShoppingData(shopping);
 

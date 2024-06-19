@@ -100,7 +100,6 @@ const deleteOne: QueryHandle<{
 const addOne: QueryHandle<
   Pick<
     Post,
-    | 'currency'
     | 'hidden'
     | 'hiddenBusiness'
     | 'description'

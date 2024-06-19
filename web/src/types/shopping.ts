@@ -1,6 +1,7 @@
 import { BillState } from './billing';
+import { BusinessCurrency } from './business';
 import { BaseIdentity } from './general';
-import { Post, PostCurrency } from './post';
+import { Post } from './post';
 
 export type ShoppingState =
   | 'CONSTRUCTION'
@@ -23,7 +24,7 @@ export interface Shopping extends BaseIdentity {
   purchaserId: string;
   purchaserName: string;
   routeName: string;
-  currency: PostCurrency;
+  currency: BusinessCurrency;
   state: ShoppingState;
   history?: Array<{
     state: ShoppingState;

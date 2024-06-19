@@ -68,10 +68,6 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
                     value: 'postPageLayout',
                   },
                   {
-                    label: 'Moneda',
-                    value: 'currency',
-                  },
-                  {
                     label: 'Tallas de ropa',
                     value: 'clothingSizes',
                   },

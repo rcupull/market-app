@@ -26,69 +26,70 @@ describe('business', () => {
           expect(response.body.data[0]).toMatchInlineSnapshot(
             setAnyString<Business>('_id', 'createdAt', 'createdBy'),
             `
-          {
-            "__v": 0,
-            "_id": Anything,
-            "aboutUsPage": {
-              "visible": false,
-            },
-            "bannerImages": [],
-            "categories": [],
-            "createdAt": Anything,
-            "createdBy": Anything,
-            "hidden": false,
-            "layouts": {
-              "banner": {
-                "type": "static",
+            {
+              "__v": 0,
+              "_id": Anything,
+              "aboutUsPage": {
+                "visible": false,
               },
-              "footer": {
-                "type": "basic",
+              "bannerImages": [],
+              "categories": [],
+              "createdAt": Anything,
+              "createdBy": Anything,
+              "currency": "CUP",
+              "hidden": false,
+              "layouts": {
+                "banner": {
+                  "type": "static",
+                },
+                "footer": {
+                  "type": "basic",
+                },
+                "search": {
+                  "type": "right",
+                },
               },
-              "search": {
-                "type": "right",
+              "logo": null,
+              "name": "business1User1",
+              "postCategories": [],
+              "postFormFields": [
+                "name",
+                "currency",
+                "clothingSizes",
+                "colors",
+                "description",
+                "price",
+                "details",
+                "postCategoriesTags",
+                "discount",
+                "postPageLayout",
+                "stockAmount",
+                "images",
+              ],
+              "routeName": "business1User1",
+              "shoppingPayment": {
+                "history": [],
+                "requests": [],
+                "totalDebit": 0,
               },
-            },
-            "logo": null,
-            "name": "business1User1",
-            "postCategories": [],
-            "postFormFields": [
-              "name",
-              "currency",
-              "clothingSizes",
-              "colors",
-              "description",
-              "price",
-              "details",
-              "postCategoriesTags",
-              "discount",
-              "postPageLayout",
-              "stockAmount",
-              "images",
-            ],
-            "routeName": "business1User1",
-            "shoppingPayment": {
-              "history": [],
-              "requests": [],
-              "totalDebit": 0,
-            },
-          }
-        `,
+            }
+          `,
           );
 
           expect(response.body.paginator).toMatchInlineSnapshot(`
-          {
-            "dataCount": 4,
-            "hasNextPage": false,
-            "hasPrevPage": false,
-            "limit": 10,
-            "nextPage": null,
-            "offset": 0,
-            "page": 1,
-            "pageCount": 1,
-            "pagingCounter": 1,
-            "prevPage": null,
-          }
-        `);
+                      {
+                        "dataCount": 4,
+                        "hasNextPage": false,
+                        "hasPrevPage": false,
+                        "limit": 10,
+                        "nextPage": null,
+                        "offset": 0,
+                        "page": 1,
+                        "pageCount": 1,
+                        "pagingCounter": 1,
+                        "prevPage": null,
+                      }
+                  `);
         });
     });
   });
@@ -151,6 +152,7 @@ describe('business', () => {
           name: 'newBusiness',
           routeName: 'newBusiness',
           categories: ['clothing'],
+          currency: 'CUP',
         })
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200);
@@ -203,53 +205,54 @@ describe('business', () => {
           expect(response.body).toMatchInlineSnapshot(
             setAnyString<Business>('_id', 'createdAt', 'createdBy'),
             `
-          {
-            "__v": 0,
-            "_id": Anything,
-            "aboutUsPage": {
-              "visible": false,
-            },
-            "bannerImages": [],
-            "categories": [],
-            "createdAt": Anything,
-            "createdBy": Anything,
-            "hidden": false,
-            "layouts": {
-              "banner": {
-                "type": "static",
+            {
+              "__v": 0,
+              "_id": Anything,
+              "aboutUsPage": {
+                "visible": false,
               },
-              "footer": {
-                "type": "basic",
+              "bannerImages": [],
+              "categories": [],
+              "createdAt": Anything,
+              "createdBy": Anything,
+              "currency": "CUP",
+              "hidden": false,
+              "layouts": {
+                "banner": {
+                  "type": "static",
+                },
+                "footer": {
+                  "type": "basic",
+                },
+                "search": {
+                  "type": "right",
+                },
               },
-              "search": {
-                "type": "right",
+              "logo": null,
+              "name": "business1User1",
+              "postCategories": [],
+              "postFormFields": [
+                "name",
+                "currency",
+                "clothingSizes",
+                "colors",
+                "description",
+                "price",
+                "details",
+                "postCategoriesTags",
+                "discount",
+                "postPageLayout",
+                "stockAmount",
+                "images",
+              ],
+              "routeName": "business1User1",
+              "shoppingPayment": {
+                "history": [],
+                "requests": [],
+                "totalDebit": 0,
               },
-            },
-            "logo": null,
-            "name": "business1User1",
-            "postCategories": [],
-            "postFormFields": [
-              "name",
-              "currency",
-              "clothingSizes",
-              "colors",
-              "description",
-              "price",
-              "details",
-              "postCategoriesTags",
-              "discount",
-              "postPageLayout",
-              "stockAmount",
-              "images",
-            ],
-            "routeName": "business1User1",
-            "shoppingPayment": {
-              "history": [],
-              "requests": [],
-              "totalDebit": 0,
-            },
-          }
-        `,
+            }
+          `,
           );
         });
     });

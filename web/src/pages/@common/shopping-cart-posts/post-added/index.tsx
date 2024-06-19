@@ -15,10 +15,10 @@ import { Image } from 'types/general';
 
 export interface PostAddedProps {
   count: number;
-  postId:string;
-  postImages?: Array<Image>
-  postName:string
-  routeName:string
+  postId: string;
+  postImages?: Array<Image>;
+  postName: string;
+  routeName: string;
 }
 
 export const PostAdded = ({ count, postId, postImages, postName, routeName }: PostAddedProps) => {

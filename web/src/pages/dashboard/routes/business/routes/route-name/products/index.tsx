@@ -151,7 +151,6 @@ export const Products = () => {
                   _id: postId,
                   name,
                   createdAt,
-                  currency,
                   price,
                   postCategoriesTags,
                   hidden,
@@ -195,7 +194,7 @@ export const Products = () => {
                       },
                       {
                         label: 'Precio',
-                        value: `${price} ${currency}`,
+                        value: `${price} ${business?.currency}`,
                       },
                       {
                         label: (
