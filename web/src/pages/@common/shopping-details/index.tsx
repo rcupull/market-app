@@ -1,6 +1,7 @@
 import { EmptyImage } from 'components/empty-image';
 import { LabelValuePair } from 'components/label-value-pair';
 
+import { ShoppingButtonStateHistory } from '../shopping-button-state-history';
 import { ShoppingStateLabel } from '../shopping-state-label';
 
 import { Shopping } from 'types/shopping';
@@ -27,6 +28,7 @@ export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => 
       <div className="flex items-center gap-1">
         <span>Estado:</span>
         <ShoppingStateLabel state={state} />
+        <ShoppingButtonStateHistory shopping={shopping} />
       </div>
 
       <div className="flex flex-col gap-2 mt-2">

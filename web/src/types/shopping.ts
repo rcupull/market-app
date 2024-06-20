@@ -16,6 +16,11 @@ export type ShoppingState =
 
 export type ShoppingPostData = Pick<Post, '_id' | 'price' | 'images' | 'name'>;
 
+export type ShoppingStateHistory = Array<{
+  state: ShoppingState;
+  lastUpdatedDate: string;
+}>;
+
 export interface Shopping extends BaseIdentity {
   posts: Array<{
     postData: ShoppingPostData;
@@ -27,10 +32,7 @@ export interface Shopping extends BaseIdentity {
   routeName: string;
   currency: BusinessCurrency;
   state: ShoppingState;
-  history?: Array<{
-    state: ShoppingState;
-    lastUpdatedDate: string;
-  }>;
+  history?: ShoppingStateHistory;
   billId?: string;
   billState?: BillState;
 }

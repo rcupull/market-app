@@ -20,7 +20,7 @@ export const useShoppingDetailsModal = () => {
             const { shopping } = args;
 
             return {
-              title: 'Detalles de la compra',
+              title: 'Detalles de la orden de compra',
               content: <Component shopping={shopping} />,
               customBtn: <ButtonClose className="ml-auto" />,
             };

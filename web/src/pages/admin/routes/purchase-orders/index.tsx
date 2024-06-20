@@ -13,6 +13,7 @@ import { BulkActionsShopping } from './BulkActionsShopping';
 import { Filters } from './Filters';
 import { RowActions } from './RowActions';
 
+import { ShoppingButtonStateHistory } from 'pages/@common/shopping-button-state-history';
 import { ShoppingStateLabel } from 'pages/@common/shopping-state-label';
 import { TopActions } from 'pages/@common/top-actions';
 import { GetAllShoppingAdminQuery } from 'types/api';
@@ -114,7 +115,10 @@ export const PurchaseOrders = () => {
                         <span className="text-gray-400">{routeName}</span>
                       </div>,
                       purchaserName,
-                      <ShoppingStateLabel key="state" state={state} className="text-nowrap" />,
+                      <div key="state" className='flex items-center' >
+                        <ShoppingStateLabel state={state} className="text-nowrap" />
+                        <ShoppingButtonStateHistory shopping={rowData}/>
+                      </div>,
                       totalProducts,
                       <span key="price" className="text-nowrap">{`${totalPrice} CUP`}</span>,
                       <BillShopping
