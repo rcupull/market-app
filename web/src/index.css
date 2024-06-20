@@ -20,6 +20,13 @@ code {
     monospace;
 }
 
+.height-webkit-fill-available {
+    height: 100%;
+    height: -moz-available;          /* WebKit-based browsers will ignore this. */
+    height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+    height: fill-available;
+}
+
 .swiper-button-next:after,
 .swiper-button-prev:after {
   font-family: 'Courier New', Courier, monospace;

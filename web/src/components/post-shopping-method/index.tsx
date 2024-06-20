@@ -12,22 +12,22 @@ export interface PostShoppingMethodProps extends StyleProps {
 }
 
 export const PostShoppingMethod = ({
-  // layout,
+  layout,
   post,
   purshaseNotes,
   className,
   btnPostToCartVariant,
 }: PostShoppingMethodProps) => {
-  // if (layout === 'shoppingCart') {
-  return (
-    <ButtonPostToCart
-      post={post}
-      purshaseNotes={purshaseNotes}
-      className={className}
-      variant={btnPostToCartVariant}
-    />
-  );
-  // }
+  if (layout === 'shoppingCart') {
+    return (
+      <ButtonPostToCart
+        post={post}
+        purshaseNotes={purshaseNotes}
+        className={className}
+        variant={btnPostToCartVariant}
+      />
+    );
+  }
 
   return <></>;
 };
