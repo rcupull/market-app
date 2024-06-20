@@ -9,6 +9,7 @@ const shoppingState = {
   enum: [
     'CONSTRUCTION',
     'REQUESTED',
+    'APPROVED',
     'PROCESSING',
     'READY_TO_DELIVER',
     'DELIVERED',
@@ -69,6 +70,7 @@ const ShoppingSchema = new Schema<Shopping>({
   history: {
     type: [
       {
+        _id: false,
         state: shoppingState,
         lastUpdatedDate: {
           type: Date,

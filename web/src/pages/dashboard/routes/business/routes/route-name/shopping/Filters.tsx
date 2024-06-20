@@ -45,6 +45,10 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
           value: 'REQUESTED',
         },
         {
+          label: 'Aceptados',
+          value: 'APPROVED',
+        },
+        {
           label: 'En proceso',
           value: 'PROCESSING',
         },

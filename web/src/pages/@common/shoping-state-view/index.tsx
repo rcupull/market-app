@@ -45,7 +45,9 @@ export const ShoppingStateView = ({
   const nextStates = (): Array<ShoppingState> => {
     switch (state) {
       case 'REQUESTED':
-        return ['REQUESTED', 'PROCESSING', 'REJECTED'];
+        return ['REQUESTED', 'APPROVED', 'REJECTED'];
+      case 'APPROVED':
+        return ['APPROVED', 'PROCESSING', 'REJECTED'];
       case 'PROCESSING':
         return ['PROCESSING', 'READY_TO_DELIVER', 'DELIVERED', 'REJECTED'];
       case 'READY_TO_DELIVER':

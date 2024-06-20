@@ -38,6 +38,7 @@ export const getShoppingStateLabel = (state: ShoppingState): string => {
     PROCESSING: 'En proceso',
     DELIVERED: 'Entregado',
     READY_TO_DELIVER: 'Listo para entregar',
+    APPROVED: 'Aceptado',
   };
 
   return labels[state];

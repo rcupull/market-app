@@ -12,8 +12,8 @@ import { Links } from './links';
 import { Options } from './options';
 import { PostsSections } from './posts-sections';
 import { Products } from './products';
-import { PurchaseOrders } from './purchase-orders';
 import { Settings } from './settings';
+import { ShoppingPage } from './shopping';
 import { BusinessTab, getBusinessTabLabel } from './utils';
 
 import SvgAddressCard from 'icons/AddressCard';
@@ -87,7 +87,7 @@ export const RouteName = () => {
     {
       q: 'shopping',
       label: getBusinessTabLabel('shopping'),
-      content: <PurchaseOrders />,
+      content: <ShoppingPage />,
       svg: SvgShoppingCartSolid,
     },
     {

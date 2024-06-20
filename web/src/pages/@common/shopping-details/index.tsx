@@ -1,9 +1,11 @@
 import { EmptyImage } from 'components/empty-image';
 import { LabelValuePair } from 'components/label-value-pair';
 
+import { ShoppingStateLabel } from '../shopping-state-label';
+
 import { Shopping } from 'types/shopping';
 import { cn } from 'utils/general';
-import { getShoppingData, getShoppingStateLabel } from 'utils/shopping';
+import { getShoppingData } from 'utils/shopping';
 
 export interface ShoppingDetailsProps {
   shopping: Shopping;
@@ -24,15 +26,7 @@ export const ShoppingDetails = ({ shopping, onClick }: ShoppingDetailsProps) => 
     >
       <div className="flex items-center gap-1">
         <span>Estado:</span>
-        <span
-          className={cn('font-bold', {
-            'text-yellow-500': state === 'REQUESTED',
-            'text-gray-300': state === 'CONSTRUCTION',
-            'text-red-500': state === 'REJECTED' || state === 'CANCELED',
-          })}
-        >
-          {getShoppingStateLabel(state)}
-        </span>
+        <ShoppingStateLabel state={state} />
       </div>
 
       <div className="flex flex-col gap-2 mt-2">

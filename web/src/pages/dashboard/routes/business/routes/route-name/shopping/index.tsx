@@ -18,7 +18,7 @@ import { Shopping } from 'types/shopping';
 import { getDateString } from 'utils/date';
 import { getShoppingData } from 'utils/shopping';
 
-export const PurchaseOrders = () => {
+export const ShoppingPage = () => {
   const { getShoppingOwner } = useGetShoppingOwner();
   const { business } = useBusiness();
 

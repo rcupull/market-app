@@ -21,6 +21,7 @@ export interface FiltersProps extends StyleProps {
 const allStates: Array<ShoppingState> = [
   'CONSTRUCTION',
   'REQUESTED',
+  'APPROVED',
   'CANCELED',
   'REJECTED',
   'DELIVERED',
