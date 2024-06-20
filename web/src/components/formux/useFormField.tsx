@@ -1,6 +1,6 @@
 import { useForm } from './useForm';
 
-import { get, set } from 'utils/general';
+import { deepJsonCopy, get, set } from 'utils/general';
 
 //eslint-disable-next-line
 export const useFormField = <Value extends any = any>(args: {
@@ -28,7 +28,7 @@ export const useFormField = <Value extends any = any>(args: {
         if (!name) return;
 
         setValue((state) => {
-          const newState = { ...state };
+          const newState = deepJsonCopy(state);
           set(newState, name, e.target.value);
           return newState;
         });
