@@ -21,6 +21,7 @@ import SvgCogSolid from 'icons/CogSolid';
 import SvgDollarSignSolid from 'icons/DollarSignSolid';
 import SvgHomeSolid from 'icons/HomeSolid';
 import SvgKeySolid from 'icons/KeySolid';
+import SvgLinkSolid from 'icons/LinkSolid';
 import SvgSignInAltSolid from 'icons/SignInAltSolid';
 import SvgSignOutAltSolid from 'icons/SignOutAltSolid';
 import SvgStoreSolid from 'icons/StoreSolid';
@@ -40,14 +41,14 @@ import {
   getDashboardRoute,
   getOneBusinessRoute,
 } from 'utils/business';
-import { cn } from 'utils/general';
+import { cn, copyToClipboard } from 'utils/general';
 
 export interface NavbarProps extends StyleProps {}
 export const Navbar = ({ className }: NavbarProps) => {
   const { isAdmin, isUser, isAuthenticated, authData, onRefreshAuthUser } = useAuth();
   const { signOut } = useSignOut();
   const { user } = authData || {};
-  const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute } = useRouter();
+  const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute, isPostPage } = useRouter();
   const { routeName } = params;
   const { business } = useBusiness();
   const authChangePasswordModal = useAuthChangePasswordModal();
@@ -59,6 +60,17 @@ export const Navbar = ({ className }: NavbarProps) => {
   const authForgotPasswordRequestModal = useAuthForgotPasswordRequestModal();
   const callAfarResourcesRefreshUser = 'callAfarResourcesRefreshUser';
   useCallFromAfar(callAfarResourcesRefreshUser, onRefreshAuthUser);
+
+  const getCopyLinkLabel = () => {
+    if (isPostPage) {
+      return 'Copiar el link de este producto';
+    }
+    if (isOneBusinessPage) {
+      return 'Copiar el link de este negocio';
+    }
+    
+    return 'Copiar link';
+  };
 
   const navBarMenu = (
     <Menu
@@ -125,6 +137,13 @@ export const Navbar = ({ className }: NavbarProps) => {
             });
           },
           svg: IconUpdate,
+        },
+        {
+          label: getCopyLinkLabel(),
+          onClick: () => {
+            copyToClipboard(window.location.href);
+          },
+          svg: SvgLinkSolid,
         },
         !isAuthenticated && {
           label: 'Iniciar sesión',
