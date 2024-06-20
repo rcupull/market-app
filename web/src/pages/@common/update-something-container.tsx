@@ -26,7 +26,7 @@ export const UpdateSomethingContainer = ({
   const [over, setOver] = useState(false);
 
   if (!owner) {
-    return <>{children}</>;
+    return <div className={className}>{children}</div>;
   }
 
   return (
