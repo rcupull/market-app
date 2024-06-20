@@ -6,7 +6,7 @@ import { ZoomUpContainer } from 'components/zoom-up-container';
 
 import { useInterval } from 'hooks/useInterval';
 
-import { getCardPostImageSizes } from './utils';
+import { useCardPostImageSizes } from './utils';
 
 import { PostCardLayout } from 'types/business';
 import { Image, StyleProps } from 'types/general';
@@ -108,11 +108,11 @@ export const CardPostImage = ({ post, layout, className }: CardPostImageProps) =
       ref={ref}
       style={style}
       className={cn(
-        'border border-gray-300 overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center mx-auto',
+        'border border-gray-300 overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center mx-auto w-full',
         {
           '!rounded-full': imageLayout === 'rounded',
         },
-        getCardPostImageSizes({ size: layout?.size, rounded: imageLayout === 'rounded' }),
+        useCardPostImageSizes({ size: layout?.size, rounded: imageLayout === 'rounded' }),
         className,
       )}
     >

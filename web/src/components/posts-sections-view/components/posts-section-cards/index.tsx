@@ -75,7 +75,7 @@ export const PostsSectionCards = ({
   }
 
   return (
-    <CardGroup>
+    <CardGroup layout={layout.postCardLayout}>
       {posts?.map((post, index) => {
         return (
           <CardPost

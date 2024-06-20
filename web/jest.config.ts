@@ -1,6 +1,7 @@
 import type { Config } from 'jest';
 
 const config: Config = {
+  prettierPath: require.resolve('prettier-2'),
   verbose: true,
   moduleNameMapper: {
     '^src/(.*)$': '<rootDir>/src/$1',
@@ -13,7 +14,9 @@ const config: Config = {
     'utils/(.*)': '<rootDir>/src/utils/$1',
     'constants/(.*)': '<rootDir>/src/constants/$1',
     'media/(.*)': '<rootDir>/src/media/$1',
+    '\\.(css|less)$': 'identity-obj-proxy',
   },
+  testEnvironment: 'jsdom',
   transform: {
     '\\.[jt]sx?$': [
       'ts-jest',

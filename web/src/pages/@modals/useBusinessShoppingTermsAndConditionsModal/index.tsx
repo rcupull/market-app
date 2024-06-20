@@ -10,7 +10,7 @@ import { dynamic } from 'utils/makeLazy';
 //eslint-disable-next-line
 const Component = dynamic(() => import('./Component').then((m) => m));
 
-export const usePurchaseRequestTopInfoModal = () => {
+export const useBusinessShoppingTermsAndConditionsModal = () => {
   const { pushModal } = useModal();
 
   return {
@@ -22,7 +22,7 @@ export const usePurchaseRequestTopInfoModal = () => {
             const portal = usePortal();
 
             return {
-              title: 'Información sobre la compra',
+              title: 'Términos y condiciones para la venta de productos',
               badge: <Badge variant="cart" />,
               content: <Component portal={portal} />,
               secondaryBtn: <ButtonClose />,

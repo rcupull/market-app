@@ -135,7 +135,7 @@ export interface Business extends BaseIdentity {
   whatsAppPhoneNumber?: string;
   telegramBotChat?: TelegramBotChat;
   shoppingMeta?: {
-    purchaseRequestTopInfo?: string;
+    termsAndConditions?: string;
   };
   shoppingPayment: {
     //debit not payed by the user

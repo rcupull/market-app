@@ -107,7 +107,7 @@ const BusinessSchema = new Schema<Business>({
     type: { type: String, enum: ['private'] },
   },
   shoppingMeta: {
-    purchaseRequestTopInfo: { type: String },
+    termsAndConditions: { type: String },
   },
   shoppingPayment: {
     totalDebit: { type: Number, default: 0 },
