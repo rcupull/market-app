@@ -66,8 +66,8 @@ export const CardPost = ({
   };
 
   const content = (
-    <Link data-id="CardPost" className={cn('group', className)} to={href}>
-      <div className={cn('flex flex-col p-1 w-[90vw] overflow-hidden', getCardPostSizes({ size }))}>
+    <Link data-id="CardPost" className={cn('group w-full', className)} to={href}>
+      <div className={cn('flex flex-col p-1 w-full overflow-hidden')}>
         <CardPostImage layout={layout} post={post} />
 
         {renderMeta()}
@@ -91,6 +91,7 @@ export const CardPost = ({
     <UpdateSomethingContainer
       warning={getWarning()}
       title="Editar esta publicación"
+      className="w-full height-webkit-fill-available"
       onClick={() =>
         businessNewUpdatePost.open({
           postId: post._id,

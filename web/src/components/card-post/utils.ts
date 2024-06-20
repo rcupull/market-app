@@ -9,7 +9,7 @@ export const getCardPostSizes = ({ size }: { size: PostCardSize | undefined }) =
   });
 };
 
-export const getCardPostImageSizes = ({
+export const useCardPostImageSizes = ({
   rounded,
   size,
 }: {
@@ -18,15 +18,15 @@ export const getCardPostImageSizes = ({
 }) => {
   if (rounded) {
     return cn({
-      'max-w-[20rem] sm:w-[11.5rem] sm:h-[10rem]': size === 'small',
-      'max-w-[20rem] sm:w-[15.5rem] sm:h-[14rem]': size === 'medium',
-      'max-w-[20rem] sm:w-[19.5rem] sm:h-[19rem]': size === 'long',
+      'h-[4rem]': size === 'small',
+      'h-[8rem]': size === 'medium',
+      'h-[10rem]': size === 'long',
     });
   }
 
   return cn({
-    'max-w-[20rem] sm:w-[11.5rem] sm:h-[12rem]': size === 'small',
-    'max-w-[20rem] sm:w-[15.5rem] sm:h-[15rem]': size === 'medium',
-    'max-w-[20rem] sm:w-[19.5rem] sm:h-[20rem]': size === 'long',
+    'h-[6rem]': size === 'small',
+    'h-[15rem]': size === 'medium',
+    'h-[20rem]': size === 'long',
   });
 };
