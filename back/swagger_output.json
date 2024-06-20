@@ -183,9 +183,6 @@
                   "colors": {
                     "example": "any"
                   },
-                  "currency": {
-                    "example": "any"
-                  },
                   "description": {
                     "example": "any"
                   },
@@ -511,6 +508,9 @@
                     "example": "any"
                   },
                   "routeName": {
+                    "example": "any"
+                  },
+                  "currency": {
                     "example": "any"
                   }
                 }

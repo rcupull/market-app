@@ -80,7 +80,7 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
             },
           )}
         >
-          <div className="p-3">{children}</div>
+          {children}
 
           <Footer className="mt-auto flex-shrink-0" />
         </div>

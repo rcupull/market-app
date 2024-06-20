@@ -11,6 +11,11 @@ const getCheckEditorMaxHClasses = () => {
           maxHeight: `${h}vh`,
         },
       },
+      [`.check-editor-min-h-${h}vh`]: {
+        '.ck .ck-content': {
+          minHeight: `${h}vh`,
+        },
+      },
     }),
     {},
   );

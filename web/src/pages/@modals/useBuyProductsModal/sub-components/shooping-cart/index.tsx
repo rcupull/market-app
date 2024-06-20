@@ -1,6 +1,6 @@
 import { StepCommonProps } from '../../types';
 import { ButtonNavContainer } from '../button-nav-container';
-import { TopInfo } from './TopInfo';
+import { ShoppingTermsAndConditions } from './ShoppingTermsAndConditions';
 
 import { ShoppingCartPosts } from 'pages/@common/shopping-cart-posts';
 import { ShoppingCartRemoveAllButton } from 'pages/@common/shopping-cart-remove-all-button';
@@ -18,7 +18,7 @@ export const ShoppingCart = ({ nextButton }: ShoppingCartProps) => {
   return (
     <>
       <div>
-        <TopInfo />
+        <ShoppingTermsAndConditions />
         <ShoppingCartPosts value={shopping.lastShopping} />
 
         <div className="flex justify-end mt-2">

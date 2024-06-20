@@ -6,7 +6,6 @@ import { CardPostImage } from './CardPostImage';
 import { CardPostName } from './CardPostName';
 import { CardPostPrice } from './CardPostPrice';
 import { CardPostStockAmount } from './CardPostStockAmount';
-import { getCardPostSizes } from './utils';
 
 import { UpdateSomethingContainer } from 'pages/@common/update-something-container';
 import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
@@ -34,19 +33,17 @@ export const CardPost = ({
   currency,
 }: CardPostProps) => {
   const businessNewUpdatePost = useBusinessNewUpdatePost();
-  const { size, metaLayout } = layout || {};
+  const { metaLayout, size } = layout || {};
 
   const renderMeta = () => {
     if (metaLayout === 'basic') {
       return (
-        <div className="flex items-end flex-shrink-0">
+        <div className="flex items-end flex-wrap flex-shrink-0">
           <div>
             <CardPostName layout={layout} post={post} />
             <CardPostPrice layout={layout} post={post} currency={currency} />
-            <CardPostStockAmount post={post} />
+            <CardPostStockAmount layout={layout} post={post} />
           </div>
-
-          <PostShoppingMethod layout={layout?.shoppingMethod} post={post} className="ml-auto" />
         </div>
       );
     }
@@ -56,8 +53,7 @@ export const CardPost = ({
         <div className="flex flex-col items-center flex-shrink-0">
           <CardPostName layout={layout} post={post} className="text-center" />
           <CardPostPrice layout={layout} post={post} currency={currency} />
-
-          <PostShoppingMethod layout={layout?.shoppingMethod} post={post} />
+          <CardPostStockAmount layout={layout} post={post} />
         </div>
       );
     }
@@ -66,11 +62,26 @@ export const CardPost = ({
   };
 
   const content = (
-    <Link data-id="CardPost" className={cn('group', className)} to={href}>
-      <div className={cn('flex flex-col p-1 w-[90vw] overflow-hidden', getCardPostSizes({ size }))}>
+    <Link data-id="CardPost" className={cn('group w-full', className)} to={href}>
+      <div className={cn('flex flex-col p-1 w-full overflow-hidden h-full relative')}>
         <CardPostImage layout={layout} post={post} />
 
         {renderMeta()}
+
+        <div
+          className={cn({
+            'ml-auto mt-auto': size === 'small',
+            '!absolute right-0 bottom-0': size === 'medium' || size === 'long',
+          })}
+        >
+          <PostShoppingMethod
+            layout={layout?.shoppingMethod}
+            post={post}
+            className={cn({
+              '-m-3 size-10': size === 'small',
+            })}
+          />
+        </div>
       </div>
     </Link>
   );
@@ -91,6 +102,7 @@ export const CardPost = ({
     <UpdateSomethingContainer
       warning={getWarning()}
       title="Editar esta publicación"
+      className="w-full height-webkit-fill-available"
       onClick={() =>
         businessNewUpdatePost.open({
           postId: post._id,

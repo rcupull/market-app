@@ -38,7 +38,15 @@ export const ButtonPostToCart = ({
     /**
      * Can not show the car because has not products in stock
      */
-    return <></>;
+
+    return (
+      <IconButton
+        title="Agotados"
+        preventDefault
+        svg={<SvgShoppingCartSolid className="!size-8 !fill-red-500 !cursor-not-allowed" />}
+        className={className}
+      />
+    );
   }
 
   const handleCall = () => {
