@@ -30,3 +30,11 @@ export const useCardPostImageSizes = ({
     'h-[20rem]': size === 'long',
   });
 };
+
+export const getCardPostMetaSizes = ({ size }: { size: PostCardSize | undefined }) => {
+  return cn({
+    'text-sm': size === 'small',
+    'text-lg': size === 'medium',
+    'text-xl': size === 'long',
+  });
+};

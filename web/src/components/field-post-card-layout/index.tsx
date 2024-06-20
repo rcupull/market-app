@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Accordion } from 'components/accordion';
 import { Divider } from 'components/divider';
 import { FieldCheckbox } from 'components/field-checkbox';
+import { FieldPostShoppingMethodSelect } from 'components/field-post-shopping-method-select';
 import { FieldRadioGroup } from 'components/field-radio-group';
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
 import { useFormField } from 'components/formux/useFormField';
@@ -141,7 +142,7 @@ export const FieldPostCardLayout = ({
               },
               {
                 value: 'basic',
-                label: 'Basico',
+                label: 'Básico',
               },
             ]}
             containerClassName="flex items-center flex-wrap gap-4"
@@ -201,6 +202,13 @@ export const FieldPostCardLayout = ({
               },
             ]}
             containerClassName="flex items-center flex-wrap gap-4"
+          />
+
+          <Divider className="!my-2" />
+
+          <FieldPostShoppingMethodSelect
+            name={getNestedFieldName('shoppingMethod')}
+            label="Método de compra"
           />
         </div>
       </div>

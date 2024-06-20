@@ -5,7 +5,7 @@ import { RadioGroup } from '.';
 describe('RadioGroup', () => {
   it('render', async () => {
     const result = render(
-      <RadioGroup items={[]} optionToValue={() => ''} renderOption={() => <div />} />
+      <RadioGroup items={[]} optionToValue={() => ''} renderOption={() => <div />} />,
     );
 
     expect(result.container).toMatchInlineSnapshot(`

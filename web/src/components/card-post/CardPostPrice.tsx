@@ -1,3 +1,5 @@
+import { getCardPostMetaSizes } from './utils';
+
 import { BusinessCurrency, PostCardLayout } from 'types/business';
 import { Post } from 'types/post';
 import { cn, isNumber } from 'utils/general';
@@ -10,12 +12,12 @@ const renderPriceCurrency = (
   const priceToRender = price.toFixed(2);
 
   if (layout === 'basic') {
-    return `${priceToRender} ${currency}`;
+    return <div className="text-nowrap">{`${priceToRender} ${currency}`}</div>;
   }
 
   if (layout === 'smallerCurrency') {
     return (
-      <div>
+      <div className="text-nowrap">
         {`${priceToRender}`}
         <span className="text-sm ml-1">{currency}</span>
       </div>
@@ -50,7 +52,7 @@ export const CardPostPrice = ({ post, layout, currency }: CardPostPriceProps) =>
     if (discountLayout === 'savedMoney') {
       const oldPrice = price + discount;
       return (
-        <div className="text-gray-400 line-through text-sm ml-2">
+        <div className="text-gray-400 line-through text-sm">
           {renderPriceCurrency(oldPrice, currency, priceLayout)}
         </div>
       );
@@ -59,7 +61,7 @@ export const CardPostPrice = ({ post, layout, currency }: CardPostPriceProps) =>
     if (discountLayout === 'savedPercent') {
       const percentToSave = ((discount / price) * 100).toFixed(1);
       return (
-        <div className="border border-red-500 text-red-500 text-sm ml-2 p-0.5">{`-${percentToSave}%`}</div>
+        <div className="border border-red-500 text-red-500 text-sm p-0.5">{`-${percentToSave}%`}</div>
       );
     }
 
@@ -68,11 +70,14 @@ export const CardPostPrice = ({ post, layout, currency }: CardPostPriceProps) =>
 
   if (priceLayout !== 'none' && isNumber(price) && currency) {
     return (
-      <div className="mt-1 text-lg font-medium text-gray-900 flex items-center">
+      <div className="mt-1 text-lg font-medium text-gray-900 flex gap-1 items-center flex-wrap">
         <div
-          className={cn({
-            'text-red-500 font-bold': hasDiscount,
-          })}
+          className={cn(
+            {
+              'text-red-500 font-bold': hasDiscount,
+            },
+            getCardPostMetaSizes({ size: layout?.size }),
+          )}
         >
           {renderPriceCurrency(price, currency, priceLayout)}
         </div>

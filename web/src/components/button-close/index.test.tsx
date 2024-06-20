@@ -5,7 +5,6 @@ import { ReduxProvider } from 'features/redux';
 
 import { ButtonClose } from '.';
 
-
 describe('ButtonClose', () => {
   it('render', async () => {
     const result = render(<ButtonClose />, {
