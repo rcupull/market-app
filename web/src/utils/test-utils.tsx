@@ -5,18 +5,22 @@ import { ModalContainer } from 'features/modal';
 import { NotificationsProvider } from 'features/notifications';
 import { ReduxProvider } from 'features/redux';
 
+import { ReduxState } from 'types/redux';
+
 export const getWrapper = ({
   useNotifications,
   useRedux,
   useRouter,
   useModal,
   useCookies,
+  initialReduxState,
 }: {
   useRedux?: boolean;
   useModal?: boolean;
   useRouter?: boolean;
   useNotifications?: boolean;
   useCookies?: boolean;
+  initialReduxState?: Partial<ReduxState>;
 }) => {
   return ({ children }: { children: React.ReactNode }) => {
     let out = <>{children}</>;
@@ -39,7 +43,7 @@ export const getWrapper = ({
     }
 
     if (useRedux || useModal) {
-      out = <ReduxProvider>{out}</ReduxProvider>;
+      out = <ReduxProvider initialState={initialReduxState}>{out}</ReduxProvider>;
     }
 
     if (useCookies) {

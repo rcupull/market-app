@@ -2,13 +2,13 @@ import { render } from '@testing-library/react';
 
 import { Component } from './Component';
 
-import { dummiPortal } from 'utils/test-dummies';
+import { portalDummy } from 'utils/test-dummies';
 import { getWrapper } from 'utils/test-utils';
 
 describe('Component', () => {
   it('render', async () => {
     const result = render(
-      <Component portal={dummiPortal} onAfterSuccess={jest.fn()} postId="postId" />,
+      <Component portal={portalDummy} onAfterSuccess={jest.fn()} postId="postId" />,
       {
         wrapper: getWrapper({ useModal: true, useRouter: true }),
       },

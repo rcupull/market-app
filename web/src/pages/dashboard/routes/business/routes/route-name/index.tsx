@@ -22,7 +22,8 @@ import SvgLayerGroupSolid from 'icons/LayerGroupSolid';
 import SvgLinkSolid from 'icons/LinkSolid';
 import SvgMoneyBillAltSolid from 'icons/MoneyBillAltSolid';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
-import { KpiTelegram, KpiTotalDebit } from 'pages/@common/kpis-business';
+import { BannerInfoTelegramBusiness } from 'pages/@common/banner-info-telegram-business';
+import { BannerInfoTotalDebitBusiness } from 'pages/@common/banner-info-total-debit-business';
 import { LayoutSection } from 'pages/@common/layout-section';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { isString } from 'utils/general';
@@ -117,9 +118,9 @@ export const RouteName = () => {
       <LayoutSection
         topRightHeader={
           <div className="flex items-center gap-6">
-            <KpiTelegram className="hidden sm:flex" />
+            <BannerInfoTelegramBusiness className="hidden sm:flex" />
 
-            <KpiTotalDebit className="hidden sm:flex" />
+            <BannerInfoTotalDebitBusiness className="hidden sm:flex" />
 
             {hidden && (
               <div className="text-red-500 ring-1 ring-red-400 rounded-3xl px-2 py-1/2 text-sm sm:text-lg">

@@ -1,9 +1,11 @@
 import { Portal } from 'hooks/usePortal';
 
-import { User } from 'types/auth';
+import { AdminConfig } from 'types/admin';
+import { AuthData, User } from 'types/auth';
+import { Business } from 'types/business';
 import { Shopping } from 'types/shopping';
 
-export const dummiPortal: Portal = {
+export const portalDummy: Portal = {
   getPortal: jest.fn(),
   ref: jest.fn(),
 };
@@ -30,4 +32,32 @@ export const shoppingDummy: Shopping = {
   billId: 'billId',
   billState: 'PENDING_TO_PAY',
   history: [],
+};
+export const businessDummy: Business = {
+  _id: 'id',
+  createdAt: 'createdAt',
+  currency: 'USD',
+  categories: [],
+  createdBy: 'createdBy',
+  name: 'name',
+  routeName: 'routeName',
+  shoppingPayment: {
+    history: [],
+    totalDebit: 0,
+    requests: [],
+  },
+};
+
+export const adminConfigDummy: AdminConfig = {
+  _id: 'id',
+  createdAt: 'createdAt',
+  price: '<>price</>',
+  privacyPolicy: '<>privacyPolicy</>',
+  termsAndConditions: '<>termsAndConditions</>',
+};
+
+export const authDataDummy: AuthData = {
+  user: userDummy,
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
 };

@@ -140,7 +140,7 @@ export const addStringToUniqueArray = <T extends string = string>(
   return array.includes(value) ? array : addRow(array, value);
 };
 
-export const getRandomHash = () => `${Date.now()}`;
+export const getRandomHash = () => `${Math.floor(Math.random() * 1000000000000000)}`;
 
 export const deepJsonCopy = <T extends AnyRecord = AnyRecord>(json: T): T => {
   return JSON.parse(JSON.stringify(json));

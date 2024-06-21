@@ -16,7 +16,8 @@ export const telegramServices = {
     bot = new TelegramBot(telegram_token_bot, { polling: true });
 
     bot.onText(/\/start/, async (msg) => {
-      const code = getRandomHash().slice(-6);
+      const code = getRandomHash().slice(-4);
+
       const { id, first_name, username } = msg.chat;
 
       const meta: TelegramBotChat = {
