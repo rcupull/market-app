@@ -4,7 +4,8 @@ import { withTryCatch } from '../../utils/error';
 import { imagesServices } from '../images/services';
 import { userServices } from './services';
 import { User } from '../../types/user';
-import { getUserNotFoundResponse } from '../../utils/server-response';
+import { get404Response, getUserNotFoundResponse } from '../../utils/server-response';
+import { ValidationCodeModel } from '../../schemas/auth';
 
 const get_users_userId: () => RequestHandler = () => {
   return (req, res) => {
@@ -70,6 +71,55 @@ const put_users_userId: () => RequestHandler = () => {
   };
 };
 
+const post_user_userId_chatbot_validate: () => RequestHandler = () => {
+  return async (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { body, user } = req;
+      const { code } = body;
+
+      if (!user) {
+        return getUserNotFoundResponse({ res });
+      }
+
+      const validationCode = await ValidationCodeModel.findOneAndDelete({
+        code,
+      });
+
+      if (!validationCode) {
+        return get404Response({
+          res,
+          json: {
+            message:
+              'Este codigo de validación no existe o ya el bot fue verificado con este código',
+          },
+        });
+      }
+
+      const { meta } = validationCode.toJSON();
+
+      if (!meta) {
+        return get404Response({
+          res,
+          json: {
+            message: 'No hay metadatos disponibles en este codigo de validación del bot',
+          },
+        });
+      }
+
+      await userServices.updateOne({
+        query: {
+          _id: user._id,
+        },
+        update: {
+          telegramBotChat: meta,
+        },
+      });
+
+      res.send({});
+    });
+  };
+};
+
 /**
  *  //////////////////////////////////////////POSTS
  */
@@ -77,4 +127,5 @@ const put_users_userId: () => RequestHandler = () => {
 export const userHandles = {
   get_users_userId,
   put_users_userId,
+  post_user_userId_chatbot_validate,
 };

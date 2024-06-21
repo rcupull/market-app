@@ -133,3 +133,5 @@ export interface GetAllBusinessQuery extends PaginationQuery {
   includeHidden?: boolean;
   userId?: string;
 }
+
+export type SliceApiPersistentState<D = any> = { data: FetchData<D>; status: FetchStatus } | null;

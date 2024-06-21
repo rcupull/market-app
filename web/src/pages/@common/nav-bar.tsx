@@ -12,6 +12,7 @@ import { useModal } from 'features/modal/useModal';
 import { useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
 
+import { BannerInfoTelegramUser } from './banner-info-telegram-user';
 import { BusinessLogo } from './business-logo';
 import { BusinessName } from './business-name';
 import { ShoppingCartMenu } from './shopping-cart-menu';
@@ -80,9 +81,10 @@ export const Navbar = ({ className }: NavbarProps) => {
       topElement={
         <>
           {user ? (
-            <div className="px-2 py-3 flex flex-col items-center border">
+            <div className="px-2 py-3 flex flex-col gap-3 items-center border">
               <span className="text-sm border px-2 py-1 rounded-2xl">{user.name}</span>
-              <span className="text-xs mt-2">{user.email}</span>
+              <span className="text-xs">{user.email}</span>
+              <BannerInfoTelegramUser/>
             </div>
           ) : (
             <div className="w-64 m-2 rounded-md px-4 py-3 border flex items-center justify-center">

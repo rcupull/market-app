@@ -1,10 +1,10 @@
 import TelegramBot from 'node-telegram-bot-api';
 import { telegram_token_bot } from '../../config';
 import { ValidationCodeModel } from '../../schemas/auth';
-import { TelegramBotChat } from '../../types/business';
 import { getRandomHash } from '../../utils/general';
 import { logger } from '../logger';
 import { agendaHandles } from '../agenda/handles';
+import { TelegramBotChat } from '../../types/general';
 
 let bot: TelegramBot;
 
@@ -16,7 +16,8 @@ export const telegramServices = {
     bot = new TelegramBot(telegram_token_bot, { polling: true });
 
     bot.onText(/\/start/, async (msg) => {
-      const code = getRandomHash().slice(-6);
+      const code = getRandomHash().slice(-4);
+
       const { id, first_name, username } = msg.chat;
 
       const meta: TelegramBotChat = {

@@ -1,4 +1,5 @@
 import { Access } from './admin';
+import { TelegramBotChat } from './business';
 import { BaseIdentity, Image } from './general';
 
 export type UserRole = 'user' | 'admin';
@@ -11,6 +12,7 @@ export interface User extends BaseIdentity {
   profileImage?: Image | null;
   canCreateBusiness: boolean;
   specialAccess?: Array<Access>;
+  telegramBotChat?: TelegramBotChat;
 }
 
 export type UserData = User | null;

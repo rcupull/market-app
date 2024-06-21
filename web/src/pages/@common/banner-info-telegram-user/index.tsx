@@ -1,38 +1,25 @@
 import { Button } from 'components/button';
 import { LabelValuePair } from 'components/label-value-pair';
 
+import { useAuth } from 'features/api-slices/useAuth';
+
 import SvgCheckCircleSolid from 'icons/CheckCircleSolid';
 import SvgTimesCircleSolid from 'icons/TimesCircleSolid';
-import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useBusinessUpdateTelegramBot } from 'pages/@modals/useBusinessUpdateTelegramBot';
+import { useUpdateTelegramBotUserModal } from 'pages/@modals/useUpdateTelegramBotUserModal';
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
-export const KpiTotalDebit = ({ className }: StyleProps) => {
-  const { business } = useBusiness();
+export const BannerInfoTelegramUser = ({ className }: StyleProps) => {
+  const { authData, onRefreshAuthUser } = useAuth();
+  const updateTelegramBotUserModal = useUpdateTelegramBotUserModal();
 
-  if (!business) {
+  const user = authData?.user;
+
+  if (!user) {
     return <></>;
   }
-  const { shoppingPayment } = business || {};
 
-  return (
-    <LabelValuePair
-      label={<span className="text-nowrap">Débito</span>}
-      value={<span className="text-nowrap">{` ${shoppingPayment.totalDebit} CUP`}</span>}
-      className={cn('ring-1 ring-gray-400 rounded-2xl py-0.5 px-2', className)}
-    />
-  );
-};
-
-export const KpiTelegram = ({ className }: StyleProps) => {
-  const { business, onFetch } = useBusiness();
-  const businessUpdateTelegramBot = useBusinessUpdateTelegramBot();
-
-  if (!business) {
-    return <></>;
-  }
-  const { telegramBotChat } = business || {};
+  const { telegramBotChat } = user;
 
   return (
     <LabelValuePair
@@ -48,9 +35,9 @@ export const KpiTelegram = ({ className }: StyleProps) => {
                 label="Activar"
                 variant="link"
                 onClick={() => {
-                  businessUpdateTelegramBot.open({
+                  updateTelegramBotUserModal.open({
                     onAfterSuccess: () => {
-                      business && onFetch({ routeName: business?.routeName });
+                      onRefreshAuthUser()
                     },
                   });
                 }}
