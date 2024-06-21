@@ -38,6 +38,7 @@ export const ShoppingButtonStateHistory = ({ shopping }: ShoppingButtonStateHist
   return (
     <IconButton
       title="Ver el historial de la orden de compra"
+      stopPropagation
       svg={SvgHistorySolid}
       onClick={handleOpen}
     />

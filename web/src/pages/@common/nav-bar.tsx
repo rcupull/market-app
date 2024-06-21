@@ -41,6 +41,7 @@ import {
   getDashboardBusinessRoute,
   getDashboardRoute,
   getOneBusinessRoute,
+  getShoppingRoute,
 } from 'utils/business';
 import { cn, copyToClipboard } from 'utils/general';
 
@@ -84,7 +85,7 @@ export const Navbar = ({ className }: NavbarProps) => {
             <div className="px-2 py-3 flex flex-col gap-3 items-center border">
               <span className="text-sm border px-2 py-1 rounded-2xl">{user.name}</span>
               <span className="text-xs">{user.email}</span>
-              <BannerInfoTelegramUser/>
+              <BannerInfoTelegramUser />
             </div>
           ) : (
             <div className="w-64 m-2 rounded-md px-4 py-3 border flex items-center justify-center">
@@ -195,7 +196,9 @@ export const Navbar = ({ className }: NavbarProps) => {
       }
       items={[
         isOneBusinessPage &&
-          !!routeName && { name: 'Publicaciones', href: getOneBusinessRoute({ routeName }) },
+          !!routeName && { name: 'Productos', href: getOneBusinessRoute({ routeName }) },
+        isOneBusinessPage &&
+          !!routeName && { name: 'Mis compras', href: getShoppingRoute({ routeName }) },
         isOneBusinessPage &&
           aboutUsPage?.visible &&
           !!aboutUsPage.title &&
