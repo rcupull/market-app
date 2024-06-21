@@ -1,0 +1,84 @@
+import { render } from '@testing-library/react';
+
+import { Component } from './Component';
+
+import { shoppingDummy } from 'utils/test-dummies';
+import { getWrapper } from 'utils/test-utils';
+
+describe('Component', () => {
+  it('render', async () => {
+    const result = render(<Component shopping={shoppingDummy} />, {
+      wrapper: getWrapper({ useModal: true, useRouter: true }),
+    });
+
+    expect(result.container).toMatchInlineSnapshot(`
+      <div>
+        <div
+          class="w-full p-3"
+        >
+          <div
+            class="flex items-center gap-1"
+          >
+            <span>
+              Estado:
+            </span>
+            <span
+              class="font-bold text-gray-300"
+            >
+              En construcción
+            </span>
+            <button
+              class="relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100 !rounded-full !p-2 !ring-0 !shadow-none"
+              title="Ver el historial de la orden de compra"
+            >
+              <svg
+                class="h-5 w-5"
+                height="1em"
+                viewBox="0 0 32 32"
+                width="1em"
+              >
+                <path
+                  d="M16 4A11.989 11.989 0 006 9.344V6H4v7h7v-2H7.375C9.102 8.02 12.297 6 16 6c5.535 0 10 4.465 10 10s-4.465 10-10 10S6 21.535 6 16H4c0 6.617 5.383 12 12 12s12-5.383 12-12S22.617 4 16 4zm-1 4v9h7v-2h-5V8z"
+                />
+              </svg>
+            </button>
+          </div>
+          <div
+            class="flex flex-col gap-2 mt-2"
+          >
+            <div
+              class="flex justify-end gap-4"
+            >
+              <div
+                class="flex items-center"
+              >
+                <span
+                  class="font-bold"
+                >
+                  Total
+                  :
+                </span>
+                <span>
+                   0 unidades
+                </span>
+              </div>
+              <div
+                class="flex items-center"
+              >
+                <span
+                  class="font-bold"
+                >
+                  Precio
+                  :
+                </span>
+                <span>
+                   0 CUP
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `);
+  });
+});

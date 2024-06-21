@@ -11,6 +11,7 @@ import { Filters } from './Filters';
 import { RowActions } from './RowActions';
 
 import { ShoppingStateView } from 'pages/@common/shoping-state-view';
+import { ShoppingButtonStateHistory } from 'pages/@common/shopping-button-state-history';
 import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { GetAllShoppingQuery } from 'types/api';
@@ -18,7 +19,7 @@ import { Shopping } from 'types/shopping';
 import { getDateString } from 'utils/date';
 import { getShoppingData } from 'utils/shopping';
 
-export const PurchaseOrders = () => {
+export const ShoppingPage = () => {
   const { getShoppingOwner } = useGetShoppingOwner();
   const { business } = useBusiness();
 
@@ -72,12 +73,14 @@ export const PurchaseOrders = () => {
             nodes: [
               <RowActions key="RowActions" rowData={rowData} />,
               purchaserName,
-              <ShoppingStateView
-                key="ShoppingState"
-                shopping={rowData}
-                fetchStatus={getShoppingOwner.status}
-                onAfterSuccess={() => onRefreshForce()}
-              />,
+              <div key="ShoppingState" className="flex items-center">
+                <ShoppingStateView
+                  shopping={rowData}
+                  fetchStatus={getShoppingOwner.status}
+                  onAfterSuccess={() => onRefreshForce()}
+                />
+                <ShoppingButtonStateHistory shopping={rowData} />
+              </div>,
               totalProducts,
               <span key="price" className="text-nowrap">{`${totalPrice} CUP`}</span>,
               getDateString({ date: createdAt, showTime: true }),

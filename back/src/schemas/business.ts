@@ -3,7 +3,7 @@ import { Business } from '../types/business';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { createdAtSchemaDefinition } from '../utils/schemas';
 import { PostModel } from './post';
-import { PostLayoutSchema } from './common';
+import { PostLayoutSchema, TelegramBotChatDefinition } from './common';
 
 const PaymentRequestSchema = {
   type: [
@@ -100,12 +100,7 @@ const BusinessSchema = new Schema<Business>({
     description: { type: String },
   },
   whatsAppPhoneNumber: { type: String },
-  telegramBotChat: {
-    chatId: { type: String },
-    firstName: { type: String },
-    userName: { type: String },
-    type: { type: String, enum: ['private'] },
-  },
+  telegramBotChat: TelegramBotChatDefinition,
   shoppingMeta: {
     termsAndConditions: { type: String },
   },

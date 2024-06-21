@@ -4,7 +4,7 @@ import { useGetAllShopping } from 'features/api/shopping/useGetAllShopping';
 
 import { useRouter } from 'hooks/useRouter';
 
-import { LayoutPageSection } from 'pages/@common/layout-page-section';
+import { LayoutPage } from 'pages/@common/layout-page';
 import { ShoppingDetails } from 'pages/@common/shopping-details';
 import { getOneShoppingRoute } from 'utils/business';
 
@@ -21,8 +21,8 @@ export const Home = ({ routeName }: HomeProps) => {
   }, []);
 
   return (
-    <LayoutPageSection title="Tus compras">
-      <div className="flex flex-col items-center gap-4">
+    <LayoutPage title="Mis compras">
+      <div className="flex flex-col items-center gap-4 w-full">
         {getAllShopping.data?.map((shopping, index) => {
           return (
             <ShoppingDetails
@@ -35,7 +35,7 @@ export const Home = ({ routeName }: HomeProps) => {
           );
         })}
       </div>
-    </LayoutPageSection>
+    </LayoutPage>
   );
 };
 export default Home;

@@ -12,6 +12,7 @@ import { useModal } from 'features/modal/useModal';
 import { useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
 
+import { BannerInfoTelegramUser } from './banner-info-telegram-user';
 import { BusinessLogo } from './business-logo';
 import { BusinessName } from './business-name';
 import { ShoppingCartMenu } from './shopping-cart-menu';
@@ -21,6 +22,7 @@ import SvgCogSolid from 'icons/CogSolid';
 import SvgDollarSignSolid from 'icons/DollarSignSolid';
 import SvgHomeSolid from 'icons/HomeSolid';
 import SvgKeySolid from 'icons/KeySolid';
+import SvgLinkSolid from 'icons/LinkSolid';
 import SvgSignInAltSolid from 'icons/SignInAltSolid';
 import SvgSignOutAltSolid from 'icons/SignOutAltSolid';
 import SvgStoreSolid from 'icons/StoreSolid';
@@ -39,15 +41,16 @@ import {
   getDashboardBusinessRoute,
   getDashboardRoute,
   getOneBusinessRoute,
+  getShoppingRoute,
 } from 'utils/business';
-import { cn } from 'utils/general';
+import { cn, copyToClipboard } from 'utils/general';
 
 export interface NavbarProps extends StyleProps {}
 export const Navbar = ({ className }: NavbarProps) => {
   const { isAdmin, isUser, isAuthenticated, authData, onRefreshAuthUser } = useAuth();
   const { signOut } = useSignOut();
   const { user } = authData || {};
-  const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute } = useRouter();
+  const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute, isPostPage } = useRouter();
   const { routeName } = params;
   const { business } = useBusiness();
   const authChangePasswordModal = useAuthChangePasswordModal();
@@ -60,6 +63,17 @@ export const Navbar = ({ className }: NavbarProps) => {
   const callAfarResourcesRefreshUser = 'callAfarResourcesRefreshUser';
   useCallFromAfar(callAfarResourcesRefreshUser, onRefreshAuthUser);
 
+  const getCopyLinkLabel = () => {
+    if (isPostPage) {
+      return 'Copiar el link de este producto';
+    }
+    if (isOneBusinessPage) {
+      return 'Copiar el link de este negocio';
+    }
+
+    return 'Copiar link';
+  };
+
   const navBarMenu = (
     <Menu
       buttonElement={
@@ -68,9 +82,10 @@ export const Navbar = ({ className }: NavbarProps) => {
       topElement={
         <>
           {user ? (
-            <div className="px-2 py-3 flex flex-col items-center border">
+            <div className="px-2 py-3 flex flex-col gap-3 items-center border">
               <span className="text-sm border px-2 py-1 rounded-2xl">{user.name}</span>
-              <span className="text-xs mt-2">{user.email}</span>
+              <span className="text-xs">{user.email}</span>
+              <BannerInfoTelegramUser />
             </div>
           ) : (
             <div className="w-64 m-2 rounded-md px-4 py-3 border flex items-center justify-center">
@@ -126,6 +141,13 @@ export const Navbar = ({ className }: NavbarProps) => {
           },
           svg: IconUpdate,
         },
+        {
+          label: getCopyLinkLabel(),
+          onClick: () => {
+            copyToClipboard(window.location.href);
+          },
+          svg: SvgLinkSolid,
+        },
         !isAuthenticated && {
           label: 'Iniciar sesión',
           onClick: () => authSignInModal.open(),
@@ -174,7 +196,9 @@ export const Navbar = ({ className }: NavbarProps) => {
       }
       items={[
         isOneBusinessPage &&
-          !!routeName && { name: 'Publicaciones', href: getOneBusinessRoute({ routeName }) },
+          !!routeName && { name: 'Productos', href: getOneBusinessRoute({ routeName }) },
+        isOneBusinessPage &&
+          !!routeName && { name: 'Mis compras', href: getShoppingRoute({ routeName }) },
         isOneBusinessPage &&
           aboutUsPage?.visible &&
           !!aboutUsPage.title &&

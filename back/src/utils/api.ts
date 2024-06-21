@@ -50,3 +50,5 @@ export const getTestingRoute = ({
 
   return `/api-services${flattenPath}?${paramsSerializer(flattenParams)}`;
 };
+
+export const defaultQuerySort = '-createdAt';

@@ -6,6 +6,7 @@ import { Post } from './post';
 export type ShoppingState =
   | 'CONSTRUCTION'
   | 'REQUESTED'
+  | 'APPROVED'
   | 'PROCESSING'
   | 'READY_TO_DELIVER'
   | 'DELIVERED'
@@ -14,6 +15,11 @@ export type ShoppingState =
   | 'REJECTED';
 
 export type ShoppingPostData = Pick<Post, '_id' | 'price' | 'images' | 'name'>;
+
+export type ShoppingStateHistory = Array<{
+  state: ShoppingState;
+  lastUpdatedDate: string;
+}>;
 
 export interface Shopping extends BaseIdentity {
   posts: Array<{
@@ -26,10 +32,7 @@ export interface Shopping extends BaseIdentity {
   routeName: string;
   currency: BusinessCurrency;
   state: ShoppingState;
-  history?: Array<{
-    state: ShoppingState;
-    lastUpdatedDate: string;
-  }>;
+  history?: ShoppingStateHistory;
   billId?: string;
   billState?: BillState;
 }

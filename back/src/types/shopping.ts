@@ -6,6 +6,7 @@ import { BusinessCurrency } from './business';
 export type ShoppingState =
   | 'CONSTRUCTION'
   | 'REQUESTED'
+  | 'APPROVED'
   | 'PROCESSING'
   | 'READY_TO_DELIVER'
   | 'DELIVERED'

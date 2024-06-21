@@ -4,12 +4,14 @@ import { Button } from 'components/button';
 import { IconButton } from 'components/icon-button';
 
 import { useUpdateAddOneShopping } from 'features/api/shopping/useUpdateAddOneShopping';
+import { useAuth } from 'features/api-slices/useAuth';
 
 import { useDebouncer } from 'hooks/useDebouncer';
 
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useShopping } from 'pages/@hooks/useShopping';
+import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { StyleProps } from 'types/general';
 import { Post, PostPurshaseNotes } from 'types/post';
 
@@ -27,6 +29,8 @@ export const ButtonPostToCart = ({
 }: ButtonPostToCartProps) => {
   const [count, setCount] = useState<number>(0);
   const { stockAmount } = post;
+  const { isAuthenticated } = useAuth();
+  const authSignInModal = useAuthSignInModal();
 
   const { updateAddOneShopping } = useUpdateAddOneShopping();
   const shopping = useShopping();
@@ -50,6 +54,10 @@ export const ButtonPostToCart = ({
   }
 
   const handleCall = () => {
+    if (!isAuthenticated) {
+      return authSignInModal.open({ redirect: false });
+    }
+
     const amountToAdd = count + 1;
     setCount(amountToAdd);
 
