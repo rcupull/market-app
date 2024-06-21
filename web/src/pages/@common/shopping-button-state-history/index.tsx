@@ -35,5 +35,11 @@ export const ShoppingButtonStateHistory = ({ shopping }: ShoppingButtonStateHist
       { emergent: true },
     );
   };
-  return <IconButton title='Ver el historial de la orden de compra' svg={SvgHistorySolid} onClick={handleOpen} />;
+  return (
+    <IconButton
+      title="Ver el historial de la orden de compra"
+      svg={SvgHistorySolid}
+      onClick={handleOpen}
+    />
+  );
 };

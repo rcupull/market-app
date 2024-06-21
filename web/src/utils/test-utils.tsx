@@ -10,7 +10,7 @@ export const getWrapper = ({
   useRedux,
   useRouter,
   useModal,
-  useCookies
+  useCookies,
 }: {
   useRedux?: boolean;
   useModal?: boolean;
@@ -18,8 +18,7 @@ export const getWrapper = ({
   useNotifications?: boolean;
   useCookies?: boolean;
 }) => {
-
-  return ({ children }: {children: React.ReactNode}) => {
+  return ({ children }: { children: React.ReactNode }) => {
     let out = <>{children}</>;
 
     if (useModal) {

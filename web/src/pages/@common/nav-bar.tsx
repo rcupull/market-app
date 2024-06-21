@@ -68,7 +68,7 @@ export const Navbar = ({ className }: NavbarProps) => {
     if (isOneBusinessPage) {
       return 'Copiar el link de este negocio';
     }
-    
+
     return 'Copiar link';
   };
 
