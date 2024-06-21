@@ -23,6 +23,12 @@ import { ShoppingModel } from '../../schemas/shopping';
 import { sendNewOrderTelegramMessage } from '../telegram/handles';
 import { sendNewOrderPushMessage, sendUpdateStockAmountMessage } from '../notifications/handles';
 import { ShoppingState } from '../../types/shopping';
+import { telegramServices } from '../telegram/services';
+import { userServices } from '../user/services';
+import { User } from '../../types/user';
+import { getShoppingUrl } from '../../utils/web';
+import { Business } from '../../types/business';
+import { defaultQuerySort } from '../../utils/api';
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -33,10 +39,11 @@ const get_shopping: () => RequestHandler = () => {
         return getUserNotFoundResponse({ res });
       }
 
-      const { routeName } = query;
+      const { routeName, sort = defaultQuerySort } = query;
 
       const out = await shoppingServices.getAllWithPagination({
         paginateOptions,
+        sort,
         query: {
           routeName,
           purchaserId: user._id,
@@ -250,12 +257,6 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
 const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const { user } = req;
-
-      if (!user) {
-        return getUserNotFoundResponse({ res });
-      }
-
       const { params, body } = req;
 
       const { shoppingId } = params;
@@ -301,6 +302,64 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
       shopping.state = state;
 
       await shopping.save();
+
+      if (state === 'APPROVED') {
+        /**
+         * send telegram notificaion when the shopiing to be aproved
+         */
+        const purchaserData: Pick<User, 'telegramBotChat'> | null = await userServices.getOne({
+          query: {
+            _id: shopping.purchaserId,
+          },
+          projection: {
+            telegramBotChat: 1,
+          },
+        });
+
+        if (!purchaserData) {
+          return getUserNotFoundResponse({
+            res,
+          });
+        }
+
+        const businessData: Pick<Business, 'name'> | null = await businessServices.findOne({
+          query: {
+            routeName: shopping.routeName,
+          },
+          projection: {
+            name: 1,
+          },
+        });
+
+        if (!businessData) {
+          return getBusinessNotFoundResponse({
+            res,
+          });
+        }
+
+        if (purchaserData.telegramBotChat) {
+          telegramServices.sendMessage(
+            purchaserData.telegramBotChat.chatId,
+            `Una orden de compra generada por usted en el negocio <b>${businessData.name}</b> ha sido aprovada. Usted será contactado luego por el vendedor para los detalles de la entrega.`,
+            {
+              parse_mode: 'HTML',
+            },
+          );
+
+          const shoppingLink = getShoppingUrl({
+            routeName: shopping.routeName,
+            shoppingId: shopping._id.toString(),
+          });
+
+          telegramServices.sendMessage(
+            purchaserData.telegramBotChat.chatId,
+            `<a href='${shoppingLink}'>Ver detalles de la orden de compra</a>`,
+            {
+              parse_mode: 'HTML',
+            },
+          );
+        }
+      }
 
       res.send({});
     });
