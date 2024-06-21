@@ -115,9 +115,9 @@ export const PurchaseOrders = () => {
                         <span className="text-gray-400">{routeName}</span>
                       </div>,
                       purchaserName,
-                      <div key="state" className='flex items-center' >
+                      <div key="state" className="flex items-center">
                         <ShoppingStateLabel state={state} className="text-nowrap" />
-                        <ShoppingButtonStateHistory shopping={rowData}/>
+                        <ShoppingButtonStateHistory shopping={rowData} />
                       </div>,
                       totalProducts,
                       <span key="price" className="text-nowrap">{`${totalPrice} CUP`}</span>,
