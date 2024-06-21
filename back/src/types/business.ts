@@ -1,4 +1,4 @@
-import { BaseIdentity, Image } from './general';
+import { BaseIdentity, Image, TelegramBotChat } from './general';
 import { Schema } from 'mongoose';
 import { Post, PostType } from './post';
 import { Path } from './paths';
@@ -106,12 +106,6 @@ export interface BusinessPaymentRequest {
 export interface BusinessPaymentRequestHistory {
   requests: BusinessPaymentRequest;
   paymendDate: Date;
-}
-
-export interface TelegramBotChat {
-  chatId: number;
-  firstName?: string;
-  userName?: string;
 }
 
 export interface Business extends BaseIdentity {

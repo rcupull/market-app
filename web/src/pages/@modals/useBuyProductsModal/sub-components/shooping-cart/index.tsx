@@ -11,7 +11,7 @@ export interface ShoppingCartProps extends StepCommonProps {}
 export const ShoppingCart = ({ nextButton }: ShoppingCartProps) => {
   const shopping = useShopping();
 
-  if (!shopping.lastShopping) {
+  if (!shopping.constructionShopping) {
     return <div className="font-semibold">No tiene productos en la bolsa</div>;
   }
 
@@ -19,7 +19,7 @@ export const ShoppingCart = ({ nextButton }: ShoppingCartProps) => {
     <>
       <div>
         <ShoppingTermsAndConditions />
-        <ShoppingCartPosts value={shopping.lastShopping} />
+        <ShoppingCartPosts value={shopping.constructionShopping} />
 
         <div className="flex justify-end mt-2">
           <ShoppingCartRemoveAllButton />

@@ -19,6 +19,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    //
+    "esModuleInterop": true,
+    //
     "paths": {
       "components*": [
         "./src/components*"

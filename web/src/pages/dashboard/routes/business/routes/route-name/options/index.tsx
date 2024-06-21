@@ -22,7 +22,8 @@ import SvgLayerGroupSolid from 'icons/LayerGroupSolid';
 import SvgLinkSolid from 'icons/LinkSolid';
 import SvgMoneyBillAltSolid from 'icons/MoneyBillAltSolid';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
-import { KpiTelegram, KpiTotalDebit } from 'pages/@common/kpis-business';
+import { BannerInfoTelegramBusiness } from 'pages/@common/banner-info-telegram-business';
+import { BannerInfoTotalDebitBusiness } from 'pages/@common/banner-info-total-debit-business';
 import { Business } from 'types/business';
 import { getOneBusinessRoute } from 'utils/business';
 
@@ -96,9 +97,9 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
           <div className="flex flex-col items-center gap-2 p-2">
             <Divider className="!m-0" />
 
-            <KpiTelegram className="flex sm:hidden" />
+            <BannerInfoTelegramBusiness className="flex sm:hidden" />
 
-            <KpiTotalDebit className="flex sm:hidden" />
+            <BannerInfoTotalDebitBusiness className="flex sm:hidden" />
           </div>
         }
         items={[

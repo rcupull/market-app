@@ -3,14 +3,14 @@ import { Provider } from 'react-redux';
 
 import { makerStore } from './makeStore';
 
-import { AnyRecord } from 'types/general';
+import { ReduxState } from 'types/redux';
 
 export const ReduxProvider = ({
   children,
   initialState,
 }: {
   children: React.ReactNode;
-  initialState?: Partial<AnyRecord>;
+  initialState?: Partial<ReduxState>;
 }): JSX.Element => {
   const { store } = useMemo(() => {
     const { store } = makerStore(initialState);

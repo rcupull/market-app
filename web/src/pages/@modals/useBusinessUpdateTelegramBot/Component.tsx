@@ -1,10 +1,5 @@
 import { Badge } from 'components/badge';
-import { Button } from 'components/button';
 import { Divider } from 'components/divider';
-import { FieldInput } from 'components/field-input';
-import { Formux } from 'components/formux';
-import { HtmlTextContainer } from 'components/html-text-container';
-import { QrCode } from 'components/qr-code';
 
 import { useBusinessChatBotValidate } from 'features/api/business/useBusinessChatBotValidate';
 
@@ -12,7 +7,7 @@ import { Portal } from 'hooks/usePortal';
 
 import { useBusiness } from '../../@hooks/useBusiness';
 
-import { getTelegramUrl } from 'utils/api';
+import { TelegramActivationSteps } from 'pages/@common/telegram-activation-steps';
 
 export interface ComponentProps {
   portal: Portal;
@@ -27,7 +22,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   const { telegramBotChat } = business || {};
 
   return (
-    <HtmlTextContainer>
+    <div>
       {telegramBotChat ? (
         <div className="flex flex-col items-center gap-5">
           <div className="flex items-center gap-6 ring ring-green-400 rounded-xl p-2">
@@ -50,79 +45,29 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
         </>
       )}
 
-      <ol className="mt-4 text-left">
-        <Divider />
-        <li>
-          De click en el enlace o escanee el QR siguiente.
-          <div className="flex flex-col items-center gap-4 mt-4">
-            <a href={getTelegramUrl()} target="_blank" rel="noreferrer">
-              {getTelegramUrl()}
-            </a>
+      <Divider />
+      <TelegramActivationSteps
+        portal={portal}
+        getSubmitBtnProps={({ resetForm, value }) => ({
+          isBusy: businessChatBotValidate.status.isBusy,
+          onClick: () => {
+            if (!business) return;
+            const { code } = value;
+            const { routeName } = business;
 
-            <QrCode value={getTelegramUrl()} className="size-40" />
-          </div>
-        </li>
-
-        <li className="mt-4">
-          De click sobre el botón <span className="font-bold">Iniciar</span>. En caso de que{' '}
-          <span className="font-bold">no aparezca</span> dicho botón envie un mensaje con el texto{' '}
-          <span className="font-bold">&quot;/start&quot;</span>
-        </li>
-
-        <li className="mt-4">
-          Copie el código enviado a su cuenta de Telegram, péguelo en el campo siguiente y de click
-          en <span className="font-bold">Activar</span>.
-        </li>
-
-        <Formux
-          value={{
-            code: '',
-          }}
-          validate={[
-            {
-              field: 'code',
-              type: 'required',
-            },
-          ]}
-        >
-          {({ value, isValid, resetForm, hasChange }) => {
-            return (
-              <form className="mt-4">
-                <FieldInput
-                  name="code"
-                  label="Código de activación"
-                  placeholder="Escriba el código de activación"
-                />
-
-                {portal.getPortal(
-                  <Button
-                    label="Activar"
-                    hasChange={hasChange}
-                    disabled={!isValid}
-                    className="w-full"
-                    onClick={() => {
-                      if (!business) return;
-                      const { code } = value;
-                      const { routeName } = business;
-
-                      businessChatBotValidate.fetch(
-                        { code, routeName },
-                        {
-                          onAfterSuccess: () => {
-                            resetForm();
-                            onAfterSuccess?.();
-                          },
-                        },
-                      );
-                    }}
-                  />,
-                )}
-              </form>
+            businessChatBotValidate.fetch(
+              { code, routeName },
+              {
+                onAfterSuccess: () => {
+                  resetForm();
+                  onAfterSuccess?.();
+                },
+              },
             );
-          }}
-        </Formux>
-      </ol>
-    </HtmlTextContainer>
+          },
+        })}
+      />
+    </div>
   );
 };
 

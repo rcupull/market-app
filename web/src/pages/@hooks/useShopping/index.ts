@@ -7,8 +7,6 @@ import { Shopping } from 'types/shopping';
 interface UseShoppingReturn {
   data: Array<Shopping>;
   //
-  lastShopping: Shopping | undefined;
-  //
   constructionShopping: Shopping | undefined;
   constructionShoppingProductsCount: number;
   //
@@ -23,8 +21,7 @@ export const useShopping = (): UseShoppingReturn => {
   const { data, status, reset, fetch } = useApiPersistentPaginated('useShopping', getAllShopping);
 
   const shopping = data || [];
-  const shoppingCount = shopping.length;
-  const lastShopping = shoppingCount ? shopping[shoppingCount - 1] : undefined;
+  const firstShopping = shopping[0] || undefined;
 
   const getProductsCount = (sh: Shopping): number => {
     return (sh?.posts || [])?.reduce((acc, { count }) => acc + count, 0);
@@ -34,7 +31,7 @@ export const useShopping = (): UseShoppingReturn => {
     UseShoppingReturn,
     'constructionShopping' | 'constructionShoppingProductsCount'
   > => {
-    if (!lastShopping || lastShopping.state !== 'CONSTRUCTION') {
+    if (!firstShopping || firstShopping.state !== 'CONSTRUCTION') {
       return {
         constructionShopping: undefined,
         constructionShoppingProductsCount: 0,
@@ -42,16 +39,13 @@ export const useShopping = (): UseShoppingReturn => {
     }
 
     return {
-      constructionShopping: lastShopping,
-      constructionShoppingProductsCount: getProductsCount(lastShopping),
+      constructionShopping: firstShopping,
+      constructionShoppingProductsCount: getProductsCount(firstShopping),
     };
   };
 
   return {
     data: data || [],
-    //
-    lastShopping,
-    //
     ...getShoppingContructionData(),
     status,
     onFetch: fetch,

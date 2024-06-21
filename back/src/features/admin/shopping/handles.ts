@@ -1,4 +1,5 @@
 import { RequestHandler } from '../../../types/general';
+import { defaultQuerySort } from '../../../utils/api';
 import { withTryCatch } from '../../../utils/error';
 import { deepJsonCopy } from '../../../utils/general';
 import { billingServices } from '../../billing/services';
@@ -9,7 +10,7 @@ const get_admin_shopping: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { query, paginateOptions } = req;
 
-      const { routeNames, hasBill, states, dateFrom, dateTo, sort = '-createdAt' } = query;
+      const { routeNames, hasBill, states, dateFrom, dateTo, sort = defaultQuerySort } = query;
 
       const allBills = await billingServices.getAll({ query: {} });
 

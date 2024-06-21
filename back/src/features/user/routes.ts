@@ -24,3 +24,13 @@ router
     isUserIdAccessible,
     userHandles.put_users_userId(),
   );
+
+router
+  .route('/user/:userId/chatbotValidate')
+  .post(
+    validators.param('userId').notEmpty(),
+    validators.body('code').notEmpty(),
+    validators.handle,
+    isLogged,
+    userHandles.post_user_userId_chatbot_validate(),
+  );

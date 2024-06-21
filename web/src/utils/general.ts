@@ -227,3 +227,12 @@ export const wait = (timeout = 10): Promise<void> => {
 };
 
 export const getRandomHash = () => `${Date.now()}`;
+
+export const copyToClipboard = (text: string): void => {
+  const textField = document.createElement('textarea');
+  textField.innerText = text;
+  document.body.appendChild(textField);
+  textField.select();
+  document.execCommand('copy');
+  textField.remove();
+};

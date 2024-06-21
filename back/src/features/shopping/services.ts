@@ -16,6 +16,108 @@ import { getSortQuery } from '../../utils/schemas';
 import { Business } from '../../types/business';
 import { businessServices } from '../business/services';
 
+const addOne: QueryHandle<
+  {
+    amountToAdd?: number;
+    purshaseNotes?: PostPurshaseNotes;
+    user: User;
+    post: Post;
+  },
+  void
+> = async ({ amountToAdd = 1, purshaseNotes, user, post }) => {
+  const { routeName } = post;
+
+  const businessData: ModelDocument<Pick<Business, 'currency'>> | null =
+    await businessServices.findOne({
+      query: {
+        routeName,
+      },
+      projection: {
+        currency: 1,
+      },
+    });
+
+  if (!businessData) return;
+
+  const newShopping = new ShoppingModel({
+    state: 'CONSTRUCTION',
+    purchaserId: user._id,
+    purchaserName: user.name,
+    routeName,
+    currency: businessData.currency,
+    posts: [
+      {
+        postData: postToShoppingPostDataReshaper(post),
+        purshaseNotes,
+        count: amountToAdd,
+        lastUpdatedDate: new Date(),
+      },
+    ],
+  });
+
+  await newShopping.save();
+};
+
+const addPostToOne: QueryHandle<
+  {
+    amountToAdd?: number;
+    post: Post;
+    currentShopping: ModelDocument<Shopping>;
+  },
+  void
+> = async ({ amountToAdd = 1, post, currentShopping }) => {
+  const { _id: postId } = post;
+
+  const existsPost = currentShopping.posts.find((e) => {
+    return isEqualIds(e.postData._id, postId);
+  });
+
+  if (existsPost) {
+    await ShoppingModel.updateOne(
+      {
+        _id: currentShopping._id,
+      },
+      {
+        $set: {
+          'posts.$[p].lastUpdatedDate': new Date(),
+        },
+        $inc: {
+          'posts.$[p].count': amountToAdd,
+        },
+      },
+      {
+        arrayFilters: [
+          {
+            'p.postData._id': postId,
+          },
+        ],
+      },
+    );
+  } else {
+    await ShoppingModel.updateOne(
+      {
+        _id: currentShopping._id,
+      },
+      {
+        $push: {
+          posts: {
+            postData: postToShoppingPostDataReshaper(post),
+            count: amountToAdd,
+            lastUpdatedDate: new Date(),
+          },
+        },
+      },
+      {
+        arrayFilters: [
+          {
+            'p.post._id': postId,
+          },
+        ],
+      },
+    );
+  }
+};
+
 const updateOrAddOne: QueryHandle<
   {
     amountToAdd?: number;
@@ -25,7 +127,7 @@ const updateOrAddOne: QueryHandle<
   },
   void
 > = async ({ amountToAdd = 1, purshaseNotes, user, post }) => {
-  const { _id: postId, routeName } = post;
+  const { routeName } = post;
 
   const existInConstruction = await ShoppingModel.findOne({
     purchaserId: user._id,
@@ -34,84 +136,9 @@ const updateOrAddOne: QueryHandle<
   });
 
   if (existInConstruction) {
-    const existePost = existInConstruction.posts.find((e) => {
-      return isEqualIds(e.postData._id, postId);
-    });
-
-    if (existePost) {
-      await ShoppingModel.updateOne(
-        {
-          _id: existInConstruction._id,
-        },
-        {
-          $set: {
-            'posts.$[p].lastUpdatedDate': new Date(),
-          },
-          $inc: {
-            'posts.$[p].count': amountToAdd,
-          },
-        },
-        {
-          arrayFilters: [
-            {
-              'p.postData._id': postId,
-            },
-          ],
-        },
-      );
-    } else {
-      await ShoppingModel.updateOne(
-        {
-          _id: existInConstruction._id,
-        },
-        {
-          $push: {
-            posts: {
-              postData: postToShoppingPostDataReshaper(post),
-              count: amountToAdd,
-              lastUpdatedDate: new Date(),
-            },
-          },
-        },
-        {
-          arrayFilters: [
-            {
-              'p.post._id': postId,
-            },
-          ],
-        },
-      );
-    }
+    await addPostToOne({ amountToAdd, post, currentShopping: existInConstruction });
   } else {
-    const businessData: ModelDocument<Pick<Business, 'currency'>> | null =
-      await businessServices.findOne({
-        query: {
-          routeName,
-        },
-        projection: {
-          currency: 1,
-        },
-      });
-
-    if (!businessData) return;
-
-    const newShopping = new ShoppingModel({
-      state: 'CONSTRUCTION',
-      purchaserId: user._id,
-      purchaserName: user.name,
-      routeName,
-      currency: businessData.currency,
-      posts: [
-        {
-          postData: postToShoppingPostDataReshaper(post),
-          purshaseNotes,
-          count: amountToAdd,
-          lastUpdatedDate: new Date(),
-        },
-      ],
-    });
-
-    await newShopping.save();
+    await addOne({ amountToAdd, purshaseNotes, user, post });
   }
 };
 
@@ -228,4 +255,5 @@ export const shoppingServices = {
   deleteMany,
   findAndUpdateOne,
   findOneAndDelete,
+  addOne,
 };
