@@ -1,10 +1,10 @@
 import TelegramBot from 'node-telegram-bot-api';
 import { telegram_token_bot } from '../../config';
 import { ValidationCodeModel } from '../../schemas/auth';
-import { TelegramBotChat } from '../../types/business';
 import { getRandomHash } from '../../utils/general';
 import { logger } from '../logger';
 import { agendaHandles } from '../agenda/handles';
+import { TelegramBotChat } from '../../types/general';
 
 let bot: TelegramBot;
 

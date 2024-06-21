@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { Schema, SchemaDefinitionProperty } from 'mongoose';
 import {
   PostCardLayout,
   PostLayoutShoppingMethod,
@@ -6,11 +6,17 @@ import {
   PostsLayout,
   PostsLayoutSection,
 } from '../types/business';
-import { SchemaDefinition } from '../types/general';
+import { TelegramBotChat } from '../types/general';
 
-const PostLayoutShoppingMethodDefinition: SchemaDefinition<PostLayoutShoppingMethod> = {
+const PostLayoutShoppingMethodDefinition: SchemaDefinitionProperty<PostLayoutShoppingMethod> = {
   type: String,
   enum: ['none', 'shoppingCart'],
+};
+
+export const TelegramBotChatDefinition: SchemaDefinitionProperty<TelegramBotChat> = {
+  chatId: { type: String },
+  firstName: { type: String },
+  userName: { type: String },
 };
 
 export const PostCardLayoutSchema = new Schema<PostCardLayout>({
