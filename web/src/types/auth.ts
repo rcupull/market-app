@@ -19,6 +19,9 @@ export type UserData = User | null;
 
 export interface AuthData {
   user: User;
+}
+
+export interface AuthDataDto extends AuthData {
   accessToken: string;
   refreshToken: string;
 }

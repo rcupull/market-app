@@ -1,13 +1,13 @@
 import { useFetch } from 'hooks/useFetch';
 
 import { FetchResource } from 'types/api';
-import { AuthData } from 'types/auth';
+import { AuthDataDto } from 'types/auth';
 import { getEndpoint } from 'utils/api';
 
 export const useAuthSignIn = (): {
-  authSignIn: FetchResource<{ email: string; password: string }, AuthData>;
+  authSignIn: FetchResource<{ email: string; password: string }, AuthDataDto>;
 } => {
-  const fetch = useFetch<AuthData>();
+  const fetch = useFetch<AuthDataDto>();
 
   return {
     authSignIn: {

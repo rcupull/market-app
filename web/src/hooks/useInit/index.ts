@@ -52,7 +52,7 @@ export const useInit = () => {
 
   ////////////////////////////////////////////////////////////////////////
   const { authRefresh } = useAuthRefresh();
-  const refreshInterval = useInterval({ startCalling: true });
+  const refreshInterval = useInterval();
   const { signOut } = useSignOut();
   const { setCookie } = useCookies();
 
@@ -63,6 +63,7 @@ export const useInit = () => {
           authRefresh.fetch(undefined, {
             onAfterSuccess: ({ accessToken }) => {
               setCookie('accessToken', accessToken);
+              setCookie('accessTokenUpdatedAt', new Date().toISOString());
             },
             onAfterFailed: () => {
               signOut.fetch();
