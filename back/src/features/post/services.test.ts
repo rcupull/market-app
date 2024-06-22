@@ -126,7 +126,11 @@ describe('services', () => {
     it('should return one post', async () => {
       const { productPost1Business1User1 } = await fillBD();
 
-      const post = await postServices.getOne({ postId: productPost1Business1User1._id.toString() });
+      const post = await postServices.getOne({
+        query: {
+          _id: productPost1Business1User1._id,
+        },
+      });
 
       if (!post) return;
       //eslint-disable-next-line @typescript-eslint/no-unused-vars

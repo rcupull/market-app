@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 
 import { BusinessCardSimple } from 'components/business-card-simple';
-import { CardGroup } from 'components/card-group';
 
 import { useGetAllBusinessSummary } from 'features/api/business/useGetAllBusinessSummary';
 
@@ -41,7 +40,7 @@ export const Home = () => {
       <Filters onChange={(e) => filters.onMergeFilters(e)} />
       <LayoutPageSection isBusy={getAllBusinessSummary.status.isBusy} className="mt-20">
         <div ref={refCardContainer} onScroll={onScroll} className="overflow-y-auto max-h-50rem">
-          <CardGroup className="mt-6">
+          <div className="flex flex-wrap gap-10 mt-6">
             {infinityScrolling.tableData?.map((businessSummary, index) => {
               return (
                 <BusinessCardSimple
@@ -52,7 +51,7 @@ export const Home = () => {
                 />
               );
             })}
-          </CardGroup>
+          </div>
         </div>
       </LayoutPageSection>
     </LayoutPage>

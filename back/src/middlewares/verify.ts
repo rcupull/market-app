@@ -142,7 +142,9 @@ export const isUserThisPostOwner: RequestHandler = async (req, res, next) => {
   }
 
   const post = await postServices.getOne({
-    postId,
+    query: {
+      _id: postId,
+    },
   });
 
   if (!post) {
@@ -168,7 +170,9 @@ export const addPostToReq: RequestHandler = async (req, res, next) => {
   }
 
   const post = await postServices.getOne({
-    postId,
+    query: {
+      _id: postId,
+    },
   });
 
   if (!post) {
@@ -212,7 +216,9 @@ export const verifyPost: RequestHandler = (req, res, next) => {
     }
 
     const out = await postServices.getOne({
-      postId,
+      query: {
+        _id: postId,
+      },
     });
 
     if (!out) {
