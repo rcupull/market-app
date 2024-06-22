@@ -25,7 +25,9 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
   user: User;
 }> = async ({ postId, routeName, user }) => {
   const post = await postServices.getOne({
-    postId,
+    query: {
+      _id: postId,
+    },
   });
 
   if (!post) {
@@ -99,7 +101,9 @@ export const deleteShoppingInConstruction: QueryHandle<{
       return new Promise((resolve) => {
         postServices
           .getOne({
-            postId,
+            query: {
+              postId,
+            },
           })
           .then((post) => {
             if (!post) {

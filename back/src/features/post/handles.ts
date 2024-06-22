@@ -55,7 +55,9 @@ const get_posts_postId: () => RequestHandler = () => {
       const { postId } = params;
 
       const out = await postServices.getOne({
-        postId,
+        query: {
+          _id: postId,
+        },
       });
 
       res.send(out);
@@ -127,7 +129,9 @@ const post_posts_postId_duplicate: () => RequestHandler = () => {
       const { postId } = params;
 
       const post = await postServices.getOne({
-        postId,
+        query: {
+          _id: postId,
+        },
       });
 
       if (!post) {

@@ -157,7 +157,7 @@ export interface Business extends BaseIdentity {
 }
 
 export interface BusinessSummary extends Pick<Business, '_id' | 'name' | 'routeName'> {
-  mostSelledProductsImages: Array<Image>;
+  images: Array<Image>;
   bestDiscount: number; // percent
   salesAmount: number; // ammount
 }
