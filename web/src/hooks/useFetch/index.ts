@@ -5,6 +5,7 @@ import { useCookies } from 'features/cookies/useCookies';
 import { useDebouncedValue } from 'hooks/useDebouncedValue';
 
 import axios, { AxiosError } from 'axios';
+import { differenceInMinutes } from 'date-fns';
 import {
   ApiError,
   ApiErrorReazon,
@@ -16,6 +17,7 @@ import {
   OnAfterFailed,
   OnAfterSuccess,
 } from 'types/api';
+import { getEndpoint } from 'utils/api';
 import { wait } from 'utils/general';
 
 export type FetchOptions<Data = any> = {
@@ -43,12 +45,19 @@ export type UseFetchReturn<Data = unknown> = [
   FetchFnReset,
 ];
 
+let fetchingTokenPromise: Promise<any> | null = null;
+
+const isOutOfDateToken = (accessTokenUpdatedAt: string) => {
+  const diff = differenceInMinutes(new Date(), new Date(accessTokenUpdatedAt));
+
+  return diff > 20;
+};
 export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
   const [response, setResponse] = useState<FetchData<Data>>(null);
   const [error, setError] = useState<ApiError | null>(null);
   const [status, setStatus] = useState<ApiStatus>('NOT_STARTED');
   const [wasCalled, setWasCalled] = useState<boolean>(false);
-  const { getCookie } = useCookies();
+  const { getCookie, setCookie } = useCookies();
   const debouncedStatus = useDebouncedValue<ApiStatus>(status, 100);
 
   useEffect(() => {
@@ -69,53 +78,103 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
 
     const { onAfterSuccess, onAfterFailed } = options || {};
 
-    try {
-      setStatus('BUSY');
-
-      const resourcesArray = args instanceof Array ? args : [args];
-
-      const accessToken = getCookie('accessToken') as string | null;
-
-      const promises = resourcesArray.map(({ method, url, data, headers = {} }) => {
-        return axios({
-          url,
-          method,
-          data,
-          headers: {
-            ...headers,
-            Authorization: accessToken && `Bearer ${accessToken}`,
-          },
-        });
-      });
-
-      const responseArray = await Promise.all(promises);
-
-      if (DEVELOPMENT) {
-        //simulate the api call delay
-        await wait(1000);
+    const handleFetchAccessToken = async () => {
+      if (fetchingTokenPromise) {
+        return fetchingTokenPromise;
       }
 
-      const response = (
-        args instanceof Array ? responseArray.map(({ data }) => data) : responseArray[0].data
-      ) as Data;
+      fetchingTokenPromise = new Promise((resolve, reject) => {
+        const refreshToken = getCookie('refreshToken');
 
-      setResponse(response);
-      onAfterSuccess?.(response);
-      setStatus('SUCCESS');
-      setWasCalled(true);
-    } catch (e) {
-      const { response } = e as AxiosError<{ message?: string; reazon?: ApiErrorReazon }>;
+        axios({
+          method: 'post',
+          url: getEndpoint({ path: '/auth/refresh' }),
+          data: { refreshToken },
+        })
+          .then(({ data }) => {
+            const newAccessToken = data.accessToken;
 
-      const apiError: ApiError = {
-        message: response?.data?.message || 'Something went wrong',
-        reazon: response?.data?.reazon,
-      };
+            setCookie('accessToken', newAccessToken);
+            setCookie('accessTokenUpdatedAt', new Date().toISOString());
 
-      onAfterFailed?.(apiError);
-      setResponse(null);
-      setError(apiError);
-      setStatus('FAILED');
-      setWasCalled(true);
+            fetchingTokenPromise = null;
+
+            if (DEVELOPMENT) {
+              //simulate the api call delay
+              wait(1000).then(() => {
+                resolve(newAccessToken);
+              });
+            } else {
+              resolve(newAccessToken);
+            }
+          })
+          .catch((e) => {
+            fetchingTokenPromise = null;
+            reject(e);
+          });
+      });
+
+      return fetchingTokenPromise;
+    };
+
+    const handleFetchCall = async (accessToken: string | null) => {
+      try {
+        setStatus('BUSY');
+
+        const resourcesArray = args instanceof Array ? args : [args];
+
+        const promises = resourcesArray.map(({ method, url, data, headers = {} }) => {
+          return axios({
+            url,
+            method,
+            data,
+            headers: {
+              ...headers,
+              Authorization: accessToken && `Bearer ${accessToken}`,
+            },
+          });
+        });
+
+        const responseArray = await Promise.all(promises);
+
+        if (DEVELOPMENT) {
+          //simulate the api call delay
+          await wait(1000);
+        }
+
+        const response = (
+          args instanceof Array ? responseArray.map(({ data }) => data) : responseArray[0].data
+        ) as Data;
+
+        setResponse(response);
+        onAfterSuccess?.(response);
+        setStatus('SUCCESS');
+        setWasCalled(true);
+      } catch (e) {
+        const { response } = e as AxiosError<{ message?: string; reazon?: ApiErrorReazon }>;
+
+        const apiError: ApiError = {
+          message: response?.data?.message || 'Something went wrong',
+          reazon: response?.data?.reazon,
+        };
+
+        onAfterFailed?.(apiError);
+        setResponse(null);
+        setError(apiError);
+        setStatus('FAILED');
+        setWasCalled(true);
+      }
+    };
+
+    const accessTokenUpdatedAt = getCookie('accessTokenUpdatedAt') as string | null;
+
+    if (accessTokenUpdatedAt && isOutOfDateToken(accessTokenUpdatedAt)) {
+      const accessToken = await handleFetchAccessToken();
+      await handleFetchCall(accessToken);
+    } else {
+      const accessToken = getCookie('accessToken') as string | null;
+
+      await handleFetchCall(accessToken);
     }
   };
 
