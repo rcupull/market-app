@@ -35,7 +35,7 @@ export const LayoutSection = ({
         </div>
       </div>
 
-      <div className='m-2'>{children}</div>
+      <div className="m-2">{children}</div>
     </div>
   );
 };

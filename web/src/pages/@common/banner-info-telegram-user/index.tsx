@@ -37,7 +37,7 @@ export const BannerInfoTelegramUser = ({ className }: StyleProps) => {
                 onClick={() => {
                   updateTelegramBotUserModal.open({
                     onAfterSuccess: () => {
-                      onRefreshAuthUser()
+                      onRefreshAuthUser();
                     },
                   });
                 }}

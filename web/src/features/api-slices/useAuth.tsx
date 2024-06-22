@@ -90,6 +90,7 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
               const { accessToken, user, refreshToken } = response;
 
               setCookie('accessToken', accessToken);
+              setCookie('accessTokenUpdatedAt', new Date().toISOString());
               setCookie('refreshToken', refreshToken);
               setCookie('user', user);
 
@@ -101,6 +102,7 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
       },
       reset: () => {
         removeCookie('accessToken');
+        removeCookie('accessTokenUpdatedAt');
         removeCookie('refreshToken');
         removeCookie('user');
         reset();

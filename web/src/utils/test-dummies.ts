@@ -58,6 +58,4 @@ export const adminConfigDummy: AdminConfig = {
 
 export const authDataDummy: AuthData = {
   user: userDummy,
-  accessToken: 'accessToken',
-  refreshToken: 'refreshToken',
 };
