@@ -12,7 +12,7 @@ describe('BusinessCardSimple', () => {
           bestDiscount: 0,
           _id: '_id',
           name: 'name',
-          mostSelledProductsImages: [],
+          images: [],
           routeName: 'routeName',
           salesAmount: 0,
         }}

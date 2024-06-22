@@ -17,9 +17,9 @@ export const BusinessCardSimple = ({
   className,
   href,
 }: BusinessCardSimpleProps) => {
-  const { name, mostSelledProductsImages } = businessSummary;
+  const { name, images } = businessSummary;
 
-  const image = mostSelledProductsImages?.[0];
+  const image = images?.[0];
   const imageSrc = (image && getImageSrc?.(image.src)) || image?.src;
 
   return (

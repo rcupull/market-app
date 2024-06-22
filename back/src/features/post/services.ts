@@ -1,4 +1,4 @@
-import { FilterQuery, PaginateOptions, Schema, UpdateQuery } from 'mongoose';
+import { FilterQuery, PaginateOptions, QueryOptions, Schema, UpdateQuery } from 'mongoose';
 import { ModelDocument, QueryHandle } from '../../types/general';
 import { PostModel } from '../../schemas/post';
 import { Post } from '../../types/post';
@@ -28,24 +28,25 @@ const getAllWithPagination: QueryHandle<
 };
 
 const getAll: QueryHandle<
-  { query: GetAllPostArgs; projection?: ProjectionType<Post> },
+  { query: GetAllPostArgs; projection?: ProjectionType<Post>; options?: QueryOptions },
   Array<Post>
-> = async ({ query, projection }) => {
+> = async ({ query, projection, options }) => {
   const filterQuery = getAllFilterQuery(query);
 
-  const out = await PostModel.find(filterQuery, projection);
+  const out = await PostModel.find(filterQuery, projection, options);
 
   return out;
 };
 
 const getOne: QueryHandle<
   {
-    postId: string | Schema.Types.ObjectId;
-    hidden?: boolean;
+    query: FilterQuery<Post> & { postId?: string | Schema.Types.ObjectId; hidden?: boolean };
   },
   ModelDocument<Post> | null
-> = async ({ postId, hidden }) => {
-  const filterQuery: FilterQuery<Post> = {};
+> = async ({ query }) => {
+  const { postId, hidden, ...omittedQuery } = query;
+
+  const filterQuery: FilterQuery<Post> = omittedQuery;
 
   if (postId) {
     filterQuery._id = postId;

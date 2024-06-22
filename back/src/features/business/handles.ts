@@ -10,7 +10,7 @@ import {
 } from '../../utils/server-response';
 import { Business, BusinessSummary, PostCategory } from '../../types/business';
 import { postServices } from '../post/services';
-import { RequestHandler } from '../../types/general';
+import { Image, RequestHandler } from '../../types/general';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { getPostCategoriesFromBusinessCategories } from './utils';
 import { imagesServices } from '../images/services';
@@ -47,7 +47,7 @@ const get_business_summary: () => RequestHandler = () => {
 
       const { routeNames, search, userId, includeHidden } = query;
 
-      const business = await businessServices.getAllWithPagination({
+      const paginatedBusiness = await businessServices.getAllWithPagination({
         paginateOptions,
         query: {
           routeNames,
@@ -57,16 +57,35 @@ const get_business_summary: () => RequestHandler = () => {
         },
       });
 
-      const out: PaginateResult<BusinessSummary> = {
-        ...business,
-        data: business.data.map(({ routeName, _id, name }) => ({
+      const getBusinessSummary = async (business: Business): Promise<BusinessSummary> => {
+        const { routeName, _id, name } = business;
+        const posts = await postServices.getOne({
+          query: {
+            routeName,
+          },
+        });
+
+        const images: Array<Image> = [];
+
+        if (posts?.images?.[0]) {
+          images.push(posts?.images?.[0]);
+        }
+
+        return {
           name,
           routeName,
           _id,
           bestDiscount: 20,
-          mostSelledProductsImages: [],
+          images,
           salesAmount: 78,
-        })),
+        };
+      };
+
+      const data = await Promise.all(paginatedBusiness.data.map(getBusinessSummary));
+
+      const out: PaginateResult<BusinessSummary> = {
+        ...paginatedBusiness,
+        data,
       };
 
       res.send(out);

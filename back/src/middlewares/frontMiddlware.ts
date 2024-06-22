@@ -110,7 +110,9 @@ const injectPostMetaMiddlware: RequestHandler = async (req, res, next) => {
 
   if (postId) {
     const post = await postServices.getOne({
-      postId,
+      query: {
+        postId,
+      },
     });
 
     if (!post) {
