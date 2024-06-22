@@ -128,7 +128,7 @@ describe('services', () => {
 
       const post = await postServices.getOne({
         query: {
-          postId: productPost1Business1User1._id.toString(),
+          _id: productPost1Business1User1._id,
         },
       });
 

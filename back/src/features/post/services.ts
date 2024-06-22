@@ -1,4 +1,4 @@
-import { FilterQuery, PaginateOptions, QueryOptions, Schema, UpdateQuery } from 'mongoose';
+import { FilterQuery, PaginateOptions, QueryOptions, UpdateQuery } from 'mongoose';
 import { ModelDocument, QueryHandle } from '../../types/general';
 import { PostModel } from '../../schemas/post';
 import { Post } from '../../types/post';
@@ -40,17 +40,13 @@ const getAll: QueryHandle<
 
 const getOne: QueryHandle<
   {
-    query: FilterQuery<Post> & { postId?: string | Schema.Types.ObjectId; hidden?: boolean };
+    query: FilterQuery<Post> & { hidden?: boolean };
   },
   ModelDocument<Post> | null
 > = async ({ query }) => {
-  const { postId, hidden, ...omittedQuery } = query;
+  const { hidden, ...omittedQuery } = query;
 
   const filterQuery: FilterQuery<Post> = omittedQuery;
-
-  if (postId) {
-    filterQuery._id = postId;
-  }
 
   if (hidden !== undefined) {
     filterQuery.hidden = hidden;

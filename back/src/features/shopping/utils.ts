@@ -26,7 +26,7 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
 }> = async ({ postId, routeName, user }) => {
   const post = await postServices.getOne({
     query: {
-      postId,
+      _id: postId,
     },
   });
 
