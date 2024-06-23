@@ -35,11 +35,14 @@ export const PostsSection = ({ routeName, layout, className, visibility }: Posts
   const notRender = hidden && !owner;
   const renderHiddenSection = hidden && owner;
 
-  const hotUpdateTableData = useHotUpdateTableData<Post, { postId: string; stockAmount: number }>({
+  const hotUpdateTableData = useHotUpdateTableData<
+    Post,
+    { postId: string; stockAmountAvailable: number }
+  >({
     data: getAllPosts.data,
     updateKey: `updatePostAmount`,
     findCB: (rowData, { postId }) => rowData._id === postId,
-    changeCB: (rowData, { stockAmount }) => ({ ...rowData, stockAmount }),
+    changeCB: (rowData, { stockAmountAvailable }) => ({ ...rowData, stockAmountAvailable }),
   });
 
   const handleFilter = (filters: GetAllPostsQuery) => {
