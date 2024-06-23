@@ -3,13 +3,13 @@ import { Shopping, ShoppingPostData, ShoppingState } from '../../types/shopping'
 import { User } from '../../types/user';
 import { logger } from '../logger';
 import { shoppingServices } from './services';
-import { isEqualIds, isNumber } from '../../utils/general';
+import { isNumber } from '../../utils/general';
 import { postServices } from '../post/services';
-import { sendUpdateStockAmountMessage } from '../notifications/handles';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { Post } from '../../types/post';
 import { FilterQuery } from 'mongoose';
 import { setFilterQueryWithDates } from '../../utils/schemas';
+import { notificationsServices } from '../notifications/services';
 
 export interface GetAllShoppingArgs extends FilterQuery<Shopping> {
   routeNames?: Array<string>;
@@ -67,21 +67,18 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
     });
   }
 
-  const shoppingPostToUpdate = oldShopping.posts.find((p) => {
-    return isEqualIds(p.postData._id, postId);
-  });
-
-  const updateStockResponse = await postServices.updateStockAmount({
-    amountToAdd: shoppingPostToUpdate?.count ?? 0,
-    post,
-  });
-
   /**
    * push Notification to update the stock in  the front
    */
-  if (updateStockResponse) {
-    const { currentStockAmount } = updateStockResponse;
-    sendUpdateStockAmountMessage({ postId, currentStockAmount });
+  const [stockAmountAvailable] = await shoppingServices.getStockAmountAvailableFromPosts({
+    posts: [post],
+  });
+
+  if (isNumber(stockAmountAvailable)) {
+    notificationsServices.sendUpdateStockAmountMessage({
+      postId: post._id.toString(),
+      stockAmountAvailable,
+    });
   }
 };
 
@@ -97,40 +94,24 @@ export const deleteShoppingInConstruction: QueryHandle<{
   });
 
   if (oldShopping) {
-    const promises = oldShopping.posts.map(({ postData: { _id: postId }, count }) => {
-      return new Promise((resolve) => {
-        postServices
-          .getOne({
-            query: {
-              postId,
-            },
-          })
-          .then((post) => {
-            if (!post) {
-              return resolve(null);
-            }
-
-            postServices
-              .updateStockAmount({
-                amountToAdd: count,
-                post,
-              })
-              .then((updateStockResponse) => {
-                if (updateStockResponse) {
-                  const { currentStockAmount } = updateStockResponse;
-                  sendUpdateStockAmountMessage({
-                    postId: post._id.toString(),
-                    currentStockAmount,
-                  });
-                }
-
-                resolve(null);
-              });
-          });
-      });
+    const posts = await postServices.getAll({
+      query: {
+        postsIds: oldShopping.posts.map((p) => p.postData._id.toString()),
+      },
     });
 
-    await Promise.all(promises);
+    const stockAmountsAvaliable = await shoppingServices.getStockAmountAvailableFromPosts({
+      posts,
+    });
+
+    stockAmountsAvaliable.forEach((stockAmount, index) => {
+      if (isNumber(stockAmount)) {
+        notificationsServices.sendUpdateStockAmountMessage({
+          postId: posts[index]._id.toString(),
+          stockAmountAvailable: stockAmount,
+        });
+      }
+    });
   }
 };
 

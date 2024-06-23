@@ -9,10 +9,11 @@ import {
   getPostNotFoundResponse,
   getUserNotFoundResponse,
 } from '../../utils/server-response';
-import { isEmpty, isEqual } from '../../utils/general';
-import { Post } from '../../types/post';
+import { deepJsonCopy, isEmpty, isEqual } from '../../utils/general';
+import { Post, PostDto } from '../../types/post';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { GetAllPostArgs } from './utils';
+import { shoppingServices } from '../shopping/services';
 
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
@@ -29,7 +30,7 @@ const get_posts: () => RequestHandler = () => {
         postType,
       } = query;
 
-      const out = await postServices.getAllWithPagination({
+      const posts = await postServices.getAllWithPagination({
         paginateOptions,
         query: {
           postsIds,
@@ -43,6 +44,22 @@ const get_posts: () => RequestHandler = () => {
         },
       });
 
+      const stockAmountsAvailable = await shoppingServices.getStockAmountAvailableFromPosts({
+        posts: posts.data,
+      });
+
+      const out = deepJsonCopy(posts);
+
+      const getPostDto = async (post: Post, index: number): Promise<PostDto> => {
+        return {
+          ...post,
+          stockAmountAvailable: stockAmountsAvailable[index],
+        };
+      };
+
+      const promises = out.data.map(getPostDto);
+      out.data = await Promise.all(promises);
+
       res.send(out);
     });
   };
@@ -54,11 +71,23 @@ const get_posts_postId: () => RequestHandler = () => {
       const { params } = req;
       const { postId } = params;
 
-      const out = await postServices.getOne({
+      const post = await postServices.getOne({
         query: {
           _id: postId,
         },
       });
+
+      if (!post) {
+        return getPostNotFoundResponse({ res });
+      }
+
+      const out: PostDto = deepJsonCopy(post);
+
+      const [stockAmountAvailable] = await shoppingServices.getStockAmountAvailableFromPosts({
+        posts: [out],
+      });
+
+      out.stockAmountAvailable = stockAmountAvailable;
 
       res.send(out);
     });
