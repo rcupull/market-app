@@ -4,7 +4,7 @@ import { UpdateOptions } from 'mongodb';
 import { ShoppingModel } from '../../schemas/shopping';
 import { Shopping, ShoppingState } from '../../types/shopping';
 import { Post, PostPurshaseNotes } from '../../types/post';
-import { isEqualIds } from '../../utils/general';
+import { isEqualIds, isNumber } from '../../utils/general';
 import { User } from '../../types/user';
 import { PaginateResult } from '../../middlewares/pagination';
 import {
@@ -15,6 +15,9 @@ import {
 import { getSortQuery } from '../../utils/schemas';
 import { Business } from '../../types/business';
 import { businessServices } from '../business/services';
+import { postServices } from '../post/services';
+import { logger } from '../logger';
+import { notificationsServices } from '../notifications/services';
 
 const addOne: QueryHandle<
   {
@@ -300,6 +303,68 @@ const getStockAmountAvailableFromPosts: QueryHandle<
   return out;
 };
 
+const sendUpdateStockAmountMessagesFromShoppingPosts: QueryHandle<{
+  shopping: Shopping;
+}> = async ({ shopping }) => {
+  if (![ShoppingState.REJECTED, ShoppingState.CANCELED].includes(shopping.state)) {
+    logger.info('No need to send update stock amount messages from shopping posts.');
+    return;
+  }
+
+  const posts = await postServices.getAll({
+    query: {
+      postsIds: shopping.posts.map((post) => post.postData._id.toString()),
+    },
+  });
+
+  const amountAvailableFromPosts = await getStockAmountAvailableFromPosts({
+    posts,
+  });
+
+  amountAvailableFromPosts.forEach((stockAmountAvailable, index) => {
+    if (isNumber(stockAmountAvailable)) {
+      notificationsServices.sendUpdateStockAmountMessage({
+        postId: posts[index]._id.toString(),
+        stockAmountAvailable,
+      });
+    }
+  });
+};
+
+const decrementStockAmountFromShoppingPosts: QueryHandle<{
+  shopping: Shopping;
+}> = async ({ shopping }) => {
+  if (![ShoppingState.DELIVERED].includes(shopping.state)) {
+    logger.info('No need to decrement stock amount from shopping posts.');
+    return;
+  }
+
+  /**
+   * TODO this can be improved
+   */
+  const promises = shopping.posts.map(({ count, postData }) => {
+    return new Promise<void>((resolve) => {
+      postServices
+        .getOne({
+          query: {
+            _id: postData._id,
+          },
+        })
+        .then((post) => {
+          if (post && isNumber(post.stockAmount)) {
+            post.updateOne({ $inc: { stockAmount: -count } }).then(() => {
+              resolve();
+            });
+          } else {
+            resolve();
+          }
+        });
+    });
+  });
+
+  await Promise.all(promises);
+};
+
 export const shoppingServices = {
   getOne,
   updateOne,
@@ -315,4 +380,6 @@ export const shoppingServices = {
   //
   getStockAmountAvailableFromPost,
   getStockAmountAvailableFromPosts,
+  sendUpdateStockAmountMessagesFromShoppingPosts,
+  decrementStockAmountFromShoppingPosts,
 };

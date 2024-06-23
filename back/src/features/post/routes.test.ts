@@ -1,8 +1,9 @@
 import supertest from 'supertest';
 import { app } from '../../server';
-import { dropTestDbConnectionAsync, generateToken } from '../../utils/test-utils';
+import { dropTestDbConnectionAsync, generateToken, setAnyString } from '../../utils/test-utils';
 import { fillBD } from '../../utils/test-BD';
 import { getTestingRoute } from '../../utils/api';
+import { Post } from '../../types/post';
 
 describe('posts', () => {
   describe('POST: /posts/:postId/review', () => {
@@ -150,6 +151,42 @@ describe('posts', () => {
         .expect(200)
         .then((response) => {
           expect(response.body.data.length).toEqual(5);
+
+          expect(response.body.data[0]).toMatchInlineSnapshot(
+            setAnyString<Post>('_id', 'createdAt', 'createdBy'),
+            `
+            {
+              "__v": 0,
+              "_id": Anything,
+              "clothingSizes": [],
+              "colors": [],
+              "createdAt": Anything,
+              "createdBy": Anything,
+              "hidden": false,
+              "hiddenBusiness": false,
+              "images": [],
+              "name": "chancletas",
+              "postCategoriesTags": [
+                "cat1",
+                "cat2",
+                "cat3",
+              ],
+              "postType": "product",
+              "price": 10,
+              "reviews": [
+                0,
+                0,
+                0,
+                0,
+                0,
+              ],
+              "reviewsUserIds": [],
+              "routeName": "business1User1",
+              "stockAmount": null,
+              "stockAmountAvailable": null,
+            }
+          `,
+          );
         });
     });
 

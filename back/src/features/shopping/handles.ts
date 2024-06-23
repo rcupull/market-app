@@ -318,9 +318,9 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
 
       await shopping.save();
 
-      if (state === 'APPROVED') {
+      if (state === ShoppingState.APPROVED) {
         /**
-         * send telegram notificaion when the shopiing to be aproved
+         * send telegram notificaion when the shopping to be aproved
          */
         const purchaserData: Pick<User, 'telegramBotChat'> | null = await userServices.getOne({
           query: {
@@ -374,6 +374,24 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
             },
           );
         }
+      }
+
+      if (state === ShoppingState.CANCELED || state === ShoppingState.REJECTED) {
+        /**
+         * Send update stock amount messages
+         */
+        await shoppingServices.sendUpdateStockAmountMessagesFromShoppingPosts({
+          shopping,
+        });
+      }
+
+      if (state === ShoppingState.DELIVERED) {
+        /**
+         * Decrement stock amount
+         */
+        await shoppingServices.decrementStockAmountFromShoppingPosts({
+          shopping,
+        });
       }
 
       res.send({});

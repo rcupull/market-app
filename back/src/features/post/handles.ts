@@ -10,14 +10,11 @@ import {
   getUserNotFoundResponse,
 } from '../../utils/server-response';
 import { deepJsonCopy, isEmpty, isEqual } from '../../utils/general';
-import { Post } from '../../types/post';
+import { Post, PostDto } from '../../types/post';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { GetAllPostArgs } from './utils';
 import { shoppingServices } from '../shopping/services';
 
-interface PostDto extends Post {
-  stockAmountAvailable?: number | null;
-}
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
@@ -74,11 +71,23 @@ const get_posts_postId: () => RequestHandler = () => {
       const { params } = req;
       const { postId } = params;
 
-      const out = await postServices.getOne({
+      const post = await postServices.getOne({
         query: {
           _id: postId,
         },
       });
+
+      if (!post) {
+        return getPostNotFoundResponse({ res });
+      }
+
+      const out: PostDto = deepJsonCopy(post);
+
+      const [stockAmountAvailable] = await shoppingServices.getStockAmountAvailableFromPosts({
+        posts: [out],
+      });
+
+      out.stockAmountAvailable = stockAmountAvailable;
 
       res.send(out);
     });
