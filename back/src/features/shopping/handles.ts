@@ -9,7 +9,6 @@ import {
   getUserNotFoundResponse,
 } from '../../utils/server-response';
 import { shoppingServices } from './services';
-import { postServices } from '../post/services';
 import { isNumber } from '../../utils/general';
 import { businessServices } from '../business/services';
 import {
@@ -128,25 +127,45 @@ const post_shopping: () => RequestHandler<
 
       const { amountToAdd = 1, purshaseNotes } = body;
 
-      /**
-       * Update the post stock in the case that it has enabled this features
-       * this service return the amount added to the post and the current stock
-       */
-      const updateStockResponse = await postServices.updateStockAmount({
-        amountToAdd: -amountToAdd,
-        post,
+      const [stockAmountAvailable] = await shoppingServices.getStockAmountAvailableFromPosts({
+        posts: [post],
       });
 
-      /**
-       * update the shopping with the new amount according to amount added to post.
-       * updateStockResponse is null if the stock amount fearure is not enabled
-       */
+      if (isNumber(stockAmountAvailable)) {
+        /**
+         * is enabled the stock amount feature
+         */
+        const wantAddMore = amountToAdd > stockAmountAvailable;
 
-      const { amountAddedToPost, currentStockAmount } = updateStockResponse || {};
+        if (wantAddMore) {
+          /**
+           * add the rest of the stock
+           */
+          await shoppingServices.updateOrAddOne({
+            amountToAdd: stockAmountAvailable,
+            post,
+            user,
+          });
 
-      if (isNumber(amountAddedToPost) && isNumber(currentStockAmount)) {
+          /**
+           * send notification to update the post. TODO maybe we need some conditions
+           */
+          notificationsServices.sendUpdateStockAmountMessage({
+            postId: post._id.toString(),
+            stockAmountAvailable: 0,
+          });
+
+          return res.send({
+            message:
+              'Por falta de disponibilidad en el stock no se han podido agregar la cantidad solicitada. Se han agregado solamente las cantidades disponibles.',
+          });
+        }
+
+        /**
+         * add the amount to add
+         */
         await shoppingServices.updateOrAddOne({
-          amountToAdd: -amountAddedToPost,
+          amountToAdd: amountToAdd,
           post,
           user,
         });
@@ -156,15 +175,8 @@ const post_shopping: () => RequestHandler<
          */
         notificationsServices.sendUpdateStockAmountMessage({
           postId: post._id.toString(),
-          currentStockAmount,
+          stockAmountAvailable: stockAmountAvailable - amountToAdd,
         });
-
-        if (amountAddedToPost !== amountToAdd) {
-          return res.send({
-            message:
-              'Por falta de disponibilidad en el stock no se han podido agregar la cantidad solicitada. Se han agregado solamente las cantidades disponibles.',
-          });
-        }
 
         return res.send({});
       }

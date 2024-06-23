@@ -47,9 +47,9 @@ export const NotificationsProvider = ({ children }: ChildrenProp) => {
 
       switch (type) {
         case 'POST_AMOUNT_STOCK_CHANGE': {
-          const { postId, stockAmount } = notificationPayload;
+          const { postId, stockAmountAvailable } = notificationPayload;
 
-          onCallAfar('updatePostAmount', { postId, stockAmount });
+          onCallAfar('updatePostAmount', { postId, stockAmountAvailable });
           return;
         }
         case 'NEW_ORDER_WAS_CREATED': {

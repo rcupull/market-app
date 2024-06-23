@@ -9,11 +9,15 @@ import {
   getPostNotFoundResponse,
   getUserNotFoundResponse,
 } from '../../utils/server-response';
-import { isEmpty, isEqual } from '../../utils/general';
+import { deepJsonCopy, isEmpty, isEqual } from '../../utils/general';
 import { Post } from '../../types/post';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { GetAllPostArgs } from './utils';
+import { shoppingServices } from '../shopping/services';
 
+interface PostDto extends Post {
+  stockAmountAvailable?: number | null;
+}
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
@@ -29,7 +33,7 @@ const get_posts: () => RequestHandler = () => {
         postType,
       } = query;
 
-      const out = await postServices.getAllWithPagination({
+      const posts = await postServices.getAllWithPagination({
         paginateOptions,
         query: {
           postsIds,
@@ -42,6 +46,22 @@ const get_posts: () => RequestHandler = () => {
           postType,
         },
       });
+
+      const stockAmountsAvailable = await shoppingServices.getStockAmountAvailableFromPosts({
+        posts: posts.data,
+      });
+
+      const out = deepJsonCopy(posts);
+
+      const getPostDto = async (post: Post, index: number): Promise<PostDto> => {
+        return {
+          ...post,
+          stockAmountAvailable: stockAmountsAvailable[index],
+        };
+      };
+
+      const promises = out.data.map(getPostDto);
+      out.data = await Promise.all(promises);
 
       res.send(out);
     });

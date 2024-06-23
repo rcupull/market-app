@@ -2,7 +2,7 @@ import { ModelDocument, QueryHandle } from '../../types/general';
 import { FilterQuery, PaginateOptions, ProjectionType, UpdateQuery } from 'mongoose';
 import { UpdateOptions } from 'mongodb';
 import { ShoppingModel } from '../../schemas/shopping';
-import { Shopping } from '../../types/shopping';
+import { Shopping, ShoppingState } from '../../types/shopping';
 import { Post, PostPurshaseNotes } from '../../types/post';
 import { isEqualIds } from '../../utils/general';
 import { User } from '../../types/user';
@@ -244,6 +244,62 @@ const findOneAndDelete: QueryHandle<
   return await ShoppingModel.findOneAndDelete(query);
 };
 
+const getStockAmountAvailableFromPost: QueryHandle<
+  {
+    post: Post;
+    shoppings: Array<Shopping>;
+  },
+  number | null
+> = async ({ post, shoppings }) => {
+  const { stockAmount } = post;
+
+  if (!stockAmount) return null; // this be 0, null or undefined
+
+  const postCount = shoppings.reduce((acc, shopping) => {
+    let out = acc;
+    shopping.posts.forEach(({ count, postData }) => {
+      if (isEqualIds(postData._id, post._id)) {
+        out = out + count;
+      }
+    });
+
+    return out;
+  }, 0);
+
+  return stockAmount - postCount;
+};
+
+const getStockAmountAvailableFromPosts: QueryHandle<
+  {
+    posts: Array<Post>;
+  },
+  Array<number | null>
+> = async ({ posts }) => {
+  /**
+   * shopping que tienen estos productos incluidos pero todavia no han sido vendidos. O sea, existen en los almacenes del comerciante
+   * El stockAmount de los posts sera decrementado una vez se haya vendido y entregado el producto (cambia para ShoppingState.DELIVERED)*/
+  const allShoppings = await shoppingServices.getAll({
+    query: {
+      'posts.postData._id': { $in: posts.map((post) => post._id) },
+      state: {
+        $in: [
+          ShoppingState.CONSTRUCTION,
+          ShoppingState.REQUESTED,
+          ShoppingState.APPROVED,
+          ShoppingState.PROCESSING,
+          ShoppingState.READY_TO_DELIVER,
+        ],
+      },
+    },
+  });
+
+  const out = await Promise.all(
+    posts.map((post) => getStockAmountAvailableFromPost({ post, shoppings: allShoppings })),
+  );
+
+  return out;
+};
+
 export const shoppingServices = {
   getOne,
   updateOne,
@@ -256,4 +312,7 @@ export const shoppingServices = {
   findAndUpdateOne,
   findOneAndDelete,
   addOne,
+  //
+  getStockAmountAvailableFromPost,
+  getStockAmountAvailableFromPosts,
 };

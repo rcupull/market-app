@@ -3,7 +3,7 @@ import { app } from '../../server';
 import { dropTestDbConnectionAsync, generateToken } from '../../utils/test-utils';
 import { TestBDContent, fillBD } from '../../utils/test-BD';
 import { getTestingRoute } from '../../utils/api';
-import { Shopping } from '../../types/shopping';
+import { Shopping, ShoppingState } from '../../types/shopping';
 import { Post } from '../../types/post';
 import { notificationsServices as notificationsServicesBase } from '../notifications/services';
 
@@ -450,7 +450,7 @@ describe('shopping', () => {
     it('should change the state to READY_TO_DELIVER', async () => {
       const { user1, shopping1Business1User1 } = await fillBD({
         shopping1Business1User1: {
-          state: 'REQUESTED',
+          state: ShoppingState.REQUESTED,
         },
       });
 
@@ -492,7 +492,7 @@ describe('shopping', () => {
     it('should not change the state to CONSTRUCTION', async () => {
       const { user1, shopping1Business1User1 } = await fillBD({
         shopping1Business1User1: {
-          state: 'REQUESTED',
+          state: ShoppingState.REQUESTED,
         },
       });
 

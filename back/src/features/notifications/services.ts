@@ -72,9 +72,9 @@ const sendNewOrderPushMessage: QueryHandle<{
 };
 
 const sendUpdateStockAmountMessage: QueryHandle<{
-  currentStockAmount: number;
+  stockAmountAvailable: number;
   postId: string;
-}> = async ({ postId, currentStockAmount }) => {
+}> = async ({ postId, stockAmountAvailable }) => {
   try {
     const users = await userServices.getAll({
       query: {},
@@ -88,7 +88,7 @@ const sendUpdateStockAmountMessage: QueryHandle<{
 
     const payload: NotificationPayload = {
       type: 'POST_AMOUNT_STOCK_CHANGE',
-      stockAmount: currentStockAmount,
+      stockAmountAvailable,
       postId,
     };
 
