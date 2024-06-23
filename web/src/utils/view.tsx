@@ -20,7 +20,11 @@ const mapToOutlinedBox = <T extends React.ReactNode = React.ReactNode>(args: {
   ));
 };
 
-const keyValueList = (list: Array<{ label: React.ReactNode; value?: React.ReactNode }>) => {
+export interface KeyValueListItem {
+  label: React.ReactNode;
+  value?: React.ReactNode;
+}
+const keyValueList = (list: Array<KeyValueListItem>) => {
   return (
     <div className="flex flex-col gap-1">
       {list.map(({ label, value }, index) => {

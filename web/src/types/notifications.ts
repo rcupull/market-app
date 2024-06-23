@@ -5,7 +5,12 @@ export interface NotificationPayload {
   //
   postId?: string;
   shoppingId?: string;
-  stockAmount?: number;
+  stockAmountAvailable?: number;
   routeName?: string;
   //
+}
+
+export interface Notification {
+  body: React.ReactNode;
+  title: React.ReactNode;
 }

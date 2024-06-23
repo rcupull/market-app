@@ -4,7 +4,7 @@ import { set } from './general';
 import { BaseIdentity } from '../types/general';
 
 export const createdAtSchemaDefinition: SchemaDefinition = {
-  createdAt: { type: Date, required: true, default: new Date() },
+  createdAt: { type: Date, required: true, default: Date.now },
 };
 
 export const allPostClothingSize: Array<PostClothingSize> = [

@@ -28,7 +28,7 @@ export const ButtonPostToCart = ({
   purshaseNotes,
 }: ButtonPostToCartProps) => {
   const [count, setCount] = useState<number>(0);
-  const { stockAmount } = post;
+  const { stockAmountAvailable } = post;
   const { isAuthenticated } = useAuth();
   const authSignInModal = useAuthSignInModal();
 
@@ -38,7 +38,7 @@ export const ButtonPostToCart = ({
 
   const debouncer = useDebouncer();
 
-  if (stockAmount === 0) {
+  if (stockAmountAvailable === 0) {
     /**
      * Can not show the car because has not products in stock
      */

@@ -64,3 +64,7 @@ export interface Post extends BaseIdentity {
     value: string;
   };
 }
+
+export interface PostDto extends Post {
+  stockAmountAvailable?: number | null;
+}
