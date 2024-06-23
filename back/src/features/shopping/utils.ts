@@ -5,11 +5,11 @@ import { logger } from '../logger';
 import { shoppingServices } from './services';
 import { isEqualIds, isNumber } from '../../utils/general';
 import { postServices } from '../post/services';
-import { sendUpdateStockAmountMessage } from '../notifications/handles';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { Post } from '../../types/post';
 import { FilterQuery } from 'mongoose';
 import { setFilterQueryWithDates } from '../../utils/schemas';
+import { notificationsServices } from '../notifications/services';
 
 export interface GetAllShoppingArgs extends FilterQuery<Shopping> {
   routeNames?: Array<string>;
@@ -81,7 +81,7 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
    */
   if (updateStockResponse) {
     const { currentStockAmount } = updateStockResponse;
-    sendUpdateStockAmountMessage({ postId, currentStockAmount });
+    notificationsServices.sendUpdateStockAmountMessage({ postId, currentStockAmount });
   }
 };
 
@@ -118,7 +118,7 @@ export const deleteShoppingInConstruction: QueryHandle<{
               .then((updateStockResponse) => {
                 if (updateStockResponse) {
                   const { currentStockAmount } = updateStockResponse;
-                  sendUpdateStockAmountMessage({
+                  notificationsServices.sendUpdateStockAmountMessage({
                     postId: post._id.toString(),
                     currentStockAmount,
                   });

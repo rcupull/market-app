@@ -21,7 +21,6 @@ import { logger } from '../logger';
 import { PostPurshaseNotes } from '../../types/post';
 import { ShoppingModel } from '../../schemas/shopping';
 import { sendNewOrderTelegramMessage } from '../telegram/handles';
-import { sendNewOrderPushMessage, sendUpdateStockAmountMessage } from '../notifications/handles';
 import { ShoppingState } from '../../types/shopping';
 import { telegramServices } from '../telegram/services';
 import { userServices } from '../user/services';
@@ -29,6 +28,7 @@ import { User } from '../../types/user';
 import { getShoppingUrl } from '../../utils/web';
 import { Business } from '../../types/business';
 import { defaultQuerySort } from '../../utils/api';
+import { notificationsServices } from '../notifications/services';
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -154,7 +154,10 @@ const post_shopping: () => RequestHandler<
         /**
          * send notification to update the post. TODO maybe we need some conditions
          */
-        sendUpdateStockAmountMessage({ postId: post._id.toString(), currentStockAmount });
+        notificationsServices.sendUpdateStockAmountMessage({
+          postId: post._id.toString(),
+          currentStockAmount,
+        });
 
         if (amountAddedToPost !== amountToAdd) {
           return res.send({
@@ -247,7 +250,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
        */
 
       sendNewOrderTelegramMessage({ business, shopping });
-      sendNewOrderPushMessage({ business, shopping });
+      notificationsServices.sendNewOrderPushMessage({ business, shopping });
 
       res.send({});
     });

@@ -5,14 +5,21 @@ import { TestBDContent, fillBD } from '../../utils/test-BD';
 import { getTestingRoute } from '../../utils/api';
 import { Shopping } from '../../types/shopping';
 import { Post } from '../../types/post';
-import * as notificationsHanldlesAll from '../notifications/handles';
+import { notificationsServices as notificationsServicesBase } from '../notifications/services';
 
 jest.mock('../notifications/services', () => ({
   notificationsServices: {
     init: jest.fn(),
     sendNotificationToUpdate: jest.fn(),
+    sendUpdateStockAmountMessage: jest.fn(),
+    sendNewOrderPushMessage: jest.fn(),
   },
 }));
+
+const { sendUpdateStockAmountMessage } = notificationsServicesBase as Record<
+  keyof typeof notificationsServicesBase,
+  jest.Mock
+>;
 
 const handleAddPostsToOrder = async ({
   productPost1Business1User1,
@@ -178,10 +185,6 @@ describe('shopping', () => {
     });
 
     it('should add a new shopping with several posts', async () => {
-      const sendUpdateStockAmountMessage = jest
-        .spyOn(notificationsHanldlesAll, 'sendUpdateStockAmountMessage')
-        .mockImplementation(jest.fn());
-
       const bd = await fillBD({
         noCreateInitialShopping: true,
         productPost1Business1User1: {
@@ -290,10 +293,6 @@ describe('shopping', () => {
     });
 
     it('should remove the whole shopping if has not postid', async () => {
-      const sendUpdateStockAmountMessage = jest
-        .spyOn(notificationsHanldlesAll, 'sendUpdateStockAmountMessage')
-        .mockImplementation(jest.fn());
-
       const bd = await fillBD({
         noCreateInitialShopping: true,
         productPost1Business1User1: {
@@ -363,10 +362,6 @@ describe('shopping', () => {
     });
 
     it('should remove only one post from  the orden when has postId', async () => {
-      const sendUpdateStockAmountMessage = jest
-        .spyOn(notificationsHanldlesAll, 'sendUpdateStockAmountMessage')
-        .mockImplementation(jest.fn());
-
       const bd = await fillBD({
         noCreateInitialShopping: true,
         productPost1Business1User1: {
