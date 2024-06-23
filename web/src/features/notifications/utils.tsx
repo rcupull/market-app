@@ -4,6 +4,7 @@ import { Badge } from 'components/badge';
 import { initializeApp } from 'firebase/app';
 //eslint-disable-next-line
 import { getMessaging, Messaging } from 'firebase/messaging';
+import { Notification } from 'types/notifications';
 
 export const renderNotificationsContent = (notification: Notification) => {
   const { body, title } = notification;

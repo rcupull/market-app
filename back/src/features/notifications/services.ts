@@ -37,6 +37,30 @@ const sendNotificationToUpdate: QueryHandle<{
   });
 };
 
+const sendTestNativeNotification: QueryHandle<{
+  title: string;
+  body: string;
+}> = async ({ body, title }) => {
+  const users = await userServices.getAll({
+    query: {
+      email: { $in: ['rcupull@gmail.com', 'rcupull+user1@gmail.com'] },
+    },
+    projection: {
+      firebaseToken: 1,
+    },
+  });
+
+  const tokens = compact(users.map((user) => user.firebaseToken));
+
+  await firebase.messaging().sendEachForMulticast({
+    notification: {
+      body,
+      title,
+    },
+    tokens,
+  });
+};
+
 const sendNewOrderPushMessage: QueryHandle<{
   business: Business;
   shopping: Shopping;
@@ -106,4 +130,5 @@ export const notificationsServices = {
   init,
   sendUpdateStockAmountMessage,
   sendNewOrderPushMessage,
+  sendTestNativeNotification,
 };
