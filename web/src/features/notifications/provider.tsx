@@ -8,7 +8,7 @@ import { useAuth } from 'features/api-slices/useAuth';
 import { useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
 
-import { NotificationPayload } from '../../types/notifications';
+import { Notification, NotificationPayload } from '../../types/notifications';
 import { firebaseVapidKey, getFirebaseMessaging, renderNotificationsContent } from './utils';
 
 //eslint-disable-next-line
@@ -101,9 +101,7 @@ export const NotificationsProvider = ({ children }: ChildrenProp) => {
         authUpdateFirebaseToken.fetch({ firebaseToken: newToken });
         onMessage(newMessaging, (payload) => {
           if (payload) {
-            if (DEVELOPMENT) {
-              console.log('firebase payload:', payload);
-            }
+            console.log('firebase payload:', payload);
 
             handleUpdateNotification(payload);
           }

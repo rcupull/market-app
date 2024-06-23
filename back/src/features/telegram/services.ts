@@ -5,6 +5,7 @@ import { getRandomHash } from '../../utils/general';
 import { logger } from '../logger';
 import { agendaHandles } from '../agenda/handles';
 import { TelegramBotChat } from '../../types/general';
+import { notificationsServices } from '../notifications/services';
 
 /**
  * https://core.telegram.org/bots/api#html-style
@@ -51,18 +52,20 @@ export const telegramServices = {
       );
     });
 
-    bot.onText(/\/test/, async (msg) => {
-      const { id, first_name, username } = msg.chat;
+    bot.onText(/\/test/, async () => {
+      // const { id, first_name, username } = msg.chat;
 
-      const meta: TelegramBotChat = {
-        chatId: id,
-        firstName: first_name,
-        userName: username,
-      };
+      // const meta: TelegramBotChat = {
+      //   chatId: id,
+      //   firstName: first_name,
+      //   userName: username,
+      // };
 
-      bot.sendMessage(meta.chatId, `<a href='https://www.aseremarket.net'>some link</a>`, {
-        parse_mode: 'HTML',
-      });
+      // bot.sendMessage(meta.chatId, `<a href='https://www.aseremarket.net'>some link</a>`, {
+      //   parse_mode: 'HTML',
+      // });
+
+      notificationsServices.sendTestNativeNotification({ title: 'title', body: 'Prueba' });
     });
 
     bot.on('message', (msg) => {
