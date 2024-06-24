@@ -18,6 +18,7 @@ import { businessServices } from '../business/services';
 import { postServices } from '../post/services';
 import { logger } from '../logger';
 import { notificationsServices } from '../notifications/services';
+import { agendaServices } from '../agenda/services';
 
 const addOne: QueryHandle<
   {
@@ -143,6 +144,14 @@ const updateOrAddOne: QueryHandle<
   } else {
     await addOne({ amountToAdd, purshaseNotes, user, post });
   }
+  //TODO quizas puedan ser mejoradas estas 4 lineas
+  const shopping = await ShoppingModel.findOne({
+    purchaserId: user._id,
+    state: 'CONSTRUCTION',
+    routeName: routeName,
+  })
+  if(!shopping) return;
+  await agendaServices.scheduleAutoShoppingDelete({ orderId: shopping._id.toString() });
 };
 
 const getAllWithPagination: QueryHandle<

@@ -27,7 +27,6 @@ import { User } from '../../types/user';
 import { getShoppingUrl } from '../../utils/web';
 import { Business } from '../../types/business';
 import { defaultQuerySort } from '../../utils/api';
-import { agendaServices } from '../agenda/services';
 import { notificationsServices } from '../notifications/services';
 
 const get_shopping: () => RequestHandler = () => {
@@ -115,6 +114,7 @@ const post_shopping: () => RequestHandler<
     withTryCatch(req, res, async () => {
       const { user, post } = req;
       //
+      console.log('ID', post?._id.toString());
 
       if (!user) {
         return getUserNotFoundResponse({ res });
@@ -171,7 +171,6 @@ const post_shopping: () => RequestHandler<
           user,
         });
 
-        await agendaServices.scheduleAutoShoppingDelete({ orderId: post._id.toString() });
         /**
          * send notification to update the post. TODO maybe we need some conditions
          */
