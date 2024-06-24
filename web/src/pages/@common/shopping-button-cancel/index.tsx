@@ -10,7 +10,7 @@ import { Shopping } from 'types/shopping';
 
 export interface ShoppingButtonCancelProps extends StyleProps {
   shopping: Shopping;
-  onAfterSucess?: ()=>void
+  onAfterSucess?: () => void;
 }
 
 export const ShoppingButtonCancel = ({ shopping, onAfterSucess }: ShoppingButtonCancelProps) => {
@@ -44,7 +44,7 @@ export const ShoppingButtonCancel = ({ shopping, onAfterSucess }: ShoppingButton
                     {
                       onAfterSuccess: () => {
                         onClose();
-                        onAfterSucess?.()
+                        onAfterSucess?.();
                       },
                     },
                   );
