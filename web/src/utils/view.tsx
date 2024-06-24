@@ -1,3 +1,5 @@
+import type { UseBreakpointsReturn } from 'hooks/useBreakpoints';
+
 const mapToOutlinedBox = <T extends React.ReactNode = React.ReactNode>(args: {
   value?: Array<T>;
   preMap?: (t: T, index: number) => T;
@@ -42,4 +44,27 @@ const keyValueList = (list: Array<KeyValueListItem>) => {
 export const viewUtils = {
   mapToOutlinedBox,
   keyValueList,
+};
+
+export const breakpointsSwitch = <T extends any = any>({
+  values,
+  breakpoints,
+}: {
+  breakpoints: UseBreakpointsReturn;
+  values: {
+    xs?: T;
+    sm?: T;
+    md?: T;
+    lg?: T;
+    xl?: T;
+    xxl?: T;
+  };
+}): T | undefined => {
+  if (breakpoints.xxl && values.xxl) return values.xxl;
+  if (breakpoints.xl && values.xl) return values.xl;
+  if (breakpoints.lg && values.lg) return values.lg;
+  if (breakpoints.md && values.md) return values.md;
+  if (breakpoints.sm && values.sm) return values.sm;
+
+  return values.xs;
 };
