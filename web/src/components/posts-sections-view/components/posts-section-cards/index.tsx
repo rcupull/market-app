@@ -2,10 +2,13 @@ import { CardGroup } from 'components/card-group';
 import { CardPost } from 'components/card-post';
 import { Swiper } from 'components/swiper';
 
+import {  useSwiperProps } from './useSwiperProps';
+
 import { Business, PostsLayoutSection } from 'types/business';
 import { StyleProps } from 'types/general';
 import { Post } from 'types/post';
 import { getOneBusinessRoute, getOnePostRoute } from 'utils/business';
+
 
 export interface PostsSectionCardsProps extends StyleProps {
   posts: Array<Post> | null;
@@ -50,12 +53,12 @@ export const PostsSectionCards = ({
 
     return '#';
   };
+  const extraProps = useSwiperProps({ layout: layout.postCardLayout });
 
   if (type === 'oneRowSlider') {
     return (
       <Swiper
         className="!w-[90%] !sm:w-[80vw] !p-2"
-        slidesPerView="auto"
         items={posts?.map((post, index) => {
           return {
             content: (
@@ -70,6 +73,7 @@ export const PostsSectionCards = ({
             ),
           };
         })}
+        {...extraProps}
       />
     );
   }
