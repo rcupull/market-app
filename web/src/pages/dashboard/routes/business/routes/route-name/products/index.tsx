@@ -26,7 +26,7 @@ import { GetAllPostsQuery } from 'types/api';
 import { getImageEndpoint } from 'utils/api';
 import { getDateString } from 'utils/date';
 import { cn, isNumber } from 'utils/general';
-import { viewUtils } from 'utils/view';
+import { KeyValueListItem, viewUtils } from 'utils/view';
 
 export const Products = () => {
   const { getAllPosts } = useGetAllPosts();
@@ -156,9 +156,81 @@ export const Products = () => {
                   hidden,
                   images,
                   stockAmount,
+                  stockAmountAvailable,
                 } = rowData;
 
                 const mainImage = images?.[0];
+
+                const getDetailsItems = () => {
+                  const out: Array<KeyValueListItem> = [
+                    {
+                      label: (
+                        <span
+                          className={cn({
+                            'text-red-500': hidden,
+                          })}
+                        >{`${hidden ? 'Oculta' : 'Visible'}`}</span>
+                      ),
+                      value: null,
+                    },
+                    {
+                      label: 'Precio',
+                      value: `${price} ${business?.currency}`,
+                    },
+                  ];
+
+                  if (isNumber(stockAmount)) {
+                    out.push({
+                      label: (
+                        <span
+                          className={cn({
+                            'text-red-500': stockAmount === 0,
+                          })}
+                        >
+                          Existencias
+                        </span>
+                      ),
+                      value: (
+                        <PostAmount
+                          value={stockAmount}
+                          postId={postId}
+                          onAfterSuccess={filters.onRefresh}
+                          className={cn({
+                            'border-2 rounded-lg border-red-500': stockAmount === 0,
+                          })}
+                        />
+                      ),
+                    });
+
+                    out.push({
+                      label: (
+                        <span
+                          className={cn({
+                            'text-red-500': stockAmountAvailable === 0,
+                          })}
+                        >
+                          Disponibles
+                        </span>
+                      ),
+                      value: (
+                        <span
+                          className={cn({
+                            'text-red-500': stockAmountAvailable === 0,
+                          })}
+                        >
+                          {stockAmountAvailable}
+                        </span>
+                      ),
+                    });
+                  } else {
+                    out.push({
+                      label: 'Existencias',
+                      value: <span className="text-red-500">Desabilitado</span>,
+                    });
+                  }
+
+                  return out;
+                };
 
                 return {
                   className: cn({
@@ -181,45 +253,7 @@ export const Products = () => {
                       'ninguna'
                     ),
                     getDateString({ date: createdAt, showTime: true }),
-                    viewUtils.keyValueList([
-                      {
-                        label: (
-                          <span
-                            className={cn({
-                              'text-red-500': hidden,
-                            })}
-                          >{`${hidden ? 'Oculta' : 'Visible'}`}</span>
-                        ),
-                        value: null,
-                      },
-                      {
-                        label: 'Precio',
-                        value: `${price} ${business?.currency}`,
-                      },
-                      {
-                        label: (
-                          <span
-                            className={cn({
-                              'text-red-500': stockAmount === 0,
-                            })}
-                          >
-                            Stock
-                          </span>
-                        ),
-                        value: isNumber(stockAmount) ? (
-                          <PostAmount
-                            value={stockAmount}
-                            postId={postId}
-                            onAfterSuccess={filters.onRefresh}
-                            className={cn({
-                              'border-2 rounded-lg border-red-500': stockAmount === 0,
-                            })}
-                          />
-                        ) : (
-                          <span className="text-red-500">Desabilitado</span>
-                        ),
-                      },
-                    ]),
+                    viewUtils.keyValueList(getDetailsItems()),
                   ]),
                 };
               }}

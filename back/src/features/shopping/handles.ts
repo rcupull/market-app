@@ -9,7 +9,6 @@ import {
   getUserNotFoundResponse,
 } from '../../utils/server-response';
 import { shoppingServices } from './services';
-import { postServices } from '../post/services';
 import { isNumber } from '../../utils/general';
 import { businessServices } from '../business/services';
 import {
@@ -21,7 +20,6 @@ import { logger } from '../logger';
 import { PostPurshaseNotes } from '../../types/post';
 import { ShoppingModel } from '../../schemas/shopping';
 import { sendNewOrderTelegramMessage } from '../telegram/handles';
-import { sendNewOrderPushMessage, sendUpdateStockAmountMessage } from '../notifications/handles';
 import { ShoppingState } from '../../types/shopping';
 import { telegramServices } from '../telegram/services';
 import { userServices } from '../user/services';
@@ -30,6 +28,7 @@ import { getShoppingUrl } from '../../utils/web';
 import { Business } from '../../types/business';
 import { defaultQuerySort } from '../../utils/api';
 import { agendaServices } from '../agenda/services';
+import { notificationsServices } from '../notifications/services';
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -129,25 +128,45 @@ const post_shopping: () => RequestHandler<
 
       const { amountToAdd = 1, purshaseNotes } = body;
 
-      /**
-       * Update the post stock in the case that it has enabled this features
-       * this service return the amount added to the post and the current stock
-       */
-      const updateStockResponse = await postServices.updateStockAmount({
-        amountToAdd: -amountToAdd,
-        post,
+      const [stockAmountAvailable] = await shoppingServices.getStockAmountAvailableFromPosts({
+        posts: [post],
       });
 
-      /**
-       * update the shopping with the new amount according to amount added to post.
-       * updateStockResponse is null if the stock amount fearure is not enabled
-       */
+      if (isNumber(stockAmountAvailable)) {
+        /**
+         * is enabled the stock amount feature
+         */
+        const wantAddMore = amountToAdd > stockAmountAvailable;
 
-      const { amountAddedToPost, currentStockAmount } = updateStockResponse || {};
+        if (wantAddMore) {
+          /**
+           * add the rest of the stock
+           */
+          await shoppingServices.updateOrAddOne({
+            amountToAdd: stockAmountAvailable,
+            post,
+            user,
+          });
 
-      if (isNumber(amountAddedToPost) && isNumber(currentStockAmount)) {
+          /**
+           * send notification to update the post. TODO maybe we need some conditions
+           */
+          notificationsServices.sendUpdateStockAmountMessage({
+            postId: post._id.toString(),
+            stockAmountAvailable: 0,
+          });
+
+          return res.send({
+            message:
+              'Por falta de disponibilidad en el stock no se han podido agregar la cantidad solicitada. Se han agregado solamente las cantidades disponibles.',
+          });
+        }
+
+        /**
+         * add the amount to add
+         */
         await shoppingServices.updateOrAddOne({
-          amountToAdd: -amountAddedToPost,
+          amountToAdd: amountToAdd,
           post,
           user,
         });
@@ -156,14 +175,10 @@ const post_shopping: () => RequestHandler<
         /**
          * send notification to update the post. TODO maybe we need some conditions
          */
-        sendUpdateStockAmountMessage({ postId: post._id.toString(), currentStockAmount });
-
-        if (amountAddedToPost !== amountToAdd) {
-          return res.send({
-            message:
-              'Por falta de disponibilidad en el stock no se han podido agregar la cantidad solicitada. Se han agregado solamente las cantidades disponibles.',
-          });
-        }
+        notificationsServices.sendUpdateStockAmountMessage({
+          postId: post._id.toString(),
+          stockAmountAvailable: stockAmountAvailable - amountToAdd,
+        });
 
         return res.send({});
       }
@@ -249,7 +264,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
        */
 
       sendNewOrderTelegramMessage({ business, shopping });
-      sendNewOrderPushMessage({ business, shopping });
+      notificationsServices.sendNewOrderPushMessage({ business, shopping });
 
       res.send({});
     });
@@ -305,9 +320,9 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
 
       await shopping.save();
 
-      if (state === 'APPROVED') {
+      if (state === ShoppingState.APPROVED) {
         /**
-         * send telegram notificaion when the shopiing to be aproved
+         * send telegram notificaion when the shopping to be aproved
          */
         const purchaserData: Pick<User, 'telegramBotChat'> | null = await userServices.getOne({
           query: {
@@ -361,6 +376,24 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
             },
           );
         }
+      }
+
+      if (state === ShoppingState.CANCELED || state === ShoppingState.REJECTED) {
+        /**
+         * Send update stock amount messages
+         */
+        await shoppingServices.sendUpdateStockAmountMessagesFromShoppingPosts({
+          shopping,
+        });
+      }
+
+      if (state === ShoppingState.DELIVERED) {
+        /**
+         * Decrement stock amount
+         */
+        await shoppingServices.decrementStockAmountFromShoppingPosts({
+          shopping,
+        });
       }
 
       res.send({});

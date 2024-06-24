@@ -8,7 +8,7 @@ import { useAuth } from 'features/api-slices/useAuth';
 import { useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
 
-import { NotificationPayload } from '../../types/notifications';
+import { Notification, NotificationPayload } from '../../types/notifications';
 import { firebaseVapidKey, getFirebaseMessaging, renderNotificationsContent } from './utils';
 
 //eslint-disable-next-line
@@ -47,9 +47,9 @@ export const NotificationsProvider = ({ children }: ChildrenProp) => {
 
       switch (type) {
         case 'POST_AMOUNT_STOCK_CHANGE': {
-          const { postId, stockAmount } = notificationPayload;
+          const { postId, stockAmountAvailable } = notificationPayload;
 
-          onCallAfar('updatePostAmount', { postId, stockAmount });
+          onCallAfar('updatePostAmount', { postId, stockAmountAvailable });
           return;
         }
         case 'NEW_ORDER_WAS_CREATED': {
@@ -101,9 +101,7 @@ export const NotificationsProvider = ({ children }: ChildrenProp) => {
         authUpdateFirebaseToken.fetch({ firebaseToken: newToken });
         onMessage(newMessaging, (payload) => {
           if (payload) {
-            if (DEVELOPMENT) {
-              console.log('firebase payload:', payload);
-            }
+            console.log('firebase payload:', payload);
 
             handleUpdateNotification(payload);
           }

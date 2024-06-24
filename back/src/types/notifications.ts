@@ -5,7 +5,7 @@ export interface NotificationPayload {
   //
   postId?: string;
   shoopingId?: string;
-  stockAmount?: number;
+  stockAmountAvailable?: number;
   routeName?: string;
   //
 }
