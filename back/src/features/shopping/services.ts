@@ -26,7 +26,7 @@ const addOne: QueryHandle<
     user: User;
     post: Post;
   },
-  void
+  ModelDocument<Shopping> | null
 > = async ({ amountToAdd = 1, purshaseNotes, user, post }) => {
   const { routeName } = post;
 
@@ -40,7 +40,7 @@ const addOne: QueryHandle<
       },
     });
 
-  if (!businessData) return;
+  if (!businessData) return null;
 
   const newShopping = new ShoppingModel({
     state: 'CONSTRUCTION',
@@ -59,6 +59,8 @@ const addOne: QueryHandle<
   });
 
   await newShopping.save();
+
+  return newShopping;
 };
 
 const addPostToOne: QueryHandle<
