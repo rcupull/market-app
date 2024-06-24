@@ -104,20 +104,6 @@ const BusinessSchema = new Schema<Business>({
   shoppingMeta: {
     termsAndConditions: { type: String },
   },
-  shoppingPayment: {
-    totalDebit: { type: Number, default: 0 },
-    requests: PaymentRequestSchema,
-    history: {
-      type: [
-        {
-          _id: false,
-          requests: PaymentRequestSchema,
-          paymendDate: { type: Date, required: true },
-        },
-      ],
-      default: [],
-    },
-  },
   postFormFields: {
     type: [
       {

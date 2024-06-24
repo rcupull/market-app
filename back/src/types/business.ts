@@ -131,12 +131,6 @@ export interface Business extends BaseIdentity {
   shoppingMeta?: {
     termsAndConditions?: string;
   };
-  shoppingPayment: {
-    //debit not payed by the user
-    totalDebit: number;
-    requests: Array<BusinessPaymentRequest>;
-    history: Array<BusinessPaymentRequestHistory>;
-  };
   postFormFields?: Array<
     Extract<
       Post,
