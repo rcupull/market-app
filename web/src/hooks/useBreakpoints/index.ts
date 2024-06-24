@@ -1,13 +1,16 @@
 import { useBreakpoint } from 'hooks/useBreakpoint';
 
-export const useBreakpoints = (): {
+export interface UseBreakpointsReturn {
   xs: boolean;
   sm: boolean;
   md: boolean;
   lg: boolean;
   xl: boolean;
   xxl: boolean;
-} => {
+}
+
+export const useBreakpoints = (args?: { sweep?: boolean }): UseBreakpointsReturn => {
+  const { sweep } = args || {};
   const breakPoints = [
     true,
     useBreakpoint('sm'),
@@ -18,6 +21,10 @@ export const useBreakpoints = (): {
   ];
 
   const getBreakpointValue = (index: number): boolean => {
+    if (sweep) {
+      return breakPoints[index];
+    }
+
     //@ts-expect-error this function exists
     const lastIndex = breakPoints.findLastIndex((v) => v);
 
