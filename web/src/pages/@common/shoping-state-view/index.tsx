@@ -49,9 +49,9 @@ export const ShoppingStateView = ({
       case 'APPROVED':
         return ['APPROVED', 'PROCESSING', 'REJECTED'];
       case 'PROCESSING':
-        return ['PROCESSING', 'READY_TO_DELIVER', 'DELIVERED', 'REJECTED'];
-      case 'READY_TO_DELIVER':
-        return ['READY_TO_DELIVER', 'DELIVERED', 'REJECTED'];
+        return ['PROCESSING'/*, 'READY_TO_DELIVER'*/, 'DELIVERED', 'REJECTED'];
+      // case 'READY_TO_DELIVER':
+      //   return ['READY_TO_DELIVER', 'DELIVERED', 'REJECTED'];
       default:
         return [];
     }

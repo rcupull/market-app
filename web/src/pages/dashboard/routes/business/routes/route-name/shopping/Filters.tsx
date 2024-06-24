@@ -53,16 +53,8 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
           value: 'PROCESSING',
         },
         {
-          label: 'Listos para entregar',
-          value: 'READY_TO_DELIVER',
-        },
-        {
           label: 'Entregados',
           value: 'DELIVERED',
-        },
-        {
-          label: 'Cancelados',
-          value: 'CANCELED',
         },
         {
           label: 'Rechazadas',

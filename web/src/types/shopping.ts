@@ -8,7 +8,7 @@ export type ShoppingState =
   | 'REQUESTED'
   | 'APPROVED'
   | 'PROCESSING'
-  | 'READY_TO_DELIVER'
+  // | 'READY_TO_DELIVER'
   | 'DELIVERED'
   //
   | 'CANCELED'

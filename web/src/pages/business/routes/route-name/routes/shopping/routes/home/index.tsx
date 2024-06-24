@@ -5,6 +5,8 @@ import { useGetAllShopping } from 'features/api/shopping/useGetAllShopping';
 import { useRouter } from 'hooks/useRouter';
 
 import { LayoutPage } from 'pages/@common/layout-page';
+import { ShoppingButtonCancel } from 'pages/@common/shopping-button-cancel';
+import { ShoppingButtonStateHistory } from 'pages/@common/shopping-button-state-history';
 import { ShoppingDetails } from 'pages/@common/shopping-details';
 import { getOneShoppingRoute } from 'utils/business';
 
@@ -16,8 +18,10 @@ export const Home = ({ routeName }: HomeProps) => {
   const { getAllShopping } = useGetAllShopping();
   const { pushRoute } = useRouter();
 
+  const onRefresh = () => getAllShopping.fetch({ routeName });
+
   useEffect(() => {
-    getAllShopping.fetch({ routeName });
+    onRefresh();
   }, []);
 
   return (
@@ -28,6 +32,17 @@ export const Home = ({ routeName }: HomeProps) => {
             <ShoppingDetails
               key={index}
               shopping={shopping}
+              getActions={({ shopping }) => {
+                const { state } = shopping;
+                return (
+                  <>
+                    <ShoppingButtonStateHistory shopping={shopping} />
+                    {state === 'REQUESTED' && (
+                      <ShoppingButtonCancel shopping={shopping} onAfterSucess={onRefresh} />
+                    )}
+                  </>
+                );
+              }}
               onClick={() =>
                 pushRoute(getOneShoppingRoute({ routeName, shoppingId: shopping._id }))
               }

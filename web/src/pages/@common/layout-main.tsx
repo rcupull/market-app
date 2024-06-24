@@ -21,7 +21,7 @@ export interface LayoutMainProps extends ChildrenProp {}
 
 export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
   const { isDashboardPage, isAdminPage } = useRouter();
-  const { isUser } = useAuth();
+  const { isUser, isAdmin } = useAuth();
   const { signOut } = useSignOut();
 
   const sideBar = (
@@ -87,7 +87,7 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
           <Footer className="mt-auto flex-shrink-0" />
         </div>
 
-        {isUser && (
+        {(isUser || isAdmin) && (
           <>
             {xsSideBar}
             {sideBar}
