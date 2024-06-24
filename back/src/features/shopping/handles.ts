@@ -235,29 +235,6 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
       }
 
       /**
-       * compute payment and reduce de credit with this product
-       */
-
-      const { shoppingDebit } = getShoppingInfo(shopping);
-
-      await businessServices.updateOne({
-        query: {
-          routeName: shopping.routeName,
-        },
-        update: {
-          $inc: {
-            'shoppingPayment.totalDebit': shoppingDebit,
-          },
-          $push: {
-            'shoppingPayment.requests': {
-              shoppingId: shopping._id,
-              shoppingDebit,
-            },
-          },
-        },
-      });
-
-      /**
        * send Telegram message
        */
 
