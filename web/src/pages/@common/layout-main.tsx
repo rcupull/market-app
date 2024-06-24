@@ -11,6 +11,8 @@ import { useRouter } from 'hooks/useRouter';
 import { Footer } from './footer';
 import { SideBar } from './side-bar';
 
+import SvgBarsSolid from 'icons/BarsSolid';
+import SvgTimesSolid from 'icons/TimesSolid';
 import { Navbar } from 'pages/@common/nav-bar';
 import { ChildrenProp } from 'types/general';
 import { cn } from 'utils/general';
@@ -19,7 +21,7 @@ export interface LayoutMainProps extends ChildrenProp {}
 
 export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
   const { isDashboardPage, isAdminPage } = useRouter();
-  const { isAuthenticated } = useAuth();
+  const { isUser } = useAuth();
   const { signOut } = useSignOut();
 
   const sideBar = (
@@ -35,17 +37,17 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
   const xsSideBar = (
     <Popover className={cn('relative md:hidden')}>
       {({ close, open }) => {
+        const IconBar = open ? SvgTimesSolid : SvgBarsSolid;
+
         return (
           <>
-            {!open && (
-              <Popover.Button as="div" className="absolute -top-3 z-10">
-                <div className="flex w-14 cursor-pointer">
-                  <div className="relative text-nowrap bg-indigo-600 text-gray-100 px-2 rounded-tr-3xl rounded-br-3xl">
-                    Mis panel
-                  </div>
+            <Popover.Button as="div" className="absolute -top-3 z-20">
+              <div className="flex w-14 cursor-pointer">
+                <div className="relative text-nowrap bg-indigo-600 text-gray-100 px-2 rounded-tr-3xl rounded-br-3xl">
+                  <IconBar className="fill-gray-200 size-6 ml-4" />
                 </div>
-              </Popover.Button>
-            )}
+              </div>
+            </Popover.Button>
 
             <Transition
               show={open}
@@ -85,7 +87,7 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
           <Footer className="mt-auto flex-shrink-0" />
         </div>
 
-        {isAuthenticated && (
+        {isUser && (
           <>
             {xsSideBar}
             {sideBar}
