@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 
 import { ButtonNew } from 'components/button-new';
 import { ButtonRefresh } from 'components/button-refresh';
-import { Divider } from 'components/divider';
-import { IconButton } from 'components/icon-button';
+import { IconButtonAdd } from 'components/icon-button-add';
+import { IconButtonRefresh } from 'components/icon-button-refresh';
 import { Table } from 'components/table';
 
 import { useGetAllPosts } from 'features/api/posts/useGetAllPosts';
@@ -11,12 +11,9 @@ import { useGetAllPosts } from 'features/api/posts/useGetAllPosts';
 import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 
 import { BulkActions } from './BulkActions';
-import { Filters } from './Filters';
 import { RowActions } from './RowActions';
 import { useInfinityScrolling } from './useInfinityScrolling';
 
-import SvgPlusSolid from 'icons/PlusSolid';
-import SvgSyncSolid from 'icons/SyncSolid';
 import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
@@ -68,9 +65,8 @@ export const Links = () => {
         }}
         className="ml-auto hidden sm:block"
       />
-      <IconButton
+      <IconButtonAdd
         title="Nuevo enlace"
-        svg={SvgPlusSolid}
         onClick={() => {
           businessNewUpdatePost.open({
             postType: 'link',
@@ -90,9 +86,7 @@ export const Links = () => {
         isBusy={getAllPosts.status.isBusy}
         className="hidden sm:block"
       />
-      <IconButton
-        title="Actualizar"
-        svg={SvgSyncSolid}
+      <IconButtonRefresh
         onClick={filters.onRefresh}
         isBusy={getAllPosts.status.isBusy}
         className="block sm:hidden"
@@ -115,16 +109,6 @@ export const Links = () => {
                 {buttonRefresh}
               </TopActions>,
             )}
-
-            <Divider className="!my-3" />
-
-            <Filters
-              business={business}
-              onChange={(filtersValue) => filters.onMergeFilters(filtersValue)}
-              value={filters.value}
-            />
-
-            <Divider className="!my-3" />
 
             <Table
               className="!max-h-[calc(100vh-25rem)]"

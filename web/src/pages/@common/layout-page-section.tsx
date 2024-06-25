@@ -15,8 +15,8 @@ export const LayoutPageSection = ({
   isBusy,
 }: LayoutSectionSubProps): JSX.Element => {
   return (
-    <div className={cn('mt-4 w-full relative', className)}>
-      {title && <h2 className="text-xl mt-3 mb-2">{title}</h2>}
+    <div className={cn('mt-4 w-full relative px-2', className)}>
+      {title && <h2 className="text-xl font-bold mt-3 mb-2">{title}</h2>}
 
       {children}
 

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { ButtonRefresh } from 'components/button-refresh';
+import { IconButtonRefresh } from 'components/icon-button-refresh';
 import { Table } from 'components/table';
 
 import { useGetAllBills } from 'features/api/billing/useGetAllBills';
@@ -37,6 +38,20 @@ export const Billing = () => {
     filters.onMergeFilters({ page: 1 }, { forceFetch: true });
   };
 
+  const buttonRefresh = (
+    <>
+      <ButtonRefresh
+        onClick={() => onRefreshForce()}
+        className="ml-auto hidden sm:block"
+        isBusy={getAllBills.status.isBusy}
+      />
+      <IconButtonRefresh
+        onClick={() => onRefreshForce()}
+        className="ml-auto sm:hidden"
+        isBusy={getAllBills.status.isBusy}
+      />
+    </>
+  );
   return (
     <>
       <TopActions>
@@ -45,11 +60,7 @@ export const Billing = () => {
           value={filters.value}
         />
 
-        <ButtonRefresh
-          onClick={() => onRefreshForce()}
-          className="ml-auto"
-          isBusy={getAllBills.status.isBusy}
-        />
+        {buttonRefresh}
       </TopActions>
 
       <Table<Bill>

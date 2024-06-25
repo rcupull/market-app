@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'hooks/useRouter';
 
 import { LayoutPageSection } from 'pages/@common/layout-page-section';
+import { ShoppingButtonStateHistory } from 'pages/@common/shopping-button-state-history';
 import { ShoppingDetails } from 'pages/@common/shopping-details';
 import { useShoppingIdPersistent } from 'pages/@hooks/useShoppingIdPersistent';
 
@@ -32,7 +33,12 @@ export const ShoppingId = () => {
   return (
     <LayoutPageSection title="Compra">
       <div className="w-full flex justify-center">
-        <ShoppingDetails shopping={shopping} />
+        <ShoppingDetails
+          shopping={shopping}
+          getActions={({ shopping }) => {
+            return <ShoppingButtonStateHistory shopping={shopping} />;
+          }}
+        />
       </div>
     </LayoutPageSection>
   );
