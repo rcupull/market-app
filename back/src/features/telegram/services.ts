@@ -3,9 +3,9 @@ import { telegram_token_bot } from '../../config';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { getRandomHash } from '../../utils/general';
 import { logger } from '../logger';
-import { agendaHandles } from '../agenda/handles';
 import { TelegramBotChat } from '../../types/general';
 import { notificationsServices } from '../notifications/services';
+import { agendaServices } from '../agenda/services';
 
 /**
  * https://core.telegram.org/bots/api#html-style
@@ -44,7 +44,7 @@ export const telegramServices = {
       /**
        * Remove validation code in 60 seconds if still exists
        */
-      agendaHandles.removeValidationCode({ code, timeout: 60 });
+      await agendaServices.scheduleRemoveValidationCode({ code, timeout: 60 });
 
       bot.sendMessage(
         meta.chatId,

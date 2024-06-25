@@ -143,12 +143,15 @@ const updateOrAddOne: QueryHandle<
 
   if (existInConstruction) {
     await addPostToOne({ amountToAdd, post, currentShopping: existInConstruction });
-    await agendaServices.scheduleAutoShoppingDelete({
+    await agendaServices.scheduleRemoveOrderInConstruction({
       orderId: existInConstruction._id.toString(),
     });
   } else {
     const shopping = await addOne({ amountToAdd, purshaseNotes, user, post });
-    await agendaServices.scheduleAutoShoppingDelete({ orderId: shopping!._id.toString() });
+
+    if (!shopping) return;
+
+    await agendaServices.scheduleRemoveOrderInConstruction({ orderId: shopping._id.toString() });
   }
 };
 
