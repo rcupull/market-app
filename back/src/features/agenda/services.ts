@@ -29,14 +29,13 @@ agenda.on('ready', async () => {
   await agenda.start();
 });
 
-agenda.define('deleteOrderInConstruction', async (job : any) => {
+agenda.define('deleteOrderInConstruction', async (job: any) => {
   const { orderId } = job.attrs.data;
 
   const _id = orderId;
   const query = { query: { _id, state: 'CONSTRUCTION' } };
   const shopping = await shoppingServices.findOneAndDelete(query);
-  if(shopping)
-    await shoppingServices.sendUpdateStockAmountMessagesFromShoppingPosts({ shopping });
+  if (shopping) await shoppingServices.sendUpdateStockAmountMessagesFromShoppingPosts({ shopping });
 });
 
 export const agendaServices = {
@@ -44,10 +43,10 @@ export const agendaServices = {
     const { code, timeout } = args;
     await agenda.schedule(`${timeout} seconds`, 'removeValidationCode', { code });
   },
-  scheduleAutoShoppingDelete: async (args: { orderId: string;}) => {
+  scheduleAutoShoppingDelete: async (args: { orderId: string }) => {
     const { orderId } = args;
 
-    await agenda.cancel({ name: 'deleteOrderInConstruction', 'data.orderId': orderId })
+    await agenda.cancel({ name: 'deleteOrderInConstruction', 'data.orderId': orderId });
     await agenda.schedule('5 minutes', 'deleteOrderInConstruction', { orderId });
-  }
+  },
 };

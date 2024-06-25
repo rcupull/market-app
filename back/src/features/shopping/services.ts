@@ -143,12 +143,13 @@ const updateOrAddOne: QueryHandle<
 
   if (existInConstruction) {
     await addPostToOne({ amountToAdd, post, currentShopping: existInConstruction });
-    await agendaServices.scheduleAutoShoppingDelete({ orderId: existInConstruction._id.toString() });
+    await agendaServices.scheduleAutoShoppingDelete({
+      orderId: existInConstruction._id.toString(),
+    });
   } else {
     const shopping = await addOne({ amountToAdd, purshaseNotes, user, post });
     await agendaServices.scheduleAutoShoppingDelete({ orderId: shopping!._id.toString() });
   }
-  
 };
 
 const getAllWithPagination: QueryHandle<
@@ -312,7 +313,11 @@ const getStockAmountAvailableFromPosts: QueryHandle<
 const sendUpdateStockAmountMessagesFromShoppingPosts: QueryHandle<{
   shopping: Shopping;
 }> = async ({ shopping }) => {
-  if (![ShoppingState.REJECTED, ShoppingState.CANCELED, ShoppingState.CONSTRUCTION].includes(shopping.state)) {
+  if (
+    ![ShoppingState.REJECTED, ShoppingState.CANCELED, ShoppingState.CONSTRUCTION].includes(
+      shopping.state,
+    )
+  ) {
     logger.info('No need to send update stock amount messages from shopping posts.');
     return;
   }
