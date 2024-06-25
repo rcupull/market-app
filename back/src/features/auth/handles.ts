@@ -20,7 +20,7 @@ import { generateAccessJWT, generateRefreshJWT } from '../../utils/auth';
 import { logger } from '../logger';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { User } from '../../types/user';
-import { agendaHandles } from '../agenda/handles';
+import { agendaServices } from '../agenda/services';
 
 const post_signIn: () => RequestHandler = () => {
   return (req, res) => {
@@ -153,7 +153,7 @@ const post_signUp: () => RequestHandler = () => {
       /**
        * Remove validation code in 2 days if still exists
        */
-      agendaHandles.removeValidationCode({ code, timeout: 2 * 24 * 60 * 60 }); //2 days
+      await agendaServices.scheduleRemoveValidationCode({ code, timeout: 2 * 24 * 60 * 60 }); //2 days
 
       get201Response({
         res,
@@ -291,7 +291,7 @@ const post_forgot_password_request: () => RequestHandler = () => {
       /**
        * Remove validation code in 1 hour if still exists
        */
-      agendaHandles.removeValidationCode({ code, timeout: 1 * 60 * 60 }); //1 hour
+      await agendaServices.scheduleRemoveValidationCode({ code, timeout: 1 * 60 * 60 }); //1 hour
 
       get201Response({
         res,

@@ -18,6 +18,7 @@ import { businessServices } from '../business/services';
 import { postServices } from '../post/services';
 import { logger } from '../logger';
 import { notificationsServices } from '../notifications/services';
+import { agendaServices } from '../agenda/services';
 
 const addOne: QueryHandle<
   {
@@ -142,8 +143,15 @@ const updateOrAddOne: QueryHandle<
 
   if (existInConstruction) {
     await addPostToOne({ amountToAdd, post, currentShopping: existInConstruction });
+    await agendaServices.scheduleRemoveOrderInConstruction({
+      orderId: existInConstruction._id.toString(),
+    });
   } else {
-    await addOne({ amountToAdd, purshaseNotes, user, post });
+    const shopping = await addOne({ amountToAdd, purshaseNotes, user, post });
+
+    if (!shopping) return;
+
+    await agendaServices.scheduleRemoveOrderInConstruction({ orderId: shopping._id.toString() });
   }
 };
 
@@ -308,7 +316,11 @@ const getStockAmountAvailableFromPosts: QueryHandle<
 const sendUpdateStockAmountMessagesFromShoppingPosts: QueryHandle<{
   shopping: Shopping;
 }> = async ({ shopping }) => {
-  if (![ShoppingState.REJECTED, ShoppingState.CANCELED].includes(shopping.state)) {
+  if (
+    ![ShoppingState.REJECTED, ShoppingState.CANCELED, ShoppingState.CONSTRUCTION].includes(
+      shopping.state,
+    )
+  ) {
     logger.info('No need to send update stock amount messages from shopping posts.');
     return;
   }
