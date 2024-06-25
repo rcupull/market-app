@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 
 import { ButtonNew } from 'components/button-new';
 import { ButtonRefresh } from 'components/button-refresh';
-import { Divider } from 'components/divider';
-import { IconButton } from 'components/icon-button';
+import { IconButtonAdd } from 'components/icon-button-add';
+import { IconButtonRefresh } from 'components/icon-button-refresh';
 import { Table } from 'components/table';
 
 import { useGetAllPosts } from 'features/api/posts/useGetAllPosts';
@@ -16,8 +16,6 @@ import { PostAmount } from './PostAmount';
 import { RowActions } from './RowActions';
 import { useInfinityScrolling } from './useInfinityScrolling';
 
-import SvgPlusSolid from 'icons/PlusSolid';
-import SvgSyncSolid from 'icons/SyncSolid';
 import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useTableCellCategoriesTags } from 'pages/@hooks/useTableCellCategoriesTags';
@@ -74,9 +72,8 @@ export const Products = () => {
         }}
         className="ml-auto hidden sm:block"
       />
-      <IconButton
+      <IconButtonAdd
         title="Nuevo producto"
-        svg={SvgPlusSolid}
         onClick={() => {
           businessNewUpdatePost.open({
             postType: 'product',
@@ -96,9 +93,7 @@ export const Products = () => {
         isBusy={getAllPosts.status.isBusy}
         className="hidden sm:block"
       />
-      <IconButton
-        title="Actualizar"
-        svg={SvgSyncSolid}
+      <IconButtonRefresh
         onClick={filters.onRefresh}
         isBusy={getAllPosts.status.isBusy}
         className="block sm:hidden"
@@ -122,15 +117,11 @@ export const Products = () => {
               </TopActions>,
             )}
 
-            <Divider className="!my-3" />
-
             <Filters
               business={business}
               onChange={(filtersValue) => filters.onMergeFilters(filtersValue)}
               value={filters.value}
             />
-
-            <Divider className="!my-3" />
 
             <Table
               className="!max-h-[calc(100vh-25rem)]"
