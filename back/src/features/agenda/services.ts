@@ -4,6 +4,7 @@ import { dbUrl } from '../../config';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { shoppingServices } from '../shopping/services';
 import { ShoppingState } from '../../types/shopping';
+import { notificationsServices } from '../notifications/services';
 
 export const agenda = new Agenda({ db: { address: dbUrl }, processEvery: '10 seconds' });
 
@@ -39,7 +40,11 @@ agenda.define('removeOrderInConstruction', async (job: any) => {
       state: ShoppingState.CONSTRUCTION,
     },
   });
-  if (shopping) await shoppingServices.sendUpdateStockAmountMessagesFromShoppingPosts({ shopping });
+
+  if (shopping) {
+    await shoppingServices.sendUpdateStockAmountMessagesFromShoppingPosts({ shopping });
+    await notificationsServices.sendOrderInConstructionWasRemoved({ shopping });
+  }
 });
 
 export const agendaServices = {

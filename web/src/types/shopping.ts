@@ -25,7 +25,7 @@ export interface Shopping extends BaseIdentity {
   posts: Array<{
     postData: ShoppingPostData;
     count: number;
-    lastUpdatedDate: Date;
+    lastUpdatedDate: string;
   }>;
   purchaserId: string;
   purchaserName: string;

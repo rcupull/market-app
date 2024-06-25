@@ -4,5 +4,5 @@ import { cn } from 'utils/general';
 export interface IconAddProps extends StyleProps {}
 
 export const IconAdd = ({ className }: IconAddProps) => (
-  <SvgPlusCircleSolid className={cn('fill-blue-700',  className)} />
+  <SvgPlusCircleSolid className={cn('fill-blue-700', className)} />
 );

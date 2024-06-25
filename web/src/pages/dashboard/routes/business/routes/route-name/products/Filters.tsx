@@ -42,7 +42,7 @@ export const Filters = ({ business, onChange, value, className }: FiltersProps) 
           postCategoriesMethod: undefined,
         });
 
-        setFilterType('categories')
+        setFilterType('categories');
       }}
       className={className}
     >
