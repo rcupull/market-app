@@ -16,6 +16,19 @@ jest.mock('../notifications/services', () => ({
   },
 }));
 
+jest.mock('../agenda/services', () => ({
+  agenda: {
+    schedule: jest.fn(),
+    cancel: jest.fn(),
+    on: jest.fn(),
+    define: jest.fn(),
+  },
+  agendaServices: {
+    removeValidationCode: jest.fn(),
+    scheduleAutoShoppingDelete: jest.fn(),
+  },
+}));
+
 const { sendUpdateStockAmountMessage } = notificationsServicesBase as Record<
   keyof typeof notificationsServicesBase,
   jest.Mock
