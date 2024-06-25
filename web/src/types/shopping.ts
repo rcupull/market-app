@@ -8,7 +8,7 @@ export type ShoppingState =
   | 'REQUESTED'
   | 'APPROVED'
   | 'PROCESSING'
-  | 'READY_TO_DELIVER'
+  // | 'READY_TO_DELIVER'
   | 'DELIVERED'
   //
   | 'CANCELED'
@@ -25,7 +25,7 @@ export interface Shopping extends BaseIdentity {
   posts: Array<{
     postData: ShoppingPostData;
     count: number;
-    lastUpdatedDate: Date;
+    lastUpdatedDate: string;
   }>;
   purchaserId: string;
   purchaserName: string;

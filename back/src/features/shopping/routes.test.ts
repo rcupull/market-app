@@ -6,6 +6,7 @@ import { getTestingRoute } from '../../utils/api';
 import { Shopping, ShoppingState } from '../../types/shopping';
 import { PostDto } from '../../types/post';
 import { notificationsServices as notificationsServicesBase } from '../notifications/services';
+import { agendaServices as agendaServicesBase } from '../agenda/services';
 
 jest.mock('../notifications/services', () => ({
   notificationsServices: {
@@ -16,8 +17,26 @@ jest.mock('../notifications/services', () => ({
   },
 }));
 
+jest.mock('../agenda/services', () => ({
+  agenda: {
+    schedule: jest.fn(),
+    cancel: jest.fn(),
+    on: jest.fn(),
+    define: jest.fn(),
+  },
+  agendaServices: {
+    scheduleRemoveValidationCode: jest.fn(),
+    scheduleRemoveOrderInConstruction: jest.fn(),
+  },
+}));
+
 const { sendUpdateStockAmountMessage } = notificationsServicesBase as Record<
   keyof typeof notificationsServicesBase,
+  jest.Mock
+>;
+
+const { scheduleRemoveOrderInConstruction } = agendaServicesBase as Record<
+  keyof typeof agendaServicesBase,
   jest.Mock
 >;
 
@@ -245,6 +264,13 @@ describe('shopping', () => {
           expect(shopping.posts[1].count).toEqual(10);
           expect(shopping.posts[1].postData._id).toContain(
             productPost2Business1User1._id.toString(),
+          );
+
+          /**
+           * call to agenda to remove
+           */
+          expect(scheduleRemoveOrderInConstruction.mock.calls[0][0].orderId).toEqual(
+            shopping._id.toString(),
           );
         });
 

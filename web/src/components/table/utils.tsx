@@ -31,7 +31,7 @@ export const getRemapedProps = <RowData extends AnyRecord = AnyRecord>(args: {
                 key={index}
                 className="flex items-center gap-4 w-full odd:bg-gray-100 px-2 py-0.5 rounded-sm"
               >
-                <div className="font-bold text-nowrap">{heads[index]}</div>
+                <div className="font-semibold">{heads[index]}</div>
                 <div className="ml-auto">{nodes[index]}</div>
               </div>
             ))}

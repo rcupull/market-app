@@ -9,6 +9,7 @@ describe('IconAdd', () => {
     expect(result.container).toMatchInlineSnapshot(`
       <div>
         <svg
+          class="fill-blue-700"
           height="1em"
           viewBox="0 0 32 32"
           width="1em"

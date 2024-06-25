@@ -1,9 +1,10 @@
-import { SliceApiPersistentState } from './api';
+import { PaginatedData, SliceApiPersistentState } from './api';
 import { AuthData } from './auth';
+import { Shopping } from './shopping';
 
 export interface ReduxState {
   useBusiness: SliceApiPersistentState;
-  useShopping: SliceApiPersistentState;
+  useShopping: SliceApiPersistentState<PaginatedData<Shopping>>;
   useShoppingIdPersistent: SliceApiPersistentState;
   usePostIdPersistent: SliceApiPersistentState;
   //

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 
 import { ButtonRefresh } from 'components/button-refresh';
+import { IconButtonRefresh } from 'components/icon-button-refresh';
 import { Table } from 'components/table';
 
 import { useGetShoppingOwner } from 'features/api/shopping-owner/useGetShoppingOwner';
@@ -40,20 +41,29 @@ export const ShoppingPage = () => {
     filters.onMergeFilters({ page: 1 }, { forceFetch: true });
   };
 
+  const refreshButton = (
+    <>
+      <ButtonRefresh
+        onClick={() => onRefreshForce()}
+        className="ml-auto hidden sm:block"
+        isBusy={getShoppingOwner.status.isBusy}
+      />
+      <IconButtonRefresh
+        onClick={() => onRefreshForce()}
+        className="ml-auto sm:hidden"
+        isBusy={getShoppingOwner.status.isBusy}
+      />
+    </>
+  );
   return (
     <>
-      <TopActions>
-        <Filters
-          onChange={(filtersValue) => filters.onMergeFilters(filtersValue)}
-          value={filters.value}
-        />
+      <TopActions>{refreshButton}</TopActions>
 
-        <ButtonRefresh
-          onClick={() => onRefreshForce()}
-          className="ml-auto"
-          isBusy={getShoppingOwner.status.isBusy}
-        />
-      </TopActions>
+      <Filters
+        onChange={(filtersValue) => filters.onMergeFilters(filtersValue)}
+        value={filters.value}
+      />
+
       <Table<Shopping>
         remapRowsIndex={{
           xs: [[0, 1, 2, 3, 4, 5]],

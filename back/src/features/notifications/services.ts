@@ -125,10 +125,39 @@ const sendUpdateStockAmountMessage: QueryHandle<{
   }
 };
 
+const sendOrderInConstructionWasRemoved: QueryHandle<{
+  shopping: Shopping;
+}> = async ({ shopping }) => {
+  try {
+    const users = await userServices.getAll({
+      query: {
+        _id: shopping.purchaserId,
+      },
+      projection: {
+        firebaseToken: 1,
+      },
+    });
+
+    const tokens = compact(users.map((user) => user.firebaseToken));
+
+    const payload: NotificationPayload = {
+      type: 'ORDER_IN_CONSTRUCTION_WAS_REMOVED',
+    };
+
+    await firebaseInstance.messaging().sendEachForMulticast({
+      data: { payload: JSON.stringify(payload) },
+      tokens,
+    });
+  } catch (e) {
+    logger.error(e);
+  }
+};
+
 export const notificationsServices = {
   sendNotificationToUpdate,
   init,
   sendUpdateStockAmountMessage,
   sendNewOrderPushMessage,
   sendTestNativeNotification,
+  sendOrderInConstructionWasRemoved,
 };
