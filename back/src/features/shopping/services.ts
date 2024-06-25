@@ -312,7 +312,7 @@ const getStockAmountAvailableFromPosts: QueryHandle<
 const sendUpdateStockAmountMessagesFromShoppingPosts: QueryHandle<{
   shopping: Shopping;
 }> = async ({ shopping }) => {
-  if (![ShoppingState.REJECTED, ShoppingState.CANCELED].includes(shopping.state)) {
+  if (![ShoppingState.REJECTED, ShoppingState.CANCELED, ShoppingState.CONSTRUCTION].includes(shopping.state)) {
     logger.info('No need to send update stock amount messages from shopping posts.');
     return;
   }
