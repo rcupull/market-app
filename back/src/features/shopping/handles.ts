@@ -114,7 +114,6 @@ const post_shopping: () => RequestHandler<
     withTryCatch(req, res, async () => {
       const { user, post } = req;
       //
-      console.log('ID', post?._id.toString());
 
       if (!user) {
         return getUserNotFoundResponse({ res });

@@ -30,7 +30,6 @@ agenda.on('ready', async () => {
 });
 
 agenda.define('deleteOrderInConstruction', async (job : any) => {
-  console.log('OK');
   const { orderId } = job.attrs.data;
 
   const _id = orderId;

@@ -143,17 +143,12 @@ const updateOrAddOne: QueryHandle<
 
   if (existInConstruction) {
     await addPostToOne({ amountToAdd, post, currentShopping: existInConstruction });
+    await agendaServices.scheduleAutoShoppingDelete({ orderId: existInConstruction._id.toString() });
   } else {
-    await addOne({ amountToAdd, purshaseNotes, user, post });
+    const shopping = await addOne({ amountToAdd, purshaseNotes, user, post });
+    await agendaServices.scheduleAutoShoppingDelete({ orderId: shopping!._id.toString() });
   }
-  //TODO quizas puedan ser mejoradas estas 4 lineas
-  const shopping = await ShoppingModel.findOne({
-    purchaserId: user._id,
-    state: 'CONSTRUCTION',
-    routeName: routeName,
-  })
-  if(!shopping) return;
-  await agendaServices.scheduleAutoShoppingDelete({ orderId: shopping._id.toString() });
+  
 };
 
 const getAllWithPagination: QueryHandle<
