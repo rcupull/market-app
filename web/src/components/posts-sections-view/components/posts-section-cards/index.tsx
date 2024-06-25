@@ -2,13 +2,12 @@ import { CardGroup } from 'components/card-group';
 import { CardPost } from 'components/card-post';
 import { Swiper } from 'components/swiper';
 
-import {  useSwiperProps } from './useSwiperProps';
+import { useSwiperProps } from './useSwiperProps';
 
 import { Business, PostsLayoutSection } from 'types/business';
 import { StyleProps } from 'types/general';
 import { Post } from 'types/post';
 import { getOneBusinessRoute, getOnePostRoute } from 'utils/business';
-
 
 export interface PostsSectionCardsProps extends StyleProps {
   posts: Array<Post> | null;

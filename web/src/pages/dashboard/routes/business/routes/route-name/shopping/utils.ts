@@ -4,12 +4,12 @@ export const allStatesQuery: Array<ShoppingState> = [
   'REQUESTED',
   'PROCESSING',
   'APPROVED',
-  'CANCELED',
   'REJECTED',
   'DELIVERED',
-  'READY_TO_DELIVER',
+  // 'READY_TO_DELIVER',
   /**
    * ignored in this view
    */
   // 'CONSTRUCTION',
+  // 'CANCELED',
 ];

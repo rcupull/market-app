@@ -1,7 +1,9 @@
 import { SettingBox } from 'components/setting-box';
 
-import SvgDollarSignSolid from 'icons/DollarSignSolid';
 import SvgFileInvoiceSolid from 'icons/FileInvoiceSolid';
+import SvgHandHoldingUsdSolid from 'icons/HandHoldingUsdSolid';
+import SvgUserSecretSolid from 'icons/UserSecretSolid';
+import { LayoutPageSection } from 'pages/@common/layout-page-section';
 import { useAdminConfigUpdatePrice } from 'pages/@modals/useAdminConfigUpdatePrice';
 import { useAdminConfigUpdatePrivacyPolicy } from 'pages/@modals/useAdminConfigUpdatePrivacyPolicy';
 import { useAdminConfigUpdateTermsAndConditions } from 'pages/@modals/useAdminConfigUpdateTermsAndConditions';
@@ -12,24 +14,26 @@ export const Settings = () => {
   const adminConfigUpdatePrice = useAdminConfigUpdatePrice();
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
-      <SettingBox
-        title="Términos y condiciones"
-        svg={SvgFileInvoiceSolid}
-        onClick={() => adminConfigUpdateTermsAndConditions.open()}
-      />
+    <LayoutPageSection title="Configuración">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
+        <SettingBox
+          title="Términos y condiciones"
+          svg={SvgFileInvoiceSolid}
+          onClick={() => adminConfigUpdateTermsAndConditions.open()}
+        />
 
-      <SettingBox
-        title="Política de Privacidad"
-        svg={SvgFileInvoiceSolid}
-        onClick={() => adminConfigUpdatePrivacyPolicy.open()}
-      />
+        <SettingBox
+          title="Política de Privacidad"
+          svg={SvgUserSecretSolid}
+          onClick={() => adminConfigUpdatePrivacyPolicy.open()}
+        />
 
-      <SettingBox
-        title="Precio"
-        svg={SvgDollarSignSolid}
-        onClick={() => adminConfigUpdatePrice.open()}
-      />
-    </div>
+        <SettingBox
+          title="Precios"
+          svg={SvgHandHoldingUsdSolid}
+          onClick={() => adminConfigUpdatePrice.open()}
+        />
+      </div>
+    </LayoutPageSection>
   );
 };

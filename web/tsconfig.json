@@ -23,39 +23,18 @@
     "esModuleInterop": true,
     //
     "paths": {
-      "components*": [
-        "./src/components*"
-      ],
-      "features*": [
-        "./src/features*"
-      ],
-      "hooks*": [
-        "./src/hooks*"
-      ],
-      "pages*": [
-        "./src/pages*"
-      ],
-      "types*": [
-        "./src/types*"
-      ],
-      "utils*": [
-        "./src/utils*"
-      ],
-      "constants*": [
-        "./src/constants*"
-      ],
-      "icons*": [
-        "./src/icons*"
-      ],
-      "media*": [
-        "./src/media*"
-      ],
+      "components*": ["./src/components*"],
+      "features*": ["./src/features*"],
+      "hooks*": ["./src/hooks*"],
+      "pages*": ["./src/pages*"],
+      "types*": ["./src/types*"],
+      "utils*": ["./src/utils*"],
+      "constants*": ["./src/constants*"],
+      "icons*": ["./src/icons*"],
+      "media*": ["./src/media*"]
     }
   },
   "include": ["src"],
-  "exclude": [
-    "node_modules",
-    "build",
-  ],
+  "exclude": ["node_modules", "build"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

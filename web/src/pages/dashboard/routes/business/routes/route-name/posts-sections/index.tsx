@@ -1,14 +1,14 @@
-import { ButtonNew } from 'components/button-new';
 import { ButtonRefresh } from 'components/button-refresh';
+import { IconButtonRefresh } from 'components/icon-button-refresh';
 import { Table } from 'components/table';
 
 import { useBusinessSectionsReorder } from 'features/api/business/useBusinessSectionsReorder';
 
+import { NewSectionButton } from './NewSectionButton';
 import { RowActions } from './RowActions';
 
 import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useBusinessNewUpdateSection } from 'pages/@modals/useBusinessNewUpdateSection';
 import { PostsLayoutSection } from 'types/business';
 import { viewUtils } from 'utils/view';
 
@@ -19,34 +19,27 @@ export const PostsSections = () => {
 
   const data = business?.layouts?.posts?.sections || [];
 
-  const businessNewUpdateSection = useBusinessNewUpdateSection();
+  const buttonRefresh = (
+    <>
+      <ButtonRefresh
+        onClick={() => business && onFetch({ routeName: business.routeName })}
+        className="hidden sm:block"
+      />
 
-  const handleNewProductsSections = () => {
-    businessNewUpdateSection.open({
-      postType: 'product',
-      onAfterSuccess: () => business && onFetch({ routeName: business.routeName }),
-    });
-  };
-
-  const handleNewLinksSections = () => {
-    businessNewUpdateSection.open({
-      postType: 'link',
-      onAfterSuccess: () => business && onFetch({ routeName: business.routeName }),
-    });
-  };
+      <IconButtonRefresh
+        onClick={() => business && onFetch({ routeName: business.routeName })}
+        isBusy={status.isBusy}
+        className="block sm:hidden"
+      />
+    </>
+  );
 
   return (
     <>
       <TopActions>
-        <ButtonNew
-          label="Nueva de productos"
-          onClick={handleNewProductsSections}
-          className="ml-auto"
-        />
+        <NewSectionButton />
 
-        <ButtonNew label="Nueva de enlaces" onClick={handleNewLinksSections} />
-
-        <ButtonRefresh onClick={() => business && onFetch({ routeName: business.routeName })} />
+        {buttonRefresh}
       </TopActions>
       <Table<PostsLayoutSection>
         remapRowsIndex={{

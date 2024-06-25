@@ -26,7 +26,7 @@ const allStates: Array<ShoppingState> = [
   'REJECTED',
   'DELIVERED',
   'PROCESSING',
-  'READY_TO_DELIVER',
+  // 'READY_TO_DELIVER',
 ];
 
 export const Filters = ({ onChange, value, className }: FiltersProps) => {

@@ -2,6 +2,9 @@ import Agenda from 'agenda';
 
 import { dbUrl } from '../../config';
 import { ValidationCodeModel } from '../../schemas/auth';
+import { shoppingServices } from '../shopping/services';
+import { ShoppingState } from '../../types/shopping';
+import { notificationsServices } from '../notifications/services';
 
 export const agenda = new Agenda({ db: { address: dbUrl }, processEvery: '10 seconds' });
 
@@ -28,9 +31,31 @@ agenda.on('ready', async () => {
   await agenda.start();
 });
 
+agenda.define('removeOrderInConstruction', async (job: any) => {
+  const { orderId } = job.attrs.data;
+
+  const shopping = await shoppingServices.findOneAndDelete({
+    query: {
+      _id: orderId,
+      state: ShoppingState.CONSTRUCTION,
+    },
+  });
+
+  if (shopping) {
+    await shoppingServices.sendUpdateStockAmountMessagesFromShoppingPosts({ shopping });
+    await notificationsServices.sendOrderInConstructionWasRemoved({ shopping });
+  }
+});
+
 export const agendaServices = {
-  removeValidationCode: async (args: { code: string; timeout: number }) => {
+  scheduleRemoveValidationCode: async (args: { code: string; timeout: number }) => {
     const { code, timeout } = args;
     await agenda.schedule(`${timeout} seconds`, 'removeValidationCode', { code });
+  },
+  scheduleRemoveOrderInConstruction: async (args: { orderId: string }) => {
+    const { orderId } = args;
+
+    await agenda.cancel({ name: 'removeOrderInConstruction', 'data.orderId': orderId });
+    await agenda.schedule('5 minutes', 'removeOrderInConstruction', { orderId });
   },
 };

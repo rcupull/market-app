@@ -13,6 +13,7 @@ import { BulkActionsShopping } from './BulkActionsShopping';
 import { Filters } from './Filters';
 import { RowActions } from './RowActions';
 
+import { LayoutPageSection } from 'pages/@common/layout-page-section';
 import { ShoppingButtonStateHistory } from 'pages/@common/shopping-button-state-history';
 import { ShoppingStateLabel } from 'pages/@common/shopping-state-label';
 import { TopActions } from 'pages/@common/top-actions';
@@ -47,7 +48,7 @@ export const PurchaseOrders = () => {
   };
 
   return (
-    <>
+    <LayoutPageSection title="Órdenes de compra">
       <BulkActionsShopping
         onRefresh={() => filters.onMergeFilters({ page: 1 }, { forceFetch: true })}
         filters={filters.value}
@@ -137,7 +138,7 @@ export const PurchaseOrders = () => {
           );
         }}
       </BulkActionsShopping>
-    </>
+    </LayoutPageSection>
   );
 };
 
