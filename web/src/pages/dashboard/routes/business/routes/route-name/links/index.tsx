@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 import { ButtonNew } from 'components/button-new';
 import { ButtonRefresh } from 'components/button-refresh';
-import { Divider } from 'components/divider';
 import { IconButtonAdd } from 'components/icon-button-add';
 import { IconButtonRefresh } from 'components/icon-button-refresh';
 import { Table } from 'components/table';
@@ -12,7 +11,6 @@ import { useGetAllPosts } from 'features/api/posts/useGetAllPosts';
 import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 
 import { BulkActions } from './BulkActions';
-import { Filters } from './Filters';
 import { RowActions } from './RowActions';
 import { useInfinityScrolling } from './useInfinityScrolling';
 
@@ -111,16 +109,6 @@ export const Links = () => {
                 {buttonRefresh}
               </TopActions>,
             )}
-
-            <Divider className="!my-3" />
-
-            <Filters
-              business={business}
-              onChange={(filtersValue) => filters.onMergeFilters(filtersValue)}
-              value={filters.value}
-            />
-
-            <Divider className="!my-3" />
 
             <Table
               className="!max-h-[calc(100vh-25rem)]"

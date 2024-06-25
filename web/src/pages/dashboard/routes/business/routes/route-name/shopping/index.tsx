@@ -57,14 +57,13 @@ export const ShoppingPage = () => {
   );
   return (
     <>
-      <TopActions>
-        <Filters
-          onChange={(filtersValue) => filters.onMergeFilters(filtersValue)}
-          value={filters.value}
-        />
+      <TopActions>{refreshButton}</TopActions>
 
-        {refreshButton}
-      </TopActions>
+      <Filters
+        onChange={(filtersValue) => filters.onMergeFilters(filtersValue)}
+        value={filters.value}
+      />
+
       <Table<Shopping>
         remapRowsIndex={{
           xs: [[0, 1, 2, 3, 4, 5]],
