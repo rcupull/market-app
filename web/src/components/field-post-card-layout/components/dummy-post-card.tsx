@@ -2,6 +2,7 @@ import { CardPost } from 'components/card-post';
 
 import { PostCardLayout } from 'types/business';
 import { Post } from 'types/post';
+import { cn } from 'utils/general';
 
 const imagesSrcs = [
   'https://i.etsystatic.com/22218968/r/il/b43c35/4139110628/il_570xN.4139110628_l9ye.jpg',
@@ -32,14 +33,24 @@ export interface DummyPostCardProps {
 }
 
 export const DummyPostCard = ({ postCardLayout }: DummyPostCardProps) => {
+  const postSize = postCardLayout?.size;
+
   return (
-    <CardPost
-      neverUpdate
-      href="/"
-      layout={postCardLayout}
-      post={dummyPost}
-      currency="CUP"
-      onRefresh={() => {}}
-    />
+    <div
+      className={cn({
+        'w-[8rem]': postSize === 'small',
+        'w-[15rem]': postSize === 'medium',
+        'w-[20rem]': postSize === 'long',
+      })}
+    >
+      <CardPost
+        neverUpdate
+        href="/"
+        layout={postCardLayout}
+        post={dummyPost}
+        currency="CUP"
+        onRefresh={() => {}}
+      />
+    </div>
   );
 };
