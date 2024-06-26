@@ -84,7 +84,7 @@ export const replaceAll = (value: string, match: string, replace: string): strin
 };
 
 export const deepJsonCopy = <T extends AnyRecord = AnyRecord>(json: T): T => {
-  return JSON.parse(JSON.stringify(json));
+  return structuredClone(json);
 };
 
 export const addRow = <T = any>(

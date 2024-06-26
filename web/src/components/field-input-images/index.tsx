@@ -81,7 +81,6 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
         setState(newState);
         const newPreviewState = addOneEmptyPreview(newState);
         setStateToPreview(newPreviewState);
-        setPreviewIndex(0);
       }
     }, [value, max]);
 
