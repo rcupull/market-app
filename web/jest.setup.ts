@@ -1,3 +1,5 @@
+global.structuredClone = (json) => JSON.parse(JSON.stringify(json));
+
 global.beforeAll(async () => {
   global.DEVELOPMENT = true;
 });
