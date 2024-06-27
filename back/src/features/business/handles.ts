@@ -12,7 +12,7 @@ import { Business, BusinessSummary, PostCategory } from '../../types/business';
 import { postServices } from '../post/services';
 import { Image, RequestHandler } from '../../types/general';
 import { makeReshaper } from '../../utils/makeReshaper';
-import { getPostCategoriesFromBusinessCategories } from './utils';
+import { getBussinesShoppingDebit, getPostCategoriesFromBusinessCategories } from './utils';
 import { imagesServices } from '../images/services';
 import { isEqualIds, movRow } from '../../utils/general';
 import { PaginateResult } from '../../middlewares/pagination';
@@ -108,6 +108,7 @@ const get_business_routeName: () => RequestHandler = () => {
       if (!out) {
         return getBusinessNotFoundResponse({ res });
       }
+      //const totalDebit = await getBussinesShoppingDebit(routeName);
 
       res.send(out);
     });

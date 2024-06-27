@@ -14,7 +14,6 @@ import { businessServices } from '../business/services';
 import {
   deleteOnePostFromShoppingInContruction,
   deleteShoppingInConstruction,
-  getShoppingInfo,
 } from './utils';
 import { logger } from '../logger';
 import { PostPurshaseNotes } from '../../types/post';

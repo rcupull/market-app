@@ -1,6 +1,9 @@
 import { FilterQuery, UpdateQuery, UpdateWithAggregationPipeline } from 'mongoose';
 import { Business, BusinessCategory, PostCategory } from '../../types/business';
-import { addStringToUniqueArray, replaceAll } from '../../utils/general';
+import { addStringToUniqueArray, isNumber, replaceAll } from '../../utils/general';
+import { shoppingServices } from '../shopping/services';
+import { Shopping, ShoppingState } from '../../types/shopping';
+import { ModelDocument } from '../../types/general';
 
 export interface GetAllBusinessArgs extends FilterQuery<Business> {
   createdBy?: string;
@@ -129,3 +132,47 @@ export const getAllFilterQuery = ({
 
   return filterQuery;
 };
+
+export const getShoppingData = (
+  shopping: ModelDocument<Shopping>,
+): {
+  totalProducts: number;
+  totalPrice: number;
+} => {
+  let totalProducts = 0;
+  let totalPrice = 0;
+
+  shopping.posts.forEach(({ count, postData }) => {
+    if (!postData.price || !isNumber(postData.price)) {
+      console.log('not price number');
+      return;
+    }
+
+    totalProducts = totalProducts + count;
+    totalPrice = totalPrice + postData.price * count; //TODO add conversion if the currency is not USD
+  });
+
+  return {
+    totalProducts,
+    totalPrice,
+  };
+};
+
+export const getBussinesShoppingDebit = async (routeName: string): Promise<number> => {
+  const query = {
+      routeName,
+      $or: [
+        { state: ShoppingState.APPROVED },
+        { history: {$in : ShoppingState.APPROVED} }
+      ],
+      billId: { $exists: false }
+  }
+  const orders = await shoppingServices.getAll({query});
+
+  const totalDebit = orders.reduce((acc, order) => {
+    const { totalPrice } = getShoppingData(order);
+    return acc + (totalPrice * 0.01);  
+  },0);
+
+  return parseFloat(totalDebit.toFixed(2));
+}
