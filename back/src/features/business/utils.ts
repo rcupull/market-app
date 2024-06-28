@@ -1,8 +1,6 @@
 import { FilterQuery, UpdateQuery, UpdateWithAggregationPipeline } from 'mongoose';
 import { Business, BusinessCategory, PostCategory } from '../../types/business';
-import { addStringToUniqueArray, isNumber, replaceAll } from '../../utils/general';
-import { Shopping } from '../../types/shopping';
-import { ModelDocument } from '../../types/general';
+import { addStringToUniqueArray, replaceAll } from '../../utils/general';
 
 export interface GetAllBusinessArgs extends FilterQuery<Business> {
   createdBy?: string;
@@ -130,29 +128,4 @@ export const getAllFilterQuery = ({
   }
 
   return filterQuery;
-};
-
-export const getShoppingData = (
-  shopping: ModelDocument<Shopping>,
-): {
-  totalProducts: number;
-  totalPrice: number;
-} => {
-  let totalProducts = 0;
-  let totalPrice = 0;
-
-  shopping.posts.forEach(({ count, postData }) => {
-    if (!postData.price || !isNumber(postData.price)) {
-      console.log('not price number');
-      return;
-    }
-
-    totalProducts = totalProducts + count;
-    totalPrice = totalPrice + postData.price * count;
-  });
-
-  return {
-    totalProducts,
-    totalPrice,
-  };
 };

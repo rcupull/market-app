@@ -5,7 +5,7 @@ import { includesId } from '../../../utils/general';
 import { get400Response, getBillNotFoundResponse } from '../../../utils/server-response';
 import { billingServices } from '../../billing/services';
 import { shoppingServices } from '../../shopping/services';
-import { getShoppingInfo } from '../../shopping/utils';
+import { getShoppingsTotalDebit } from '../../shopping/utils';
 
 const post_admin_bills: () => RequestHandler = () => {
   return (req, res) => {
@@ -19,7 +19,7 @@ const post_admin_bills: () => RequestHandler = () => {
       });
 
       // get shopping
-      const shoppingData: Array<Shopping> = await shoppingServices.getAll({
+      const shoppings: Array<Shopping> = await shoppingServices.getAll({
         query: {
           routeName,
           shoppingIds,
@@ -30,17 +30,13 @@ const post_admin_bills: () => RequestHandler = () => {
         },
       });
 
-      // get shopping debits
-      const shoppingDebits = shoppingData.reduce(
-        (acc, shopping) => acc + getShoppingInfo(shopping).shoppingDebit,
-        0,
-      );
+      const totalDebit = getShoppingsTotalDebit(shoppings);
 
       // create new bill
       const newBill = await billingServices.addOne({
         routeName,
-        shoppingIds: shoppingData.map(({ _id }) => _id),
-        totalDebit: shoppingDebits,
+        shoppingIds: shoppings.map(({ _id }) => _id),
+        totalDebit,
         state: 'PENDING_TO_PAY',
       });
 

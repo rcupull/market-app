@@ -168,7 +168,7 @@ export const getShoppingInfo = (
   let totalPrice = 0;
 
   posts.forEach(({ count, postData }) => {
-    if (!isNumber(postData.price)) {
+    if (!postData.price || !isNumber(postData.price)) {
       console.log('not price number');
       return;
     }
@@ -182,4 +182,13 @@ export const getShoppingInfo = (
     totalPrice,
     shoppingDebit: totalPrice * 0.01, //el 1% de las ventas es de la app
   };
+};
+
+export const getShoppingsTotalDebit = (shoppings: Array<Shopping>): number => {
+  const totalDebit = shoppings.reduce((acc, order) => {
+    const { shoppingDebit } = getShoppingInfo(order);
+    return acc + shoppingDebit;
+  }, 0);
+
+  return parseFloat(totalDebit.toFixed(2));
 };

@@ -7,15 +7,11 @@ import { PaginateResult } from '../../middlewares/pagination';
 
 import { imagesServices } from '../images/services';
 import { UpdateOptions } from 'mongodb';
-import {
-  GetAllBusinessArgs,
-  UpdateQueryBusiness,
-  getAllFilterQuery,
-  getShoppingData,
-} from './utils';
+import { GetAllBusinessArgs, UpdateQueryBusiness, getAllFilterQuery } from './utils';
 import { billingServices } from '../billing/services';
 import { shoppingServices } from '../shopping/services';
-import { ShoppingState } from '../../types/shopping';
+import { getShoppingWasAcceptedQuery } from '../../utils/schemas';
+import { getShoppingsTotalDebit } from '../shopping/utils';
 
 const getAllWithPagination: QueryHandle<
   {
@@ -158,24 +154,16 @@ const getShoppingPaymentData: QueryHandle<
     query: { routeNames: [routeName] },
   });
 
-  const orders = await shoppingServices.getAll({
+  const shoppings = await shoppingServices.getAll({
     query: {
       routeName,
-      $or: [
-        { state: ShoppingState.APPROVED },
-        { 'history.state': { $in: ShoppingState.APPROVED } },
-      ],
+      ...getShoppingWasAcceptedQuery(),
       excludeShoppingIds: getAllShopingIds(),
     },
   });
 
-  const totalDebit = orders.reduce((acc, order) => {
-    const { totalPrice } = getShoppingData(order);
-    return acc + totalPrice * 0.01;
-  }, 0);
-
   return {
-    shoppingDebit: parseFloat(totalDebit.toFixed(2)),
+    shoppingDebit: getShoppingsTotalDebit(shoppings),
   };
 };
 

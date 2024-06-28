@@ -5,13 +5,22 @@ import { deepJsonCopy } from '../../../utils/general';
 import { billingServices } from '../../billing/services';
 import { shoppingServices } from '../../shopping/services';
 import { Shopping, ShoppingDto } from '../../../types/shopping';
+import { getShoppingWasAcceptedQuery } from '../../../utils/schemas';
 
 const get_admin_shopping: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
       const { query, paginateOptions } = req;
 
-      const { routeNames, hasBill, states, dateFrom, dateTo, sort = defaultQuerySort } = query;
+      const {
+        routeNames,
+        hasBill,
+        states,
+        dateFrom,
+        dateTo,
+        sort = defaultQuerySort,
+        wasAccepted,
+      } = query;
 
       const { getAllShopingIds, getOneShoppingBillData } =
         await billingServices.getBillDataFromShopping({
@@ -24,6 +33,7 @@ const get_admin_shopping: () => RequestHandler = () => {
         query: {
           ...(hasBill === 'true' ? { shoppingIds: getAllShopingIds() } : {}),
           ...(hasBill === 'false' ? { excludeShoppingIds: getAllShopingIds() } : {}),
+          ...(wasAccepted === 'true' ? getShoppingWasAcceptedQuery() : {}),
           routeNames,
           states,
           dateFrom,

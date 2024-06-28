@@ -89,7 +89,7 @@ export const ShoppingPage = () => {
                   fetchStatus={getShoppingOwner.status}
                   onAfterSuccess={() => {
                     onRefreshForce();
-                    business && onFetch({routeName: business.routeName})
+                    business && onFetch({ routeName: business.routeName });
                   }}
                 />
                 <ShoppingButtonStateHistory shopping={rowData} />
