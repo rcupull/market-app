@@ -1,19 +1,13 @@
 import { RequestHandler } from '../../types/general';
 import { uploadImageMiddleware } from '../../middlewares/files';
-import { isNumber } from '../../utils/general';
 import { withTryCatch } from '../../utils/error';
-import { imagesServices } from './services';
 
 import {
   get200Response,
   get400Response,
   getUserNotFoundResponse,
 } from '../../utils/server-response';
-import { getAssetsDir } from '../../config';
-import sharp from 'sharp';
-import { getFullFileNameToSave } from './utils';
-import path from 'path';
-import fs from 'fs';
+import { imagesServices } from './services';
 
 const post_images: () => RequestHandler = () => {
   return (req, res) => {
@@ -21,21 +15,6 @@ const post_images: () => RequestHandler = () => {
       uploadImageMiddleware(req, res, async (err) => {
         if (err) {
           return get400Response({ res, json: { message: err.message } });
-        }
-
-        const filename = getFullFileNameToSave({
-          userId: req.query.userId,
-          postId: req.query.postId,
-          routeName: req.query.routeName,
-        });
-
-        const { width, height } = req.query;
-
-        if (!filename) {
-          return get400Response({
-            res,
-            json: { message: 'has not filename' },
-          });
         }
 
         const { file } = req;
@@ -47,19 +26,26 @@ const post_images: () => RequestHandler = () => {
           });
         }
 
-        const webImagePathNameFilename = `${filename}-${path.parse(file.path).name}.web`;
+        const response = await imagesServices.uploadFile({
+          file,
+          userId: req.query.userId,
+          postId: req.query.postId,
+          routeName: req.query.routeName,
+        });
 
-        const realWidth = width && isNumber(Number(width)) ? Number(width) : undefined;
-        const realHeight = height && isNumber(Number(height)) ? Number(height) : undefined;
-
-        await sharp(file.path).resize(realWidth, realHeight).toFile(webImagePathNameFilename);
-
-        fs.unlinkSync(file.path);
+        if (!response) {
+          return get400Response({
+            res,
+            json: {
+              message: 'Some problem saving the image',
+            },
+          });
+        }
 
         return get200Response({
           res,
           json: {
-            imageSrc: webImagePathNameFilename.replace(getAssetsDir(), ''),
+            imageSrc: response.result.id,
           },
         });
       });
@@ -79,47 +65,38 @@ const post_image_checkeditor: () => RequestHandler = () => {
           return getUserNotFoundResponse({ res });
         }
 
-        const { postId, routeName, endpoint } = query;
-
-        const filename = getFullFileNameToSave({
-          userId: user._id.toString(),
-          postId,
-          routeName,
-        });
-
-        const { width, height } = req.query;
-
-        if (!filename) {
-          return get400Response({
-            res,
-            json: { message: 'has not filename' },
-          });
-        }
+        const { postId, routeName } = query;
 
         const { file } = req;
 
         if (!file) {
           return get400Response({
             res,
-            json: { message: 'Has not file', uploaded: 0 },
+            json: { message: 'Has not file' },
           });
         }
 
-        const webImagePathNameFilename = `${filename}-${path.parse(file.path).name}.web`;
+        const response = await imagesServices.uploadFile({
+          file,
+          userId: user._id.toString(),
+          postId,
+          routeName,
+        });
 
-        const realWidth = width && isNumber(Number(width)) ? Number(width) : undefined;
-        const realHeight = height && isNumber(Number(height)) ? Number(height) : undefined;
-
-        await sharp(file.path).resize(realWidth, realHeight).toFile(webImagePathNameFilename);
-
-        fs.unlinkSync(file.path);
+        if (!response) {
+          return get400Response({
+            res,
+            json: {
+              message: 'Some problem saving the image',
+            },
+          });
+        }
 
         return get200Response({
           res,
           json: {
-            url: `${endpoint}${webImagePathNameFilename.replace(getAssetsDir(), '')}`,
+            url: response.result.variants[0],
             uploaded: 1,
-            filename: `${path.parse(file.path).name}.web`,
           },
         });
       });

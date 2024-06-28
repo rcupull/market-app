@@ -1,9 +1,11 @@
 import { ModelDocument, QueryHandle } from '../../types/general';
 import { PaginateResult } from '../../middlewares/pagination';
-import { Bill } from '../../types/billing';
+import { Bill, BillState } from '../../types/billing';
 import { BillingModel } from '../../schemas/billing';
 import { GetAllBillsArgs, getAllBillFilterQuery } from './utils';
-import { FilterQuery, PaginateOptions, UpdateQuery } from 'mongoose';
+import { FilterQuery, PaginateOptions, ProjectionType, Schema, UpdateQuery } from 'mongoose';
+import { Shopping } from '../../types/shopping';
+import { includesId } from '../../utils/general';
 
 const getAllWithPagination: QueryHandle<
   {
@@ -19,10 +21,13 @@ const getAllWithPagination: QueryHandle<
   return out as unknown as PaginateResult<Bill>;
 };
 
-const getAll: QueryHandle<{ query: GetAllBillsArgs }, Array<Bill>> = async ({ query }) => {
+const getAll: QueryHandle<
+  { query: GetAllBillsArgs; projection?: ProjectionType<Bill> },
+  Array<Bill>
+> = async ({ query, projection }) => {
   const filterQuery = getAllBillFilterQuery(query);
 
-  const out = await BillingModel.find(filterQuery);
+  const out = await BillingModel.find(filterQuery, projection);
 
   return out;
 };
@@ -55,6 +60,12 @@ const findOneAndDelete: QueryHandle<
   return out;
 };
 
+const deleteOne: QueryHandle<{
+  query: FilterQuery<Bill>;
+}> = async ({ query }) => {
+  await BillingModel.deleteOne(query);
+};
+
 const deleteMany: QueryHandle<{
   query: FilterQuery<Bill>;
 }> = async ({ query }) => {
@@ -70,6 +81,48 @@ const getOne: QueryHandle<
   return await BillingModel.findOne(query);
 };
 
+const getBillDataFromShopping: QueryHandle<
+  {
+    query: GetAllBillsArgs;
+  },
+  {
+    getAllShopingIds: () => Array<Schema.Types.ObjectId>;
+    getOneShoppingBillData: (shopping: Shopping) => {
+      billId: Schema.Types.ObjectId;
+      billState: BillState;
+    } | null;
+  }
+> = async ({ query }) => {
+  const billsData: Array<Pick<Bill, '_id' | 'shoppingIds' | 'state'>> = await getAll({
+    query,
+    projection: {
+      _id: 1,
+      shoppingIds: 1,
+      state: 1,
+    },
+  });
+
+  return {
+    getAllShopingIds: () => {
+      return billsData.reduce((acc, billData) => {
+        return billData.shoppingIds.reduce((acc2, shoppingId) => {
+          return includesId(acc, shoppingId) ? acc2 : [...acc2, shoppingId];
+        }, acc);
+      }, [] as Array<Schema.Types.ObjectId>);
+    },
+    getOneShoppingBillData: (shopping) => {
+      const bill = billsData.find((bill) => includesId(bill.shoppingIds, shopping._id));
+      if (bill) {
+        return {
+          billId: bill._id,
+          billState: bill.state,
+        };
+      }
+      return null;
+    },
+  };
+};
+
 export const billingServices = {
   getAllWithPagination,
   getAll,
@@ -78,4 +131,7 @@ export const billingServices = {
   updateOne,
   findOneAndDelete,
   deleteMany,
+  deleteOne,
+  //
+  getBillDataFromShopping,
 };

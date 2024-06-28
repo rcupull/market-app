@@ -4,38 +4,60 @@ import { withTryCatch } from '../../../utils/error';
 import { deepJsonCopy } from '../../../utils/general';
 import { billingServices } from '../../billing/services';
 import { shoppingServices } from '../../shopping/services';
+import { Shopping, ShoppingDto } from '../../../types/shopping';
+import { getShoppingWasAcceptedQuery } from '../../../utils/schemas';
 
 const get_admin_shopping: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
       const { query, paginateOptions } = req;
 
-      const { routeNames, hasBill, states, dateFrom, dateTo, sort = defaultQuerySort } = query;
+      const {
+        routeNames,
+        hasBill,
+        states,
+        dateFrom,
+        dateTo,
+        sort = defaultQuerySort,
+        wasAccepted,
+      } = query;
 
-      const allBills = await billingServices.getAll({ query: {} });
+      const { getAllShopingIds, getOneShoppingBillData } =
+        await billingServices.getBillDataFromShopping({
+          query: { routeNames },
+        });
 
-      let out = await shoppingServices.getAllWithPagination({
+      const shoppings = await shoppingServices.getAllWithPagination({
         paginateOptions,
         sort,
         query: {
+          ...(hasBill === 'true' ? { shoppingIds: getAllShopingIds() } : {}),
+          ...(hasBill === 'false' ? { excludeShoppingIds: getAllShopingIds() } : {}),
+          ...(wasAccepted === 'true' ? getShoppingWasAcceptedQuery() : {}),
           routeNames,
           states,
           dateFrom,
           dateTo,
-          ...(hasBill ? { billId: { $exists: hasBill === 'true' } } : {}),
         },
       });
 
-      out = deepJsonCopy(out);
-      out.data = out.data.map((shopping) => {
-        const bill = allBills.find(({ shoppingIds }) => shoppingIds.includes(shopping._id));
+      const getShoppingDto = async (shopping: Shopping): Promise<ShoppingDto> => {
+        const billData = getOneShoppingBillData(shopping);
 
-        if (bill) {
-          return { ...shopping, billState: bill.state };
+        if (!billData) {
+          return shopping;
         }
 
-        return shopping;
-      });
+        return {
+          ...shopping,
+          billId: billData.billId,
+          billState: billData.billState,
+        };
+      };
+
+      const out = deepJsonCopy(shoppings);
+      const promises = out.data.map(getShoppingDto);
+      out.data = await Promise.all(promises);
 
       res.send(out);
     });

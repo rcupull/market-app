@@ -2,7 +2,6 @@ import { AnyRecord, RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
 import { postServices } from './services';
 
-import { imagesServices } from '../images/services';
 import {
   get200Response,
   get400Response,
@@ -14,6 +13,8 @@ import { Post, PostDto } from '../../types/post';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { GetAllPostArgs } from './utils';
 import { shoppingServices } from '../shopping/services';
+import { defaultQuerySort } from '../../utils/api';
+import { imagesServices } from '../images/services';
 
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
@@ -28,10 +29,12 @@ const get_posts: () => RequestHandler = () => {
         includeHidden,
         postsIds,
         postType,
+        sort = defaultQuerySort,
       } = query;
 
       const posts = await postServices.getAllWithPagination({
         paginateOptions,
+        sort,
         query: {
           postsIds,
           routeNames,

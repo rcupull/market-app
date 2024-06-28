@@ -3,11 +3,12 @@ import { ModelDocument, QueryHandle } from '../../types/general';
 import { PostModel } from '../../schemas/post';
 import { Post } from '../../types/post';
 import { PaginateResult } from '../../middlewares/pagination';
-import { imagesServices } from '../images/services';
 
 import { isNumber } from '../../utils/general';
 import { GetAllPostArgs, getAllFilterQuery } from './utils';
 import { ProjectionType } from 'mongoose';
+import { imagesServices } from '../images/services';
+import { getSortQuery } from '../../utils/schemas';
 
 interface DeletePostQuery extends FilterQuery<Post> {
   postIds?: Array<string>;
@@ -17,12 +18,16 @@ const getAllWithPagination: QueryHandle<
   {
     paginateOptions?: PaginateOptions;
     query: GetAllPostArgs;
+    sort?: string;
   },
   PaginateResult<Post>
-> = async ({ paginateOptions = {}, query }) => {
+> = async ({ paginateOptions = {}, query, sort }) => {
   const filterQuery = getAllFilterQuery(query);
 
-  const out = await PostModel.paginate(filterQuery, paginateOptions);
+  const out = await PostModel.paginate(filterQuery, {
+    ...paginateOptions,
+    sort: getSortQuery(sort),
+  });
 
   return out as unknown as PaginateResult<Post>;
 };
@@ -87,7 +92,7 @@ const deleteOne: QueryHandle<{
   /**
    * Remove all images of post
    */
-  await imagesServices.deleteImagesBy({
+  await imagesServices.deleteBulk({
     userId: post.createdBy.toString(),
     postId,
     routeName: post.routeName,

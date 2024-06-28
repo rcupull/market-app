@@ -32,7 +32,7 @@ const del_users_userId: () => RequestHandler = () => {
       /**
        * Remove all business images
        */
-      await imagesServices.deleteImagesBy({
+      await imagesServices.deleteBulk({
         userId,
       });
 

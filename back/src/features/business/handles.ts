@@ -8,15 +8,15 @@ import {
   getBusinessNotFoundResponse,
   getUserNotFoundResponse,
 } from '../../utils/server-response';
-import { Business, BusinessSummary, PostCategory } from '../../types/business';
+import { Business, BusinessDto, BusinessSummary, PostCategory } from '../../types/business';
 import { postServices } from '../post/services';
-import { Image, RequestHandler } from '../../types/general';
+import { Image, ModelDocument, RequestHandler } from '../../types/general';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { getPostCategoriesFromBusinessCategories } from './utils';
-import { imagesServices } from '../images/services';
-import { isEqualIds, movRow } from '../../utils/general';
 import { PaginateResult } from '../../middlewares/pagination';
 import { ValidationCodeModel } from '../../schemas/auth';
+import { isEqualIds, movRow } from '../../utils/general';
+import { imagesServices } from '../images/services';
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {
@@ -99,15 +99,26 @@ const get_business_routeName: () => RequestHandler = () => {
       const { params } = req;
       const { routeName } = params;
 
-      const out = await businessServices.findOne({
+      const business = await businessServices.findOne({
         query: {
           routeName,
         },
       });
 
-      if (!out) {
+      if (!business) {
         return getBusinessNotFoundResponse({ res });
       }
+
+      const getBusinessDto = async (business: ModelDocument<Business>): Promise<BusinessDto> => {
+        const { shoppingDebit } = await businessServices.getShoppingPaymentData({ routeName });
+
+        return {
+          ...business.toJSON(),
+          shoppingDebit,
+        };
+      };
+
+      const out = await getBusinessDto(business);
 
       res.send(out);
     });

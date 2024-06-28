@@ -1,18 +1,23 @@
-import { getAssetsImageDir } from '../../config';
-import fs from 'fs';
-import { join, resolve } from 'path';
+import { cloudFlareAccountHash, cloudFlareAccountId } from '../../config';
 import { logger } from '../logger';
 
-export const getFullFileNameToSave = (args: {
-  routeName?: string;
-  postId?: string;
-  userId?: string;
-}): string | null => {
-  const filename = getFileNameToSave(args);
+export const cloudflareBaseUrl = `https://api.cloudflare.com/client/v4/accounts/${cloudFlareAccountId}/images/v1`;
+export const cloudflareDeliveryUrl = `https://imagedelivery.net/${cloudFlareAccountHash}`;
 
-  if (!filename) return filename;
+export const cloudflareImageVariants = {
+  public: 'public',
+};
 
-  return `${getAssetsImageDir()}/${filename}`;
+export const getImageIdFromUrl = (url: string): string => {
+  let out = url.replace(`${cloudflareDeliveryUrl}/`, '');
+
+  Object.keys(cloudflareImageVariants).forEach((variant) => {
+    if (out.endsWith(`/${variant}`)) {
+      out = out.replace(`/${variant}`, '');
+    }
+  });
+
+  return out;
 };
 
 export const getFileNameToSave = (args: {
@@ -32,29 +37,19 @@ export const getFileNameToSave = (args: {
     return null;
   }
 
-  let filename = `${userId}_user`;
+  let filename = `${userId}`;
+
+  if (process.env.NODE_ENV === 'development') {
+    filename = `development/${filename}`;
+  }
 
   if (routeName) {
-    filename = `${filename}_${routeName}_routeName`;
+    filename = `${filename}/${routeName}`;
   }
 
   if (postId) {
-    filename = `${filename}_${postId}_post`;
+    filename = `${filename}/${postId}`;
   }
 
   return filename;
-};
-
-export const deleteDirFilesUsingStartPattern = (start: string, dirPath: string) => {
-  fs.readdir(resolve(dirPath), (err, fileNames) => {
-    if (err) throw err;
-
-    for (const name of fileNames) {
-      if (name.startsWith(start)) {
-        fs.unlink(join(dirPath, name), (err) => {
-          if (err) throw err;
-        });
-      }
-    }
-  });
 };

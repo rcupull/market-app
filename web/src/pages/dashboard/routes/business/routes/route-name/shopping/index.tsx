@@ -22,7 +22,7 @@ import { getShoppingData } from 'utils/shopping';
 
 export const ShoppingPage = () => {
   const { getShoppingOwner } = useGetShoppingOwner();
-  const { business } = useBusiness();
+  const { business, onFetch } = useBusiness();
 
   const filters = useFiltersVolatile<Omit<GetAllShoppingQuery, 'routeName'>>({
     onChange: (filters) => {
@@ -87,7 +87,10 @@ export const ShoppingPage = () => {
                 <ShoppingStateView
                   shopping={rowData}
                   fetchStatus={getShoppingOwner.status}
-                  onAfterSuccess={() => onRefreshForce()}
+                  onAfterSuccess={() => {
+                    onRefreshForce();
+                    business && onFetch({ routeName: business.routeName });
+                  }}
                 />
                 <ShoppingButtonStateHistory shopping={rowData} />
               </div>,
