@@ -5,17 +5,6 @@ import { createdAtSchemaDefinition } from '../utils/schemas';
 import { PostModel } from './post';
 import { PostLayoutSchema, TelegramBotChatDefinition } from './common';
 
-const PaymentRequestSchema = {
-  type: [
-    {
-      _id: false,
-      shoppingId: { type: Schema.Types.ObjectId, ref: 'Shopping' },
-      shoppingDebit: { type: Number },
-    },
-  ],
-  default: [],
-};
-
 const BusinessSchema = new Schema<Business>({
   ...createdAtSchemaDefinition,
   name: { type: String, required: true },

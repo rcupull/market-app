@@ -108,9 +108,12 @@ const get_business_routeName: () => RequestHandler = () => {
       if (!out) {
         return getBusinessNotFoundResponse({ res });
       }
-      //const totalDebit = await getBussinesShoppingDebit(routeName);
+      const totalDebit = await getBussinesShoppingDebit(routeName);
 
-      res.send(out);
+      res.send({
+        ...out.toJSON(),
+        shoppingDebit: totalDebit,
+      });
     });
   };
 };
