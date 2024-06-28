@@ -4,7 +4,7 @@ import { UpdateOptions } from 'mongodb';
 import { ShoppingModel } from '../../schemas/shopping';
 import { Shopping, ShoppingState } from '../../types/shopping';
 import { Post, PostPurshaseNotes } from '../../types/post';
-import { isEqualIds, isNumber } from '../../utils/general';
+import { isEqualIds, isNullOrUndefined, isNumber } from '../../utils/general';
 import { User } from '../../types/user';
 import { PaginateResult } from '../../middlewares/pagination';
 import {
@@ -266,7 +266,9 @@ const getStockAmountAvailableFromPost: QueryHandle<
 > = async ({ post, shoppings }) => {
   const { stockAmount } = post;
 
-  if (!stockAmount) return null; // this be 0, null or undefined
+  if (isNullOrUndefined(stockAmount)) return null;
+
+  if (stockAmount === 0) return 0;
 
   const postCount = shoppings.reduce((acc, shopping) => {
     let out = acc;
@@ -279,7 +281,9 @@ const getStockAmountAvailableFromPost: QueryHandle<
     return out;
   }, 0);
 
-  return stockAmount - postCount;
+  const diff = stockAmount - postCount;
+
+  return diff < 0 ? 0 : diff;
 };
 
 const getStockAmountAvailableFromPosts: QueryHandle<

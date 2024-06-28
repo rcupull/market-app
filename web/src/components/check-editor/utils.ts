@@ -1,11 +1,11 @@
 import { Query } from 'types/api';
-import { getEndpoint, getEndpointUrl } from 'utils/api';
+import { getEndpoint } from 'utils/api';
 import { compact } from 'utils/general';
 
-export const getCheckEditorUploadUrl = (extraQuery: Query = {}): string => {
+export const getCheckEditorUploadUrl = (query: Query = {}): string => {
   return getEndpoint({
     path: '/images-checkeditor',
-    query: { endpoint: getEndpointUrl(), ...extraQuery },
+    query,
   });
 };
 

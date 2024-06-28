@@ -12,11 +12,4 @@ router
   .post(isLogged, imageHandles.post_images())
   .delete(validators.body('srcs'), validators.handle, isLogged, imageHandles.delete_images());
 
-router
-  .route('/images-checkeditor')
-  .post(
-    validators.query('endpoint').notEmpty(),
-    validators.handle,
-    isLogged,
-    imageHandles.post_image_checkeditor(),
-  );
+router.route('/images-checkeditor').post(isLogged, imageHandles.post_image_checkeditor());

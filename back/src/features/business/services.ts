@@ -5,11 +5,13 @@ import { BusinessModel } from '../../schemas/business';
 import { postServices } from '../post/services';
 import { PaginateResult } from '../../middlewares/pagination';
 
-import { imagesServices } from '../images/services';
 import { UpdateOptions } from 'mongodb';
 import { GetAllBusinessArgs, UpdateQueryBusiness, getAllFilterQuery } from './utils';
 import { billingServices } from '../billing/services';
 import { shoppingServices } from '../shopping/services';
+import { getShoppingWasAcceptedQuery } from '../../utils/schemas';
+import { getShoppingsTotalDebit } from '../shopping/utils';
+import { imagesServices } from '../images/services';
 
 const getAllWithPagination: QueryHandle<
   {
@@ -92,7 +94,7 @@ const deleteOne: QueryHandle<{
    * Remove all business images
    */
 
-  await imagesServices.deleteImagesBy({
+  await imagesServices.deleteBulk({
     userId: business.createdBy.toString(),
     routeName,
   });
@@ -142,6 +144,29 @@ const updateMany: QueryHandle<{
   await BusinessModel.updateMany(query, update);
 };
 
+const getShoppingPaymentData: QueryHandle<
+  {
+    routeName: string;
+  },
+  { shoppingDebit: number }
+> = async ({ routeName }) => {
+  const { getAllShopingIds } = await billingServices.getBillDataFromShopping({
+    query: { routeNames: [routeName] },
+  });
+
+  const shoppings = await shoppingServices.getAll({
+    query: {
+      routeName,
+      ...getShoppingWasAcceptedQuery(),
+      excludeShoppingIds: getAllShopingIds(),
+    },
+  });
+
+  return {
+    shoppingDebit: getShoppingsTotalDebit(shoppings),
+  };
+};
+
 export const businessServices = {
   getAllWithPagination,
   getAll,
@@ -150,4 +175,6 @@ export const businessServices = {
   deleteOne,
   updateOne,
   updateMany,
+  //
+  getShoppingPaymentData,
 };

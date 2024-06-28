@@ -13,6 +13,10 @@ export const apiErrorsMesages = {
     'PreAuthentication failed with error Usted no tiene acceso a los recursos de esta aplicación.',
 };
 
+export const getCloudflareEndpoint = () => {
+  return 'https://imagedelivery.net/PbRzz2Q180x22vsY1oXAdA';
+};
+
 export const getTelegramUrl = () => {
   if (DEVELOPMENT) {
     return 'https://t.me/AsereMarketDevBot';
@@ -76,10 +80,25 @@ export const getEndpoint: GetEndpoint = ({ path, query, urlParams }) => {
   return `${getEndpointUrl()}/api-services${flattenPath}`;
 };
 
-export const getImageEndpoint = (src: string) => {
+export const getImageEndpoint = (src: string, options?: { variant: 'public' }) => {
+  /**
+   * images searched in google scrapping
+   */
   if (src.startsWith('http')) {
     return src;
   }
 
-  return `${getEndpointUrl()}${src}`;
+  /**
+   * Deprecated: will bee removed
+   */
+  if (src.startsWith('/app-image')) {
+    return `${getEndpointUrl()}${src}`;
+  }
+
+  /**
+   * Images saved in cloudflare
+   */
+  const { variant = 'public' } = options || {};
+
+  return `${getCloudflareEndpoint()}/${src}/${variant}`;
 };

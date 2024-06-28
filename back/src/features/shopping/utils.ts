@@ -3,18 +3,19 @@ import { Shopping, ShoppingPostData, ShoppingState } from '../../types/shopping'
 import { User } from '../../types/user';
 import { logger } from '../logger';
 import { shoppingServices } from './services';
-import { isNumber } from '../../utils/general';
+import { isEmpty, isNumber } from '../../utils/general';
 import { postServices } from '../post/services';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { Post } from '../../types/post';
-import { FilterQuery } from 'mongoose';
+import { FilterQuery, Schema } from 'mongoose';
 import { setFilterQueryWithDates } from '../../utils/schemas';
 import { notificationsServices } from '../notifications/services';
 
 export interface GetAllShoppingArgs extends FilterQuery<Shopping> {
   routeNames?: Array<string>;
   states?: Array<ShoppingState>;
-  shoppingIds?: Array<string>;
+  shoppingIds?: Array<string | Schema.Types.ObjectId>;
+  excludeShoppingIds?: Array<string | Schema.Types.ObjectId>;
   dateFrom?: string;
   dateTo?: string;
 }
@@ -123,12 +124,18 @@ export const postToShoppingPostDataReshaper = makeReshaper<Post, ShoppingPostDat
 });
 
 export const getAllShoppingFilterQuery = (args: GetAllShoppingArgs): FilterQuery<Shopping> => {
-  const { routeNames, states, dateFrom, dateTo, shoppingIds, ...omittedQuery } = args;
+  const { routeNames, states, dateFrom, dateTo, shoppingIds, excludeShoppingIds, ...omittedQuery } =
+    args;
 
   const filterQuery: FilterQuery<Shopping> = omittedQuery;
+  filterQuery.$and = [];
 
   if (shoppingIds?.length) {
-    filterQuery._id = { $in: shoppingIds };
+    filterQuery.$and.push({ _id: { $in: shoppingIds } });
+  }
+
+  if (excludeShoppingIds?.length) {
+    filterQuery.$and.push({ _id: { $nin: excludeShoppingIds } });
   }
 
   if (routeNames?.length) {
@@ -140,6 +147,10 @@ export const getAllShoppingFilterQuery = (args: GetAllShoppingArgs): FilterQuery
   }
 
   setFilterQueryWithDates({ filterQuery, dateFrom, dateTo });
+
+  if (isEmpty(filterQuery.$and)) {
+    delete filterQuery.$and;
+  }
 
   return filterQuery;
 };
@@ -157,7 +168,7 @@ export const getShoppingInfo = (
   let totalPrice = 0;
 
   posts.forEach(({ count, postData }) => {
-    if (!isNumber(postData.price)) {
+    if (!postData.price || !isNumber(postData.price)) {
       console.log('not price number');
       return;
     }
@@ -171,4 +182,13 @@ export const getShoppingInfo = (
     totalPrice,
     shoppingDebit: totalPrice * 0.01, //el 1% de las ventas es de la app
   };
+};
+
+export const getShoppingsTotalDebit = (shoppings: Array<Shopping>): number => {
+  const totalDebit = shoppings.reduce((acc, order) => {
+    const { shoppingDebit } = getShoppingInfo(order);
+    return acc + shoppingDebit;
+  }, 0);
+
+  return parseFloat(totalDebit.toFixed(2));
 };

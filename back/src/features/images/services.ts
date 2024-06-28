@@ -1,44 +1,109 @@
+import { cloudFlareApiToken } from '../../config';
 import { Image, QueryHandle } from '../../types/general';
-import fs from 'fs';
-import { getAssetsDir, getAssetsImageDir } from '../../config';
-import { deleteDirFilesUsingStartPattern, getFileNameToSave } from './utils';
-import { logger } from '../logger';
 
-const deleteOne: QueryHandle<{
-  src: string;
-}> = async ({ src }) => {
-  const fullPath = `${getAssetsDir()}${src}`;
+import axios from 'axios';
+import { CloudflareCDNListResponse, CloudflareCDNUploadResponse } from './types';
+import { getRandomHash } from '../../utils/general';
+import { cloudflareBaseUrl, getFileNameToSave, getImageIdFromUrl } from './utils';
 
-  if (fs.existsSync(fullPath)) {
-    fs.unlink(fullPath, (err) => {
-      if (err) {
-        logger.error('Error deleting the image');
-      }
-    });
+const uploadFile: QueryHandle<
+  {
+    file: Express.Multer.File;
+    routeName?: string;
+    postId?: string;
+    userId?: string;
+  },
+  CloudflareCDNUploadResponse | null
+> = async ({ file, postId, routeName, userId }) => {
+  const fileName = getFileNameToSave({
+    userId,
+    postId,
+    routeName,
+  });
+
+  if (!fileName) {
+    return null;
   }
+
+  const formData = new FormData();
+
+  const blobData = new Blob([file.buffer]);
+
+  formData.append('file', blobData, file.originalname);
+  formData.append('id', `${fileName}/${getRandomHash().slice(-6)}`);
+
+  const response = await axios({
+    method: 'post',
+    url: cloudflareBaseUrl,
+    headers: {
+      Authorization: `Bearer ${cloudFlareApiToken}`,
+      'Content-Type': 'multipart/form-data',
+    },
+    data: formData,
+  });
+
+  const out: CloudflareCDNUploadResponse = response.data;
+
+  return out;
 };
 
-const deleteDir: QueryHandle<{
-  postId?: string;
+const getAll: QueryHandle<void, CloudflareCDNListResponse> = async () => {
+  const axiosResponse = await axios({
+    method: 'get',
+    url: cloudflareBaseUrl,
+    headers: {
+      Authorization: `Bearer ${cloudFlareApiToken}`,
+    },
+  });
+
+  const out: CloudflareCDNListResponse = axiosResponse.data;
+
+  return out;
+};
+
+/**
+ *
+ * @param src can be the full url or the id of the image
+ */
+const deleteOne: QueryHandle<{ src: string }> = async ({ src }) => {
+  const id = getImageIdFromUrl(src);
+
+  await axios({
+    method: 'delete',
+    url: `${cloudflareBaseUrl}/${id}`,
+    headers: {
+      Authorization: `Bearer ${cloudFlareApiToken}`,
+    },
+  });
+};
+
+/**
+ *
+ * @param srcs can be an array of the full url or the id of the image
+ */
+
+const deleteMany: QueryHandle<{ srcs: Array<string> }> = async ({ srcs }) => {
+  const promises = srcs.map((src) => deleteOne({ src }));
+  await Promise.all(promises);
+};
+
+const deleteBulk: QueryHandle<{
   routeName?: string;
+  postId?: string;
   userId: string;
-}> = async ({ postId, routeName, userId }) => {
-  let path = `${getAssetsImageDir()}/${userId}/`;
+}> = async ({ routeName, postId, userId }) => {
+  const allImages = await getAll();
 
-  if (routeName) {
-    path = `${path}${routeName}/`;
-  }
+  const filename = getFileNameToSave({
+    userId,
+    postId,
+    routeName,
+  });
 
-  if (postId) {
-    path = `${path}${postId}/`;
-  }
+  const imagesToRemove = allImages.result.images.filter(({ id }) => id.startsWith(`${filename}/`));
 
-  if (fs.existsSync(path)) {
-    fs.rmdir(path, { recursive: true }, (err) => {
-      if (err) {
-        logger.error('Error deleting the folder');
-      }
-    });
+  if (imagesToRemove.length) {
+    await deleteMany({ srcs: imagesToRemove.map(({ id }) => id) });
   }
 };
 
@@ -50,39 +115,16 @@ const deleteOldImages: QueryHandle<{
     ({ src }) => !newImagesSrcs.map(({ src }) => src).includes(src),
   );
 
-  imagesToRemove.forEach(({ src }) => {
-    deleteOne({ src });
-  });
-};
-
-const deleteMany: QueryHandle<{
-  srcs: Array<string> | undefined;
-}> = async ({ srcs = [] }) => {
-  srcs.forEach((src) => {
-    deleteOne({ src });
-  });
-};
-
-const deleteImagesBy: QueryHandle<{
-  routeName?: string;
-  postId?: string;
-  userId: string;
-}> = async ({ routeName, postId, userId }) => {
-  const filename = getFileNameToSave({
-    userId,
-    postId,
-    routeName,
-  });
-
-  if (!filename) return;
-
-  deleteDirFilesUsingStartPattern(filename, getAssetsImageDir());
+  if (imagesToRemove.length) {
+    await deleteMany({ srcs: imagesToRemove.map(({ src }) => src) });
+  }
 };
 
 export const imagesServices = {
+  uploadFile,
   deleteOne,
-  deleteOldImages,
-  deleteDir,
-  deleteImagesBy,
   deleteMany,
+  getAll,
+  deleteBulk,
+  deleteOldImages,
 };

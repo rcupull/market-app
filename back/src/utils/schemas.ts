@@ -2,6 +2,7 @@ import { FilterQuery, SchemaDefinition } from 'mongoose';
 import { PostClothingSize } from '../types/post';
 import { set } from './general';
 import { BaseIdentity } from '../types/general';
+import { Shopping, ShoppingState } from '../types/shopping';
 
 export const createdAtSchemaDefinition: SchemaDefinition = {
   createdAt: { type: Date, required: true, default: Date.now },
@@ -52,4 +53,10 @@ export const setFilterQueryWithDates = <T extends BaseIdentity = BaseIdentity>({
     //@ts-expect-error ts(2345)
     set(filterQuery, 'createdAt.$lte', new Date(dateTo));
   }
+};
+
+export const getShoppingWasAcceptedQuery = (): FilterQuery<Shopping> => {
+  return {
+    $or: [{ state: ShoppingState.APPROVED }, { 'history.state': { $in: ShoppingState.APPROVED } }],
+  };
 };
