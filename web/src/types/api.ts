@@ -120,6 +120,7 @@ export interface GetAllShoppingAdminQuery extends PaginationQuery {
   dateFrom?: string;
   dateTo?: string;
   hasBill?: boolean;
+  wasAccepted?: boolean;
 }
 
 export interface GetAllBillAdminQuery extends PaginationQuery {

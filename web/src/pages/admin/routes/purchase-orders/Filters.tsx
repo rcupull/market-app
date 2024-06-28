@@ -31,7 +31,7 @@ const allStates: Array<ShoppingState> = [
 
 export const Filters = ({ onChange, value, className }: FiltersProps) => {
   const useCall = () => useGetAllBusinessSummary().getAllBusinessSummary;
-
+  //
   return (
     <FiltersContainer
       onReset={() => {
@@ -52,6 +52,7 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
           dateFrom: value?.dateFrom,
           dateTo: value?.dateTo,
           hasBill: value?.hasBill,
+          wasAccepted: value?.wasAccepted,
         }}
         onChange={(filters) => {
           onChange?.({
@@ -106,6 +107,27 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
                     {
                       label: 'No',
                       value: false,
+                    },
+                    {
+                      label: 'Todas',
+                      value: null,
+                    },
+                  ]}
+                  containerClassName="flex item-center flex-wrap gap-4 w-fit"
+                />
+
+                <FieldRadioGroup<{ value: boolean | null; label: string }>
+                  name="wasAccepted"
+                  label="Fue Aceptada"
+                  renderOption={({ checked, item }) => (
+                    <FieldCheckbox noUseFormik value={checked} label={item.label} />
+                  )}
+                  description="El estado actual es ACEPTADO o lo tiene en el historial"
+                  optionToValue={({ value }) => value}
+                  items={[
+                    {
+                      label: 'Si',
+                      value: true,
                     },
                     {
                       label: 'Todas',

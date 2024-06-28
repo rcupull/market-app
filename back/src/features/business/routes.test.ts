@@ -67,11 +67,6 @@ describe('business', () => {
                 "images",
               ],
               "routeName": "business1User1",
-              "shoppingPayment": {
-                "history": [],
-                "requests": [],
-                "totalDebit": 0,
-              },
             }
           `,
           );
@@ -246,11 +241,7 @@ describe('business', () => {
                 "images",
               ],
               "routeName": "business1User1",
-              "shoppingPayment": {
-                "history": [],
-                "requests": [],
-                "totalDebit": 0,
-              },
+              "shoppingDebit": 0,
             }
           `,
           );
