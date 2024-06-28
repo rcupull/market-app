@@ -5,13 +5,13 @@ import { BusinessModel } from '../../schemas/business';
 import { postServices } from '../post/services';
 import { PaginateResult } from '../../middlewares/pagination';
 
-import { imagesServices } from '../images/services';
 import { UpdateOptions } from 'mongodb';
 import { GetAllBusinessArgs, UpdateQueryBusiness, getAllFilterQuery } from './utils';
 import { billingServices } from '../billing/services';
 import { shoppingServices } from '../shopping/services';
 import { getShoppingWasAcceptedQuery } from '../../utils/schemas';
 import { getShoppingsTotalDebit } from '../shopping/utils';
+import { imagesServices } from '../images/services';
 
 const getAllWithPagination: QueryHandle<
   {
@@ -94,7 +94,7 @@ const deleteOne: QueryHandle<{
    * Remove all business images
    */
 
-  await imagesServices.deleteImagesBy({
+  await imagesServices.deleteBulk({
     userId: business.createdBy.toString(),
     routeName,
   });

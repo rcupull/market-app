@@ -13,10 +13,10 @@ import { postServices } from '../post/services';
 import { Image, ModelDocument, RequestHandler } from '../../types/general';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { getPostCategoriesFromBusinessCategories } from './utils';
-import { imagesServices } from '../images/services';
 import { PaginateResult } from '../../middlewares/pagination';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { isEqualIds, movRow } from '../../utils/general';
+import { imagesServices } from '../images/services';
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {

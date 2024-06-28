@@ -1,11 +1,11 @@
 import { RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
 
-import { imagesServices } from '../images/services';
 import { userServices } from './services';
 import { User } from '../../types/user';
 import { get404Response, getUserNotFoundResponse } from '../../utils/server-response';
 import { ValidationCodeModel } from '../../schemas/auth';
+import { imagesServices } from '../images/services';
 
 const get_users_userId: () => RequestHandler = () => {
   return (req, res) => {
