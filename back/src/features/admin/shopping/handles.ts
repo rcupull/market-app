@@ -14,7 +14,7 @@ const get_admin_shopping: () => RequestHandler = () => {
       const { routeNames, hasBill, states, dateFrom, dateTo, sort = defaultQuerySort } = query;
 
       const { getAllShopingIds, getOneShoppingBillData } =
-        await billingServices.getBillDataFromShoppingV2({
+        await billingServices.getBillDataFromShopping({
           query: { routeNames },
         });
 

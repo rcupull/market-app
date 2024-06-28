@@ -14,7 +14,7 @@ const post_admin_bills: () => RequestHandler = () => {
 
       const { routeName, shoppingIds, dateFrom, dateTo, states } = body;
 
-      const { getAllShopingIds } = await billingServices.getBillDataFromShoppingV2({
+      const { getAllShopingIds } = await billingServices.getBillDataFromShopping({
         query: { routeNames: [routeName] },
       });
 
@@ -42,16 +42,6 @@ const post_admin_bills: () => RequestHandler = () => {
         shoppingIds: shoppingData.map(({ _id }) => _id),
         totalDebit: shoppingDebits,
         state: 'PENDING_TO_PAY',
-      });
-
-      // update shopping billId
-      await shoppingServices.updateMany({
-        query: {
-          _id: { $in: shoppingData.map(({ _id }) => _id) },
-        },
-        update: {
-          billId: newBill._id,
-        },
       });
 
       res.send(newBill);
@@ -120,16 +110,6 @@ const del_admin_bills_billId_shopping: () => RequestHandler = () => {
         bill.shoppingIds = newShoppingIds;
         await bill.save();
       }
-
-      // update shopping billId
-      await shoppingServices.updateMany({
-        query: {
-          _id: { $in: shoppingIds },
-        },
-        update: {
-          billId: null,
-        },
-      });
 
       res.send({});
     });

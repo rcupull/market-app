@@ -150,6 +150,10 @@ export interface Business extends BaseIdentity {
   currency: BusinessCurrency;
 }
 
+export interface BusinessDto extends Business {
+  shoppingDebit: number;
+}
+
 export interface BusinessSummary extends Pick<Business, '_id' | 'name' | 'routeName'> {
   images: Array<Image>;
   bestDiscount: number; // percent

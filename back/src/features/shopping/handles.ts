@@ -11,10 +11,7 @@ import {
 import { shoppingServices } from './services';
 import { deepJsonCopy, isNumber } from '../../utils/general';
 import { businessServices } from '../business/services';
-import {
-  deleteOnePostFromShoppingInContruction,
-  deleteShoppingInConstruction,
-} from './utils';
+import { deleteOnePostFromShoppingInContruction, deleteShoppingInConstruction } from './utils';
 import { logger } from '../logger';
 import { PostPurshaseNotes } from '../../types/post';
 import { ShoppingModel } from '../../schemas/shopping';
@@ -51,7 +48,7 @@ const get_shopping: () => RequestHandler = () => {
 
       const out = deepJsonCopy(shoppings);
 
-      const { getOneShoppingBillData } = await billingServices.getBillDataFromShoppingV2({
+      const { getOneShoppingBillData } = await billingServices.getBillDataFromShopping({
         query: { shoppingIds: { $in: out.data.map(({ _id }) => _id) } },
       });
 

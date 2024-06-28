@@ -1,8 +1,7 @@
 import { FilterQuery, UpdateQuery, UpdateWithAggregationPipeline } from 'mongoose';
 import { Business, BusinessCategory, PostCategory } from '../../types/business';
 import { addStringToUniqueArray, isNumber, replaceAll } from '../../utils/general';
-import { shoppingServices } from '../shopping/services';
-import { Shopping, ShoppingState } from '../../types/shopping';
+import { Shopping } from '../../types/shopping';
 import { ModelDocument } from '../../types/general';
 
 export interface GetAllBusinessArgs extends FilterQuery<Business> {
@@ -149,7 +148,7 @@ export const getShoppingData = (
     }
 
     totalProducts = totalProducts + count;
-    totalPrice = totalPrice + postData.price * count; //TODO add conversion if the currency is not USD
+    totalPrice = totalPrice + postData.price * count;
   });
 
   return {
@@ -157,22 +156,3 @@ export const getShoppingData = (
     totalPrice,
   };
 };
-
-export const getBussinesShoppingDebit = async (routeName: string): Promise<number> => {
-  const query = {
-      routeName,
-      $or: [
-        { state: ShoppingState.APPROVED },
-        { history: {$in : ShoppingState.APPROVED} }
-      ],
-      billId: { $exists: false }
-  }
-  const orders = await shoppingServices.getAll({query});
-
-  const totalDebit = orders.reduce((acc, order) => {
-    const { totalPrice } = getShoppingData(order);
-    return acc + (totalPrice * 0.01);  
-  },0);
-
-  return parseFloat(totalDebit.toFixed(2));
-}

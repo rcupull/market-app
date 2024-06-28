@@ -81,7 +81,7 @@ const getOne: QueryHandle<
   return await BillingModel.findOne(query);
 };
 
-const getBillDataFromShoppingV2: QueryHandle<
+const getBillDataFromShopping: QueryHandle<
   {
     query: GetAllBillsArgs;
   },
@@ -133,5 +133,5 @@ export const billingServices = {
   deleteMany,
   deleteOne,
   //
-  getBillDataFromShoppingV2,
+  getBillDataFromShopping,
 };

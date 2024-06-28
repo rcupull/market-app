@@ -67,11 +67,7 @@ export const businessDummy: Business = {
   createdBy: 'createdBy',
   name: 'name',
   routeName: 'routeName',
-  shoppingPayment: {
-    history: [],
-    totalDebit: 0,
-    requests: [],
-  },
+  shoppingDebit: 0,
 };
 
 export const adminConfigDummy: AdminConfig = {

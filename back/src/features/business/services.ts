@@ -7,9 +7,15 @@ import { PaginateResult } from '../../middlewares/pagination';
 
 import { imagesServices } from '../images/services';
 import { UpdateOptions } from 'mongodb';
-import { GetAllBusinessArgs, UpdateQueryBusiness, getAllFilterQuery } from './utils';
+import {
+  GetAllBusinessArgs,
+  UpdateQueryBusiness,
+  getAllFilterQuery,
+  getShoppingData,
+} from './utils';
 import { billingServices } from '../billing/services';
 import { shoppingServices } from '../shopping/services';
+import { ShoppingState } from '../../types/shopping';
 
 const getAllWithPagination: QueryHandle<
   {
@@ -142,6 +148,37 @@ const updateMany: QueryHandle<{
   await BusinessModel.updateMany(query, update);
 };
 
+const getShoppingPaymentData: QueryHandle<
+  {
+    routeName: string;
+  },
+  { shoppingDebit: number }
+> = async ({ routeName }) => {
+  const { getAllShopingIds } = await billingServices.getBillDataFromShopping({
+    query: { routeNames: [routeName] },
+  });
+
+  const orders = await shoppingServices.getAll({
+    query: {
+      routeName,
+      $or: [
+        { state: ShoppingState.APPROVED },
+        { 'history.state': { $in: ShoppingState.APPROVED } },
+      ],
+      excludeShoppingIds: getAllShopingIds(),
+    },
+  });
+
+  const totalDebit = orders.reduce((acc, order) => {
+    const { totalPrice } = getShoppingData(order);
+    return acc + totalPrice * 0.01;
+  }, 0);
+
+  return {
+    shoppingDebit: parseFloat(totalDebit.toFixed(2)),
+  };
+};
+
 export const businessServices = {
   getAllWithPagination,
   getAll,
@@ -150,4 +187,6 @@ export const businessServices = {
   deleteOne,
   updateOne,
   updateMany,
+  //
+  getShoppingPaymentData,
 };
