@@ -66,7 +66,11 @@ export const ProfileUpdate = ({ userId, callAfarResources }: ProfileUpdateProps)
             {portal.getPortal(
               <Button
                 label="Guardar"
-                isBusy={addOneBusiness.status.isBusy || updateOneUser.status.isBusy}
+                isBusy={
+                  addOneBusiness.status.isBusy ||
+                  updateOneUser.status.isBusy ||
+                  addManyImages.status.isBusy
+                }
                 disabled={!isValid}
                 onClick={() => {
                   const { profileImages, name } = value;

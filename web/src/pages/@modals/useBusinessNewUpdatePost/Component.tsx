@@ -283,7 +283,11 @@ export const Component = ({
             {portal.getPortal(
               <Button
                 label="Guardar"
-                isBusy={addOnePost.status.isBusy || updateOnePost.status.isBusy}
+                isBusy={
+                  addOnePost.status.isBusy ||
+                  updateOnePost.status.isBusy ||
+                  addManyImages.status.isBusy
+                }
                 disabled={!isValid}
                 hasChange={hasChange}
                 onClick={() => {
@@ -435,7 +439,8 @@ export const Component = ({
                 isBusy={
                   addOnePost.status.isBusy ||
                   updateOnePost.status.isBusy ||
-                  updateBusinessSection.status.isBusy
+                  updateBusinessSection.status.isBusy ||
+                  addManyImages.status.isBusy
                 }
                 disabled={!isValid}
                 onClick={() => {
