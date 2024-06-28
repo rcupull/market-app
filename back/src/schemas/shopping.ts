@@ -78,7 +78,6 @@ const ShoppingSchema = new Schema<Shopping>({
       },
     ],
   },
-  billId: { type: Schema.Types.ObjectId },
 });
 
 ShoppingSchema.plugin(mongoosePaginate);

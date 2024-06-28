@@ -2,6 +2,7 @@ import { Schema } from 'mongoose';
 import { BaseIdentity } from './general';
 import { Post, PostPurshaseNotes } from './post';
 import { BusinessCurrency } from './business';
+import { BillState } from './billing';
 
 export enum ShoppingState {
   CONSTRUCTION = 'CONSTRUCTION',
@@ -35,6 +36,9 @@ export interface Shopping extends BaseIdentity {
     state: ShoppingState;
     lastUpdatedDate: Date;
   }>;
-  //
+}
+
+export interface ShoppingDto extends Shopping {
   billId?: Schema.Types.ObjectId;
+  billState?: BillState;
 }
