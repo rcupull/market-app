@@ -70,7 +70,13 @@ export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
 
     return (
       <div className="w-full">
+        <div className="text-red-600 text-xs text-center font-bold">
+          En caso de no generar la orden de compra en 5 min, los productos del carro serán
+          eliminados.
+        </div>
+
         <div className="mt-4">Tu selección hasta ahora:</div>
+
         <ShoppingCartPosts value={shopping.constructionShopping} />
 
         <div className="flex justify-between mt-2">

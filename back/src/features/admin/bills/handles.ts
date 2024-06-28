@@ -14,6 +14,10 @@ const post_admin_bills: () => RequestHandler = () => {
 
       const { routeName, shoppingIds, dateFrom, dateTo, states } = body;
 
+      const { getAllShopingIds } = await billingServices.getBillDataFromShoppingV2({
+        query: { routeNames: [routeName] },
+      });
+
       // get shopping
       const shoppingData: Array<Shopping> = await shoppingServices.getAll({
         query: {
@@ -22,7 +26,7 @@ const post_admin_bills: () => RequestHandler = () => {
           dateFrom,
           dateTo,
           states,
-          billId: { $exists: false },
+          excludeShoppingIds: getAllShopingIds(),
         },
       });
 
@@ -139,24 +143,9 @@ const del_admin_bills_billId: () => RequestHandler = () => {
 
       const { billId } = params;
 
-      // remove and get the bill
-      const bill = await billingServices.findOneAndDelete({
+      await billingServices.deleteOne({
         query: {
           _id: billId,
-        },
-      });
-
-      if (!bill) {
-        return getBillNotFoundResponse({ res });
-      }
-
-      // update shopping billId
-      await shoppingServices.updateMany({
-        query: {
-          _id: { $in: bill.shoppingIds },
-        },
-        update: {
-          billId: null,
         },
       });
 

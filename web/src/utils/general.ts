@@ -84,7 +84,7 @@ export const replaceAll = (value: string, match: string, replace: string): strin
 };
 
 export const deepJsonCopy = <T extends AnyRecord = AnyRecord>(json: T): T => {
-  return JSON.parse(JSON.stringify(json));
+  return structuredClone(json);
 };
 
 export const addRow = <T = any>(
@@ -163,7 +163,12 @@ export const isEqualObj = (a: AnyRecord | undefined, b: AnyRecord | undefined): 
     return false;
   }
 
-  for (const prop in a) {
+  const mergedObj = {
+    ...a,
+    ...b,
+  };
+
+  for (const prop in mergedObj) {
     //eslint-disable-next-line
     if (a.hasOwnProperty(prop)) {
       //eslint-disable-next-line
@@ -179,6 +184,8 @@ export const isEqualObj = (a: AnyRecord | undefined, b: AnyRecord | undefined): 
       } else {
         return false;
       }
+    } else {
+      return false;
     }
   }
   return true;

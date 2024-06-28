@@ -42,6 +42,8 @@ const obj = {
   discount: 10,
 };
 
+const arr = [0, 3, 'some', obj];
+
 describe('isEqual', () => {
   it.each([
     [true, 1, 1],
@@ -52,6 +54,12 @@ describe('isEqual', () => {
     //
     [true, obj, deepJsonCopy(obj)],
     [false, obj, { ...deepJsonCopy(obj), _id: 'wrong id' }],
+    [false, obj, { ...deepJsonCopy(obj), newProp: 'someNewValue' }],
+    //
+    [true, arr, deepJsonCopy(arr)],
+    [false, arr, [...deepJsonCopy(arr), undefined]],
+    [false, arr, [...deepJsonCopy(arr), null]],
+    [false, arr, [...deepJsonCopy(arr), 'wrong value']],
   ])('should return %p when dateIn = %p and showTime is %p', (expected, value1, value2) => {
     expect(isEqual(value1, value2)).toEqual(expected);
   });

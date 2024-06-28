@@ -1,4 +1,5 @@
 import { FieldCheckbox } from 'components/field-checkbox';
+import { FiltersContainer } from 'components/filters-container';
 import { RadioGroup } from 'components/radio-group';
 
 import { allStatesQuery } from './utils';
@@ -28,48 +29,46 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
   };
 
   return (
-    <RadioGroup<{ label: string; value: Value }>
-      onChange={handleChange}
-      value={getValue()}
-      renderOption={({ checked, item }) => (
-        <FieldCheckbox noUseFormik value={checked} label={item.label} />
-      )}
-      optionToValue={({ value }) => value}
-      items={[
-        {
-          label: 'Todas',
-          value: 'ALL',
-        },
-        {
-          label: 'Solicitados',
-          value: 'REQUESTED',
-        },
-        {
-          label: 'Aceptados',
-          value: 'APPROVED',
-        },
-        {
-          label: 'En proceso',
-          value: 'PROCESSING',
-        },
-        {
-          label: 'Listos para entregar',
-          value: 'READY_TO_DELIVER',
-        },
-        {
-          label: 'Entregados',
-          value: 'DELIVERED',
-        },
-        {
-          label: 'Cancelados',
-          value: 'CANCELED',
-        },
-        {
-          label: 'Rechazadas',
-          value: 'REJECTED',
-        },
-      ]}
-      className={cn('flex items-center gap-4 mb-5 flex-wrap', className)}
-    />
+    <FiltersContainer
+      onReset={() => {
+        onChange?.({ page: 1, states: ['REQUESTED'] });
+      }}
+    >
+      <RadioGroup<{ label: string; value: Value }>
+        onChange={handleChange}
+        value={getValue()}
+        renderOption={({ checked, item }) => (
+          <FieldCheckbox noUseFormik value={checked} label={item.label} />
+        )}
+        optionToValue={({ value }) => value}
+        items={[
+          {
+            label: 'Todas',
+            value: 'ALL',
+          },
+          {
+            label: 'Solicitados',
+            value: 'REQUESTED',
+          },
+          {
+            label: 'Aceptados',
+            value: 'APPROVED',
+          },
+          {
+            label: 'En proceso',
+            value: 'PROCESSING',
+          },
+          {
+            label: 'Entregados',
+            value: 'DELIVERED',
+          },
+          {
+            label: 'Rechazadas',
+            value: 'REJECTED',
+          },
+        ]}
+        className={cn('flex items-center gap-4 mb-5 flex-wrap w-full', className)}
+      />
+    </FiltersContainer>
   );
 };

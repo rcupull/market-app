@@ -4,7 +4,7 @@ import { UpdateOptions } from 'mongodb';
 import { ShoppingModel } from '../../schemas/shopping';
 import { Shopping, ShoppingState } from '../../types/shopping';
 import { Post, PostPurshaseNotes } from '../../types/post';
-import { isEqualIds, isNumber } from '../../utils/general';
+import { isEqualIds, isNullOrUndefined, isNumber } from '../../utils/general';
 import { User } from '../../types/user';
 import { PaginateResult } from '../../middlewares/pagination';
 import {
@@ -18,6 +18,7 @@ import { businessServices } from '../business/services';
 import { postServices } from '../post/services';
 import { logger } from '../logger';
 import { notificationsServices } from '../notifications/services';
+import { agendaServices } from '../agenda/services';
 
 const addOne: QueryHandle<
   {
@@ -26,7 +27,7 @@ const addOne: QueryHandle<
     user: User;
     post: Post;
   },
-  void
+  ModelDocument<Shopping> | null
 > = async ({ amountToAdd = 1, purshaseNotes, user, post }) => {
   const { routeName } = post;
 
@@ -40,7 +41,7 @@ const addOne: QueryHandle<
       },
     });
 
-  if (!businessData) return;
+  if (!businessData) return null;
 
   const newShopping = new ShoppingModel({
     state: 'CONSTRUCTION',
@@ -59,6 +60,8 @@ const addOne: QueryHandle<
   });
 
   await newShopping.save();
+
+  return newShopping;
 };
 
 const addPostToOne: QueryHandle<
@@ -140,8 +143,15 @@ const updateOrAddOne: QueryHandle<
 
   if (existInConstruction) {
     await addPostToOne({ amountToAdd, post, currentShopping: existInConstruction });
+    await agendaServices.scheduleRemoveOrderInConstruction({
+      orderId: existInConstruction._id.toString(),
+    });
   } else {
-    await addOne({ amountToAdd, purshaseNotes, user, post });
+    const shopping = await addOne({ amountToAdd, purshaseNotes, user, post });
+
+    if (!shopping) return;
+
+    await agendaServices.scheduleRemoveOrderInConstruction({ orderId: shopping._id.toString() });
   }
 };
 
@@ -256,7 +266,9 @@ const getStockAmountAvailableFromPost: QueryHandle<
 > = async ({ post, shoppings }) => {
   const { stockAmount } = post;
 
-  if (!stockAmount) return null; // this be 0, null or undefined
+  if (isNullOrUndefined(stockAmount)) return null;
+
+  if (stockAmount === 0) return 0;
 
   const postCount = shoppings.reduce((acc, shopping) => {
     let out = acc;
@@ -269,7 +281,9 @@ const getStockAmountAvailableFromPost: QueryHandle<
     return out;
   }, 0);
 
-  return stockAmount - postCount;
+  const diff = stockAmount - postCount;
+
+  return diff < 0 ? 0 : diff;
 };
 
 const getStockAmountAvailableFromPosts: QueryHandle<
@@ -306,7 +320,11 @@ const getStockAmountAvailableFromPosts: QueryHandle<
 const sendUpdateStockAmountMessagesFromShoppingPosts: QueryHandle<{
   shopping: Shopping;
 }> = async ({ shopping }) => {
-  if (![ShoppingState.REJECTED, ShoppingState.CANCELED].includes(shopping.state)) {
+  if (
+    ![ShoppingState.REJECTED, ShoppingState.CANCELED, ShoppingState.CONSTRUCTION].includes(
+      shopping.state,
+    )
+  ) {
     logger.info('No need to send update stock amount messages from shopping posts.');
     return;
   }

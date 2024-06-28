@@ -9,7 +9,7 @@ import {
   getUserNotFoundResponse,
 } from '../../utils/server-response';
 import { shoppingServices } from './services';
-import { isNumber } from '../../utils/general';
+import { deepJsonCopy, isNumber } from '../../utils/general';
 import { businessServices } from '../business/services';
 import {
   deleteOnePostFromShoppingInContruction,
@@ -19,7 +19,7 @@ import { logger } from '../logger';
 import { PostPurshaseNotes } from '../../types/post';
 import { ShoppingModel } from '../../schemas/shopping';
 import { sendNewOrderTelegramMessage } from '../telegram/handles';
-import { ShoppingState } from '../../types/shopping';
+import { Shopping, ShoppingDto, ShoppingState } from '../../types/shopping';
 import { telegramServices } from '../telegram/services';
 import { userServices } from '../user/services';
 import { User } from '../../types/user';
@@ -27,6 +27,7 @@ import { getShoppingUrl } from '../../utils/web';
 import { Business } from '../../types/business';
 import { defaultQuerySort } from '../../utils/api';
 import { notificationsServices } from '../notifications/services';
+import { billingServices } from '../billing/services';
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -39,7 +40,7 @@ const get_shopping: () => RequestHandler = () => {
 
       const { routeName, sort = defaultQuerySort } = query;
 
-      const out = await shoppingServices.getAllWithPagination({
+      const shoppings = await shoppingServices.getAllWithPagination({
         paginateOptions,
         sort,
         query: {
@@ -47,6 +48,31 @@ const get_shopping: () => RequestHandler = () => {
           purchaserId: user._id,
         },
       });
+
+      const out = deepJsonCopy(shoppings);
+
+      const { getOneShoppingBillData } = await billingServices.getBillDataFromShoppingV2({
+        query: { shoppingIds: { $in: out.data.map(({ _id }) => _id) } },
+      });
+
+      const getShoppingDto = async (shopping: Shopping): Promise<ShoppingDto> => {
+        const billData = getOneShoppingBillData(shopping);
+
+        if (!billData) {
+          return shopping;
+        }
+
+        const { billId, billState } = billData;
+
+        return {
+          ...shopping,
+          billId,
+          billState,
+        };
+      };
+
+      const promises = out.data.map(getShoppingDto);
+      out.data = await Promise.all(promises);
 
       res.send(out);
     });
