@@ -1,10 +1,10 @@
 import { cloudFlareApiToken } from '../../config';
 import { Image, QueryHandle } from '../../types/general';
 
-import axios from 'axios';
 import { CloudflareCDNListResponse, CloudflareCDNUploadResponse } from './types';
 import { getRandomHash } from '../../utils/general';
-import { cloudflareBaseUrl, getFileNameToSave, getImageIdFromUrl } from './utils';
+import { cloudflareBaseUrl, getFileNameToSave, getCloudFlareImageIdFromUrl } from './utils';
+import { axios } from '../../utils/api';
 
 const uploadFile: QueryHandle<
   {
@@ -65,8 +65,10 @@ const getAll: QueryHandle<void, CloudflareCDNListResponse> = async () => {
  *
  * @param src can be the full url or the id of the image
  */
-const deleteOne: QueryHandle<{ src: string }> = async ({ src }) => {
-  const id = getImageIdFromUrl(src);
+export const deleteOne: QueryHandle<{ src: string }> = async ({ src }) => {
+  const id = getCloudFlareImageIdFromUrl(src);
+
+  if (!id) return;
 
   await axios({
     method: 'delete',
@@ -82,7 +84,7 @@ const deleteOne: QueryHandle<{ src: string }> = async ({ src }) => {
  * @param srcs can be an array of the full url or the id of the image
  */
 
-const deleteMany: QueryHandle<{ srcs: Array<string> }> = async ({ srcs }) => {
+export const deleteMany: QueryHandle<{ srcs: Array<string> }> = async ({ srcs }) => {
   const promises = srcs.map((src) => deleteOne({ src }));
   await Promise.all(promises);
 };
@@ -107,7 +109,7 @@ const deleteBulk: QueryHandle<{
   }
 };
 
-const deleteOldImages: QueryHandle<{
+export const deleteOldImages: QueryHandle<{
   newImagesSrcs: Array<Image> | undefined;
   oldImagesSrcs: Array<Image> | undefined;
 }> = async ({ newImagesSrcs = [], oldImagesSrcs = [] }) => {

@@ -146,7 +146,7 @@ describe('posts', () => {
         .get(
           getTestingRoute({
             path: '/posts',
-          }),
+          })
         )
         .expect(200)
         .then((response) => {
@@ -165,7 +165,7 @@ describe('posts', () => {
               "hidden": false,
               "hiddenBusiness": false,
               "images": [],
-              "name": "chancletas",
+              "name": "productPost3Business1User2 name",
               "postCategoriesTags": [
                 "cat1",
                 "cat2",
@@ -181,11 +181,11 @@ describe('posts', () => {
                 0,
               ],
               "reviewsUserIds": [],
-              "routeName": "business1User1",
+              "routeName": "business1User2",
               "stockAmount": null,
               "stockAmountAvailable": null,
             }
-          `,
+          `
           );
         });
     });
@@ -198,7 +198,7 @@ describe('posts', () => {
           getTestingRoute({
             path: '/posts',
             query: { routeNames: [business1User1.routeName] },
-          }),
+          })
         )
         .expect(200)
         .then((response) => {
@@ -210,7 +210,7 @@ describe('posts', () => {
           getTestingRoute({
             path: '/posts',
             query: { routeNames: [business1User2.routeName] },
-          }),
+          })
         )
         .expect(200)
         .then((response) => {
