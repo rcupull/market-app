@@ -4,7 +4,7 @@ import { User } from '../../types/user';
 import { logger } from '../logger';
 import { shoppingServices } from './services';
 import { isEmpty, isNumber } from '../../utils/general';
-import { postServices } from '../post/services';
+import { postServicesGetAll, postServicesGetOne } from '../post/services';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { Post } from '../../types/post';
 import { FilterQuery, Schema } from 'mongoose';
@@ -25,7 +25,7 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
   postId: string;
   user: User;
 }> = async ({ postId, routeName, user }) => {
-  const post = await postServices.getOne({
+  const post = await postServicesGetOne({
     query: {
       _id: postId,
     },
@@ -95,7 +95,7 @@ export const deleteShoppingInConstruction: QueryHandle<{
   });
 
   if (oldShopping) {
-    const posts = await postServices.getAll({
+    const posts = await postServicesGetAll({
       query: {
         postsIds: oldShopping.posts.map((p) => p.postData._id.toString()),
       },

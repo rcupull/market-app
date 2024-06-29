@@ -1,6 +1,10 @@
 import { dropTestDbConnectionAsync, paginateOptionsForTesting } from '../../utils/test-utils';
 import { fillBD } from '../../utils/test-BD';
-import { postServices } from './services';
+import {
+  postServicesGetAll,
+  postServicesGetAllWithPagination,
+  postServicesGetOne,
+} from './services';
 
 describe('services', () => {
   afterEach(async () => {
@@ -11,7 +15,7 @@ describe('services', () => {
     it('should return all posts with pagination', async () => {
       await fillBD();
 
-      const paginatedPosts = await postServices.getAllWithPagination({
+      const paginatedPosts = await postServicesGetAllWithPagination({
         paginateOptions: paginateOptionsForTesting,
         query: {},
       });
@@ -41,7 +45,7 @@ describe('services', () => {
     it('should return all posts without pagination', async () => {
       await fillBD();
 
-      const posts = await postServices.getAll({ query: {} });
+      const posts = await postServicesGetAll({ query: {} });
 
       expect(posts.length).toBe(5);
     });
@@ -49,7 +53,7 @@ describe('services', () => {
     it('should return filtering by <createdBy>', async () => {
       const { user1, user2 } = await fillBD();
 
-      const response1 = await postServices.getAll({
+      const response1 = await postServicesGetAll({
         query: {
           createdBy: user1._id.toString(),
         },
@@ -59,7 +63,7 @@ describe('services', () => {
 
       //////////////////////////////////////////////
 
-      const response2 = await postServices.getAll({
+      const response2 = await postServicesGetAll({
         query: {
           createdBy: user2._id.toString(),
         },
@@ -71,7 +75,7 @@ describe('services', () => {
     it('should return filtering by <postType>', async () => {
       await fillBD();
 
-      const response1 = await postServices.getAll({
+      const response1 = await postServicesGetAll({
         query: {
           postType: 'product',
         },
@@ -81,7 +85,7 @@ describe('services', () => {
 
       //////////////////////////////////////////////
 
-      const response2 = await postServices.getAll({
+      const response2 = await postServicesGetAll({
         query: {
           postType: 'link',
         },
@@ -93,7 +97,7 @@ describe('services', () => {
     it('should return filtering by <routeNames>', async () => {
       const { business1User1, business2User1, business1User2 } = await fillBD();
 
-      const response1 = await postServices.getAll({
+      const response1 = await postServicesGetAll({
         query: {
           routeNames: [business1User1.routeName],
         },
@@ -102,7 +106,7 @@ describe('services', () => {
       expect(response1.length).toBe(2);
       //////////////////////////////////////////////
 
-      const response2 = await postServices.getAll({
+      const response2 = await postServicesGetAll({
         query: {
           routeNames: [business2User1.routeName],
         },
@@ -112,7 +116,7 @@ describe('services', () => {
 
       //////////////////////////////////////////////
 
-      const response3 = await postServices.getAll({
+      const response3 = await postServicesGetAll({
         query: {
           routeNames: [business1User2.routeName],
         },
@@ -126,7 +130,7 @@ describe('services', () => {
     it('should return one post', async () => {
       const { productPost1Business1User1 } = await fillBD();
 
-      const post = await postServices.getOne({
+      const post = await postServicesGetOne({
         query: {
           _id: productPost1Business1User1._id,
         },

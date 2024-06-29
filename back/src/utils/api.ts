@@ -1,3 +1,4 @@
+import axiosClient, { AxiosPromise, AxiosRequestConfig } from 'axios';
 import { isEmpty, isNullOrUndefined } from './general';
 
 type Query = Record<string, any>;
@@ -52,3 +53,11 @@ export const getTestingRoute = ({
 };
 
 export const defaultQuerySort = '-createdAt';
+
+export const axios = async (args: AxiosRequestConfig): AxiosPromise => {
+  return axiosClient(args)
+    .then((response) => response)
+    .catch((e) => {
+      throw new Error(e);
+    });
+};

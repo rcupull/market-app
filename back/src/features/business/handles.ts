@@ -1,5 +1,11 @@
 import { withTryCatch } from '../../utils/error';
-import { businessServices } from './services';
+import {
+  businessServicesAddOne,
+  businessServicesFindOne,
+  businessServicesGetAllWithPagination,
+  businessServicesGetShoppingPaymentData,
+  businessServicesUpdateOne,
+} from './services';
 
 import {
   get200Response,
@@ -9,14 +15,14 @@ import {
   getUserNotFoundResponse,
 } from '../../utils/server-response';
 import { Business, BusinessDto, BusinessSummary, PostCategory } from '../../types/business';
-import { postServices } from '../post/services';
 import { Image, ModelDocument, RequestHandler } from '../../types/general';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { getPostCategoriesFromBusinessCategories } from './utils';
 import { PaginateResult } from '../../middlewares/pagination';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { isEqualIds, movRow } from '../../utils/general';
-import { imagesServices } from '../images/services';
+import { imagesServicesDeleteOldImages } from '../images/services';
+import { postServicesGetOne, postServicesUpdateMany } from '../post/services';
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {
@@ -25,7 +31,7 @@ const get_business: () => RequestHandler = () => {
 
       const { routeNames, search, userId, includeHidden } = query;
 
-      const out = await businessServices.getAllWithPagination({
+      const out = await businessServicesGetAllWithPagination({
         paginateOptions,
         query: {
           routeNames,
@@ -47,7 +53,7 @@ const get_business_summary: () => RequestHandler = () => {
 
       const { routeNames, search, userId, includeHidden } = query;
 
-      const paginatedBusiness = await businessServices.getAllWithPagination({
+      const paginatedBusiness = await businessServicesGetAllWithPagination({
         paginateOptions,
         query: {
           routeNames,
@@ -59,7 +65,7 @@ const get_business_summary: () => RequestHandler = () => {
 
       const getBusinessSummary = async (business: Business): Promise<BusinessSummary> => {
         const { routeName, _id, name } = business;
-        const posts = await postServices.getOne({
+        const posts = await postServicesGetOne({
           query: {
             routeName,
           },
@@ -99,7 +105,7 @@ const get_business_routeName: () => RequestHandler = () => {
       const { params } = req;
       const { routeName } = params;
 
-      const business = await businessServices.findOne({
+      const business = await businessServicesFindOne({
         query: {
           routeName,
         },
@@ -110,7 +116,7 @@ const get_business_routeName: () => RequestHandler = () => {
       }
 
       const getBusinessDto = async (business: ModelDocument<Business>): Promise<BusinessDto> => {
-        const { shoppingDebit } = await businessServices.getShoppingPaymentData({ routeName });
+        const { shoppingDebit } = await businessServicesGetShoppingPaymentData({ routeName });
 
         return {
           ...business.toJSON(),
@@ -134,7 +140,7 @@ const update_business_post_categories: () => RequestHandler = () => {
         postCategories: Array<PostCategory>;
       };
 
-      const business = await businessServices.findOne({
+      const business = await businessServicesFindOne({
         query: {
           routeName,
         },
@@ -151,7 +157,7 @@ const update_business_post_categories: () => RequestHandler = () => {
 
       if (missingTags?.length) {
         //
-        await postServices.updateMany({
+        await postServicesUpdateMany({
           query: {
             routeName,
           },
@@ -162,7 +168,7 @@ const update_business_post_categories: () => RequestHandler = () => {
           },
         });
         //
-        await businessServices.updateOne({
+        await businessServicesUpdateOne({
           query: {
             routeName,
           },
@@ -181,7 +187,7 @@ const update_business_post_categories: () => RequestHandler = () => {
         });
       }
 
-      await businessServices.updateOne({
+      await businessServicesUpdateOne({
         query: {
           routeName,
         },
@@ -215,7 +221,7 @@ const post_business: () => RequestHandler = () => {
 
       const { name, categories, routeName, currency } = body;
 
-      const out = await businessServices.addOne({
+      const out = await businessServicesAddOne({
         categories,
         name,
         routeName,
@@ -250,12 +256,12 @@ const put_business_routeName: () => RequestHandler = () => {
       const { routeName } = params;
 
       if (body.logo === null && business.logo) {
-        await imagesServices.deleteOldImages({
+        await imagesServicesDeleteOldImages({
           newImagesSrcs: [],
           oldImagesSrcs: [business.logo],
         });
       }
-      const out = await businessServices.updateOne({
+      const out = await businessServicesUpdateOne({
         query: {
           routeName,
           createdBy: user._id,
@@ -306,7 +312,7 @@ const put_business_section_reorder: () => RequestHandler = () => {
         });
       }
 
-      await businessServices.updateOne({
+      await businessServicesUpdateOne({
         query: {
           routeName,
         },
@@ -331,7 +337,7 @@ const post_business_routeName_sections: () => RequestHandler = () => {
       const { params, body } = req;
       const { routeName } = params;
 
-      await businessServices.updateOne({
+      await businessServicesUpdateOne({
         query: {
           routeName,
         },
@@ -364,7 +370,7 @@ const put_business_routeName_sections_sectionId: () => RequestHandler = () => {
         isEqualIds(sectionId, section._id),
       );
 
-      await businessServices.updateOne({
+      await businessServicesUpdateOne({
         query: {
           routeName,
         },
@@ -399,7 +405,7 @@ const del_business_routeName_sections_sectionId: () => RequestHandler = () => {
       const { params } = req;
       const { routeName, sectionId } = params;
 
-      await businessServices.updateOne({
+      await businessServicesUpdateOne({
         query: {
           routeName,
         },
@@ -455,7 +461,7 @@ const post_business_routeName_chatbot_validate: () => RequestHandler = () => {
         });
       }
 
-      await businessServices.updateOne({
+      await businessServicesUpdateOne({
         query: {
           _id: business._id,
         },

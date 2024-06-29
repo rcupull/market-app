@@ -8,7 +8,11 @@ export const cloudflareImageVariants = {
   public: 'public',
 };
 
-export const getImageIdFromUrl = (url: string): string => {
+export const getCloudFlareImageIdFromUrl = (url: string): string | null => {
+  if (url.startsWith('http') && !url.includes(cloudflareDeliveryUrl)) {
+    return null;
+  }
+
   let out = url.replace(`${cloudflareDeliveryUrl}/`, '');
 
   Object.keys(cloudflareImageVariants).forEach((variant) => {

@@ -165,7 +165,7 @@ describe('posts', () => {
               "hidden": false,
               "hiddenBusiness": false,
               "images": [],
-              "name": "chancletas",
+              "name": "productPost3Business1User2 name",
               "postCategoriesTags": [
                 "cat1",
                 "cat2",
@@ -181,7 +181,7 @@ describe('posts', () => {
                 0,
               ],
               "reviewsUserIds": [],
-              "routeName": "business1User1",
+              "routeName": "business1User2",
               "stockAmount": null,
               "stockAmountAvailable": null,
             }

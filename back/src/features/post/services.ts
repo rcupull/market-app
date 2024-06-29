@@ -7,14 +7,15 @@ import { PaginateResult } from '../../middlewares/pagination';
 import { isNumber } from '../../utils/general';
 import { GetAllPostArgs, getAllFilterQuery } from './utils';
 import { ProjectionType } from 'mongoose';
-import { imagesServices } from '../images/services';
+
 import { getSortQuery } from '../../utils/schemas';
+import { imagesServicesDeleteBulk } from '../images/services';
 
 interface DeletePostQuery extends FilterQuery<Post> {
   postIds?: Array<string>;
 }
 
-const getAllWithPagination: QueryHandle<
+export const postServicesGetAllWithPagination: QueryHandle<
   {
     paginateOptions?: PaginateOptions;
     query: GetAllPostArgs;
@@ -32,7 +33,7 @@ const getAllWithPagination: QueryHandle<
   return out as unknown as PaginateResult<Post>;
 };
 
-const getAll: QueryHandle<
+export const postServicesGetAll: QueryHandle<
   { query: GetAllPostArgs; projection?: ProjectionType<Post>; options?: QueryOptions },
   Array<Post>
 > = async ({ query, projection, options }) => {
@@ -43,7 +44,7 @@ const getAll: QueryHandle<
   return out;
 };
 
-const getOne: QueryHandle<
+export const postServicesGetOne: QueryHandle<
   {
     query: FilterQuery<Post> & { hidden?: boolean };
   },
@@ -62,7 +63,7 @@ const getOne: QueryHandle<
   return out;
 };
 
-const deleteMany: QueryHandle<{
+export const postServicesDeleteMany: QueryHandle<{
   query: DeletePostQuery;
 }> = async ({ query }) => {
   const { postIds, ...rest } = query;
@@ -76,7 +77,7 @@ const deleteMany: QueryHandle<{
   await PostModel.deleteMany(filterQuery);
 };
 
-const deleteOne: QueryHandle<{
+export const postServicesDeleteOne: QueryHandle<{
   postId: string;
 }> = async ({ postId }) => {
   /**
@@ -92,14 +93,14 @@ const deleteOne: QueryHandle<{
   /**
    * Remove all images of post
    */
-  await imagesServices.deleteBulk({
+  await imagesServicesDeleteBulk({
     userId: post.createdBy.toString(),
     postId,
     routeName: post.routeName,
   });
 };
 
-const addOne: QueryHandle<
+export const postServicesAddOne: QueryHandle<
   Pick<
     Post,
     | 'hidden'
@@ -129,14 +130,14 @@ const addOne: QueryHandle<
   return newPost;
 };
 
-const updateOne: QueryHandle<{
+export const postServicesUpdateOne: QueryHandle<{
   query: FilterQuery<Post>;
   update: UpdateQuery<Post>;
 }> = async ({ query, update }) => {
   await PostModel.updateOne(query, update);
 };
 
-const findOneAndUpdate: QueryHandle<
+export const postServicesFindOneAndUpdate: QueryHandle<
   {
     query: FilterQuery<Post>;
     update: UpdateQuery<Post>;
@@ -148,7 +149,7 @@ const findOneAndUpdate: QueryHandle<
   return out;
 };
 
-const updateStockAmount: QueryHandle<
+export const postServicesUpdateStockAmount: QueryHandle<
   {
     amountToAdd: number;
     post: Post;
@@ -199,22 +200,9 @@ const updateStockAmount: QueryHandle<
   return null;
 };
 
-const updateMany: QueryHandle<{
+export const postServicesUpdateMany: QueryHandle<{
   query: FilterQuery<Post>;
   update: UpdateQuery<Post>;
 }> = async ({ query, update }) => {
   await PostModel.updateMany(query, update);
-};
-
-export const postServices = {
-  deleteMany,
-  getAllWithPagination,
-  getAll,
-  addOne,
-  getOne,
-  updateOne,
-  updateMany,
-  deleteOne,
-  updateStockAmount,
-  findOneAndUpdate,
 };

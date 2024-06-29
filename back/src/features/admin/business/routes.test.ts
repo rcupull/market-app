@@ -3,6 +3,7 @@ import { fillBD } from '../../../utils/test-BD';
 import { dropTestDbConnectionAsync, generateToken } from '../../../utils/test-utils';
 import { getTestingRoute } from '../../../utils/api';
 import { app } from '../../../server';
+import { mockImagesServicesDeleteBulk } from '../../../utils/test-mocks/mockImagesServices';
 
 describe('admin', () => {
   describe('DELETE: /admin/business/:routeName', () => {
@@ -42,6 +43,8 @@ describe('admin', () => {
     });
 
     it('should remove all posts and business', async () => {
+      const { imagesServicesDeleteBulk } = mockImagesServicesDeleteBulk();
+
       const { business1User1, admin } = await fillBD({
         admin: { specialAccess: ['business__remove'] },
       });
@@ -81,6 +84,14 @@ describe('admin', () => {
         )
         .auth(generateToken(admin._id), { type: 'bearer' })
         .expect(200);
+
+      /**
+       * remove all business images
+       */
+      expect(imagesServicesDeleteBulk).toHaveBeenCalledWith({
+        routeName: business1User1.routeName,
+        userId: business1User1.createdBy.toString(),
+      });
 
       //get business posts(should be 0)
       await supertest(app)

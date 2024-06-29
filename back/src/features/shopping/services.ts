@@ -14,11 +14,11 @@ import {
 } from './utils';
 import { getSortQuery } from '../../utils/schemas';
 import { Business } from '../../types/business';
-import { businessServices } from '../business/services';
-import { postServices } from '../post/services';
+import { postServicesGetAll, postServicesGetOne } from '../post/services';
 import { logger } from '../logger';
 import { notificationsServices } from '../notifications/services';
 import { agendaServices } from '../agenda/services';
+import { businessServicesFindOne } from '../business/services';
 
 const addOne: QueryHandle<
   {
@@ -32,7 +32,7 @@ const addOne: QueryHandle<
   const { routeName } = post;
 
   const businessData: ModelDocument<Pick<Business, 'currency'>> | null =
-    await businessServices.findOne({
+    await businessServicesFindOne({
       query: {
         routeName,
       },
@@ -329,7 +329,7 @@ const sendUpdateStockAmountMessagesFromShoppingPosts: QueryHandle<{
     return;
   }
 
-  const posts = await postServices.getAll({
+  const posts = await postServicesGetAll({
     query: {
       postsIds: shopping.posts.map((post) => post.postData._id.toString()),
     },
@@ -362,21 +362,19 @@ const decrementStockAmountFromShoppingPosts: QueryHandle<{
    */
   const promises = shopping.posts.map(({ count, postData }) => {
     return new Promise<void>((resolve) => {
-      postServices
-        .getOne({
-          query: {
-            _id: postData._id,
-          },
-        })
-        .then((post) => {
-          if (post && isNumber(post.stockAmount)) {
-            post.updateOne({ $inc: { stockAmount: -count } }).then(() => {
-              resolve();
-            });
-          } else {
+      postServicesGetOne({
+        query: {
+          _id: postData._id,
+        },
+      }).then((post) => {
+        if (post && isNumber(post.stockAmount)) {
+          post.updateOne({ $inc: { stockAmount: -count } }).then(() => {
             resolve();
-          }
-        });
+          });
+        } else {
+          resolve();
+        }
+      });
     });
   });
 
