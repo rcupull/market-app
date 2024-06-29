@@ -1,6 +1,16 @@
 import { AnyRecord, RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
-import { postServices } from './services';
+import {
+  postServicesAddOne,
+  postServicesDeleteMany,
+  postServicesDeleteOne,
+  postServicesFindOneAndUpdate,
+  postServicesGetAll,
+  postServicesGetAllWithPagination,
+  postServicesGetOne,
+  postServicesUpdateMany,
+  postServicesUpdateOne,
+} from './services';
 
 import {
   get200Response,
@@ -14,7 +24,7 @@ import { makeReshaper } from '../../utils/makeReshaper';
 import { GetAllPostArgs } from './utils';
 import { shoppingServices } from '../shopping/services';
 import { defaultQuerySort } from '../../utils/api';
-import { imagesServices } from '../images/services';
+import { imagesServicesDeleteOldImages } from '../images/services';
 
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
@@ -32,7 +42,7 @@ const get_posts: () => RequestHandler = () => {
         sort = defaultQuerySort,
       } = query;
 
-      const posts = await postServices.getAllWithPagination({
+      const posts = await postServicesGetAllWithPagination({
         paginateOptions,
         sort,
         query: {
@@ -74,7 +84,7 @@ const get_posts_postId: () => RequestHandler = () => {
       const { params } = req;
       const { postId } = params;
 
-      const post = await postServices.getOne({
+      const post = await postServicesGetOne({
         query: {
           _id: postId,
         },
@@ -127,7 +137,7 @@ const post_posts: () => RequestHandler<AnyRecord, any, Post> = () => {
         postLink,
       } = body;
 
-      const out = await postServices.addOne({
+      const out = await postServicesAddOne({
         name,
         routeName,
         hidden,
@@ -160,7 +170,7 @@ const post_posts_postId_duplicate: () => RequestHandler = () => {
 
       const { postId } = params;
 
-      const post = await postServices.getOne({
+      const post = await postServicesGetOne({
         query: {
           _id: postId,
         },
@@ -196,13 +206,13 @@ const put_posts_postId: () => RequestHandler = () => {
       }
 
       if (!isEqual(body.images, post.images)) {
-        await imagesServices.deleteOldImages({
+        await imagesServicesDeleteOldImages({
           newImagesSrcs: body.images,
           oldImagesSrcs: post.images,
         });
       }
 
-      const out = await postServices.updateOne({
+      const out = await postServicesUpdateOne({
         query: {
           _id: post._id,
         },
@@ -245,7 +255,7 @@ const delete_posts_postId: () => RequestHandler = () => {
       /**
        * Removing the post
        */
-      const out = await postServices.deleteOne({
+      const out = await postServicesDeleteOne({
         postId,
       });
 
@@ -269,7 +279,7 @@ const bulk_action_delete: () => RequestHandler = () => {
       if (ids?.length) {
         // delete selected posts
 
-        await postServices.deleteMany({
+        await postServicesDeleteMany({
           query: {
             postIds: ids,
             routeName,
@@ -278,7 +288,7 @@ const bulk_action_delete: () => RequestHandler = () => {
       } else if (!isEmpty(query)) {
         const { postCategoriesMethod, postCategoriesTags, search } = query;
 
-        const posts = await postServices.getAll({
+        const posts = await postServicesGetAll({
           query: {
             routeNames: [routeName],
             postCategoriesMethod,
@@ -287,7 +297,7 @@ const bulk_action_delete: () => RequestHandler = () => {
           },
         });
 
-        await postServices.deleteMany({
+        await postServicesDeleteMany({
           query: {
             postIds: posts.map((post) => post._id.toString()),
             routeName,
@@ -295,13 +305,13 @@ const bulk_action_delete: () => RequestHandler = () => {
         });
       } else {
         // get all post
-        const posts = await postServices.getAll({
+        const posts = await postServicesGetAll({
           query: {
             routeNames: [routeName],
           },
         });
 
-        await postServices.deleteMany({
+        await postServicesDeleteMany({
           query: {
             postIds: posts.map((post) => post._id.toString()),
             routeName,
@@ -331,7 +341,7 @@ const bulk_action_update: () => RequestHandler = () => {
       const { hidden } = update || {};
 
       if (ids?.length) {
-        await postServices.updateMany({
+        await postServicesUpdateMany({
           query: {
             _id: { $in: ids },
           },
@@ -343,7 +353,7 @@ const bulk_action_update: () => RequestHandler = () => {
         // TODO esto puede ser mejorado en una sola quuery
         const { postCategoriesMethod, postCategoriesTags, search } = query;
 
-        const posts = await postServices.getAll({
+        const posts = await postServicesGetAll({
           query: {
             routeNames: [routeName],
             postCategoriesMethod,
@@ -352,7 +362,7 @@ const bulk_action_update: () => RequestHandler = () => {
           },
         });
 
-        await postServices.updateMany({
+        await postServicesUpdateMany({
           query: {
             _id: { $in: posts.map(({ _id }) => _id) },
           },
@@ -362,13 +372,13 @@ const bulk_action_update: () => RequestHandler = () => {
         });
       } else {
         // get all posts
-        const posts = await postServices.getAll({
+        const posts = await postServicesGetAll({
           query: {
             routeNames: [routeName],
           },
         });
 
-        await postServices.updateMany({
+        await postServicesUpdateMany({
           query: {
             _id: { $in: posts.map(({ _id }) => _id) },
           },
@@ -393,7 +403,7 @@ const post_make_review: () => RequestHandler = () => {
       return get400Response({ res, json: { message: 'Invalid review value' } });
     }
 
-    const out = await postServices.findOneAndUpdate({
+    const out = await postServicesFindOneAndUpdate({
       query: {
         _id: postId,
         createdBy: { $ne: user },

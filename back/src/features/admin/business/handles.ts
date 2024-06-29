@@ -4,8 +4,11 @@ import { Post } from '../../../types/post';
 import { User } from '../../../types/user';
 import { withTryCatch } from '../../../utils/error';
 import { deepJsonCopy, isEqualIds } from '../../../utils/general';
-import { businessServices } from '../../business/services';
-import { postServices } from '../../post/services';
+import {
+  businessServicesDeleteOne,
+  businessServicesGetAllWithPagination,
+} from '../../business/services';
+import { postServicesGetAll } from '../../post/services';
 import { userServices } from '../../user/services';
 
 const delete_admin_business_routeName: () => RequestHandler = () => {
@@ -18,7 +21,7 @@ const delete_admin_business_routeName: () => RequestHandler = () => {
       /**
        * Delete the business, business images, posts, and billing
        */
-      await businessServices.deleteOne({
+      await businessServicesDeleteOne({
         routeName,
       });
 
@@ -38,7 +41,7 @@ const get_admin_business: () => RequestHandler = () => {
 
       const { routeNames, search, userId } = query;
 
-      let out = await businessServices.getAllWithPagination({
+      let out = await businessServicesGetAllWithPagination({
         paginateOptions,
         query: {
           routeNames,
@@ -57,7 +60,7 @@ const get_admin_business: () => RequestHandler = () => {
         },
       });
 
-      const postsData: Array<Pick<Post, 'routeName'>> = await postServices.getAll({
+      const postsData: Array<Pick<Post, 'routeName'>> = await postServicesGetAll({
         query: {
           routeName: { $in: out.data.map(({ routeName }) => routeName) },
         },

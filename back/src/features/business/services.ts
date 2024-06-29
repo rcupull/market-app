@@ -2,7 +2,7 @@ import { FilterQuery, PaginateOptions, ProjectionType } from 'mongoose';
 import { ModelDocument, QueryHandle } from '../../types/general';
 import { Business } from '../../types/business';
 import { BusinessModel } from '../../schemas/business';
-import { postServices } from '../post/services';
+import { postServicesDeleteMany } from '../post/services';
 import { PaginateResult } from '../../middlewares/pagination';
 
 import { UpdateOptions } from 'mongodb';
@@ -11,9 +11,9 @@ import { billingServices } from '../billing/services';
 import { shoppingServices } from '../shopping/services';
 import { getShoppingWasAcceptedQuery } from '../../utils/schemas';
 import { getShoppingsTotalDebit } from '../shopping/utils';
-import { imagesServices } from '../images/services';
+import { imagesServicesDeleteBulk } from '../images/services';
 
-const getAllWithPagination: QueryHandle<
+export const businessServicesGetAllWithPagination: QueryHandle<
   {
     paginateOptions?: PaginateOptions;
     query: GetAllBusinessArgs;
@@ -27,7 +27,7 @@ const getAllWithPagination: QueryHandle<
   return out as unknown as PaginateResult<Business>;
 };
 
-const getAll: QueryHandle<
+export const businessServicesGetAll: QueryHandle<
   {
     query: GetAllBusinessArgs;
   },
@@ -40,7 +40,7 @@ const getAll: QueryHandle<
   return out;
 };
 
-const addOne: QueryHandle<
+export const businessServicesAddOne: QueryHandle<
   Pick<Business, 'categories' | 'createdBy' | 'routeName' | 'name' | 'postCategories' | 'currency'>,
   Business | null
 > = async ({ categories, createdBy, routeName, name, postCategories, currency }) => {
@@ -64,7 +64,7 @@ const addOne: QueryHandle<
   return out;
 };
 
-const findOne: QueryHandle<
+export const businessServicesFindOne: QueryHandle<
   {
     query: FilterQuery<Business>;
     projection?: ProjectionType<Business>;
@@ -76,7 +76,7 @@ const findOne: QueryHandle<
   return out;
 };
 
-const deleteOne: QueryHandle<{
+export const businessServicesDeleteOne: QueryHandle<{
   routeName: string;
 }> = async ({ routeName }) => {
   /**
@@ -94,7 +94,7 @@ const deleteOne: QueryHandle<{
    * Remove all business images
    */
 
-  await imagesServices.deleteBulk({
+  await imagesServicesDeleteBulk({
     userId: business.createdBy.toString(),
     routeName,
   });
@@ -102,7 +102,7 @@ const deleteOne: QueryHandle<{
   /**
    * Remove all business posts
    */
-  await postServices.deleteMany({
+  await postServicesDeleteMany({
     query: {
       routeName,
     },
@@ -129,7 +129,7 @@ const deleteOne: QueryHandle<{
   });
 };
 
-const updateOne: QueryHandle<{
+export const businessServicesUpdateOne: QueryHandle<{
   query: FilterQuery<Business>;
   update: UpdateQueryBusiness;
   options?: UpdateOptions;
@@ -137,14 +137,14 @@ const updateOne: QueryHandle<{
   await BusinessModel.updateOne(query, update, options);
 };
 
-const updateMany: QueryHandle<{
+export const businessServicesUpdateMany: QueryHandle<{
   query: FilterQuery<Business>;
   update: UpdateQueryBusiness;
 }> = async ({ query, update }) => {
   await BusinessModel.updateMany(query, update);
 };
 
-const getShoppingPaymentData: QueryHandle<
+export const businessServicesGetShoppingPaymentData: QueryHandle<
   {
     routeName: string;
   },
@@ -165,16 +165,4 @@ const getShoppingPaymentData: QueryHandle<
   return {
     shoppingDebit: getShoppingsTotalDebit(shoppings),
   };
-};
-
-export const businessServices = {
-  getAllWithPagination,
-  getAll,
-  addOne,
-  findOne,
-  deleteOne,
-  updateOne,
-  updateMany,
-  //
-  getShoppingPaymentData,
 };

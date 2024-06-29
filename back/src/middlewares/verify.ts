@@ -3,7 +3,7 @@ import { withTryCatch } from '../utils/error';
 import { User } from '../types/user';
 import { AnyRecord } from '../types/general';
 
-import { postServices } from '../features/post/services';
+import { postServicesGetOne } from '../features/post/services';
 import { isEqualIds } from '../utils/general';
 import { passportJwtMiddleware } from './passport';
 import {
@@ -13,8 +13,9 @@ import {
   getPostNotFoundResponse,
   getUserNotFoundResponse,
 } from '../utils/server-response';
-import { businessServices } from '../features/business/services';
+
 import { Access } from '../types/admin';
+import { businessServicesFindOne } from '../features/business/services';
 
 export const isLogged = passportJwtMiddleware;
 
@@ -104,7 +105,7 @@ export const isUserThisBusinessOwner: RequestHandler = async (req, res, next) =>
     });
   }
 
-  const business = await businessServices.findOne({
+  const business = await businessServicesFindOne({
     query: {
       routeName,
     },
@@ -141,7 +142,7 @@ export const isUserThisPostOwner: RequestHandler = async (req, res, next) => {
     });
   }
 
-  const post = await postServices.getOne({
+  const post = await postServicesGetOne({
     query: {
       _id: postId,
     },
@@ -169,7 +170,7 @@ export const addPostToReq: RequestHandler = async (req, res, next) => {
     return next();
   }
 
-  const post = await postServices.getOne({
+  const post = await postServicesGetOne({
     query: {
       _id: postId,
     },
@@ -215,7 +216,7 @@ export const verifyPost: RequestHandler = (req, res, next) => {
         .json({ message: 'We should have some value in postId in this point' });
     }
 
-    const out = await postServices.getOne({
+    const out = await postServicesGetOne({
       query: {
         _id: postId,
       },

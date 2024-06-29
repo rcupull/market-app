@@ -2,7 +2,7 @@ import { UserModel } from '../../../schemas/user';
 import { RequestHandler } from '../../../types/general';
 import { withTryCatch } from '../../../utils/error';
 import { get200Response } from '../../../utils/server-response';
-import { imagesServices } from '../../images/services';
+import { imagesServicesDeleteBulk } from '../../images/services';
 import { userServices } from '../../user/services';
 import { specialAccessRecord } from './utils';
 
@@ -32,7 +32,7 @@ const del_users_userId: () => RequestHandler = () => {
       /**
        * Remove all business images
        */
-      await imagesServices.deleteBulk({
+      await imagesServicesDeleteBulk({
         userId,
       });
 

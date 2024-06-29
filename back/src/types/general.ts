@@ -15,6 +15,7 @@ import { User as UserApp } from './user';
 import { Document } from 'mongoose';
 
 export type AnyRecord = Record<string, any>;
+export type UnknownRecord = Record<string, unknown>;
 
 export interface BaseIdentity {
   _id: Schema.Types.ObjectId;

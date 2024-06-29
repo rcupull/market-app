@@ -7,7 +7,11 @@ import {
   get400Response,
   getUserNotFoundResponse,
 } from '../../utils/server-response';
-import { imagesServices } from './services';
+import {
+  imagesServicesDeleteMany,
+  imagesServicesDeleteOne,
+  imagesServicesUploadFile,
+} from './services';
 
 const post_images: () => RequestHandler = () => {
   return (req, res) => {
@@ -26,7 +30,7 @@ const post_images: () => RequestHandler = () => {
           });
         }
 
-        const response = await imagesServices.uploadFile({
+        const response = await imagesServicesUploadFile({
           file,
           userId: req.query.userId,
           postId: req.query.postId,
@@ -76,7 +80,7 @@ const post_image_checkeditor: () => RequestHandler = () => {
           });
         }
 
-        const response = await imagesServices.uploadFile({
+        const response = await imagesServicesUploadFile({
           file,
           userId: user._id.toString(),
           postId,
@@ -109,7 +113,7 @@ const delete_one_image: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { imageSrc } = req.body;
 
-      await imagesServices.deleteOne({ src: imageSrc });
+      await imagesServicesDeleteOne({ src: imageSrc });
 
       get200Response({
         res,
@@ -124,7 +128,7 @@ const delete_images: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { srcs } = req.body;
 
-      await imagesServices.deleteMany({ srcs });
+      await imagesServicesDeleteMany({ srcs });
 
       get200Response({
         res,
