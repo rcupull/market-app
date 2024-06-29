@@ -16,7 +16,7 @@ import { getPostCategoriesFromBusinessCategories } from './utils';
 import { PaginateResult } from '../../middlewares/pagination';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { isEqualIds, movRow } from '../../utils/general';
-import { imagesServices } from '../images/services';
+import { imagesServicesDeleteOldImages } from '../images/services';
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {
@@ -250,7 +250,7 @@ const put_business_routeName: () => RequestHandler = () => {
       const { routeName } = params;
 
       if (body.logo === null && business.logo) {
-        await imagesServices.deleteOldImages({
+        await imagesServicesDeleteOldImages({
           newImagesSrcs: [],
           oldImagesSrcs: [business.logo],
         });

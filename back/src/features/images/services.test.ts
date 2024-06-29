@@ -1,17 +1,23 @@
 import { cloudFlareAccountId, cloudFlareApiToken } from '../../config';
 import { Image } from '../../types/general';
 import { mockAxios } from '../../utils/test-mocks/mockApiClients';
-import * as services from './services';
+import {
+  mockImagesServicesDeleteMany,
+  mockImagesServicesDeleteOne,
+} from '../../utils/test-mocks/mockImagesServices';
+import {
+  imagesServicesDeleteMany,
+  imagesServicesDeleteOldImages,
+  imagesServicesDeleteOne,
+} from './services';
 import { cloudflareDeliveryUrl } from './utils';
 
-const { deleteOne, deleteMany, deleteOldImages } = services;
-
 describe('services', () => {
-  describe('deleteOne', () => {
+  describe('imagesServicesDeleteOne', () => {
     it('should call axios with right params when call to remove with image url', async () => {
       const { axios } = mockAxios();
 
-      await deleteOne({ src: `${cloudflareDeliveryUrl}/imageId/public` });
+      await imagesServicesDeleteOne({ src: `${cloudflareDeliveryUrl}/imageId/public` });
 
       expect(axios).toHaveBeenCalledWith({
         headers: {
@@ -25,7 +31,7 @@ describe('services', () => {
     it('should call axios with right params when call to remove with image id', async () => {
       const { axios } = mockAxios();
 
-      await deleteOne({ src: 'imageId' });
+      await imagesServicesDeleteOne({ src: 'imageId' });
 
       expect(axios).toHaveBeenCalledWith({
         headers: {
@@ -39,15 +45,15 @@ describe('services', () => {
     it('should call axios with right params when call to remove with not cloudflare url', async () => {
       const { axios } = mockAxios();
 
-      await deleteOne({ src: 'https://someimage,com' });
+      await imagesServicesDeleteOne({ src: 'https://someimage,com' });
 
       expect(axios).toHaveBeenCalledTimes(0); //no call ti remove when the image is extern
     });
   });
 
-  describe('deleteMany', () => {
+  describe('imagesServicesDeleteMany', () => {
     it('should call deleteOne with right params', async () => {
-      const deleteOne = jest.spyOn(services, 'deleteOne').mockImplementation(jest.fn());
+      const { imagesServicesDeleteOne } = mockImagesServicesDeleteOne();
 
       const srcs = [
         `${cloudflareDeliveryUrl}/imageId1/public`,
@@ -55,19 +61,19 @@ describe('services', () => {
         `${cloudflareDeliveryUrl}/imageId3/public`,
       ];
 
-      await deleteMany({ srcs });
+      await imagesServicesDeleteMany({ srcs });
 
-      expect(deleteOne).toHaveBeenCalledTimes(3);
+      expect(imagesServicesDeleteOne).toHaveBeenCalledTimes(3);
 
-      expect(deleteOne).toHaveBeenCalledWith({ src: srcs[0] });
-      expect(deleteOne).toHaveBeenCalledWith({ src: srcs[1] });
-      expect(deleteOne).toHaveBeenCalledWith({ src: srcs[2] });
+      expect(imagesServicesDeleteOne).toHaveBeenCalledWith({ src: srcs[0] });
+      expect(imagesServicesDeleteOne).toHaveBeenCalledWith({ src: srcs[1] });
+      expect(imagesServicesDeleteOne).toHaveBeenCalledWith({ src: srcs[2] });
     });
   });
 
-  describe('deleteOldImages', () => {
+  describe('imagesServicesDeleteOldImages', () => {
     it('should call deleteMany with right params', async () => {
-      const deleteMany = jest.spyOn(services, 'deleteMany').mockImplementation(jest.fn());
+      const { imagesServicesDeleteMany } = mockImagesServicesDeleteMany();
 
       const oldImagesSrcs: Array<Image> = [
         {
@@ -115,9 +121,9 @@ describe('services', () => {
         },
       ];
 
-      await deleteOldImages({ oldImagesSrcs, newImagesSrcs });
+      await imagesServicesDeleteOldImages({ oldImagesSrcs, newImagesSrcs });
 
-      expect(deleteMany).toHaveBeenLastCalledWith({
+      expect(imagesServicesDeleteMany).toHaveBeenLastCalledWith({
         srcs: [`${cloudflareDeliveryUrl}/imageId2/public`, 'http://someurl.com', 'imageId3'],
       });
     });

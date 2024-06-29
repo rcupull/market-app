@@ -11,7 +11,7 @@ import { billingServices } from '../billing/services';
 import { shoppingServices } from '../shopping/services';
 import { getShoppingWasAcceptedQuery } from '../../utils/schemas';
 import { getShoppingsTotalDebit } from '../shopping/utils';
-import { imagesServices } from '../images/services';
+import { imagesServicesDeleteBulk } from '../images/services';
 
 const getAllWithPagination: QueryHandle<
   {
@@ -94,7 +94,7 @@ const deleteOne: QueryHandle<{
    * Remove all business images
    */
 
-  await imagesServices.deleteBulk({
+  await imagesServicesDeleteBulk({
     userId: business.createdBy.toString(),
     routeName,
   });

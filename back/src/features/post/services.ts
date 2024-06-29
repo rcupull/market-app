@@ -7,8 +7,9 @@ import { PaginateResult } from '../../middlewares/pagination';
 import { isNumber } from '../../utils/general';
 import { GetAllPostArgs, getAllFilterQuery } from './utils';
 import { ProjectionType } from 'mongoose';
-import { imagesServices } from '../images/services';
+
 import { getSortQuery } from '../../utils/schemas';
+import { imagesServicesDeleteBulk } from '../images/services';
 
 interface DeletePostQuery extends FilterQuery<Post> {
   postIds?: Array<string>;
@@ -92,7 +93,7 @@ const deleteOne: QueryHandle<{
   /**
    * Remove all images of post
    */
-  await imagesServices.deleteBulk({
+  await imagesServicesDeleteBulk({
     userId: post.createdBy.toString(),
     postId,
     routeName: post.routeName,

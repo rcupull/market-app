@@ -14,7 +14,7 @@ import { makeReshaper } from '../../utils/makeReshaper';
 import { GetAllPostArgs } from './utils';
 import { shoppingServices } from '../shopping/services';
 import { defaultQuerySort } from '../../utils/api';
-import { imagesServices } from '../images/services';
+import { imagesServicesDeleteOldImages } from '../images/services';
 
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
@@ -196,7 +196,7 @@ const put_posts_postId: () => RequestHandler = () => {
       }
 
       if (!isEqual(body.images, post.images)) {
-        await imagesServices.deleteOldImages({
+        await imagesServicesDeleteOldImages({
           newImagesSrcs: body.images,
           oldImagesSrcs: post.images,
         });
