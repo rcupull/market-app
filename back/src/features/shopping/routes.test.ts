@@ -7,6 +7,7 @@ import { Shopping, ShoppingState } from '../../types/shopping';
 import { PostDto } from '../../types/post';
 import { notificationsServices as notificationsServicesBase } from '../notifications/services';
 import { agendaServices as agendaServicesBase } from '../agenda/services';
+import { isEqualIds } from '../../utils/general';
 
 jest.mock('../notifications/services', () => ({
   notificationsServices: {
@@ -225,13 +226,15 @@ describe('shopping', () => {
         )
         .expect(200)
         .then((response) => {
-          const [post1, post2]: Array<PostDto> = response.body.data;
+          const posts: Array<PostDto> = response.body.data;
+          const post1 = posts.find(({ _id }) => isEqualIds(_id, productPost1Business1User1._id));
+          const post2 = posts.find(({ _id }) => isEqualIds(_id, productPost2Business1User1._id));
 
-          expect(post1.stockAmount).toEqual(20);
-          expect(post1.stockAmountAvailable).toEqual(20);
+          expect(post1?.stockAmount).toEqual(20);
+          expect(post1?.stockAmountAvailable).toEqual(20);
 
-          expect(post2.stockAmount).toEqual(30);
-          expect(post2.stockAmountAvailable).toEqual(30);
+          expect(post2?.stockAmount).toEqual(30);
+          expect(post2?.stockAmountAvailable).toEqual(30);
         });
 
       // create the shopping with two added posts
@@ -283,13 +286,15 @@ describe('shopping', () => {
         )
         .expect(200)
         .then((response) => {
-          const [post1, post2]: Array<PostDto> = response.body.data;
+          const posts: Array<PostDto> = response.body.data;
+          const post1 = posts.find(({ _id }) => isEqualIds(_id, productPost1Business1User1._id));
+          const post2 = posts.find(({ _id }) => isEqualIds(_id, productPost2Business1User1._id));
 
-          expect(post1.stockAmount).toEqual(20);
-          expect(post1.stockAmountAvailable).toEqual(15);
+          expect(post1?.stockAmount).toEqual(20);
+          expect(post1?.stockAmountAvailable).toEqual(15);
 
-          expect(post2.stockAmount).toEqual(30);
-          expect(post2.stockAmountAvailable).toEqual(20);
+          expect(post2?.stockAmount).toEqual(30);
+          expect(post2?.stockAmountAvailable).toEqual(20);
         });
 
       expect(sendUpdateStockAmountMessage.mock.calls[0][0].stockAmountAvailable).toEqual(15);
@@ -322,10 +327,12 @@ describe('shopping', () => {
         )
         .expect(200)
         .then((response) => {
-          const [post1]: Array<PostDto> = response.body.data;
+          const posts: Array<PostDto> = response.body.data;
 
-          expect(post1.stockAmount).toEqual(2);
-          expect(post1.stockAmountAvailable).toEqual(2);
+          const post1 = posts.find(({ _id }) => isEqualIds(_id, productPost1Business1User1._id));
+
+          expect(post1?.stockAmount).toEqual(2);
+          expect(post1?.stockAmountAvailable).toEqual(2);
         });
 
       // create the shopping with two added posts
@@ -365,10 +372,12 @@ describe('shopping', () => {
         )
         .expect(200)
         .then((response) => {
-          const [post1]: Array<PostDto> = response.body.data;
+          const posts: Array<PostDto> = response.body.data;
 
-          expect(post1.stockAmount).toEqual(2);
-          expect(post1.stockAmountAvailable).toEqual(0);
+          const post1 = posts.find(({ _id }) => isEqualIds(_id, productPost1Business1User1._id));
+
+          expect(post1?.stockAmount).toEqual(2);
+          expect(post1?.stockAmountAvailable).toEqual(0);
         });
 
       expect(sendUpdateStockAmountMessage.mock.calls[0][0].stockAmountAvailable).toEqual(0);
@@ -425,13 +434,16 @@ describe('shopping', () => {
         )
         .expect(200)
         .then((response) => {
-          const [post1, post2]: Array<PostDto> = response.body.data;
+          const posts: Array<PostDto> = response.body.data;
 
-          expect(post1.stockAmount).toEqual(20);
-          expect(post1.stockAmountAvailable).toEqual(15);
+          const post1 = posts.find(({ _id }) => isEqualIds(_id, productPost1Business1User1._id));
+          const post2 = posts.find(({ _id }) => isEqualIds(_id, productPost2Business1User1._id));
 
-          expect(post2.stockAmount).toEqual(30);
-          expect(post2.stockAmountAvailable).toEqual(20);
+          expect(post1?.stockAmount).toEqual(20);
+          expect(post1?.stockAmountAvailable).toEqual(15);
+
+          expect(post2?.stockAmount).toEqual(30);
+          expect(post2?.stockAmountAvailable).toEqual(20);
         });
 
       expect(sendUpdateStockAmountMessage.mock.calls[0][0].stockAmountAvailable).toEqual(15);
@@ -480,13 +492,16 @@ describe('shopping', () => {
         )
         .expect(200)
         .then((response) => {
-          const [post1, post2]: Array<PostDto> = response.body.data;
+          const posts: Array<PostDto> = response.body.data;
 
-          expect(post1.stockAmount).toEqual(20);
-          expect(post1.stockAmountAvailable).toEqual(20);
+          const post1 = posts.find(({ _id }) => isEqualIds(_id, productPost1Business1User1._id));
+          const post2 = posts.find(({ _id }) => isEqualIds(_id, productPost2Business1User1._id));
 
-          expect(post2.stockAmount).toEqual(30);
-          expect(post2.stockAmountAvailable).toEqual(30);
+          expect(post1?.stockAmount).toEqual(20);
+          expect(post1?.stockAmountAvailable).toEqual(20);
+
+          expect(post2?.stockAmount).toEqual(30);
+          expect(post2?.stockAmountAvailable).toEqual(30);
         });
 
       expect(sendUpdateStockAmountMessage.mock.calls[2][0].stockAmountAvailable).toEqual(20);
@@ -566,13 +581,16 @@ describe('shopping', () => {
         )
         .expect(200)
         .then((response) => {
-          const [post1, post2]: Array<PostDto> = response.body.data;
+          const posts: Array<PostDto> = response.body.data;
 
-          expect(post1.stockAmount).toEqual(20);
-          expect(post1.stockAmountAvailable).toEqual(20); // has the initial amount
+          const post1 = posts.find(({ _id }) => isEqualIds(_id, productPost1Business1User1._id));
+          const post2 = posts.find(({ _id }) => isEqualIds(_id, productPost2Business1User1._id));
 
-          expect(post2.stockAmount).toEqual(30);
-          expect(post2.stockAmountAvailable).toEqual(20); // has the computed amount
+          expect(post1?.stockAmount).toEqual(20);
+          expect(post1?.stockAmountAvailable).toEqual(20); // has the initial amount
+
+          expect(post2?.stockAmount).toEqual(30);
+          expect(post2?.stockAmountAvailable).toEqual(20); // has the computed amount
         });
 
       expect(sendUpdateStockAmountMessage.mock.calls[2][0].stockAmountAvailable).toEqual(20);
