@@ -1,12 +1,12 @@
 import { cloudFlareApiToken } from '../../config';
 import { Image, QueryHandle } from '../../types/general';
 
-import axios from 'axios';
 import { CloudflareCDNListResponse, CloudflareCDNUploadResponse } from './types';
 import { getRandomHash } from '../../utils/general';
-import { cloudflareBaseUrl, getFileNameToSave, getImageIdFromUrl } from './utils';
+import { cloudflareBaseUrl, getFileNameToSave, getCloudFlareImageIdFromUrl } from './utils';
+import { axios } from '../../utils/api';
 
-const uploadFile: QueryHandle<
+export const imagesServicesUploadFile: QueryHandle<
   {
     file: Express.Multer.File;
     routeName?: string;
@@ -47,7 +47,7 @@ const uploadFile: QueryHandle<
   return out;
 };
 
-const getAll: QueryHandle<void, CloudflareCDNListResponse> = async () => {
+export const imagesServicesGetAll: QueryHandle<void, CloudflareCDNListResponse> = async () => {
   const axiosResponse = await axios({
     method: 'get',
     url: cloudflareBaseUrl,
@@ -65,8 +65,10 @@ const getAll: QueryHandle<void, CloudflareCDNListResponse> = async () => {
  *
  * @param src can be the full url or the id of the image
  */
-const deleteOne: QueryHandle<{ src: string }> = async ({ src }) => {
-  const id = getImageIdFromUrl(src);
+export const imagesServicesDeleteOne: QueryHandle<{ src: string }> = async ({ src }) => {
+  const id = getCloudFlareImageIdFromUrl(src);
+
+  if (!id) return;
 
   await axios({
     method: 'delete',
@@ -82,17 +84,17 @@ const deleteOne: QueryHandle<{ src: string }> = async ({ src }) => {
  * @param srcs can be an array of the full url or the id of the image
  */
 
-const deleteMany: QueryHandle<{ srcs: Array<string> }> = async ({ srcs }) => {
-  const promises = srcs.map((src) => deleteOne({ src }));
+export const imagesServicesDeleteMany: QueryHandle<{ srcs: Array<string> }> = async ({ srcs }) => {
+  const promises = srcs.map((src) => imagesServicesDeleteOne({ src }));
   await Promise.all(promises);
 };
 
-const deleteBulk: QueryHandle<{
+export const imagesServicesDeleteBulk: QueryHandle<{
   routeName?: string;
   postId?: string;
   userId: string;
 }> = async ({ routeName, postId, userId }) => {
-  const allImages = await getAll();
+  const allImages = await imagesServicesGetAll();
 
   const filename = getFileNameToSave({
     userId,
@@ -103,11 +105,11 @@ const deleteBulk: QueryHandle<{
   const imagesToRemove = allImages.result.images.filter(({ id }) => id.startsWith(`${filename}/`));
 
   if (imagesToRemove.length) {
-    await deleteMany({ srcs: imagesToRemove.map(({ id }) => id) });
+    await imagesServicesDeleteMany({ srcs: imagesToRemove.map(({ id }) => id) });
   }
 };
 
-const deleteOldImages: QueryHandle<{
+export const imagesServicesDeleteOldImages: QueryHandle<{
   newImagesSrcs: Array<Image> | undefined;
   oldImagesSrcs: Array<Image> | undefined;
 }> = async ({ newImagesSrcs = [], oldImagesSrcs = [] }) => {
@@ -116,15 +118,6 @@ const deleteOldImages: QueryHandle<{
   );
 
   if (imagesToRemove.length) {
-    await deleteMany({ srcs: imagesToRemove.map(({ src }) => src) });
+    await imagesServicesDeleteMany({ srcs: imagesToRemove.map(({ src }) => src) });
   }
-};
-
-export const imagesServices = {
-  uploadFile,
-  deleteOne,
-  deleteMany,
-  getAll,
-  deleteBulk,
-  deleteOldImages,
 };

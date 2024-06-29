@@ -5,7 +5,7 @@ import { userServices } from './services';
 import { User } from '../../types/user';
 import { get404Response, getUserNotFoundResponse } from '../../utils/server-response';
 import { ValidationCodeModel } from '../../schemas/auth';
-import { imagesServices } from '../images/services';
+import { imagesServicesDeleteOldImages } from '../images/services';
 
 const get_users_userId: () => RequestHandler = () => {
   return (req, res) => {
@@ -49,7 +49,7 @@ const put_users_userId: () => RequestHandler = () => {
         }
 
         if (currentUser.profileImage) {
-          await imagesServices.deleteOldImages({
+          await imagesServicesDeleteOldImages({
             newImagesSrcs: [profileImage],
             oldImagesSrcs: [currentUser.profileImage],
           });

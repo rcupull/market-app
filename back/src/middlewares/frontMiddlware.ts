@@ -11,9 +11,9 @@ import {
 import { logger } from '../features/logger';
 import { combineMiddleware } from '../utils/general';
 import { HtmlMeta } from '../types/general';
-import { businessServices } from '../features/business/services';
 
-import { postServices } from '../features/post/services';
+import { postServicesGetOne } from '../features/post/services';
+import { businessServicesFindOne } from '../features/business/services';
 
 const defaultMeta: HtmlMeta = {
   title: 'Asere Market - Comercio para todos',
@@ -68,7 +68,7 @@ const injectBusinessMetaMiddlware: RequestHandler = async (req, res, next) => {
   req.htmlMeta = defaultMeta;
 
   if (routeName) {
-    const business = await businessServices.findOne({
+    const business = await businessServicesFindOne({
       query: {
         routeName,
       },
@@ -109,7 +109,7 @@ const injectPostMetaMiddlware: RequestHandler = async (req, res, next) => {
   req.htmlMeta = defaultMeta;
 
   if (postId) {
-    const post = await postServices.getOne({
+    const post = await postServicesGetOne({
       query: {
         _id: postId,
       },

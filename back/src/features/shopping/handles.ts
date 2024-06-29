@@ -10,7 +10,7 @@ import {
 } from '../../utils/server-response';
 import { shoppingServices } from './services';
 import { deepJsonCopy, isNumber } from '../../utils/general';
-import { businessServices } from '../business/services';
+import { businessServicesFindOne } from '../business/services';
 import { deleteOnePostFromShoppingInContruction, deleteShoppingInConstruction } from './utils';
 import { logger } from '../logger';
 import { PostPurshaseNotes } from '../../types/post';
@@ -246,7 +246,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
         return res.send({});
       }
 
-      const business = await businessServices.findOne({
+      const business = await businessServicesFindOne({
         query: {
           routeName: shopping.routeName,
         },
@@ -336,7 +336,7 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
           });
         }
 
-        const businessData: Pick<Business, 'name'> | null = await businessServices.findOne({
+        const businessData: Pick<Business, 'name'> | null = await businessServicesFindOne({
           query: {
             routeName: shopping.routeName,
           },

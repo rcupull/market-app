@@ -1,6 +1,6 @@
 import { dropTestDbConnectionAsync, paginateOptionsForTesting } from '../../utils/test-utils';
 import { fillBD } from '../../utils/test-BD';
-import { businessServices } from './services';
+import { businessServicesGetAll, businessServicesGetAllWithPagination } from './services';
 
 describe('services', () => {
   afterEach(async () => {
@@ -11,7 +11,7 @@ describe('services', () => {
     it('should return all business with pagination', async () => {
       await fillBD();
 
-      const paginatedPosts = await businessServices.getAllWithPagination({
+      const paginatedPosts = await businessServicesGetAllWithPagination({
         paginateOptions: paginateOptionsForTesting,
         query: {},
       });
@@ -41,7 +41,7 @@ describe('services', () => {
     it('should return all busines without pagination', async () => {
       await fillBD();
 
-      const response = await businessServices.getAll({ query: {} });
+      const response = await businessServicesGetAll({ query: {} });
 
       expect(response.length).toBe(6);
     });
@@ -65,7 +65,7 @@ describe('services', () => {
       ///////////////////////////////////////////////////////////
       expect(
         (
-          await businessServices.getAll({
+          await businessServicesGetAll({
             query: {
               search: 'somethingWrong',
             },
@@ -76,7 +76,7 @@ describe('services', () => {
       ///////////////////////////////////////////////////////////
       expect(
         (
-          await businessServices.getAll({
+          await businessServicesGetAll({
             query: {
               search: 'wNaMe1',
             },
@@ -87,7 +87,7 @@ describe('services', () => {
 
       expect(
         (
-          await businessServices.getAll({
+          await businessServicesGetAll({
             query: {
               search: 'wNaMe12',
             },
@@ -99,7 +99,7 @@ describe('services', () => {
 
       expect(
         (
-          await businessServices.getAll({
+          await businessServicesGetAll({
             query: {
               search: '',
             },
@@ -164,7 +164,7 @@ describe('services', () => {
       ///////////////////////////////////////////////////////////
       expect(
         (
-          await businessServices.getAll({
+          await businessServicesGetAll({
             query: {
               search: 'somethingWrong',
             },
@@ -175,7 +175,7 @@ describe('services', () => {
       ///////////////////////////////////////////////////////////
       expect(
         (
-          await businessServices.getAll({
+          await businessServicesGetAll({
             query: {
               search: 'aT1234',
             },
@@ -186,7 +186,7 @@ describe('services', () => {
 
       expect(
         (
-          await businessServices.getAll({
+          await businessServicesGetAll({
             query: {
               search: '',
             },
