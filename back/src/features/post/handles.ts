@@ -236,7 +236,7 @@ const put_posts_postId: () => RequestHandler = () => {
         })(body),
       });
 
-      // await notificationsServices.sendNotification({
+      // await notificationsServicesSendNotification({
       //   title: "Producto actulizado",
       //   message: `El producto ${currentPost.name} ha sido actualizado`,
       // });

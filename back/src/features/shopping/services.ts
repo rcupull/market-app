@@ -16,7 +16,7 @@ import { getSortQuery } from '../../utils/schemas';
 import { Business } from '../../types/business';
 import { postServicesGetAll, postServicesGetOne } from '../post/services';
 import { logger } from '../logger';
-import { notificationsServices } from '../notifications/services';
+import { notificationsServicesSendUpdateStockAmountMessage } from '../notifications/services';
 import { agendaServices } from '../agenda/services';
 import { businessServicesFindOne } from '../business/services';
 
@@ -343,7 +343,7 @@ export const shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts: Que
 
   amountAvailableFromPosts.forEach((stockAmountAvailable, index) => {
     if (isNumber(stockAmountAvailable)) {
-      notificationsServices.sendUpdateStockAmountMessage({
+      notificationsServicesSendUpdateStockAmountMessage({
         postId: posts[index]._id.toString(),
         stockAmountAvailable,
       });

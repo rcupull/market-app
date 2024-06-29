@@ -14,7 +14,7 @@ import { makeReshaper } from '../../utils/makeReshaper';
 import { Post } from '../../types/post';
 import { FilterQuery, Schema } from 'mongoose';
 import { setFilterQueryWithDates } from '../../utils/schemas';
-import { notificationsServices } from '../notifications/services';
+import { notificationsServicesSendUpdateStockAmountMessage } from '../notifications/services';
 
 export interface GetAllShoppingArgs extends FilterQuery<Shopping> {
   routeNames?: Array<string>;
@@ -81,7 +81,7 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
   });
 
   if (isNumber(stockAmountAvailable)) {
-    notificationsServices.sendUpdateStockAmountMessage({
+    notificationsServicesSendUpdateStockAmountMessage({
       postId: post._id.toString(),
       stockAmountAvailable,
     });
@@ -112,7 +112,7 @@ export const deleteShoppingInConstruction: QueryHandle<{
 
     stockAmountsAvaliable.forEach((stockAmount, index) => {
       if (isNumber(stockAmount)) {
-        notificationsServices.sendUpdateStockAmountMessage({
+        notificationsServicesSendUpdateStockAmountMessage({
           postId: posts[index]._id.toString(),
           stockAmountAvailable: stockAmount,
         });

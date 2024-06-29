@@ -4,7 +4,7 @@ import { ValidationCodeModel } from '../../schemas/auth';
 import { getRandomHash } from '../../utils/general';
 import { logger } from '../logger';
 import { TelegramBotChat } from '../../types/general';
-import { notificationsServices } from '../notifications/services';
+import { notificationsServicesSendTestNativeNotification } from '../notifications/services';
 import { agendaServices } from '../agenda/services';
 
 /**
@@ -65,7 +65,7 @@ export const telegramServices = {
       //   parse_mode: 'HTML',
       // });
 
-      notificationsServices.sendTestNativeNotification({ title: 'title', body: 'Prueba' });
+      notificationsServicesSendTestNativeNotification({ title: 'title', body: 'Prueba' });
     });
 
     bot.on('message', (msg) => {

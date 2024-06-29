@@ -5,18 +5,9 @@ import { TestBDContent, fillBD } from '../../utils/test-BD';
 import { getTestingRoute } from '../../utils/api';
 import { Shopping, ShoppingState } from '../../types/shopping';
 import { PostDto } from '../../types/post';
-import { notificationsServices as notificationsServicesBase } from '../notifications/services';
 import { agendaServices as agendaServicesBase } from '../agenda/services';
 import { isEqualIds } from '../../utils/general';
-
-jest.mock('../notifications/services', () => ({
-  notificationsServices: {
-    init: jest.fn(),
-    sendNotificationToUpdate: jest.fn(),
-    sendUpdateStockAmountMessage: jest.fn(),
-    sendNewOrderPushMessage: jest.fn(),
-  },
-}));
+import { mockNotificationsServicesSendUpdateStockAmountMessage } from '../../utils/test-mocks/mockNotificationsServices';
 
 jest.mock('../agenda/services', () => ({
   agenda: {
@@ -30,11 +21,6 @@ jest.mock('../agenda/services', () => ({
     scheduleRemoveOrderInConstruction: jest.fn(),
   },
 }));
-
-const { sendUpdateStockAmountMessage } = notificationsServicesBase as Record<
-  keyof typeof notificationsServicesBase,
-  jest.Mock
->;
 
 const { scheduleRemoveOrderInConstruction } = agendaServicesBase as Record<
   keyof typeof agendaServicesBase,
@@ -205,6 +191,9 @@ describe('shopping', () => {
     });
 
     it('should add a new shopping with several posts', async () => {
+      const { notificationsServicesSendUpdateStockAmountMessage } =
+        mockNotificationsServicesSendUpdateStockAmountMessage();
+
       const bd = await fillBD({
         noCreateInitialShopping: true,
         productPost1Business1User1: {
@@ -297,18 +286,25 @@ describe('shopping', () => {
           expect(post2?.stockAmountAvailable).toEqual(20);
         });
 
-      expect(sendUpdateStockAmountMessage.mock.calls[0][0].stockAmountAvailable).toEqual(15);
-      expect(sendUpdateStockAmountMessage.mock.calls[0][0].postId).toEqual(
+      expect(
+        notificationsServicesSendUpdateStockAmountMessage.mock.calls[0][0].stockAmountAvailable,
+      ).toEqual(15);
+      expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[0][0].postId).toEqual(
         productPost1Business1User1._id.toString(),
       );
 
-      expect(sendUpdateStockAmountMessage.mock.calls[1][0].stockAmountAvailable).toEqual(20);
-      expect(sendUpdateStockAmountMessage.mock.calls[1][0].postId).toEqual(
+      expect(
+        notificationsServicesSendUpdateStockAmountMessage.mock.calls[1][0].stockAmountAvailable,
+      ).toEqual(20);
+      expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[1][0].postId).toEqual(
         productPost2Business1User1._id.toString(),
       );
     });
 
     it('should add all available products if the amount is greater than the stock', async () => {
+      const { notificationsServicesSendUpdateStockAmountMessage } =
+        mockNotificationsServicesSendUpdateStockAmountMessage();
+
       const bd = await fillBD({
         noCreateInitialShopping: true,
         productPost1Business1User1: {
@@ -380,8 +376,10 @@ describe('shopping', () => {
           expect(post1?.stockAmountAvailable).toEqual(0);
         });
 
-      expect(sendUpdateStockAmountMessage.mock.calls[0][0].stockAmountAvailable).toEqual(0);
-      expect(sendUpdateStockAmountMessage.mock.calls[0][0].postId).toEqual(
+      expect(
+        notificationsServicesSendUpdateStockAmountMessage.mock.calls[0][0].stockAmountAvailable,
+      ).toEqual(0);
+      expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[0][0].postId).toEqual(
         productPost1Business1User1._id.toString(),
       );
     });
@@ -408,6 +406,9 @@ describe('shopping', () => {
     });
 
     it('should remove the whole shopping if has not postid', async () => {
+      const { notificationsServicesSendUpdateStockAmountMessage } =
+        mockNotificationsServicesSendUpdateStockAmountMessage();
+
       // ids has some object ids
 
       const bd = await fillBD({
@@ -446,13 +447,17 @@ describe('shopping', () => {
           expect(post2?.stockAmountAvailable).toEqual(20);
         });
 
-      expect(sendUpdateStockAmountMessage.mock.calls[0][0].stockAmountAvailable).toEqual(15);
-      expect(sendUpdateStockAmountMessage.mock.calls[0][0].postId).toEqual(
+      expect(
+        notificationsServicesSendUpdateStockAmountMessage.mock.calls[0][0].stockAmountAvailable,
+      ).toEqual(15);
+      expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[0][0].postId).toEqual(
         productPost1Business1User1._id.toString(),
       );
 
-      expect(sendUpdateStockAmountMessage.mock.calls[1][0].stockAmountAvailable).toEqual(20);
-      expect(sendUpdateStockAmountMessage.mock.calls[1][0].postId).toEqual(
+      expect(
+        notificationsServicesSendUpdateStockAmountMessage.mock.calls[1][0].stockAmountAvailable,
+      ).toEqual(20);
+      expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[1][0].postId).toEqual(
         productPost2Business1User1._id.toString(),
       );
 
@@ -504,18 +509,25 @@ describe('shopping', () => {
           expect(post2?.stockAmountAvailable).toEqual(30);
         });
 
-      expect(sendUpdateStockAmountMessage.mock.calls[2][0].stockAmountAvailable).toEqual(20);
-      expect(sendUpdateStockAmountMessage.mock.calls[2][0].postId).toEqual(
+      expect(
+        notificationsServicesSendUpdateStockAmountMessage.mock.calls[2][0].stockAmountAvailable,
+      ).toEqual(20);
+      expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[2][0].postId).toEqual(
         productPost1Business1User1._id.toString(),
       );
 
-      expect(sendUpdateStockAmountMessage.mock.calls[3][0].stockAmountAvailable).toEqual(30);
-      expect(sendUpdateStockAmountMessage.mock.calls[3][0].postId).toEqual(
+      expect(
+        notificationsServicesSendUpdateStockAmountMessage.mock.calls[3][0].stockAmountAvailable,
+      ).toEqual(30);
+      expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[3][0].postId).toEqual(
         productPost2Business1User1._id.toString(),
       );
     });
 
     it('should remove only one post from  the orden when has postId', async () => {
+      const { notificationsServicesSendUpdateStockAmountMessage } =
+        mockNotificationsServicesSendUpdateStockAmountMessage();
+
       const bd = await fillBD({
         noCreateInitialShopping: true,
         productPost1Business1User1: {
@@ -593,12 +605,14 @@ describe('shopping', () => {
           expect(post2?.stockAmountAvailable).toEqual(20); // has the computed amount
         });
 
-      expect(sendUpdateStockAmountMessage.mock.calls[2][0].stockAmountAvailable).toEqual(20);
-      expect(sendUpdateStockAmountMessage.mock.calls[2][0].postId).toEqual(
+      expect(
+        notificationsServicesSendUpdateStockAmountMessage.mock.calls[2][0].stockAmountAvailable,
+      ).toEqual(20);
+      expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[2][0].postId).toEqual(
         productPost1Business1User1._id.toString(),
       );
 
-      expect(sendUpdateStockAmountMessage.mock.calls[3]).toEqual(undefined);
+      expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[3]).toEqual(undefined);
     });
   });
 

@@ -9,16 +9,16 @@ import { Business } from '../../types/business';
 import { Shopping } from '../../types/shopping';
 import { logger } from '../logger';
 
-export const firebaseInstance = firebase;
+const firebaseInstance = firebase;
 
-const init = () => {
+export const notificationsServicesInit = () => {
   firebase.initializeApp({
     credential: firebase.credential.cert(serviceAccount),
   });
   console.info('Initialized Firebase SDK');
 };
 
-const sendNotificationToUpdate: QueryHandle<{
+export const notificationsServicesSendNotificationToUpdate: QueryHandle<{
   payload: NotificationPayload;
 }> = async ({ payload }) => {
   const users = await userServices.getAll({
@@ -37,7 +37,7 @@ const sendNotificationToUpdate: QueryHandle<{
   });
 };
 
-const sendTestNativeNotification: QueryHandle<{
+export const notificationsServicesSendTestNativeNotification: QueryHandle<{
   title: string;
   body: string;
 }> = async ({ body, title }) => {
@@ -61,7 +61,7 @@ const sendTestNativeNotification: QueryHandle<{
   });
 };
 
-const sendNewOrderPushMessage: QueryHandle<{
+export const notificationsServicesSendNewOrderPushMessage: QueryHandle<{
   business: Business;
   shopping: Shopping;
 }> = async ({ business, shopping }) => {
@@ -95,7 +95,7 @@ const sendNewOrderPushMessage: QueryHandle<{
   }
 };
 
-const sendUpdateStockAmountMessage: QueryHandle<{
+export const notificationsServicesSendUpdateStockAmountMessage: QueryHandle<{
   stockAmountAvailable: number;
   postId: string;
 }> = async ({ postId, stockAmountAvailable }) => {
@@ -125,7 +125,7 @@ const sendUpdateStockAmountMessage: QueryHandle<{
   }
 };
 
-const sendOrderInConstructionWasRemoved: QueryHandle<{
+export const notificationsServicesSendOrderInConstructionWasRemoved: QueryHandle<{
   shopping: Shopping;
 }> = async ({ shopping }) => {
   try {
@@ -151,13 +151,4 @@ const sendOrderInConstructionWasRemoved: QueryHandle<{
   } catch (e) {
     logger.error(e);
   }
-};
-
-export const notificationsServices = {
-  sendNotificationToUpdate,
-  init,
-  sendUpdateStockAmountMessage,
-  sendNewOrderPushMessage,
-  sendTestNativeNotification,
-  sendOrderInConstructionWasRemoved,
 };

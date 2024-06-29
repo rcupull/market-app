@@ -31,7 +31,10 @@ import { User } from '../../types/user';
 import { getShoppingUrl } from '../../utils/web';
 import { Business } from '../../types/business';
 import { defaultQuerySort } from '../../utils/api';
-import { notificationsServices } from '../notifications/services';
+import {
+  notificationsServicesSendNewOrderPushMessage,
+  notificationsServicesSendUpdateStockAmountMessage,
+} from '../notifications/services';
 import { billingServices } from '../billing/services';
 
 const get_shopping: () => RequestHandler = () => {
@@ -180,7 +183,7 @@ const post_shopping: () => RequestHandler<
           /**
            * send notification to update the post. TODO maybe we need some conditions
            */
-          notificationsServices.sendUpdateStockAmountMessage({
+          notificationsServicesSendUpdateStockAmountMessage({
             postId: post._id.toString(),
             stockAmountAvailable: 0,
           });
@@ -203,7 +206,7 @@ const post_shopping: () => RequestHandler<
         /**
          * send notification to update the post. TODO maybe we need some conditions
          */
-        notificationsServices.sendUpdateStockAmountMessage({
+        notificationsServicesSendUpdateStockAmountMessage({
           postId: post._id.toString(),
           stockAmountAvailable: stockAmountAvailable - amountToAdd,
         });
@@ -269,7 +272,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
        */
 
       sendNewOrderTelegramMessage({ business, shopping });
-      notificationsServices.sendNewOrderPushMessage({ business, shopping });
+      notificationsServicesSendNewOrderPushMessage({ business, shopping });
 
       res.send({});
     });

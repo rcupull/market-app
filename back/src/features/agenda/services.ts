@@ -7,7 +7,7 @@ import {
   shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts,
 } from '../shopping/services';
 import { ShoppingState } from '../../types/shopping';
-import { notificationsServices } from '../notifications/services';
+import { notificationsServicesSendOrderInConstructionWasRemoved } from '../notifications/services';
 
 export const agenda = new Agenda({ db: { address: dbUrl }, processEvery: '10 seconds' });
 
@@ -46,7 +46,7 @@ agenda.define('removeOrderInConstruction', async (job: any) => {
 
   if (shopping) {
     await shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts({ shopping });
-    await notificationsServices.sendOrderInConstructionWasRemoved({ shopping });
+    await notificationsServicesSendOrderInConstructionWasRemoved({ shopping });
   }
 });
 
