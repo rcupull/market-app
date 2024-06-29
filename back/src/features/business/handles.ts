@@ -15,7 +15,6 @@ import {
   getUserNotFoundResponse,
 } from '../../utils/server-response';
 import { Business, BusinessDto, BusinessSummary, PostCategory } from '../../types/business';
-import { postServices } from '../post/services';
 import { Image, ModelDocument, RequestHandler } from '../../types/general';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { getPostCategoriesFromBusinessCategories } from './utils';
@@ -23,6 +22,7 @@ import { PaginateResult } from '../../middlewares/pagination';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { isEqualIds, movRow } from '../../utils/general';
 import { imagesServicesDeleteOldImages } from '../images/services';
+import { postServicesGetOne, postServicesUpdateMany } from '../post/services';
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {
@@ -65,7 +65,7 @@ const get_business_summary: () => RequestHandler = () => {
 
       const getBusinessSummary = async (business: Business): Promise<BusinessSummary> => {
         const { routeName, _id, name } = business;
-        const posts = await postServices.getOne({
+        const posts = await postServicesGetOne({
           query: {
             routeName,
           },
@@ -157,7 +157,7 @@ const update_business_post_categories: () => RequestHandler = () => {
 
       if (missingTags?.length) {
         //
-        await postServices.updateMany({
+        await postServicesUpdateMany({
           query: {
             routeName,
           },

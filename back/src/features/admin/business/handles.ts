@@ -8,7 +8,7 @@ import {
   businessServicesDeleteOne,
   businessServicesGetAllWithPagination,
 } from '../../business/services';
-import { postServices } from '../../post/services';
+import { postServicesGetAll } from '../../post/services';
 import { userServices } from '../../user/services';
 
 const delete_admin_business_routeName: () => RequestHandler = () => {
@@ -60,7 +60,7 @@ const get_admin_business: () => RequestHandler = () => {
         },
       });
 
-      const postsData: Array<Pick<Post, 'routeName'>> = await postServices.getAll({
+      const postsData: Array<Pick<Post, 'routeName'>> = await postServicesGetAll({
         query: {
           routeName: { $in: out.data.map(({ routeName }) => routeName) },
         },

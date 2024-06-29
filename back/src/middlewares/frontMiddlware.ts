@@ -12,7 +12,7 @@ import { logger } from '../features/logger';
 import { combineMiddleware } from '../utils/general';
 import { HtmlMeta } from '../types/general';
 
-import { postServices } from '../features/post/services';
+import { postServicesGetOne } from '../features/post/services';
 import { businessServicesFindOne } from '../features/business/services';
 
 const defaultMeta: HtmlMeta = {
@@ -109,7 +109,7 @@ const injectPostMetaMiddlware: RequestHandler = async (req, res, next) => {
   req.htmlMeta = defaultMeta;
 
   if (postId) {
-    const post = await postServices.getOne({
+    const post = await postServicesGetOne({
       query: {
         _id: postId,
       },

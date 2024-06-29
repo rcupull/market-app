@@ -2,7 +2,7 @@ import { FilterQuery, PaginateOptions, ProjectionType } from 'mongoose';
 import { ModelDocument, QueryHandle } from '../../types/general';
 import { Business } from '../../types/business';
 import { BusinessModel } from '../../schemas/business';
-import { postServices } from '../post/services';
+import { postServicesDeleteMany } from '../post/services';
 import { PaginateResult } from '../../middlewares/pagination';
 
 import { UpdateOptions } from 'mongodb';
@@ -102,7 +102,7 @@ export const businessServicesDeleteOne: QueryHandle<{
   /**
    * Remove all business posts
    */
-  await postServices.deleteMany({
+  await postServicesDeleteMany({
     query: {
       routeName,
     },
