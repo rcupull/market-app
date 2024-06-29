@@ -14,11 +14,11 @@ import {
 } from './utils';
 import { getSortQuery } from '../../utils/schemas';
 import { Business } from '../../types/business';
-import { businessServices } from '../business/services';
 import { postServices } from '../post/services';
 import { logger } from '../logger';
 import { notificationsServices } from '../notifications/services';
 import { agendaServices } from '../agenda/services';
+import { businessServicesFindOne } from '../business/services';
 
 const addOne: QueryHandle<
   {
@@ -32,7 +32,7 @@ const addOne: QueryHandle<
   const { routeName } = post;
 
   const businessData: ModelDocument<Pick<Business, 'currency'>> | null =
-    await businessServices.findOne({
+    await businessServicesFindOne({
       query: {
         routeName,
       },

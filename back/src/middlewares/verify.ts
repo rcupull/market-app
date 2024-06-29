@@ -13,8 +13,9 @@ import {
   getPostNotFoundResponse,
   getUserNotFoundResponse,
 } from '../utils/server-response';
-import { businessServices } from '../features/business/services';
+
 import { Access } from '../types/admin';
+import { businessServicesFindOne } from '../features/business/services';
 
 export const isLogged = passportJwtMiddleware;
 
@@ -104,7 +105,7 @@ export const isUserThisBusinessOwner: RequestHandler = async (req, res, next) =>
     });
   }
 
-  const business = await businessServices.findOne({
+  const business = await businessServicesFindOne({
     query: {
       routeName,
     },
