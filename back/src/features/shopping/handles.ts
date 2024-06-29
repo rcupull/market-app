@@ -8,7 +8,15 @@ import {
   getShoppingNotFoundResponse,
   getUserNotFoundResponse,
 } from '../../utils/server-response';
-import { shoppingServices } from './services';
+import {
+  shoppingServicesDecrementStockAmountFromShoppingPosts,
+  shoppingServicesFindAndUpdateOne,
+  shoppingServicesGetAllWithPagination,
+  shoppingServicesGetOne,
+  shoppingServicesGetStockAmountAvailableFromPosts,
+  shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts,
+  shoppingServicesUpdateOrAddOne,
+} from './services';
 import { deepJsonCopy, isNumber } from '../../utils/general';
 import { businessServicesFindOne } from '../business/services';
 import { deleteOnePostFromShoppingInContruction, deleteShoppingInConstruction } from './utils';
@@ -37,7 +45,7 @@ const get_shopping: () => RequestHandler = () => {
 
       const { routeName, sort = defaultQuerySort } = query;
 
-      const shoppings = await shoppingServices.getAllWithPagination({
+      const shoppings = await shoppingServicesGetAllWithPagination({
         paginateOptions,
         sort,
         query: {
@@ -88,7 +96,7 @@ const get_shopping_owner: () => RequestHandler = () => {
       const { routeName } = business;
       const { states } = query;
 
-      const out = await shoppingServices.getAllWithPagination({
+      const out = await shoppingServicesGetAllWithPagination({
         paginateOptions,
         query: {
           routeName,
@@ -112,7 +120,7 @@ const get_shopping_shoppingId: () => RequestHandler = () => {
 
       const { shoppingId } = params;
 
-      const out = await shoppingServices.getOne({
+      const out = await shoppingServicesGetOne({
         query: {
           _id: shoppingId,
           purchaserId: user._id,
@@ -149,7 +157,7 @@ const post_shopping: () => RequestHandler<
 
       const { amountToAdd = 1, purshaseNotes } = body;
 
-      const [stockAmountAvailable] = await shoppingServices.getStockAmountAvailableFromPosts({
+      const [stockAmountAvailable] = await shoppingServicesGetStockAmountAvailableFromPosts({
         posts: [post],
       });
 
@@ -163,7 +171,7 @@ const post_shopping: () => RequestHandler<
           /**
            * add the rest of the stock
            */
-          await shoppingServices.updateOrAddOne({
+          await shoppingServicesUpdateOrAddOne({
             amountToAdd: stockAmountAvailable,
             post,
             user,
@@ -186,7 +194,7 @@ const post_shopping: () => RequestHandler<
         /**
          * add the amount to add
          */
-        await shoppingServices.updateOrAddOne({
+        await shoppingServicesUpdateOrAddOne({
           amountToAdd: amountToAdd,
           post,
           user,
@@ -206,7 +214,7 @@ const post_shopping: () => RequestHandler<
       /**
        * The purshaseNotes is added only when the purshase is created
        */
-      await shoppingServices.updateOrAddOne({
+      await shoppingServicesUpdateOrAddOne({
         amountToAdd,
         purshaseNotes,
         post,
@@ -231,7 +239,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
 
       const { shoppingId } = params;
 
-      const shopping = await shoppingServices.findAndUpdateOne({
+      const shopping = await shoppingServicesFindAndUpdateOne({
         query: {
           _id: shoppingId,
           purchaserId: user._id,
@@ -379,7 +387,7 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
         /**
          * Send update stock amount messages
          */
-        await shoppingServices.sendUpdateStockAmountMessagesFromShoppingPosts({
+        await shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts({
           shopping,
         });
       }
@@ -388,7 +396,7 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
         /**
          * Decrement stock amount
          */
-        await shoppingServices.decrementStockAmountFromShoppingPosts({
+        await shoppingServicesDecrementStockAmountFromShoppingPosts({
           shopping,
         });
       }

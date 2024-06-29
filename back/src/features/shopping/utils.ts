@@ -2,7 +2,12 @@ import { QueryHandle } from '../../types/general';
 import { Shopping, ShoppingPostData, ShoppingState } from '../../types/shopping';
 import { User } from '../../types/user';
 import { logger } from '../logger';
-import { shoppingServices } from './services';
+import {
+  shoppingServicesDeleteOne,
+  shoppingServicesFindAndUpdateOne,
+  shoppingServicesFindOneAndDelete,
+  shoppingServicesGetStockAmountAvailableFromPosts,
+} from './services';
 import { isEmpty, isNumber } from '../../utils/general';
 import { postServicesGetAll, postServicesGetOne } from '../post/services';
 import { makeReshaper } from '../../utils/makeReshaper';
@@ -37,7 +42,7 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
   }
 
   ////////////////////////////////////////////////////////////////////////////////////
-  const oldShopping = await shoppingServices.findAndUpdateOne({
+  const oldShopping = await shoppingServicesFindAndUpdateOne({
     query: {
       state: 'CONSTRUCTION',
       routeName,
@@ -61,7 +66,7 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
     /**
      * si tenia 1 elemento, el cual ya fuel eliminado en el paso anterior entonces debe ser eliminada la shooping
      */
-    await shoppingServices.deleteOne({
+    await shoppingServicesDeleteOne({
       query: {
         _id: oldShopping._id,
       },
@@ -71,7 +76,7 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
   /**
    * push Notification to update the stock in  the front
    */
-  const [stockAmountAvailable] = await shoppingServices.getStockAmountAvailableFromPosts({
+  const [stockAmountAvailable] = await shoppingServicesGetStockAmountAvailableFromPosts({
     posts: [post],
   });
 
@@ -87,7 +92,7 @@ export const deleteShoppingInConstruction: QueryHandle<{
   routeName: string;
   user: User;
 }> = async ({ routeName }) => {
-  const oldShopping = await shoppingServices.findOneAndDelete({
+  const oldShopping = await shoppingServicesFindOneAndDelete({
     query: {
       state: 'CONSTRUCTION',
       routeName,
@@ -101,7 +106,7 @@ export const deleteShoppingInConstruction: QueryHandle<{
       },
     });
 
-    const stockAmountsAvaliable = await shoppingServices.getStockAmountAvailableFromPosts({
+    const stockAmountsAvaliable = await shoppingServicesGetStockAmountAvailableFromPosts({
       posts,
     });
 

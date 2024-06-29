@@ -8,10 +8,10 @@ import { PaginateResult } from '../../middlewares/pagination';
 import { UpdateOptions } from 'mongodb';
 import { GetAllBusinessArgs, UpdateQueryBusiness, getAllFilterQuery } from './utils';
 import { billingServices } from '../billing/services';
-import { shoppingServices } from '../shopping/services';
 import { getShoppingWasAcceptedQuery } from '../../utils/schemas';
 import { getShoppingsTotalDebit } from '../shopping/utils';
 import { imagesServicesDeleteBulk } from '../images/services';
+import { shoppingServicesDeleteMany, shoppingServicesGetAll } from '../shopping/services';
 
 export const businessServicesGetAllWithPagination: QueryHandle<
   {
@@ -122,7 +122,7 @@ export const businessServicesDeleteOne: QueryHandle<{
    * Remove all shopping
    */
 
-  await shoppingServices.deleteMany({
+  await shoppingServicesDeleteMany({
     query: {
       routeName,
     },
@@ -154,7 +154,7 @@ export const businessServicesGetShoppingPaymentData: QueryHandle<
     query: { routeNames: [routeName] },
   });
 
-  const shoppings = await shoppingServices.getAll({
+  const shoppings = await shoppingServicesGetAll({
     query: {
       routeName,
       ...getShoppingWasAcceptedQuery(),

@@ -4,7 +4,11 @@ import {
   setAnyString,
 } from '../../utils/test-utils';
 import { fillBD } from '../../utils/test-BD';
-import { shoppingServices } from './services';
+import {
+  shoppingServicesGetAll,
+  shoppingServicesGetAllWithPagination,
+  shoppingServicesGetOne,
+} from './services';
 import { Shopping } from '../../types/shopping';
 
 describe('shopping services', () => {
@@ -16,7 +20,7 @@ describe('shopping services', () => {
     it('should return all posts with pagination', async () => {
       await fillBD();
 
-      const result = await shoppingServices.getAllWithPagination({
+      const result = await shoppingServicesGetAllWithPagination({
         paginateOptions: paginateOptionsForTesting,
         query: {},
       });
@@ -46,7 +50,7 @@ describe('shopping services', () => {
     it('should return all posts without pagination', async () => {
       await fillBD();
 
-      const result = await shoppingServices.getAll({ query: {} });
+      const result = await shoppingServicesGetAll({ query: {} });
 
       expect(result.length).toBe(1);
     });
@@ -58,7 +62,7 @@ describe('shopping services', () => {
 
       if (!shopping1Business1User1) return;
 
-      const result = await shoppingServices.getOne({
+      const result = await shoppingServicesGetOne({
         query: { _id: shopping1Business1User1._id.toString() },
       });
 
