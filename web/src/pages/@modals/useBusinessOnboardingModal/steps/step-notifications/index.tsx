@@ -6,9 +6,9 @@ import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useNextButtonPortal } from 'pages/@hooks/useNextButtonPortal';
 import { Component } from 'pages/@modals/useBusinessUpdateNotifications/Component';
 
-export interface StepShoppingProps extends OnboardingStepProps {}
+export interface StepNotificationsProps extends OnboardingStepProps {}
 
-export const StepTelegramBot = ({ nextButton }: StepShoppingProps) => {
+export const StepNotifications = ({ nextButton }: StepNotificationsProps) => {
   const { nextAction, portal, rightButton } = useNextButtonPortal(nextButton);
   const { onFetch, business } = useBusiness();
 

@@ -278,6 +278,7 @@ const put_business_routeName: () => RequestHandler = () => {
           whatsAppPhoneNumber: 'whatsAppPhoneNumber',
           postFormFields: 'postFormFields',
           shoppingMeta: 'shoppingMeta',
+          notificationFlags: 'notificationFlags',
         })(body),
       });
 

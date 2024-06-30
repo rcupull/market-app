@@ -27,15 +27,18 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
           const { code } = value;
           const { _id } = user;
 
-          updateTelegramChatBotUser.fetch(
-            { code, userId: _id },
-            {
-              onAfterSuccess: () => {
-                resetForm();
-                onAfterSuccess?.();
+          if(code){
+            updateTelegramChatBotUser.fetch(
+              { code, userId: _id },
+              {
+                onAfterSuccess: () => {
+                  resetForm();
+                  onAfterSuccess?.();
+                },
               },
-            },
-          );
+            );
+          }
+          
         },
       })}
     />

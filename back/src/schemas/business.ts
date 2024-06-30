@@ -1,5 +1,5 @@
 import { PaginateModel, Schema, model } from 'mongoose';
-import { Business } from '../types/business';
+import { Business, BusinessNotificationFlags } from '../types/business';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { createdAtSchemaDefinition } from '../utils/schemas';
 import { PostModel } from './post';
@@ -90,6 +90,15 @@ const BusinessSchema = new Schema<Business>({
   },
   whatsAppPhoneNumber: { type: String },
   telegramBotChat: TelegramBotChatDefinition,
+  notificationFlags: {
+    type: [
+      {
+        type: String,
+        enum: Object.values(BusinessNotificationFlags),
+      },
+    ],
+    default: [BusinessNotificationFlags.TELEGRAM_NEW_SHOPPING],
+  },
   shoppingMeta: {
     termsAndConditions: { type: String },
   },
