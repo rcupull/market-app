@@ -68,13 +68,13 @@ export const postServicesGetRelated: QueryHandle<
     paginateOptions?: PaginateOptions;
     postId: string;
   },
-  Array<Post>
-> = async ({ /*paginateOptions = {},*/ postId }) => {
+  PaginateResult<Post> | null
+> = async ({ paginateOptions = {}, postId }) => {
   
   const post = await PostModel.findOne({ _id: postId });
 
-  if (!post) {
-    return [];
+  if (!post){
+    return null;
   }
 
   const query = {
@@ -83,9 +83,9 @@ export const postServicesGetRelated: QueryHandle<
     postCategoriesTags: { $in: post.postCategoriesTags },
   }  
 
-  const out = await PostModel.find(query);
+  const out = await PostModel.paginate(query, paginateOptions);
 
-  return out;
+  return out as unknown as PaginateResult<Post>;
 };
 
 export const postServicesDeleteMany: QueryHandle<{
