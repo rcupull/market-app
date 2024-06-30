@@ -5,6 +5,7 @@ import { useAuth } from 'features/api-slices/useAuth';
 
 import { useRouter } from 'hooks/useRouter';
 
+import { LayoutPage } from 'pages/@common/layout-page';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useShopping } from 'pages/@hooks/useShopping';
 import { getOneBusinessRoute } from 'utils/business';
@@ -22,7 +23,7 @@ export const RouteName = () => {
   const { isAuthenticated } = useAuth();
   const { routeName } = params;
 
-  const business = useBusiness();
+  const { business, onFetch, onReset, owner } = useBusiness();
   const shopping = useShopping();
 
   ////////////////////////////////////////////////////////////////////////////////////
@@ -30,10 +31,10 @@ export const RouteName = () => {
   useEffect(() => {
     if (!routeName) return;
 
-    business.onFetch({ routeName });
+    onFetch({ routeName });
 
     return () => {
-      business.onReset();
+      onReset();
     };
   }, [routeName]);
 
@@ -55,6 +56,16 @@ export const RouteName = () => {
   ////////////////////////////////////////////////////////////////////////////////////
 
   if (!routeName || !business) return <></>;
+
+  if (business?.hidden && !owner) {
+    return (
+      <LayoutPage>
+        <div className="flex items-center justify-center h-96 w-full text-2xl text-gray-500">
+          Este negocio no está disponible por ahora
+        </div>
+      </LayoutPage>
+    );
+  }
 
   return (
     <Routes>

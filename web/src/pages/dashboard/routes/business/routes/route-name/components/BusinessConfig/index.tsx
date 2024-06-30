@@ -7,13 +7,14 @@ import { useInterval } from 'hooks/useInterval';
 import { useBusinessOnboardingModal } from 'pages/@modals/useBusinessOnboardingModal';
 import { BusinessOnboardingSteps } from 'pages/@modals/useBusinessOnboardingModal/types';
 import { Business } from 'types/business';
+import { isEmpty } from 'utils/general';
 
 export interface BusinessConfigProps {
   business: Business;
 }
 
 export const BusinessConfig = ({ business }: BusinessConfigProps) => {
-  const businessOnboardingModal = useBusinessOnboardingModal(); //
+  const businessOnboardingModal = useBusinessOnboardingModal();
   const { getAllPosts } = useGetAllPosts();
 
   const hasPosts = async (b: Business): Promise<boolean> => {
@@ -32,10 +33,10 @@ export const BusinessConfig = ({ business }: BusinessConfigProps) => {
   const handleIsMissing = async (b: Business): Promise<Array<BusinessOnboardingSteps>> => {
     const out: Array<BusinessOnboardingSteps> = [];
 
-    if (!b?.telegramBotChat) {
-      out.push('telegramBot');
+    if (!isEmpty(b?.notificationFlags) && !b?.telegramBotChat) {
+      out.push('notifications');
     }
-    if (!b?.layouts?.banner) {
+    if (isEmpty(b?.bannerImages)) {
       out.push('banner');
     }
     if (!b?.layouts?.posts?.sections.length) {

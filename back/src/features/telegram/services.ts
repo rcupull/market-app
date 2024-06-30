@@ -4,7 +4,7 @@ import { ValidationCodeModel } from '../../schemas/auth';
 import { getRandomHash } from '../../utils/general';
 import { logger } from '../logger';
 import { TelegramBotChat } from '../../types/general';
-import { notificationsServices } from '../notifications/services';
+import { notificationsServicesSendTestNativeNotification } from '../notifications/services';
 import { agendaServices } from '../agenda/services';
 
 /**
@@ -44,11 +44,11 @@ export const telegramServices = {
       /**
        * Remove validation code in 60 seconds if still exists
        */
-      await agendaServices.scheduleRemoveValidationCode({ code, timeout: 60 });
+      await agendaServices.scheduleRemoveValidationCode({ code, timeout: 300 });
 
       bot.sendMessage(
         meta.chatId,
-        `Tiene 60 segundos para usar el siguiente código de activación: ${code}.`,
+        `Tiene 5 minutos para usar el siguiente código de activación: ${code}.`,
       );
     });
 
@@ -65,7 +65,7 @@ export const telegramServices = {
       //   parse_mode: 'HTML',
       // });
 
-      notificationsServices.sendTestNativeNotification({ title: 'title', body: 'Prueba' });
+      notificationsServicesSendTestNativeNotification({ title: 'title', body: 'Prueba' });
     });
 
     bot.on('message', (msg) => {

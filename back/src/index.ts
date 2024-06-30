@@ -1,6 +1,6 @@
 import { connectDB } from './db';
 import { logger } from './features/logger';
-import { notificationsServices } from './features/notifications/services';
+import { notificationsServicesInit } from './features/notifications/services';
 import { app } from './server';
 import fs from 'fs';
 import https from 'https';
@@ -10,7 +10,7 @@ import { telegramServices } from './features/telegram/services';
 connectDB();
 
 telegramServices.init();
-notificationsServices.init();
+notificationsServicesInit();
 
 if (process.env.NODE_ENV === 'production') {
   const privateKey = fs.readFileSync('/etc/letsencrypt/live/aseremarket.net/privkey.pem', 'utf8');

@@ -6,9 +6,9 @@ import { useModal } from 'features/modal/useModal';
 import { useRouter } from 'hooks/useRouter';
 
 import { StepBanner } from './steps/step-banner';
+import { StepNotifications } from './steps/step-notifications';
 import { StepPost } from './steps/step-post';
 import { StepPostsSections } from './steps/step-posts-sections';
-import { StepTelegramBot } from './steps/step-telegram-bot';
 import { BusinessOnboardingSteps } from './types';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
@@ -20,7 +20,7 @@ export interface ComponentProps {
 }
 
 export const Component = ({
-  steps = ['banner', 'products', 'telegramBot', 'section'],
+  steps = ['banner', 'products', 'notifications', 'section'],
 }: ComponentProps) => {
   const { onClose } = useModal();
   const { pushRoute } = useRouter();
@@ -38,7 +38,7 @@ export const Component = ({
   );
 
   const compactSteps: Array<BusinessOnboardingSteps> = compact([
-    steps.includes('telegramBot') && 'telegramBot',
+    steps.includes('notifications') && 'notifications',
     steps.includes('section') && 'section',
     steps.includes('products') && 'products',
     steps.includes('banner') && 'banner',
@@ -49,12 +49,12 @@ export const Component = ({
   return (
     <Stepper
       items={[
-        compactSteps.includes('telegramBot') && {
-          label: 'Bot de Telegram',
+        compactSteps.includes('notifications') && {
+          label: 'Notificaciones',
           render: (props) => (
-            <StepTelegramBot
+            <StepNotifications
               {...props}
-              {...(lastStep === 'telegramBot' ? { nextButton: finishButton } : {})}
+              {...(lastStep === 'notifications' ? { nextButton: finishButton } : {})}
             />
           ),
         },

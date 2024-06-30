@@ -22,9 +22,9 @@ import { deepJsonCopy, isEmpty, isEqual } from '../../utils/general';
 import { Post, PostDto } from '../../types/post';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { GetAllPostArgs } from './utils';
-import { shoppingServices } from '../shopping/services';
 import { defaultQuerySort } from '../../utils/api';
 import { imagesServicesDeleteOldImages } from '../images/services';
+import { shoppingServicesGetStockAmountAvailableFromPosts } from '../shopping/services';
 
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
@@ -49,15 +49,15 @@ const get_posts: () => RequestHandler = () => {
           postsIds,
           routeNames,
           search,
-          hidden: includeHidden ? undefined : false,
-          hiddenBusiness: includeHidden ? undefined : false,
+          hidden: includeHidden === 'true' ? undefined : false,
+          hiddenBusiness: includeHidden === 'true' ? undefined : false,
           postCategoriesTags,
           postCategoriesMethod,
           postType,
         },
       });
 
-      const stockAmountsAvailable = await shoppingServices.getStockAmountAvailableFromPosts({
+      const stockAmountsAvailable = await shoppingServicesGetStockAmountAvailableFromPosts({
         posts: posts.data,
       });
 
@@ -96,7 +96,7 @@ const get_posts_postId: () => RequestHandler = () => {
 
       const out: PostDto = deepJsonCopy(post);
 
-      const [stockAmountAvailable] = await shoppingServices.getStockAmountAvailableFromPosts({
+      const [stockAmountAvailable] = await shoppingServicesGetStockAmountAvailableFromPosts({
         posts: [out],
       });
 
@@ -236,7 +236,7 @@ const put_posts_postId: () => RequestHandler = () => {
         })(body),
       });
 
-      // await notificationsServices.sendNotification({
+      // await notificationsServicesSendNotification({
       //   title: "Producto actulizado",
       //   message: `El producto ${currentPost.name} ha sido actualizado`,
       // });

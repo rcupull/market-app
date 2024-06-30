@@ -2,9 +2,12 @@ import Agenda from 'agenda';
 
 import { dbUrl } from '../../config';
 import { ValidationCodeModel } from '../../schemas/auth';
-import { shoppingServices } from '../shopping/services';
+import {
+  shoppingServicesFindOneAndDelete,
+  shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts,
+} from '../shopping/services';
 import { ShoppingState } from '../../types/shopping';
-import { notificationsServices } from '../notifications/services';
+import { notificationsServicesSendOrderInConstructionWasRemoved } from '../notifications/services';
 
 export const agenda = new Agenda({ db: { address: dbUrl }, processEvery: '10 seconds' });
 
@@ -34,7 +37,7 @@ agenda.on('ready', async () => {
 agenda.define('removeOrderInConstruction', async (job: any) => {
   const { orderId } = job.attrs.data;
 
-  const shopping = await shoppingServices.findOneAndDelete({
+  const shopping = await shoppingServicesFindOneAndDelete({
     query: {
       _id: orderId,
       state: ShoppingState.CONSTRUCTION,
@@ -42,8 +45,8 @@ agenda.define('removeOrderInConstruction', async (job: any) => {
   });
 
   if (shopping) {
-    await shoppingServices.sendUpdateStockAmountMessagesFromShoppingPosts({ shopping });
-    await notificationsServices.sendOrderInConstructionWasRemoved({ shopping });
+    await shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts({ shopping });
+    await notificationsServicesSendOrderInConstructionWasRemoved({ shopping });
   }
 });
 

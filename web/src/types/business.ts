@@ -130,6 +130,10 @@ export interface TelegramBotChat {
   userName?: string;
 }
 
+export enum BusinessNotificationFlags {
+  TELEGRAM_NEW_SHOPPING = 'TELEGRAM_NEW_SHOPPING',
+}
+
 export interface Business extends BaseIdentity {
   name: string;
   categories: Array<BusinessCategory>;
@@ -144,6 +148,7 @@ export interface Business extends BaseIdentity {
   aboutUsPage?: BusinessAboutUsPage;
   whatsAppPhoneNumber?: string;
   telegramBotChat?: TelegramBotChat;
+  notificationFlags?: Array<BusinessNotificationFlags>;
   shoppingMeta?: {
     termsAndConditions?: string;
   };

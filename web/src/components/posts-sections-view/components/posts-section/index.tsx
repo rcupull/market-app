@@ -52,6 +52,7 @@ export const PostsSection = ({ routeName, layout, className, visibility }: Posts
       routeNames: [routeName],
       postCategoriesTags,
       postType,
+      includeHidden: owner,
       ...filters,
       postCategoriesMethod: hasCategoriesTags ? 'every' : 'some',
     });

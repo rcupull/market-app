@@ -1,4 +1,4 @@
-import { Business } from '../../types/business';
+import { Business, BusinessNotificationFlags } from '../../types/business';
 import { Shopping } from '../../types/shopping';
 import { logger } from '../logger';
 import { telegramServices } from './services';
@@ -11,6 +11,10 @@ export const sendNewOrderTelegramMessage = ({
   business: Business;
   shopping: Shopping;
 }) => {
+  if (!business.notificationFlags?.includes(BusinessNotificationFlags.TELEGRAM_NEW_SHOPPING)) {
+    return;
+  }
+
   try {
     const { telegramBotChat, name } = business;
 

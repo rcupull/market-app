@@ -3,7 +3,7 @@ import { defaultQuerySort } from '../../../utils/api';
 import { withTryCatch } from '../../../utils/error';
 import { deepJsonCopy } from '../../../utils/general';
 import { billingServices } from '../../billing/services';
-import { shoppingServices } from '../../shopping/services';
+import { shoppingServicesGetAllWithPagination } from '../../shopping/services';
 import { Shopping, ShoppingDto } from '../../../types/shopping';
 import { getShoppingWasAcceptedQuery } from '../../../utils/schemas';
 
@@ -27,7 +27,7 @@ const get_admin_shopping: () => RequestHandler = () => {
           query: { routeNames },
         });
 
-      const shoppings = await shoppingServices.getAllWithPagination({
+      const shoppings = await shoppingServicesGetAllWithPagination({
         paginateOptions,
         sort,
         query: {
