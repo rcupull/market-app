@@ -11,7 +11,7 @@ export interface RelatedSectionsViewProps extends StyleProps {
 export const RelatedSectionsView = ({ postId, business}: RelatedSectionsViewProps) => {
   return (
     <div data-id="RelatedSectionsView" className="flex flex-col w-full">
-      <RelatedSection postId={postId} business={business}/>;
+      <RelatedSection postId={postId} business={business}/>
     </div>
   );
 };
