@@ -410,7 +410,6 @@ export const Component = ({
               label={
                 <div className="flex items-center">
                   Incluir en las secciones
-
                   <IconButtonAdd
                     title="Agregar nueva sección de enlaces"
                     className="text-green-600 font-bold ml-2"

@@ -44,7 +44,7 @@ export const PostsSections = () => {
           lg: 'none',
         }}
         heads={['Acciones', 'Nombre', 'Tipo', 'Oculto']}
-        getRowProps={(rowData,rowIndex) => {
+        getRowProps={(rowData, rowIndex) => {
           const { name, hiddenName, postType, hidden } = rowData;
 
           return {
@@ -52,7 +52,12 @@ export const PostsSections = () => {
               'bg-gray-100': hidden,
             }),
             nodes: [
-              <RowActions key="RowActions" rowData={rowData} rowIndex={rowIndex} allSections={data}/>,
+              <RowActions
+                key="RowActions"
+                rowData={rowData}
+                rowIndex={rowIndex}
+                allSections={data}
+              />,
               <div key={name} className="flex flex-col">
                 {name}
                 {hiddenName && <span className="text-red-500">(nombre oculto)</span>}
