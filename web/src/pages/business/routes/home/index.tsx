@@ -40,7 +40,7 @@ export const Home = () => {
       <Filters onChange={(e) => filters.onMergeFilters(e)} />
       <LayoutPageSection isBusy={getAllBusinessSummary.status.isBusy} className="mt-20">
         <div ref={refCardContainer} onScroll={onScroll} className="overflow-y-auto max-h-50rem">
-          <div className="flex flex-wrap gap-10 mt-6">
+          <div className="grid place-items-center grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-4 md:gap-8 p-1">
             {infinityScrolling.tableData?.map((businessSummary, index) => {
               return (
                 <BusinessCardSimple

@@ -5,14 +5,13 @@ import { useShoppingMakeOrder } from 'features/api/shopping/useShoppingMakeOrder
 import { StepCommonProps } from '../../types';
 import { ButtonNavContainer } from '../button-nav-container';
 
-import { ShoppingButtonStateHistory } from 'pages/@common/shopping-button-state-history';
 import { ShoppingDetails } from 'pages/@common/shopping-details';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useShopping } from 'pages/@hooks/useShopping';
 
-export interface PurchaseOrderProps extends StepCommonProps {}
+export interface CheckingDataProps extends StepCommonProps {}
 
-export const PurchaseOrder = ({ nextButton: nextButtonProp, backButton }: PurchaseOrderProps) => {
+export const CheckingData = ({ nextButton: nextButtonProp, backButton }: CheckingDataProps) => {
   const { shoppingMakeOrder } = useShoppingMakeOrder();
   const shopping = useShopping();
   const { business } = useBusiness();
@@ -43,12 +42,7 @@ export const PurchaseOrder = ({ nextButton: nextButtonProp, backButton }: Purcha
   return (
     <>
       <div className="flex justify-center">
-        <ShoppingDetails
-          shopping={shopping.constructionShopping}
-          getActions={({ shopping }) => {
-            return <ShoppingButtonStateHistory shopping={shopping} />;
-          }}
-        />
+        <ShoppingDetails shopping={shopping.constructionShopping} />
       </div>
 
       <ButtonNavContainer leftButton={backButton} rightButton={nextButton} />

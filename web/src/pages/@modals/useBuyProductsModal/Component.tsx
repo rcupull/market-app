@@ -5,7 +5,7 @@ import { useModal } from 'features/modal/useModal';
 
 import { useRouter } from 'hooks/useRouter';
 
-import { PurchaseOrder } from './sub-components/purchase-order';
+import { CheckingData } from './sub-components/checking-data';
 import { PurchaseOrderSuccess } from './sub-components/purchase-order-success';
 import { ShoppingCart } from './sub-components/shooping-cart';
 
@@ -37,8 +37,8 @@ export const Component = () => {
             render: (props) => <ShoppingCart {...props} finishButton={finishButton} />,
           },
           {
-            label: 'Crear orden de compra',
-            render: (props) => <PurchaseOrder {...props} finishButton={finishButton} />,
+            label: 'Verificar datos',
+            render: (props) => <CheckingData {...props} finishButton={finishButton} />,
           },
           {
             label: 'Orden de compra creada',

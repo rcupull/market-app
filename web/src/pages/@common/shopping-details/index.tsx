@@ -1,9 +1,8 @@
 import { EmptyImage } from 'components/empty-image';
 import { LabelValuePair } from 'components/label-value-pair';
 
-import { ShoppingStateLabel } from '../shopping-state-label';
-
 import { Shopping } from 'types/shopping';
+import { getImageEndpoint } from 'utils/api';
 import { cn } from 'utils/general';
 import { getShoppingData } from 'utils/shopping';
 
@@ -14,7 +13,7 @@ export interface ShoppingDetailsProps {
 }
 
 export const ShoppingDetails = ({ shopping, onClick, getActions }: ShoppingDetailsProps) => {
-  const { state, posts, currency } = shopping;
+  const { posts, currency } = shopping;
 
   const { totalPrice, totalProducts } = getShoppingData(shopping);
 
@@ -25,11 +24,7 @@ export const ShoppingDetails = ({ shopping, onClick, getActions }: ShoppingDetai
         'cursor-pointer': onClick,
       })}
     >
-      <div className="flex items-center gap-1">
-        <span>Estado:</span>
-        <ShoppingStateLabel state={state} />
-        {getActions?.({ shopping })}
-      </div>
+      <div className="flex items-center gap-1">{getActions?.({ shopping })}</div>
 
       <div className="flex flex-col gap-2 mt-2">
         {posts.map(({ postData, count }, index) => {
@@ -44,7 +39,7 @@ export const ShoppingDetails = ({ shopping, onClick, getActions }: ShoppingDetai
             >
               <div className="flex-shrink-0">
                 {mainImage ? (
-                  <img src={mainImage.src} className="w-8" />
+                  <img src={getImageEndpoint(mainImage.src)} className="w-8" />
                 ) : (
                   <EmptyImage className="w-8" />
                 )}
