@@ -25,7 +25,7 @@ export type FooterLayoutType = 'none' | 'basic';
 export interface PostsLayoutSection {
   _id: string;
   name: string;
-  showIn?: Array<'businessPage' | 'postPage'>;
+  hidden?: boolean;
   //
   postType: PostType;
   //

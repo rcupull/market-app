@@ -5,7 +5,6 @@ export type BusinessCategory = string;
 export type BusinessCurrency = 'CUP' | 'MLC' | 'USD';
 
 export type PostsLayoutSectionType = 'grid' | 'oneRowSlider';
-export type PostsLayoutSectionVisibility = 'businessPage' | 'postPage';
 export type BannerLayoutType = 'none' | 'static' | 'swipableClassic';
 export type SearchLayoutType =
   | 'none'
@@ -23,7 +22,7 @@ export type PostSectionType = 'post' | 'link';
 
 export interface PostsLayoutSection {
   _id: string;
-  showIn?: Array<PostsLayoutSectionVisibility>;
+  hidden?: boolean;
   //
   postType: PostType;
   //
@@ -167,7 +166,7 @@ export type PostsLayoutSectionPayload = Pick<
   | 'postCategoriesTags'
   | 'searchLayout'
   | 'hiddenName'
-  | 'showIn'
+  | 'hidden'
   | 'type'
   | 'postType'
 >;

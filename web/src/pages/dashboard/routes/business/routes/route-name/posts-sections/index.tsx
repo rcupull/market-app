@@ -4,13 +4,14 @@ import { Table } from 'components/table';
 
 import { useBusinessSectionsReorder } from 'features/api/business/useBusinessSectionsReorder';
 
+import { IconButtonShowHideSection } from './IconButtonShowHideSection';
 import { NewSectionButton } from './NewSectionButton';
 import { RowActions } from './RowActions';
 
 import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { PostsLayoutSection } from 'types/business';
-import { viewUtils } from 'utils/view';
+import { cn } from 'utils/general';
 
 export const PostsSections = () => {
   const { business, onFetch, status } = useBusiness();
@@ -59,11 +60,14 @@ export const PostsSections = () => {
             },
           );
         }}
-        heads={['Acciones', 'Nombre', 'Tipo', 'Visible en']}
+        heads={['Acciones', 'Nombre', 'Tipo', 'Oculto']}
         getRowProps={(rowData) => {
-          const { name, hiddenName, showIn, postType } = rowData;
+          const { name, hiddenName, postType, hidden } = rowData;
 
           return {
+            className: cn({
+              'bg-gray-100': hidden,
+            }),
             nodes: [
               <RowActions key="RowActions" rowData={rowData} />,
               <div key={name} className="flex flex-col">
@@ -71,7 +75,7 @@ export const PostsSections = () => {
                 {hiddenName && <span className="text-red-500">(nombre oculto)</span>}
               </div>,
               postType === 'product' ? 'Productos' : 'Enlaces',
-              viewUtils.mapToOutlinedBox({ value: showIn }),
+              <IconButtonShowHideSection key="hidden" rowData={rowData} />,
             ],
           };
         }}

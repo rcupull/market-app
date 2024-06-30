@@ -1,28 +1,19 @@
 import { PostsSection } from './components/posts-section';
 
-import { PostsLayoutSection, PostsLayoutSectionVisibility } from 'types/business';
+import { PostsLayoutSection } from 'types/business';
 import { StyleProps } from 'types/general';
 
 export interface PostsSectionsViewProps extends StyleProps {
   layouts: Array<PostsLayoutSection>;
-  visibility: PostsLayoutSectionVisibility;
   //
   routeName: string;
 }
 
-export const PostsSectionsView = ({ routeName, layouts, visibility }: PostsSectionsViewProps) => {
+export const PostsSectionsView = ({ routeName, layouts }: PostsSectionsViewProps) => {
   return (
     <div data-id="PostsSectionsView" className="flex flex-col w-full">
       {layouts?.map((layout, index) => {
-        return (
-          <PostsSection
-            key={index}
-            index={index}
-            routeName={routeName}
-            layout={layout}
-            visibility={visibility}
-          />
-        );
+        return <PostsSection key={index} index={index} routeName={routeName} layout={layout} />;
       })}
     </div>
   );

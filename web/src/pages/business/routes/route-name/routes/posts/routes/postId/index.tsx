@@ -23,7 +23,6 @@ import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
 import { usePostMakeReviewModal } from 'pages/@modals/usePostMakeReviewModal';
 
-
 export const PostId = () => {
   const { params } = useRouter();
   const { postId } = params;
@@ -67,11 +66,7 @@ export const PostId = () => {
         title={
           <div className="flex items-center">
             {post?.name}
-            <PostShoppingMethod
-              post={post}
-              layout="shoppingCart"
-              className="ml-auto"
-            />
+            <PostShoppingMethod post={post} layout="shoppingCart" className="ml-auto" />
           </div>
         }
         backButton
