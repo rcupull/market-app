@@ -120,7 +120,7 @@ describe('Footer', () => {
             <div
               class="w-full p-4 text-center"
             >
-              © 2024 Todo los derechos reservados
+              © 2024 Todos los derechos reservados
             </div>
           </div>
         </footer>

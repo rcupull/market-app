@@ -19,14 +19,18 @@ describe('Component', () => {
           <div
             class="flex items-center gap-1"
           >
-            <span>
-              Estado:
-            </span>
-            <span
-              class="font-bold text-gray-300"
+            <div
+              class="flex items-center gap-1"
             >
-              En construcción
-            </span>
+              <span>
+                Estado:
+              </span>
+              <span
+                class="font-bold text-gray-300"
+              >
+                En construcción
+              </span>
+            </div>
             <button
               class="relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100 !rounded-full !p-2 !ring-0 !shadow-none"
               title="Ver el historial de la orden de compra"
@@ -47,6 +51,35 @@ describe('Component', () => {
             class="flex flex-col gap-2 mt-2"
           >
             <div
+              class="flex items-center justify-between bg-gray-100 p-2 rounded-md"
+            >
+              <div
+                class="flex-shrink-0"
+              >
+                <svg
+                  class="fill-gray-300 w-8"
+                  height="1em"
+                  viewBox="0 0 32 32"
+                  width="1em"
+                >
+                  <path
+                    d="M2 5v22h28V5zm2 2h24v13.906l-5.281-5.312-.719-.719-4.531 4.531-5.75-5.812-.719-.719-7 7zm20 2a1.999 1.999 0 100 4 1.999 1.999 0 100-4zm-13 6.719L20.188 25H4v-2.281zm11 2l6 6V25h-4.969l-4.156-4.188z"
+                  />
+                </svg>
+              </div>
+              <span
+                class="text-wrap max-w-48 flex-grow"
+              >
+                Chancletas de palo
+              </span>
+              <span>
+                4 unidades
+              </span>
+              <span>
+                50 USD
+              </span>
+            </div>
+            <div
               class="flex justify-end gap-4"
             >
               <div
@@ -59,7 +92,7 @@ describe('Component', () => {
                   :
                 </span>
                 <span>
-                   0 unidades
+                   4 unidades
                 </span>
               </div>
               <div
@@ -72,7 +105,7 @@ describe('Component', () => {
                   :
                 </span>
                 <span>
-                   0 CUP
+                   200 CUP
                 </span>
               </div>
             </div>
