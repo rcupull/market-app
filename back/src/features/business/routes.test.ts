@@ -17,7 +17,7 @@ describe('business', () => {
         .get(
           getTestingRoute({
             path: '/business',
-          })
+          }),
         )
         .expect(200)
         .then((response) => {
@@ -71,7 +71,7 @@ describe('business', () => {
               ],
               "routeName": "business1User1",
             }
-          `
+          `,
           );
 
           expect(response.body.paginator).toMatchInlineSnapshot(`
@@ -108,7 +108,7 @@ describe('business', () => {
         .post(
           getTestingRoute({
             path: '/business',
-          })
+          }),
         )
         .send({
           name: 'newBusiness',
@@ -126,7 +126,7 @@ describe('business', () => {
         .post(
           getTestingRoute({
             path: '/business',
-          })
+          }),
         )
         .send({
           name: 'newBusiness',
@@ -144,7 +144,7 @@ describe('business', () => {
         .post(
           getTestingRoute({
             path: '/business',
-          })
+          }),
         )
         .send({
           name: 'newBusiness',
@@ -160,7 +160,7 @@ describe('business', () => {
           getTestingRoute({
             path: '/business/:newBusiness',
             urlParams: { newBusiness: 'newBusiness' },
-          })
+          }),
         )
         .expect(200);
     });
@@ -172,7 +172,7 @@ describe('business', () => {
         .post(
           getTestingRoute({
             path: '/business',
-          })
+          }),
         )
         .send({
           name: 'newBusiness',
@@ -196,7 +196,7 @@ describe('business', () => {
           getTestingRoute({
             path: '/business/:routeName',
             urlParams: { routeName: business1User1.routeName },
-          })
+          }),
         )
         .expect(200)
         .then((response) => {
@@ -249,7 +249,7 @@ describe('business', () => {
               "routeName": "business1User1",
               "shoppingDebit": 0,
             }
-          `
+          `,
           );
         });
     });

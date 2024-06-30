@@ -37,7 +37,7 @@ const get_business: () => RequestHandler = () => {
           routeNames,
           search,
           createdBy: userId,
-          hidden: includeHidden ? undefined : false,
+          hidden: includeHidden === 'true' ? undefined : false,
         },
       });
 
