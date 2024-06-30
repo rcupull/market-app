@@ -24,6 +24,7 @@ import SvgMoneyBillAltSolid from 'icons/MoneyBillAltSolid';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { BannerInfoTelegramBusiness } from 'pages/@common/banner-info-telegram-business';
 import { BannerInfoTotalDebitBusiness } from 'pages/@common/banner-info-total-debit-business';
+import { LayoutPage } from 'pages/@common/layout-page';
 import { LayoutSection } from 'pages/@common/layout-section';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { isString } from 'utils/general';
@@ -65,6 +66,16 @@ export const RouteName = () => {
   }
 
   const { hidden } = business;
+
+  if (!businessOwnerData.owner) {
+    return (
+      <LayoutPage>
+        <div className="flex items-center justify-center w-full h-96 text-2xl text-gray-500">
+          No tiene acceso a este negocio
+        </div>
+      </LayoutPage>
+    );
+  }
 
   const tabsItems: Array<TabItem & { q: BusinessTab }> = [
     {
