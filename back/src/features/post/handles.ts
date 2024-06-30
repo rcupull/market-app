@@ -270,17 +270,18 @@ const get_related_posts: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { params } = req;
       const { postId } = params;
-      
-      const related = await postServicesGetRelated(
-        {
-          postId,
-        }
-      )
+
+      const related = await postServicesGetRelated({
+        postId,
+      });
+      if (!related) {
+        return getPostNotFoundResponse({ res });
+      }
 
       res.send(related);
     });
-  }
-}
+  };
+};
 const bulk_action_delete: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
