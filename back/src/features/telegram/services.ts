@@ -44,11 +44,11 @@ export const telegramServices = {
       /**
        * Remove validation code in 60 seconds if still exists
        */
-      await agendaServices.scheduleRemoveValidationCode({ code, timeout: 60 });
+      await agendaServices.scheduleRemoveValidationCode({ code, timeout: 300 });
 
       bot.sendMessage(
         meta.chatId,
-        `Tiene 60 segundos para usar el siguiente código de activación: ${code}.`,
+        `Tiene 5 minutos para usar el siguiente código de activación: ${code}.`,
       );
     });
 

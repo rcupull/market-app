@@ -1,12 +1,12 @@
 import { ButtonDescription } from 'components/button-decription';
 import { SettingBox } from 'components/setting-box';
 
+import SvgBell from 'icons/Bell';
 import SvgBootstrap from 'icons/Bootstrap';
 import SvgFighterJetSolid from 'icons/FighterJetSolid';
 import SvgHandshakeSolid from 'icons/HandshakeSolid';
 import SvgMedrt from 'icons/Medrt';
 import SvgShareAltSolid from 'icons/ShareAltSolid';
-import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import SvgTagsSolid from 'icons/TagsSolid';
 import SvgUsersSolid from 'icons/UsersSolid';
 import SvgWpforms from 'icons/Wpforms';
@@ -16,10 +16,10 @@ import { useBusinessShoppingTermsAndConditionsModal } from 'pages/@modals/useBus
 import { useBusinessUpdateAboutUs } from 'pages/@modals/useBusinessUpdateAboutUs';
 import { useBusinessUpdateBanner } from 'pages/@modals/useBusinessUpdateBanner';
 import { useBusinessUpdateLogo } from 'pages/@modals/useBusinessUpdateLogo';
+import { useBusinessUpdateNotifications } from 'pages/@modals/useBusinessUpdateNotifications';
 import { useBusinessUpdatePostCategories } from 'pages/@modals/useBusinessUpdatePostCategories';
 import { useBusinessUpdatePostForm } from 'pages/@modals/useBusinessUpdatePostForm';
 import { useBusinessUpdateSocialNetworks } from 'pages/@modals/useBusinessUpdateSocialNetworks';
-import { useBusinessUpdateTelegramBot } from 'pages/@modals/useBusinessUpdateTelegramBot';
 
 export const Settings = () => {
   const businessUpdateSocialNetworks = useBusinessUpdateSocialNetworks();
@@ -29,7 +29,7 @@ export const Settings = () => {
   const businessUpdateLogo = useBusinessUpdateLogo();
   const businessUpdatePostCategories = useBusinessUpdatePostCategories();
   const businessUpdatePostForm = useBusinessUpdatePostForm();
-  const businessUpdateTelegramBot = useBusinessUpdateTelegramBot();
+  const businessUpdateNotifications = useBusinessUpdateNotifications();
   const businessShoppingTermsAndConditionsModal = useBusinessShoppingTermsAndConditionsModal();
 
   const { onFetch, business } = useBusiness();
@@ -51,11 +51,11 @@ export const Settings = () => {
       )}
 
       <SettingBox
-        title="Bot de Telegram"
-        description="Reciba las notificaciones por Telegram en tiempo real."
-        svg={SvgShoppingCartSolid}
+        title="Notificaciones"
+        description="Reciba las notificaciones de su negocio por Telegram en tiempo real."
+        svg={SvgBell}
         onClick={() =>
-          businessUpdateTelegramBot.open({
+          businessUpdateNotifications.open({
             onAfterSuccess: () => {
               business && onFetch({ routeName: business?.routeName });
             },

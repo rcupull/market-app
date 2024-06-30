@@ -57,6 +57,7 @@ export const businessServicesAddOne: QueryHandle<
     routeName,
     postCategories,
     currency,
+    hidden: true, //by default the businees is hidden
   });
 
   await out.save();

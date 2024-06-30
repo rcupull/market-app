@@ -21,6 +21,7 @@ export const useUpdateOneBusiness = (): {
           | 'whatsAppPhoneNumber'
           | 'shoppingMeta'
           | 'postFormFields'
+          | 'notificationFlags'
         >
       >;
     },

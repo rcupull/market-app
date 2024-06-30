@@ -126,7 +126,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
               {portal.getPortal(
                 <Button
                   label="Guardar"
-                  isBusy={addOneBusiness.status.isBusy}
+                  isBusy={addOneBusiness.status.isBusy || getAllBusiness.status.isBusy}
                   disabled={!isValid}
                   onClick={() => {
                     if (business) {

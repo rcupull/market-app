@@ -10,17 +10,20 @@ import { Portal } from 'hooks/usePortal';
 import { getTelegramUrl } from 'utils/api';
 
 interface FormValue {
-  code: string;
+  code?: string;
 }
 
 export interface TelegramActivationStepsProps {
-  getSubmitBtnProps: (args: { value: FormValue; resetForm: () => void }) => Partial<ButtonProps>;
-  portal: Portal;
+  getSubmitBtnProps?: (args: { value: FormValue; resetForm: () => void }) => Partial<ButtonProps>;
+  portal?: Portal;
+  value?: FormValue;
+  onChange?: (newValue: FormValue) => void;
 }
 
 export const TelegramActivationSteps = ({
   getSubmitBtnProps,
   portal,
+  ...omittedProps
 }: TelegramActivationStepsProps) => {
   const codeKeyboard = useKeyBoard<{
     handleSubmit: () => void;
@@ -60,15 +63,10 @@ export const TelegramActivationSteps = ({
           value={{
             code: '',
           }}
-          validate={[
-            {
-              field: 'code',
-              type: 'required',
-            },
-          ]}
+          {...omittedProps}
         >
-          {({ value, isValid, resetForm, hasChange }) => {
-            const overrydeBtnProps = getSubmitBtnProps({ value, resetForm });
+          {({ value, resetForm, hasChange }) => {
+            const overrydeBtnProps = getSubmitBtnProps?.({ value, resetForm }) || {};
 
             return (
               <form className="mt-4">
@@ -84,11 +82,10 @@ export const TelegramActivationSteps = ({
                   })}
                 />
 
-                {portal.getPortal(
+                {portal?.getPortal(
                   <Button
                     label="Activar"
                     hasChange={hasChange}
-                    disabled={!isValid}
                     className="w-full"
                     {...overrydeBtnProps}
                   />,
