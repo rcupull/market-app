@@ -7,6 +7,7 @@ import { ButtonNavContainer } from '../button-nav-container';
 
 import { ShoppingButtonStateHistory } from 'pages/@common/shopping-button-state-history';
 import { ShoppingDetails } from 'pages/@common/shopping-details';
+import { ShoppingState } from 'pages/@common/shopping-state';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useShopping } from 'pages/@hooks/useShopping';
 
@@ -46,7 +47,12 @@ export const PurchaseOrder = ({ nextButton: nextButtonProp, backButton }: Purcha
         <ShoppingDetails
           shopping={shopping.constructionShopping}
           getActions={({ shopping }) => {
-            return <ShoppingButtonStateHistory shopping={shopping} />;
+            return (
+              <>
+                <ShoppingState shopping={shopping} />
+                <ShoppingButtonStateHistory shopping={shopping} />
+              </>
+            );
           }}
         />
       </div>

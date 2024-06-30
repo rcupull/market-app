@@ -59,9 +59,14 @@ export interface HighlightsProps extends StyleProps {}
 
 export const Highlights = ({ className }: HighlightsProps) => {
   return (
-    <div className={cn('w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-16 md:gap-4', className)}>
+    <div
+      className={cn(
+        'w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-16 md:gap-4',
+        className,
+      )}
+    >
       {items.map((item, index) => (
-        <Highlight key={index} {...item}  />
+        <Highlight key={index} {...item} />
       ))}
     </div>
   );
