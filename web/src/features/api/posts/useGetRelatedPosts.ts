@@ -1,19 +1,19 @@
 import { useFetch } from 'hooks/useFetch';
 
-import { FetchResource } from 'types/api';
+import { FetchResourceWithPagination } from 'types/api';
 import { Post } from 'types/post';
 import { getEndpoint } from 'utils/api';
 
 export const useGetRelatedPosts = (): {
-  getRelatedPosts: FetchResource<{ id: string }, Post>;
+  getRelatedPosts: FetchResourceWithPagination<{ id: string }, Post>;
 } => {
-  const fetch = useFetch<Post>();
+  const fetch = useFetch<Post[]>();
 
   return {
     getRelatedPosts: {
       data: fetch[0],
       status: fetch[1],
-      fetch: ({ id }, options = {}) => {
+      fetch: ({ id }) => {
         fetch[2](
           {
             method: 'get',
@@ -24,7 +24,6 @@ export const useGetRelatedPosts = (): {
               },
             }),
           },
-          options,
         );
       },
       reset: fetch[3],

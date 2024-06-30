@@ -4,6 +4,7 @@ import { ClothingProductGrid1 } from 'components/clothing-product-grid-1';
 import { FieldClothingSizeSelect } from 'components/field-clothing-size-select';
 import { FieldColorSelect } from 'components/field-colors-select';
 import { PostShoppingMethod } from 'components/post-shopping-method';
+import { RelatedSectionsView } from 'components/posts-related-view';
 import { ProductDescription1 } from 'components/product/description/product-description-1';
 import { ProductDetails1 } from 'components/product/details/product-details-1';
 import { ProductHighLights1 } from 'components/product/hightlights/product-highlights-1';
@@ -102,6 +103,10 @@ export const PostId = () => {
           }}
         />
       </LayoutPage>
+      <RelatedSectionsView 
+        postId={post._id} 
+        business={business}
+      />
     </UpdateSomethingContainer>
   );
 };

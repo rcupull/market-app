@@ -8,7 +8,6 @@ import {
   postServicesGetAll,
   postServicesGetAllWithPagination,
   postServicesGetOne,
-  postServicesGetRelated,
   postServicesUpdateMany,
   postServicesUpdateOne,
 } from './services';
@@ -268,17 +267,28 @@ const delete_posts_postId: () => RequestHandler = () => {
 const get_related_posts: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const { params } = req;
+      const { params, paginateOptions } = req;
       const { postId } = params;
 
-      const related = await postServicesGetRelated({
-        postId,
-      });
-      if (!related) {
+      const post = await postServicesGetOne({ query: { _id: postId } });
+
+      if (!post) {
         return getPostNotFoundResponse({ res });
       }
 
-      res.send(related);
+      const out = await postServicesGetAllWithPagination({
+        paginateOptions,
+        query: {
+          _id: { $ne: postId },
+          routeName: post.routeName,
+          hidden: false,
+          $expr: {
+            $gt: [{ $size: { $setIntersection: ['$postCategoriesTags', post.postCategoriesTags] } }, 0],
+          },
+        },
+      });
+
+      res.send(out);
     });
   };
 };
