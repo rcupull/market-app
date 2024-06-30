@@ -95,7 +95,7 @@ export const ClothingProductGrid1 = ({ post, render, currency }: ClothingProduct
                         interestedByClothingSizes: value.interestedByClothingSizes,
                         interestedByColors: value.interestedByColors,
                       }}
-                      layout={post.postPageLayout?.shoppingMethod}
+                      layout="shoppingCart"
                       btnPostToCartVariant="button"
                       className="mt-4 w-full"
                     />,

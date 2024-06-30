@@ -4,7 +4,6 @@ import { ClothingProductGrid1 } from 'components/clothing-product-grid-1';
 import { FieldClothingSizeSelect } from 'components/field-clothing-size-select';
 import { FieldColorSelect } from 'components/field-colors-select';
 import { PostShoppingMethod } from 'components/post-shopping-method';
-import { PostsSectionsView } from 'components/posts-sections-view';
 import { ProductDescription1 } from 'components/product/description/product-description-1';
 import { ProductDetails1 } from 'components/product/details/product-details-1';
 import { ProductHighLights1 } from 'components/product/hightlights/product-highlights-1';
@@ -23,12 +22,9 @@ import { usePostIdPersistent } from 'pages/@hooks/usePostIdPersistent';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
 import { usePostMakeReviewModal } from 'pages/@modals/usePostMakeReviewModal';
-import { PostsLayoutSection } from 'types/business';
 
-export interface PostIdProps {
-  routeName: string;
-}
-export const PostId = ({ routeName }: PostIdProps) => {
+
+export const PostId = () => {
   const { params } = useRouter();
   const { postId } = params;
   const businessNewUpdatePost = useBusinessNewUpdatePost();
@@ -57,13 +53,6 @@ export const PostId = ({ routeName }: PostIdProps) => {
     return <></>;
   }
 
-  const getSectionsBelow = (): Array<PostsLayoutSection> => {
-    const postsSectionsBelowIds = post.postPageLayout?.postsSectionsBelowIds;
-
-    const allBusinessSections = business?.layouts?.posts?.sections || [];
-    return allBusinessSections.filter(({ _id }) => postsSectionsBelowIds?.includes(_id));
-  };
-
   return (
     <UpdateSomethingContainer
       title="Editar esta publicación"
@@ -80,7 +69,7 @@ export const PostId = ({ routeName }: PostIdProps) => {
             {post?.name}
             <PostShoppingMethod
               post={post}
-              layout={post.postPageLayout?.shoppingMethod}
+              layout="shoppingCart"
               className="ml-auto"
             />
           </div>
@@ -116,12 +105,6 @@ export const PostId = ({ routeName }: PostIdProps) => {
             highLights: (props) => <ProductHighLights1 {...props} />,
             details: (props) => <ProductDetails1 {...props} />,
           }}
-        />
-
-        <PostsSectionsView
-          routeName={routeName}
-          layouts={getSectionsBelow()}
-          visibility="postPage"
         />
       </LayoutPage>
     </UpdateSomethingContainer>

@@ -7,7 +7,6 @@ import { FieldInput } from 'components/field-input';
 import { FieldInputImages } from 'components/field-input-images';
 import { FieldPostCategoriesButtons } from 'components/field-post-categories-buttons';
 import { FieldPostLink } from 'components/field-post-link';
-import { FieldPostPageLayout } from 'components/field-post-page-layout';
 import { FieldPostStockAmount } from 'components/field-post-stock-amount';
 import { FieldRadioGroup } from 'components/field-radio-group';
 import { FieldTextArea } from 'components/field-text-area';
@@ -269,7 +268,7 @@ export const Component = ({
               </>
             )}
 
-            {postFormFields.includes('postPageLayout') && (
+            {/* {postFormFields.includes('postPageLayout') && (
               <>
                 <FieldPostPageLayout
                   label="Página de la publicación"
@@ -278,7 +277,7 @@ export const Component = ({
                 />
                 <Divider />
               </>
-            )}
+            )} */}
 
             {portal.getPortal(
               <Button

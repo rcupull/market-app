@@ -42,9 +42,7 @@ export interface PostsLayout {
   sections?: Array<PostsLayoutSection>;
 }
 
-export interface PostPageLayout {
-  postsSectionsBelowIds?: Array<string>;
-}
+export interface PostPageLayout {}
 
 export type PostCardLayoutImages = 'static' | 'hoverZoom' | 'slider' | 'switch' | 'rounded';
 
