@@ -399,6 +399,26 @@
         }
       }
     },
+    "/posts/{postId}/related": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "postId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/posts/bulkActions/delete": {
       "delete": {
         "description": "",

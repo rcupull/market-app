@@ -71,21 +71,19 @@ export const postServicesGetRelated: QueryHandle<
   Array<Post>
 > = async ({ /*paginateOptions = {},*/ postId }) => {
   
-  const post = await PostModel.findOne({id: postId});
+  const post = await PostModel.findOne({ _id: postId });
 
   if (!post) {
     return [];
   }
 
   const query = {
-    postId: { $ne: post._id },
+    _id: { $ne: post._id },
     routeName : post.routeName,
     postCategoriesTags: { $in: post.postCategoriesTags },
   }  
 
-  const out = await PostModel.find(query, {
-    query,
-  });
+  const out = await PostModel.find(query);
 
   return out;
 };
