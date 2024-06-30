@@ -60,8 +60,6 @@ describe('shopping services', () => {
     it('should return all posts without pagination', async () => {
       const { shopping1Business1User1 } = await fillBD();
 
-      if (!shopping1Business1User1) return;
-
       const result = await shoppingServicesGetOne({
         query: { _id: shopping1Business1User1._id.toString() },
       });

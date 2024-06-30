@@ -28,7 +28,7 @@ export interface TestBDContent {
   business2User2: Business;
   hiddenBusinessUser2: Business;
   //
-  shopping1Business1User1?: Shopping;
+  shopping1Business1User1: Shopping;
   //
   admin: User;
 }
@@ -50,11 +50,7 @@ export const fillBD = async (args?: {
   hiddenBusinessUser2?: Partial<Business>;
   shopping1Business1User1?: Partial<Shopping>;
   admin?: Partial<User>;
-  //
-  noCreateInitialShopping?: boolean;
 }): Promise<TestBDContent> => {
-  const { noCreateInitialShopping } = args || {};
-
   const admin = new UserModel({
     name: 'admin',
     email: 'admin@gmail.com',
@@ -129,26 +125,24 @@ export const fillBD = async (args?: {
   await productPost2Business1User1.save();
 
   let shopping1Business1User1 = undefined;
-  if (!noCreateInitialShopping) {
-    shopping1Business1User1 = new ShoppingModel({
-      state: 'CONSTRUCTION',
-      purchaserId: user1._id,
-      purchaserName: user1.name,
-      routeName: business1User1.routeName,
-      currency: business1User1.currency,
-      posts: [
-        {
-          postData: postToShoppingPostDataReshaper(productPost1Business1User1),
-          purshaseNotes: {},
-          count: 5,
-          lastUpdatedDate: new Date(),
-        },
-      ],
-      ...(args?.shopping1Business1User1 || {}),
-    });
+  shopping1Business1User1 = new ShoppingModel({
+    state: 'CONSTRUCTION',
+    purchaserId: user1._id,
+    purchaserName: user1.name,
+    routeName: business1User1.routeName,
+    currency: business1User1.currency,
+    posts: [
+      {
+        postData: postToShoppingPostDataReshaper(productPost1Business1User1),
+        purshaseNotes: {},
+        count: 5,
+        lastUpdatedDate: new Date(),
+      },
+    ],
+    ...(args?.shopping1Business1User1 || {}),
+  });
 
-    await shopping1Business1User1.save();
-  }
+  await shopping1Business1User1.save();
 
   //////////////////////////////////////////////////////////////////////////////////
 
@@ -260,4 +254,8 @@ export const fillBD = async (args?: {
     //
     admin,
   };
+};
+
+export const removeAllShoppings = async () => {
+  await ShoppingModel.deleteMany({});
 };
