@@ -27,7 +27,6 @@ export const Home = ({ routeName }: HomeProps) => {
         <PostsSectionsView
           routeName={routeName}
           layouts={business?.layouts?.posts?.sections || []}
-          visibility="businessPage"
         />
       </LayoutPage>
     </UpdateSomethingContainer>

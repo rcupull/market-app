@@ -1,8 +1,13 @@
+import { useRef } from 'react';
+
 import { Badge } from 'components/badge';
 import { ButtonRemove } from 'components/button-remove';
+import { IconButtonMoveDown } from 'components/icon-button-move-down';
+import { IconButtonMoveUp } from 'components/icon-button-move-up';
 import { IconButtonRemove } from 'components/icon-button-remove';
 import { IconButtonUpdate } from 'components/icon-button-update';
 
+import { useBusinessSectionsReorder } from 'features/api/business/useBusinessSectionsReorder';
 import { useRemoveBusinessSection } from 'features/api/business/useRemoveBusinessSection';
 import { useModal } from 'features/modal/useModal';
 
@@ -13,10 +18,13 @@ import { PostsLayoutSection } from 'types/business';
 
 export interface RowActionsProps {
   rowData: PostsLayoutSection;
+  rowIndex: number;
+  allSections: Array<PostsLayoutSection>;
 }
-export const RowActions = ({ rowData }: RowActionsProps) => {
+export const RowActions = ({ rowData, allSections, rowIndex }: RowActionsProps) => {
   const { pushModal } = useModal();
   const { business, onFetch } = useBusiness();
+  const { businessSectionsReorder } = useBusinessSectionsReorder();
 
   const handleDelete = () => {
     pushModal(
@@ -70,10 +78,42 @@ export const RowActions = ({ rowData }: RowActionsProps) => {
     });
   };
 
+  const refDirectionReorder = useRef<'up' | 'down' | null>();
+  const handleReorder = (direction: 'up' | 'down') => {
+    if (!business) return;
+
+    refDirectionReorder.current = direction;
+
+    businessSectionsReorder.fetch(
+      {
+        routeName: business?.routeName,
+        fromIndex: rowIndex,
+        toIndex: direction === 'up' ? rowIndex - 1 : rowIndex + 1,
+      },
+      {
+        onAfterSuccess: () => {
+          onFetch({ routeName: business?.routeName });
+        },
+      },
+    );
+  };
+
   return (
     <RowActionsContainer>
       <IconButtonRemove onClick={handleDelete} />
       <IconButtonUpdate onClick={handleUpdate} />
+      {rowIndex > 0 && (
+        <IconButtonMoveUp
+          isBusy={businessSectionsReorder.status.isBusy && refDirectionReorder.current === 'up'}
+          onClick={() => handleReorder('up')}
+        />
+      )}
+      {rowIndex < allSections.length - 1 && (
+        <IconButtonMoveDown
+          isBusy={businessSectionsReorder.status.isBusy && refDirectionReorder.current === 'down'}
+          onClick={() => handleReorder('down')}
+        />
+      )}
     </RowActionsContainer>
   );
 };

@@ -12,7 +12,7 @@ import { UpdateSomethingContainer } from 'pages/@common/update-something-contain
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useBusinessNewUpdateSection } from 'pages/@modals/useBusinessNewUpdateSection';
 import { GetAllPostsQuery } from 'types/api';
-import { PostsLayoutSection, PostsLayoutSectionVisibility } from 'types/business';
+import { PostsLayoutSection } from 'types/business';
 import { StyleProps } from 'types/general';
 import { Post } from 'types/post';
 import { cn } from 'utils/general';
@@ -21,17 +21,15 @@ export interface PostsSectionProps extends StyleProps {
   index: number;
   routeName: string;
   layout: PostsLayoutSection;
-  visibility: PostsLayoutSectionVisibility;
 }
 
-export const PostsSection = ({ routeName, layout, className, visibility }: PostsSectionProps) => {
+export const PostsSection = ({ routeName, layout, className }: PostsSectionProps) => {
   const { business, onFetch } = useBusiness();
-  const { name, hiddenName, postCategoriesTags, _id, showIn, postType } = layout;
+  const { name, hiddenName, postCategoriesTags, _id, hidden, postType } = layout;
 
   const { getAllPosts } = useGetAllPosts();
   const { owner } = useBusiness();
 
-  const hidden = !showIn?.includes(visibility);
   const notRender = hidden && !owner;
   const renderHiddenSection = hidden && owner;
 
