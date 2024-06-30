@@ -2,6 +2,7 @@ import { EmptyImage } from 'components/empty-image';
 import { LabelValuePair } from 'components/label-value-pair';
 
 import { Shopping } from 'types/shopping';
+import { getImageEndpoint } from 'utils/api';
 import { cn } from 'utils/general';
 import { getShoppingData } from 'utils/shopping';
 
@@ -38,7 +39,7 @@ export const ShoppingDetails = ({ shopping, onClick, getActions }: ShoppingDetai
             >
               <div className="flex-shrink-0">
                 {mainImage ? (
-                  <img src={mainImage.src} className="w-8" />
+                  <img src={getImageEndpoint(mainImage.src)} className="w-8" />
                 ) : (
                   <EmptyImage className="w-8" />
                 )}

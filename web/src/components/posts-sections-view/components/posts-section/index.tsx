@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+import { WarningViewOnlyAdmin } from 'components/warning-view-only-admin';
+
 import { useGetAllPosts } from 'features/api/posts/useGetAllPosts';
 
 import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
@@ -98,11 +100,7 @@ export const PostsSection = ({ routeName, layout, className }: PostsSectionProps
         {!hiddenName && (
           <div className="flex flex-col items-center mb-8">
             <h2 className="text-3xl font-bold">{name}</h2>
-            {renderHiddenSection && (
-              <span className="text-sm sm:text-lg ml-3 text-yellow-600">
-                (Solo visible para el administrador del negocio)
-              </span>
-            )}
+            {renderHiddenSection && <WarningViewOnlyAdmin />}
           </div>
         )}
 
