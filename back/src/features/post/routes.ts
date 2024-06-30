@@ -67,6 +67,14 @@ router
     postHandles.post_make_review(),
   );
 /////////////////////////////////////////////////////////////////
+router
+  .route('/posts/:postId/related')
+  .get(
+    validators.param('postId').notEmpty(),
+    validators.handle,
+    postHandles.get_related_posts(),
+  );
+/////////////////////////////////////////////////////////////////
 
 router
   .route('/posts/bulkActions/delete')

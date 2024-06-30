@@ -63,6 +63,33 @@ export const postServicesGetOne: QueryHandle<
   return out;
 };
 
+export const postServicesGetRelated: QueryHandle<
+  {
+    paginateOptions?: PaginateOptions;
+    postId: string;
+  },
+  Array<Post>
+> = async ({ /*paginateOptions = {},*/ postId }) => {
+  
+  const post = await PostModel.findOne({id: postId});
+
+  if (!post) {
+    return [];
+  }
+
+  const query = {
+    postId: { $ne: post._id },
+    routeName : post.routeName,
+    postCategoriesTags: { $in: post.postCategoriesTags },
+  }  
+
+  const out = await PostModel.find(query, {
+    query,
+  });
+
+  return out;
+};
+
 export const postServicesDeleteMany: QueryHandle<{
   query: DeletePostQuery;
 }> = async ({ query }) => {

@@ -8,6 +8,7 @@ import {
   postServicesGetAll,
   postServicesGetAllWithPagination,
   postServicesGetOne,
+  postServicesGetRelated,
   postServicesUpdateMany,
   postServicesUpdateOne,
 } from './services';
@@ -264,6 +265,22 @@ const delete_posts_postId: () => RequestHandler = () => {
   };
 };
 
+const get_related_posts: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { params } = req;
+      const { postId } = params;
+      
+      const related = await postServicesGetRelated(
+        {
+          postId,
+        }
+      )
+
+      res.send(related);
+    });
+  }
+}
 const bulk_action_delete: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
@@ -434,6 +451,7 @@ export const postHandles = {
   get_posts_postId,
   put_posts_postId,
   delete_posts_postId,
+  get_related_posts,
   //
   bulk_action_delete,
   bulk_action_update,
