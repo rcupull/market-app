@@ -2,8 +2,6 @@ import { ButtonRefresh } from 'components/button-refresh';
 import { IconButtonRefresh } from 'components/icon-button-refresh';
 import { Table } from 'components/table';
 
-import { useBusinessSectionsReorder } from 'features/api/business/useBusinessSectionsReorder';
-
 import { IconButtonShowHideSection } from './IconButtonShowHideSection';
 import { NewSectionButton } from './NewSectionButton';
 import { RowActions } from './RowActions';
@@ -15,8 +13,6 @@ import { cn } from 'utils/general';
 
 export const PostsSections = () => {
   const { business, onFetch, status } = useBusiness();
-
-  const { businessSectionsReorder } = useBusinessSectionsReorder();
 
   const data = business?.layouts?.posts?.sections || [];
 
@@ -47,21 +43,8 @@ export const PostsSections = () => {
           xs: [[0, 1, 2, 3]],
           lg: 'none',
         }}
-        enabledReorder
-        onReorder={({ fromIndex, toIndex }) => {
-          if (!business) return;
-
-          businessSectionsReorder.fetch(
-            { routeName: business?.routeName, fromIndex, toIndex },
-            {
-              onAfterSuccess: () => {
-                onFetch({ routeName: business?.routeName });
-              },
-            },
-          );
-        }}
         heads={['Acciones', 'Nombre', 'Tipo', 'Oculto']}
-        getRowProps={(rowData) => {
+        getRowProps={(rowData,rowIndex) => {
           const { name, hiddenName, postType, hidden } = rowData;
 
           return {
@@ -69,7 +52,7 @@ export const PostsSections = () => {
               'bg-gray-100': hidden,
             }),
             nodes: [
-              <RowActions key="RowActions" rowData={rowData} />,
+              <RowActions key="RowActions" rowData={rowData} rowIndex={rowIndex} allSections={data}/>,
               <div key={name} className="flex flex-col">
                 {name}
                 {hiddenName && <span className="text-red-500">(nombre oculto)</span>}
@@ -80,7 +63,7 @@ export const PostsSections = () => {
           };
         }}
         data={data}
-        isBusy={businessSectionsReorder.status.isBusy || status.isBusy}
+        isBusy={status.isBusy}
       />
     </>
   );
