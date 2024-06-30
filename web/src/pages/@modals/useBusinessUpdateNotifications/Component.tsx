@@ -33,10 +33,10 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   const { businessChatBotValidate } = useBusinessChatBotValidate();
   const { updateOneBusiness } = useUpdateOneBusiness();
 
-  const initialState:State = {
+  const initialState: State = {
     notificationFlags: business?.notificationFlags,
     code: '',
-  }
+  };
   const [state, setState] = useState<State>(initialState);
 
   const { telegramBotChat } = business || {};
@@ -45,17 +45,27 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
     <div>
       Nuestra plataforma utiliza Telegram para mantenerlo actualizado del estado de sus negocios,
       órdenes de compra y otras informaciones importantes.
-
       <Divider />
       <Formux<State> value={state} onChange={setState}>
         {() => {
           return (
             <form>
-              <FieldRadioGroup<{ value: BusinessNotificationFlags; label: string; description:string }>
+              <FieldRadioGroup<{
+                value: BusinessNotificationFlags;
+                label: string;
+                description: string;
+              }>
                 label="Recibir notificaciones:"
                 name="notificationFlags"
                 renderOption={({ checked, item }) => {
-                  return <FieldCheckbox noUseFormik value={checked} label={item.label} description={item.description} />;
+                  return (
+                    <FieldCheckbox
+                      noUseFormik
+                      value={checked}
+                      label={item.label}
+                      description={item.description}
+                    />
+                  );
                 }}
                 multi
                 optionToValue={({ value }) => value}
@@ -63,7 +73,8 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                   {
                     value: BusinessNotificationFlags.TELEGRAM_NEW_SHOPPING,
                     label: 'Al crear orden de compra',
-                    description: 'Le llegarán los detalles (precio, productos y enlace) de las ordenes de compra al ser solicitadas por los clientes.'
+                    description:
+                      'Le llegarán los detalles (precio, productos y enlace) de las ordenes de compra al ser solicitadas por los clientes.',
                   },
                 ]}
                 containerClassName="flex items-center flex-wrap gap-4"

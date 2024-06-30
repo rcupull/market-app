@@ -27,7 +27,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
           const { code } = value;
           const { _id } = user;
 
-          if(code){
+          if (code) {
             updateTelegramChatBotUser.fetch(
               { code, userId: _id },
               {
@@ -38,7 +38,6 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               },
             );
           }
-          
         },
       })}
     />

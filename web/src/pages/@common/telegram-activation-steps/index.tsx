@@ -16,8 +16,8 @@ interface FormValue {
 export interface TelegramActivationStepsProps {
   getSubmitBtnProps?: (args: { value: FormValue; resetForm: () => void }) => Partial<ButtonProps>;
   portal?: Portal;
-  value?: FormValue
-  onChange?:(newValue: FormValue)=>void
+  value?: FormValue;
+  onChange?: (newValue: FormValue) => void;
 }
 
 export const TelegramActivationSteps = ({

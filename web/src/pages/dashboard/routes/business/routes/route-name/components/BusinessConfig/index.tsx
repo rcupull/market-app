@@ -36,7 +36,7 @@ export const BusinessConfig = ({ business }: BusinessConfigProps) => {
     if (!isEmpty(b?.notificationFlags) && !b?.telegramBotChat) {
       out.push('notifications');
     }
-    if (!b?.layouts?.banner) {
+    if (isEmpty(b?.bannerImages)) {
       out.push('banner');
     }
     if (!b?.layouts?.posts?.sections.length) {

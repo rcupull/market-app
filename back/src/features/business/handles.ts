@@ -59,7 +59,7 @@ const get_business_summary: () => RequestHandler = () => {
           routeNames,
           search,
           createdBy: userId,
-          hidden: includeHidden ? undefined : false,
+          hidden: includeHidden === 'true' ? undefined : false,
         },
       });
 
