@@ -16,11 +16,11 @@ import { getSortQuery } from '../../utils/schemas';
 import { Business } from '../../types/business';
 import { postServicesGetAll, postServicesGetOne } from '../post/services';
 import { logger } from '../logger';
-import { notificationsServices } from '../notifications/services';
+import { notificationsServicesSendUpdateStockAmountMessage } from '../notifications/services';
 import { agendaServices } from '../agenda/services';
 import { businessServicesFindOne } from '../business/services';
 
-const addOne: QueryHandle<
+export const shoppingServicesAddOne: QueryHandle<
   {
     amountToAdd?: number;
     purshaseNotes?: PostPurshaseNotes;
@@ -64,7 +64,7 @@ const addOne: QueryHandle<
   return newShopping;
 };
 
-const addPostToOne: QueryHandle<
+export const shoppingServicesAddPostToOne: QueryHandle<
   {
     amountToAdd?: number;
     post: Post;
@@ -124,7 +124,7 @@ const addPostToOne: QueryHandle<
   }
 };
 
-const updateOrAddOne: QueryHandle<
+export const shoppingServicesUpdateOrAddOne: QueryHandle<
   {
     amountToAdd?: number;
     purshaseNotes?: PostPurshaseNotes;
@@ -142,12 +142,12 @@ const updateOrAddOne: QueryHandle<
   });
 
   if (existInConstruction) {
-    await addPostToOne({ amountToAdd, post, currentShopping: existInConstruction });
+    await shoppingServicesAddPostToOne({ amountToAdd, post, currentShopping: existInConstruction });
     await agendaServices.scheduleRemoveOrderInConstruction({
       orderId: existInConstruction._id.toString(),
     });
   } else {
-    const shopping = await addOne({ amountToAdd, purshaseNotes, user, post });
+    const shopping = await shoppingServicesAddOne({ amountToAdd, purshaseNotes, user, post });
 
     if (!shopping) return;
 
@@ -155,7 +155,7 @@ const updateOrAddOne: QueryHandle<
   }
 };
 
-const getAllWithPagination: QueryHandle<
+export const shoppingServicesGetAllWithPagination: QueryHandle<
   {
     paginateOptions?: PaginateOptions;
     query: GetAllShoppingArgs;
@@ -173,7 +173,7 @@ const getAllWithPagination: QueryHandle<
   return out as unknown as PaginateResult<Shopping>;
 };
 
-const getAll: QueryHandle<
+export const shoppingServicesGetAll: QueryHandle<
   {
     query: GetAllShoppingArgs;
     projection?: ProjectionType<Shopping>;
@@ -187,7 +187,7 @@ const getAll: QueryHandle<
   return out;
 };
 
-const getOne: QueryHandle<
+export const shoppingServicesGetOne: QueryHandle<
   {
     query: FilterQuery<Shopping>;
   },
@@ -198,7 +198,7 @@ const getOne: QueryHandle<
   return out;
 };
 
-const updateOne: QueryHandle<
+export const shoppingServicesUpdateOne: QueryHandle<
   {
     query: FilterQuery<Shopping>;
     update: UpdateQuery<Shopping>;
@@ -209,7 +209,7 @@ const updateOne: QueryHandle<
   await ShoppingModel.updateOne(query, update, options);
 };
 
-const updateMany: QueryHandle<
+export const shoppingServicesUpdateMany: QueryHandle<
   {
     query: FilterQuery<Shopping>;
     update: UpdateQuery<Shopping>;
@@ -220,7 +220,7 @@ const updateMany: QueryHandle<
   await ShoppingModel.updateMany(query, update, options);
 };
 
-const findAndUpdateOne: QueryHandle<
+export const shoppingServicesFindAndUpdateOne: QueryHandle<
   {
     query: FilterQuery<Shopping>;
     update: UpdateQuery<Shopping>;
@@ -230,7 +230,7 @@ const findAndUpdateOne: QueryHandle<
   return await ShoppingModel.findOneAndUpdate(query, update);
 };
 
-const deleteOne: QueryHandle<
+export const shoppingServicesDeleteOne: QueryHandle<
   {
     query: FilterQuery<Shopping>;
   },
@@ -239,7 +239,7 @@ const deleteOne: QueryHandle<
   await ShoppingModel.deleteOne(query);
 };
 
-const deleteMany: QueryHandle<
+export const shoppingServicesDeleteMany: QueryHandle<
   {
     query: FilterQuery<Shopping>;
   },
@@ -248,7 +248,7 @@ const deleteMany: QueryHandle<
   await ShoppingModel.deleteMany(query);
 };
 
-const findOneAndDelete: QueryHandle<
+export const shoppingServicesFindOneAndDelete: QueryHandle<
   {
     query: FilterQuery<Shopping>;
   },
@@ -257,7 +257,7 @@ const findOneAndDelete: QueryHandle<
   return await ShoppingModel.findOneAndDelete(query);
 };
 
-const getStockAmountAvailableFromPost: QueryHandle<
+export const shoppingServicesGetStockAmountAvailableFromPost: QueryHandle<
   {
     post: Post;
     shoppings: Array<Shopping>;
@@ -286,7 +286,7 @@ const getStockAmountAvailableFromPost: QueryHandle<
   return diff < 0 ? 0 : diff;
 };
 
-const getStockAmountAvailableFromPosts: QueryHandle<
+export const shoppingServicesGetStockAmountAvailableFromPosts: QueryHandle<
   {
     posts: Array<Post>;
   },
@@ -295,7 +295,7 @@ const getStockAmountAvailableFromPosts: QueryHandle<
   /**
    * shopping que tienen estos productos incluidos pero todavia no han sido vendidos. O sea, existen en los almacenes del comerciante
    * El stockAmount de los posts sera decrementado una vez se haya vendido y entregado el producto (cambia para ShoppingState.DELIVERED)*/
-  const allShoppings = await shoppingServices.getAll({
+  const allShoppings = await shoppingServicesGetAll({
     query: {
       'posts.postData._id': { $in: posts.map((post) => post._id) },
       state: {
@@ -311,13 +311,15 @@ const getStockAmountAvailableFromPosts: QueryHandle<
   });
 
   const out = await Promise.all(
-    posts.map((post) => getStockAmountAvailableFromPost({ post, shoppings: allShoppings })),
+    posts.map((post) =>
+      shoppingServicesGetStockAmountAvailableFromPost({ post, shoppings: allShoppings }),
+    ),
   );
 
   return out;
 };
 
-const sendUpdateStockAmountMessagesFromShoppingPosts: QueryHandle<{
+export const shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts: QueryHandle<{
   shopping: Shopping;
 }> = async ({ shopping }) => {
   if (
@@ -335,13 +337,13 @@ const sendUpdateStockAmountMessagesFromShoppingPosts: QueryHandle<{
     },
   });
 
-  const amountAvailableFromPosts = await getStockAmountAvailableFromPosts({
+  const amountAvailableFromPosts = await shoppingServicesGetStockAmountAvailableFromPosts({
     posts,
   });
 
   amountAvailableFromPosts.forEach((stockAmountAvailable, index) => {
     if (isNumber(stockAmountAvailable)) {
-      notificationsServices.sendUpdateStockAmountMessage({
+      notificationsServicesSendUpdateStockAmountMessage({
         postId: posts[index]._id.toString(),
         stockAmountAvailable,
       });
@@ -349,7 +351,7 @@ const sendUpdateStockAmountMessagesFromShoppingPosts: QueryHandle<{
   });
 };
 
-const decrementStockAmountFromShoppingPosts: QueryHandle<{
+export const shoppingServicesDecrementStockAmountFromShoppingPosts: QueryHandle<{
   shopping: Shopping;
 }> = async ({ shopping }) => {
   if (![ShoppingState.DELIVERED].includes(shopping.state)) {
@@ -379,23 +381,4 @@ const decrementStockAmountFromShoppingPosts: QueryHandle<{
   });
 
   await Promise.all(promises);
-};
-
-export const shoppingServices = {
-  getOne,
-  updateOne,
-  updateMany,
-  updateOrAddOne,
-  getAllWithPagination,
-  getAll,
-  deleteOne,
-  deleteMany,
-  findAndUpdateOne,
-  findOneAndDelete,
-  addOne,
-  //
-  getStockAmountAvailableFromPost,
-  getStockAmountAvailableFromPosts,
-  sendUpdateStockAmountMessagesFromShoppingPosts,
-  decrementStockAmountFromShoppingPosts,
 };

@@ -108,6 +108,10 @@ export interface BusinessPaymentRequestHistory {
   paymendDate: Date;
 }
 
+export enum BusinessNotificationFlags {
+  TELEGRAM_NEW_SHOPPING = 'TELEGRAM_NEW_SHOPPING',
+}
+
 export interface Business extends BaseIdentity {
   name: string;
   routeName: string;
@@ -128,6 +132,7 @@ export interface Business extends BaseIdentity {
   aboutUsPage?: BusinessAboutUsPage;
   whatsAppPhoneNumber?: string;
   telegramBotChat?: TelegramBotChat;
+  notificationFlags?: Array<BusinessNotificationFlags>;
   shoppingMeta?: {
     termsAndConditions?: string;
   };

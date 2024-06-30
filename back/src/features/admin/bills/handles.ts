@@ -4,7 +4,7 @@ import { withTryCatch } from '../../../utils/error';
 import { includesId } from '../../../utils/general';
 import { get400Response, getBillNotFoundResponse } from '../../../utils/server-response';
 import { billingServices } from '../../billing/services';
-import { shoppingServices } from '../../shopping/services';
+import { shoppingServicesGetAll } from '../../shopping/services';
 import { getShoppingsTotalDebit } from '../../shopping/utils';
 
 const post_admin_bills: () => RequestHandler = () => {
@@ -19,7 +19,7 @@ const post_admin_bills: () => RequestHandler = () => {
       });
 
       // get shopping
-      const shoppings: Array<Shopping> = await shoppingServices.getAll({
+      const shoppings: Array<Shopping> = await shoppingServicesGetAll({
         query: {
           routeName,
           shoppingIds,
