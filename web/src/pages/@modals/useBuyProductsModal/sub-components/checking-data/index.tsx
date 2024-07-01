@@ -1,9 +1,10 @@
-import { cloneElement } from 'react';
+import { cloneElement, useState } from 'react';
 
 import { useShoppingMakeOrder } from 'features/api/shopping/useShoppingMakeOrder';
 
 import { StepCommonProps } from '../../types';
 import { ButtonNavContainer } from '../button-nav-container';
+import { PersonalData } from './PersonalData';
 
 import { ShoppingDetails } from 'pages/@common/shopping-details';
 import { useBusiness } from 'pages/@hooks/useBusiness';
@@ -15,6 +16,7 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
   const { shoppingMakeOrder } = useShoppingMakeOrder();
   const shopping = useShopping();
   const { business } = useBusiness();
+  const [isValidPersonalData, setIsValidPersonalData] = useState(false)
 
   if (!shopping.constructionShopping) {
     return <></>;
@@ -23,6 +25,7 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
   const nextButton = cloneElement(nextButtonProp, {
     label: 'Crear orden',
     isBusy: shoppingMakeOrder.status.isBusy,
+    disabled: !isValidPersonalData,
     onClick: () => {
       if (!shopping.constructionShopping || !business) return;
 
@@ -44,6 +47,8 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
       <div className="flex justify-center">
         <ShoppingDetails shopping={shopping.constructionShopping} />
       </div>
+
+      <PersonalData className='mt-6' onValid={setIsValidPersonalData}/>
 
       <ButtonNavContainer leftButton={backButton} rightButton={nextButton} />
     </>

@@ -1,13 +1,11 @@
 import { DevSwitchSession } from 'components/dev-switch-session';
 import { IconButton } from 'components/icon-button';
-import { IconUpdate } from 'components/icon-update';
 import { Menu } from 'components/menu';
 import { NavBar as NavBarBase } from 'components/nav-bar';
 import { UserAvatar } from 'components/user-avatar';
 
 import { useAuth } from 'features/api-slices/useAuth';
 import { useSignOut } from 'features/api-slices/useSignOut';
-import { useModal } from 'features/modal/useModal';
 
 import { useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
@@ -55,7 +53,6 @@ export const Navbar = ({ className }: NavbarProps) => {
   const { business } = useBusiness();
   const authChangePasswordModal = useAuthChangePasswordModal();
   const aboutUsPage = business?.aboutUsPage || {};
-  const { pushModal } = useModal();
 
   const authSignInModal = useAuthSignInModal();
   const authSignUpModal = useAuthSignUpModal();
@@ -131,16 +128,6 @@ export const Navbar = ({ className }: NavbarProps) => {
           }),
           divider: true,
         },
-        user && {
-          label: 'Editar perfil',
-          onClick: () => {
-            pushModal('ProfileUpdate', {
-              userId: user._id,
-              callAfarResources: callAfarResourcesRefreshUser,
-            });
-          },
-          svg: IconUpdate,
-        },
         {
           label: getCopyLinkLabel(),
           onClick: () => {
@@ -179,6 +166,11 @@ export const Navbar = ({ className }: NavbarProps) => {
             authChangePasswordModal.open();
           },
           svg: SvgKeySolid,
+        },
+        isAuthenticated && {
+          label: 'Preferencias',
+          onClick: () => pushRoute('/settings'),
+          svg: SvgCogSolid,
         },
       ]}
       className="flex-shrink-0"

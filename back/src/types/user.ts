@@ -1,3 +1,4 @@
+import { Address } from 'cluster';
 import { Access } from './admin';
 import { BaseIdentity, Image, TelegramBotChat } from './general';
 
@@ -15,4 +16,6 @@ export interface User extends BaseIdentity {
   firebaseToken?: string;
   specialAccess?: Array<Access>;
   telegramBotChat?: TelegramBotChat;
+  phone?: string;
+  address?: Address;
 }

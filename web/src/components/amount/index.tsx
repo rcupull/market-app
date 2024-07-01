@@ -56,11 +56,7 @@ export const Amount = ({ value, onChange, className, isBusy }: AmountProps) => {
         value={state || 0}
         onChange={(e) => handleChange(Number(e.target.value))}
         onClick={(e) => e.stopPropagation()}
-        onKeyPress={(event) => {
-          if (!/[0-9]/.test(event.key)) {
-            event.preventDefault();
-          }
-        }}
+        typeOnlyNumbers
         className={cn('!w-12 !h-6 !text-center', {
           '!font-bold !text-lg text-indigo-700': refPromise.current,
         })}

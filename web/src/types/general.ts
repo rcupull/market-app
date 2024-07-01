@@ -39,3 +39,14 @@ declare global {
   const PRODUCTION: boolean;
   const STAGING: boolean;
 }
+
+export interface Address {
+  city?: string;
+  municipality?: string;
+  street?: string;
+  streetBetweenFrom?: string;
+  streetBetweenTo?: string;
+  neighborhood?: string;
+  number?: number;
+  apartment?: number;
+}

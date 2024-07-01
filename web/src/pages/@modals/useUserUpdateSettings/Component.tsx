@@ -1,68 +1,80 @@
-import { useEffect } from 'react';
-
-import { Badge } from 'components/badge';
+import { AddressView } from 'components/address-view';
 import { Button } from 'components/button';
-import { ButtonClose } from 'components/button-close';
+import { FieldAddress } from 'components/field-address';
 import { FieldInput } from 'components/field-input';
 import { FieldInputImages } from 'components/field-input-images';
 import { Formux } from 'components/formux';
-import { Modal } from 'components/modal';
 
 import { useAddOneBusiness } from 'features/api/business/useAddOneBusiness';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
-import { useGetOneUser } from 'features/api/user/useGetOneUser';
 import { useUpdateOneUser } from 'features/api/user/useUpdateOneUser';
-import { useModal } from 'features/modal/useModal';
 
-import { CallAfarResources, useCallFromAfar } from 'hooks/useCallFromAfar';
-import { usePortal } from 'hooks/usePortal';
+import { Portal } from 'hooks/usePortal';
 
-import { Image } from 'types/general';
-import { getImageEndpoint } from 'utils/api';
+import { User } from 'types/auth';
+import { Address, Image } from 'types/general';
+import { getIsValidPhone } from 'utils/validation';
 
-export interface ProfileUpdateProps {
-  userId: string;
-  callAfarResources?: CallAfarResources;
+interface State {
+  profileImages: Array<Image>;
+  name: string;
+  phone?: string;
+  address?: Address;
 }
 
-export const ProfileUpdate = ({ userId, callAfarResources }: ProfileUpdateProps) => {
-  const { onClose } = useModal();
+export interface ComponentProps {
+  portal: Portal;
+  user: User;
+  onAfterSuccess: () => void;
+}
 
-  const { getOneUser } = useGetOneUser();
-
-  const { onCallAfar } = useCallFromAfar();
-
-  useEffect(() => {
-    getOneUser.fetch({ userId });
-  }, []);
-
+export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
   const { addOneBusiness } = useAddOneBusiness();
   const { updateOneUser } = useUpdateOneUser();
   const { addManyImages } = useAddManyImages();
 
-  const user = getOneUser.data;
-
-  const portal = usePortal();
-
-  const content = (
-    <Formux
+  return (
+    <Formux<State>
       value={{
         profileImages: user?.profileImage ? [user?.profileImage] : [],
-        name: user?.name,
+        name: user.name,
+        phone: user?.phone,
+        address: user?.address,
       }}
+      validate={[
+        {
+          field: 'name',
+          type: 'required',
+        },
+        {
+          field: 'phone',
+          type: 'custom',
+          customCb: getIsValidPhone
+        }
+      ]}
     >
-      {({ value, isValid }) => {
+      {({ value, isValid, hasChange }) => {
         return (
-          <form>
+          <form className="w-full">
             <FieldInput name="name" label="Nombre" />
+
+            <FieldInput name="phone" label="Teléfono" className="mt-6" typeOnlyNumbers />
+
+            <FieldAddress
+              label="Dirección"
+              name="address"
+              className="mt-6"
+              collapsable
+              collapsableHeader={<AddressView address={value.address || {}} />}
+            />
 
             <FieldInputImages
               id="profileImages"
               name="profileImages"
               label="Imagen del perfil"
-              getImageSrc={getImageEndpoint}
               className="mt-6"
             />
+
             {portal.getPortal(
               <Button
                 label="Guardar"
@@ -71,32 +83,30 @@ export const ProfileUpdate = ({ userId, callAfarResources }: ProfileUpdateProps)
                   updateOneUser.status.isBusy ||
                   addManyImages.status.isBusy
                 }
-                disabled={!isValid}
+                disabled={!isValid || !hasChange}
                 onClick={() => {
-                  const { profileImages, name } = value;
+                  const { profileImages, name, address, phone } = value;
 
                   const handleSubmit = (profileImage?: Image | null) => {
                     updateOneUser.fetch(
                       {
-                        userId,
+                        userId: user._id,
                         update: {
                           profileImage,
                           name,
+                          address,
+                          phone,
                         },
                       },
                       {
-                        onAfterSuccess: () => {
-                          onClose();
-
-                          callAfarResources && onCallAfar(callAfarResources);
-                        },
+                        onAfterSuccess: () => onAfterSuccess(),
                       },
                     );
                   };
 
                   if (profileImages.length) {
                     addManyImages.fetch(
-                      { images: profileImages, userId },
+                      { images: profileImages, userId: user._id },
                       {
                         onAfterSuccess: (images) => {
                           handleSubmit(images[0]);
@@ -116,16 +126,6 @@ export const ProfileUpdate = ({ userId, callAfarResources }: ProfileUpdateProps)
       }}
     </Formux>
   );
-
-  return (
-    <Modal
-      title="Editar perfil"
-      content={content}
-      badge={<Badge variant="info" />}
-      isBusy={getOneUser.status.isBusy}
-      primaryBtn={<div ref={portal.ref} />}
-      secondaryBtn={<ButtonClose />}
-    />
-  );
 };
-export default ProfileUpdate;
+
+export default Component;

@@ -8,7 +8,6 @@ const componentRecord: Record<ModalId, LoadableReturn> = {
   Emergent: dynamic(() => import('./components/emergent').then((m) => m)),
   CatalogsSearchImage: dynamic(() => import('./components/catalogs-search-image').then((m) => m)),
   Confirmation: dynamic(() => import('./components/confirmation').then((m) => m)),
-  ProfileUpdate: dynamic(() => import('./components/profile-update').then((m) => m)),
 };
 
 export const ModalContainer = (): JSX.Element | null => {

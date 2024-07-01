@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { User } from '../types/user';
 import { createdAtSchemaDefinition } from '../utils/schemas';
 import mongoosePaginate from 'mongoose-paginate-v2';
-import { TelegramBotChatDefinition } from './common';
+import { AddressDefinition, TelegramBotChatDefinition } from './common';
 
 const UserSchema = new Schema<User>({
   ...createdAtSchemaDefinition,
@@ -26,6 +26,8 @@ const UserSchema = new Schema<User>({
   },
   specialAccess: { type: [String], default: [] },
   telegramBotChat: TelegramBotChatDefinition,
+  phone: { type: String },
+  address: AddressDefinition,
 });
 
 const updateUserPassword = (user: User): Promise<void> => {

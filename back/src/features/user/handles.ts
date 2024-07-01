@@ -6,6 +6,7 @@ import { User } from '../../types/user';
 import { get404Response, getUserNotFoundResponse } from '../../utils/server-response';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { imagesServicesDeleteOldImages } from '../images/services';
+import { makeReshaper } from '../../utils/makeReshaper';
 
 const get_users_userId: () => RequestHandler = () => {
   return (req, res) => {
@@ -63,7 +64,12 @@ const put_users_userId: () => RequestHandler = () => {
         query: {
           _id: userId,
         },
-        update: body,
+        update: makeReshaper<User, User>({
+          name: 'name',
+          profileImage: 'profileImage',
+          phone: 'phone',
+          address: 'address',
+        })(body),
       });
 
       res.send(out);
