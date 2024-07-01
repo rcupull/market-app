@@ -1,6 +1,9 @@
+import { cloneElement } from 'react';
+
 import { Button } from 'components/button';
 import { FieldInput } from 'components/field-input';
 import { Formux } from 'components/formux';
+import { IconButton } from 'components/icon-button';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useModal } from 'features/modal/useModal';
@@ -9,6 +12,8 @@ import { FetchOptions } from 'hooks/useFetch';
 import { Portal } from 'hooks/usePortal';
 
 import { useBusiness } from '../../@hooks/useBusiness';
+
+import SvgExternalLinkAltSolid from 'icons/ExternalLinkAltSolid';
 
 interface State {
   face: string;
@@ -35,15 +40,17 @@ export const Component = ({ portal, options }: ComponentProps) => {
 
   const { routeName } = business;
 
-  const renderFieldLink = (field: React.ReactNode, href: string) => {
-    return (
-      <div className="flex items-center w-full">
-        {field}
-        <a href={href} className="text-nowrap ml-2 hyperlink mt-8" target="_blank" rel="noreferrer">
-          Ir al link
-        </a>
-      </div>
-    );
+  const renderFieldLink = (field: React.ReactElement, href: string) => {
+
+    return cloneElement(field, {
+      endElement:
+        <IconButton
+          svg={SvgExternalLinkAltSolid}
+          title="Ir al link"
+          preventDefault
+          onClick={() => window.open(href, '_blank')}
+        />
+    })
   };
 
   return (

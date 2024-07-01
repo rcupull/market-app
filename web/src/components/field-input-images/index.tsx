@@ -4,11 +4,13 @@ import { EmptyImage } from 'components/empty-image';
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
 import { useFormField } from 'components/formux/useFormField';
 import { HtmlTextContainer } from 'components/html-text-container';
+import { IconButton } from 'components/icon-button';
 import { IconButtonRemove } from 'components/icon-button-remove';
 import { Input } from 'components/input';
 
 import { useModal } from 'features/modal/useModal';
 
+import SvgExternalLinkAltSolid from 'icons/ExternalLinkAltSolid';
 import SvgPlusSolid from 'icons/PlusSolid';
 import { Image, ImageFile } from 'types/general';
 import { getFileImageSize } from 'utils/file';
@@ -368,24 +370,23 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
         </div>
 
         {previewImage && enabledImageHref && (
-          <div className="flex flex-col sm:flex-row sm:items-center mt-2 gap-4">
-            <Input
-              placeholder="Escriba la url promocional de esta imagen del banner (opcional). Ejemplo: https://example.com"
-              value={stateToPreview[previewIndex]?.href || ''}
-              onChange={(e) => {
-                e.preventDefault();
-                handleChangeHref(e.target.value);
-              }}
-            />
-            <a
-              href={stateToPreview[previewIndex]?.href || ''}
-              className="text-nowrap hyperlink"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Ir al link
-            </a>
-          </div>
+          <Input
+            placeholder="Escriba la url promocional de esta imagen del banner (opcional). Ejemplo: https://example.com"
+            value={stateToPreview[previewIndex]?.href || ''}
+            onChange={(e) => {
+              e.preventDefault();
+              handleChangeHref(e.target.value);
+            }}
+            className="w-full"
+            endElement={
+              <IconButton
+                svg={SvgExternalLinkAltSolid}
+                title="Ir al link"
+                preventDefault
+                onClick={() => window.open(stateToPreview[previewIndex]?.href || '', '_blank')}
+              />
+            }
+          />
         )}
       </FormFieldWrapper>
     );
