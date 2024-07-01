@@ -4,6 +4,7 @@ import { useShoppingMakeOrder } from 'features/api/shopping/useShoppingMakeOrder
 
 import { StepCommonProps } from '../../types';
 import { ButtonNavContainer } from '../button-nav-container';
+import { PersonalData } from './PersonalData';
 
 import { ShoppingDetails } from 'pages/@common/shopping-details';
 import { useBusiness } from 'pages/@hooks/useBusiness';
@@ -44,6 +45,8 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
       <div className="flex justify-center">
         <ShoppingDetails shopping={shopping.constructionShopping} />
       </div>
+
+      <PersonalData className='mt-6'/>
 
       <ButtonNavContainer leftButton={backButton} rightButton={nextButton} />
     </>

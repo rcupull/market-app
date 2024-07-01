@@ -27,7 +27,6 @@ import { useBusinessNewUpdateSection } from '../useBusinessNewUpdateSection';
 import { imagesDimensions } from 'constants/posts';
 import { StyleProps } from 'types/general';
 import { Post, PostFormState, PostType } from 'types/post';
-import { getImageEndpoint } from 'utils/api';
 import { getRequiredLabel } from 'utils/form';
 import { addStringToUniqueArray, isNumber } from 'utils/general';
 
@@ -182,7 +181,6 @@ export const Component = ({
                 id="images"
                 name="images"
                 className="mt-6"
-                getImageSrc={getImageEndpoint}
                 multi
               />
               <Divider />
@@ -447,7 +445,6 @@ export const Component = ({
               id="images"
               name="images"
               className="mt-6"
-              getImageSrc={getImageEndpoint}
               multi
             />
             <Divider />

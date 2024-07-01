@@ -13,6 +13,7 @@ import { useModal } from 'features/modal/useModal';
 import SvgExternalLinkAltSolid from 'icons/ExternalLinkAltSolid';
 import SvgPlusSolid from 'icons/PlusSolid';
 import { Image, ImageFile } from 'types/general';
+import { getImageEndpoint } from 'utils/api';
 import { getFileImageSize } from 'utils/file';
 import { cn, getFlattenArray, removeRow, updateRow } from 'utils/general';
 
@@ -20,7 +21,6 @@ export interface FieldInputImagesProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     FormFieldWrapperProps {
   multi?: boolean;
-  getImageSrc?: (src: string) => string;
   max?: number;
   enabledImageHref?: boolean;
 }
@@ -36,7 +36,6 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
       label,
       multi,
       max,
-      getImageSrc: getImageSrcProp,
       enabledImageHref,
       ...omittedProps
     } = props;
@@ -61,7 +60,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
       }
 
       if (typeof image.src === 'string') {
-        return getImageSrcProp?.(image.src) || '';
+        return getImageEndpoint?.(image.src) || '';
       }
 
       return '';

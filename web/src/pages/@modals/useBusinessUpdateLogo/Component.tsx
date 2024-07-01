@@ -14,7 +14,6 @@ import { useBusiness } from '../../@hooks/useBusiness';
 
 import { imagesDimensions } from 'constants/posts';
 import { Image, ImageFile } from 'types/general';
-import { getImageEndpoint } from 'utils/api';
 
 interface State {
   logoField: Array<ImageFile | Image | undefined | null>;
@@ -54,7 +53,6 @@ export const Component = ({ portal }: ComponentProps) => {
               id="logoField"
               name="logoField"
               className="mt-6"
-              getImageSrc={getImageEndpoint}
             />
 
             {portal.getPortal(
