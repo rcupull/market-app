@@ -108,10 +108,10 @@ describe('services', () => {
       ).toEqual([
         'newName',
         'newName1',
-        'hiddenBusinessUser1',
+        'business3User1',
         'newName12',
         'newName123',
-        'hiddenBusinessUser2',
+        'business3User2',
       ]);
     });
 
@@ -195,10 +195,10 @@ describe('services', () => {
       ).toEqual([
         'business1User1',
         'business2User1',
-        'hiddenBusinessUser1',
+        'business3User1',
         'business1User2',
         'business2User2',
-        'hiddenBusinessUser2',
+        'business3User2',
       ]);
     });
   });

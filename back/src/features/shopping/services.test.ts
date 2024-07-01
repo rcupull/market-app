@@ -17,7 +17,7 @@ describe('shopping services', () => {
   });
 
   describe('getAllWithPagination', () => {
-    it('should return all posts with pagination', async () => {
+    it('should return all shopping with pagination', async () => {
       await fillBD();
 
       const result = await shoppingServicesGetAllWithPagination({
@@ -47,7 +47,7 @@ describe('shopping services', () => {
   });
 
   describe('getAll', () => {
-    it('should return all posts without pagination', async () => {
+    it('should return all shopping without pagination', async () => {
       await fillBD();
 
       const result = await shoppingServicesGetAll({ query: {} });
@@ -57,7 +57,7 @@ describe('shopping services', () => {
   });
 
   describe('getOne', () => {
-    it('should return all posts without pagination', async () => {
+    it('should return one shopping', async () => {
       const { shopping1Business1User1 } = await fillBD();
 
       const result = await shoppingServicesGetOne({
@@ -88,7 +88,7 @@ describe('shopping services', () => {
               "postData": {
                 "_id": Anything,
                 "images": [],
-                "name": "chancletas",
+                "name": "productPost1Business1User1",
                 "price": 10,
               },
               "purshaseNotes": {
