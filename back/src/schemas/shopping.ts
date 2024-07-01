@@ -63,7 +63,6 @@ const ShoppingSchema = new Schema<Shopping>({
     ],
   },
   purchaserId: { type: String, required: true },
-  purchaserName: { type: String, required: true },
   routeName: { type: String, required: true },
   currency: { type: String, required: true, enum: ['CUP', 'MLC', 'USD'] },
   state: shoppingState,

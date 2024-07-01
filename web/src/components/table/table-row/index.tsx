@@ -68,7 +68,7 @@ export const TableRow = ({
             key={indexCell}
             {...othersProps}
             className={cn(
-              'px-6 py-4 whitespace-no-wrap border-b border-gray-300 relative',
+              'px-6 py-4 whitespace-no-wrap border-b-2 border-gray-300 relative',
               othersProps.className,
             )}
           >

@@ -1,4 +1,5 @@
 import { Address, StyleProps } from 'types/general';
+import { cn } from 'utils/general';
 
 const keys: Array<keyof Address> = [
   'street',
@@ -27,7 +28,7 @@ export interface AddressViewProps extends StyleProps {
 }
 export const AddressView = ({ address, className }: AddressViewProps) => {
   return (
-    <div className={className}>
+    <div className={cn('flex flex-wrap',className)}>
       {keys
         .filter((key) => !!address[key])
         .map((key) => {

@@ -6,6 +6,7 @@ import { billingServices } from '../../billing/services';
 import { shoppingServicesGetAllWithPagination } from '../../shopping/services';
 import { Shopping, ShoppingDto } from '../../../types/shopping';
 import { getShoppingWasAcceptedQuery } from '../../../utils/schemas';
+import { userServices } from '../../user/services';
 
 const get_admin_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -41,21 +42,27 @@ const get_admin_shopping: () => RequestHandler = () => {
         },
       });
 
+      const out = deepJsonCopy(shoppings);
+
+      const { getOneShoppingUserData } = await userServices.getUserDataFromShopping({
+        query: { _id: { $in: out.data.map(({ purchaserId }) => purchaserId) } },
+      });
+
       const getShoppingDto = async (shopping: Shopping): Promise<ShoppingDto> => {
         const billData = getOneShoppingBillData(shopping);
-
-        if (!billData) {
-          return shopping;
-        }
+        const purchaserData = getOneShoppingUserData(shopping);
 
         return {
           ...shopping,
-          billId: billData.billId,
-          billState: billData.billState,
+          billId: billData?.billId,
+          billState: billData?.billState,
+
+          purchaserName: purchaserData?.purchaserName,
+          purchaserAddress: purchaserData?.purchaserAddress,
+          purchaserPhone: purchaserData?.purchaserPhone,
         };
       };
 
-      const out = deepJsonCopy(shoppings);
       const promises = out.data.map(getShoppingDto);
       out.data = await Promise.all(promises);
 

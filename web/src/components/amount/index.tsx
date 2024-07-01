@@ -15,9 +15,10 @@ export interface AmountProps extends StyleProps {
   value?: number;
   onChange?: (newValue: number) => void;
   isBusy?: boolean;
+  error?: boolean;
 }
 
-export const Amount = ({ value, onChange, className, isBusy }: AmountProps) => {
+export const Amount = ({ value, onChange, className, isBusy, error }: AmountProps) => {
   const [state, setState] = useState<number>();
   const refPromise = useRef(false);
 
@@ -38,7 +39,7 @@ export const Amount = ({ value, onChange, className, isBusy }: AmountProps) => {
   };
 
   return (
-    <div className={cn('relative flex items-center gap-1', className)}>
+    <div className={cn('relative flex items-center gap-1 w-fit', className)}>
       <Button
         svg={<SvgAngleLeftSolid className="!size-3" />}
         stopPropagation
@@ -49,7 +50,9 @@ export const Amount = ({ value, onChange, className, isBusy }: AmountProps) => {
           handleChange(state - 1);
         }}
         variant="outlined"
-        className="!p-1 !ring-1"
+        className={cn("!p-1 !ring-1",{
+          '!ring-2 ring-red-500': error,
+        })}
       />
 
       <Input
@@ -57,8 +60,9 @@ export const Amount = ({ value, onChange, className, isBusy }: AmountProps) => {
         onChange={(e) => handleChange(Number(e.target.value))}
         onClick={(e) => e.stopPropagation()}
         typeOnlyNumbers
-        className={cn('!w-12 !h-6 !text-center', {
+        className={cn('!w-20 !h-6', {
           '!font-bold !text-lg text-indigo-700': refPromise.current,
+          'ring-2 ring-red-500  rounded-md': error,
         })}
       />
 
@@ -71,7 +75,9 @@ export const Amount = ({ value, onChange, className, isBusy }: AmountProps) => {
           handleChange(state + 1);
         }}
         variant="outlined"
-        className="!p-1 !ring-1"
+        className={cn("!p-1 !ring-1",{
+          '!ring-2 ring-red-500': error,
+        })}
       />
 
       {isBusy && (

@@ -113,7 +113,7 @@ export const ShoppingStateView = ({
     >
       {() => {
         return (
-          <form className="w-52">
+          <form className="w-36">
             <FieldSelect<{ value: ShoppingState }>
               name="state"
               optionToValue={({ value }) => value}
