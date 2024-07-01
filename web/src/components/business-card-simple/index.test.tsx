@@ -23,33 +23,37 @@ describe('BusinessCardSimple', () => {
     expect(result.container).toMatchInlineSnapshot(`
       <div>
         <a
-          class="group"
+          class="group size-full"
           data-id="BusinessCardSimple"
           href="/href"
         >
           <div
-            class="overflow-hidden rounded-lg bg-gray-100 flex items-center justify-center h-64 w-64"
+            class="overflow-hidden border border-gray-300 rounded-lg flex flex-col items-center justify-between size-full"
           >
             <div
-              class="flex items-center justify-center h-64 w-64"
+              class="w-full p-2"
             >
-              <svg
-                class="fill-gray-300 h-32 w-32"
-                height="1em"
-                viewBox="0 0 32 32"
-                width="1em"
+              <div
+                class="flex items-center justify-center size-full"
               >
-                <path
-                  d="M2 5v22h28V5zm2 2h24v13.906l-5.281-5.312-.719-.719-4.531 4.531-5.75-5.812-.719-.719-7 7zm20 2a1.999 1.999 0 100 4 1.999 1.999 0 100-4zm-13 6.719L20.188 25H4v-2.281zm11 2l6 6V25h-4.969l-4.156-4.188z"
-                />
-              </svg>
+                <svg
+                  class="fill-gray-300 size-full"
+                  height="1em"
+                  viewBox="0 0 32 32"
+                  width="1em"
+                >
+                  <path
+                    d="M2 5v22h28V5zm2 2h24v13.906l-5.281-5.312-.719-.719-4.531 4.531-5.75-5.812-.719-.719-7 7zm20 2a1.999 1.999 0 100 4 1.999 1.999 0 100-4zm-13 6.719L20.188 25H4v-2.281zm11 2l6 6V25h-4.969l-4.156-4.188z"
+                  />
+                </svg>
+              </div>
             </div>
+            <h3
+              class="mt-4 text-lg text-gray-700"
+            >
+              name
+            </h3>
           </div>
-          <h3
-            class="mt-4 text-sm text-gray-700"
-          >
-            name
-          </h3>
         </a>
       </div>
     `);

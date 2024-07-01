@@ -10,7 +10,8 @@ describe('business', () => {
     afterEach(async () => {
       await dropTestDbConnectionAsync();
     });
-    it('should return all visible business the business', async () => {
+
+    it('should match snapshot', async () => {
       await fillBD();
 
       await supertest(app)
@@ -21,8 +22,6 @@ describe('business', () => {
         )
         .expect(200)
         .then((response) => {
-          expect(response.body.data.length).toEqual(4);
-
           expect(response.body.data[0]).toMatchInlineSnapshot(
             setAnyString<Business>('_id', 'createdAt', 'createdBy'),
             `
@@ -73,21 +72,43 @@ describe('business', () => {
             }
           `,
           );
+        });
+    });
 
-          expect(response.body.paginator).toMatchInlineSnapshot(`
-                      {
-                        "dataCount": 4,
-                        "hasNextPage": false,
-                        "hasPrevPage": false,
-                        "limit": 10,
-                        "nextPage": null,
-                        "offset": 0,
-                        "page": 1,
-                        "pageCount": 1,
-                        "pagingCounter": 1,
-                        "prevPage": null,
-                      }
-                  `);
+    it('should return all business', async () => {
+      await fillBD();
+
+      await supertest(app)
+        .get(
+          getTestingRoute({
+            path: '/business',
+          }),
+        )
+        .expect(200)
+        .then((response) => {
+          expect(response.body.data.length).toEqual(6);
+        });
+    });
+
+    it('should not return the hidden business', async () => {
+      await fillBD({
+        business1User1: {
+          hidden: true,
+        },
+        business1User2: {
+          hidden: true,
+        },
+      });
+
+      await supertest(app)
+        .get(
+          getTestingRoute({
+            path: '/business',
+          }),
+        )
+        .expect(200)
+        .then((response) => {
+          expect(response.body.data.length).toEqual(4);
         });
     });
   });

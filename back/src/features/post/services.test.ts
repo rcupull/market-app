@@ -22,11 +22,11 @@ describe('services', () => {
 
       const { data, ...omittedProps } = paginatedPosts;
 
-      expect(data.length).toBe(5);
+      expect(data.length).toBe(10);
       expect(omittedProps).toMatchInlineSnapshot(`
         {
           "paginator": {
-            "dataCount": 5,
+            "dataCount": 10,
             "hasNextPage": false,
             "hasPrevPage": false,
             "limit": 10,
@@ -47,7 +47,7 @@ describe('services', () => {
 
       const posts = await postServicesGetAll({ query: {} });
 
-      expect(posts.length).toBe(5);
+      expect(posts.length).toBe(10);
     });
 
     it('should return filtering by <createdBy>', async () => {
@@ -59,7 +59,7 @@ describe('services', () => {
         },
       });
 
-      expect(response1.length).toBe(2);
+      expect(response1.length).toEqual(5);
 
       //////////////////////////////////////////////
 
@@ -69,11 +69,18 @@ describe('services', () => {
         },
       });
 
-      expect(response2.length).toBe(3);
+      expect(response2.length).toEqual(5);
     });
 
     it('should return filtering by <postType>', async () => {
-      await fillBD();
+      await fillBD({
+        productPost1Business1User1: {
+          postType: 'link',
+        },
+        productPost2Business1User1: {
+          postType: 'link',
+        },
+      });
 
       const response1 = await postServicesGetAll({
         query: {
@@ -81,7 +88,7 @@ describe('services', () => {
         },
       });
 
-      expect(response1.length).toBe(5);
+      expect(response1.length).toBe(8);
 
       //////////////////////////////////////////////
 
@@ -91,7 +98,7 @@ describe('services', () => {
         },
       });
 
-      expect(response2.length).toBe(0);
+      expect(response2.length).toBe(2);
     });
 
     it('should return filtering by <routeNames>', async () => {
@@ -103,7 +110,7 @@ describe('services', () => {
         },
       });
 
-      expect(response1.length).toBe(2);
+      expect(response1.length).toEqual(5);
       //////////////////////////////////////////////
 
       const response2 = await postServicesGetAll({
@@ -122,7 +129,7 @@ describe('services', () => {
         },
       });
 
-      expect(response3.length).toBe(3);
+      expect(response3.length).toBe(5);
     });
   });
 
@@ -147,7 +154,7 @@ describe('services', () => {
           "hidden": false,
           "hiddenBusiness": false,
           "images": [],
-          "name": "chancletas",
+          "name": "productPost1Business1User1",
           "postCategoriesTags": [
             "cat1",
             "cat2",

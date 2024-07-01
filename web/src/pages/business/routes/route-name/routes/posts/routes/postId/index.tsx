@@ -15,6 +15,8 @@ import { useAuth } from 'features/api-slices/useAuth';
 
 import { useRouter } from 'hooks/useRouter';
 
+import { PostsRelatedView } from './PostsRelatedView';
+
 import { LayoutPage } from 'pages/@common/layout-page';
 import { UpdateSomethingContainer } from 'pages/@common/update-something-container';
 import { useBusiness } from 'pages/@hooks/useBusiness';
@@ -53,23 +55,24 @@ export const PostId = () => {
   }
 
   return (
-    <UpdateSomethingContainer
-      title="Editar esta publicación"
-      onClick={() => {
-        businessNewUpdatePost.open({
-          postId: post._id,
-          onAfterSuccess: () => postIdPersistent.fetch({ id: post._id }),
-        });
-      }}
+    <LayoutPage
+      title={
+        <div className="flex items-center">
+          {post?.name}
+          <PostShoppingMethod post={post} layout="shoppingCart" className="ml-auto" />
+        </div>
+      }
+      backButton
     >
-      <LayoutPage
-        title={
-          <div className="flex items-center">
-            {post?.name}
-            <PostShoppingMethod post={post} layout="shoppingCart" className="ml-auto" />
-          </div>
-        }
-        backButton
+      <UpdateSomethingContainer
+        title="Editar esta publicación"
+        onClick={() => {
+          businessNewUpdatePost.open({
+            postId: post._id,
+            onAfterSuccess: () => postIdPersistent.fetch({ id: post._id }),
+          });
+        }}
+        className="w-full"
       >
         <ClothingProductGrid1
           currency={business.currency}
@@ -101,8 +104,10 @@ export const PostId = () => {
             details: (props) => <ProductDetails1 {...props} />,
           }}
         />
-      </LayoutPage>
-    </UpdateSomethingContainer>
+      </UpdateSomethingContainer>
+
+      <PostsRelatedView post={post} business={business} />
+    </LayoutPage>
   );
 };
 

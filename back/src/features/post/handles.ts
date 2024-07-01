@@ -264,6 +264,37 @@ const delete_posts_postId: () => RequestHandler = () => {
   };
 };
 
+const get_related_posts: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { params, paginateOptions } = req;
+      const { postId } = params;
+
+      const post = await postServicesGetOne({ query: { _id: postId } });
+
+      if (!post) {
+        return getPostNotFoundResponse({ res });
+      }
+
+      const out = await postServicesGetAllWithPagination({
+        paginateOptions,
+        query: {
+          _id: { $ne: postId },
+          routeName: post.routeName,
+          hidden: false,
+          $expr: {
+            $gt: [
+              { $size: { $setIntersection: ['$postCategoriesTags', post.postCategoriesTags] } },
+              0,
+            ],
+          },
+        },
+      });
+
+      res.send(out);
+    });
+  };
+};
 const bulk_action_delete: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
@@ -434,6 +465,7 @@ export const postHandles = {
   get_posts_postId,
   put_posts_postId,
   delete_posts_postId,
+  get_related_posts,
   //
   bulk_action_delete,
   bulk_action_update,
