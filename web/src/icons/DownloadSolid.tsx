@@ -13,7 +13,7 @@ export function SvgDownloadSolid(props: StyleProps) {
     },
     createElement('path', {
       d: 'M15 4v16.563L9.719 15.28 8.28 16.72l7 7 .719.687.719-.687 7-7-1.438-1.438L17 20.562V4zM7 26v2h18v-2z',
-    }),
+    })
   );
 }
 export default SvgDownloadSolid;

@@ -9,16 +9,17 @@ import { useDebouncer } from 'hooks/useDebouncer';
 import SvgAngleLeftSolid from 'icons/AngleLeftSolid';
 import SvgAngleRightSolid from 'icons/AngleRightSolid';
 import { StyleProps } from 'types/general';
-import { cn, isNumber } from 'utils/general';
+import { cn, isNullOrUndefined, isNumber } from 'utils/general';
 
 export interface AmountProps extends StyleProps {
   value?: number;
   onChange?: (newValue: number) => void;
   isBusy?: boolean;
   error?: boolean;
+  min?: number;
 }
 
-export const Amount = ({ value, onChange, className, isBusy, error }: AmountProps) => {
+export const Amount = ({ value, onChange, className, isBusy, error, min }: AmountProps) => {
   const [state, setState] = useState<number>();
   const refPromise = useRef(false);
 
@@ -38,11 +39,19 @@ export const Amount = ({ value, onChange, className, isBusy, error }: AmountProp
     }, 500);
   };
 
+  const getDisabledByMin = (): boolean => {
+    if (isNullOrUndefined(min)) return false;
+    if (isNullOrUndefined(state)) return false;
+
+    return state <= min;
+  };
+
   return (
     <div className={cn('relative flex items-center gap-1 w-fit', className)}>
       <Button
         svg={<SvgAngleLeftSolid className="!size-3" />}
         stopPropagation
+        disabled={getDisabledByMin()}
         onClick={() => {
           if (!isNumber(state)) return;
           if (state <= 0) return;
@@ -50,7 +59,7 @@ export const Amount = ({ value, onChange, className, isBusy, error }: AmountProp
           handleChange(state - 1);
         }}
         variant="outlined"
-        className={cn("!p-1 !ring-1",{
+        className={cn('!p-1 !ring-1', {
           '!ring-2 ring-red-500': error,
         })}
       />
@@ -75,7 +84,7 @@ export const Amount = ({ value, onChange, className, isBusy, error }: AmountProp
           handleChange(state + 1);
         }}
         variant="outlined"
-        className={cn("!p-1 !ring-1",{
+        className={cn('!p-1 !ring-1', {
           '!ring-2 ring-red-500': error,
         })}
       />

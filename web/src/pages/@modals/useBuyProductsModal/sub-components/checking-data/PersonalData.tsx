@@ -30,7 +30,6 @@ export const PersonalData = ({ className, onValid }: PersonalDataProps) => {
     onValid(isValid);
   }, [isValid]);
 
-
   if (!user) {
     return <></>;
   }

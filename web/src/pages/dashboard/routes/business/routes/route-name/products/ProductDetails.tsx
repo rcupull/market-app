@@ -4,7 +4,7 @@ import { PostAmount } from './PostAmount';
 
 import { Business } from 'types/business';
 import { Post } from 'types/post';
-import { cn, isNumber } from 'utils/general';
+import { cn, isNullOrUndefined, isNumber } from 'utils/general';
 
 export interface ProductDetailsProps {
   rowData: Post;
@@ -12,7 +12,7 @@ export interface ProductDetailsProps {
   onRefresh: () => void;
 }
 export const ProductDetails = ({ rowData, business, onRefresh }: ProductDetailsProps) => {
-  const { price, stockAmount, _id: postId, stockAmountAvailable , hidden} = rowData;
+  const { price, stockAmount, _id: postId, stockAmountAvailable, amountInProcess } = rowData;
 
   const renderKey = (label: string, options?: { error?: boolean }) => {
     const { error } = options || {};
@@ -41,31 +41,39 @@ export const ProductDetails = ({ rowData, business, onRefresh }: ProductDetailsP
     );
   };
 
+  const renderUnit = (value: number | undefined) => {
+    if (isNullOrUndefined(value)) return '';
+
+    return `${value} ${value === 1 ? 'unidad' : 'unidades'}`;
+  };
+
   return (
     <div className="w-48 sm:w-60">
-      {renderKey('Visibilidad')}
-      {renderValue(hidden ? 'Oculto' : 'Visible', { error: hidden })}
-
       {renderKey('Precio')}
       {renderValue(`${price} ${business?.currency}`)}
 
       <Divider className="!my-1" />
 
+      {renderKey('En proceso de venta')}
+      {renderValue(renderUnit(amountInProcess))}
+      <Divider className="!my-1" />
+
       {isNumber(stockAmount) ? (
         <>
-          {renderKey('Existencias')}
+          {renderKey('Total de unidades')}
           {renderValue(
             <PostAmount
               value={stockAmount}
               postId={postId}
               onAfterSuccess={onRefresh}
               error={stockAmount === 0}
-            />,
+              min={amountInProcess}
+            />
           )}
           <Divider className="!my-1" />
 
-          {renderKey('Disponible para venta', { error: stockAmountAvailable === 0 })}
-          {renderValue(stockAmountAvailable, { error: stockAmountAvailable === 0 })}
+          {renderKey('Disponibles', { error: stockAmountAvailable === 0 })}
+          {renderValue(renderUnit(stockAmountAvailable), { error: stockAmountAvailable === 0 })}
         </>
       ) : (
         <>
@@ -76,66 +84,3 @@ export const ProductDetails = ({ rowData, business, onRefresh }: ProductDetailsP
     </div>
   );
 };
-
-// const getDetailsItems = () => {
-//   const out: Array<KeyValueListItem> = [
-//     {
-//       label: (
-//         <span
-//           className={cn({
-//             'text-red-500': hidden,
-//           })}
-//         >{`${hidden ? 'Oculta' : 'Visible'}`}</span>
-//       ),
-//       value: null,
-//     },
-//     {
-//       label: 'Precio',
-//       value: `${price} ${business?.currency}`,
-//     },
-//   ];
-
-//   if (isNumber(stockAmount)) {
-//     out.push({
-//       label: (
-//         <span
-//           className={cn({
-//             'text-red-500': stockAmount === 0,
-//           })}
-//         >
-//           Existencias
-//         </span>
-//       ),
-//       value: (
-//       ),
-//     });
-
-//     out.push({
-//       label: (
-//         <span
-//           className={cn({
-//             'text-red-500': stockAmountAvailable === 0,
-//           })}
-//         >
-//           Disponibles
-//         </span>
-//       ),
-//       value: (
-//         <span
-//           className={cn({
-//             'text-red-500': stockAmountAvailable === 0,
-//           })}
-//         >
-//           {stockAmountAvailable}
-//         </span>
-//       ),
-//     });
-//   } else {
-//     out.push({
-//       label: 'Existencias',
-//       value: <span className="text-red-500">Desabilitado</span>,
-//     });
-//   }
-
-//   return out;
-// };

@@ -4,16 +4,20 @@ import { AddressView } from '.';
 
 describe('AddressView', () => {
   it('render', async () => {
-    const result = render(<AddressView address={{
-      apartment: 45,
-      city: 'Habana',
-      municipality: 'La Lisa',
-      neighborhood: 'Los Pinos',
-      number: 60,
-      street: 'Marrero',
-      streetBetweenFrom: '56',
-      streetBetweenTo: '89',
-    }}/>);
+    const result = render(
+      <AddressView
+        address={{
+          apartment: 45,
+          city: 'Habana',
+          municipality: 'La Lisa',
+          neighborhood: 'Los Pinos',
+          number: 60,
+          street: 'Marrero',
+          streetBetweenFrom: '56',
+          streetBetweenTo: '89',
+        }}
+      />
+    );
 
     expect(result.container).toMatchInlineSnapshot(`
       <div>

@@ -19,7 +19,7 @@ export const useAuthForgotPasswordRequest = (): {
             url: getEndpoint({ path: '/auth/forgot-password-request' }),
             data,
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

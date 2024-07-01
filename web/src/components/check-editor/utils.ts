@@ -11,7 +11,7 @@ export const getCheckEditorUploadUrl = (query: Query = {}): string => {
 
 export const getImagesSrcFromValue = (data: string) => {
   const out = Array.from(
-    new DOMParser().parseFromString(data, 'text/html').querySelectorAll('img'),
+    new DOMParser().parseFromString(data, 'text/html').querySelectorAll('img')
   ).map((img) => img.getAttribute('src'));
 
   return compact(out);

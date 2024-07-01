@@ -16,7 +16,7 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
   const { shoppingMakeOrder } = useShoppingMakeOrder();
   const shopping = useShopping();
   const { business } = useBusiness();
-  const [isValidPersonalData, setIsValidPersonalData] = useState(false)
+  const [isValidPersonalData, setIsValidPersonalData] = useState(false);
 
   if (!shopping.constructionShopping) {
     return <></>;
@@ -37,7 +37,7 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
           onAfterSuccess: () => {
             shopping.onFetch({ routeName: business.routeName }), nextButtonProp.props.onClick();
           },
-        },
+        }
       );
     },
   });
@@ -48,7 +48,7 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
         <ShoppingDetails shopping={shopping.constructionShopping} />
       </div>
 
-      <PersonalData className='mt-6' onValid={setIsValidPersonalData}/>
+      <PersonalData className="mt-6" onValid={setIsValidPersonalData} />
 
       <ButtonNavContainer leftButton={backButton} rightButton={nextButton} />
     </>

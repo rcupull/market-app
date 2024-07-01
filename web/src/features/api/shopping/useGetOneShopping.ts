@@ -22,7 +22,7 @@ export const useGetOneShopping = (): {
               urlParams: { shoppingId },
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

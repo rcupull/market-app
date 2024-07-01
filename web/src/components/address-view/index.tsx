@@ -28,7 +28,7 @@ export interface AddressViewProps extends StyleProps {
 }
 export const AddressView = ({ address, className }: AddressViewProps) => {
   return (
-    <div className={cn('flex flex-wrap',className)}>
+    <div className={cn('flex flex-wrap', className)}>
       {keys
         .filter((key) => !!address[key])
         .map((key) => {

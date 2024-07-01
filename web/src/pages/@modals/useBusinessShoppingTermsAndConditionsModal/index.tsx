@@ -30,7 +30,7 @@ export const useBusinessShoppingTermsAndConditionsModal = () => {
             };
           },
         },
-        { emergent: true },
+        { emergent: true }
       );
     },
   };

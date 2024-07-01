@@ -37,7 +37,7 @@ export const Component = ({ portal }: ComponentProps) => {
     () => ({
       logoField: [logo],
     }),
-    [logo],
+    [logo]
   );
 
   if (!routeName) {
@@ -49,11 +49,7 @@ export const Component = ({ portal }: ComponentProps) => {
       {({ value: values, isValid }) => {
         return (
           <form>
-            <FieldInputImages
-              id="logoField"
-              name="logoField"
-              className="mt-6"
-            />
+            <FieldInputImages id="logoField" name="logoField" className="mt-6" />
 
             {portal.getPortal(
               <Button
@@ -79,7 +75,7 @@ export const Component = ({ portal }: ComponentProps) => {
                           onFetch({ routeName });
                           onClose();
                         },
-                      },
+                      }
                     );
                   };
 
@@ -93,7 +89,7 @@ export const Component = ({ portal }: ComponentProps) => {
                       },
                       {
                         onAfterSuccess: ([logo]) => submitLogo(logo),
-                      },
+                      }
                     );
                   } else {
                     submitLogo(null);
@@ -101,7 +97,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 }}
                 variant="primary"
                 className="w-full"
-              />,
+              />
             )}
           </form>
         );

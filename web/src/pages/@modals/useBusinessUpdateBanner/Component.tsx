@@ -126,16 +126,16 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                             },
                             {
                               onAfterSuccess,
-                            },
+                            }
                           );
                         },
-                      },
+                      }
                     );
                   }
                 }}
                 variant="primary"
                 className="w-full"
-              />,
+              />
             )}
           </form>
         );

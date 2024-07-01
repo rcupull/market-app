@@ -23,7 +23,7 @@ export const useGetAllShopping = (): {
               query,
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

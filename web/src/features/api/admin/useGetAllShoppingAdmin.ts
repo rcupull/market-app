@@ -25,7 +25,7 @@ export const useGetAllShoppingAdmin = (): {
             }),
           },
 
-          options,
+          options
         );
       },
       reset: fetch[3],

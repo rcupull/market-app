@@ -46,7 +46,7 @@ export const TableRow = ({
           'hover:bg-indigo-50': isSorting && !isDragging,
           'bg-gray-50': isDragging,
         },
-        className,
+        className
       )}
     >
       {nodes.map((node, indexCell) => {
@@ -69,7 +69,7 @@ export const TableRow = ({
             {...othersProps}
             className={cn(
               'px-6 py-4 whitespace-no-wrap border-b-2 border-gray-300 relative',
-              othersProps.className,
+              othersProps.className
             )}
           >
             {node}

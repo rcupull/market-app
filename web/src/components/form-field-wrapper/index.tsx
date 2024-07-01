@@ -22,7 +22,7 @@ export const FormFieldWrapper = ({
   labelPosition = 'top',
   description,
   collapsable,
-  collapsableHeader = 'Abrir'
+  collapsableHeader = 'Abrir',
 }: FormFieldWrapperProps & { children: React.ReactNode; error?: Nullable<string> }) => {
   return (
     <div data-id="FormFieldWrapper" className={cn(className)}>

@@ -21,7 +21,7 @@ export const SettingBox = ({
     <div
       className={cn(
         'w-full h-full gap-1 p-2 border border-gray-300 rounded-md flex flex-col',
-        className,
+        className
       )}
     >
       <div className="flex items-center justify-center ">

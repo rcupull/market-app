@@ -3,7 +3,7 @@ import { isNumber } from './general';
 import { Shopping, ShoppingState } from 'types/shopping';
 
 export const getShoppingData = (
-  shopping: Shopping,
+  shopping: Shopping
 ): {
   totalProducts: number;
   totalPrice: number;

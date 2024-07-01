@@ -46,7 +46,7 @@ export const ShoppingButtonCancel = ({ shopping, onAfterSucess }: ShoppingButton
                         onClose();
                         onAfterSucess?.();
                       },
-                    },
+                    }
                   );
                 }}
               />
@@ -55,7 +55,7 @@ export const ShoppingButtonCancel = ({ shopping, onAfterSucess }: ShoppingButton
           };
         },
       },
-      { emergent: true },
+      { emergent: true }
     );
   };
   return (

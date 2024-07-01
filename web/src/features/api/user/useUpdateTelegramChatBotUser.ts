@@ -30,7 +30,7 @@ export const useUpdateTelegramChatBotUser = (): {
               code,
             },
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

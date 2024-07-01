@@ -27,7 +27,7 @@ export const useGeneralBusinessCategories = (): {
               path: '/general/business-categories',
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

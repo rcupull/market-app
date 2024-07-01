@@ -73,7 +73,7 @@ export const useBusinessNewUpdatePost = () => {
             };
           },
         },
-        { emergent: true },
+        { emergent: true }
       );
     },
   };

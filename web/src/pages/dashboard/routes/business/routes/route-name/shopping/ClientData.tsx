@@ -33,7 +33,7 @@ export const ClientData = ({ rowData }: ClientDataProps) => {
   };
 
   return (
-    <div className='w-48 sm:w-60'>
+    <div className="w-48 sm:w-60">
       {renderKey('Nombre')}
       {renderValue(purchaserName)}
 
@@ -45,7 +45,11 @@ export const ClientData = ({ rowData }: ClientDataProps) => {
       <Divider className="!my-1" />
 
       {renderKey('Dirección')}
-      {renderValue(purchaserAddress && getIsValidAddress(purchaserAddress) && <AddressView address={purchaserAddress}/>)}
+      {renderValue(
+        purchaserAddress && getIsValidAddress(purchaserAddress) && (
+          <AddressView address={purchaserAddress} />
+        )
+      )}
     </div>
   );
 };

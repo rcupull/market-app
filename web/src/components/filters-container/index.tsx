@@ -12,7 +12,7 @@ export const FiltersContainer = ({ onReset, children, className }: FiltersContai
     <div
       className={cn(
         'w-full flex flex-col md:flex-row items-center gap-6 ring-2 ring-gray-200 rounded-sm p-2',
-        className,
+        className
       )}
     >
       {children}

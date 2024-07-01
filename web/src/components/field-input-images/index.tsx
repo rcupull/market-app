@@ -31,14 +31,7 @@ type State = Array<ImageElement>;
 
 export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesProps>(
   (props, ref) => {
-    const {
-      className,
-      label,
-      multi,
-      max,
-      enabledImageHref,
-      ...omittedProps
-    } = props;
+    const { className, label, multi, max, enabledImageHref, ...omittedProps } = props;
 
     const { pushModal } = useModal();
     const { field, error } = useFormField(props);
@@ -91,7 +84,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
 
     const handleChange = async (
       image: File | Image | null | undefined,
-      action: 'add' | 'remove' | 'change',
+      action: 'add' | 'remove' | 'change'
     ) => {
       let newStateToPreview = [...stateToPreview];
 
@@ -106,7 +99,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                 src: image,
                 ...(await getFileImageSize(image)),
               },
-              previewIndex,
+              previewIndex
             );
           } else {
             newStateToPreview = updateRow(newStateToPreview, image, previewIndex);
@@ -136,7 +129,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                 src: image,
                 ...(await getFileImageSize(image)),
               },
-              previewIndex,
+              previewIndex
             );
           } else {
             newStateToPreview = updateRow(
@@ -145,7 +138,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                 ...newStateToPreview[previewIndex],
                 ...image,
               },
-              previewIndex,
+              previewIndex
             );
           }
 
@@ -184,7 +177,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
       const addImages = async (
         images: Array<ImageElement>,
         imagesToAdd: Array<Image | File>,
-        index: number,
+        index: number
       ): Promise<void> => {
         const image = imagesToAdd[index];
 
@@ -233,7 +226,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
             ...current,
             href,
           },
-          previewIndex,
+          previewIndex
         );
 
         setStateToPreview(newStateToPreview);
@@ -256,7 +249,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
           onSelected: (images) => handleAddManyImages(images),
           multi: true,
         },
-        { emergent: true },
+        { emergent: true }
       );
     };
     return (
@@ -328,7 +321,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                     <label
                       htmlFor={field.name}
                       className={cn(
-                        'relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500',
+                        'relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500'
                       )}
                     >
                       <span>Seleccione imagen en su galería</span>
@@ -343,7 +336,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                         onChange={(event) => {
                           handleChange(
                             event.target.files?.[0],
-                            previewIndex === stateToPreview.length - 1 ? 'add' : 'change',
+                            previewIndex === stateToPreview.length - 1 ? 'add' : 'change'
                           );
                         }}
                       />
@@ -352,7 +345,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                   <li>
                     <span
                       className={cn(
-                        'relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500',
+                        'relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500'
                       )}
                       onClick={() => {
                         handleOpenCatalogsSearchImage();
@@ -389,5 +382,5 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
         )}
       </FormFieldWrapper>
     );
-  },
+  }
 );

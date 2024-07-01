@@ -12,8 +12,8 @@ import {
   shoppingServicesDecrementStockAmountFromShoppingPosts,
   shoppingServicesFindAndUpdateOne,
   shoppingServicesGetAllWithPagination,
+  shoppingServicesGetDataFromPosts,
   shoppingServicesGetOne,
-  shoppingServicesGetStockAmountAvailableFromPosts,
   shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts,
   shoppingServicesUpdateOrAddOne,
 } from './services';
@@ -190,9 +190,11 @@ const post_shopping: () => RequestHandler<
 
       const { amountToAdd = 1, purshaseNotes } = body;
 
-      const [stockAmountAvailable] = await shoppingServicesGetStockAmountAvailableFromPosts({
+      const { getPostData } = await shoppingServicesGetDataFromPosts({
         posts: [post],
       });
+
+      const { stockAmountAvailable } = getPostData(post);
 
       if (isNumber(stockAmountAvailable)) {
         /**

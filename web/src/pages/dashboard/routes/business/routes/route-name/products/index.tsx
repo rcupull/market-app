@@ -113,7 +113,7 @@ export const Products = () => {
               <TopActions>
                 {buttonNew}
                 {buttonRefresh}
-              </TopActions>,
+              </TopActions>
             )}
 
             <Filters
@@ -162,7 +162,12 @@ export const Products = () => {
                       'ninguna'
                     ),
                     getDateString({ date: createdAt, showTime: true }),
-                    <ProductDetails key="ProductDetails" rowData={rowData} business={business} onRefresh={filters.onRefresh}/>,
+                    <ProductDetails
+                      key="ProductDetails"
+                      rowData={rowData}
+                      business={business}
+                      onRefresh={filters.onRefresh}
+                    />,
                   ]),
                 };
               }}
