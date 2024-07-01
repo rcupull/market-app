@@ -3,7 +3,8 @@ import { useRef } from 'react';
 import { FormErrors } from './types';
 
 import { AnyRecord, Nullable } from 'types/general';
-import { compact, getFlattenJson, isNullOrUndefinedOrEmptyString } from 'utils/general';
+import { Path } from 'types/paths';
+import { compact, get, getFlattenJson, isNullOrUndefinedOrEmptyString } from 'utils/general';
 
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
@@ -22,7 +23,7 @@ const validationsCallback = {
   },
 };
 
-interface Validation<V extends AnyRecord, F extends keyof V = keyof V> {
+export interface Validation<V extends AnyRecord, F extends Path<V> = Path<V>> {
   field: F;
   type: 'required' | 'email' | 'equal' | 'custom';
   equalField?: F;
@@ -30,16 +31,16 @@ interface Validation<V extends AnyRecord, F extends keyof V = keyof V> {
   message?: string;
 }
 
-export type FormValidations<V extends AnyRecord, F extends keyof V = keyof V> = Array<
+export type FormValidations<V extends AnyRecord, F extends Path<V> = Path<V>> = Array<
   Nullable<Validation<V, F>>
 >;
 
-export type GetFormErrors<V extends AnyRecord, F extends keyof V = keyof V> = (
+export type GetFormErrors<V extends AnyRecord, F extends Path<V> = Path<V>> = (
   value: V,
   validations: FormValidations<V, F>,
 ) => Promise<Partial<Record<F, string>>>;
 
-export const useGetFormErrors = <V extends AnyRecord, F extends keyof V = keyof V>(): GetFormErrors<
+export const useGetFormErrors = <V extends AnyRecord, F extends Path<V> = Path<V>>(): GetFormErrors<
   V,
   F
 > => {
@@ -54,9 +55,9 @@ export const useGetFormErrors = <V extends AnyRecord, F extends keyof V = keyof 
 
       if (errors[field]) return; //return if has error
 
-      const fieldValue = value[field];
+      const fieldValue = get(value, field);
 
-      if (type !== 'equal' && refValues.current && refValues.current[field] === fieldValue) {
+      if (type !== 'equal' && refValues.current && get(refValues.current, field) === fieldValue) {
         /**
          * // return de same error if has not change the value
          * if type = 'equal' the validation depends of two values. It is necessary ignore this rule
@@ -88,7 +89,7 @@ export const useGetFormErrors = <V extends AnyRecord, F extends keyof V = keyof 
           return console.log('equalField not found');
         }
 
-        if (!validationsCallback.equal(fieldValue, value[equalField])) {
+        if (!validationsCallback.equal(fieldValue, get(value, equalField))) {
           errors[field] = message || `El campo debe ser ${equalField.toString()}.`;
         }
       }

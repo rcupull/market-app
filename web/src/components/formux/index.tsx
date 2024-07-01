@@ -52,6 +52,7 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
     /**
      * Only get errors for touched fields
      */
+    //@ts-expect-error ignore this error
     return Object.keys(touched).reduce((acc, key) => ({ ...acc, [key]: errors[key] }), {});
   };
 
