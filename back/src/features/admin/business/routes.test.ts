@@ -71,7 +71,7 @@ describe('admin', () => {
         )
         .expect(200)
         .then((response) => {
-          expect(response.body.data.length).toEqual(2);
+          expect(response.body.data.length).toEqual(5);
         });
 
       //delete business

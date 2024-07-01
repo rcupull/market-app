@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 import { app } from '../../server';
 import { dropTestDbConnectionAsync, generateToken } from '../../utils/test-utils';
-import { TestBDContent, fillBD } from '../../utils/test-BD';
+import { TestBDContent, fillBD, removeAllShoppings } from '../../utils/test-BD';
 import { getTestingRoute } from '../../utils/api';
 import { Shopping, ShoppingState } from '../../types/shopping';
 import { PostDto } from '../../types/post';
@@ -195,7 +195,6 @@ describe('shopping', () => {
         mockNotificationsServicesSendUpdateStockAmountMessage();
 
       const bd = await fillBD({
-        noCreateInitialShopping: true,
         productPost1Business1User1: {
           stockAmount: 20,
         },
@@ -203,6 +202,8 @@ describe('shopping', () => {
           stockAmount: 30,
         },
       });
+
+      await removeAllShoppings();
 
       const { business1User1, productPost1Business1User1, productPost2Business1User1, user1 } = bd;
 
@@ -306,12 +307,12 @@ describe('shopping', () => {
         mockNotificationsServicesSendUpdateStockAmountMessage();
 
       const bd = await fillBD({
-        noCreateInitialShopping: true,
         productPost1Business1User1: {
           stockAmount: 2,
         },
       });
 
+      await removeAllShoppings();
       const { business1User1, productPost1Business1User1, user1 } = bd;
 
       // checking the initial stokc amounts
@@ -412,7 +413,6 @@ describe('shopping', () => {
       // ids has some object ids
 
       const bd = await fillBD({
-        noCreateInitialShopping: true,
         productPost1Business1User1: {
           stockAmount: 20,
         },
@@ -420,6 +420,8 @@ describe('shopping', () => {
           stockAmount: 30,
         },
       });
+
+      await removeAllShoppings();
 
       const { business1User1, user1, productPost1Business1User1, productPost2Business1User1 } = bd;
 
@@ -529,7 +531,6 @@ describe('shopping', () => {
         mockNotificationsServicesSendUpdateStockAmountMessage();
 
       const bd = await fillBD({
-        noCreateInitialShopping: true,
         productPost1Business1User1: {
           stockAmount: 20,
         },
@@ -628,8 +629,6 @@ describe('shopping', () => {
         },
       });
 
-      if (!shopping1Business1User1) return;
-
       // checking the state
       expect(shopping1Business1User1.state).toEqual('REQUESTED');
 
@@ -672,8 +671,6 @@ describe('shopping', () => {
           stockAmount: 20,
         },
       });
-
-      if (!shopping1Business1User1) return;
 
       // checking the shoppinPost
       await supertest(app)
@@ -750,8 +747,6 @@ describe('shopping', () => {
         },
       });
 
-      if (!shopping1Business1User1) return;
-
       // checking the shoppinPost
       await supertest(app)
         .get(
@@ -827,8 +822,6 @@ describe('shopping', () => {
         },
       });
 
-      if (!shopping1Business1User1) return;
-
       // checking the shoppinPost
       await supertest(app)
         .get(
@@ -901,8 +894,6 @@ describe('shopping', () => {
         },
       });
 
-      if (!shopping1Business1User1) return;
-
       // change the state
       await supertest(app)
         .post(
@@ -935,8 +926,6 @@ describe('shopping', () => {
 
     it('should not change the state from CONSTRUCTION', async () => {
       const { user1, shopping1Business1User1 } = await fillBD();
-
-      if (!shopping1Business1User1) return;
 
       // change the state
       await supertest(app)

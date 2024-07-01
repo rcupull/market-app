@@ -40,20 +40,45 @@ export const NewSectionButton = () => {
                   {({ value }) => {
                     return (
                       <form className="mt-10">
-                        <FieldRadioGroup<{ value: PostType; label: string }>
+                        <FieldRadioGroup<{
+                          value: PostType;
+                          label: string;
+                          description: React.ReactNode;
+                        }>
                           name="postType"
                           renderOption={({ checked, item }) => {
-                            return <FieldCheckbox noUseFormik value={checked} label={item.label} />;
+                            return (
+                              <FieldCheckbox
+                                noUseFormik
+                                value={checked}
+                                label={item.label}
+                                description={item.description}
+                              />
+                            );
                           }}
                           optionToValue={({ value }) => value}
                           items={[
                             {
                               value: 'product',
                               label: 'Productos',
+                              description: (
+                                <div>
+                                  Una sección de productos agrupa los{' '}
+                                  <span className="font-bold">productos</span> de su negocio que
+                                  tengan las categorías asociadas a dicha sección.
+                                </div>
+                              ),
                             },
                             {
                               value: 'link',
                               label: 'Enlace',
+                              description: (
+                                <div>
+                                  Una sección de enlace agrupa{' '}
+                                  <span className="font-bold">enlaces</span> de su negocio hacia
+                                  otros negocios de Asere Market o hacia links externos.
+                                </div>
+                              ),
                             },
                           ]}
                           containerClassName="flex items-center justify-center gap-8"
@@ -61,6 +86,7 @@ export const NewSectionButton = () => {
 
                         {portal.getPortal(
                           <ButtonNew
+                            label="Crear sección"
                             onClick={() => {
                               const { postType } = value;
                               onClose();

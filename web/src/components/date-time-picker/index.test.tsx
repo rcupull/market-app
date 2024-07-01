@@ -1143,7 +1143,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayToday"
+                  class="rdrDay"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -1208,7 +1208,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayWeekend rdrDayEndOfWeek rdrDayEndOfMonth"
+                  class="rdrDay rdrDayToday rdrDayWeekend rdrDayEndOfWeek rdrDayEndOfMonth"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >

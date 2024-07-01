@@ -12,6 +12,7 @@ import { IconButtonViewPostPage } from './IconButtonViewPostPage';
 
 import { useShopping } from 'pages/@hooks/useShopping';
 import { Image } from 'types/general';
+import { getImageEndpoint } from 'utils/api';
 
 export interface PostAddedProps {
   count: number;
@@ -31,7 +32,11 @@ export const PostAdded = ({ count, postId, postImages, postName, routeName }: Po
   return (
     <div className="flex items-center border border-gray-300 rounded-md p-1 gap-1">
       <div className="flex-shrink-0">
-        {mainImage ? <img src={mainImage.src} className="w-8" /> : <EmptyImage className="w-8" />}
+        {mainImage ? (
+          <img src={getImageEndpoint(mainImage.src)} className="w-8" />
+        ) : (
+          <EmptyImage className="w-8" />
+        )}
       </div>
 
       {postName}

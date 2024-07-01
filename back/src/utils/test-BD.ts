@@ -10,51 +10,102 @@ import { User } from '../types/user';
 
 export interface TestBDContent {
   user1: User;
-  user2: User;
-  user3: User;
-  //
   business1User1: Business;
   business2User1: Business;
-  hiddenBusinessUser1: Business;
-  //
+  business3User1: Business;
   productPost1Business1User1: Post;
   productPost2Business1User1: Post;
+  productPost3Business1User1: Post;
+  productPost4Business1User1: Post;
+  productPost5Business1User1: Post;
+  shopping1Business1User1: Shopping;
+  //
+  user2: User;
+  business1User2: Business;
+  business2User2: Business;
+  business3User2: Business;
   productPost1Business1User2: Post;
   productPost2Business1User2: Post;
   productPost3Business1User2: Post;
-
+  productPost4Business1User2: Post;
+  productPost5Business1User2: Post;
   //
-  business1User2: Business;
-  business2User2: Business;
-  hiddenBusinessUser2: Business;
-  //
-  shopping1Business1User1?: Shopping;
+  user3: User;
   //
   admin: User;
 }
 
+const createProductPost = async ({
+  name,
+  business,
+  user,
+  override,
+}: {
+  name: string;
+  business: Business;
+  user: User;
+  override: Partial<Post> | undefined;
+}): Promise<Post> => {
+  const product = new PostModel({
+    name,
+    routeName: business.routeName,
+    createdBy: user._id,
+    price: 10,
+    currency: 'CUP',
+    postCategoriesTags: ['cat1', 'cat2', 'cat3'],
+    ...(override || {}),
+  });
+  await product.save();
+
+  return product;
+};
+
+const createBusiness = async ({
+  name,
+  user,
+  override,
+}: {
+  name: string;
+  user: User;
+  override: Partial<Business> | undefined;
+}): Promise<Business> => {
+  const business = new BusinessModel({
+    name,
+    routeName: name,
+    createdBy: user._id,
+    currency: 'CUP',
+    ...(override || {}),
+  });
+  await business.save();
+
+  return business;
+};
+
 export const fillBD = async (args?: {
   user1?: Partial<User>;
-  user2?: Partial<User>;
-  user3?: Partial<User>;
   business1User1?: Partial<Business>;
   business2User1?: Partial<Business>;
-  hiddenBusinessUser1?: Partial<Business>;
+  business3User1?: Partial<Business>;
   productPost1Business1User1?: Partial<Post>;
   productPost2Business1User1?: Partial<Post>;
+  productPost3Business1User1?: Partial<Post>;
+  productPost4Business1User1?: Partial<Post>;
+  productPost5Business1User1?: Partial<Post>;
+  shopping1Business1User1?: Partial<Shopping>;
+  //
+  user2?: Partial<User>;
+  business1User2?: Partial<Business>;
+  business2User2?: Partial<Business>;
+  business3User2?: Partial<Business>;
   productPost1Business1User2?: Partial<Post>;
   productPost2Business1User2?: Partial<Post>;
   productPost3Business1User2?: Partial<Post>;
-  business1User2?: Partial<Business>;
-  business2User2?: Partial<Business>;
-  hiddenBusinessUser2?: Partial<Business>;
-  shopping1Business1User1?: Partial<Shopping>;
-  admin?: Partial<User>;
+  productPost4Business1User2?: Partial<Post>;
+  productPost5Business1User2?: Partial<Post>;
   //
-  noCreateInitialShopping?: boolean;
+  user3?: Partial<User>;
+  admin?: Partial<User>;
 }): Promise<TestBDContent> => {
-  const { noCreateInitialShopping } = args || {};
-
   const admin = new UserModel({
     name: 'admin',
     email: 'admin@gmail.com',
@@ -76,79 +127,78 @@ export const fillBD = async (args?: {
     ...(args?.user1 || {}),
   });
   await user1.save();
-  //
-  const business1User1 = new BusinessModel({
+
+  const business1User1 = await createBusiness({
     name: 'business1User1',
-    routeName: 'business1User1',
-    createdBy: user1._id,
-    currency: 'CUP',
-    ...(args?.business1User1 || {}),
+    user: user1,
+    override: args?.business1User1,
   });
-  await business1User1.save();
 
-  const business2User1 = new BusinessModel({
+  const business2User1 = await createBusiness({
     name: 'business2User1',
-    routeName: 'business2User1',
-    createdBy: user1.id,
-    currency: 'CUP',
-    ...(args?.business2User1 || {}),
-  });
-  await business2User1.save();
-
-  const hiddenBusinessUser1 = new BusinessModel({
-    name: 'hiddenBusinessUser1',
-    routeName: 'hiddenBusinessUser1',
-    createdBy: user1.id,
-    hidden: true,
-    currency: 'CUP',
-    ...(args?.hiddenBusinessUser1 || {}),
+    user: user1,
+    override: args?.business2User1,
   });
 
-  await hiddenBusinessUser1.save();
+  const business3User1 = await createBusiness({
+    name: 'business3User1',
+    user: user1,
+    override: args?.business3User1,
+  });
 
-  const productPost1Business1User1 = new PostModel({
-    name: 'chancletas',
+  const productPost1Business1User1 = await createProductPost({
+    name: 'productPost1Business1User1',
+    business: business1User1,
+    user: user1,
+    override: args?.productPost1Business1User1,
+  });
+
+  const productPost2Business1User1 = await createProductPost({
+    name: 'productPost2Business1User1',
+    business: business1User1,
+    user: user1,
+    override: args?.productPost2Business1User1,
+  });
+
+  const productPost3Business1User1 = await createProductPost({
+    name: 'productPost3Business1User1',
+    business: business1User1,
+    user: user1,
+    override: args?.productPost3Business1User1,
+  });
+
+  const productPost4Business1User1 = await createProductPost({
+    name: 'productPost4Business1User1',
+    business: business1User1,
+    user: user1,
+    override: args?.productPost4Business1User1,
+  });
+
+  const productPost5Business1User1 = await createProductPost({
+    name: 'productPost5Business1User1',
+    business: business1User1,
+    user: user1,
+    override: args?.productPost5Business1User1,
+  });
+
+  const shopping1Business1User1 = new ShoppingModel({
+    state: 'CONSTRUCTION',
+    purchaserId: user1._id,
+    purchaserName: user1.name,
     routeName: business1User1.routeName,
-    createdBy: user1.id,
-    price: '10',
-    currency: 'CUP',
-    postCategoriesTags: ['cat1', 'cat2', 'cat3'],
-    ...(args?.productPost1Business1User1 || {}),
+    currency: business1User1.currency,
+    posts: [
+      {
+        postData: postToShoppingPostDataReshaper(productPost1Business1User1),
+        purshaseNotes: {},
+        count: 5,
+        lastUpdatedDate: new Date(),
+      },
+    ],
+    ...(args?.shopping1Business1User1 || {}),
   });
-  await productPost1Business1User1.save();
 
-  const productPost2Business1User1 = new PostModel({
-    name: 'zapatos',
-    routeName: business1User1.routeName,
-    createdBy: user1.id,
-    price: '20',
-    currency: 'CUP',
-    postCategoriesTags: ['cat1', 'cat2', 'cat3', 'cat4'],
-    ...(args?.productPost2Business1User1 || {}),
-  });
-  await productPost2Business1User1.save();
-
-  let shopping1Business1User1 = undefined;
-  if (!noCreateInitialShopping) {
-    shopping1Business1User1 = new ShoppingModel({
-      state: 'CONSTRUCTION',
-      purchaserId: user1._id,
-      purchaserName: user1.name,
-      routeName: business1User1.routeName,
-      currency: business1User1.currency,
-      posts: [
-        {
-          postData: postToShoppingPostDataReshaper(productPost1Business1User1),
-          purshaseNotes: {},
-          count: 5,
-          lastUpdatedDate: new Date(),
-        },
-      ],
-      ...(args?.shopping1Business1User1 || {}),
-    });
-
-    await shopping1Business1User1.save();
-  }
+  await shopping1Business1User1.save();
 
   //////////////////////////////////////////////////////////////////////////////////
 
@@ -160,69 +210,60 @@ export const fillBD = async (args?: {
     ...(args?.user2 || {}),
   });
   await user2.save();
+
   //
-  const business1User2 = new BusinessModel({
+  const business1User2 = await createBusiness({
     name: 'business1User2',
-    routeName: 'business1User2',
-    createdBy: user2.id,
-    currency: 'CUP',
-    ...(args?.business1User2 || {}),
+    user: user2,
+    override: args?.business1User2,
   });
-  await business1User2.save();
-  //
-  const business2User2 = new BusinessModel({
+
+  const business2User2 = await createBusiness({
     name: 'business2User2',
-    routeName: 'business2User2',
-    createdBy: user2.id,
-    currency: 'CUP',
-    ...(args?.business2User2 || {}),
+    user: user2,
+    override: args?.business2User2,
   });
-  await business2User2.save();
 
-  const hiddenBusinessUser2 = new BusinessModel({
-    name: 'hiddenBusinessUser2',
-    routeName: 'hiddenBusinessUser2',
-    createdBy: user2.id,
-    hidden: true,
-    currency: 'CUP',
-    ...(args?.hiddenBusinessUser2 || {}),
+  const business3User2 = await createBusiness({
+    name: 'business3User2',
+    user: user2,
+    override: args?.business3User2,
   });
-  await hiddenBusinessUser2.save();
 
-  const productPost1Business1User2 = new PostModel({
-    name: 'productPost1Business1User2 name',
-    routeName: business1User2.routeName,
-    createdBy: user2.id,
-    price: '10',
-    currency: 'CUP',
-    postCategoriesTags: ['cat1', 'cat2', 'cat3'],
-    ...(args?.productPost1Business1User2 || {}),
+  const productPost1Business1User2 = await createProductPost({
+    name: 'productPost1Business1User2',
+    business: business1User2,
+    user: user2,
+    override: args?.productPost1Business1User2,
   });
-  await productPost1Business1User2.save();
 
-  const productPost2Business1User2 = new PostModel({
-    name: 'productPost2Business1User2 name',
-    routeName: business1User2.routeName,
-    createdBy: user2.id,
-    price: '10',
-    currency: 'CUP',
-    postCategoriesTags: ['cat1', 'cat2', 'cat3'],
-    ...(args?.productPost2Business1User2 || {}),
+  const productPost2Business1User2 = await createProductPost({
+    name: 'productPost2Business1User2',
+    business: business1User2,
+    user: user2,
+    override: args?.productPost2Business1User2,
   });
-  await productPost2Business1User2.save();
 
-  const productPost3Business1User2 = new PostModel({
-    name: 'productPost3Business1User2 name',
-    routeName: business1User2.routeName,
-    createdBy: user2.id,
-    price: '10',
-    currency: 'CUP',
-    postCategoriesTags: ['cat1', 'cat2', 'cat3'],
-    ...(args?.productPost3Business1User2 || {}),
+  const productPost3Business1User2 = await createProductPost({
+    name: 'productPost3Business1User2',
+    business: business1User2,
+    user: user2,
+    override: args?.productPost3Business1User2,
   });
-  await productPost3Business1User2.save();
 
-  //////////////////////////////////////////////////////////////////////////////////
+  const productPost4Business1User2 = await createProductPost({
+    name: 'productPost4Business1User2',
+    business: business1User2,
+    user: user2,
+    override: args?.productPost4Business1User2,
+  });
+
+  const productPost5Business1User2 = await createProductPost({
+    name: 'productPost5Business1User2',
+    business: business1User2,
+    user: user2,
+    override: args?.productPost5Business1User2,
+  });
 
   //////////////////////////////////////////////////////////////////////////////////
   const user3 = new UserModel({
@@ -240,24 +281,32 @@ export const fillBD = async (args?: {
 
   return {
     user1,
-    user2,
-    user3,
     business1User1,
     business2User1,
-    hiddenBusinessUser1,
+    business3User1,
     productPost1Business1User1,
     productPost2Business1User1,
+    productPost3Business1User1,
+    productPost4Business1User1,
+    productPost5Business1User1,
+    shopping1Business1User1,
     //
+    user2,
+    business1User2,
+    business2User2,
+    business3User2,
     productPost1Business1User2,
     productPost2Business1User2,
     productPost3Business1User2,
+    productPost4Business1User2,
+    productPost5Business1User2,
     //
-    shopping1Business1User1,
-    //
-    business1User2,
-    business2User2,
-    hiddenBusinessUser2,
+    user3,
     //
     admin,
   };
+};
+
+export const removeAllShoppings = async () => {
+  await ShoppingModel.deleteMany({});
 };

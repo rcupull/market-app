@@ -54,13 +54,12 @@ export const PostCardLayoutSchema = new Schema<PostCardLayout>({
   shoppingMethod: PostLayoutShoppingMethodDefinition,
 });
 
-export const PostPageLayoutSchema = new Schema<PostPageLayout>({
-  postsSectionsBelowIds: { type: [String] },
-});
+export const PostPageLayoutSchema = new Schema<PostPageLayout>({});
 
 export const PostsLayoutSectionSchema = new Schema<PostsLayoutSection>({
   name: { type: String },
   hiddenName: { type: Boolean, default: false },
+  hidden: { type: Boolean, default: false },
   searchLayout: {
     type: String,
     enum: [
@@ -76,15 +75,6 @@ export const PostsLayoutSectionSchema = new Schema<PostsLayoutSection>({
     default: 'none',
   },
   postCategoriesTags: { type: [String] },
-  showIn: {
-    type: [
-      {
-        type: String,
-        enum: ['businessPage', 'postPage'],
-      },
-    ],
-    default: [],
-  },
   type: {
     type: String,
     enum: ['grid', 'oneRowSlider'],

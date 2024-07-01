@@ -7,11 +7,11 @@ import { FieldInput } from 'components/field-input';
 import { FieldInputImages } from 'components/field-input-images';
 import { FieldPostCategoriesButtons } from 'components/field-post-categories-buttons';
 import { FieldPostLink } from 'components/field-post-link';
-import { FieldPostPageLayout } from 'components/field-post-page-layout';
 import { FieldPostStockAmount } from 'components/field-post-stock-amount';
 import { FieldRadioGroup } from 'components/field-radio-group';
 import { FieldTextArea } from 'components/field-text-area';
 import { Formux } from 'components/formux';
+import { IconButtonAdd } from 'components/icon-button-add';
 
 import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusinessSection';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
@@ -22,6 +22,7 @@ import { useMemoizedHash } from 'hooks/useMemoizedHash';
 import { Portal } from 'hooks/usePortal';
 
 import { useBusiness } from '../../@hooks/useBusiness';
+import { useBusinessNewUpdateSection } from '../useBusinessNewUpdateSection';
 
 import { imagesDimensions } from 'constants/posts';
 import { StyleProps } from 'types/general';
@@ -47,6 +48,7 @@ export const Component = ({
   const { business, onFetch, getSections } = useBusiness();
 
   const { updateBusinessSection } = useUpdateBusinessSection();
+  const businessNewUpdateSection = useBusinessNewUpdateSection();
   const { addOnePost } = useAddOnePost();
   const { updateOnePost } = useUpdateOnePost();
   const { addManyImages } = useAddManyImages();
@@ -269,7 +271,7 @@ export const Component = ({
               </>
             )}
 
-            {postFormFields.includes('postPageLayout') && (
+            {/* {postFormFields.includes('postPageLayout') && (
               <>
                 <FieldPostPageLayout
                   label="Página de la publicación"
@@ -278,7 +280,7 @@ export const Component = ({
                 />
                 <Divider />
               </>
-            )}
+            )} */}
 
             {portal.getPortal(
               <Button
@@ -405,7 +407,24 @@ export const Component = ({
             <Divider />
 
             <FieldRadioGroup<{ label: string; value: string }>
-              label="Incluir en las secciones"
+              label={
+                <div className="flex items-center">
+                  Incluir en las secciones
+                  <IconButtonAdd
+                    title="Agregar nueva sección de enlaces"
+                    className="text-green-600 font-bold ml-2"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      businessNewUpdateSection.open({
+                        postType: 'link',
+                        onAfterSuccess: () =>
+                          business && onFetch({ routeName: business.routeName }),
+                      });
+                    }}
+                  />
+                </div>
+              }
               name="sectionIds"
               className="mt-6"
               items={getSections({ postType: 'link' }).map(({ name, _id }) => ({

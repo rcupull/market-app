@@ -7,7 +7,6 @@ import { FieldInput } from 'components/field-input';
 import { FieldPostCardLayout } from 'components/field-post-card-layout';
 import { FieldPostCategoriesButtons } from 'components/field-post-categories-buttons';
 import { FieldPostsSectionLayout } from 'components/field-posts-section-layout';
-import { FieldRadioGroup } from 'components/field-radio-group';
 import { FieldSearchLayout } from 'components/field-search-layout';
 import { FieldShowHide } from 'components/field-show-hide';
 import { Formux } from 'components/formux';
@@ -18,11 +17,7 @@ import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusines
 import { Portal } from 'hooks/usePortal';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import {
-  PostsLayoutSection,
-  PostsLayoutSectionPayload,
-  PostsLayoutSectionVisibility,
-} from 'types/business';
+import { PostsLayoutSection, PostsLayoutSectionPayload } from 'types/business';
 import { StyleProps } from 'types/general';
 import { getRequiredLabel } from 'utils/form';
 
@@ -58,7 +53,7 @@ export const ComponentProduct = ({
     postCategoriesTags: [],
     searchLayout: 'none',
     type: 'grid',
-    showIn: ['businessPage', 'postPage'],
+    hidden: true,
     postType: 'product',
     ...(section || {}),
   });
@@ -77,59 +72,7 @@ export const ComponentProduct = ({
       {({ value, isValid, hasChange }) => {
         return (
           <form className={className}>
-            <FieldRadioGroup<{
-              value: PostsLayoutSectionVisibility;
-              label: string;
-              description?: React.ReactNode;
-            }>
-              label="Visible en:"
-              renderOption={({ checked, item }) => {
-                return (
-                  <FieldCheckbox
-                    noUseFormik
-                    value={checked}
-                    label={item.label}
-                    description={item.description}
-                  />
-                );
-              }}
-              multi
-              optionToValue={({ value }) => value}
-              items={[
-                {
-                  value: 'businessPage',
-                  label: 'Página del negocio',
-                  description: (
-                    <div>
-                      En la página del negocio serán mostrados todos los grupos que{' '}
-                      <span className="font-bold">no esten ocultos</span> y que tengan la{' '}
-                      <span className="font-bold">visibilidad</span> activada.
-                    </div>
-                  ),
-                },
-                {
-                  value: 'postPage',
-                  label: 'Páginas de las publicaciones',
-                  description: (
-                    <div>
-                      Como parte del contenido de la{' '}
-                      <span className="font-bold">página de la publicación</span> serán mostrados
-                      todos los grupos que tengan la <span className="font-bold">visibilidad</span>{' '}
-                      activada en dicha página.
-                      <br />
-                      Durante la creación/edición de una publicacion usted puede escoger cuales
-                      grupos quiere que se vean como{' '}
-                      <span className="font-bold ml-1">
-                        publicaciones relacionadas o similares
-                      </span>{' '}
-                      a la publicación actual.
-                    </div>
-                  ),
-                },
-              ]}
-              name="showIn"
-              containerClassName="flex flex-col sm:flex-row sm:items-center sm:gap-4"
-            />
+            <FieldCheckbox label="Oculta" name="hidden" />
 
             {/* //////////////////////////////////////////////////////////////////////////////////////////////// */}
             <Divider />
