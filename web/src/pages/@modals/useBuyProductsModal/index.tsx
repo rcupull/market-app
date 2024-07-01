@@ -17,6 +17,7 @@ export const useBuyProductsModal = () => {
         {
           useProps: () => {
             return {
+              title: 'Crear orden de compra',
               badge: <Badge variant="cart" />,
               content: <Component />,
               className: '!min-w-[50rem]',

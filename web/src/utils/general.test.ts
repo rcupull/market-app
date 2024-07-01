@@ -33,11 +33,7 @@ const obj = {
   name: 'Camisas para hombres',
   price: 200,
   stockAmount: null,
-  postPageLayout: {
-    shoppingMethod: 'shoppingCart',
-    postsSectionsBelowIds: [],
-    _id: '6638348afae0b1017b5e2cf3',
-  },
+  postPageLayout: {},
   __v: 0,
   discount: 10,
 };

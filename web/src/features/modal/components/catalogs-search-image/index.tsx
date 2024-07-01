@@ -5,6 +5,8 @@ import { Gallery, Image as GalleryImage } from 'react-grid-gallery';
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { ButtonClose } from 'components/button-close';
+import { FieldInput } from 'components/field-input';
+import { Formux } from 'components/formux';
 import { Modal } from 'components/modal';
 import { SpinnerEllipsis } from 'components/spinner-ellipsis';
 
@@ -19,7 +21,6 @@ import { useDebouncer } from 'hooks/useDebouncer';
 
 import { ThumbnailImageComponent } from './ThumbnailImageComponent';
 
-import { SearchFilter } from 'pages/@common/filters/search-filter';
 import { FetchData } from 'types/api';
 import { Image } from 'types/general';
 import { updateRow } from 'utils/general';
@@ -107,29 +108,43 @@ export const CatalogsSearchImage = ({ onSelected, multi }: CatalogsSearchImagePr
 
   const content = (
     <div>
-      <SearchFilter
-        value={search}
-        hideButtons
-        placeholder="Buscar"
-        onChange={(search) => {
-          setSearch(search);
-
-          if (search) {
+      <Formux
+        value={{
+          searchValue: search || '',
+        }}
+        onChange={({ searchValue }) => {
+          if (searchValue && searchValue !== search) {
             searchDebouncer(() => {
               getCatalogsImages.fetch(
-                { search },
+                { search: searchValue },
                 {
                   onAfterSuccess: setData,
                 },
               );
             }, 500);
-          } else {
-            setData(null);
           }
 
-          setSearch(search);
+          setSearch(searchValue);
         }}
-      />
+      >
+        {() => {
+          return (
+            <form className="flex w-full">
+              <FieldInput
+                name="searchValue"
+                placeholder="Buscar"
+                className="w-full"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                  }
+                }}
+              />
+            </form>
+          );
+        }}
+      </Formux>
+
       <p className="mt-3 text-gray-400">
         {`(${multi ? 'Seleccione una o varias imágenes' : 'Seleccione una imagen'})`}
       </p>

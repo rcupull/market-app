@@ -101,7 +101,7 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
 
             if (DEVELOPMENT) {
               //simulate the api call delay
-              wait(1000).then(() => {
+              wait(500).then(() => {
                 resolve(newAccessToken);
               });
             } else {
@@ -139,7 +139,7 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
 
         if (DEVELOPMENT) {
           //simulate the api call delay
-          await wait(1000);
+          await wait(500);
         }
 
         const response = (

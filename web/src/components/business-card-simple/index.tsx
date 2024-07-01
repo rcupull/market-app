@@ -23,17 +23,19 @@ export const BusinessCardSimple = ({
   const imageSrc = (image && getImageSrc?.(image.src)) || image?.src;
 
   return (
-    <Link data-id="BusinessCardSimple" className={cn('group', className)} to={href}>
-      <div className="overflow-hidden rounded-lg bg-gray-100 flex items-center justify-center h-64 w-64">
-        {imageSrc ? (
-          <img src={imageSrc} className="object-contain object-center group-hover:opacity-75" />
-        ) : (
-          <div className="flex items-center justify-center h-64 w-64">
-            <EmptyImage className="h-32 w-32" />
-          </div>
-        )}
+    <Link data-id="BusinessCardSimple" className={cn('group size-full', className)} to={href}>
+      <div className="overflow-hidden border border-gray-300 rounded-lg flex flex-col items-center justify-between size-full">
+        <div className="w-full p-2">
+          {imageSrc ? (
+            <img src={imageSrc} className="object-contain object-center group-hover:opacity-75" />
+          ) : (
+            <div className="flex items-center justify-center size-full">
+              <EmptyImage className="size-full" />
+            </div>
+          )}
+        </div>
+        <h3 className="mt-4 text-lg text-gray-700">{name}</h3>
       </div>
-      <h3 className="mt-4 text-sm text-gray-700">{name}</h3>
     </Link>
   );
 };
