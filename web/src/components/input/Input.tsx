@@ -6,7 +6,7 @@ import { InputProps } from './types';
 import { cn } from 'utils/general';
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { type } = props;
+  const { type, typeOnlyNumbers } = props;
 
   const renderInput = (props: InputProps) => {
     const { className, endElement, ...omittedProps } = props;
@@ -22,6 +22,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             },
           )}
           {...omittedProps}
+          onKeyPress={(event) => {
+            if (typeOnlyNumbers && !/[0-9]/.test(event.key)) {
+              event.preventDefault();
+            }
+
+            omittedProps.onKeyPress?.(event);
+          }}
         />
         {endElement && (
           <div className="absolute h-full top-0 right-0 flex items-center">{endElement}</div>

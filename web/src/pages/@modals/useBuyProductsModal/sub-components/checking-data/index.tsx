@@ -1,4 +1,4 @@
-import { cloneElement } from 'react';
+import { cloneElement, useState } from 'react';
 
 import { useShoppingMakeOrder } from 'features/api/shopping/useShoppingMakeOrder';
 
@@ -16,6 +16,7 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
   const { shoppingMakeOrder } = useShoppingMakeOrder();
   const shopping = useShopping();
   const { business } = useBusiness();
+  const [isValidPersonalData, setIsValidPersonalData] = useState(false)
 
   if (!shopping.constructionShopping) {
     return <></>;
@@ -24,6 +25,7 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
   const nextButton = cloneElement(nextButtonProp, {
     label: 'Crear orden',
     isBusy: shoppingMakeOrder.status.isBusy,
+    disabled: !isValidPersonalData,
     onClick: () => {
       if (!shopping.constructionShopping || !business) return;
 
@@ -46,7 +48,7 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
         <ShoppingDetails shopping={shopping.constructionShopping} />
       </div>
 
-      <PersonalData className='mt-6'/>
+      <PersonalData className='mt-6' onValid={setIsValidPersonalData}/>
 
       <ButtonNavContainer leftButton={backButton} rightButton={nextButton} />
     </>

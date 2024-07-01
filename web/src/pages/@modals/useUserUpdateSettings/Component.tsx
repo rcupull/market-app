@@ -13,6 +13,7 @@ import { Portal } from 'hooks/usePortal';
 
 import { User } from 'types/auth';
 import { Address, Image } from 'types/general';
+import { getIsValidPhone } from 'utils/validation';
 
 interface State {
   profileImages: Array<Image>;
@@ -40,13 +41,24 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
         phone: user?.phone,
         address: user?.address,
       }}
+      validate={[
+        {
+          field: 'name',
+          type: 'required',
+        },
+        {
+          field: 'phone',
+          type: 'custom',
+          customCb: getIsValidPhone
+        }
+      ]}
     >
       {({ value, isValid, hasChange }) => {
         return (
           <form className="w-full">
             <FieldInput name="name" label="Nombre" />
 
-            <FieldInput name="phone" label="Teléfono" className="mt-6" />
+            <FieldInput name="phone" label="Teléfono" className="mt-6" typeOnlyNumbers />
 
             <FieldAddress
               label="Dirección"

@@ -17,7 +17,7 @@ const labels: Record<keyof Address, string> = {
   municipality: 'municipio',
   neighborhood: 'reparto',
   number: '#',
-  street: 'calle ',
+  street: '',
   streetBetweenFrom: 'entre',
   streetBetweenTo: 'y',
 };
@@ -33,8 +33,8 @@ export const AddressView = ({ address, className }: AddressViewProps) => {
         .map((key) => {
           return (
             <>
-              <span className="font-semibold mr-0.5">{`${labels[key]}`}</span>
-              <span className="text-gray-500 mr-2">{address[key]}</span>
+              <span className="text-gray-400 mx-0.5">{`${labels[key]}`}</span>
+              <span className="font-semibold mx-0.5">{address[key]}</span>
             </>
           );
         })}
