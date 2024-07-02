@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import { Menu, MenuProps } from 'components/menu';
+
 import { useRouter } from 'hooks/useRouter';
 
 import { Nullable, StyleProps } from 'types/general';
@@ -7,8 +9,9 @@ import { cn, compact } from 'utils/general';
 
 interface Item {
   name: string;
-  href: string;
+  href?: string;
   className?: string;
+  menuProps?: Pick<MenuProps, 'items'>;
 }
 
 export interface NavbarProps extends StyleProps {
@@ -30,25 +33,52 @@ export const NavBar = ({ items, preContent, postContent, className }: NavbarProp
     >
       {preContent}
 
-      <div className="space-x-4 hidden sm:flex flex-1">
-        {compact(items).map((item) => {
-          const current = pathname === item?.href;
-          return (
-            <Link
-              key={item.name}
-              to={item.href}
-              className={cn(
-                current
-                  ? 'bg-gray-300 text-gray-600'
-                  : 'text-gray-700 hover:bg-gray-200 hover:text-gray-600',
-                'rounded-md px-3 py-2 text-sm font-medium text-nowrap',
-                item.className
-              )}
-              aria-current={current ? 'page' : undefined}
-            >
-              {item.name}
-            </Link>
-          );
+      <div className="space-x-4 hidden lg:flex flex-1">
+        {compact(items).map(({ href, name, menuProps, className }) => {
+          const current = pathname === href;
+
+          if (menuProps) {
+            return (
+              <Menu
+                key={name}
+                {...menuProps}
+                buttonElement={
+                  <div
+                    className={cn(
+                      current
+                        ? 'bg-gray-300 text-gray-600'
+                        : 'text-gray-700 hover:bg-gray-200 hover:text-gray-600',
+                      'rounded-md px-3 py-2 text-sm font-medium text-nowrap',
+                      className
+                    )}
+                  >
+                    {name}
+                  </div>
+                }
+              />
+            );
+          }
+
+          if (href) {
+            return (
+              <Link
+                key={name}
+                to={href}
+                className={cn(
+                  current
+                    ? 'bg-gray-300 text-gray-600'
+                    : 'text-gray-700 hover:bg-gray-200 hover:text-gray-600',
+                  'rounded-md px-3 py-2 text-sm font-medium text-nowrap',
+                  className
+                )}
+                aria-current={current ? 'page' : undefined}
+              >
+                {name}
+              </Link>
+            );
+          }
+
+          return <>unknown</>;
         })}
       </div>
 
