@@ -3,7 +3,12 @@ import { withTryCatch } from '../../utils/error';
 
 import { v4 as uuid } from 'uuid';
 import { AuthSessionModel, ValidationCodeModel } from '../../schemas/auth';
-import { userServices } from '../user/services';
+import {
+  userServicesAddOne,
+  userServicesFindOneAndUpdate,
+  userServicesGetOne,
+  userServicesUpdateOne,
+} from '../user/services';
 import jwt from 'jsonwebtoken';
 
 import { sendForgotPasswordCodeToEmail, sendValidationCodeToEmail } from '../email';
@@ -131,7 +136,7 @@ const post_signUp: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { email, password, name, canCreateBusiness } = req.body;
 
-      const newUser = await userServices.addOne({
+      const newUser = await userServicesAddOne({
         email,
         name,
         password,
@@ -181,7 +186,7 @@ const post_validate: () => RequestHandler = () => {
         });
       }
 
-      const user = await userServices.findOneAndUpdate({
+      const user = await userServicesFindOneAndUpdate({
         query: { _id: validationCode.userId },
         update: { validated: true },
       });
@@ -241,7 +246,7 @@ const post_forgot_password_validate: () => RequestHandler = () => {
         });
       }
 
-      const user = await userServices.getOne({
+      const user = await userServicesGetOne({
         query: { _id: validationCode.userId },
       });
 
@@ -271,7 +276,7 @@ const post_forgot_password_request: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { email } = req.body;
 
-      const user = await userServices.getOne({
+      const user = await userServicesGetOne({
         query: {
           email,
         },
@@ -312,7 +317,7 @@ const put_firebase_token: () => RequestHandler = () => {
 
       const { firebaseToken } = body;
 
-      await userServices.updateOne({
+      await userServicesUpdateOne({
         query: {
           _id: user._id,
         },

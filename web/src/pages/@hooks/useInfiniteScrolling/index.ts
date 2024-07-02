@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { FetchResourceWithPagination } from 'types/api';
 import { AnyRecord } from 'types/general';
 
-export const useInfinityScrolling = <RowData extends AnyRecord = AnyRecord>(args: {
+export const useInfiniteScrolling = <RowData extends AnyRecord = AnyRecord>(args: {
   fetchPaginatedResources: FetchResourceWithPagination<AnyRecord, RowData>;
   onFetch: (args: { page: number }) => void;
 }): {

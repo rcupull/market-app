@@ -28,7 +28,7 @@ export const useAuthForgotPasswordRequestModal = () => {
             };
           },
         },
-        { emergent: true },
+        { emergent: true }
       );
     },
   };

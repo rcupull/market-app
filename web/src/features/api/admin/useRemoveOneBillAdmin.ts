@@ -21,7 +21,7 @@ export const useRemoveOneBillAdmin = (): {
               urlParams: { billId },
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

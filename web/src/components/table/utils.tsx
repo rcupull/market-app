@@ -49,7 +49,7 @@ export const getRemapedProps = <RowData extends AnyRecord = AnyRecord>(args: {
 
 export const validateRemapIndex = (
   remapIndex: RemapRowsIndexRecord,
-  headsCount: number,
+  headsCount: number
 ): boolean => {
   const validRange = range(headsCount);
 

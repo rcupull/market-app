@@ -36,7 +36,7 @@ export const useBusinessNewUpdatePost = () => {
             }, []);
 
             const getContent = () => {
-              if (getOnePost.status.isBusy) {
+              if (getOnePost.status.isBusy && !getOnePost.data) {
                 return <></>;
               }
 
@@ -45,6 +45,7 @@ export const useBusinessNewUpdatePost = () => {
                   portal={portal}
                   post={getOnePost.data}
                   postType={realPostType}
+                  onRefreshPost={() => postId && getOnePost.fetch({ id: postId })}
                   onAfterSuccess={() => {
                     onAfterSuccess?.();
                     onClose();
@@ -66,14 +67,14 @@ export const useBusinessNewUpdatePost = () => {
             };
             return {
               title: getTitle(),
-              isBusy: getOnePost.status.isBusy,
+              isBusy: getOnePost.status.isBusy && !getOnePost.data,
               content: getContent(),
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,
             };
           },
         },
-        { emergent: true },
+        { emergent: true }
       );
     },
   };

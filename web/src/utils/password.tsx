@@ -30,7 +30,7 @@ export const isPasswordValidLowerCase = (password: string): boolean => {
 };
 
 export const getStrongPasswordTracking = (
-  value: string,
+  value: string
 ): {
   valid: boolean;
   trackingNode: React.ReactNode;

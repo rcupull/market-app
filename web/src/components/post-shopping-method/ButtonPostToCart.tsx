@@ -71,7 +71,7 @@ export const ButtonPostToCart = ({
           onAfterSuccess: () => {
             shopping.onFetch({ routeName: business.routeName });
           },
-        },
+        }
       );
     }, 500);
   };

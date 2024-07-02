@@ -1,6 +1,6 @@
 import { RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
-import { billingServices } from './services';
+import { billingServicesGetAllWithPagination } from './services';
 
 const get_bills: () => RequestHandler = () => {
   return (req, res) => {
@@ -9,7 +9,7 @@ const get_bills: () => RequestHandler = () => {
 
       const { states } = query;
 
-      const out = await billingServices.getAllWithPagination({
+      const out = await billingServicesGetAllWithPagination({
         paginateOptions,
         query: {
           states,

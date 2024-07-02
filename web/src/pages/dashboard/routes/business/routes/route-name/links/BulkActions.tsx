@@ -31,7 +31,7 @@ export interface BulkActionsProps extends StyleProps {
       args: {
         rowData: Post;
       },
-      nodes: Array<React.ReactNode>,
+      nodes: Array<React.ReactNode>
     ) => Array<React.ReactNode>;
     getBulkHeaderNodes: (nodes: Array<React.ReactNode>) => Array<React.ReactNode>;
     getBulkTopActionsNode: (node: React.ReactNode) => React.ReactNode;
@@ -103,7 +103,7 @@ export const BulkActions = ({ business, children, onRefresh, filters }: BulkActi
                         routeName,
                         query: { postCategoriesMethod, postCategoriesTags, search },
                       },
-                      { onAfterSuccess },
+                      { onAfterSuccess }
                     );
                   }
 
@@ -114,7 +114,7 @@ export const BulkActions = ({ business, children, onRefresh, filters }: BulkActi
                         query: { postCategoriesMethod, postCategoriesTags, search },
                         ids: selectedPosts.map((p) => p._id),
                       },
-                      { onAfterSuccess },
+                      { onAfterSuccess }
                     );
                   }
                 }}
@@ -123,7 +123,7 @@ export const BulkActions = ({ business, children, onRefresh, filters }: BulkActi
           };
         },
       },
-      { emergent: true },
+      { emergent: true }
     );
   };
 
@@ -167,7 +167,7 @@ export const BulkActions = ({ business, children, onRefresh, filters }: BulkActi
                           search,
                         },
                       },
-                      { onAfterSuccess },
+                      { onAfterSuccess }
                     );
                   }
 
@@ -183,7 +183,7 @@ export const BulkActions = ({ business, children, onRefresh, filters }: BulkActi
                         },
                         ids: selectedPosts.map((p) => p._id),
                       },
-                      { onAfterSuccess },
+                      { onAfterSuccess }
                     );
                   }
                 }}
@@ -192,7 +192,7 @@ export const BulkActions = ({ business, children, onRefresh, filters }: BulkActi
           };
         },
       },
-      { emergent: true },
+      { emergent: true }
     );
   };
 

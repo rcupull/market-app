@@ -21,7 +21,7 @@ export const useDeleteImages = (): {
             }),
             data: { srcs },
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

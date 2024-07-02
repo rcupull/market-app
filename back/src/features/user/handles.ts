@@ -1,11 +1,12 @@
 import { RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
 
-import { userServices } from './services';
+import { userServicesGetOne, userServicesUpdateOne } from './services';
 import { User } from '../../types/user';
 import { get404Response, getUserNotFoundResponse } from '../../utils/server-response';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { imagesServicesDeleteOldImages } from '../images/services';
+import { makeReshaper } from '../../utils/makeReshaper';
 
 const get_users_userId: () => RequestHandler = () => {
   return (req, res) => {
@@ -14,7 +15,7 @@ const get_users_userId: () => RequestHandler = () => {
 
       const { userId } = params;
 
-      const out = await userServices.getOne({
+      const out = await userServicesGetOne({
         query: {
           _id: userId,
         },
@@ -38,7 +39,7 @@ const put_users_userId: () => RequestHandler = () => {
        * Delete old profile image
        */
       if (profileImage) {
-        const currentUser = await userServices.getOne({
+        const currentUser = await userServicesGetOne({
           query: {
             _id: userId,
           },
@@ -59,11 +60,16 @@ const put_users_userId: () => RequestHandler = () => {
       /**
        * Update
        */
-      const out = await userServices.updateOne({
+      const out = await userServicesUpdateOne({
         query: {
           _id: userId,
         },
-        update: body,
+        update: makeReshaper<User, User>({
+          name: 'name',
+          profileImage: 'profileImage',
+          phone: 'phone',
+          address: 'address',
+        })(body),
       });
 
       res.send(out);
@@ -106,7 +112,7 @@ const post_user_userId_chatbot_validate: () => RequestHandler = () => {
         });
       }
 
-      await userServices.updateOne({
+      await userServicesUpdateOne({
         query: {
           _id: user._id,
         },

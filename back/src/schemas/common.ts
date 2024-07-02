@@ -6,7 +6,7 @@ import {
   PostsLayout,
   PostsLayoutSection,
 } from '../types/business';
-import { TelegramBotChat } from '../types/general';
+import { Address, TelegramBotChat } from '../types/general';
 
 const PostLayoutShoppingMethodDefinition: SchemaDefinitionProperty<PostLayoutShoppingMethod> = {
   type: String,
@@ -17,6 +17,17 @@ export const TelegramBotChatDefinition: SchemaDefinitionProperty<TelegramBotChat
   chatId: { type: String },
   firstName: { type: String },
   userName: { type: String },
+};
+
+export const AddressDefinition: SchemaDefinitionProperty<Address> = {
+  city: { type: String },
+  municipality: { type: String },
+  street: { type: String },
+  streetBetweenFrom: { type: String },
+  streetBetweenTo: { type: String },
+  neighborhood: { type: String },
+  number: { type: Number },
+  apartment: { type: Number },
 };
 
 export const PostCardLayoutSchema = new Schema<PostCardLayout>({

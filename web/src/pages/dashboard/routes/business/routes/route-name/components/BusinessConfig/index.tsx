@@ -25,7 +25,7 @@ export const BusinessConfig = ({ business }: BusinessConfigProps) => {
           onAfterSuccess: ({ data }) => {
             resolve(!!data.length);
           },
-        },
+        }
       );
     });
   };

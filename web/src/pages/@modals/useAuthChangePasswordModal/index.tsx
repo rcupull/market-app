@@ -28,7 +28,7 @@ export const useAuthChangePasswordModal = () => {
             };
           },
         },
-        { emergent: true },
+        { emergent: true }
       );
     },
   };

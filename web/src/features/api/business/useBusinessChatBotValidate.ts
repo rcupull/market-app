@@ -30,7 +30,7 @@ export const useBusinessChatBotValidate = (): {
               code,
             },
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

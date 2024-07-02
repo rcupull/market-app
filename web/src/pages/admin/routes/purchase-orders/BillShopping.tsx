@@ -40,7 +40,7 @@ export const BillShopping = ({ rowData, onRefresh }: BillShoppingProps) => {
                         onClose();
                         onRefresh();
                       },
-                    },
+                    }
                   );
                 }}
               />
@@ -48,7 +48,7 @@ export const BillShopping = ({ rowData, onRefresh }: BillShoppingProps) => {
           };
         },
       },
-      { emergent: true },
+      { emergent: true }
     );
   };
 

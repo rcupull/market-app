@@ -12,8 +12,8 @@ import {
   shoppingServicesDecrementStockAmountFromShoppingPosts,
   shoppingServicesFindAndUpdateOne,
   shoppingServicesGetAllWithPagination,
+  shoppingServicesGetDataFromPosts,
   shoppingServicesGetOne,
-  shoppingServicesGetStockAmountAvailableFromPosts,
   shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts,
   shoppingServicesUpdateOrAddOne,
 } from './services';
@@ -26,7 +26,7 @@ import { ShoppingModel } from '../../schemas/shopping';
 import { sendNewOrderTelegramMessage } from '../telegram/handles';
 import { Shopping, ShoppingDto, ShoppingState } from '../../types/shopping';
 import { telegramServices } from '../telegram/services';
-import { userServices } from '../user/services';
+import { userServicesGetOne, userServicesGetUserDataFromShopping } from '../user/services';
 import { User } from '../../types/user';
 import { getShoppingUrl } from '../../utils/web';
 import { Business } from '../../types/business';
@@ -35,7 +35,7 @@ import {
   notificationsServicesSendNewOrderPushMessage,
   notificationsServicesSendUpdateStockAmountMessage,
 } from '../notifications/services';
-import { billingServices } from '../billing/services';
+import { billingServicesGetBillDataFromShopping } from '../billing/services';
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -56,26 +56,29 @@ const get_shopping: () => RequestHandler = () => {
           purchaserId: user._id,
         },
       });
+      //
 
       const out = deepJsonCopy(shoppings);
 
-      const { getOneShoppingBillData } = await billingServices.getBillDataFromShopping({
+      const { getOneShoppingBillData } = await billingServicesGetBillDataFromShopping({
         query: { shoppingIds: { $in: out.data.map(({ _id }) => _id) } },
+      });
+
+      const { getOneShoppingUserData } = await userServicesGetUserDataFromShopping({
+        query: { _id: { $in: out.data.map(({ purchaserId }) => purchaserId) } },
       });
 
       const getShoppingDto = async (shopping: Shopping): Promise<ShoppingDto> => {
         const billData = getOneShoppingBillData(shopping);
-
-        if (!billData) {
-          return shopping;
-        }
-
-        const { billId, billState } = billData;
+        const userData = getOneShoppingUserData(shopping);
 
         return {
           ...shopping,
-          billId,
-          billState,
+          billId: billData?.billId,
+          billState: billData?.billState,
+          purchaserAddress: userData?.purchaserAddress,
+          purchaserName: userData?.purchaserName,
+          purchaserPhone: userData?.purchaserPhone,
         };
       };
 
@@ -99,13 +102,40 @@ const get_shopping_owner: () => RequestHandler = () => {
       const { routeName } = business;
       const { states } = query;
 
-      const out = await shoppingServicesGetAllWithPagination({
+      const shoppings = await shoppingServicesGetAllWithPagination({
         paginateOptions,
         query: {
           routeName,
           states,
         },
       });
+
+      const { getOneShoppingUserData } = await userServicesGetUserDataFromShopping({
+        query: { _id: { $in: shoppings.data.map(({ purchaserId }) => purchaserId) } },
+      });
+
+      const { getOneShoppingBillData } = await billingServicesGetBillDataFromShopping({
+        query: { _id: { $in: shoppings.data.map((s) => s.purchaserId) } },
+      });
+
+      const getShoppingDto = async (shopping: Shopping): Promise<ShoppingDto> => {
+        const billData = getOneShoppingBillData(shopping);
+        const purchaserData = getOneShoppingUserData(shopping);
+
+        return {
+          ...shopping,
+          billId: billData?.billId,
+          billState: billData?.billState,
+
+          purchaserName: purchaserData?.purchaserName,
+          purchaserAddress: purchaserData?.purchaserAddress,
+          purchaserPhone: purchaserData?.purchaserPhone,
+        };
+      };
+
+      const out = deepJsonCopy(shoppings);
+      const promises = out.data.map(getShoppingDto);
+      out.data = await Promise.all(promises);
 
       res.send(out);
     });
@@ -160,9 +190,11 @@ const post_shopping: () => RequestHandler<
 
       const { amountToAdd = 1, purshaseNotes } = body;
 
-      const [stockAmountAvailable] = await shoppingServicesGetStockAmountAvailableFromPosts({
+      const { getPostData } = await shoppingServicesGetDataFromPosts({
         posts: [post],
       });
+
+      const { stockAmountAvailable } = getPostData(post);
 
       if (isNumber(stockAmountAvailable)) {
         /**
@@ -332,7 +364,7 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
         /**
          * send telegram notificaion when the shopping to be aproved
          */
-        const purchaserData: Pick<User, 'telegramBotChat'> | null = await userServices.getOne({
+        const purchaserData: Pick<User, 'telegramBotChat'> | null = await userServicesGetOne({
           query: {
             _id: shopping.purchaserId,
           },

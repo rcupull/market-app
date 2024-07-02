@@ -37,7 +37,7 @@ export const CardPostImage = ({ post, layout, className }: CardPostImageProps) =
 
       interval(
         images.map((image) => () => setSwitchImage(image)),
-        getRandomNumber(900, 1100),
+        getRandomNumber(900, 1100)
       );
 
       return interval.cancel;
@@ -113,7 +113,7 @@ export const CardPostImage = ({ post, layout, className }: CardPostImageProps) =
           '!rounded-full': imageLayout === 'rounded',
         },
         useCardPostImageSizes({ size: layout?.size, rounded: imageLayout === 'rounded' }),
-        className,
+        className
       )}
     >
       {renderContent()}

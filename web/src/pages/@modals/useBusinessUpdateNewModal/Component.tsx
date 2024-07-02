@@ -71,7 +71,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                         const exists = !!data.length;
                         resolve(!exists);
                       },
-                    },
+                    }
                   );
                 }, 500);
               });
@@ -141,7 +141,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                         },
                         {
                           onAfterSuccess,
-                        },
+                        }
                       );
                     } else {
                       const { categories, name, currency } = value;
@@ -155,13 +155,13 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                         },
                         {
                           onAfterSuccess,
-                        },
+                        }
                       );
                     }
                   }}
                   variant="primary"
                   className="w-full"
-                />,
+                />
               )}
             </form>
           );

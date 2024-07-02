@@ -22,7 +22,7 @@ export const useGetAllUsersAdmin = (): {
               path: '/admin/users',
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

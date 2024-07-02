@@ -12,26 +12,25 @@ import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 
 import { BulkActions } from './BulkActions';
 import { Filters } from './Filters';
-import { PostAmount } from './PostAmount';
+import { ProductDetails } from './ProductDetails';
 import { RowActions } from './RowActions';
-import { useInfinityScrolling } from './useInfinityScrolling';
 
 import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
+import { useInfiniteScrolling } from 'pages/@hooks/useInfiniteScrolling';
 import { useTableCellCategoriesTags } from 'pages/@hooks/useTableCellCategoriesTags';
 import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
 import { GetAllPostsQuery } from 'types/api';
 import { getImageEndpoint } from 'utils/api';
 import { getDateString } from 'utils/date';
-import { cn, isNumber } from 'utils/general';
-import { KeyValueListItem, viewUtils } from 'utils/view';
+import { cn } from 'utils/general';
 
 export const Products = () => {
   const { getAllPosts } = useGetAllPosts();
   const businessNewUpdatePost = useBusinessNewUpdatePost();
   const { business } = useBusiness();
 
-  const infinityScrolling = useInfinityScrolling({
+  const infiniteScrolling = useInfiniteScrolling({
     fetchPaginatedResources: getAllPosts,
     onFetch: ({ page }) => filters.onMergeFilters({ page }),
   });
@@ -114,7 +113,7 @@ export const Products = () => {
               <TopActions>
                 {buttonNew}
                 {buttonRefresh}
-              </TopActions>,
+              </TopActions>
             )}
 
             <Filters
@@ -138,90 +137,9 @@ export const Products = () => {
                 'Detalles',
               ])}
               getRowProps={(rowData) => {
-                const {
-                  _id: postId,
-                  name,
-                  createdAt,
-                  price,
-                  postCategoriesTags,
-                  hidden,
-                  images,
-                  stockAmount,
-                  stockAmountAvailable,
-                } = rowData;
+                const { name, createdAt, postCategoriesTags, hidden, images } = rowData;
 
                 const mainImage = images?.[0];
-
-                const getDetailsItems = () => {
-                  const out: Array<KeyValueListItem> = [
-                    {
-                      label: (
-                        <span
-                          className={cn({
-                            'text-red-500': hidden,
-                          })}
-                        >{`${hidden ? 'Oculta' : 'Visible'}`}</span>
-                      ),
-                      value: null,
-                    },
-                    {
-                      label: 'Precio',
-                      value: `${price} ${business?.currency}`,
-                    },
-                  ];
-
-                  if (isNumber(stockAmount)) {
-                    out.push({
-                      label: (
-                        <span
-                          className={cn({
-                            'text-red-500': stockAmount === 0,
-                          })}
-                        >
-                          Existencias
-                        </span>
-                      ),
-                      value: (
-                        <PostAmount
-                          value={stockAmount}
-                          postId={postId}
-                          onAfterSuccess={filters.onRefresh}
-                          className={cn({
-                            'border-2 rounded-lg border-red-500': stockAmount === 0,
-                          })}
-                        />
-                      ),
-                    });
-
-                    out.push({
-                      label: (
-                        <span
-                          className={cn({
-                            'text-red-500': stockAmountAvailable === 0,
-                          })}
-                        >
-                          Disponibles
-                        </span>
-                      ),
-                      value: (
-                        <span
-                          className={cn({
-                            'text-red-500': stockAmountAvailable === 0,
-                          })}
-                        >
-                          {stockAmountAvailable}
-                        </span>
-                      ),
-                    });
-                  } else {
-                    out.push({
-                      label: 'Existencias',
-                      value: <span className="text-red-500">Desabilitado</span>,
-                    });
-                  }
-
-                  return out;
-                };
 
                 return {
                   className: cn({
@@ -244,12 +162,17 @@ export const Products = () => {
                       'ninguna'
                     ),
                     getDateString({ date: createdAt, showTime: true }),
-                    viewUtils.keyValueList(getDetailsItems()),
+                    <ProductDetails
+                      key="ProductDetails"
+                      rowData={rowData}
+                      business={business}
+                      onRefresh={filters.onRefresh}
+                    />,
                   ]),
                 };
               }}
-              data={infinityScrolling.tableData}
-              onScrollBottom={infinityScrolling.onScrollBottom}
+              data={infiniteScrolling.tableData}
+              onScrollBottom={infiniteScrolling.onScrollBottom}
               isBusy={getAllPosts.status.isBusy}
             />
           </>
