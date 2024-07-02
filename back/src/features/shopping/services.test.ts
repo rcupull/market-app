@@ -98,7 +98,6 @@ describe('shopping services', () => {
             },
           ],
           "purchaserId": Anything,
-          "purchaserName": "user1",
           "routeName": "business1User1",
           "state": "CONSTRUCTION",
         }

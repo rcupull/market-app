@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { BaseIdentity } from './general';
+import { Address, BaseIdentity } from './general';
 import { Post, PostPurshaseNotes } from './post';
 import { BusinessCurrency } from './business';
 import { BillState } from './billing';
@@ -26,7 +26,6 @@ export interface Shopping extends BaseIdentity {
   }>;
   //
   purchaserId: string;
-  purchaserName: string;
   //
   routeName: string;
   currency: BusinessCurrency;
@@ -39,6 +38,10 @@ export interface Shopping extends BaseIdentity {
 }
 
 export interface ShoppingDto extends Shopping {
-  billId?: Schema.Types.ObjectId;
-  billState?: BillState;
+  billId: Schema.Types.ObjectId | undefined;
+  billState: BillState | undefined;
+
+  purchaserName: string | undefined;
+  purchaserAddress: Address | undefined;
+  purchaserPhone: string | undefined;
 }

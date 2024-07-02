@@ -15,7 +15,7 @@ describe('PricePlanCard', () => {
             included: true,
           },
         ]}
-      />,
+      />
     );
 
     expect(result.container).toMatchInlineSnapshot(`

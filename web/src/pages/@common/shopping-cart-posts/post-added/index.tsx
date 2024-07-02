@@ -55,7 +55,7 @@ export const PostAdded = ({ count, postId, postImages, postName, routeName }: Po
               onAfterSuccess: () => {
                 shopping.onFetch({ routeName });
               },
-            },
+            }
           );
         }}
       />
@@ -87,7 +87,7 @@ export const PostAdded = ({ count, postId, postImages, postName, routeName }: Po
                               onClose();
                               shopping.onFetch({ routeName });
                             },
-                          },
+                          }
                         );
                       }}
                     />
@@ -95,7 +95,7 @@ export const PostAdded = ({ count, postId, postImages, postName, routeName }: Po
                 };
               },
             },
-            { emergent: true },
+            { emergent: true }
           );
         }}
       />

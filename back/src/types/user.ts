@@ -1,6 +1,5 @@
-import { Address } from 'cluster';
 import { Access } from './admin';
-import { BaseIdentity, Image, TelegramBotChat } from './general';
+import { Address, BaseIdentity, Image, TelegramBotChat } from './general';
 
 export type UserRole = 'user' | 'admin';
 

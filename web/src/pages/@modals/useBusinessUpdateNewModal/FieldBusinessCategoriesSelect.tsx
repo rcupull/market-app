@@ -18,7 +18,7 @@ interface Option {
 }
 
 export const FieldBusinessCategoriesSelect = (
-  props: FieldBusinessCategoriesSelectProps<AnyRecord>,
+  props: FieldBusinessCategoriesSelectProps<AnyRecord>
 ) => {
   const { generalBusinessCategories } = useGeneralBusinessCategories();
 

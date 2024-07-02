@@ -184,7 +184,6 @@ export const fillBD = async (args?: {
   const shopping1Business1User1 = new ShoppingModel({
     state: 'CONSTRUCTION',
     purchaserId: user1._id,
-    purchaserName: user1.name,
     routeName: business1User1.routeName,
     currency: business1User1.currency,
     posts: [

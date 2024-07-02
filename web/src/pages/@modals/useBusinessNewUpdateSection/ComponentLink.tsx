@@ -107,16 +107,16 @@ export const ComponentLink = ({
                           sectionId: section._id,
                           data: value,
                         },
-                        { onAfterSuccess },
+                        { onAfterSuccess }
                       )
                     : addBusinessSection.fetch(
                         { routeName: business.routeName, data: value },
-                        { onAfterSuccess },
+                        { onAfterSuccess }
                       );
                 }}
                 variant="primary"
                 className="w-full"
-              />,
+              />
             )}
           </form>
         );

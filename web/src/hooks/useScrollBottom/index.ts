@@ -5,7 +5,7 @@ export const useScrollBottom = (
   onScrollBottom: () => void,
   options?: {
     backWayDiff?: number; // in px
-  },
+  }
 ): {
   onScroll: () => void;
 } => {

@@ -55,7 +55,7 @@ export const useBusinessUpdateNewModal = () => {
             };
           },
         },
-        { emergent: true },
+        { emergent: true }
       );
     },
   };

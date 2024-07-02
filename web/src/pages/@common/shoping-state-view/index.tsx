@@ -89,7 +89,7 @@ export const ShoppingStateView = ({
                               onClose();
                               onAfterSuccess?.();
                             },
-                          },
+                          }
                         );
                       }}
                     />
@@ -106,14 +106,14 @@ export const ShoppingStateView = ({
                 };
               },
             },
-            { emergent: true },
+            { emergent: true }
           );
         }
       }}
     >
       {() => {
         return (
-          <form className="w-52">
+          <form className="w-36">
             <FieldSelect<{ value: ShoppingState }>
               name="state"
               optionToValue={({ value }) => value}

@@ -8,6 +8,7 @@ import { useGetShoppingOwner } from 'features/api/shopping-owner/useGetShoppingO
 
 import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 
+import { ClientData } from './ClientData';
 import { Filters } from './Filters';
 import { RowActions } from './RowActions';
 
@@ -75,14 +76,14 @@ export const ShoppingPage = () => {
         }}
         heads={['Acciones', 'Cliente', 'Estado', 'Unidades', 'Precio total', 'Fecha de creación']}
         getRowProps={(rowData) => {
-          const { createdAt, purchaserName } = rowData;
+          const { createdAt } = rowData;
 
           const { totalPrice, totalProducts } = getShoppingData(rowData);
 
           return {
             nodes: [
               <RowActions key="RowActions" rowData={rowData} />,
-              purchaserName,
+              <ClientData key="ClientData" rowData={rowData} />,
               <div key="ShoppingState" className="flex items-center">
                 <ShoppingStateView
                   shopping={rowData}

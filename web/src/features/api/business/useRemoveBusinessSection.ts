@@ -24,7 +24,7 @@ export const useRemoveBusinessSection = (): {
               urlParams: { routeName, sectionId },
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

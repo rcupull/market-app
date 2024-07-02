@@ -13,7 +13,7 @@ export function SvgLongArrowAltRightSolid(props: StyleProps) {
     },
     createElement('path', {
       d: 'M21.188 9.281L19.78 10.72 24.063 15H4v2h20.063l-4.282 4.281 1.407 1.438L27.905 16z',
-    }),
+    })
   );
 }
 export default SvgLongArrowAltRightSolid;

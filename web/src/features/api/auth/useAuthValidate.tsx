@@ -19,7 +19,7 @@ export const useAuthValidate = (): {
             url: getEndpoint({ path: '/auth/validate' }),
             data: { code },
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

@@ -24,7 +24,7 @@ export const useGetOneUser = (): {
               },
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

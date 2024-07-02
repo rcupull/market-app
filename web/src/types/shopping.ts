@@ -1,6 +1,6 @@
 import { BillState } from './billing';
 import { BusinessCurrency } from './business';
-import { BaseIdentity } from './general';
+import { Address, BaseIdentity } from './general';
 import { Post } from './post';
 
 export type ShoppingState =
@@ -28,11 +28,14 @@ export interface Shopping extends BaseIdentity {
     lastUpdatedDate: string;
   }>;
   purchaserId: string;
-  purchaserName: string;
   routeName: string;
   currency: BusinessCurrency;
   state: ShoppingState;
   history?: ShoppingStateHistory;
+  // hot values
   billId?: string;
   billState?: BillState;
+  purchaserName?: string;
+  purchaserAddress?: Address;
+  purchaserPhone?: string;
 }

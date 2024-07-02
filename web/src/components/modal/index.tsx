@@ -66,7 +66,7 @@ export const Modal = ({
               <Dialog.Panel
                 className={cn(
                   'relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8  w-11/12 md:w-8/12 lg:w-8/12',
-                  className,
+                  className
                 )}
               >
                 <IconButton

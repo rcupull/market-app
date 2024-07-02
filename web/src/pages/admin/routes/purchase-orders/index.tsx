@@ -62,7 +62,7 @@ export const PurchaseOrders = () => {
                   <ButtonRefresh
                     onClick={() => onRefreshForce()}
                     isBusy={getAllShoppingAdmin.status.isBusy}
-                  />,
+                  />
                 )}
               </div>
 
@@ -72,7 +72,7 @@ export const PurchaseOrders = () => {
                     onChange={(filtersValue) => filters.onMergeFilters(filtersValue)}
                     value={filters.value}
                   />
-                </TopActions>,
+                </TopActions>
               )}
 
               <div className="mb-2 flex justify-center">{selectAllNode}</div>

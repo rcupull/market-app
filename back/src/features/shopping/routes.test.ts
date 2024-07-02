@@ -3,7 +3,7 @@ import { app } from '../../server';
 import { dropTestDbConnectionAsync, generateToken } from '../../utils/test-utils';
 import { TestBDContent, fillBD, removeAllShoppings } from '../../utils/test-BD';
 import { getTestingRoute } from '../../utils/api';
-import { Shopping, ShoppingState } from '../../types/shopping';
+import { Shopping, ShoppingDto, ShoppingState } from '../../types/shopping';
 import { PostDto } from '../../types/post';
 import { agendaServices as agendaServicesBase } from '../agenda/services';
 import { isEqualIds } from '../../utils/general';
@@ -93,7 +93,7 @@ describe('shopping', () => {
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
         .then((response) => {
-          const shopping: Shopping = response.body.data[0];
+          const shopping: ShoppingDto = response.body.data[0];
 
           expect(shopping.history).toEqual([]);
           expect(shopping.purchaserId).toEqual(user1._id.toString());
@@ -155,7 +155,7 @@ describe('shopping', () => {
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
         .then((response) => {
-          const shopping: Shopping = response.body.data[0];
+          const shopping: ShoppingDto = response.body.data[0];
 
           expect(shopping.history).toEqual([]);
           expect(shopping.purchaserId).toEqual(user1._id.toString());
@@ -241,7 +241,7 @@ describe('shopping', () => {
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
         .then((response) => {
-          const shopping: Shopping = response.body.data[0];
+          const shopping: ShoppingDto = response.body.data[0];
 
           expect(shopping.history).toEqual([]);
           expect(shopping.purchaserId).toEqual(user1._id.toString());
@@ -346,7 +346,7 @@ describe('shopping', () => {
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
         .then((response) => {
-          const shopping: Shopping = response.body.data[0];
+          const shopping: ShoppingDto = response.body.data[0];
 
           expect(shopping.history).toEqual([]);
           expect(shopping.purchaserId).toEqual(user1._id.toString());
@@ -569,7 +569,7 @@ describe('shopping', () => {
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
         .then((response) => {
-          const shopping: Shopping = response.body.data[0];
+          const shopping: ShoppingDto = response.body.data[0];
 
           expect(shopping.history).toEqual([]);
           expect(shopping.purchaserId).toEqual(user1._id.toString());

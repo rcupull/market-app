@@ -13,7 +13,7 @@ export function SvgEllipsisHSolid(props: StyleProps) {
     },
     createElement('path', {
       d: 'M6 14a1.999 1.999 0 100 4 1.999 1.999 0 100-4zm10 0a1.999 1.999 0 100 4 1.999 1.999 0 100-4zm10 0a1.999 1.999 0 100 4 1.999 1.999 0 100-4z',
-    }),
+    })
   );
 }
 export default SvgEllipsisHSolid;

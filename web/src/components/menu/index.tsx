@@ -75,7 +75,7 @@ export const Menu = ({
                             {
                               'bg-gray-100': active,
                               '!cursor-not-allowed !text-gray-300': disabled,
-                            },
+                            }
                           )}
                         >
                           {Svg && <Svg className={cn('h-5 w-5', { ['mr-2']: label })} />}
@@ -87,7 +87,7 @@ export const Menu = ({
                     );
                   }}
                 </MenuBase.Item>
-              ),
+              )
             )}
 
             <MenuBase.Item key="bottomElement" as="div">

@@ -1,6 +1,5 @@
 import type { UseBreakpointsReturn } from 'hooks/useBreakpoints';
 
-
 const mapToOutlinedBox = <T extends React.ReactNode = React.ReactNode>(args: {
   value?: Array<T>;
   preMap?: (t: T, index: number) => T;
@@ -69,5 +68,3 @@ export const breakpointsSwitch = <T extends any = any>({
 
   return values.xs;
 };
-
-

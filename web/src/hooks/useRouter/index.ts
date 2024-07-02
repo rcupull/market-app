@@ -19,7 +19,7 @@ interface UseRouterReturn {
     query?: AnyRecord,
     options?: {
       timeout?: number;
-    },
+    }
   ) => void;
   onBack: () => void;
   queryToSearch: (query: Query) => void;
@@ -43,7 +43,7 @@ interface UseRouterReturn {
     partialQuery: Query,
     options?: {
       timeout?: number;
-    },
+    }
   ) => void;
 }
 

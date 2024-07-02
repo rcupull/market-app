@@ -3,7 +3,7 @@ import { isNumber } from './general';
 import { Shopping, ShoppingState } from 'types/shopping';
 
 export const getShoppingData = (
-  shopping: Shopping,
+  shopping: Shopping
 ): {
   totalProducts: number;
   totalPrice: number;
@@ -42,4 +42,13 @@ export const getShoppingStateLabel = (state: ShoppingState): string => {
   };
 
   return labels[state];
+};
+
+/**
+ * Return tru if the shopping is or was approved
+ */
+export const wasApprovedShopping = (shopping: Shopping): boolean => {
+  const { state, history } = shopping;
+
+  return state === 'APPROVED' || !!history?.find(({ state }) => state === 'APPROVED');
 };
