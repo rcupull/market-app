@@ -16,11 +16,11 @@ import { Settings } from './settings';
 import { ShoppingPage } from './shopping';
 import { BusinessTab, getBusinessTabLabel } from './utils';
 
-import SvgAddressCard from 'icons/AddressCard';
 import SvgCogSolid from 'icons/CogSolid';
 import SvgLayerGroupSolid from 'icons/LayerGroupSolid';
 import SvgLinkSolid from 'icons/LinkSolid';
 import SvgMoneyBillAltSolid from 'icons/MoneyBillAltSolid';
+import SvgProductHunt from 'icons/ProductHunt';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { BannerInfoTelegramBusiness } from 'pages/@common/banner-info-telegram-business';
 import { BannerInfoTotalDebitBusiness } from 'pages/@common/banner-info-total-debit-business';
@@ -82,7 +82,7 @@ export const RouteName = () => {
       q: 'products',
       label: getBusinessTabLabel('products'),
       content: <Products />,
-      svg: SvgAddressCard,
+      svg: SvgProductHunt,
     },
     {
       q: 'links',

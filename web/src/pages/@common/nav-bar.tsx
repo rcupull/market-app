@@ -16,11 +16,14 @@ import { BusinessName } from './business-name';
 import { ShoppingCartMenu } from './shopping-cart-menu';
 
 import SvgBarsSolid from 'icons/BarsSolid';
+import SvgBookSolid from 'icons/BookSolid';
 import SvgCogSolid from 'icons/CogSolid';
 import SvgDollarSignSolid from 'icons/DollarSignSolid';
 import SvgHomeSolid from 'icons/HomeSolid';
 import SvgKeySolid from 'icons/KeySolid';
 import SvgLinkSolid from 'icons/LinkSolid';
+import SvgProductHunt from 'icons/ProductHunt';
+import SvgShoppingBagSolid from 'icons/ShoppingBagSolid';
 import SvgSignInAltSolid from 'icons/SignInAltSolid';
 import SvgSignOutAltSolid from 'icons/SignOutAltSolid';
 import SvgStoreSolid from 'icons/StoreSolid';
@@ -48,7 +51,8 @@ export const Navbar = ({ className }: NavbarProps) => {
   const { isAdmin, isUser, isAuthenticated, authData, onRefreshAuthUser } = useAuth();
   const { signOut } = useSignOut();
   const { user } = authData || {};
-  const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute, isPostPage } = useRouter();
+  const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute, isPostPage, pathname } =
+    useRouter();
   const { routeName } = params;
   const { business } = useBusiness();
   const authChangePasswordModal = useAuthChangePasswordModal();
@@ -95,11 +99,25 @@ export const Navbar = ({ className }: NavbarProps) => {
         </>
       }
       items={[
+        isOneBusinessPage && {
+          label: 'Productos',
+          onClick: () => routeName && pushRoute(getOneBusinessRoute({ routeName })),
+          svg: SvgProductHunt,
+          className: cn('lg:hidden'),
+        },
+        isOneBusinessPage && {
+          label: 'Mis compras',
+          onClick: () => routeName && pushRoute(getShoppingRoute({ routeName })),
+          svg: SvgShoppingBagSolid,
+          className: cn('lg:hidden'),
+          divider: true,
+        },
+        /////////////////////////////////////////////////////////////////////////////
         {
           label: 'Inicio',
           onClick: () => pushRoute('/'),
           svg: SvgHomeSolid,
-          className: cn('sm:hidden', {
+          className: cn('lg:hidden', {
             '!block': isOneBusinessPage,
           }),
         },
@@ -107,7 +125,7 @@ export const Navbar = ({ className }: NavbarProps) => {
           label: 'Todos los negocios',
           onClick: () => pushRoute(getBusinessRoute()),
           svg: SvgStoreSolid,
-          className: cn('sm:hidden', {
+          className: cn('lg:hidden', {
             '!block': isOneBusinessPage,
           }),
         },
@@ -115,7 +133,7 @@ export const Navbar = ({ className }: NavbarProps) => {
           label: 'Precios',
           onClick: () => pushRoute('/price'),
           svg: SvgDollarSignSolid,
-          className: cn('sm:hidden', {
+          className: cn('lg:hidden', {
             '!block': isOneBusinessPage,
           }),
         },
@@ -123,7 +141,7 @@ export const Navbar = ({ className }: NavbarProps) => {
           label: '¿Que es Asere Market?',
           onClick: () => pushRoute('/about-us'),
           svg: SvgUsersSolid,
-          className: cn('sm:hidden', {
+          className: cn('lg:hidden', {
             '!block': isOneBusinessPage,
           }),
           divider: true,
@@ -182,8 +200,8 @@ export const Navbar = ({ className }: NavbarProps) => {
       className={className}
       preContent={
         <>
-          <BusinessLogo className="hidden sm:block flex-shrink-0" />
-          <BusinessName className="flex-shrink-0 ml-12 sm:ml-0" />
+          <BusinessLogo className="flex-shrink-0" />
+          <BusinessName className="flex-shrink-0" />
         </>
       }
       items={[
@@ -201,9 +219,31 @@ export const Navbar = ({ className }: NavbarProps) => {
         ////////////////////////////////////////////////////////////////////////////////////////////////
         !isOneBusinessPage && { name: 'Inicio', href: '/' },
         !isOneBusinessPage && { name: 'Todos los negocios', href: getBusinessRoute() },
-        !isOneBusinessPage && { name: 'Precios', href: '/price' },
-        !isOneBusinessPage && { name: '¿Que es Asere Market?', href: '/about-us' },
-        !isOneBusinessPage && DEVELOPMENT && { name: 'Documentación', href: '/docs' },
+        !isOneBusinessPage && {
+          name: 'Asere Market',
+          menuProps: {
+            items: [
+              {
+                label: '¿Que es Asere Market?',
+                onClick: () => pushRoute('/about-us'),
+                svg: SvgUsersSolid,
+                active: pathname === '/about-us',
+              },
+              {
+                label: 'Precios',
+                onClick: () => pushRoute('/price'),
+                svg: SvgDollarSignSolid,
+                active: pathname === '/price',
+              },
+              DEVELOPMENT && {
+                label: 'Documentación',
+                onClick: () => pushRoute('/docs'),
+                svg: SvgBookSolid,
+                active: pathname === '/docs',
+              },
+            ],
+          },
+        },
         ////////////////////////////////////////////////////////////////////////////////////////////////
       ]}
       postContent={

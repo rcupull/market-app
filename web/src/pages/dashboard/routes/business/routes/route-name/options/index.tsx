@@ -16,11 +16,11 @@ import { useRouter } from 'hooks/useRouter';
 
 import { BusinessTab, getBusinessTabLabel } from '../utils';
 
-import SvgAddressCard from 'icons/AddressCard';
 import SvgCogSolid from 'icons/CogSolid';
 import SvgLayerGroupSolid from 'icons/LayerGroupSolid';
 import SvgLinkSolid from 'icons/LinkSolid';
 import SvgMoneyBillAltSolid from 'icons/MoneyBillAltSolid';
+import SvgProductHunt from 'icons/ProductHunt';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { BannerInfoTelegramBusiness } from 'pages/@common/banner-info-telegram-business';
 import { BannerInfoTotalDebitBusiness } from 'pages/@common/banner-info-total-debit-business';
@@ -118,7 +118,7 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
           {
             label: getBusinessTabLabel('products'),
             onClick: () => onChangeQuery({ businessTab: 'products' }),
-            svg: SvgAddressCard,
+            svg: SvgProductHunt,
             active: query.businessTab === 'products',
           },
           {
