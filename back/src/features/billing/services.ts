@@ -7,7 +7,7 @@ import { FilterQuery, PaginateOptions, ProjectionType, Schema, UpdateQuery } fro
 import { Shopping } from '../../types/shopping';
 import { includesId } from '../../utils/general';
 
-const getAllWithPagination: QueryHandle<
+export const billingServicesGetAllWithPagination: QueryHandle<
   {
     paginateOptions?: PaginateOptions;
     query: GetAllBillsArgs;
@@ -21,7 +21,7 @@ const getAllWithPagination: QueryHandle<
   return out as unknown as PaginateResult<Bill>;
 };
 
-const getAll: QueryHandle<
+export const billingServicesGetAll: QueryHandle<
   { query: GetAllBillsArgs; projection?: ProjectionType<Bill> },
   Array<Bill>
 > = async ({ query, projection }) => {
@@ -32,7 +32,7 @@ const getAll: QueryHandle<
   return out;
 };
 
-const addOne: QueryHandle<
+export const billingServicesAddOne: QueryHandle<
   Pick<Bill, 'routeName' | 'shoppingIds' | 'totalDebit' | 'state'>,
   Bill
 > = async (data) => {
@@ -43,14 +43,14 @@ const addOne: QueryHandle<
   return newbill;
 };
 
-const updateOne: QueryHandle<{
+export const billingServicesUpdateOne: QueryHandle<{
   query: FilterQuery<Bill>;
   update: UpdateQuery<Bill>;
 }> = async ({ query, update }) => {
   await BillingModel.updateOne(query, update);
 };
 
-const findOneAndDelete: QueryHandle<
+export const billingServicesFindOneAndDelete: QueryHandle<
   {
     query: FilterQuery<Bill>;
   },
@@ -60,19 +60,19 @@ const findOneAndDelete: QueryHandle<
   return out;
 };
 
-const deleteOne: QueryHandle<{
+export const billingServicesDeleteOne: QueryHandle<{
   query: FilterQuery<Bill>;
 }> = async ({ query }) => {
   await BillingModel.deleteOne(query);
 };
 
-const deleteMany: QueryHandle<{
+export const billingServicesDeleteMany: QueryHandle<{
   query: FilterQuery<Bill>;
 }> = async ({ query }) => {
   await BillingModel.deleteMany(query);
 };
 
-const getOne: QueryHandle<
+export const billingServicesGetOne: QueryHandle<
   {
     query: FilterQuery<Bill>;
   },
@@ -81,7 +81,7 @@ const getOne: QueryHandle<
   return await BillingModel.findOne(query);
 };
 
-const getBillDataFromShopping: QueryHandle<
+export const billingServicesGetBillDataFromShopping: QueryHandle<
   {
     query: GetAllBillsArgs;
   },
@@ -93,14 +93,16 @@ const getBillDataFromShopping: QueryHandle<
     } | null;
   }
 > = async ({ query }) => {
-  const billsData: Array<Pick<Bill, '_id' | 'shoppingIds' | 'state'>> = await getAll({
-    query,
-    projection: {
-      _id: 1,
-      shoppingIds: 1,
-      state: 1,
+  const billsData: Array<Pick<Bill, '_id' | 'shoppingIds' | 'state'>> = await billingServicesGetAll(
+    {
+      query,
+      projection: {
+        _id: 1,
+        shoppingIds: 1,
+        state: 1,
+      },
     },
-  });
+  );
 
   return {
     getAllShopingIds: () => {
@@ -121,17 +123,4 @@ const getBillDataFromShopping: QueryHandle<
       return null;
     },
   };
-};
-
-export const billingServices = {
-  getAllWithPagination,
-  getAll,
-  addOne,
-  getOne,
-  updateOne,
-  findOneAndDelete,
-  deleteMany,
-  deleteOne,
-  //
-  getBillDataFromShopping,
 };

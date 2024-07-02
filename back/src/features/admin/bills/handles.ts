@@ -3,7 +3,13 @@ import { Shopping } from '../../../types/shopping';
 import { withTryCatch } from '../../../utils/error';
 import { includesId } from '../../../utils/general';
 import { get400Response, getBillNotFoundResponse } from '../../../utils/server-response';
-import { billingServices } from '../../billing/services';
+import {
+  billingServicesAddOne,
+  billingServicesDeleteOne,
+  billingServicesGetAllWithPagination,
+  billingServicesGetBillDataFromShopping,
+  billingServicesGetOne,
+} from '../../billing/services';
 import { shoppingServicesGetAll } from '../../shopping/services';
 import { getShoppingsTotalDebit } from '../../shopping/utils';
 
@@ -14,7 +20,7 @@ const post_admin_bills: () => RequestHandler = () => {
 
       const { routeName, shoppingIds, dateFrom, dateTo, states } = body;
 
-      const { getAllShopingIds } = await billingServices.getBillDataFromShopping({
+      const { getAllShopingIds } = await billingServicesGetBillDataFromShopping({
         query: { routeNames: [routeName] },
       });
 
@@ -33,7 +39,7 @@ const post_admin_bills: () => RequestHandler = () => {
       const totalDebit = getShoppingsTotalDebit(shoppings);
 
       // create new bill
-      const newBill = await billingServices.addOne({
+      const newBill = await billingServicesAddOne({
         routeName,
         shoppingIds: shoppings.map(({ _id }) => _id),
         totalDebit,
@@ -52,7 +58,7 @@ const get_admin_bills: () => RequestHandler = () => {
 
       const { states, routeNames } = query;
 
-      const bills = await billingServices.getAllWithPagination({
+      const bills = await billingServicesGetAllWithPagination({
         paginateOptions,
         query: {
           routeNames,
@@ -73,7 +79,7 @@ const del_admin_bills_billId_shopping: () => RequestHandler = () => {
       const { shoppingIds } = body;
       const { billId } = params;
 
-      const bill = await billingServices.getOne({
+      const bill = await billingServicesGetOne({
         query: {
           _id: billId,
         },
@@ -119,7 +125,7 @@ const del_admin_bills_billId: () => RequestHandler = () => {
 
       const { billId } = params;
 
-      await billingServices.deleteOne({
+      await billingServicesDeleteOne({
         query: {
           _id: billId,
         },

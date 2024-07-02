@@ -7,7 +7,10 @@ import { PaginateResult } from '../../middlewares/pagination';
 
 import { UpdateOptions } from 'mongodb';
 import { GetAllBusinessArgs, UpdateQueryBusiness, getAllFilterQuery } from './utils';
-import { billingServices } from '../billing/services';
+import {
+  billingServicesDeleteMany,
+  billingServicesGetBillDataFromShopping,
+} from '../billing/services';
 import { getShoppingWasAcceptedQuery } from '../../utils/schemas';
 import { getShoppingsTotalDebit } from '../shopping/utils';
 import { imagesServicesDeleteBulk } from '../images/services';
@@ -113,7 +116,7 @@ export const businessServicesDeleteOne: QueryHandle<{
    * Remove all bills
    */
 
-  await billingServices.deleteMany({
+  await billingServicesDeleteMany({
     query: {
       routeName,
     },
@@ -151,7 +154,7 @@ export const businessServicesGetShoppingPaymentData: QueryHandle<
   },
   { shoppingDebit: number }
 > = async ({ routeName }) => {
-  const { getAllShopingIds } = await billingServices.getBillDataFromShopping({
+  const { getAllShopingIds } = await billingServicesGetBillDataFromShopping({
     query: { routeNames: [routeName] },
   });
 

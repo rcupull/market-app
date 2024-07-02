@@ -2,7 +2,7 @@ import { RequestHandler } from '../../../types/general';
 import { defaultQuerySort } from '../../../utils/api';
 import { withTryCatch } from '../../../utils/error';
 import { deepJsonCopy } from '../../../utils/general';
-import { billingServices } from '../../billing/services';
+import { billingServicesGetBillDataFromShopping } from '../../billing/services';
 import { shoppingServicesGetAllWithPagination } from '../../shopping/services';
 import { Shopping, ShoppingDto } from '../../../types/shopping';
 import { getShoppingWasAcceptedQuery } from '../../../utils/schemas';
@@ -24,7 +24,7 @@ const get_admin_shopping: () => RequestHandler = () => {
       } = query;
 
       const { getAllShopingIds, getOneShoppingBillData } =
-        await billingServices.getBillDataFromShopping({
+        await billingServicesGetBillDataFromShopping({
           query: { routeNames },
         });
 

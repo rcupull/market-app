@@ -35,7 +35,7 @@ import {
   notificationsServicesSendNewOrderPushMessage,
   notificationsServicesSendUpdateStockAmountMessage,
 } from '../notifications/services';
-import { billingServices } from '../billing/services';
+import { billingServicesGetBillDataFromShopping } from '../billing/services';
 
 const get_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -60,7 +60,7 @@ const get_shopping: () => RequestHandler = () => {
 
       const out = deepJsonCopy(shoppings);
 
-      const { getOneShoppingBillData } = await billingServices.getBillDataFromShopping({
+      const { getOneShoppingBillData } = await billingServicesGetBillDataFromShopping({
         query: { shoppingIds: { $in: out.data.map(({ _id }) => _id) } },
       });
 
@@ -114,7 +114,7 @@ const get_shopping_owner: () => RequestHandler = () => {
         query: { _id: { $in: shoppings.data.map(({ purchaserId }) => purchaserId) } },
       });
 
-      const { getOneShoppingBillData } = await billingServices.getBillDataFromShopping({
+      const { getOneShoppingBillData } = await billingServicesGetBillDataFromShopping({
         query: { _id: { $in: shoppings.data.map((s) => s.purchaserId) } },
       });
 
