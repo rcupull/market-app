@@ -9,7 +9,7 @@ import {
   businessServicesGetAllWithPagination,
 } from '../../business/services';
 import { postServicesGetAll } from '../../post/services';
-import { userServices } from '../../user/services';
+import { userServicesGetAll } from '../../user/services';
 
 const delete_admin_business_routeName: () => RequestHandler = () => {
   return (req, res) => {
@@ -50,7 +50,7 @@ const get_admin_business: () => RequestHandler = () => {
         },
       });
 
-      const usersData: Array<Pick<User, 'name' | '_id'>> = await userServices.getAll({
+      const usersData: Array<Pick<User, 'name' | '_id'>> = await userServicesGetAll({
         query: {
           _id: { $in: out.data.map(({ createdBy }) => createdBy) },
         },

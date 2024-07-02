@@ -6,7 +6,7 @@ import { billingServices } from '../../billing/services';
 import { shoppingServicesGetAllWithPagination } from '../../shopping/services';
 import { Shopping, ShoppingDto } from '../../../types/shopping';
 import { getShoppingWasAcceptedQuery } from '../../../utils/schemas';
-import { userServices } from '../../user/services';
+import { userServicesGetUserDataFromShopping } from '../../user/services';
 
 const get_admin_shopping: () => RequestHandler = () => {
   return (req, res) => {
@@ -44,7 +44,7 @@ const get_admin_shopping: () => RequestHandler = () => {
 
       const out = deepJsonCopy(shoppings);
 
-      const { getOneShoppingUserData } = await userServices.getUserDataFromShopping({
+      const { getOneShoppingUserData } = await userServicesGetUserDataFromShopping({
         query: { _id: { $in: out.data.map(({ purchaserId }) => purchaserId) } },
       });
 

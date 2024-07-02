@@ -26,7 +26,7 @@ import { ShoppingModel } from '../../schemas/shopping';
 import { sendNewOrderTelegramMessage } from '../telegram/handles';
 import { Shopping, ShoppingDto, ShoppingState } from '../../types/shopping';
 import { telegramServices } from '../telegram/services';
-import { userServices } from '../user/services';
+import { userServicesGetOne, userServicesGetUserDataFromShopping } from '../user/services';
 import { User } from '../../types/user';
 import { getShoppingUrl } from '../../utils/web';
 import { Business } from '../../types/business';
@@ -64,7 +64,7 @@ const get_shopping: () => RequestHandler = () => {
         query: { shoppingIds: { $in: out.data.map(({ _id }) => _id) } },
       });
 
-      const { getOneShoppingUserData } = await userServices.getUserDataFromShopping({
+      const { getOneShoppingUserData } = await userServicesGetUserDataFromShopping({
         query: { _id: { $in: out.data.map(({ purchaserId }) => purchaserId) } },
       });
 
@@ -110,7 +110,7 @@ const get_shopping_owner: () => RequestHandler = () => {
         },
       });
 
-      const { getOneShoppingUserData } = await userServices.getUserDataFromShopping({
+      const { getOneShoppingUserData } = await userServicesGetUserDataFromShopping({
         query: { _id: { $in: shoppings.data.map(({ purchaserId }) => purchaserId) } },
       });
 
@@ -364,7 +364,7 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
         /**
          * send telegram notificaion when the shopping to be aproved
          */
-        const purchaserData: Pick<User, 'telegramBotChat'> | null = await userServices.getOne({
+        const purchaserData: Pick<User, 'telegramBotChat'> | null = await userServicesGetOne({
           query: {
             _id: shopping.purchaserId,
           },

@@ -6,7 +6,7 @@ import { UpdateOptions } from 'mongodb';
 import { Shopping } from '../../types/shopping';
 import { isEqualIds } from '../../utils/general';
 
-const addOne: QueryHandle<
+export const userServicesAddOne: QueryHandle<
   {
     email: string;
     password: string;
@@ -35,7 +35,7 @@ const addOne: QueryHandle<
   return newUser;
 };
 
-const getOne: QueryHandle<
+export const userServicesGetOne: QueryHandle<
   {
     query: FilterQuery<User>;
     projection?: ProjectionType<User>;
@@ -47,7 +47,7 @@ const getOne: QueryHandle<
   return user;
 };
 
-const getAll: QueryHandle<
+export const userServicesGetAll: QueryHandle<
   {
     query: FilterQuery<User>;
     projection?: ProjectionType<User>;
@@ -59,7 +59,7 @@ const getAll: QueryHandle<
   return out;
 };
 
-const updateOne: QueryHandle<
+export const userServicesUpdateOne: QueryHandle<
   {
     query: FilterQuery<User>;
     update: UpdateQuery<User>;
@@ -70,7 +70,7 @@ const updateOne: QueryHandle<
   await UserModel.updateOne(query, update, options);
 };
 
-const findOneAndUpdate: QueryHandle<
+export const userServicesFindOneAndUpdate: QueryHandle<
   {
     query: FilterQuery<User>;
     update: UpdateQuery<User>;
@@ -80,7 +80,7 @@ const findOneAndUpdate: QueryHandle<
   return await UserModel.findOneAndUpdate(query, update);
 };
 
-const getUserDataFromShopping: QueryHandle<
+export const userServicesGetUserDataFromShopping: QueryHandle<
   {
     query: FilterQuery<User>;
   },
@@ -93,7 +93,7 @@ const getUserDataFromShopping: QueryHandle<
   }
 > = async ({ query }) => {
   const usersData: Array<Pick<User, '_id' | 'name' | 'address' | 'phone'>> =
-    await userServices.getAll({
+    await userServicesGetAll({
       query,
       projection: { name: 1, address: 1, _id: 1, phone: 1 },
     });
@@ -111,13 +111,4 @@ const getUserDataFromShopping: QueryHandle<
       return null;
     },
   };
-};
-
-export const userServices = {
-  addOne,
-  getOne,
-  updateOne,
-  findOneAndUpdate,
-  getAll,
-  getUserDataFromShopping,
 };
