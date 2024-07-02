@@ -23,7 +23,7 @@ export const useGetAllBills = (): {
               query: { routeName, states },
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

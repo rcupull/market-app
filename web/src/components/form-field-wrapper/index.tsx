@@ -1,3 +1,6 @@
+import { ReactNode } from 'react';
+
+import { Accordion } from 'components/accordion';
 import { ButtonDescription } from 'components/button-decription';
 
 import { Nullable, StyleProps } from 'types/general';
@@ -7,6 +10,8 @@ export interface FormFieldWrapperProps extends StyleProps {
   label?: React.ReactNode;
   labelPosition?: 'top' | 'right';
   description?: React.ReactNode;
+  collapsable?: boolean;
+  collapsableHeader?: ReactNode;
 }
 
 export const FormFieldWrapper = ({
@@ -16,6 +21,8 @@ export const FormFieldWrapper = ({
   children,
   labelPosition = 'top',
   description,
+  collapsable,
+  collapsableHeader = 'Abrir',
 }: FormFieldWrapperProps & { children: React.ReactNode; error?: Nullable<string> }) => {
   return (
     <div data-id="FormFieldWrapper" className={cn(className)}>
@@ -44,7 +51,8 @@ export const FormFieldWrapper = ({
             {description && <ButtonDescription description={description} />}
           </div>
         )}
-        {children}
+
+        {collapsable ? <Accordion header={collapsableHeader}>{children}</Accordion> : children}
       </div>
 
       <span className="text-red-500 text-xs">{error}</span>

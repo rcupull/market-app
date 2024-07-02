@@ -94,7 +94,7 @@ export const PostsSection = ({ routeName, layout, className }: PostsSectionProps
           {
             'bg-gray-200 rounded-md': renderHiddenSection,
           },
-          className,
+          className
         )}
       >
         {!hiddenName && (

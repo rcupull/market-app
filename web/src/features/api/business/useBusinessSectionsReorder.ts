@@ -25,7 +25,7 @@ export const useBusinessSectionsReorder = (): {
             }),
             data,
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

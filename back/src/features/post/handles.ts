@@ -24,7 +24,7 @@ import { makeReshaper } from '../../utils/makeReshaper';
 import { GetAllPostArgs } from './utils';
 import { defaultQuerySort } from '../../utils/api';
 import { imagesServicesDeleteOldImages } from '../images/services';
-import { shoppingServicesGetStockAmountAvailableFromPosts } from '../shopping/services';
+import { shoppingServicesGetDataFromPosts } from '../shopping/services';
 
 const get_posts: () => RequestHandler = () => {
   return (req, res) => {
@@ -57,16 +57,19 @@ const get_posts: () => RequestHandler = () => {
         },
       });
 
-      const stockAmountsAvailable = await shoppingServicesGetStockAmountAvailableFromPosts({
+      const { getPostData } = await shoppingServicesGetDataFromPosts({
         posts: posts.data,
       });
 
       const out = deepJsonCopy(posts);
 
-      const getPostDto = async (post: Post, index: number): Promise<PostDto> => {
+      const getPostDto = async (post: Post): Promise<PostDto> => {
+        const { amountInProcess, stockAmountAvailable } = getPostData(post);
+
         return {
           ...post,
-          stockAmountAvailable: stockAmountsAvailable[index],
+          stockAmountAvailable,
+          amountInProcess,
         };
       };
 
@@ -94,15 +97,23 @@ const get_posts_postId: () => RequestHandler = () => {
         return getPostNotFoundResponse({ res });
       }
 
-      const out: PostDto = deepJsonCopy(post);
+      const out = deepJsonCopy(post);
 
-      const [stockAmountAvailable] = await shoppingServicesGetStockAmountAvailableFromPosts({
+      const { getPostData } = await shoppingServicesGetDataFromPosts({
         posts: [out],
       });
 
-      out.stockAmountAvailable = stockAmountAvailable;
+      const getPostDto = (post: Post): PostDto => {
+        const { amountInProcess, stockAmountAvailable } = getPostData(post);
 
-      res.send(out);
+        return {
+          ...post,
+          stockAmountAvailable,
+          amountInProcess,
+        };
+      };
+
+      res.send(getPostDto(out));
     });
   };
 };

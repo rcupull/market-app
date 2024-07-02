@@ -156,6 +156,7 @@ describe('posts', () => {
             {
               "__v": 0,
               "_id": Anything,
+              "amountInProcess": 0,
               "clothingSizes": [],
               "colors": [],
               "createdAt": Anything,

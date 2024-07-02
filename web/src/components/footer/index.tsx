@@ -30,7 +30,7 @@ export const Footer = ({ className, socialLinks }: FooterProps) => {
         href={href}
         className={cn(
           'm-1 h-9 w-9 rounded-full border-2 border-white uppercase leading-normal text-white transition duration-150 ease-in-out hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0',
-          className,
+          className
         )}
         target="_blank"
         rel="noreferrer"
@@ -43,7 +43,7 @@ export const Footer = ({ className, socialLinks }: FooterProps) => {
     <footer className={cn('shadow-lg -scale-y-100', className)}>
       <HtmlTextContainer
         className={cn(
-          '-scale-y-100 flex flex-col items-center bg-white shadow-xl text-center text-gray-700',
+          '-scale-y-100 flex flex-col items-center bg-white shadow-xl text-center text-gray-700'
         )}
       >
         <div className="container px-6 pt-6 flex">

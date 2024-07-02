@@ -12,10 +12,10 @@ import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 
 import { BulkActions } from './BulkActions';
 import { RowActions } from './RowActions';
-import { useInfinityScrolling } from './useInfinityScrolling';
 
 import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
+import { useInfiniteScrolling } from 'pages/@hooks/useInfiniteScrolling';
 import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
 import { GetAllPostsQuery } from 'types/api';
 import { getImageEndpoint } from 'utils/api';
@@ -28,7 +28,7 @@ export const Links = () => {
   const businessNewUpdatePost = useBusinessNewUpdatePost();
   const { business } = useBusiness();
 
-  const infinityScrolling = useInfinityScrolling({
+  const infiniteScrolling = useInfiniteScrolling({
     fetchPaginatedResources: getAllPosts,
     onFetch: ({ page }) => filters.onMergeFilters({ page }),
   });
@@ -107,7 +107,7 @@ export const Links = () => {
               <TopActions>
                 {buttonNew}
                 {buttonRefresh}
-              </TopActions>,
+              </TopActions>
             )}
 
             <Table
@@ -163,8 +163,8 @@ export const Links = () => {
                   ]),
                 };
               }}
-              data={infinityScrolling.tableData}
-              onScrollBottom={infinityScrolling.onScrollBottom}
+              data={infiniteScrolling.tableData}
+              onScrollBottom={infiniteScrolling.onScrollBottom}
               isBusy={getAllPosts.status.isBusy}
             />
           </>

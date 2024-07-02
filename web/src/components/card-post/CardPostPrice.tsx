@@ -7,7 +7,7 @@ import { cn, isNumber } from 'utils/general';
 const renderPriceCurrency = (
   price: number,
   currency: BusinessCurrency,
-  layout: PostCardLayout['price'],
+  layout: PostCardLayout['price']
 ) => {
   const priceToRender = price.toFixed(2);
 
@@ -76,7 +76,7 @@ export const CardPostPrice = ({ post, layout, currency }: CardPostPriceProps) =>
             {
               'text-red-500 font-bold': hasDiscount,
             },
-            getCardPostMetaSizes({ size: layout?.size }),
+            getCardPostMetaSizes({ size: layout?.size })
           )}
         >
           {renderPriceCurrency(price, currency, priceLayout)}

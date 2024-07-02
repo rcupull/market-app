@@ -1,6 +1,7 @@
 import { FormValidations } from './useGetFormErrors';
 
 import { AnyRecord } from 'types/general';
+import { Path } from 'types/paths';
 
 export interface ContextState<Value extends AnyRecord = AnyRecord> {
   value: Value;
@@ -19,9 +20,9 @@ export interface ContextState<Value extends AnyRecord = AnyRecord> {
   hasChange: boolean;
 }
 
-export type FormErrors<Value extends AnyRecord = AnyRecord> = Partial<Record<keyof Value, string>>;
+export type FormErrors<Value extends AnyRecord = AnyRecord> = Partial<Record<Path<Value>, string>>;
 export type FormTouched<Value extends AnyRecord = AnyRecord> = Partial<
-  Record<keyof Value, boolean>
+  Record<Path<Value>, boolean>
 >;
 
 export interface FormProps<Value extends AnyRecord = AnyRecord> {

@@ -25,7 +25,7 @@ export const useMakeReviewPost = (): {
               value,
             },
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

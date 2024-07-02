@@ -6,7 +6,7 @@ import {
   shoppingServicesDeleteOne,
   shoppingServicesFindAndUpdateOne,
   shoppingServicesFindOneAndDelete,
-  shoppingServicesGetStockAmountAvailableFromPosts,
+  shoppingServicesGetDataFromPosts,
 } from './services';
 import { isEmpty, isNumber } from '../../utils/general';
 import { postServicesGetAll, postServicesGetOne } from '../post/services';
@@ -76,9 +76,11 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
   /**
    * push Notification to update the stock in  the front
    */
-  const [stockAmountAvailable] = await shoppingServicesGetStockAmountAvailableFromPosts({
+  const { getPostData } = await shoppingServicesGetDataFromPosts({
     posts: [post],
   });
+
+  const { stockAmountAvailable } = getPostData(post);
 
   if (isNumber(stockAmountAvailable)) {
     notificationsServicesSendUpdateStockAmountMessage({
@@ -106,15 +108,17 @@ export const deleteShoppingInConstruction: QueryHandle<{
       },
     });
 
-    const stockAmountsAvaliable = await shoppingServicesGetStockAmountAvailableFromPosts({
+    const { getPostData } = await shoppingServicesGetDataFromPosts({
       posts,
     });
 
-    stockAmountsAvaliable.forEach((stockAmount, index) => {
-      if (isNumber(stockAmount)) {
+    posts.forEach((post) => {
+      const { stockAmountAvailable } = getPostData(post);
+
+      if (isNumber(stockAmountAvailable)) {
         notificationsServicesSendUpdateStockAmountMessage({
-          postId: posts[index]._id.toString(),
-          stockAmountAvailable: stockAmount,
+          postId: post._id.toString(),
+          stockAmountAvailable,
         });
       }
     });

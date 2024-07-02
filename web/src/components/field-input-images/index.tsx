@@ -4,13 +4,16 @@ import { EmptyImage } from 'components/empty-image';
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
 import { useFormField } from 'components/formux/useFormField';
 import { HtmlTextContainer } from 'components/html-text-container';
+import { IconButton } from 'components/icon-button';
 import { IconButtonRemove } from 'components/icon-button-remove';
 import { Input } from 'components/input';
 
 import { useModal } from 'features/modal/useModal';
 
+import SvgExternalLinkAltSolid from 'icons/ExternalLinkAltSolid';
 import SvgPlusSolid from 'icons/PlusSolid';
 import { Image, ImageFile } from 'types/general';
+import { getImageEndpoint } from 'utils/api';
 import { getFileImageSize } from 'utils/file';
 import { cn, getFlattenArray, removeRow, updateRow } from 'utils/general';
 
@@ -18,7 +21,6 @@ export interface FieldInputImagesProps
   extends React.InputHTMLAttributes<HTMLInputElement>,
     FormFieldWrapperProps {
   multi?: boolean;
-  getImageSrc?: (src: string) => string;
   max?: number;
   enabledImageHref?: boolean;
 }
@@ -29,15 +31,7 @@ type State = Array<ImageElement>;
 
 export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesProps>(
   (props, ref) => {
-    const {
-      className,
-      label,
-      multi,
-      max,
-      getImageSrc: getImageSrcProp,
-      enabledImageHref,
-      ...omittedProps
-    } = props;
+    const { className, label, multi, max, enabledImageHref, ...omittedProps } = props;
 
     const { pushModal } = useModal();
     const { field, error } = useFormField(props);
@@ -59,7 +53,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
       }
 
       if (typeof image.src === 'string') {
-        return getImageSrcProp?.(image.src) || '';
+        return getImageEndpoint?.(image.src) || '';
       }
 
       return '';
@@ -90,7 +84,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
 
     const handleChange = async (
       image: File | Image | null | undefined,
-      action: 'add' | 'remove' | 'change',
+      action: 'add' | 'remove' | 'change'
     ) => {
       let newStateToPreview = [...stateToPreview];
 
@@ -105,7 +99,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                 src: image,
                 ...(await getFileImageSize(image)),
               },
-              previewIndex,
+              previewIndex
             );
           } else {
             newStateToPreview = updateRow(newStateToPreview, image, previewIndex);
@@ -135,7 +129,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                 src: image,
                 ...(await getFileImageSize(image)),
               },
-              previewIndex,
+              previewIndex
             );
           } else {
             newStateToPreview = updateRow(
@@ -144,7 +138,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                 ...newStateToPreview[previewIndex],
                 ...image,
               },
-              previewIndex,
+              previewIndex
             );
           }
 
@@ -183,7 +177,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
       const addImages = async (
         images: Array<ImageElement>,
         imagesToAdd: Array<Image | File>,
-        index: number,
+        index: number
       ): Promise<void> => {
         const image = imagesToAdd[index];
 
@@ -232,7 +226,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
             ...current,
             href,
           },
-          previewIndex,
+          previewIndex
         );
 
         setStateToPreview(newStateToPreview);
@@ -255,7 +249,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
           onSelected: (images) => handleAddManyImages(images),
           multi: true,
         },
-        { emergent: true },
+        { emergent: true }
       );
     };
     return (
@@ -327,7 +321,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                     <label
                       htmlFor={field.name}
                       className={cn(
-                        'relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500',
+                        'relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500'
                       )}
                     >
                       <span>Seleccione imagen en su galería</span>
@@ -342,7 +336,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                         onChange={(event) => {
                           handleChange(
                             event.target.files?.[0],
-                            previewIndex === stateToPreview.length - 1 ? 'add' : 'change',
+                            previewIndex === stateToPreview.length - 1 ? 'add' : 'change'
                           );
                         }}
                       />
@@ -351,7 +345,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                   <li>
                     <span
                       className={cn(
-                        'relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500',
+                        'relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500'
                       )}
                       onClick={() => {
                         handleOpenCatalogsSearchImage();
@@ -368,26 +362,25 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
         </div>
 
         {previewImage && enabledImageHref && (
-          <div className="flex flex-col sm:flex-row sm:items-center mt-2 gap-4">
-            <Input
-              placeholder="Escriba la url promocional de esta imagen del banner (opcional). Ejemplo: https://example.com"
-              value={stateToPreview[previewIndex]?.href || ''}
-              onChange={(e) => {
-                e.preventDefault();
-                handleChangeHref(e.target.value);
-              }}
-            />
-            <a
-              href={stateToPreview[previewIndex]?.href || ''}
-              className="text-nowrap hyperlink"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Ir al link
-            </a>
-          </div>
+          <Input
+            placeholder="Escriba la url promocional de esta imagen del banner (opcional). Ejemplo: https://example.com"
+            value={stateToPreview[previewIndex]?.href || ''}
+            onChange={(e) => {
+              e.preventDefault();
+              handleChangeHref(e.target.value);
+            }}
+            className="w-full"
+            endElement={
+              <IconButton
+                svg={SvgExternalLinkAltSolid}
+                title="Ir al link"
+                preventDefault
+                onClick={() => window.open(stateToPreview[previewIndex]?.href || '', '_blank')}
+              />
+            }
+          />
         )}
       </FormFieldWrapper>
     );
-  },
+  }
 );

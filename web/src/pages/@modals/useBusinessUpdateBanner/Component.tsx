@@ -15,7 +15,6 @@ import { useBusiness } from '../../@hooks/useBusiness';
 
 import { BannerLayoutType } from 'types/business';
 import { Image, ImageFile } from 'types/general';
-import { getImageEndpoint } from 'utils/api';
 
 interface State {
   bannerImages: Array<ImageFile | Image>;
@@ -92,7 +91,6 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               label="Imágenes"
               name="bannerImages"
               className="mt-6"
-              getImageSrc={getImageEndpoint}
               multi
               enabledImageHref
             />
@@ -128,16 +126,16 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                             },
                             {
                               onAfterSuccess,
-                            },
+                            }
                           );
                         },
-                      },
+                      }
                     );
                   }
                 }}
                 variant="primary"
                 className="w-full"
-              />,
+              />
             )}
           </form>
         );

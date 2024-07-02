@@ -77,3 +77,14 @@ export interface TelegramBotChat {
   firstName?: string;
   userName?: string;
 }
+
+export interface Address {
+  city?: string;
+  municipality?: string;
+  street?: string;
+  streetBetweenFrom?: string;
+  streetBetweenTo?: string;
+  neighborhood?: string;
+  number?: number;
+  apartment?: number;
+}

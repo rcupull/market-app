@@ -88,7 +88,7 @@ export const TelegramActivationSteps = ({
                     hasChange={hasChange}
                     className="w-full"
                     {...overrydeBtnProps}
-                  />,
+                  />
                 )}
               </form>
             );

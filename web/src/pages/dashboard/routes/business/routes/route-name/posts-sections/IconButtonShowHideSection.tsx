@@ -61,7 +61,7 @@ export const IconButtonShowHideSection = ({ rowData }: IconButtonShowHideSection
                         onFetch({ routeName: business.routeName });
                         onClose();
                       },
-                    },
+                    }
                   );
                 }}
               />
@@ -69,7 +69,7 @@ export const IconButtonShowHideSection = ({ rowData }: IconButtonShowHideSection
           };
         },
       },
-      { emergent: true },
+      { emergent: true }
     );
   };
 

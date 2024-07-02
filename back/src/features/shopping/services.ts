@@ -257,40 +257,16 @@ export const shoppingServicesFindOneAndDelete: QueryHandle<
   return await ShoppingModel.findOneAndDelete(query);
 };
 
-export const shoppingServicesGetStockAmountAvailableFromPost: QueryHandle<
-  {
-    post: Post;
-    shoppings: Array<Shopping>;
-  },
-  number | null
-> = async ({ post, shoppings }) => {
-  const { stockAmount } = post;
-
-  if (isNullOrUndefined(stockAmount)) return null;
-
-  if (stockAmount === 0) return 0;
-
-  const postCount = shoppings.reduce((acc, shopping) => {
-    let out = acc;
-    shopping.posts.forEach(({ count, postData }) => {
-      if (isEqualIds(postData._id, post._id)) {
-        out = out + count;
-      }
-    });
-
-    return out;
-  }, 0);
-
-  const diff = stockAmount - postCount;
-
-  return diff < 0 ? 0 : diff;
-};
-
-export const shoppingServicesGetStockAmountAvailableFromPosts: QueryHandle<
+export const shoppingServicesGetDataFromPosts: QueryHandle<
   {
     posts: Array<Post>;
   },
-  Array<number | null>
+  {
+    getPostData: (post: Post) => {
+      amountInProcess: number;
+      stockAmountAvailable: number | null;
+    };
+  }
 > = async ({ posts }) => {
   /**
    * shopping que tienen estos productos incluidos pero todavia no han sido vendidos. O sea, existen en los almacenes del comerciante
@@ -310,13 +286,26 @@ export const shoppingServicesGetStockAmountAvailableFromPosts: QueryHandle<
     },
   });
 
-  const out = await Promise.all(
-    posts.map((post) =>
-      shoppingServicesGetStockAmountAvailableFromPost({ post, shoppings: allShoppings }),
-    ),
-  );
+  return {
+    getPostData: (post: Post) => {
+      const { stockAmount } = post;
+      const amountInProcess = allShoppings.reduce((acc, shopping) => {
+        let out = acc;
+        shopping.posts.forEach(({ count, postData }) => {
+          if (isEqualIds(postData._id, post._id)) {
+            out = out + count;
+          }
+        });
 
-  return out;
+        return out;
+      }, 0);
+
+      return {
+        amountInProcess,
+        stockAmountAvailable: isNullOrUndefined(stockAmount) ? null : stockAmount - amountInProcess,
+      };
+    },
+  };
 };
 
 export const shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts: QueryHandle<{
@@ -337,14 +326,16 @@ export const shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts: Que
     },
   });
 
-  const amountAvailableFromPosts = await shoppingServicesGetStockAmountAvailableFromPosts({
+  const { getPostData } = await shoppingServicesGetDataFromPosts({
     posts,
   });
 
-  amountAvailableFromPosts.forEach((stockAmountAvailable, index) => {
+  posts.forEach((post) => {
+    const { stockAmountAvailable } = getPostData(post);
+
     if (isNumber(stockAmountAvailable)) {
       notificationsServicesSendUpdateStockAmountMessage({
-        postId: posts[index]._id.toString(),
+        postId: post._id.toString(),
         stockAmountAvailable,
       });
     }

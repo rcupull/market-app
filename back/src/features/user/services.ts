@@ -1,10 +1,12 @@
-import { ModelDocument, QueryHandle } from '../../types/general';
+import { Address, ModelDocument, QueryHandle } from '../../types/general';
 import { User } from '../../types/user';
 import { UserModel } from '../../schemas/user';
 import { FilterQuery, ProjectionType, UpdateQuery } from 'mongoose';
 import { UpdateOptions } from 'mongodb';
+import { Shopping } from '../../types/shopping';
+import { isEqualIds } from '../../utils/general';
 
-const addOne: QueryHandle<
+export const userServicesAddOne: QueryHandle<
   {
     email: string;
     password: string;
@@ -33,7 +35,7 @@ const addOne: QueryHandle<
   return newUser;
 };
 
-const getOne: QueryHandle<
+export const userServicesGetOne: QueryHandle<
   {
     query: FilterQuery<User>;
     projection?: ProjectionType<User>;
@@ -45,7 +47,7 @@ const getOne: QueryHandle<
   return user;
 };
 
-const getAll: QueryHandle<
+export const userServicesGetAll: QueryHandle<
   {
     query: FilterQuery<User>;
     projection?: ProjectionType<User>;
@@ -57,7 +59,7 @@ const getAll: QueryHandle<
   return out;
 };
 
-const updateOne: QueryHandle<
+export const userServicesUpdateOne: QueryHandle<
   {
     query: FilterQuery<User>;
     update: UpdateQuery<User>;
@@ -68,7 +70,7 @@ const updateOne: QueryHandle<
   await UserModel.updateOne(query, update, options);
 };
 
-const findOneAndUpdate: QueryHandle<
+export const userServicesFindOneAndUpdate: QueryHandle<
   {
     query: FilterQuery<User>;
     update: UpdateQuery<User>;
@@ -78,10 +80,35 @@ const findOneAndUpdate: QueryHandle<
   return await UserModel.findOneAndUpdate(query, update);
 };
 
-export const userServices = {
-  addOne,
-  getOne,
-  updateOne,
-  findOneAndUpdate,
-  getAll,
+export const userServicesGetUserDataFromShopping: QueryHandle<
+  {
+    query: FilterQuery<User>;
+  },
+  {
+    getOneShoppingUserData: (shopping: Shopping) => {
+      purchaserName: string;
+      purchaserAddress?: Address;
+      purchaserPhone?: string;
+    } | null;
+  }
+> = async ({ query }) => {
+  const usersData: Array<Pick<User, '_id' | 'name' | 'address' | 'phone'>> =
+    await userServicesGetAll({
+      query,
+      projection: { name: 1, address: 1, _id: 1, phone: 1 },
+    });
+
+  return {
+    getOneShoppingUserData: (shopping) => {
+      const userData = usersData.find((user) => isEqualIds(user._id, shopping.purchaserId));
+      if (userData) {
+        return {
+          purchaserName: userData.name,
+          purchaserAddress: userData.address,
+          purchaserPhone: userData.phone,
+        };
+      }
+      return null;
+    },
+  };
 };

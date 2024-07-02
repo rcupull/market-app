@@ -1,6 +1,5 @@
 import { NotificationPayload } from '../../types/notifications';
 import firebase from 'firebase-admin';
-import { userServices } from '../user/services';
 import { QueryHandle } from '../../types/general';
 
 import { compact } from '../../utils/general';
@@ -8,6 +7,7 @@ import { serviceAccount } from '../../config';
 import { Business } from '../../types/business';
 import { Shopping } from '../../types/shopping';
 import { logger } from '../logger';
+import { userServicesGetAll, userServicesGetOne } from '../user/services';
 
 const firebaseInstance = firebase;
 
@@ -21,7 +21,7 @@ export const notificationsServicesInit = () => {
 export const notificationsServicesSendNotificationToUpdate: QueryHandle<{
   payload: NotificationPayload;
 }> = async ({ payload }) => {
-  const users = await userServices.getAll({
+  const users = await userServicesGetAll({
     query: {},
     projection: {
       firebaseToken: 1,
@@ -41,7 +41,7 @@ export const notificationsServicesSendTestNativeNotification: QueryHandle<{
   title: string;
   body: string;
 }> = async ({ body, title }) => {
-  const users = await userServices.getAll({
+  const users = await userServicesGetAll({
     query: {
       email: { $in: ['rcupull@gmail.com', 'rcupull+user1@gmail.com'] },
     },
@@ -67,7 +67,7 @@ export const notificationsServicesSendNewOrderPushMessage: QueryHandle<{
 }> = async ({ business, shopping }) => {
   try {
     const { createdBy, routeName } = business;
-    const user = await userServices.getOne({
+    const user = await userServicesGetOne({
       query: {
         _id: createdBy,
       },
@@ -100,7 +100,7 @@ export const notificationsServicesSendUpdateStockAmountMessage: QueryHandle<{
   postId: string;
 }> = async ({ postId, stockAmountAvailable }) => {
   try {
-    const users = await userServices.getAll({
+    const users = await userServicesGetAll({
       query: {},
       projection: {
         firebaseToken: 1,
@@ -129,7 +129,7 @@ export const notificationsServicesSendOrderInConstructionWasRemoved: QueryHandle
   shopping: Shopping;
 }> = async ({ shopping }) => {
   try {
-    const users = await userServices.getAll({
+    const users = await userServicesGetAll({
       query: {
         _id: shopping.purchaserId,
       },

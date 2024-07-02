@@ -21,7 +21,7 @@ export const useRemoveOneBusinessAdmin = (): {
               urlParams: { routeName },
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

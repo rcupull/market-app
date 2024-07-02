@@ -761,77 +761,7 @@ describe('DateTimePicker', () => {
                 class="rdrDays"
               >
                 <button
-                  class="rdrDay rdrDayPassive rdrDayStartOfWeek"
-                  style="color: rgb(61, 145, 255);"
-                  tabindex="-1"
-                  type="button"
-                >
-                  <span
-                    class="rdrDayNumber"
-                  >
-                    <span>
-                      27
-                    </span>
-                  </span>
-                </button>
-                <button
-                  class="rdrDay rdrDayPassive"
-                  style="color: rgb(61, 145, 255);"
-                  tabindex="-1"
-                  type="button"
-                >
-                  <span
-                    class="rdrDayNumber"
-                  >
-                    <span>
-                      28
-                    </span>
-                  </span>
-                </button>
-                <button
-                  class="rdrDay rdrDayPassive"
-                  style="color: rgb(61, 145, 255);"
-                  tabindex="-1"
-                  type="button"
-                >
-                  <span
-                    class="rdrDayNumber"
-                  >
-                    <span>
-                      29
-                    </span>
-                  </span>
-                </button>
-                <button
-                  class="rdrDay rdrDayPassive"
-                  style="color: rgb(61, 145, 255);"
-                  tabindex="-1"
-                  type="button"
-                >
-                  <span
-                    class="rdrDayNumber"
-                  >
-                    <span>
-                      30
-                    </span>
-                  </span>
-                </button>
-                <button
-                  class="rdrDay rdrDayPassive"
-                  style="color: rgb(61, 145, 255);"
-                  tabindex="-1"
-                  type="button"
-                >
-                  <span
-                    class="rdrDayNumber"
-                  >
-                    <span>
-                      31
-                    </span>
-                  </span>
-                </button>
-                <button
-                  class="rdrDay rdrDayWeekend rdrDayStartOfMonth"
+                  class="rdrDay rdrDayToday rdrDayStartOfWeek rdrDayStartOfMonth"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -844,7 +774,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayWeekend rdrDayEndOfWeek"
+                  class="rdrDay"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -857,7 +787,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayStartOfWeek"
+                  class="rdrDay"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -896,7 +826,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay"
+                  class="rdrDay rdrDayWeekend"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -909,7 +839,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay"
+                  class="rdrDay rdrDayWeekend rdrDayEndOfWeek"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -922,7 +852,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayWeekend"
+                  class="rdrDay rdrDayStartOfWeek"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -935,7 +865,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayWeekend rdrDayEndOfWeek"
+                  class="rdrDay"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -948,7 +878,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayStartOfWeek"
+                  class="rdrDay"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -987,7 +917,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay"
+                  class="rdrDay rdrDayWeekend"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -1000,7 +930,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay"
+                  class="rdrDay rdrDayWeekend rdrDayEndOfWeek"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -1013,7 +943,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayWeekend"
+                  class="rdrDay rdrDayStartOfWeek"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -1026,7 +956,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayWeekend rdrDayEndOfWeek"
+                  class="rdrDay"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -1039,7 +969,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayStartOfWeek"
+                  class="rdrDay"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -1078,7 +1008,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay"
+                  class="rdrDay rdrDayWeekend"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -1091,7 +1021,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay"
+                  class="rdrDay rdrDayWeekend rdrDayEndOfWeek"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -1104,7 +1034,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayWeekend"
+                  class="rdrDay rdrDayStartOfWeek"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -1117,7 +1047,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayWeekend rdrDayEndOfWeek"
+                  class="rdrDay"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -1130,7 +1060,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayStartOfWeek"
+                  class="rdrDay"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -1169,7 +1099,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay"
+                  class="rdrDay rdrDayWeekend"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -1182,7 +1112,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay"
+                  class="rdrDay rdrDayWeekend rdrDayEndOfWeek"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -1195,7 +1125,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayWeekend"
+                  class="rdrDay rdrDayStartOfWeek"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -1208,7 +1138,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayToday rdrDayWeekend rdrDayEndOfWeek rdrDayEndOfMonth"
+                  class="rdrDay"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -1217,6 +1147,75 @@ describe('DateTimePicker', () => {
                   >
                     <span>
                       30
+                    </span>
+                  </span>
+                </button>
+                <button
+                  class="rdrDay rdrDayEndOfMonth"
+                  style="color: rgb(61, 145, 255);"
+                  type="button"
+                >
+                  <span
+                    class="rdrDayNumber"
+                  >
+                    <span>
+                      31
+                    </span>
+                  </span>
+                </button>
+                <button
+                  class="rdrDay rdrDayPassive"
+                  style="color: rgb(61, 145, 255);"
+                  tabindex="-1"
+                  type="button"
+                >
+                  <span
+                    class="rdrDayNumber"
+                  >
+                    <span>
+                      1
+                    </span>
+                  </span>
+                </button>
+                <button
+                  class="rdrDay rdrDayPassive"
+                  style="color: rgb(61, 145, 255);"
+                  tabindex="-1"
+                  type="button"
+                >
+                  <span
+                    class="rdrDayNumber"
+                  >
+                    <span>
+                      2
+                    </span>
+                  </span>
+                </button>
+                <button
+                  class="rdrDay rdrDayPassive rdrDayWeekend"
+                  style="color: rgb(61, 145, 255);"
+                  tabindex="-1"
+                  type="button"
+                >
+                  <span
+                    class="rdrDayNumber"
+                  >
+                    <span>
+                      3
+                    </span>
+                  </span>
+                </button>
+                <button
+                  class="rdrDay rdrDayPassive rdrDayWeekend rdrDayEndOfWeek"
+                  style="color: rgb(61, 145, 255);"
+                  tabindex="-1"
+                  type="button"
+                >
+                  <span
+                    class="rdrDayNumber"
+                  >
+                    <span>
+                      4
                     </span>
                   </span>
                 </button>

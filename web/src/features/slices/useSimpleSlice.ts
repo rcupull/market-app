@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { store } from 'features/redux/setupReduxBackdoor';
 
 export const useSimpleSlice = <D = any, N extends string = string>(
-  name: N,
+  name: N
 ): {
   setData: (dataHandle: D | ((oldData: D) => D)) => void;
   reset: () => void;

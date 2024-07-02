@@ -28,7 +28,7 @@ export const useAddOneBillAdmin = (): {
             }),
             data,
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

@@ -9,7 +9,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const { type } = props;
 
   const renderInput = (props: InputProps) => {
-    const { className, endElement, ...omittedProps } = props;
+    const { className, endElement, typeOnlyNumbers, ...omittedProps } = props;
 
     return (
       <div className={cn('relative h-9', className)}>
@@ -19,9 +19,16 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             'block w-full h-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:bg-gray-200 disabled:cursor-not-allowed',
             {
               '!pr-10': endElement,
-            },
+            }
           )}
           {...omittedProps}
+          onKeyPress={(event) => {
+            if (typeOnlyNumbers && !/[0-9]/.test(event.key)) {
+              event.preventDefault();
+            }
+
+            omittedProps.onKeyPress?.(event);
+          }}
         />
         {endElement && (
           <div className="absolute h-full top-0 right-0 flex items-center">{endElement}</div>

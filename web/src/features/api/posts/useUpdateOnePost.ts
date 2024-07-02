@@ -51,7 +51,7 @@ export const useUpdateOnePost = (): {
             }),
             data,
           },
-          options,
+          options
         );
       },
       reset: fetch[3],
