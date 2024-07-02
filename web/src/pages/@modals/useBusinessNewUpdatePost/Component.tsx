@@ -34,6 +34,7 @@ export interface ComponentProps extends StyleProps {
   portal: Portal;
   post?: Post;
   onAfterSuccess: () => void;
+  onRefreshPost?: () => void;
   postType: PostType;
 }
 
@@ -43,6 +44,7 @@ export const Component = ({
   post,
   className,
   postType,
+  onRefreshPost,
 }: ComponentProps) => {
   const { business, onFetch, getSections } = useBusiness();
 
@@ -221,6 +223,8 @@ export const Component = ({
 
                   {postFormFields.includes('stockAmount') && (
                     <FieldPostStockAmount
+                      onAfterSuccess={onRefreshPost}
+                      post={post}
                       id="post_stockAmount"
                       name="stockAmount"
                       label="Disponibilidad"

@@ -11,7 +11,7 @@ import { Filters } from './Filters';
 
 import { LayoutPage } from 'pages/@common/layout-page';
 import { LayoutPageSection } from 'pages/@common/layout-page-section';
-import { useInfinityScrolling } from 'pages/dashboard/routes/business/routes/route-name/links/useInfinityScrolling';
+import { useInfiniteScrolling } from 'pages/@hooks/useInfiniteScrolling';
 import { GetAllBusinessQuery } from 'types/api';
 import { getImageEndpoint } from 'utils/api';
 import { getOneBusinessRoute } from 'utils/business';
@@ -23,13 +23,13 @@ export const Home = () => {
     onChange: (query) => getAllBusinessSummary.fetch(query),
   });
 
-  const infinityScrolling = useInfinityScrolling({
+  const infiniteScrolling = useInfiniteScrolling({
     fetchPaginatedResources: getAllBusinessSummary,
     onFetch: ({ page }) => filters.onMergeFilters({ page }),
   });
 
   const refCardContainer = useRef<HTMLDivElement>(null);
-  const { onScroll } = useScrollBottom(refCardContainer, infinityScrolling.onScrollBottom);
+  const { onScroll } = useScrollBottom(refCardContainer, infiniteScrolling.onScrollBottom);
 
   useEffect(() => {
     filters.onRefresh();
@@ -41,7 +41,7 @@ export const Home = () => {
       <LayoutPageSection isBusy={getAllBusinessSummary.status.isBusy} className="mt-20">
         <div ref={refCardContainer} onScroll={onScroll} className="overflow-y-auto max-h-50rem">
           <div className="grid place-items-center grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-4 md:gap-8 p-1">
-            {infinityScrolling.tableData?.map((businessSummary, index) => {
+            {infiniteScrolling.tableData?.map((businessSummary, index) => {
               return (
                 <BusinessCardSimple
                   key={index}

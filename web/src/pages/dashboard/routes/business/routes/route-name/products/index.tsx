@@ -14,10 +14,10 @@ import { BulkActions } from './BulkActions';
 import { Filters } from './Filters';
 import { ProductDetails } from './ProductDetails';
 import { RowActions } from './RowActions';
-import { useInfinityScrolling } from './useInfinityScrolling';
 
 import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
+import { useInfiniteScrolling } from 'pages/@hooks/useInfiniteScrolling';
 import { useTableCellCategoriesTags } from 'pages/@hooks/useTableCellCategoriesTags';
 import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
 import { GetAllPostsQuery } from 'types/api';
@@ -30,7 +30,7 @@ export const Products = () => {
   const businessNewUpdatePost = useBusinessNewUpdatePost();
   const { business } = useBusiness();
 
-  const infinityScrolling = useInfinityScrolling({
+  const infiniteScrolling = useInfiniteScrolling({
     fetchPaginatedResources: getAllPosts,
     onFetch: ({ page }) => filters.onMergeFilters({ page }),
   });
@@ -171,8 +171,8 @@ export const Products = () => {
                   ]),
                 };
               }}
-              data={infinityScrolling.tableData}
-              onScrollBottom={infinityScrolling.onScrollBottom}
+              data={infiniteScrolling.tableData}
+              onScrollBottom={infiniteScrolling.onScrollBottom}
               isBusy={getAllPosts.status.isBusy}
             />
           </>

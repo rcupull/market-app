@@ -6,10 +6,10 @@ import { InputProps } from './types';
 import { cn } from 'utils/general';
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { type, typeOnlyNumbers } = props;
+  const { type } = props;
 
   const renderInput = (props: InputProps) => {
-    const { className, endElement, ...omittedProps } = props;
+    const { className, endElement, typeOnlyNumbers, ...omittedProps } = props;
 
     return (
       <div className={cn('relative h-9', className)}>

@@ -1,7 +1,6 @@
 import { Divider } from 'components/divider';
 
-import { PostAmount } from './PostAmount';
-
+import { PostAmount } from 'pages/@common/post-amount';
 import { Business } from 'types/business';
 import { Post } from 'types/post';
 import { cn, isNullOrUndefined, isNumber } from 'utils/general';
@@ -48,7 +47,7 @@ export const ProductDetails = ({ rowData, business, onRefresh }: ProductDetailsP
   };
 
   return (
-    <div className="w-48 sm:w-60">
+    <div className="w-32">
       {renderKey('Precio')}
       {renderValue(`${price} ${business?.currency}`)}
 
@@ -70,7 +69,8 @@ export const ProductDetails = ({ rowData, business, onRefresh }: ProductDetailsP
               min={amountInProcess}
             />
           )}
-          <Divider className="!my-1" />
+
+          <div className="my-2" />
 
           {renderKey('Disponibles', { error: stockAmountAvailable === 0 })}
           {renderValue(renderUnit(stockAmountAvailable), { error: stockAmountAvailable === 0 })}

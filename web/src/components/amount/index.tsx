@@ -17,10 +17,24 @@ export interface AmountProps extends StyleProps {
   isBusy?: boolean;
   error?: boolean;
   min?: number;
+  max?: number;
+  size?: 'small' | 'medium' | 'large';
+  disabled?: boolean;
 }
 
-export const Amount = ({ value, onChange, className, isBusy, error, min }: AmountProps) => {
+export const Amount = ({
+  value,
+  onChange,
+  className,
+  isBusy,
+  error,
+  min,
+  max,
+  size = 'small',
+  disabled,
+}: AmountProps) => {
   const [state, setState] = useState<number>();
+  const [bottomMessage, setBottomMessage] = useState<string>();
   const refPromise = useRef(false);
 
   useEffect(() => {
@@ -35,6 +49,18 @@ export const Amount = ({ value, onChange, className, isBusy, error, min }: Amoun
     debouncer(() => {
       refPromise.current = false;
       setState(value);
+
+      if (!isNullOrUndefined(min) && newValue < min) {
+        setBottomMessage(`El mínimo es ${min}`);
+        setTimeout(() => setBottomMessage(undefined), 5000);
+        return;
+      }
+      if (!isNullOrUndefined(max) && newValue > max) {
+        setBottomMessage(`El máximo es ${max}`);
+        setTimeout(() => setBottomMessage(undefined), 5000);
+        return;
+      }
+
       onChange?.(newValue);
     }, 500);
   };
@@ -46,54 +72,88 @@ export const Amount = ({ value, onChange, className, isBusy, error, min }: Amoun
     return state <= min;
   };
 
+  const getDisabledByMax = (): boolean => {
+    if (isNullOrUndefined(max)) return false;
+    if (isNullOrUndefined(state)) return false;
+
+    return state >= max;
+  };
+
   return (
-    <div className={cn('relative flex items-center gap-1 w-fit', className)}>
-      <Button
-        svg={<SvgAngleLeftSolid className="!size-3" />}
-        stopPropagation
-        disabled={getDisabledByMin()}
-        onClick={() => {
-          if (!isNumber(state)) return;
-          if (state <= 0) return;
+    <div className={cn('w-fit', className)}>
+      <div className={cn('relative flex items-center gap-1 w-fit')}>
+        <Button
+          svg={
+            <SvgAngleLeftSolid
+              className={cn({
+                '!size-3': size === 'small',
+                '!size-4': size === 'medium',
+                '!size-6': size === 'large',
+              })}
+            />
+          }
+          stopPropagation
+          preventDefault
+          disabled={getDisabledByMin() || disabled}
+          onClick={() => {
+            if (!isNumber(state)) return;
+            if (state <= 0) return;
 
-          handleChange(state - 1);
-        }}
-        variant="outlined"
-        className={cn('!p-1 !ring-1', {
-          '!ring-2 ring-red-500': error,
-        })}
-      />
+            handleChange(state - 1);
+          }}
+          variant="outlined"
+          className={cn('!p-1 !ring-1', {
+            '!ring-2 ring-red-500': error,
+          })}
+        />
 
-      <Input
-        value={state || 0}
-        onChange={(e) => handleChange(Number(e.target.value))}
-        onClick={(e) => e.stopPropagation()}
-        typeOnlyNumbers
-        className={cn('!w-20 !h-6', {
-          '!font-bold !text-lg text-indigo-700': refPromise.current,
-          'ring-2 ring-red-500  rounded-md': error,
-        })}
-      />
+        <Input
+          value={isNullOrUndefined(state) ? '' : state}
+          onChange={(e) => handleChange(Number(e.target.value))}
+          onClick={(e) => e.stopPropagation()}
+          disabled={disabled}
+          typeOnlyNumbers
+          className={cn('!w-20', {
+            '!font-bold !text-lg text-indigo-700': refPromise.current,
+            'ring-2 ring-red-500  rounded-md': error,
+            '!h-6': size === 'small',
+            '!h-7': size === 'medium',
+            '!h-9': size === 'large',
+          })}
+        />
 
-      <Button
-        svg={<SvgAngleRightSolid className="!size-3" />}
-        stopPropagation
-        onClick={() => {
-          if (!isNumber(state)) return;
+        <Button
+          svg={
+            <SvgAngleRightSolid
+              className={cn({
+                '!size-3': size === 'small',
+                '!size-4': size === 'medium',
+                '!size-6': size === 'large',
+              })}
+            />
+          }
+          stopPropagation
+          preventDefault
+          onClick={() => {
+            if (!isNumber(state)) return;
 
-          handleChange(state + 1);
-        }}
-        variant="outlined"
-        className={cn('!p-1 !ring-1', {
-          '!ring-2 ring-red-500': error,
-        })}
-      />
+            handleChange(state + 1);
+          }}
+          disabled={getDisabledByMax() || disabled}
+          variant="outlined"
+          className={cn('!p-1 !ring-1', {
+            '!ring-2 ring-red-500': error,
+          })}
+        />
 
-      {isBusy && (
-        <div className="bg-white opacity-50 cursor-not-allowed absolute inset-0 flex items-center justify-center">
-          <SpinnerEllipsis />
-        </div>
-      )}
+        {isBusy && (
+          <div className="bg-white opacity-50 cursor-not-allowed absolute inset-0 flex items-center justify-center">
+            <SpinnerEllipsis />
+          </div>
+        )}
+      </div>
+
+      {bottomMessage && <div className="text-xs text-red-500">{bottomMessage}</div>}
     </div>
   );
 };

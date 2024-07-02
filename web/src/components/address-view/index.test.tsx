@@ -21,25 +21,87 @@ describe('AddressView', () => {
 
     expect(result.container).toMatchInlineSnapshot(`
       <div>
-        <div>
-          <button
-            aria-expanded="false"
-            class="flex w-full items-center border border-gray-200 p-2 rounded-sm"
-            data-headlessui-state=""
-            id="headlessui-disclosure-button-:r0:"
-            type="button"
+        <div
+          class="flex flex-wrap"
+        >
+          <span
+            class="text-gray-400 mx-0.5"
+          />
+          <span
+            class="font-semibold mx-0.5"
           >
-            <svg
-              class="w-5 h-5 ml-auto fill-gray-400"
-              height="1em"
-              viewBox="0 0 32 32"
-              width="1em"
-            >
-              <path
-                d="M12.969 4.281L11.53 5.72 21.812 16l-10.28 10.281 1.437 1.438 11-11 .687-.719-.687-.719z"
-              />
-            </svg>
-          </button>
+            Marrero
+          </span>
+          <span
+            class="text-gray-400 mx-0.5"
+          >
+            #
+          </span>
+          <span
+            class="font-semibold mx-0.5"
+          >
+            60
+          </span>
+          <span
+            class="text-gray-400 mx-0.5"
+          >
+            apto
+          </span>
+          <span
+            class="font-semibold mx-0.5"
+          >
+            45
+          </span>
+          <span
+            class="text-gray-400 mx-0.5"
+          >
+            entre
+          </span>
+          <span
+            class="font-semibold mx-0.5"
+          >
+            56
+          </span>
+          <span
+            class="text-gray-400 mx-0.5"
+          >
+            y
+          </span>
+          <span
+            class="font-semibold mx-0.5"
+          >
+            89
+          </span>
+          <span
+            class="text-gray-400 mx-0.5"
+          >
+            reparto
+          </span>
+          <span
+            class="font-semibold mx-0.5"
+          >
+            Los Pinos
+          </span>
+          <span
+            class="text-gray-400 mx-0.5"
+          >
+            ciudad
+          </span>
+          <span
+            class="font-semibold mx-0.5"
+          >
+            Habana
+          </span>
+          <span
+            class="text-gray-400 mx-0.5"
+          >
+            municipio
+          </span>
+          <span
+            class="font-semibold mx-0.5"
+          >
+            La Lisa
+          </span>
         </div>
       </div>
     `);
