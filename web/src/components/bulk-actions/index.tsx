@@ -13,19 +13,20 @@ export interface BulkMeta<RowData extends AnyRecord = AnyRecord> {
   onReset: () => void;
 }
 
+type GetBulkRowNodes<RowData extends AnyRecord = AnyRecord> = (
+  args: {
+    rowData: RowData;
+  },
+  nodes: Array<React.ReactNode>
+) => Array<React.ReactNode>;
+
+type GetBulkHeaderNodes = (nodes: Array<React.ReactNode>) => Array<React.ReactNode>;
+
 interface BulkActionArgs<RowData extends AnyRecord = AnyRecord> {
   tablePropsProcessor: TablePropsPropcessor<RowData>;
   selectAllNode: React.ReactNode;
   selecting: boolean;
   onReset: () => void;
-  getBulkRowNodes: (
-    args: {
-      rowData: RowData;
-    },
-    nodes: Array<React.ReactNode>
-  ) => Array<React.ReactNode>;
-  getBulkHeaderNodes: (nodes: Array<React.ReactNode>) => Array<React.ReactNode>;
-  getBulkTopActionsNode: (node: React.ReactNode) => React.ReactNode;
   getDisabledOverlay: (node: React.ReactNode) => React.ReactNode;
   bulkActionNode: React.ReactNode;
 }
@@ -71,6 +72,7 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
             onClick={() => {
               onReset();
             }}
+            className="ml-2"
           />
           {enableAction && <Button variant="outlined" {...getBulkActionBtnProps({ action })} />}
         </>
@@ -98,13 +100,13 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
     />
   );
 
-  const getBulkHeaderNodes: BulkActionArgs<RowData>['getBulkHeaderNodes'] = (nodes) => {
+  const getBulkHeaderNodes: GetBulkHeaderNodes = (nodes) => {
     if (!selecting) return nodes;
 
     return [null, ...nodes];
   };
 
-  const getBulkRowNodes: BulkActionArgs<RowData>['getBulkRowNodes'] = ({ rowData }, nodes) => {
+  const getBulkRowNodes: GetBulkRowNodes<RowData> = ({ rowData }, nodes) => {
     if (!selecting) return nodes;
 
     return [
@@ -148,19 +150,6 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
           },
           disabledRemapRowsValidation: selecting,
         }),
-        getBulkTopActionsNode: (node) => {
-          return (
-            <div className="flex items-center px-1">
-              {bulkActionNode}
-              <div className="ml-auto relative">
-                {node}
-                {selecting && (
-                  <div className="absolute inset-0 bg-white opacity-60 rounded-md cursor-not-allowed" />
-                )}
-              </div>
-            </div>
-          );
-        },
         getDisabledOverlay: (node) => {
           return (
             <div className="relative">
@@ -171,8 +160,6 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
             </div>
           );
         },
-        getBulkHeaderNodes,
-        getBulkRowNodes,
       })}
     </>
   );

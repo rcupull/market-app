@@ -39,10 +39,10 @@ export const ShoppingTermsAndConditions = ({
       className={className}
     >
       {info && (
-        <div className="w-full p-3 ring-2 ring-yellow-500 rounded-lg flex">
+        <div className="w-full p-3 ring-2 ring-yellow-500 rounded-lg flex flex-col sm:flex-row items-center sm:items-start">
           <Badge variant="warning" />
-          <div className="flex flex-col ml-4">
-            <span className="font-semibold">
+          <div className="flex flex-col ml-4 mt-2 sm:mt-0">
+            <span className="font-semibold text-center sm:text-left">
               Términos y condiciones para la compra en este negocio
             </span>
 
@@ -53,7 +53,7 @@ export const ShoppingTermsAndConditions = ({
               noUseFormik
               value={approved}
               onChange={(e) => onApprobed(e.target.checked)}
-              className="mt-3"
+              className="mt-5"
             />
           </div>
         </div>

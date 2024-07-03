@@ -23,7 +23,7 @@ describe('Component', () => {
               class="flex justify-center"
             >
               <div
-                class="px-2 py-0.5 rounded-full bg-white h-14 !size-28"
+                class="px-2 py-0.5 rounded-full bg-white h-12 sm:h-14 !size-28"
               >
                 <img
                   alt="Market Logo"

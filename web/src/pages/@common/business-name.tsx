@@ -10,7 +10,7 @@ export const BusinessName = ({ className }: BusinessNameProps) => {
   return (
     <div
       className={cn(
-        'text-gray-900 font-bold text-2xl text-nowrap overflow-hidden min-w-20 text-ellipsis',
+        'text-gray-900 font-bold text-xl sm:text-2xl text-nowrap overflow-hidden min-w-20 text-ellipsis',
         className
       )}
     >

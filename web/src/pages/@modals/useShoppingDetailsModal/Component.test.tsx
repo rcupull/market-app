@@ -51,62 +51,74 @@ describe('Component', () => {
             class="flex flex-col gap-2 mt-2"
           >
             <div
-              class="flex items-center justify-between bg-gray-100 p-2 rounded-md"
+              class="flex flex-col sm:flex-row gap-2 items-center justify-between bg-gray-100 p-2 rounded-md"
             >
               <div
-                class="flex-shrink-0"
+                class="flex items-center gap-2 "
               >
-                <svg
-                  class="fill-gray-300 w-8"
-                  height="1em"
-                  viewBox="0 0 32 32"
-                  width="1em"
+                <div
+                  class="flex-shrink-0"
                 >
-                  <path
-                    d="M2 5v22h28V5zm2 2h24v13.906l-5.281-5.312-.719-.719-4.531 4.531-5.75-5.812-.719-.719-7 7zm20 2a1.999 1.999 0 100 4 1.999 1.999 0 100-4zm-13 6.719L20.188 25H4v-2.281zm11 2l6 6V25h-4.969l-4.156-4.188z"
-                  />
-                </svg>
+                  <svg
+                    class="fill-gray-300 size-8"
+                    height="1em"
+                    viewBox="0 0 32 32"
+                    width="1em"
+                  >
+                    <path
+                      d="M2 5v22h28V5zm2 2h24v13.906l-5.281-5.312-.719-.719-4.531 4.531-5.75-5.812-.719-.719-7 7zm20 2a1.999 1.999 0 100 4 1.999 1.999 0 100-4zm-13 6.719L20.188 25H4v-2.281zm11 2l6 6V25h-4.969l-4.156-4.188z"
+                    />
+                  </svg>
+                </div>
+                <span
+                  class="text-wrap max-w-48 flex-grow"
+                >
+                  Chancletas de palo
+                </span>
               </div>
-              <span
-                class="text-wrap max-w-48 flex-grow"
+              <div
+                class="flex gap-2"
               >
-                Chancletas de palo
-              </span>
-              <span>
-                4 unidades
-              </span>
-              <span>
-                50 USD
-              </span>
+                <span>
+                  4 unidades
+                </span>
+                <span>
+                  50 USD
+                </span>
+              </div>
             </div>
             <div
-              class="flex justify-end gap-4"
+              class="flex justify-end"
             >
               <div
-                class="flex items-center"
+                class="flex gap-4 border-2 border-gray-400 rounded-xl px-2"
               >
-                <span
-                  class="font-bold"
+                <div
+                  class="flex items-center"
                 >
-                  Total
-                  :
-                </span>
-                <span>
-                   4 unidades
-                </span>
-              </div>
-              <div
-                class="flex items-center"
-              >
-                <span
-                  class="font-bold"
+                  <span
+                    class="font-bold"
+                  >
+                    Total
+                    :
+                  </span>
+                  <span>
+                     4 unidades
+                  </span>
+                </div>
+                <div
+                  class="flex items-center"
                 >
-                  Precio
-                  :
-                </span>
-                <span>
-                   200 CUP
-                </span>
+                  <span
+                    class="font-bold"
+                  >
+                    Precio
+                    :
+                  </span>
+                  <span>
+                     200 CUP
+                  </span>
+                </div>
               </div>
             </div>
           </div>

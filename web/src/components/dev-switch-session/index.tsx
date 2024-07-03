@@ -8,8 +8,13 @@ import { useDebouncer } from 'hooks/useDebouncer';
 import { useRouter } from 'hooks/useRouter';
 
 import SvgUsersCogSolid from 'icons/UsersCogSolid';
+import { cn } from 'utils/general';
 
-const sessions: Array<{ email: string; password: string }> = [
+const sessions: Array<{ email: string | null; password: string | null }> = [
+  {
+    email: null,
+    password: null,
+  },
   {
     email: 'rcupull@gmail.com',
     password: 'Qwerty@123',
@@ -42,39 +47,56 @@ export const DevSwitchSession = () => {
   const { pushRoute } = useRouter();
   const debouncer = useDebouncer();
 
-  if (!DEVELOPMENT) {
-    return <></>;
-  }
-
   return (
     <Menu
+      className={cn('hidden sm:block', { '!hidden': !DEVELOPMENT })}
       buttonElement={
         <IconButton
           title="Switch session (only development)"
           svg={<SvgUsersCogSolid className="!size-8" />}
         />
       }
-      items={sessions.map(({ email, password }) => ({
-        label: email,
-        active: authData?.user?.email === email,
-        onClick: () => {
-          if (authData?.user?.email === email) return;
+      items={sessions.map(({ email, password }) => {
+        if (email === null || password === null) {
+          return {
+            label: 'Ninguno',
+            active: !authData?.user,
+            onClick: () => {
+              if (authData?.user?.email === email) return;
 
-          if (isAuthenticated) {
-            pushRoute('/');
+              if (isAuthenticated) {
+                pushRoute('/');
 
-            debouncer(() => {
-              signOut.fetch(undefined, {
-                onAfterSuccess: () => {
-                  authSignIn.fetch({ email, password });
-                },
-              });
-            }, 200);
-          } else {
-            authSignIn.fetch({ email, password });
-          }
-        },
-      }))}
+                debouncer(() => {
+                  signOut.fetch(undefined);
+                }, 200);
+              }
+            },
+          };
+        }
+
+        return {
+          label: email,
+          active: authData?.user?.email === email,
+          onClick: () => {
+            if (authData?.user?.email === email) return;
+
+            if (isAuthenticated) {
+              pushRoute('/');
+
+              debouncer(() => {
+                signOut.fetch(undefined, {
+                  onAfterSuccess: () => {
+                    authSignIn.fetch({ email, password });
+                  },
+                });
+              }, 200);
+            } else {
+              authSignIn.fetch({ email, password });
+            }
+          },
+        };
+      })}
     />
   );
 };

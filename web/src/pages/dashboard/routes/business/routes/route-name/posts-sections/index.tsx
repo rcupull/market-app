@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { ButtonRefresh } from 'components/button-refresh';
 import { IconButtonRefresh } from 'components/icon-button-refresh';
 import { Table } from 'components/table';
@@ -15,6 +17,17 @@ export const PostsSections = () => {
   const { business, onFetch, status } = useBusiness();
 
   const data = business?.layouts?.posts?.sections || [];
+  const postCategories = business?.postCategories || [];
+
+  const postCategoriesRecord = useMemo<Record<string, string>>(() => {
+    return postCategories.reduce(
+      (acc, { label, tag }) => ({
+        ...acc,
+        [tag]: label,
+      }),
+      {}
+    );
+  }, [JSON.stringify(postCategories)]);
 
   const buttonRefresh = (
     <>
@@ -31,6 +44,24 @@ export const PostsSections = () => {
     </>
   );
 
+  const renderCategories = (rowData: PostsLayoutSection) => {
+    const { postCategoriesTags, postType } = rowData;
+
+    if (postType === 'link') {
+      return '---';
+    }
+
+    return (
+      <ul className="flex flex-col">
+        {postCategoriesTags?.map((tag, index) => (
+          <li className="text-nowrap" key={index}>
+            {postCategoriesRecord[tag]}
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   return (
     <>
       <TopActions>
@@ -40,10 +71,10 @@ export const PostsSections = () => {
       </TopActions>
       <Table<PostsLayoutSection>
         remapRowsIndex={{
-          xs: [[0, 1, 2, 3]],
+          xs: [[0, 1, 2, 3, 4]],
           lg: 'none',
         }}
-        heads={['Acciones', 'Nombre', 'Tipo', 'Oculto']}
+        heads={['Acciones', 'Nombre', 'Tipo', 'Categorias', 'Oculto']}
         getRowProps={(rowData, rowIndex) => {
           const { name, hiddenName, postType, hidden } = rowData;
 
@@ -63,6 +94,7 @@ export const PostsSections = () => {
                 {hiddenName && <span className="text-red-500">(nombre oculto)</span>}
               </div>,
               postType === 'product' ? 'Productos' : 'Enlaces',
+              renderCategories(rowData),
               <IconButtonShowHideSection key="hidden" rowData={rowData} />,
             ],
           };

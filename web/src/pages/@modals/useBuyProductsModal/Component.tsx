@@ -20,7 +20,7 @@ export const Component = () => {
   const finishButton = (
     <Button
       variant="link"
-      label="Finalizar"
+      label="Cerrar"
       onClick={() => {
         onClose();
         business && pushRoute(getOneBusinessRoute({ routeName: business.routeName }));
@@ -37,7 +37,7 @@ export const Component = () => {
             render: (props) => <ShoppingCart {...props} finishButton={finishButton} />,
           },
           {
-            label: 'Verificar datos',
+            label: 'Verificar los datos',
             render: (props) => <CheckingData {...props} finishButton={finishButton} />,
           },
           {

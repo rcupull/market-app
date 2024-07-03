@@ -20,7 +20,7 @@ export const useBuyProductsModal = () => {
               title: 'Crear orden de compra',
               badge: <Badge variant="cart" />,
               content: <Component />,
-              className: '!min-w-[50rem]',
+              className: '!w-[95vw] sm:!max-w-[50rem]',
             };
           },
         },

@@ -30,75 +30,76 @@ export const PostAdded = ({ count, postId, postImages, postName, routeName }: Po
   const { pushModal } = useModal();
 
   return (
-    <div className="flex items-center border border-gray-300 rounded-md p-1 gap-1">
-      <div className="flex-shrink-0">
-        {mainImage ? (
-          <img src={getImageEndpoint(mainImage.src)} className="w-8" />
-        ) : (
-          <EmptyImage className="w-8" />
-        )}
+    <div className="flex flex-col sm:flex-row items-center border border-gray-300 rounded-md p-1 gap-1">
+      <div className="flex items-center gap-2">
+        <div className="flex-shrink-0">
+          {mainImage ? (
+            <img src={getImageEndpoint(mainImage.src)} className="w-8" />
+          ) : (
+            <EmptyImage className="size-8" />
+          )}
+        </div>
+
+        {postName}
       </div>
 
-      {postName}
+      <div className="flex items-center sm:ml-auto">
+        <Amount
+          value={count}
+          isBusy={updateAddOneShopping.status.isBusy}
+          onChange={(amount) => {
+            updateAddOneShopping.fetch(
+              { postId, routeName, amountToAdd: amount - count },
+              {
+                onAfterSuccess: () => {
+                  shopping.onFetch({ routeName });
+                },
+              }
+            );
+          }}
+        />
 
-      <div className="ml-auto" />
+        <IconButtonRemove
+          stopPropagation
+          title="Eliminar articulo"
+          onClick={() => {
+            pushModal(
+              'Confirmation',
+              {
+                useProps: () => {
+                  const { onClose } = useModal();
+                  const { removeShopping } = useRemoveShopping();
 
-      <IconButtonViewPostPage postId={postId} routeName={routeName} />
-
-      <Amount
-        value={count}
-        isBusy={updateAddOneShopping.status.isBusy}
-        onChange={(amount) => {
-          updateAddOneShopping.fetch(
-            { postId, routeName, amountToAdd: amount - count },
-            {
-              onAfterSuccess: () => {
-                shopping.onFetch({ routeName });
+                  return {
+                    content: '¿Seguro que desea quitar este producto del carro de compras?',
+                    badge: <Badge variant="error" />,
+                    primaryBtn: (
+                      <Button
+                        label="Eliminar artículo"
+                        isBusy={removeShopping.status.isBusy}
+                        onClick={() => {
+                          removeShopping.fetch(
+                            { postId, routeName },
+                            {
+                              onAfterSuccess: () => {
+                                onClose();
+                                shopping.onFetch({ routeName });
+                              },
+                            }
+                          );
+                        }}
+                      />
+                    ),
+                  };
+                },
               },
-            }
-          );
-        }}
-      />
+              { emergent: true }
+            );
+          }}
+        />
 
-      <img />
-      <IconButtonRemove
-        stopPropagation
-        title="Eliminar articulo"
-        onClick={() => {
-          pushModal(
-            'Confirmation',
-            {
-              useProps: () => {
-                const { onClose } = useModal();
-                const { removeShopping } = useRemoveShopping();
-
-                return {
-                  content: '¿Seguro que desea quitar este producto del carro de compras?',
-                  badge: <Badge variant="error" />,
-                  primaryBtn: (
-                    <Button
-                      label="Eliminar artículo"
-                      isBusy={removeShopping.status.isBusy}
-                      onClick={() => {
-                        removeShopping.fetch(
-                          { postId, routeName },
-                          {
-                            onAfterSuccess: () => {
-                              onClose();
-                              shopping.onFetch({ routeName });
-                            },
-                          }
-                        );
-                      }}
-                    />
-                  ),
-                };
-              },
-            },
-            { emergent: true }
-          );
-        }}
-      />
+        <IconButtonViewPostPage postId={postId} routeName={routeName} />
+      </div>
     </div>
   );
 };

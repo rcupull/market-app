@@ -34,31 +34,37 @@ export const ShoppingDetails = ({ shopping, onClick, getActions }: ShoppingDetai
 
           return (
             <div
-              className="flex items-center justify-between bg-gray-100 p-2 rounded-md"
+              className="flex flex-col sm:flex-row gap-2 items-center justify-between bg-gray-100 p-2 rounded-md"
               key={index}
             >
-              <div className="flex-shrink-0">
-                {mainImage ? (
-                  <img src={getImageEndpoint(mainImage.src)} className="w-8" />
-                ) : (
-                  <EmptyImage className="w-8" />
-                )}
+              <div className="flex items-center gap-2 ">
+                <div className="flex-shrink-0">
+                  {mainImage ? (
+                    <img src={getImageEndpoint(mainImage.src)} className="w-8" />
+                  ) : (
+                    <EmptyImage className="size-8" />
+                  )}
+                </div>
+                <span className="text-wrap max-w-48 flex-grow">{name}</span>
               </div>
-              <span className="text-wrap max-w-48 flex-grow">{name}</span>
 
-              <span>{`${count} ${count === 1 ? 'unidad' : 'unidades'}`}</span>
+              <div className="flex gap-2">
+                <span>{`${count} ${count === 1 ? 'unidad' : 'unidades'}`}</span>
 
-              <span>{`${price} ${currency}`}</span>
+                <span>{`${price} ${currency}`}</span>
+              </div>
             </div>
           );
         })}
 
-        <div className="flex justify-end gap-4">
-          <LabelValuePair
-            label="Total"
-            value={` ${totalProducts} ${totalProducts === 1 ? 'unidad' : 'unidades'}`}
-          />
-          <LabelValuePair label="Precio" value={` ${totalPrice} CUP`} />
+        <div className="flex justify-end">
+          <div className="flex gap-4 border-2 border-gray-400 rounded-xl px-2">
+            <LabelValuePair
+              label="Total"
+              value={` ${totalProducts} ${totalProducts === 1 ? 'unidad' : 'unidades'}`}
+            />
+            <LabelValuePair label="Precio" value={` ${totalPrice} CUP`} />
+          </div>
         </div>
       </div>
     </div>

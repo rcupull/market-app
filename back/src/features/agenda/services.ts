@@ -59,6 +59,6 @@ export const agendaServices = {
     const { orderId } = args;
 
     await agenda.cancel({ name: 'removeOrderInConstruction', 'data.orderId': orderId });
-    await agenda.schedule('5 minutes', 'removeOrderInConstruction', { orderId });
+    await agenda.schedule('10 minutes', 'removeOrderInConstruction', { orderId });
   },
 };

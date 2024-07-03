@@ -1,9 +1,13 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
+
+import { NotFound } from 'components/not-found';
 
 import { useAuth } from 'features/api-slices/useAuth';
 
-import { getOneBusinessRoute } from 'utils/business';
+import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { dynamic } from 'utils/makeLazy';
+
 const Home = dynamic(() => import('./routes/home').then((m) => m));
 const ShoppingId = dynamic(() => import('./routes/shoppingId').then((m) => m));
 
@@ -13,9 +17,16 @@ export interface ShoppingProps {
 
 export const Shopping = ({ routeName }: ShoppingProps) => {
   const { isAuthenticated } = useAuth();
+  const authSignInModal = useAuthSignInModal();
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      authSignInModal.open({ redirect: false });
+    }
+  }, [isAuthenticated]);
 
   if (!isAuthenticated) {
-    return <Navigate to={getOneBusinessRoute({ routeName })} />;
+    return <NotFound />;
   }
 
   return (
