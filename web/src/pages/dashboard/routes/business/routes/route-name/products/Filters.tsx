@@ -68,7 +68,7 @@ export const Filters = ({ business, onChange, value, className }: FiltersProps) 
                 value: 'categories',
               },
               {
-                label: 'Filtrar por grupos',
+                label: 'Filtrar por secciones',
                 value: 'section',
               },
             ]}

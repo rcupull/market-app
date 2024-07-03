@@ -8,8 +8,6 @@ import { dynamic } from 'utils/makeLazy';
 
 const Business = dynamic(() => import('./routes/business').then((m) => m));
 
-const Settings = dynamic(() => import('./routes/settings').then((m) => m));
-
 export const Dashboard = () => {
   const { isUser } = useAuth();
 
@@ -30,8 +28,6 @@ export const Dashboard = () => {
       <Route path="/" element={<Navigate to="/dashboard/business" />} />
 
       <Route path="business/*" element={<Business />} />
-
-      <Route path="/settings" element={<Settings />} />
     </Routes>
   );
 };

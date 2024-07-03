@@ -41,7 +41,7 @@ export const Home = () => {
       <LayoutPageSection isBusy={getAllBusinessSummary.status.isBusy} className="mt-20">
         <div ref={refCardContainer} onScroll={onScroll} className="overflow-y-auto max-h-50rem">
           <div className="grid place-items-center grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-4 md:gap-8 p-1">
-            {infiniteScrolling.tableData?.map((businessSummary, index) => {
+            {infiniteScrolling.data?.map((businessSummary, index) => {
               return (
                 <BusinessCardSimple
                   key={index}

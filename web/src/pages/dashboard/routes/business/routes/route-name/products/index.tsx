@@ -177,9 +177,9 @@ export const Products = () => {
                   ],
                 };
               }}
-              data={infiniteScrolling.tableData}
+              data={infiniteScrolling.data}
               onScrollBottom={infiniteScrolling.onScrollBottom}
-              isBusy={getAllPosts.status.isBusy}
+              isBusyBottom={infiniteScrolling.status.isBusy}
             />
           </>
         )}
