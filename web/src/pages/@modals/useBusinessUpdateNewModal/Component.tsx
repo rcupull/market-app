@@ -86,7 +86,15 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                 id="business-name"
                 name="name"
                 autoComplete="business-name"
-                label={getRequiredLabel('Nombre del negocio')}
+                label={
+                  <span className="flex flex-col sm:flex-row items-start sm:items-center">
+                    {getRequiredLabel('Nombre del negocio')}
+                    <span className="text-red-600 text-xs sm:ml-2">
+                      (Este valor <span className="font-bold">NO</span> se puede modificar una vez
+                      creado)
+                    </span>
+                  </span>
+                }
               />
 
               <>
