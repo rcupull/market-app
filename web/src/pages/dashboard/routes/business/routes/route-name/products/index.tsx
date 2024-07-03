@@ -10,7 +10,7 @@ import { useGetAllPosts } from 'features/api/posts/useGetAllPosts';
 
 import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 
-import { BulkActions } from './BulkActions';
+import { BulkActionsProducts } from './BulkActionsProducts';
 import { Filters } from './Filters';
 import { ProductDetails } from './ProductDetails';
 import { RowActions } from './RowActions';
@@ -102,19 +102,22 @@ export const Products = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <BulkActions
+      <BulkActionsProducts
         business={business}
         onRefresh={() => filters.onMergeFilters({ page: 1 }, { forceFetch: true })}
         filters={filters.value}
       >
-        {({ getBulkHeaderNodes, getBulkRowNodes, getBulkTopActionsNode }) => (
+        {({ getDisabledOverlay, tablePropsProcessor, bulkActionNode, selectAllNode }) => (
           <>
-            {getBulkTopActionsNode(
-              <TopActions>
-                {buttonNew}
-                {buttonRefresh}
-              </TopActions>
-            )}
+            <div className="flex items-center justify-between mb-1">
+              {bulkActionNode}
+              {getDisabledOverlay(
+                <TopActions>
+                  {buttonNew}
+                  {buttonRefresh}
+                </TopActions>
+              )}
+            </div>
 
             <Filters
               business={business}
@@ -122,20 +125,23 @@ export const Products = () => {
               value={filters.value}
             />
 
+            <div className="my-2 flex justify-center">{selectAllNode}</div>
+
             <Table
               className="!max-h-[calc(100vh-25rem)]"
+              propsPreprocessors={[tablePropsProcessor]}
               remapRowsIndex={{
                 xs: [[0, 1, 2, 3, 4, 5]],
                 lg: 'none',
               }}
-              heads={getBulkHeaderNodes([
+              heads={[
                 'Acciones',
                 'Nombre',
                 'Categorías',
                 'Imágen',
                 'Fecha de Creación',
                 'Detalles',
-              ])}
+              ]}
               getRowProps={(rowData) => {
                 const { name, createdAt, postCategoriesTags, hidden, images } = rowData;
 
@@ -145,7 +151,7 @@ export const Products = () => {
                   className: cn({
                     'bg-gray-100': hidden,
                   }),
-                  nodes: getBulkRowNodes({ rowData }, [
+                  nodes: [
                     <RowActions
                       key="RowActions"
                       rowData={rowData}
@@ -168,7 +174,7 @@ export const Products = () => {
                       business={business}
                       onRefresh={filters.onRefresh}
                     />,
-                  ]),
+                  ],
                 };
               }}
               data={infiniteScrolling.tableData}
@@ -177,7 +183,7 @@ export const Products = () => {
             />
           </>
         )}
-      </BulkActions>
+      </BulkActionsProducts>
     </div>
   );
 };

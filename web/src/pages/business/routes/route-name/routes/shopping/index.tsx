@@ -21,12 +21,12 @@ export const Shopping = ({ routeName }: ShoppingProps) => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      authSignInModal.open({redirect: false});
+      authSignInModal.open({ redirect: false });
     }
   }, [isAuthenticated]);
 
   if (!isAuthenticated) {
-    return <NotFound/>
+    return <NotFound />;
   }
 
   return (

@@ -10,7 +10,7 @@ import { useGetAllPosts } from 'features/api/posts/useGetAllPosts';
 
 import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 
-import { BulkActions } from './BulkActions';
+import { BulkActionsLinks } from './BulkActionsLinks';
 import { RowActions } from './RowActions';
 
 import { TopActions } from 'pages/@common/top-actions';
@@ -96,33 +96,33 @@ export const Links = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <BulkActions
+      <BulkActionsLinks
         business={business}
         onRefresh={() => filters.onMergeFilters({ page: 1 }, { forceFetch: true })}
         filters={filters.value}
       >
-        {({ getBulkHeaderNodes, getBulkRowNodes, getBulkTopActionsNode }) => (
+        {({ selectAllNode, tablePropsProcessor, bulkActionNode, getDisabledOverlay }) => (
           <>
-            {getBulkTopActionsNode(
-              <TopActions>
-                {buttonNew}
-                {buttonRefresh}
-              </TopActions>
-            )}
+            <div className="flex items-center justify-between mb-1">
+              {bulkActionNode}
+              {getDisabledOverlay(
+                <TopActions>
+                  {buttonNew}
+                  {buttonRefresh}
+                </TopActions>
+              )}
+            </div>
+
+            <div className="my-2 flex justify-center">{selectAllNode}</div>
 
             <Table
+              propsPreprocessors={[tablePropsProcessor]}
               className="!max-h-[calc(100vh-25rem)]"
               remapRowsIndex={{
                 xs: [[0, 1, 2, 3, 4]],
                 lg: 'none',
               }}
-              heads={getBulkHeaderNodes([
-                'Acciones',
-                'Nombre',
-                'Imágen',
-                'Fecha de Creación',
-                'Detalles',
-              ])}
+              heads={['Acciones', 'Nombre', 'Imágen', 'Fecha de Creación', 'Detalles']}
               getRowProps={(rowData) => {
                 const { name, createdAt, hidden, images } = rowData;
 
@@ -132,7 +132,7 @@ export const Links = () => {
                   className: cn({
                     'bg-gray-100': hidden,
                   }),
-                  nodes: getBulkRowNodes({ rowData }, [
+                  nodes: [
                     <RowActions
                       key="RowActions"
                       rowData={rowData}
@@ -160,7 +160,7 @@ export const Links = () => {
                         value: null,
                       },
                     ]),
-                  ]),
+                  ],
                 };
               }}
               data={infiniteScrolling.tableData}
@@ -169,7 +169,7 @@ export const Links = () => {
             />
           </>
         )}
-      </BulkActions>
+      </BulkActionsLinks>
     </div>
   );
 };
