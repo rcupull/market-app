@@ -16,10 +16,10 @@ export const Motivation = () => {
           Estamos cambiando como las personas piensan
         </p>
 
-        <p className="mt-8 sm:mt-4">
-          Somos un equipo tecnologico y de comunicacion con el proposito de cambiar parte de la
-          realidad cubana, reduciendo los limites entre un emprendedor con ancias de exito y un
-          mundo tecnologico dificil de tocar desde el interior de Cuba.
+        <p className="mt-8 sm:mt-4 text-xl">
+          Somos un equipo tecnológico y de comunicación con el propósito de cambiar parte de la
+          realidad cubana, reduciendo los límites entre un emprendedor con ancias de éxito y un
+          mundo tecnológico dificil de tocar desde el interior de Cuba.
         </p>
       </div>
 
