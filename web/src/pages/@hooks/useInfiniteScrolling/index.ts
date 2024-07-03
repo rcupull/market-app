@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
 
-import { FetchResourceWithPagination } from 'types/api';
+import { FetchResourceWithPagination, FetchStatus } from 'types/api';
 import { AnyRecord } from 'types/general';
 
 export const useInfiniteScrolling = <RowData extends AnyRecord = AnyRecord>(args: {
   fetchPaginatedResources: FetchResourceWithPagination<AnyRecord, RowData>;
   onFetch: (args: { page: number }) => void;
 }): {
-  tableData: Array<RowData>;
+  data: Array<RowData>;
   onScrollBottom: () => void;
+  status: FetchStatus;
 } => {
   const { onFetch, fetchPaginatedResources } = args;
 
-  const { data, paginator } = fetchPaginatedResources;
+  const { data, paginator, status } = fetchPaginatedResources;
 
   const [tableData, setTableData] = useState<Array<RowData>>([]);
 
@@ -29,7 +30,8 @@ export const useInfiniteScrolling = <RowData extends AnyRecord = AnyRecord>(args
   }, [data]);
 
   return {
-    tableData,
+    status,
+    data: tableData,
     onScrollBottom: () => {
       if (paginator) {
         const { page, hasNextPage } = paginator;

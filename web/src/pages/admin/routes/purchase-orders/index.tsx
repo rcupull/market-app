@@ -17,6 +17,7 @@ import { LayoutPageSection } from 'pages/@common/layout-page-section';
 import { ShoppingButtonStateHistory } from 'pages/@common/shopping-button-state-history';
 import { ShoppingStateLabel } from 'pages/@common/shopping-state-label';
 import { TopActions } from 'pages/@common/top-actions';
+import { useInfiniteScrolling } from 'pages/@hooks/useInfiniteScrolling';
 import { GetAllShoppingAdminQuery } from 'types/api';
 import { BusinessSummary } from 'types/business';
 import { Shopping } from 'types/shopping';
@@ -32,6 +33,11 @@ export const PurchaseOrders = () => {
     onChange: (filters) => {
       getAllShoppingAdmin.fetch(filters);
     },
+  });
+
+  const infiniteScrolling = useInfiniteScrolling({
+    fetchPaginatedResources: getAllShoppingAdmin,
+    onFetch: ({ page }) => filters.onMergeFilters({ page }),
   });
 
   const onRefreshForce = () => {
@@ -78,6 +84,7 @@ export const PurchaseOrders = () => {
               <div className="mb-2 flex justify-center">{selectAllNode}</div>
 
               <Table<Shopping>
+                className="!max-h-[calc(100vh-25rem)]"
                 propsPreprocessors={[tablePropsProcessor]}
                 remapRowsIndex={{
                   xs: [[0, 1, 2, 3, 4, 5, 6, 7]],
@@ -131,8 +138,9 @@ export const PurchaseOrders = () => {
                     ],
                   };
                 }}
-                data={getAllShoppingAdmin.data}
-                isBusy={getAllShoppingAdmin.status.isBusy}
+                data={infiniteScrolling.data}
+                onScrollBottom={infiniteScrolling.onScrollBottom}
+                isBusyBottom={infiniteScrolling.status.isBusy}
               />
             </>
           );

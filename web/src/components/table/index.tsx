@@ -86,8 +86,12 @@ export const Table = <RowData extends AnyRecord = AnyRecord>(props: TableProps<R
 
   return (
     <ReorderContainer onReorder={onReorder}>
-      <div ref={ref} onScroll={onScroll} className={cn('relative max-h-screen', className)}>
-        <table className="min-w-full overflow-auto max-h-full table-auto">
+      <div
+        ref={ref}
+        onScroll={onScroll}
+        className={cn('relative max-h-screen overflow-auto', className)}
+      >
+        <table className="min-w-full max-h-full table-auto">
           <thead className="sticky top-0">
             <tr>
               {heads.map((head, index) => {
