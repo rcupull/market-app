@@ -7,6 +7,14 @@ import { Divider } from 'components/divider';
 import { Nullable, StyleProps } from 'types/general';
 import { cn, compact } from 'utils/general';
 
+type AllowedPlacements = Array<'bottom-start' | 'bottom-end' | 'top-start' | 'top-end'>;
+const defaultAllowedPlacements: AllowedPlacements = [
+  'bottom-start',
+  'bottom-end',
+  'top-start',
+  'top-end',
+];
+
 interface MenuItem extends StyleProps {
   label: string;
   svg?: React.FunctionComponent<StyleProps>;
@@ -21,6 +29,7 @@ export interface MenuProps extends StyleProps {
   buttonElement: React.ReactNode;
   topElement?: React.ReactNode;
   bottomElement?: React.ReactNode;
+  allowedPlacements?: AllowedPlacements;
 }
 
 export const Menu = ({
@@ -29,6 +38,7 @@ export const Menu = ({
   items = [],
   topElement,
   bottomElement,
+  allowedPlacements = defaultAllowedPlacements,
 }: MenuProps) => {
   return (
     <MenuBase data-id="Menu" as="div" className={cn('relative', className)}>
@@ -39,7 +49,7 @@ export const Menu = ({
         floatingAs={Fragment}
         portal
         autoPlacement={{
-          allowedPlacements: ['bottom-start', 'bottom-end', 'top-start', 'top-end'],
+          allowedPlacements,
         }}
       >
         <MenuBase.Button as="div" className="cursor-pointer w-fit">

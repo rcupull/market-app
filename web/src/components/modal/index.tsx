@@ -79,7 +79,7 @@ export const Modal = ({
                   <div className="sm:flex sm:items-start w-full">
                     {badge && <div className="mx-9 sm:mx-2 flex justify-center">{badge}</div>}
 
-                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                    <div className="mt-3 sm:ml-4 sm:mt-0 w-full">
                       <Dialog.Title
                         as="h3"
                         className="text-xl font-semibold leading-10 text-gray-900"

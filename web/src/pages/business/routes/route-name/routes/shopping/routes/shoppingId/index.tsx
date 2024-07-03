@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'hooks/useRouter';
 
-import { LayoutPageSection } from 'pages/@common/layout-page-section';
+import { LayoutPage } from 'pages/@common/layout-page';
 import { ShoppingButtonStateHistory } from 'pages/@common/shopping-button-state-history';
 import { ShoppingDetails } from 'pages/@common/shopping-details';
 import { ShoppingState } from 'pages/@common/shopping-state';
@@ -32,7 +32,7 @@ export const ShoppingId = () => {
   }
 
   return (
-    <LayoutPageSection title="Compra">
+    <LayoutPage title="Órden de compra" backButton>
       <div className="w-full flex justify-center">
         <ShoppingDetails
           shopping={shopping}
@@ -46,7 +46,7 @@ export const ShoppingId = () => {
           }}
         />
       </div>
-    </LayoutPageSection>
+    </LayoutPage>
   );
 };
 

@@ -8,6 +8,7 @@ import { useDebouncer } from 'hooks/useDebouncer';
 import { useRouter } from 'hooks/useRouter';
 
 import SvgUsersCogSolid from 'icons/UsersCogSolid';
+import { cn } from 'utils/general';
 
 const sessions: Array<{ email: string | null; password: string | null }> = [
   {
@@ -46,12 +47,9 @@ export const DevSwitchSession = () => {
   const { pushRoute } = useRouter();
   const debouncer = useDebouncer();
 
-  if (!DEVELOPMENT) {
-    return <></>;
-  }
-
   return (
     <Menu
+      className={cn('hidden sm:block', { '!hidden': !DEVELOPMENT })}
       buttonElement={
         <IconButton
           title="Switch session (only development)"
