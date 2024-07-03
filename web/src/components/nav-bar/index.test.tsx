@@ -25,11 +25,11 @@ describe('NavBar', () => {
     expect(result.container).toMatchInlineSnapshot(`
       <div>
         <div
-          class="w-full px-2 sm:px-8 bg-white flex shadow-lg items-center justify-center h-16 gap-6"
+          class="w-full px-2 sm:px-8 bg-white flex shadow-lg items-center justify-center h-16 gap-1 sm:gap-6"
           data-id="NavBar"
         >
           <div
-            class="space-x-4 hidden sm:flex flex-1"
+            class="space-x-4 hidden lg:flex flex-1"
           >
             <a
               class="text-gray-700 hover:bg-gray-200 hover:text-gray-600 rounded-md px-3 py-2 text-sm font-medium text-nowrap"
