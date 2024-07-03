@@ -27,7 +27,7 @@ export const NavBar = ({ items, preContent, postContent, className }: NavbarProp
     <div
       data-id="NavBar"
       className={cn(
-        'w-full px-2 sm:px-8 bg-white flex shadow-lg items-center justify-center h-16 gap-6',
+        'w-full px-2 sm:px-8 bg-white flex shadow-lg items-center justify-center h-16 gap-1 sm:gap-6',
         className
       )}
     >

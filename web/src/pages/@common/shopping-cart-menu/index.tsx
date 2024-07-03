@@ -71,15 +71,15 @@ export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
     return (
       <div className="w-full">
         <div className="text-red-600 text-xs text-center font-bold">
-          En caso de no generar la orden de compra en 5 min, los productos del carro serán
+          En caso de no generar la orden de compra en 10 min, los productos del carro serán
           eliminados.
         </div>
 
         <div className="mt-4">Tu selección hasta ahora:</div>
 
-        <ShoppingCartPosts value={shopping.constructionShopping} />
+        <ShoppingCartPosts value={shopping.constructionShopping} className="max-h-64" />
 
-        <div className="flex justify-between mt-2">
+        <div className="flex flex-col sm:flex-row gap-2 justify-between mt-2">
           <ShoppingCartRemoveAllButton />
 
           <Button
@@ -94,6 +94,7 @@ export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
 
   return (
     <Menu
+      allowedPlacements={['bottom-end']}
       buttonElement={
         <div className="relative">
           <IconButton title="Carro de Compras" svg={<SvgShoppingCartSolid className="!size-8" />} />
@@ -105,7 +106,7 @@ export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
         </div>
       }
       topElement={
-        <div className="w-96 m-2 rounded-md px-4 py-3 border flex flex-col items-center">
+        <div className="w-72 sm:w-96 m-2 rounded-md px-4 py-3 border flex flex-col items-center">
           {!isShoppingPage && isAuthenticated && (
             <Button
               variant="link"

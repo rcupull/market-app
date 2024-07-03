@@ -26,7 +26,7 @@ export const Home = ({ routeName }: HomeProps) => {
   }, []);
 
   return (
-    <LayoutPage title="Mis compras">
+    <LayoutPage title="Historial de compras" backButton>
       <div className="flex flex-col items-center gap-4 w-full">
         {getAllShopping.data?.map((shopping, index) => {
           return (
