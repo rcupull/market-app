@@ -9,6 +9,7 @@ import { router as imagesRouter } from './features/images/routes';
 import { router as shoppingRouter } from './features/shopping/routes';
 import { router as generalRouter } from './features/general/routes';
 import { router as billingRouter } from './features/billing/routes';
+import { router as geolocationRouter } from './features/geolocation/routes';
 
 export const router = Router();
 
@@ -24,6 +25,7 @@ router.use(
   shoppingRouter,
   generalRouter,
   billingRouter,
+  geolocationRouter
 );
 
 export default router;

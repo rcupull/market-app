@@ -165,7 +165,7 @@ export const getAllShoppingFilterQuery = (args: GetAllShoppingArgs): FilterQuery
 };
 
 export const getShoppingInfo = (
-  shopping: Shopping,
+  shopping: Shopping
 ): {
   totalProducts: number;
   totalPrice: number;
@@ -200,4 +200,16 @@ export const getShoppingsTotalDebit = (shoppings: Array<Shopping>): number => {
   }, 0);
 
   return parseFloat(totalDebit.toFixed(2));
+};
+
+/**
+ * Return tru if the shopping is or was approved
+ */
+export const wasApprovedShopping = (shopping: Shopping): boolean => {
+  const { state, history } = shopping;
+
+  return (
+    state === ShoppingState.APPROVED ||
+    !!history?.find(({ state }) => state === ShoppingState.APPROVED)
+  );
 };

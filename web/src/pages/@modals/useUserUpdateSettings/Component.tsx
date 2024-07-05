@@ -1,5 +1,6 @@
 import { AddressView } from 'components/address-view';
 import { Button } from 'components/button';
+import { ButtonDescription } from 'components/button-decription';
 import { FieldAddress } from 'components/field-address';
 import { FieldInput } from 'components/field-input';
 import { FieldInputImages } from 'components/field-input-images';
@@ -11,6 +12,9 @@ import { useUpdateOneUser } from 'features/api/user/useUpdateOneUser';
 
 import { Portal } from 'hooks/usePortal';
 
+import { ButtonMapLocation } from './ButtonMapLocation';
+
+import SvgExclamationTriangleSolid from 'icons/ExclamationTriangleSolid';
 import { User } from 'types/auth';
 import { Address, Image } from 'types/general';
 import { getIsValidPhone } from 'utils/validation';
@@ -53,7 +57,7 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
         },
       ]}
     >
-      {({ value, isValid, hasChange }) => {
+      {({ value, isValid, hasChange, setValue }) => {
         return (
           <form className="w-full">
             <FieldInput name="name" label="Nombre" />
@@ -65,7 +69,29 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
               name="address"
               className="mt-6"
               collapsable
-              collapsableHeader={<AddressView address={value.address || {}} />}
+              collapsableHeader={
+                <div className="flex items-center w-full">
+                  <AddressView address={value.address} />
+
+                  <div className="ml-auto flex">
+                    <ButtonDescription
+                      svg={() => <SvgExclamationTriangleSolid className="fill-red-500 size-6" />}
+                      description={
+                        <span>
+                          La dirección obtenida mediante el mapa es una aproximación que puede tener
+                          errores. Es{' '}
+                          <span className="font-bold">responsabilidad de cada usuario</span>{' '}
+                          verificar que los datos sean correctos directamente el el formulario.
+                        </span>
+                      }
+                    />
+                    <ButtonMapLocation
+                      value={value.address}
+                      onChange={(newAddress) => setValue({ ...value, address: newAddress })}
+                    />
+                  </div>
+                </div>
+              }
             />
 
             <FieldInputImages
@@ -100,7 +126,7 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
                       },
                       {
                         onAfterSuccess: () => onAfterSuccess(),
-                      }
+                      },
                     );
                   };
 
@@ -111,7 +137,7 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
                         onAfterSuccess: (images) => {
                           handleSubmit(images[0]);
                         },
-                      }
+                      },
                     );
                   } else {
                     handleSubmit(null);
@@ -119,7 +145,7 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
                 }}
                 variant="primary"
                 className="w-full"
-              />
+              />,
             )}
           </form>
         );

@@ -15,14 +15,14 @@ router
     validators.handle,
     isLogged,
     isUserIdAccessible,
-    userHandles.get_users_userId(),
+    userHandles.get_users_userId()
   )
   .put(
     validators.param('userId').notEmpty(),
     validators.handle,
     isLogged,
     isUserIdAccessible,
-    userHandles.put_users_userId(),
+    userHandles.put_users_userId()
   );
 
 router
@@ -32,5 +32,5 @@ router
     validators.body('code').notEmpty(),
     validators.handle,
     isLogged,
-    userHandles.post_user_userId_chatbot_validate(),
+    userHandles.post_user_userId_chatbot_validate()
   );

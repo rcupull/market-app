@@ -34,7 +34,7 @@ export const generateToken = (id: string | Schema.Types.ObjectId) => {
     {
       id,
     },
-    secretAccessToken,
+    secretAccessToken
   );
 };
 

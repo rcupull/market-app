@@ -15,9 +15,10 @@ const sublinedStyles =
 const transparentStyles =
   'bg-transparent text-gray-900 fill-gray-900  hover:bg-gray-100 !shadow-none border-b-2 border-transparent';
 
-type ButtonSvg = React.FunctionComponent<StyleProps> | React.ReactElement<StyleProps>;
+export type ButtonSvg = React.FunctionComponent<StyleProps> | React.ReactElement<StyleProps>;
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
   variant?: 'primary' | 'outlined' | 'error' | 'link' | 'sublined' | 'transparent';
   svgPosition?: 'left' | 'right';
   label?: React.ReactNode;
@@ -26,7 +27,14 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   stopPropagation?: boolean;
   preventDefault?: boolean;
   hasChange?: boolean;
+  onClick?: (e: MouseEvent) => void;
+  as?: 'div';
 }
+
+//@ts-expect-error ignore types
+const ButtonElement = (props) => <button {...props} />;
+//@ts-expect-error ignore types
+const DivElement = (props) => <div {...props} />;
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
   const {
@@ -40,6 +48,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
     preventDefault,
     onClick,
     svgPosition = 'left',
+    as,
     ...omittedProps
   } = props;
 
@@ -60,8 +69,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
     return <Component className={commonClassName} />;
   };
 
+  const Component = as === 'div' ? DivElement : ButtonElement;
+
   return (
-    <button
+    <Component
       ref={ref}
       className={cn(
         'relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit',
@@ -79,7 +90,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
         },
         className
       )}
-      onClick={(e) => {
+      onClick={(e: MouseEvent) => {
         if (disabled) {
           return;
         }
@@ -114,6 +125,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
           {...(variant === 'link' ? { color: 'gray' } : {})}
         />
       )}
-    </button>
+    </Component>
   );
 });
