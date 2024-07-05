@@ -15,5 +15,5 @@ router.use(
   businessRouter,
   usersRouter,
   billsRouter,
-  agendaRouter,
+  agendaRouter
 );

@@ -15,6 +15,12 @@ describe('AddressView', () => {
           street: 'Marrero',
           streetBetweenFrom: '56',
           streetBetweenTo: '89',
+          country: 'Cuba',
+          countryCode: 'asdads',
+          lat: -7,
+          lon: 7,
+          placeId: 'asdasd',
+          postCode: 'asdasda',
         }}
       />
     );

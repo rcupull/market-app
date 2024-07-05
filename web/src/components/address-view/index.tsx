@@ -23,12 +23,22 @@ const labels: Record<keyof Address, string> = {
   street: '',
   streetBetweenFrom: 'entre',
   streetBetweenTo: 'y',
+  country: '',
+  countryCode: '',
+  lat: '',
+  lon: '',
+  placeId: '',
+  postCode: '',
 };
 
 export interface AddressViewProps extends StyleProps {
-  address: Address;
+  address: Address | undefined;
 }
 export const AddressView = ({ address, className }: AddressViewProps) => {
+  if (!address) {
+    return <></>;
+  }
+
   return (
     <div className={cn('flex flex-wrap', className)}>
       {keys

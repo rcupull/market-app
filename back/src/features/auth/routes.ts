@@ -15,7 +15,7 @@ router
     validators.body('password').notEmpty(),
     validators.handle,
     autenticationMiddleware,
-    authHandles.post_signIn(),
+    authHandles.post_signIn()
   );
 
 router
@@ -36,7 +36,7 @@ router
     validators.body('name').notEmpty(),
     validators.body('canCreateBusiness').notEmpty(),
     validators.handle,
-    authHandles.post_signUp(),
+    authHandles.post_signUp()
   );
 /////////////////////////////////////////////////////////////////
 
@@ -49,7 +49,7 @@ router
   .post(
     validators.body('email').notEmpty(),
     validators.handle,
-    authHandles.post_forgot_password_request(),
+    authHandles.post_forgot_password_request()
   );
 
 router
@@ -58,7 +58,7 @@ router
     validators.body('newPassword').notEmpty(),
     validators.body('code').notEmpty(),
     validators.handle,
-    authHandles.post_forgot_password_validate(),
+    authHandles.post_forgot_password_validate()
   );
 
 router
@@ -67,7 +67,7 @@ router
     validators.body('newPassword').notEmpty(),
     validators.handle,
     isLogged,
-    authHandles.post_change_password(),
+    authHandles.post_change_password()
   );
 
 router
@@ -76,5 +76,5 @@ router
     validators.body('firebaseToken').notEmpty(),
     validators.handle,
     isLogged,
-    authHandles.put_firebase_token(),
+    authHandles.put_firebase_token()
   );

@@ -20,7 +20,7 @@ router
     validators.param('userId').notEmpty(),
     validators.handle,
     hasAccess('user__remove'),
-    adminUsersHandles.del_users_userId(),
+    adminUsersHandles.del_users_userId()
   );
 //////////////////////////
 router
@@ -32,7 +32,7 @@ router
     validators.body('specialAccess').notEmpty(),
     validators.handle,
     hasAccess('user_access__write'),
-    adminUsersHandles.put_admin_users_userId_access(),
+    adminUsersHandles.put_admin_users_userId_access()
   );
 
 router

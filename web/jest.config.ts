@@ -4,6 +4,7 @@ const config: Config = {
   prettierPath: require.resolve('prettier-2'),
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   verbose: true,
+  maxWorkers: 4,
   moduleNameMapper: {
     '^src/(.*)$': '<rootDir>/src/$1',
     'icons/(.*)': '<rootDir>/src/icons/$1',

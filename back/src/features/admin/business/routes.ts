@@ -14,7 +14,7 @@ router
     isAdmin,
     hasAccess('business__read'),
     pagination,
-    adminBusinessHandles.get_admin_business(),
+    adminBusinessHandles.get_admin_business()
   );
 
 router
@@ -25,5 +25,5 @@ router
     validators.param('routeName').notEmpty(),
     validators.handle,
     hasAccess('business__remove'),
-    adminBusinessHandles.delete_admin_business_routeName(),
+    adminBusinessHandles.delete_admin_business_routeName()
   );

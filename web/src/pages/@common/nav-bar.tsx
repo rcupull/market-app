@@ -19,6 +19,7 @@ import SvgBarsSolid from 'icons/BarsSolid';
 import SvgBookSolid from 'icons/BookSolid';
 import SvgCogSolid from 'icons/CogSolid';
 import SvgDollarSignSolid from 'icons/DollarSignSolid';
+import SvgFileAltSolid from 'icons/FileAltSolid';
 import SvgHomeSolid from 'icons/HomeSolid';
 import SvgKeySolid from 'icons/KeySolid';
 import SvgLinkSolid from 'icons/LinkSolid';
@@ -29,6 +30,7 @@ import SvgSignOutAltSolid from 'icons/SignOutAltSolid';
 import SvgStoreSolid from 'icons/StoreSolid';
 import SvgUserCircleSolid from 'icons/UserCircleSolid';
 import SvgUserPlusSolid from 'icons/UserPlusSolid';
+import SvgUserSecretSolid from 'icons/UserSecretSolid';
 import SvgUsersSolid from 'icons/UsersSolid';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useAuthChangePasswordModal } from 'pages/@modals/useAuthChangePasswordModal';
@@ -234,6 +236,18 @@ export const Navbar = ({ className }: NavbarProps) => {
                 onClick: () => pushRoute('/price'),
                 svg: SvgDollarSignSolid,
                 active: pathname === '/price',
+              },
+              {
+                label: 'Términos y condiciones',
+                onClick: () => pushRoute('/terms-and-conditions'),
+                svg: SvgFileAltSolid,
+                active: pathname === '/terms-and-conditions',
+              },
+              {
+                label: 'Política de privacidad',
+                onClick: () => pushRoute('/privacy-policy'),
+                svg: SvgUserSecretSolid,
+                active: pathname === '/privacy-policy',
               },
               DEVELOPMENT && {
                 label: 'Documentación',

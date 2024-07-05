@@ -97,7 +97,7 @@ export const shoppingServicesAddPostToOne: QueryHandle<
             'p.postData._id': postId,
           },
         ],
-      },
+      }
     );
   } else {
     await ShoppingModel.updateOne(
@@ -119,7 +119,7 @@ export const shoppingServicesAddPostToOne: QueryHandle<
             'p.post._id': postId,
           },
         ],
-      },
+      }
     );
   }
 };
@@ -313,7 +313,7 @@ export const shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts: Que
 }> = async ({ shopping }) => {
   if (
     ![ShoppingState.REJECTED, ShoppingState.CANCELED, ShoppingState.CONSTRUCTION].includes(
-      shopping.state,
+      shopping.state
     )
   ) {
     logger.info('No need to send update stock amount messages from shopping posts.');
