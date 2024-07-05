@@ -27,7 +27,22 @@ describe('Component', () => {
                 <label
                   class="block text-sm font-semibold leading-6 text-gray-900  w-fit"
                 >
-                  Nombre del negocio *
+                  <span
+                    class="flex flex-col sm:flex-row items-start sm:items-center"
+                  >
+                    Nombre del negocio *
+                    <span
+                      class="text-red-600 text-xs sm:ml-2"
+                    >
+                      (Este valor 
+                      <span
+                        class="font-bold"
+                      >
+                        NO
+                      </span>
+                       se puede modificar una vez creado)
+                    </span>
+                  </span>
                 </label>
               </div>
               <div

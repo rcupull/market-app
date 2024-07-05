@@ -79,12 +79,18 @@ export interface TelegramBotChat {
 }
 
 export interface Address {
-  city?: string;
+  city: string;
+  country: string;
+  countryCode: string;
   municipality?: string;
-  street?: string;
+  street: string;
   streetBetweenFrom?: string;
   streetBetweenTo?: string;
-  neighborhood?: string;
+  neighborhood: string;
   number?: number;
   apartment?: number;
+  lat: number;
+  lon: number;
+  postCode: string;
+  placeId: string;
 }

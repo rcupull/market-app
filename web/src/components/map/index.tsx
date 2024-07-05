@@ -27,6 +27,8 @@ export interface MapOlProps extends StyleProps {
   onMarkerClick?: (marker: MapOlMarker) => void;
   center?: MapOlPosition;
   markers?: Array<MapOlMarker>;
+  zoom?: number;
+  onChangeZoom?: (zoom: number) => void;
 }
 
 export const MapOl = ({
@@ -35,12 +37,14 @@ export const MapOl = ({
   center = havanaPosition,
   markers,
   className,
+  zoom,
+  onChangeZoom,
 }: MapOlProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<Map>();
   const refVector = useRef<VectorLayer<any>>();
 
-  const [zoom, setZoom] = useState<number>(8);
+  const [zoomState, setZoomState] = useState<number>(8);
 
   ////////////////////////////////////////////////////////////////////////
 
@@ -51,9 +55,9 @@ export const MapOl = ({
     onClick: MapOlProps['onClick'];
     onMarkerClick: MapOlProps['onMarkerClick'];
     markers: MapOlProps['markers'];
-    zoom: number;
+    zoomState: number;
   }>({
-    zoom,
+    zoomState,
     onMarkerClick: () => {},
     onClick: () => {},
     markers: [],
@@ -62,18 +66,18 @@ export const MapOl = ({
     onClick,
     onMarkerClick,
     markers,
-    zoom,
+    zoomState,
   };
 
   const handleClick = (e: MapBrowserEvent<any>) => {
-    const { onClick, onMarkerClick, zoom, markers } = refMeta.current || {};
+    const { onClick, onMarkerClick, zoomState, markers } = refMeta.current || {};
 
     const clickedPosition = coordinateToPosition(e.coordinate);
 
     const closedMarker = getClosedMarker({
       position: clickedPosition,
       markers,
-      zoom,
+      zoom: zoomState,
     });
 
     if (closedMarker) {
@@ -110,7 +114,6 @@ export const MapOl = ({
         ],
         view: new View({
           center: positionToCoordinate(center),
-          zoom,
         }),
       });
 
@@ -123,7 +126,8 @@ export const MapOl = ({
         const newZoom = map.getView()?.getZoom();
 
         if (isNumber(newZoom)) {
-          setZoom(newZoom);
+          setZoomState(newZoom);
+          onChangeZoom?.(newZoom);
         }
       });
     }
@@ -140,10 +144,22 @@ export const MapOl = ({
     }
   }, [JSON.stringify(center)]);
 
+  ////////////////////////////////////////////////////////////////////////////////////////////////
   /**
    * Setting center
    * https://gis.stackexchange.com/questions/112892/change-openlayers-3-view-center
    */
+  useEffect(() => {
+    if (isNumber(zoom)) {
+      setZoomState(zoom);
+    }
+  }, [zoom]);
+
+  useEffect(() => {
+    if (zoomState && map) {
+      map.getView().setZoom(zoomState);
+    }
+  }, [zoomState, map]);
 
   useEffect(() => {
     if (refVector.current) {

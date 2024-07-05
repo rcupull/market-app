@@ -3,11 +3,11 @@ import { MapOlPosition } from 'components/map/types';
 import { useFetch } from 'hooks/useFetch';
 
 import { FetchResource } from 'types/api';
-import { AnyRecord } from 'types/general';
+import { Address } from 'types/general';
 import { getEndpoint } from 'utils/api';
 
 export const useGetOneGeoReverse = (): {
-  getOneGeoReverse: FetchResource<MapOlPosition, AnyRecord>;
+  getOneGeoReverse: FetchResource<MapOlPosition, Address>;
 } => {
   const fetch = useFetch();
 
@@ -21,7 +21,7 @@ export const useGetOneGeoReverse = (): {
             method: 'get',
             url: getEndpoint({ path: '/geolocation/reverse', query: { lat, lon } }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

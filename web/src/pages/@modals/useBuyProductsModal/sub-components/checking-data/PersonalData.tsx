@@ -22,8 +22,8 @@ export const PersonalData = ({ className, onValid }: PersonalDataProps) => {
 
   const { phone, address } = user || {};
 
-  const isValidAddress = getIsValidAddress(address);
-  const isValidPhone = getIsValidPhone(phone);
+  const isValidAddress = !!address && getIsValidAddress(address);
+  const isValidPhone = !!phone && getIsValidPhone(phone);
   const isValid = isValidAddress && isValidPhone;
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export const PersonalData = ({ className, onValid }: PersonalDataProps) => {
         <span className="font-semibold text-nowrap">Dirección: </span>
 
         {isValidAddress ? (
-          <AddressView address={address || {}} />
+          <AddressView address={address} />
         ) : (
           <span className="text-red-500">Incompleta</span>
         )}

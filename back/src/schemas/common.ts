@@ -28,6 +28,12 @@ export const AddressDefinition: SchemaDefinitionProperty<Address> = {
   neighborhood: { type: String },
   number: { type: Number },
   apartment: { type: Number },
+  country: { type: String },
+  countryCode: { type: String },
+  lat: { type: Number, required: true },
+  lon: { type: Number, required: true },
+  postCode: { type: String, required: true },
+  placeId: { type: String, required: true },
 };
 
 export const PostCardLayoutSchema = new Schema<PostCardLayout>({
