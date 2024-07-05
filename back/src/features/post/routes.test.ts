@@ -146,7 +146,7 @@ describe('posts', () => {
         .get(
           getTestingRoute({
             path: '/posts',
-          }),
+          })
         )
         .expect(200)
         .then((response) => {
@@ -184,7 +184,7 @@ describe('posts', () => {
               "stockAmount": null,
               "stockAmountAvailable": null,
             }
-          `,
+          `
           );
         });
     });
@@ -196,7 +196,7 @@ describe('posts', () => {
         .get(
           getTestingRoute({
             path: '/posts',
-          }),
+          })
         )
         .expect(200)
         .then((response) => {
@@ -212,7 +212,7 @@ describe('posts', () => {
           getTestingRoute({
             path: '/posts',
             query: { routeNames: [business1User1.routeName] },
-          }),
+          })
         )
         .expect(200)
         .then((response) => {
@@ -224,7 +224,7 @@ describe('posts', () => {
           getTestingRoute({
             path: '/posts',
             query: { routeNames: [business1User2.routeName] },
-          }),
+          })
         )
         .expect(200)
         .then((response) => {
@@ -262,7 +262,7 @@ describe('posts', () => {
           getTestingRoute({
             path: '/posts/:postId/related',
             urlParams: { postId: productPost1Business1User2._id.toString() },
-          }),
+          })
         )
         .expect(200)
         .then((response) => {

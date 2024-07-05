@@ -19,7 +19,11 @@ import {
 } from './services';
 import { deepJsonCopy, isNumber } from '../../utils/general';
 import { businessServicesFindOne } from '../business/services';
-import { deleteOnePostFromShoppingInContruction, deleteShoppingInConstruction } from './utils';
+import {
+  deleteOnePostFromShoppingInContruction,
+  deleteShoppingInConstruction,
+  wasApprovedShopping,
+} from './utils';
 import { logger } from '../logger';
 import { PostPurshaseNotes } from '../../types/post';
 import { ShoppingModel } from '../../schemas/shopping';
@@ -56,7 +60,6 @@ const get_shopping: () => RequestHandler = () => {
           purchaserId: user._id,
         },
       });
-      //
 
       const out = deepJsonCopy(shoppings);
 
@@ -70,15 +73,28 @@ const get_shopping: () => RequestHandler = () => {
 
       const getShoppingDto = async (shopping: Shopping): Promise<ShoppingDto> => {
         const billData = getOneShoppingBillData(shopping);
-        const userData = getOneShoppingUserData(shopping);
 
-        return {
+        const out: ShoppingDto = {
           ...shopping,
           billId: billData?.billId,
           billState: billData?.billState,
-          purchaserAddress: userData?.purchaserAddress,
-          purchaserName: userData?.purchaserName,
-          purchaserPhone: userData?.purchaserPhone,
+          purchaserName: undefined,
+          purchaserAddress: undefined,
+          purchaserPhone: undefined,
+        };
+
+        /**
+         * Not return the user data if the shoping was not approved
+         */
+        if (!wasApprovedShopping(shopping)) return out;
+
+        const purchaserData = getOneShoppingUserData(shopping);
+
+        return {
+          ...out,
+          purchaserName: purchaserData?.purchaserName,
+          purchaserAddress: purchaserData?.purchaserAddress,
+          purchaserPhone: purchaserData?.purchaserPhone,
         };
       };
 
@@ -120,13 +136,25 @@ const get_shopping_owner: () => RequestHandler = () => {
 
       const getShoppingDto = async (shopping: Shopping): Promise<ShoppingDto> => {
         const billData = getOneShoppingBillData(shopping);
-        const purchaserData = getOneShoppingUserData(shopping);
 
-        return {
+        const out: ShoppingDto = {
           ...shopping,
           billId: billData?.billId,
           billState: billData?.billState,
+          purchaserName: undefined,
+          purchaserAddress: undefined,
+          purchaserPhone: undefined,
+        };
 
+        /**
+         * Not return the user data if the shoping was not approved
+         */
+        if (!wasApprovedShopping(shopping)) return out;
+
+        const purchaserData = getOneShoppingUserData(shopping);
+
+        return {
+          ...out,
           purchaserName: purchaserData?.purchaserName,
           purchaserAddress: purchaserData?.purchaserAddress,
           purchaserPhone: purchaserData?.purchaserPhone,
@@ -400,7 +428,7 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
             `Una orden de compra generada por usted en el negocio <b>${businessData.name}</b> ha sido aprovada. Usted será contactado luego por el vendedor para los detalles de la entrega.`,
             {
               parse_mode: 'HTML',
-            },
+            }
           );
 
           const shoppingLink = getShoppingUrl({
@@ -413,7 +441,7 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
             `<a href='${shoppingLink}'>Ver detalles de la orden de compra</a>`,
             {
               parse_mode: 'HTML',
-            },
+            }
           );
         }
       }

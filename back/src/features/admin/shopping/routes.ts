@@ -13,5 +13,5 @@ router
     isAdmin,
     hasAccess('shopping__read'),
     pagination,
-    adminShoppingHandles.get_admin_shopping(),
+    adminShoppingHandles.get_admin_shopping()
   );

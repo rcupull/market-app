@@ -39,11 +39,11 @@ export interface RequestHandler<
   ResBody = any,
   ReqBody = any,
   ReqQuery = AnyRecord,
-  Locals extends Record<string, any> = Record<string, any>,
+  Locals extends Record<string, any> = Record<string, any>
 > extends ExpressRequestHandler<P, ResBody, ReqBody, ReqQuery, Locals> {}
 
 export type QueryHandle<Args extends AnyRecord | void = void, R = void> = (
-  args: Args,
+  args: Args
 ) => Promise<R>;
 
 export interface Image {
@@ -79,12 +79,18 @@ export interface TelegramBotChat {
 }
 
 export interface Address {
-  city?: string;
+  city: string;
+  country: string;
+  countryCode: string;
   municipality?: string;
-  street?: string;
+  street: string;
   streetBetweenFrom?: string;
   streetBetweenTo?: string;
-  neighborhood?: string;
+  neighborhood: string;
   number?: number;
   apartment?: number;
+  lat: number;
+  lon: number;
+  postCode: string;
+  placeId: string;
 }

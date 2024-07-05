@@ -4,14 +4,14 @@ import { cn } from 'utils/general';
 export interface MissionProps extends StyleProps {}
 
 export const Mission = ({ className }: MissionProps) => {
-  const renderKpi = (label: string, description: string) => {
-    return (
-      <div className="flex flex-col gap-4">
-        <p className="text-5xl font-bold">{label}</p>
-        <p>{description}</p>
-      </div>
-    );
-  };
+  // const renderKpi = (label: string, description: string) => {
+  //   return (
+  //     <div className="flex flex-col gap-4">
+  //       <p className="text-5xl font-bold">{label}</p>
+  //       <p>{description}</p>
+  //     </div>
+  //   );
+  // };
 
   return (
     <div className={cn('flex gap-28', className)}>
@@ -19,14 +19,14 @@ export const Mission = ({ className }: MissionProps) => {
         <p className="text-3xl font-bold">Nuestra misión</p>
 
         <p>
-          Ofrecemos una servicio web dirigida para los emprendedores, vendedores, creadores y
-          emporesas cubanas que necesitan promocionar las ventas de sus productos y no poseen ese
-          espacio digital donde visualizar el concepto de sus aspiraciones.
+          Ofrecemos una servicio web dirigido para emprendedores cubanos que necesitan potenciar sus
+          ventas con tecnología, creando un espacio unico donde mostrar sus productos y supervisar
+          sus ventas.
         </p>
 
         <p>
-          Establece una espacio unico para su negocio donde solos sus productos serán visibles para
-          Cuba y el mundo.
+          Nustros servicios son más que una plataforma de comercio. Establece una espacio donde
+          solos sus productos serán visibles para Cuba y el mundo.
         </p>
         <p>
           Usted gestiona personalmente la estructura de sus páginas, administrando el que y como
@@ -46,11 +46,11 @@ export const Mission = ({ className }: MissionProps) => {
         </p>
       </div>
 
-      <div className="w-96 flex-shrink-0 flex flex-col gap-12">
+      {/* <div className="w-96 flex-shrink-0 flex flex-col gap-12">
         {renderKpi('1,000', 'Usuarios nuevos mensualmente')}
         {renderKpi('100', 'Negocios creados cada mes')}
         {renderKpi('10,000', 'Ventas efectuadas en nuestro sistema')}
-      </div>
+      </div> */}
     </div>
   );
 };
