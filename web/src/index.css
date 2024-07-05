@@ -1,6 +1,7 @@
 @import 'ckeditor-styles.css';
 @import 'react-date-range/dist/styles.css';
 @import 'react-date-range/dist/theme/default.css';
+@import "~node_modules/ol/ol.css";
 
 @tailwind base;
 @tailwind components;

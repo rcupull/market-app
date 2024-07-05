@@ -4,6 +4,7 @@ import { dset } from 'dset';
 import { nestie } from 'nestie';
 import { AnyRecord, EmptyObjectOf, Nullable } from 'types/general';
 import { Path } from 'types/paths';
+import { v4 as uuid } from 'uuid';
 
 export const isNullOrUndefined = (value: unknown): value is null | undefined => {
   return value === null || value === undefined;
@@ -233,7 +234,7 @@ export const wait = (timeout = 10): Promise<void> => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-export const getRandomHash = () => `${Date.now()}`;
+export const getRandomHash = () => uuid();
 
 export const copyToClipboard = (text: string): void => {
   const textField = document.createElement('textarea');

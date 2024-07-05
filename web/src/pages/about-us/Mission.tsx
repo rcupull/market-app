@@ -20,12 +20,13 @@ export const Mission = ({ className }: MissionProps) => {
 
         <p>
           Ofrecemos una servicio web dirigido para emprendedores cubanos que necesitan potenciar sus
-          ventas con tecnología, creando un espacio unico donde mostrar sus productos y supervisar sus ventas.
+          ventas con tecnología, creando un espacio unico donde mostrar sus productos y supervisar
+          sus ventas.
         </p>
 
         <p>
-          Nustros servicios son más que una plataforma de comercio. Establece una espacio donde solos sus productos serán visibles para
-          Cuba y el mundo. 
+          Nustros servicios son más que una plataforma de comercio. Establece una espacio donde
+          solos sus productos serán visibles para Cuba y el mundo.
         </p>
         <p>
           Usted gestiona personalmente la estructura de sus páginas, administrando el que y como
