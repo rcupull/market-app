@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {  useState } from 'react';
 
 import { MapOl } from '.';
 import { MapOlPosition } from './types';
@@ -19,7 +19,7 @@ export const ChangeCenter = (): JSX.Element => {
 
   return (
     <>
-      <MapOl onClick={({ position }) => setCenter(position)} className="!h-96" />
+      <MapOl markers={center ? [center] : undefined}  onClick={({ position }) => setCenter(position)} className="!h-96" />
       <MapOl center={center} className="!h-96" />
     </>
   );

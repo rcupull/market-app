@@ -18,6 +18,7 @@ export const telegram_token_bot = appConfig.telegram_token_bot;
 export const cloudFlareAccountId = appConfig.cloudFlareAccountId;
 export const cloudFlareApiToken = appConfig.cloudFlareApiToken;
 export const cloudFlareAccountHash = appConfig.cloudFlareAccountHash;
+export const geoapifyApikey = appConfig.geoapifyApikey;
 
 export const getAssetsDir = () => {
   return join(process.cwd(), appAssetsDir);
