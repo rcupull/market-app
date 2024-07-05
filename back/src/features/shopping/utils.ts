@@ -201,3 +201,15 @@ export const getShoppingsTotalDebit = (shoppings: Array<Shopping>): number => {
 
   return parseFloat(totalDebit.toFixed(2));
 };
+
+/**
+ * Return tru if the shopping is or was approved
+ */
+export const wasApprovedShopping = (shopping: Shopping): boolean => {
+  const { state, history } = shopping;
+
+  return (
+    state === ShoppingState.APPROVED ||
+    !!history?.find(({ state }) => state === ShoppingState.APPROVED)
+  );
+};
