@@ -16,7 +16,7 @@ router
     validators.body('routeName').notEmpty(),
     validators.handle,
     hasAccess('bills__write'),
-    adminBillsHandles.post_admin_bills(),
+    adminBillsHandles.post_admin_bills()
   );
 
 router
@@ -27,7 +27,7 @@ router
     validators.param('billId').notEmpty(),
     validators.handle,
     hasAccess('bills__remove'),
-    adminBillsHandles.del_admin_bills_billId(),
+    adminBillsHandles.del_admin_bills_billId()
   );
 
 router
@@ -39,5 +39,5 @@ router
     validators.body('shoppingIds').notEmpty(),
     validators.handle,
     hasAccess('full'),
-    adminBillsHandles.del_admin_bills_billId_shopping(),
+    adminBillsHandles.del_admin_bills_billId_shopping()
   );

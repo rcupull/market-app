@@ -101,7 +101,7 @@ export const billingServicesGetBillDataFromShopping: QueryHandle<
         shoppingIds: 1,
         state: 1,
       },
-    },
+    }
   );
 
   return {

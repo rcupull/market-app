@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'development') {
     //eslint-disable-next-line
     swaggerUiExpress.setup(require('../swagger_output.json'), {
       explorer: true,
-    }),
+    })
   );
 }
 

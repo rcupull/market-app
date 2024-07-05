@@ -25,7 +25,7 @@ router.use(
   shoppingRouter,
   generalRouter,
   billingRouter,
-  geolocationRouter,
+  geolocationRouter
 );
 
 export default router;

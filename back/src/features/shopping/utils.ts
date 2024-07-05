@@ -165,7 +165,7 @@ export const getAllShoppingFilterQuery = (args: GetAllShoppingArgs): FilterQuery
 };
 
 export const getShoppingInfo = (
-  shopping: Shopping,
+  shopping: Shopping
 ): {
   totalProducts: number;
   totalPrice: number;

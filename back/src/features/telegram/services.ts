@@ -48,7 +48,7 @@ export const telegramServices = {
 
       bot.sendMessage(
         meta.chatId,
-        `Tiene 5 minutos para usar el siguiente código de activación: ${code}.`,
+        `Tiene 5 minutos para usar el siguiente código de activación: ${code}.`
       );
     });
 

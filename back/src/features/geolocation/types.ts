@@ -49,7 +49,7 @@ export interface GeoapifyResponse {
         };
         place_id: string;
       };
-    },
+    }
   ];
   query: {
     lat: number;

@@ -400,7 +400,7 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
             `Una orden de compra generada por usted en el negocio <b>${businessData.name}</b> ha sido aprovada. Usted será contactado luego por el vendedor para los detalles de la entrega.`,
             {
               parse_mode: 'HTML',
-            },
+            }
           );
 
           const shoppingLink = getShoppingUrl({
@@ -413,7 +413,7 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
             `<a href='${shoppingLink}'>Ver detalles de la orden de compra</a>`,
             {
               parse_mode: 'HTML',
-            },
+            }
           );
         }
       }

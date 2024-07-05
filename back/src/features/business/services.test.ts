@@ -70,7 +70,7 @@ describe('services', () => {
               search: 'somethingWrong',
             },
           })
-        ).map(({ name }) => name),
+        ).map(({ name }) => name)
       ).toEqual([]);
 
       ///////////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ describe('services', () => {
               search: 'wNaMe1',
             },
           })
-        ).map(({ name }) => name),
+        ).map(({ name }) => name)
       ).toEqual(['newName1', 'newName12', 'newName123']);
       ///////////////////////////////////////////////////////////
 
@@ -92,7 +92,7 @@ describe('services', () => {
               search: 'wNaMe12',
             },
           })
-        ).map(({ name }) => name),
+        ).map(({ name }) => name)
       ).toEqual(['newName12', 'newName123']);
 
       ///////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ describe('services', () => {
               search: '',
             },
           })
-        ).map(({ name }) => name),
+        ).map(({ name }) => name)
       ).toEqual([
         'newName',
         'newName1',
@@ -169,7 +169,7 @@ describe('services', () => {
               search: 'somethingWrong',
             },
           })
-        ).map(({ name }) => name),
+        ).map(({ name }) => name)
       ).toEqual([]);
 
       ///////////////////////////////////////////////////////////
@@ -180,7 +180,7 @@ describe('services', () => {
               search: 'aT1234',
             },
           })
-        ).map(({ name }) => name),
+        ).map(({ name }) => name)
       ).toEqual(['business2User1', 'business1User2']);
       ///////////////////////////////////////////////////////////
 
@@ -191,7 +191,7 @@ describe('services', () => {
               search: '',
             },
           })
-        ).map(({ name }) => name),
+        ).map(({ name }) => name)
       ).toEqual([
         'business1User1',
         'business2User1',
