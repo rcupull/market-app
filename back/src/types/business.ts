@@ -162,3 +162,15 @@ export interface BusinessSummary extends Pick<Business, '_id' | 'name' | 'routeN
   bestDiscount: number; // percent
   salesAmount: number; // ammount
 }
+
+export interface BusinessSearchDtoBusiness {
+  type: 'business';
+  data: Business;
+}
+
+export interface BusinessSearchDtoPost {
+  type: 'post';
+  data: Post;
+}
+
+export type BusinessSearchDto = BusinessSearchDtoBusiness | BusinessSearchDtoPost;
