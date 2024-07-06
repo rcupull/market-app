@@ -8,6 +8,7 @@ import { ProductDetails1 } from 'components/product/details/product-details-1';
 import { ProductHighLights1 } from 'components/product/hightlights/product-highlights-1';
 import { ProductImages2 } from 'components/product/images/product-images-2';
 import { ProductPrice1 } from 'components/product/price/product-price-1';
+import { ProductStockLabel } from 'components/product/stock/product-stock-label';
 import { Review } from 'components/review';
 
 import { useAuth } from 'features/api-slices/useAuth';
@@ -46,7 +47,7 @@ export const PostId = () => {
   }, [postId]);
 
   const post = postIdPersistent.data;
-
+  
   const business = businessPageData.business;
 
   if (!post || !business) {
@@ -100,6 +101,7 @@ export const PostId = () => {
             description: (props) => <ProductDescription1 {...props} />,
             highLights: (props) => <ProductHighLights1 {...props} />,
             details: (props) => <ProductDetails1 {...props} />,
+            stockAvailable: (props) => <ProductStockLabel {...props} />,
           }}
         />
       </UpdateSomethingContainer>
