@@ -22,6 +22,7 @@ router
   );
 
 router.route('/business/summary').get(pagination, businessHandles.get_business_summary());
+router.route('/business/search').get(businessHandles.get_business_search());
 
 /////////////////////////////////////////////////////////////////
 
