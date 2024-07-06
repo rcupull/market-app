@@ -891,6 +891,25 @@
         }
       }
     },
+    "/business/search": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/business/{routeName}": {
       "get": {
         "description": "",
@@ -1514,6 +1533,16 @@
             }
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/nlp/train": {
+      "post": {
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"

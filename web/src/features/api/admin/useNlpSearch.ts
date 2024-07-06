@@ -3,21 +3,24 @@ import { useFetch } from 'hooks/useFetch';
 import { FetchResource } from 'types/api';
 import { getEndpoint } from 'utils/api';
 
-export const useNlpTrain = (): {
-  nlpTrain: FetchResource;
+export const useNlpSearch = (): {
+  nlpSearch: FetchResource<{
+    search: string;
+  }>;
 } => {
   const fetch = useFetch();
 
   return {
-    nlpTrain: {
+    nlpSearch: {
       data: fetch[0],
       status: fetch[1],
-      fetch: (_, options = {}) => {
+      fetch: ({ search }, options = {}) => {
         fetch[2](
           {
-            method: 'post',
+            method: 'get',
             url: getEndpoint({
-              path: '/nlp/train',
+              path: '/nlp/search',
+              query: { search },
             }),
           },
           options

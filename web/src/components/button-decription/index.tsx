@@ -7,7 +7,7 @@ import { StyleProps } from 'types/general';
 
 export interface ButtonDescriptionProps extends StyleProps {
   description: React.ReactNode;
-  svg?:ButtonSvg
+  svg?: ButtonSvg;
 }
 
 export const ButtonDescription = ({ description, className, svg }: ButtonDescriptionProps) => {
