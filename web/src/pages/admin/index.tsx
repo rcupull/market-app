@@ -8,6 +8,7 @@ const Users = dynamic(() => import('./routes/users').then((m) => m));
 const PurchaseOrders = dynamic(() => import('./routes/purchase-orders').then((m) => m));
 const Bills = dynamic(() => import('./routes/bills').then((m) => m));
 const Business = dynamic(() => import('./routes/business').then((m) => m));
+const Nlp = dynamic(() => import('./routes/nlp').then((m) => m));
 
 export const Admin = () => {
   return (
@@ -18,6 +19,7 @@ export const Admin = () => {
       <Route path="shopping" element={<PurchaseOrders />} />
       <Route path="bills" element={<Bills />} />
       <Route path="business" element={<Business />} />
+      <Route path="nlp" element={<Nlp />} />
     </Routes>
   );
 };
