@@ -20,6 +20,7 @@ import {
 import { deepJsonCopy, isNumber } from '../../utils/general';
 import { businessServicesFindOne } from '../business/services';
 import {
+  GetAllShoppingArgs,
   deleteOnePostFromShoppingInContruction,
   deleteShoppingInConstruction,
   wasApprovedShopping,
@@ -51,15 +52,20 @@ const get_shopping: () => RequestHandler = () => {
         return getUserNotFoundResponse({ res });
       }
 
-      const { routeName, sort = defaultQuerySort } = query;
+      const { routeName, sort = defaultQuerySort, state_ne} = query;
+
+      let queryObj : GetAllShoppingArgs = {
+        routeName,
+        purchaserId: user._id,
+      };
+
+      if(state_ne) 
+        queryObj = {...queryObj, state: { $ne: state_ne }};
 
       const shoppings = await shoppingServicesGetAllWithPagination({
         paginateOptions,
         sort,
-        query: {
-          routeName,
-          purchaserId: user._id,
-        },
+        query: queryObj,
       });
 
       const out = deepJsonCopy(shoppings);

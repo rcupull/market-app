@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useGetAllShopping } from 'features/api/shopping/useGetAllShopping';
+import { useGetAllConstructedShopping } from 'features/api/shopping/useGetAllConstructedShopping';
 
 import { useRouter } from 'hooks/useRouter';
 
@@ -9,6 +9,7 @@ import { ShoppingButtonCancel } from 'pages/@common/shopping-button-cancel';
 import { ShoppingButtonStateHistory } from 'pages/@common/shopping-button-state-history';
 import { ShoppingDetails } from 'pages/@common/shopping-details';
 import { ShoppingState } from 'pages/@common/shopping-state';
+import { ShoppingState as StateType} from 'types/shopping';
 import { getOneShoppingRoute } from 'utils/business';
 
 export interface HomeProps {
@@ -16,10 +17,11 @@ export interface HomeProps {
 }
 
 export const Home = ({ routeName }: HomeProps) => {
-  const { getAllShopping } = useGetAllShopping();
+  const { getAllConstructedShopping } = useGetAllConstructedShopping();
   const { pushRoute } = useRouter();
 
-  const onRefresh = () => getAllShopping.fetch({ routeName });
+  const state_ne : StateType = 'CONSTRUCTION';
+  const onRefresh = () => getAllConstructedShopping.fetch({ routeName, state_ne});
 
   useEffect(() => {
     onRefresh();
@@ -28,7 +30,7 @@ export const Home = ({ routeName }: HomeProps) => {
   return (
     <LayoutPage title="Historial de compras" backButton>
       <div className="flex flex-col items-center gap-4 w-full">
-        {getAllShopping.data?.map((shopping, index) => {
+        {getAllConstructedShopping.data?.map((shopping, index) => {
           return (
             <ShoppingDetails
               key={index}
