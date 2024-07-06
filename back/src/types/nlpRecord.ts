@@ -1,6 +1,14 @@
-import { AnyRecord } from '../../types/general';
+import { BaseIdentity } from './general';
+import { AnyRecord } from './general';
 
 export type NlpTag = 'products.add' | 'links.add' | 'sections.add';
+
+export interface NlpRecord extends BaseIdentity {
+  data: NlpTrainRecord;
+  type: 'main';
+}
+
+export type NlpTrainRecord = Record<string, Array<string>>;
 
 export interface NplProcessResponse {
   locale: 'es';

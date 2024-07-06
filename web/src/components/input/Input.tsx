@@ -9,7 +9,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const { type } = props;
 
   const renderInput = (props: InputProps) => {
-    const { className, endElement, typeOnlyNumbers, ...omittedProps } = props;
+    const { className, endElement, typeOnlyNumbers, preventDefaultEnter, ...omittedProps } = props;
 
     return (
       <div className={cn('relative h-9', className)}>
@@ -26,8 +26,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
             if (typeOnlyNumbers && !/[0-9]/.test(event.key)) {
               event.preventDefault();
             }
-
             omittedProps.onKeyPress?.(event);
+          }}
+          onKeyDown={(e) => {
+            if (preventDefaultEnter && e.key === 'Enter') {
+              e.preventDefault();
+            }
+            omittedProps.onKeyDown?.(e);
           }}
         />
         {endElement && (

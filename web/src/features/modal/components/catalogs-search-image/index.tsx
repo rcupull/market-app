@@ -134,11 +134,7 @@ export const CatalogsSearchImage = ({ onSelected, multi }: CatalogsSearchImagePr
                 name="searchValue"
                 placeholder="Buscar"
                 className="w-full"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                  }
-                }}
+                preventDefaultEnter
               />
             </form>
           );

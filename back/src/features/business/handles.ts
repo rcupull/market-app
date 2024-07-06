@@ -23,6 +23,7 @@ import { ValidationCodeModel } from '../../schemas/auth';
 import { isEqualIds, movRow } from '../../utils/general';
 import { imagesServicesDeleteOldImages } from '../images/services';
 import { postServicesGetOne, postServicesUpdateMany } from '../post/services';
+import { nlpServicesProcessMainManager } from '../nlp/services';
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {
@@ -95,6 +96,24 @@ const get_business_summary: () => RequestHandler = () => {
       };
 
       res.send(out);
+    });
+  };
+};
+
+const get_business_search: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { query } = req;
+
+      const { search } = query;
+
+      const nlpResponse = await nlpServicesProcessMainManager({ text: search });
+
+      /**
+       * TODO convert ths response to a data
+       */
+
+      res.send(nlpResponse);
     });
   };
 };
@@ -491,6 +510,7 @@ export const businessHandles = {
   del_business_routeName_sections_sectionId,
 
   get_business_summary,
+  get_business_search,
 
   post_business_routeName_chatbot_validate,
 };
