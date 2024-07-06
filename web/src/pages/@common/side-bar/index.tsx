@@ -12,6 +12,7 @@ import SvgCogSolid from 'icons/CogSolid';
 import SvgMoneyBillAltSolid from 'icons/MoneyBillAltSolid';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import SvgStoreSolid from 'icons/StoreSolid';
+import SvgTrainSolid from 'icons/TrainSolid';
 import SvgUsersSolid from 'icons/UsersSolid';
 import { StyleProps } from 'types/general';
 import { getEndpoint } from 'utils/api';
@@ -99,7 +100,7 @@ export const SideBar = ({ className }: SideBarProps) => {
                     getEndpoint({
                       path: '/admin/agenda/web/:agendaToken',
                       urlParams: { agendaToken },
-                    })
+                    }),
                   );
                 },
               });
@@ -112,6 +113,14 @@ export const SideBar = ({ className }: SideBarProps) => {
             label: 'Configuración',
             href: '/admin/settings',
             svg: SvgCogSolid,
+            className: 'pl-10',
+          },
+        isAuthenticated &&
+          isAdmin && {
+            // ADMIN
+            label: 'Nlp',
+            href: '/admin/nlp',
+            svg: SvgTrainSolid,
             className: 'pl-10',
           },
         isAuthenticated &&

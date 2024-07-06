@@ -2,7 +2,7 @@
 import { NlpManager } from 'node-nlp';
 
 import { QueryHandle } from '../../types/general';
-import { nlpRecords } from './records';
+import { nlpRecords } from './utils';
 import { NplProcessResponse } from './types';
 
 const manager = new NlpManager({ languages: ['es'] });
