@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { ClothingProductGrid1 } from 'components/clothing-product-grid-1';
 import { FieldClothingSizeSelect } from 'components/field-clothing-size-select';
 import { FieldColorSelect } from 'components/field-colors-select';
-import { PostShoppingMethod } from 'components/post-shopping-method';
 import { ProductDescription1 } from 'components/product/description/product-description-1';
 import { ProductDetails1 } from 'components/product/details/product-details-1';
 import { ProductHighLights1 } from 'components/product/hightlights/product-highlights-1';
@@ -59,7 +58,6 @@ export const PostId = () => {
       title={
         <div className="flex items-center">
           {post?.name}
-          <PostShoppingMethod post={post} layout="shoppingCart" className="ml-auto" />
         </div>
       }
       backButton
