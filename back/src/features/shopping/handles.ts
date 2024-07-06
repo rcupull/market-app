@@ -27,12 +27,13 @@ import {
 import { logger } from '../logger';
 import { PostPurshaseNotes } from '../../types/post';
 import { ShoppingModel } from '../../schemas/shopping';
-import { sendNewOrderTelegramMessage } from '../telegram/handles';
 import { Shopping, ShoppingDto, ShoppingState } from '../../types/shopping';
-import { telegramServices } from '../telegram/services';
+import {
+  telegramServicesSendNewOrderApprovedMessage,
+  telegramServicesSendNewOrderMessage,
+} from '../telegram/services';
 import { userServicesGetOne, userServicesGetUserDataFromShopping } from '../user/services';
 import { User } from '../../types/user';
-import { getShoppingUrl } from '../../utils/web';
 import { Business } from '../../types/business';
 import { defaultQuerySort } from '../../utils/api';
 import {
@@ -331,7 +332,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
        * send Telegram message
        */
 
-      sendNewOrderTelegramMessage({ business, shopping });
+      telegramServicesSendNewOrderMessage({ business, shopping });
       notificationsServicesSendNewOrderPushMessage({ business, shopping });
 
       res.send({});
@@ -423,26 +424,11 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
         }
 
         if (purchaserData.telegramBotChat) {
-          telegramServices.sendMessage(
-            purchaserData.telegramBotChat.chatId,
-            `Una orden de compra generada por usted en el negocio <b>${businessData.name}</b> ha sido aprovada. Usted será contactado luego por el vendedor para los detalles de la entrega.`,
-            {
-              parse_mode: 'HTML',
-            }
-          );
-
-          const shoppingLink = getShoppingUrl({
-            routeName: shopping.routeName,
-            shoppingId: shopping._id.toString(),
+          telegramServicesSendNewOrderApprovedMessage({
+            chatId: purchaserData.telegramBotChat.chatId,
+            businessName: businessData.name,
+            shopping,
           });
-
-          telegramServices.sendMessage(
-            purchaserData.telegramBotChat.chatId,
-            `<a href='${shoppingLink}'>Ver detalles de la orden de compra</a>`,
-            {
-              parse_mode: 'HTML',
-            }
-          );
         }
       }
 
