@@ -44,7 +44,7 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
   ////////////////////////////////////////////////////////////////////////////////////
   const oldShopping = await shoppingServicesFindAndUpdateOne({
     query: {
-      state: 'CONSTRUCTION',
+      state: ShoppingState.CONSTRUCTION,
       routeName,
       purchaserId: user._id,
     },
@@ -96,7 +96,7 @@ export const deleteShoppingInConstruction: QueryHandle<{
 }> = async ({ routeName }) => {
   const oldShopping = await shoppingServicesFindOneAndDelete({
     query: {
-      state: 'CONSTRUCTION',
+      state: ShoppingState.CONSTRUCTION,
       routeName,
     },
   });

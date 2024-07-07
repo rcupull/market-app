@@ -2,7 +2,7 @@ import { useGetAllShopping } from 'features/api/shopping/useGetAllShopping';
 import { useApiPersistentPaginated } from 'features/slices/useApiPersistentPaginated';
 
 import { FetchResourceWithPagination, FetchStatus } from 'types/api';
-import { Shopping } from 'types/shopping';
+import { Shopping, ShoppingState } from 'types/shopping';
 
 interface UseShoppingReturn {
   data: Array<Shopping>;
@@ -31,7 +31,7 @@ export const useShopping = (): UseShoppingReturn => {
     UseShoppingReturn,
     'constructionShopping' | 'constructionShoppingProductsCount'
   > => {
-    if (!firstShopping || firstShopping.state !== 'CONSTRUCTION') {
+    if (!firstShopping || firstShopping.state !== ShoppingState.CONSTRUCTION) {
       return {
         constructionShopping: undefined,
         constructionShoppingProductsCount: 0,

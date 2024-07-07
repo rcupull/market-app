@@ -6,7 +6,7 @@ import { useShoppingChangeState } from 'features/api/shopping/useShoppingChangeS
 import { useModal } from 'features/modal/useModal';
 
 import { StyleProps } from 'types/general';
-import { Shopping } from 'types/shopping';
+import { Shopping, ShoppingState } from 'types/shopping';
 
 export interface ShoppingButtonCancelProps extends StyleProps {
   shopping: Shopping;
@@ -40,7 +40,7 @@ export const ShoppingButtonCancel = ({ shopping, onAfterSucess }: ShoppingButton
                 isBusy={shoppingChangeState.status.isBusy}
                 onClick={() => {
                   shoppingChangeState.fetch(
-                    { state: 'CANCELED', shoppingId: shopping._id },
+                    { state: ShoppingState.CANCELED, shoppingId: shopping._id },
                     {
                       onAfterSuccess: () => {
                         onClose();

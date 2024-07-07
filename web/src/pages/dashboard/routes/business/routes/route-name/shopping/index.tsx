@@ -7,6 +7,7 @@ import { Table } from 'components/table';
 import { useGetShoppingOwner } from 'features/api/shopping-owner/useGetShoppingOwner';
 
 import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
+import { useRouter } from 'hooks/useRouter';
 
 import { ClientData } from './ClientData';
 import { Filters } from './Filters';
@@ -17,7 +18,7 @@ import { ShoppingButtonStateHistory } from 'pages/@common/shopping-button-state-
 import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { GetAllShoppingQuery } from 'types/api';
-import { Shopping } from 'types/shopping';
+import { Shopping, ShoppingState } from 'types/shopping';
 import { getDateString } from 'utils/date';
 import { getShoppingData } from 'utils/shopping';
 
@@ -25,17 +26,25 @@ export const ShoppingPage = () => {
   const { getShoppingOwner } = useGetShoppingOwner();
   const { business, onFetch } = useBusiness();
 
+  const { onChangeQuery, query } = useRouter<{ state?: ShoppingState }>();
+
   const filters = useFiltersVolatile<Omit<GetAllShoppingQuery, 'routeName'>>({
     onChange: (filters) => {
-      business &&
-        getShoppingOwner.fetch({
-          routeName: business.routeName,
-          ...filters,
-        });
+      if (!business) return;
+
+      if (filters.states) {
+        onChangeQuery({ state: filters.states[0] });
+      }
+
+      getShoppingOwner.fetch({
+        routeName: business.routeName,
+        ...filters,
+      });
     },
   });
+
   useEffect(() => {
-    filters.onMergeFilters({ states: ['REQUESTED'] });
+    filters.onMergeFilters({ states: [query.state || ShoppingState.REQUESTED] });
   }, [business?.routeName]);
 
   const onRefreshForce = () => {

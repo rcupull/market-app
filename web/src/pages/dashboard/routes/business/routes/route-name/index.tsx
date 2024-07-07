@@ -152,7 +152,14 @@ export const RouteName = () => {
         <Tabs
           className="mt-4 shadow-lg hidden sm:flex"
           contentClassName="w-full overflow-y-auto h-[calc(100vh-12rem)]"
-          onSelect={(tabIndex) => onChangeQuery({ businessTab: tabIndexToQuery(tabIndex) })}
+          onSelect={(tabIndex) =>
+            onChangeQuery(
+              { businessTab: tabIndexToQuery(tabIndex) },
+              {
+                replaceAll: true,
+              }
+            )
+          }
           selected={isString(query.businessTab) ? tabQueryToIndex(query.businessTab) : undefined}
           items={tabsItems}
         />

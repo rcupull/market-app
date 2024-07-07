@@ -1,21 +1,19 @@
 import { PaginateModel, Schema, SchemaDefinition, model } from 'mongoose';
 import { createdAtSchemaDefinition } from '../utils/schemas';
-import { Shopping, ShoppingPostData } from '../types/shopping';
+import { Shopping, ShoppingPostData, ShoppingState } from '../types/shopping';
 import { PostPurshaseNotes } from '../types/post';
 import mongoosePaginate from 'mongoose-paginate-v2';
 
 const shoppingState = {
   type: String,
   enum: [
-    'CONSTRUCTION',
-    'REQUESTED',
-    'APPROVED',
-    'PROCESSING',
-    'READY_TO_DELIVER',
-    'DELIVERED',
-    //
-    'CANCELED',
-    'REJECTED',
+    ShoppingState.CONSTRUCTION,
+    ShoppingState.REQUESTED,
+    ShoppingState.APPROVED,
+    ShoppingState.PROCESSING,
+    ShoppingState.DELIVERED,
+    ShoppingState.CANCELED,
+    ShoppingState.REJECTED,
   ],
   required: true,
 };
