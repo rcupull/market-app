@@ -5,13 +5,13 @@ import { useRemoveShopping } from 'features/api/shopping/useRemoveShopping';
 import { useModal } from 'features/modal/useModal';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useShopping } from 'pages/@hooks/useShopping';
+import { useCart } from 'pages/@hooks/useCart';
 import { StyleProps } from 'types/general';
 
 export interface ShoppingCartRemoveAllButton extends StyleProps {}
 
 export const ShoppingCartRemoveAllButton = ({ className }: ShoppingCartRemoveAllButton) => {
-  const shopping = useShopping();
+  const cart = useCart();
   const { business } = useBusiness();
   const { pushModal } = useModal();
 
@@ -43,7 +43,7 @@ export const ShoppingCartRemoveAllButton = ({ className }: ShoppingCartRemoveAll
                         {
                           onAfterSuccess: () => {
                             onClose();
-                            shopping.onFetch({ routeName: business?.routeName });
+                            cart.onFetch();
                           },
                         }
                       );

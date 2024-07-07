@@ -10,7 +10,7 @@ import { useDebouncer } from 'hooks/useDebouncer';
 
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useShopping } from 'pages/@hooks/useShopping';
+import { useCart } from 'pages/@hooks/useCart';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { StyleProps } from 'types/general';
 import { Post, PostPurshaseNotes } from 'types/post';
@@ -34,7 +34,7 @@ export const ButtonPostToCart = ({
   const authSignInModal = useAuthSignInModal();
 
   const { updateAddOneShopping } = useUpdateAddOneShopping();
-  const shopping = useShopping();
+  const cart = useCart();
   const { business } = useBusiness();
 
   const debouncer = useDebouncer();
@@ -49,7 +49,7 @@ export const ButtonPostToCart = ({
         title="Agotados"
         preventDefault
         svg={<SvgShoppingCartSolid className="!size-8 !fill-red-500 !cursor-not-allowed" />}
-        className={cn('!bg-gray-100',className)}
+        className={cn('!bg-gray-100', className)}
       />
     );
   }
@@ -70,7 +70,7 @@ export const ButtonPostToCart = ({
         { postId: post._id, amountToAdd, routeName: business.routeName, purshaseNotes },
         {
           onAfterSuccess: () => {
-            shopping.onFetch({ routeName: business.routeName });
+            cart.onFetch();
           },
         }
       );

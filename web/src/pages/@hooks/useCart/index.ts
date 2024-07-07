@@ -1,24 +1,26 @@
 import { useGetAllShopping } from 'features/api/shopping/useGetAllShopping';
 import { useApiPersistentPaginated } from 'features/slices/useApiPersistentPaginated';
 
-import { FetchResourceWithPagination, FetchStatus } from 'types/api';
+import { useBusiness } from '../useBusiness';
+
+import { FetchStatus } from 'types/api';
 import { Shopping, ShoppingState } from 'types/shopping';
 
 interface UseShoppingReturn {
-  data: Array<Shopping>;
   //
   constructionShopping: Shopping | undefined;
   constructionShoppingProductsCount: number;
   //
   status: FetchStatus;
-  onFetch: FetchResourceWithPagination<{ routeName: string }, Shopping>['fetch'];
+  onFetch: () => void;
   onReset: () => void;
 }
 
-export const useShopping = (): UseShoppingReturn => {
+export const useCart = (): UseShoppingReturn => {
   const { getAllShopping } = useGetAllShopping();
+  const { business } = useBusiness();
 
-  const { data, status, reset, fetch } = useApiPersistentPaginated('useShopping', getAllShopping);
+  const { data, status, reset, fetch } = useApiPersistentPaginated('useCart', getAllShopping);
 
   const shopping = data || [];
   const firstShopping = shopping[0] || undefined;
@@ -45,10 +47,11 @@ export const useShopping = (): UseShoppingReturn => {
   };
 
   return {
-    data: data || [],
     ...getShoppingContructionData(),
     status,
-    onFetch: fetch,
+    onFetch: () => {
+      business && fetch({ routeName: business.routeName, states: [ShoppingState.CONSTRUCTION] });
+    },
     onReset: reset,
   };
 };

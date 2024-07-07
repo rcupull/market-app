@@ -51,13 +51,14 @@ const get_shopping: () => RequestHandler = () => {
         return getUserNotFoundResponse({ res });
       }
 
-      const { routeName, sort = defaultQuerySort } = query;
+      const { routeName, sort = defaultQuerySort, states } = query;
 
       const shoppings = await shoppingServicesGetAllWithPagination({
         paginateOptions,
         sort,
         query: {
           routeName,
+          states,
           purchaserId: user._id,
         },
       });

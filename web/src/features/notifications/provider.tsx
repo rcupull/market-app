@@ -14,7 +14,7 @@ import { firebaseVapidKey, getFirebaseMessaging, renderNotificationsContent } fr
 //eslint-disable-next-line
 import { getToken, isSupported, MessagePayload, Messaging, onMessage } from 'firebase/messaging';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useShopping } from 'pages/@hooks/useShopping';
+import { useCart } from 'pages/@hooks/useCart';
 import { ChildrenProp } from 'types/general';
 
 interface State {
@@ -31,7 +31,7 @@ export const NotificationsProvider = ({ children }: ChildrenProp) => {
   const { isAuthenticated } = useAuth();
   const { isDashboardPage } = useRouter();
   const { onFetch, business } = useBusiness();
-  const shoppingData = useShopping();
+  const cart = useCart();
   const { authUpdateFirebaseToken } = useAuthUpdateFirebaseToken();
 
   const { onCallAfar } = useCallFromAfar();
@@ -55,7 +55,7 @@ export const NotificationsProvider = ({ children }: ChildrenProp) => {
           return;
         }
         case 'ORDER_IN_CONSTRUCTION_WAS_REMOVED': {
-          business && shoppingData.onFetch({ routeName: business.routeName });
+          cart.onFetch();
           return;
         }
         case 'NEW_ORDER_WAS_CREATED': {

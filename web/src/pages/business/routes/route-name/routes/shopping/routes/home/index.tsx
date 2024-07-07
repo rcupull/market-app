@@ -20,7 +20,19 @@ export const Home = ({ routeName }: HomeProps) => {
   const { getAllShopping } = useGetAllShopping();
   const { pushRoute } = useRouter();
 
-  const onRefresh = () => getAllShopping.fetch({ routeName });
+  const onRefresh = () =>
+    getAllShopping.fetch({
+      routeName,
+      states: [
+        ShoppingState.APPROVED,
+        ShoppingState.CANCELED,
+        ShoppingState.REJECTED,
+        ShoppingState.DELIVERED,
+        ShoppingState.REQUESTED,
+        ShoppingState.PROCESSING,
+        // CONSTRUCTION IS NOT INCLUDED
+      ],
+    });
 
   useEffect(() => {
     onRefresh();

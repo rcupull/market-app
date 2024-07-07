@@ -8,17 +8,17 @@ import { PersonalData } from './PersonalData';
 
 import { ShoppingDetails } from 'pages/@common/shopping-details';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useShopping } from 'pages/@hooks/useShopping';
+import { useCart } from 'pages/@hooks/useCart';
 
 export interface CheckingDataProps extends StepCommonProps {}
 
 export const CheckingData = ({ nextButton: nextButtonProp, backButton }: CheckingDataProps) => {
   const { shoppingMakeOrder } = useShoppingMakeOrder();
-  const shopping = useShopping();
+  const cart = useCart();
   const { business } = useBusiness();
   const [isValidPersonalData, setIsValidPersonalData] = useState(false);
 
-  if (!shopping.constructionShopping) {
+  if (!cart.constructionShopping) {
     return <></>;
   }
 
@@ -27,15 +27,16 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
     isBusy: shoppingMakeOrder.status.isBusy,
     disabled: !isValidPersonalData,
     onClick: () => {
-      if (!shopping.constructionShopping || !business) return;
+      if (!cart.constructionShopping || !business) return;
 
-      const { _id: shoppingId } = shopping.constructionShopping;
+      const { _id: shoppingId } = cart.constructionShopping;
 
       shoppingMakeOrder.fetch(
         { shoppingId },
         {
           onAfterSuccess: () => {
-            shopping.onFetch({ routeName: business.routeName }), nextButtonProp.props.onClick();
+            cart.onFetch();
+            nextButtonProp.props.onClick();
           },
         }
       );
@@ -45,7 +46,7 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
   return (
     <>
       <div className="flex justify-center">
-        <ShoppingDetails shopping={shopping.constructionShopping} />
+        <ShoppingDetails shopping={cart.constructionShopping} />
       </div>
 
       <PersonalData className="mt-6" onValid={setIsValidPersonalData} />

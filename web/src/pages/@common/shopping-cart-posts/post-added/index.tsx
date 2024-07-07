@@ -10,7 +10,7 @@ import { useModal } from 'features/modal/useModal';
 
 import { IconButtonViewPostPage } from './IconButtonViewPostPage';
 
-import { useShopping } from 'pages/@hooks/useShopping';
+import { useCart } from 'pages/@hooks/useCart';
 import { Image } from 'types/general';
 import { getImageEndpoint } from 'utils/api';
 
@@ -24,7 +24,7 @@ export interface PostAddedProps {
 
 export const PostAdded = ({ count, postId, postImages, postName, routeName }: PostAddedProps) => {
   const { updateAddOneShopping } = useUpdateAddOneShopping();
-  const shopping = useShopping();
+  const cart = useCart();
 
   const mainImage = postImages?.[0];
   const { pushModal } = useModal();
@@ -52,7 +52,7 @@ export const PostAdded = ({ count, postId, postImages, postName, routeName }: Po
               { postId, routeName, amountToAdd: amount - count },
               {
                 onAfterSuccess: () => {
-                  shopping.onFetch({ routeName });
+                  cart.onFetch();
                 },
               }
             );
@@ -83,7 +83,7 @@ export const PostAdded = ({ count, postId, postImages, postName, routeName }: Po
                             {
                               onAfterSuccess: () => {
                                 onClose();
-                                shopping.onFetch({ routeName });
+                                cart.onFetch();
                               },
                             }
                           );

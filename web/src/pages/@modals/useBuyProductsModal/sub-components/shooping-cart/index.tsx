@@ -6,15 +6,15 @@ import { ShoppingTermsAndConditions } from './ShoppingTermsAndConditions';
 
 import { ShoppingCartPosts } from 'pages/@common/shopping-cart-posts';
 import { ShoppingCartRemoveAllButton } from 'pages/@common/shopping-cart-remove-all-button';
-import { useShopping } from 'pages/@hooks/useShopping';
+import { useCart } from 'pages/@hooks/useCart';
 
 export interface ShoppingCartProps extends StepCommonProps {}
 
 export const ShoppingCart = ({ nextButton: nextButtonProp }: ShoppingCartProps) => {
-  const shopping = useShopping();
+  const cart = useCart();
   const [approved, setApproved] = useState(false);
 
-  if (!shopping.constructionShopping) {
+  if (!cart.constructionShopping) {
     return <div className="font-semibold">No tiene productos en la bolsa</div>;
   }
   const nextButton = cloneElement(nextButtonProp, { disabled: !approved });
@@ -22,7 +22,7 @@ export const ShoppingCart = ({ nextButton: nextButtonProp }: ShoppingCartProps) 
   return (
     <>
       <div>
-        <ShoppingCartPosts value={shopping.constructionShopping} />
+        <ShoppingCartPosts value={cart.constructionShopping} />
 
         <div className="flex justify-end mt-2">
           <ShoppingCartRemoveAllButton />
