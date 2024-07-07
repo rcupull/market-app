@@ -1,4 +1,7 @@
+import { useEffect } from 'react';
+
 import { useGetAllShopping } from 'features/api/shopping/useGetAllShopping';
+import { useAuth } from 'features/api-slices/useAuth';
 import { useApiPersistentPaginated } from 'features/slices/useApiPersistentPaginated';
 
 import { useBusiness } from '../useBusiness';
@@ -19,6 +22,7 @@ interface UseShoppingReturn {
 export const useCart = (): UseShoppingReturn => {
   const { getAllShopping } = useGetAllShopping();
   const { business } = useBusiness();
+  const { isAuthenticated } = useAuth();
 
   const { data, status, reset, fetch } = useApiPersistentPaginated('useCart', getAllShopping);
 
@@ -46,12 +50,22 @@ export const useCart = (): UseShoppingReturn => {
     };
   };
 
+  const onFetch: UseShoppingReturn['onFetch'] = () => {
+    business && fetch({ routeName: business.routeName, states: [ShoppingState.CONSTRUCTION] });
+  };
+
+  const shouldCall = business && !data && isAuthenticated;
+
+  useEffect(() => {
+    if (shouldCall) {
+      onFetch();
+    }
+  }, [shouldCall]);
+
   return {
     ...getShoppingContructionData(),
     status,
-    onFetch: () => {
-      business && fetch({ routeName: business.routeName, states: [ShoppingState.CONSTRUCTION] });
-    },
+    onFetch,
     onReset: reset,
   };
 };
