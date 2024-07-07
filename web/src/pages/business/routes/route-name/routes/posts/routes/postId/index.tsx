@@ -47,7 +47,7 @@ export const PostId = () => {
   }, [postId]);
 
   const post = postIdPersistent.data;
-  
+
   const business = businessPageData.business;
 
   if (!post || !business) {
@@ -55,14 +55,7 @@ export const PostId = () => {
   }
 
   return (
-    <LayoutPage
-      title={
-        <div className="flex items-center">
-          {post?.name}
-        </div>
-      }
-      backButton
-    >
+    <LayoutPage title={<div className="flex items-center">{post?.name}</div>} backButton>
       <UpdateSomethingContainer
         title="Editar esta publicación"
         onClick={() => {

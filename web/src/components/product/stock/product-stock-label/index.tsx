@@ -1,9 +1,8 @@
-
 import { Post } from 'types/post';
 import { cn, isNullOrUndefined } from 'utils/general';
 
 export interface ProductStockLabelProps {
-  post : Post;
+  post: Post;
 }
 
 export const ProductStockLabel = ({ post }: ProductStockLabelProps) => {
@@ -21,10 +20,12 @@ export const ProductStockLabel = ({ post }: ProductStockLabelProps) => {
   };
 
   return (
-    <div className={cn({
-      'mt-4': true,
-      'text-center': !stockAmountAvailable
-    })}>
+    <div
+      className={cn({
+        'mt-4': true,
+        'text-center': !stockAmountAvailable,
+      })}
+    >
       <span
         className={cn({
           'text-gray-50 bg-green-800 px-2 py-0.5 rounded-xl': stockAmountAvailable !== 0,

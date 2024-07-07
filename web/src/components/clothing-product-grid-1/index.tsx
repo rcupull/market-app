@@ -110,7 +110,7 @@ export const ClothingProductGrid1 = ({ post, render, currency }: ClothingProduct
           </Formux>
 
           <div ref={portal.ref} />
-          {render.stockAvailable?.({post})}
+          {render.stockAvailable?.({ post })}
         </div>
 
         <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
