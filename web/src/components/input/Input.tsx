@@ -3,13 +3,13 @@ import { forwardRef } from 'react';
 import { PasswordWrapper } from './PasswordWrapper';
 import { InputProps } from './types';
 
-import { cn } from 'utils/general';
+import { cn, isNumber } from 'utils/general';
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const { type } = props;
 
   const renderInput = (props: InputProps) => {
-    const { className, endElement, typeOnlyNumbers, preventDefaultEnter, ...omittedProps } = props;
+    const { className, endElement, typeOnlyNumbers, preventDefaultEnter, typeMaxLength, ...omittedProps } = props;
 
     return (
       <div className={cn('relative h-9', className)}>
@@ -24,6 +24,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           {...omittedProps}
           onKeyPress={(event) => {
             if (typeOnlyNumbers && !/[0-9]/.test(event.key)) {
+              event.preventDefault();
+            }
+            //@ts-expect-error ignore types
+            if (isNumber(typeMaxLength) && omittedProps.value?.length > typeMaxLength) {
               event.preventDefault();
             }
             omittedProps.onKeyPress?.(event);
