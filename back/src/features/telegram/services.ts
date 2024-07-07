@@ -7,7 +7,7 @@ import { QueryHandle, TelegramBotChat } from '../../types/general';
 import { agendaServices } from '../agenda/services';
 import { Business, BusinessNotificationFlags } from '../../types/business';
 import { Shopping } from '../../types/shopping';
-import { getBusinessShoppingUrl, getShoppingUrl } from '../../utils/web';
+import { getBusinessOrdersTagUrl, getShoppingUrl } from '../../utils/web';
 
 /**
  * https://core.telegram.org/bots/api#html-style
@@ -70,6 +70,15 @@ export const telegramServicesInit = () => {
         parse_mode: 'HTML',
       }
     );
+    bot.sendMessage(
+      meta.chatId,
+      `<a href='${getBusinessOrdersTagUrl(
+        { routeName: 'maria-s-garage'}
+      )}'>aquí</a>.`,
+      {
+        parse_mode: 'HTML',
+      }
+    )
   });
 
   bot.on('message', (msg) => {
@@ -114,7 +123,7 @@ export const telegramServicesSendNewOrderMessage: QueryHandle<{
 
   telegramServicesSendMessage({
     chatId,
-    message: `Una nueva orden de compra ha sido generada en su negocio "${name}" de nuestra plataforma Asere Market. Puede ver los detalles <a href='${getBusinessShoppingUrl(
+    message: `Una nueva orden de compra ha sido generada en su negocio "${name}" de nuestra plataforma Asere Market. Puede ver los detalles <a href='${getBusinessOrdersTagUrl(
       { routeName: business.name }
     )}'>aquí</a>.`,
     options: {
