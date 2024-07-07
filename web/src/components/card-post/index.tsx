@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 
 import { PostShoppingMethod } from 'components/post-shopping-method';
+import { ProductStockLabel } from 'components/product/stock/product-stock-label';
 
 import { CardPostImage } from './CardPostImage';
 import { CardPostName } from './CardPostName';
 import { CardPostPrice } from './CardPostPrice';
-import { CardPostStockAmount } from './CardPostStockAmount';
 
 import { UpdateSomethingContainer } from 'pages/@common/update-something-container';
 import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
@@ -42,7 +42,7 @@ export const CardPost = ({
           <div>
             <CardPostName layout={layout} post={post} />
             <CardPostPrice layout={layout} post={post} currency={currency} />
-            <CardPostStockAmount layout={layout} post={post} />
+            <ProductStockLabel layout={layout} post={post} />
           </div>
         </div>
       );
@@ -53,7 +53,7 @@ export const CardPost = ({
         <div className="flex flex-col items-center flex-shrink-0">
           <CardPostName layout={layout} post={post} className="text-center" />
           <CardPostPrice layout={layout} post={post} currency={currency} />
-          <CardPostStockAmount layout={layout} post={post} />
+          <ProductStockLabel layout={layout} post={post} />
         </div>
       );
     }

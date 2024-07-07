@@ -3,16 +3,17 @@ import { useEffect } from 'react';
 import { ClothingProductGrid1 } from 'components/clothing-product-grid-1';
 import { FieldClothingSizeSelect } from 'components/field-clothing-size-select';
 import { FieldColorSelect } from 'components/field-colors-select';
-import { PostShoppingMethod } from 'components/post-shopping-method';
 import { ProductDescription1 } from 'components/product/description/product-description-1';
 import { ProductDetails1 } from 'components/product/details/product-details-1';
 import { ProductHighLights1 } from 'components/product/hightlights/product-highlights-1';
 import { ProductImages2 } from 'components/product/images/product-images-2';
 import { ProductPrice1 } from 'components/product/price/product-price-1';
+import { ProductStockLabel } from 'components/product/stock/product-stock-label';
 import { Review } from 'components/review';
 
 import { useAuth } from 'features/api-slices/useAuth';
 
+import { useHotUpdateObjectData } from 'hooks/useHotUpdateObjectData';
 import { useRouter } from 'hooks/useRouter';
 
 import { PostsRelatedView } from './PostsRelatedView';
@@ -24,6 +25,7 @@ import { usePostIdPersistent } from 'pages/@hooks/usePostIdPersistent';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
 import { usePostMakeReviewModal } from 'pages/@modals/usePostMakeReviewModal';
+import { Post } from 'types/post';
 
 export const PostId = () => {
   const { params } = useRouter();
@@ -46,24 +48,24 @@ export const PostId = () => {
     }
   }, [postId]);
 
-  const post = postIdPersistent.data;
+  const hotUpdateObjectData = useHotUpdateObjectData<
+    Post,
+    { postId: string; stockAmountAvailable: number }
+  >({
+    data: postIdPersistent.data,
+    updateKey: `updatePostAmount`,
+    changeCB: (rowData, { stockAmountAvailable }) => ({ ...rowData, stockAmountAvailable }),
+  });
 
   const business = businessPageData.business;
+  const post = hotUpdateObjectData.data;
 
   if (!post || !business) {
     return <></>;
   }
 
   return (
-    <LayoutPage
-      title={
-        <div className="flex items-center">
-          {post?.name}
-          <PostShoppingMethod post={post} layout="shoppingCart" className="ml-auto" />
-        </div>
-      }
-      backButton
-    >
+    <LayoutPage title={post?.name} backButton>
       <UpdateSomethingContainer
         title="Editar esta publicación"
         onClick={() => {
@@ -102,6 +104,14 @@ export const PostId = () => {
             description: (props) => <ProductDescription1 {...props} />,
             highLights: (props) => <ProductHighLights1 {...props} />,
             details: (props) => <ProductDetails1 {...props} />,
+            stockAvailable: (props) => (
+              <ProductStockLabel
+                {...props}
+                layout={{
+                  size: 'long',
+                }}
+              />
+            ),
           }}
         />
       </UpdateSomethingContainer>

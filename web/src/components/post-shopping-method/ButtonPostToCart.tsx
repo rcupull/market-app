@@ -14,6 +14,7 @@ import { useShopping } from 'pages/@hooks/useShopping';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { StyleProps } from 'types/general';
 import { Post, PostPurshaseNotes } from 'types/post';
+import { cn } from 'utils/general';
 
 export interface ButtonPostToCartProps extends StyleProps {
   post: Post;
@@ -48,7 +49,7 @@ export const ButtonPostToCart = ({
         title="Agotados"
         preventDefault
         svg={<SvgShoppingCartSolid className="!size-8 !fill-red-500 !cursor-not-allowed" />}
-        className={className}
+        className={cn('!bg-gray-100',className)}
       />
     );
   }
@@ -79,7 +80,7 @@ export const ButtonPostToCart = ({
   if (variant === 'button') {
     return (
       <Button
-        label="Adicionar el carrito"
+        label="Adicionar al carrito"
         svg={SvgShoppingCartSolid}
         isBusy={updateAddOneShopping.status.isBusy}
         onClick={(e) => {
@@ -95,7 +96,7 @@ export const ButtonPostToCart = ({
   if (variant === 'icon') {
     return (
       <IconButton
-        title="Adicionar el carrito"
+        title="Adicionar al carrito"
         svg={<SvgShoppingCartSolid className="!size-8 !fill-gray-500" />}
         isBusy={updateAddOneShopping.status.isBusy}
         onClick={(e) => {
