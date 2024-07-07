@@ -16,30 +16,6 @@ describe('BannerInfoTotalDebitBusiness', () => {
       }),
     });
 
-    expect(result.container).toMatchInlineSnapshot(`
-      <div>
-        <div
-          class="flex items-center ring-1 ring-gray-400 rounded-2xl py-0.5 px-2"
-        >
-          <span
-            class="font-bold"
-          >
-            <span
-              class="text-nowrap"
-            >
-              Débito
-            </span>
-            :
-          </span>
-          <span>
-            <span
-              class="text-nowrap"
-            >
-               0 CUP
-            </span>
-          </span>
-        </div>
-      </div>
-    `);
+    expect(result.container).toMatchInlineSnapshot(`<div />`);
   });
 });

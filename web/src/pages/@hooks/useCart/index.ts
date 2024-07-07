@@ -1,24 +1,30 @@
+import { useEffect } from 'react';
+
 import { useGetAllShopping } from 'features/api/shopping/useGetAllShopping';
+import { useAuth } from 'features/api-slices/useAuth';
 import { useApiPersistentPaginated } from 'features/slices/useApiPersistentPaginated';
 
-import { FetchResourceWithPagination, FetchStatus } from 'types/api';
-import { Shopping } from 'types/shopping';
+import { useBusiness } from '../useBusiness';
+
+import { FetchStatus } from 'types/api';
+import { Shopping, ShoppingState } from 'types/shopping';
 
 interface UseShoppingReturn {
-  data: Array<Shopping>;
   //
   constructionShopping: Shopping | undefined;
   constructionShoppingProductsCount: number;
   //
   status: FetchStatus;
-  onFetch: FetchResourceWithPagination<{ routeName: string }, Shopping>['fetch'];
+  onFetch: () => void;
   onReset: () => void;
 }
 
-export const useShopping = (): UseShoppingReturn => {
+export const useCart = (): UseShoppingReturn => {
   const { getAllShopping } = useGetAllShopping();
+  const { business } = useBusiness();
+  const { isAuthenticated } = useAuth();
 
-  const { data, status, reset, fetch } = useApiPersistentPaginated('useShopping', getAllShopping);
+  const { data, status, reset, fetch } = useApiPersistentPaginated('useCart', getAllShopping);
 
   const shopping = data || [];
   const firstShopping = shopping[0] || undefined;
@@ -31,7 +37,7 @@ export const useShopping = (): UseShoppingReturn => {
     UseShoppingReturn,
     'constructionShopping' | 'constructionShoppingProductsCount'
   > => {
-    if (!firstShopping || firstShopping.state !== 'CONSTRUCTION') {
+    if (!firstShopping || firstShopping.state !== ShoppingState.CONSTRUCTION) {
       return {
         constructionShopping: undefined,
         constructionShoppingProductsCount: 0,
@@ -44,11 +50,22 @@ export const useShopping = (): UseShoppingReturn => {
     };
   };
 
+  const onFetch: UseShoppingReturn['onFetch'] = () => {
+    business && fetch({ routeName: business.routeName, states: [ShoppingState.CONSTRUCTION] });
+  };
+
+  const shouldCall = business && !data && isAuthenticated;
+
+  useEffect(() => {
+    if (shouldCall) {
+      onFetch();
+    }
+  }, [shouldCall]);
+
   return {
-    data: data || [],
     ...getShoppingContructionData(),
     status,
-    onFetch: fetch,
+    onFetch,
     onReset: reset,
   };
 };

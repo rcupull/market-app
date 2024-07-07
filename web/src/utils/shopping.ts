@@ -31,14 +31,13 @@ export const getShoppingData = (
 
 export const getShoppingStateLabel = (state: ShoppingState): string => {
   const labels: Record<ShoppingState, string> = {
-    CONSTRUCTION: 'En construcción', //this state is temporaly and can not handle by the user
-    REQUESTED: 'Solicitado',
-    CANCELED: 'Cancelado',
-    REJECTED: 'Rechazado',
-    PROCESSING: 'En proceso',
-    DELIVERED: 'Entregado',
-    // READY_TO_DELIVER: 'Listo para entregar',
-    APPROVED: 'Aceptado',
+    [ShoppingState.CONSTRUCTION]: 'En construcción', //this state is temporaly and can not handle by the user
+    [ShoppingState.REQUESTED]: 'Solicitado',
+    [ShoppingState.CANCELED]: 'Cancelado',
+    [ShoppingState.REJECTED]: 'Rechazado',
+    [ShoppingState.PROCESSING]: 'En proceso',
+    [ShoppingState.DELIVERED]: 'Entregado',
+    [ShoppingState.APPROVED]: 'Aceptado',
   };
 
   return labels[state];
@@ -50,5 +49,8 @@ export const getShoppingStateLabel = (state: ShoppingState): string => {
 export const wasApprovedShopping = (shopping: Shopping): boolean => {
   const { state, history } = shopping;
 
-  return state === 'APPROVED' || !!history?.find(({ state }) => state === 'APPROVED');
+  return (
+    state === ShoppingState.APPROVED ||
+    !!history?.find(({ state }) => state === ShoppingState.APPROVED)
+  );
 };

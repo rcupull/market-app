@@ -22,6 +22,7 @@ export const useUpdateOneBusiness = (): {
           | 'shoppingMeta'
           | 'postFormFields'
           | 'notificationFlags'
+          | 'seo'
         >
       >;
     },

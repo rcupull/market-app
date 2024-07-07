@@ -3,16 +3,15 @@ import { BusinessCurrency } from './business';
 import { Address, BaseIdentity } from './general';
 import { Post } from './post';
 
-export type ShoppingState =
-  | 'CONSTRUCTION'
-  | 'REQUESTED'
-  | 'APPROVED'
-  | 'PROCESSING'
-  // | 'READY_TO_DELIVER'
-  | 'DELIVERED'
-  //
-  | 'CANCELED'
-  | 'REJECTED';
+export enum ShoppingState {
+  CONSTRUCTION = 'CONSTRUCTION',
+  REQUESTED = 'REQUESTED',
+  APPROVED = 'APPROVED',
+  PROCESSING = 'PROCESSING',
+  DELIVERED = 'DELIVERED',
+  CANCELED = 'CANCELED',
+  REJECTED = 'REJECTED',
+}
 
 export type ShoppingPostData = Pick<Post, '_id' | 'price' | 'images' | 'name'>;
 

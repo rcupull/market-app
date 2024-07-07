@@ -4,7 +4,7 @@ import { Shopping } from './shopping';
 
 export interface ReduxState {
   useBusiness: SliceApiPersistentState;
-  useShopping: SliceApiPersistentState<PaginatedData<Shopping>>;
+  useCart: SliceApiPersistentState<PaginatedData<Shopping>>;
   useShoppingIdPersistent: SliceApiPersistentState;
   usePostIdPersistent: SliceApiPersistentState;
   //

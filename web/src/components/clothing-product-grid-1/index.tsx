@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { FieldClothingSizeSelectProps } from 'components/field-clothing-size-select';
 import { FieldColorSelectProps } from 'components/field-colors-select';
 import { Formux } from 'components/formux';
@@ -7,6 +9,7 @@ import { ProductDetailsProps } from 'components/product/details/types';
 import { ProductHighLightsProps } from 'components/product/hightlights/types';
 import { ProductImagesProps } from 'components/product/images/types';
 import { ProductPriceProps } from 'components/product/price/types';
+import { ProductStockLabelProps } from 'components/product/stock/product-stock-label';
 import { ReviewProps } from 'components/review';
 
 import { usePortal } from 'hooks/usePortal';
@@ -26,6 +29,7 @@ export interface ClothingProductGrid1Props {
     description?: (props: ProductDescriptionProps) => React.ReactNode;
     highLights?: (props: ProductHighLightsProps) => React.ReactNode;
     details?: (props: ProductDetailsProps) => React.ReactNode;
+    stockAvailable?: (props: ProductStockLabelProps) => React.ReactNode;
   };
 }
 
@@ -106,6 +110,8 @@ export const ClothingProductGrid1 = ({ post, render, currency }: ClothingProduct
           </Formux>
 
           <div ref={portal.ref} />
+
+          <div className="flex justify-center mt-4">{render.stockAvailable?.({ post })}</div>
         </div>
 
         <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
