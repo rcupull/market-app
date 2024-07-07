@@ -3,6 +3,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   //
   typeMaxLength?: number;
   typeOnlyNumbers?: boolean;
+  typeByRegex?: RegExp;
   //
   preventDefaultEnter?: boolean;
 }

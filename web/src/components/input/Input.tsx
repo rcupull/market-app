@@ -15,6 +15,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       typeOnlyNumbers,
       preventDefaultEnter,
       typeMaxLength,
+      typeByRegex,
       ...omittedProps
     } = props;
 
@@ -30,6 +31,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           )}
           {...omittedProps}
           onKeyPress={(event) => {
+            /**
+             * can not type any character if not match the regex
+             */
+            if (typeByRegex && !typeByRegex.test(event.key)) {
+              event.preventDefault();
+            }
+
             if (typeOnlyNumbers && !/[0-9]/.test(event.key)) {
               event.preventDefault();
             }
