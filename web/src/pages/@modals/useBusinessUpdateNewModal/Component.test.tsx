@@ -167,6 +167,24 @@ describe('Component', () => {
                   <div
                     class="relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100 w-fit cursor-pointer"
                   >
+                    Rebajas
+                  </div>
+                </div>
+                <div
+                  class="relative"
+                >
+                  <div
+                    class="relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100 w-fit cursor-pointer"
+                  >
+                    Recomendados
+                  </div>
+                </div>
+                <div
+                  class="relative"
+                >
+                  <div
+                    class="relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100 w-fit cursor-pointer"
+                  >
                     Ventas calientes
                   </div>
                 </div>
@@ -195,6 +213,24 @@ describe('Component', () => {
                     class="relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100 w-fit cursor-pointer"
                   >
                     Para niños
+                  </div>
+                </div>
+                <div
+                  class="relative"
+                >
+                  <div
+                    class="relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100 w-fit cursor-pointer"
+                  >
+                    En tendencia
+                  </div>
+                </div>
+                <div
+                  class="relative"
+                >
+                  <div
+                    class="relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100 w-fit cursor-pointer"
+                  >
+                    Tallas grandes
                   </div>
                 </div>
               </div>

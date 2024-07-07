@@ -31,7 +31,7 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
   return (
     <FiltersContainer
       onReset={() => {
-        onChange?.({ page: 1, states: ['REQUESTED'] });
+        onChange?.({ page: 1, states: [ShoppingState.REQUESTED] });
       }}
     >
       <RadioGroup<{ label: string; value: Value }>
@@ -48,23 +48,23 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
           },
           {
             label: 'Solicitados',
-            value: 'REQUESTED',
+            value: ShoppingState.REQUESTED,
           },
           {
             label: 'Aceptados',
-            value: 'APPROVED',
+            value: ShoppingState.APPROVED,
           },
           {
             label: 'En proceso',
-            value: 'PROCESSING',
+            value: ShoppingState.PROCESSING,
           },
           {
             label: 'Entregados',
-            value: 'DELIVERED',
+            value: ShoppingState.DELIVERED,
           },
           {
             label: 'Rechazadas',
-            value: 'REJECTED',
+            value: ShoppingState.REJECTED,
           },
         ]}
         className={cn('flex items-center gap-4 mb-5 flex-wrap w-full', className)}

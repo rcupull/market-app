@@ -13,27 +13,19 @@ describe('Component', () => {
 
     expect(result.container).toMatchInlineSnapshot(`
       <div>
-        <form
-          class="w-full"
+        <div
+          class="p-4"
         >
           <div
-            class="mt-6"
-            data-id="FormFieldWrapper"
+            class="flex justify-end"
           >
-            <div
-              class=""
+            <button
+              class="relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit bg-indigo-600 text-white fill-white hover:bg-indigo-500 hover:bg-indigo-500"
             >
-              <div
-                class="no-preflight check-editor-max-h-65vh"
-              >
-                <div />
-              </div>
-            </div>
-            <span
-              class="text-red-500 text-xs"
-            />
+              Añadir feature
+            </button>
           </div>
-        </form>
+        </div>
       </div>
     `);
   });
