@@ -305,6 +305,7 @@ const put_business_routeName: () => RequestHandler = () => {
           postFormFields: 'postFormFields',
           shoppingMeta: 'shoppingMeta',
           notificationFlags: 'notificationFlags',
+          seo: 'seo',
         })(body),
       });
 

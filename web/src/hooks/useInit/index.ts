@@ -7,32 +7,16 @@ import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPer
 import { useSignOut } from 'features/api-slices/useSignOut';
 import { useCookies } from 'features/cookies/useCookies';
 
-import { callAfarIds, useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useDebouncer } from 'hooks/useDebouncer';
 import { useInterval } from 'hooks/useInterval';
-import { useRouter } from 'hooks/useRouter';
 
 export const useInit = () => {
   const { isAuthenticated, onRefreshAuthUser, isUser } = useAuth();
-  const { pushRoute } = useRouter();
 
   const allUserBusiness = useAllUserBusiness();
   const adminConfig = useAdminConfig();
 
   const debouncer = useDebouncer();
-
-  const getAllUserBussinessRefresh = () => allUserBusiness.init();
-
-  useCallFromAfar(callAfarIds.getAllUserBussiness, getAllUserBussinessRefresh);
-
-  useCallFromAfar(callAfarIds.redirect_to_dashboard_business_routename, ({ routeName }) => {
-    pushRoute(`/dashboard/business/${routeName}`, undefined, { timeout: 100 });
-  });
-
-  const init = () => {
-    isUser && getAllUserBussinessRefresh();
-    onRefreshAuthUser();
-  };
 
   const reset = () => {
     allUserBusiness.reset();
@@ -44,7 +28,12 @@ export const useInit = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      debouncer(init, 500);
+      debouncer(() => {
+        if (isUser) {
+          allUserBusiness.refresh();
+        }
+        onRefreshAuthUser();
+      }, 500);
 
       return reset;
     }

@@ -93,6 +93,11 @@ export interface BusinessAboutUsPage {
   description?: string; // checkeditor text
 }
 
+export interface BusinessSEO {
+  title?: string;
+  description?: string;
+}
+
 export interface BusinessPaymentRequest {
   shoppingId: string;
   shoppingDebit: number;
@@ -147,6 +152,7 @@ export interface Business extends BaseIdentity {
     >
   >;
   currency: BusinessCurrency;
+  seo?: BusinessSEO;
 }
 
 export interface BusinessDto extends Business {

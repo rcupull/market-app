@@ -13,7 +13,7 @@ import {
 } from 'utils/business';
 import { getFlattenJson } from 'utils/general';
 
-interface UseRouterReturn {
+interface UseRouterReturn<Q extends Query = Query> {
   pushRoute: (
     route: string,
     query?: AnyRecord,
@@ -22,9 +22,9 @@ interface UseRouterReturn {
     }
   ) => void;
   onBack: () => void;
-  queryToSearch: (query: Query) => void;
+  queryToSearch: (query: Q) => void;
   pathname: string;
-  query: Query;
+  query: Q;
   search: string;
   params: Record<string, string | undefined>;
   //
@@ -40,25 +40,28 @@ interface UseRouterReturn {
   isAuthenticatedPage: boolean;
   //
   onChangeQuery: (
-    partialQuery: Query,
+    partialQuery: Partial<Q>,
     options?: {
       timeout?: number;
+      replaceAll?: boolean;
     }
   ) => void;
 }
 
-export const useRouter = (): UseRouterReturn => {
+export const useRouter = <Q extends Query = Query>(): UseRouterReturn<Q> => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
 
   const params = getParamsFromPathname(pathname);
 
-  const query = searchToQuery(search.slice(1)) as Query;
+  const query = searchToQuery(search.slice(1)) as Q;
 
   const onChangeQuery: UseRouterReturn['onChangeQuery'] = (newQuery, options) => {
-    const { timeout } = options || {};
+    const { timeout, replaceAll } = options || {};
     const handle = () => {
-      const updatedQuery = getFlattenJson({ ...query, ...newQuery });
+      const updatedQuery = replaceAll
+        ? getFlattenJson(newQuery)
+        : getFlattenJson({ ...query, ...newQuery });
 
       navigate({
         pathname: pathname,

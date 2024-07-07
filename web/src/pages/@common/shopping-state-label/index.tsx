@@ -14,14 +14,14 @@ export const ShoppingStateLabel = ({ state, disableColor, className }: ShoppingS
       className={cn(
         'font-bold',
         {
-          'text-yellow-500': !disableColor && state === 'REQUESTED',
-          'text-indigo-500': !disableColor && state === 'PROCESSING',
-          // 'text-cyan-500': !disableColor && state === 'READY_TO_DELIVER',
-          'text-green-500': !disableColor && state === 'DELIVERED',
-          'text-gray-300': !disableColor && state === 'CONSTRUCTION',
-          'text-blue-500': !disableColor && state === 'APPROVED',
+          'text-yellow-500': !disableColor && state === ShoppingState.REQUESTED,
+          'text-indigo-500': !disableColor && state === ShoppingState.PROCESSING,
+          'text-green-500': !disableColor && state === ShoppingState.DELIVERED,
+          'text-gray-300': !disableColor && state === ShoppingState.CONSTRUCTION,
+          'text-blue-500': !disableColor && state === ShoppingState.APPROVED,
           'text-red-500':
-            (!disableColor && state === 'REJECTED') || (!disableColor && state === 'CANCELED'),
+            (!disableColor && state === ShoppingState.REJECTED) ||
+            (!disableColor && state === ShoppingState.CANCELED),
         },
         className
       )}

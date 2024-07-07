@@ -6,7 +6,7 @@ import { useAuth } from './useAuth';
 import { Business } from 'types/business';
 
 export const useAllUserBusiness = (): {
-  init: () => void;
+  refresh: () => void;
   reset: () => void;
   data: Array<Business> | null;
 } => {
@@ -18,7 +18,7 @@ export const useAllUserBusiness = (): {
   return {
     reset,
     data,
-    init: () => {
+    refresh: () => {
       fetch({
         includeHidden: true,
         pagination: false,
