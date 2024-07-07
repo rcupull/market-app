@@ -130,6 +130,11 @@ export enum BusinessNotificationFlags {
   TELEGRAM_NEW_SHOPPING = 'TELEGRAM_NEW_SHOPPING',
 }
 
+export interface BusinessSEO {
+  title?: string;
+  description?: string;
+}
+
 export interface Business extends BaseIdentity {
   name: string;
   routeName: string;
@@ -150,6 +155,7 @@ export interface Business extends BaseIdentity {
   shoppingDebit: number;
   postFormFields?: Array<PostFormField>;
   currency: BusinessCurrency;
+  seo?: BusinessSEO;
 }
 
 export interface BusinessSummary extends Pick<Business, '_id' | 'name' | 'routeName'> {

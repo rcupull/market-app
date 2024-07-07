@@ -6,6 +6,7 @@ import SvgBootstrap from 'icons/Bootstrap';
 import SvgFighterJetSolid from 'icons/FighterJetSolid';
 import SvgHandshakeSolid from 'icons/HandshakeSolid';
 import SvgMedrt from 'icons/Medrt';
+import SvgNetworkWiredSolid from 'icons/NetworkWiredSolid';
 import SvgShareAltSolid from 'icons/ShareAltSolid';
 import SvgTagsSolid from 'icons/TagsSolid';
 import SvgUsersSolid from 'icons/UsersSolid';
@@ -19,6 +20,7 @@ import { useBusinessUpdateLogo } from 'pages/@modals/useBusinessUpdateLogo';
 import { useBusinessUpdateNotifications } from 'pages/@modals/useBusinessUpdateNotifications';
 import { useBusinessUpdatePostCategories } from 'pages/@modals/useBusinessUpdatePostCategories';
 import { useBusinessUpdatePostForm } from 'pages/@modals/useBusinessUpdatePostForm';
+import { useBusinessUpdateSeo } from 'pages/@modals/useBusinessUpdateSeo';
 import { useBusinessUpdateSocialNetworks } from 'pages/@modals/useBusinessUpdateSocialNetworks';
 
 export const Settings = () => {
@@ -27,6 +29,7 @@ export const Settings = () => {
   const businessUpdateBanner = useBusinessUpdateBanner();
   const businessUpdateAboutUs = useBusinessUpdateAboutUs();
   const businessUpdateLogo = useBusinessUpdateLogo();
+  const businessUpdateSeo = useBusinessUpdateSeo();
   const businessUpdatePostCategories = useBusinessUpdatePostCategories();
   const businessUpdatePostForm = useBusinessUpdatePostForm();
   const businessUpdateNotifications = useBusinessUpdateNotifications();
@@ -125,6 +128,13 @@ export const Settings = () => {
         description="Aprobecha este espacio para comunicarle a tus clientes los matices de tu negocio."
         svg={SvgUsersSolid}
         onClick={() => businessUpdateAboutUs.open()}
+      />
+
+      <SettingBox
+        title="SEO"
+        description="Optimiza los motores de busqueda y mejora la localización de tu negocio en internet."
+        svg={SvgNetworkWiredSolid}
+        onClick={() => businessUpdateSeo.open()}
       />
 
       <SettingBox

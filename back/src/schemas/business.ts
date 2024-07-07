@@ -137,6 +137,10 @@ const BusinessSchema = new Schema<Business>({
       'images',
     ],
   },
+  seo: {
+    title: { type: String },
+    description: { type: String },
+  },
 });
 
 BusinessSchema.plugin(mongoosePaginate);
