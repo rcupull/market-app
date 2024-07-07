@@ -14,10 +14,15 @@ import {
   getBusinessNotFoundResponse,
   getUserNotFoundResponse,
 } from '../../utils/server-response';
-import { Business, BusinessDto, BusinessSummary, PostCategory } from '../../types/business';
+import {
+  Business,
+  BusinessDto,
+  BusinessSearchDto,
+  BusinessSummary,
+  PostCategory,
+} from '../../types/business';
 import { Image, ModelDocument, RequestHandler } from '../../types/general';
 import { makeReshaper } from '../../utils/makeReshaper';
-import { getPostCategoriesFromBusinessCategories } from './utils';
 import { PaginateResult } from '../../middlewares/pagination';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { isEqualIds, movRow } from '../../utils/general';
@@ -107,13 +112,17 @@ const get_business_search: () => RequestHandler = () => {
 
       const { search } = query;
 
+      //eslint-disable-next-line
       const nlpResponse = await nlpServicesProcessMainManager({ text: search });
 
       /**
-       * TODO convert ths response to a data
+       * TODO convert ths nlpResponse to a data
+       * shoul return a BusinessSearchDto[]
        */
 
-      res.send(nlpResponse);
+      const out: Array<BusinessSearchDto> = [];
+
+      res.send(out);
     });
   };
 };
@@ -238,14 +247,13 @@ const post_business: () => RequestHandler = () => {
 
       const { body } = req;
 
-      const { name, categories, routeName, currency } = body;
+      const { name, postCategories, routeName, currency } = body;
 
       const out = await businessServicesAddOne({
-        categories,
         name,
         routeName,
         createdBy: user._id,
-        postCategories: getPostCategoriesFromBusinessCategories(categories),
+        postCategories,
         currency,
       });
 
@@ -287,7 +295,6 @@ const put_business_routeName: () => RequestHandler = () => {
         },
         update: makeReshaper<Business, Business>({
           name: 'name',
-          categories: 'categories',
           hidden: 'hidden',
           socialLinks: 'socialLinks',
           bannerImages: 'bannerImages',

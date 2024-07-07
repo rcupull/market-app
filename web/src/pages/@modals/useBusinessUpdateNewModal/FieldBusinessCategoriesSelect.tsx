@@ -1,126 +1,75 @@
-import { useEffect, useMemo } from 'react';
-
-import { FieldCheckbox } from 'components/field-checkbox';
+import { Button } from 'components/button';
 import { FieldRadioGroup, FieldRadioGroupProps } from 'components/field-radio-group';
-import { useFormField } from 'components/formux/useFormField';
 
-import { useGeneralBusinessCategories } from 'features/api/general/useGeneralBusinessCategories';
-
+import { PostCategory } from 'types/business';
 import { AnyRecord } from 'types/general';
+import { getPostCategoryTag } from 'utils/business';
 import { cn } from 'utils/general';
 
 export interface FieldBusinessCategoriesSelectProps<O>
   extends Omit<FieldRadioGroupProps<O>, 'renderOption' | 'optionToValue' | 'items'> {}
 
-interface Option {
-  value: string;
-  level: number;
-}
+const defaultCategoriesLabels: Array<{ label: string }> = [
+  {
+    label: 'Recientes',
+  },
+  {
+    label: 'Ofertas',
+  },
+  {
+    label: 'Rebajas',
+  },
+  {
+    label: 'Recomendados',
+  },
+  {
+    label: 'Ventas calientes',
+  },
+  {
+    label: 'Para hombres',
+  },
+  {
+    label: 'Para mujeres',
+  },
+  {
+    label: 'Para niños',
+  },
+  {
+    label: 'En tendencia',
+  },
+  {
+    label: 'Tallas grandes',
+  },
+];
 
 export const FieldBusinessCategoriesSelect = (
   props: FieldBusinessCategoriesSelectProps<AnyRecord>
 ) => {
-  const { generalBusinessCategories } = useGeneralBusinessCategories();
-
-  const { field } = useFormField<Array<any>>(props);
-  useEffect(() => {
-    generalBusinessCategories.fetch();
-  }, []);
-
-  const { businessCategoryLabels, businessCategoryTree } = generalBusinessCategories.data || {};
-
-  const getItems = (args: {
-    initialItems: Array<Option>;
-    parentPath: string;
-    tree: AnyRecord;
-    level: number;
-  }): Array<Option> => {
-    const { initialItems, parentPath, tree, level } = args;
-    const entries = Object.entries(tree);
-
-    entries.forEach(([key, value]) => {
-      const newParentPath = parentPath ? `${parentPath}.${key}` : key;
-
-      initialItems.push({
-        value: newParentPath,
-        level,
-      });
-
-      if (value instanceof Object) {
-        getItems({
-          initialItems,
-          parentPath: newParentPath,
-          tree: value,
-          level: level + 1,
-        });
-      }
-    });
-
-    return initialItems;
-  };
-
-  const items = useMemo(() => {
-    if (!businessCategoryTree) {
-      return [];
-    }
-
-    return getItems({
-      initialItems: [],
-      parentPath: '',
-      tree: businessCategoryTree,
-      level: 0,
-    });
-  }, [JSON.stringify(businessCategoryTree)]);
-
-  const maxLevel = Math.max(...items.map(({ level }) => level));
-  ////////////////////////////////////////////////////////////////////////////////
-  const addAllChildrenFrom = (path: string) => {
-    const allPaths = items.map(({ value }) => value);
-    const newValue = [...(field.value || []), ...allPaths.filter((p) => p.startsWith(path))];
-    field.onChange({
-      target: {
-        name: field.name,
-        value: newValue,
-      },
-    });
-  };
-
-  ////////////////////////////////////////////////////////////////////////////////
-  const removeAllChildrenFrom = (path: string) => {
-    const newvalue = (field.value || []).filter((p) => !p.startsWith(path));
-
-    field.onChange({
-      target: {
-        name: field.name,
-        value: newvalue,
-      },
-    });
-  };
-
   return (
-    <FieldRadioGroup<Option>
-      isBusy={generalBusinessCategories.status.isBusy}
-      onOptionClicked={({ value, level }, { selected }) => {
-        if (level < maxLevel) {
-          (selected ? addAllChildrenFrom : removeAllChildrenFrom)(value);
-        }
-      }}
+    <FieldRadioGroup<{ value: PostCategory }>
       renderOption={({ checked, item }) => {
         const { value } = item;
         return (
-          <FieldCheckbox noUseFormik value={checked} label={businessCategoryLabels?.[value]} />
+          <Button
+            as="div"
+            className={cn('w-fit cursor-pointer', {
+              '!bg-gray-300': checked,
+            })}
+            variant="outlined"
+            label={value.label}
+          />
         );
-      }}
-      getOptionCutomStyles={({ level }) => {
-        return cn({
-          'pl-4': level > 0,
-          'col-start-1 col-span-full py-1 my-4 border-y-2 border-gray-300': level === 0,
-        });
       }}
       multi
       optionToValue={({ value }) => value}
-      items={items}
-      containerClassName="grid  grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4"
+      items={defaultCategoriesLabels.map(({ label }) => ({
+        value: {
+          label,
+          tag: getPostCategoryTag(label),
+          hidden: false,
+        },
+      }))}
+      containerClassName="flex flex-wrap gap-2 justify-between"
       {...props}
     />
   );

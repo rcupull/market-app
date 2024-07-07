@@ -807,7 +807,7 @@
                   "name": {
                     "example": "any"
                   },
-                  "categories": {
+                  "postCategories": {
                     "example": "any"
                   },
                   "routeName": {
@@ -1457,16 +1457,6 @@
         }
       }
     },
-    "/general/business-categories": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/bills": {
       "get": {
         "description": "",
@@ -1543,6 +1533,25 @@
     "/nlp/train": {
       "post": {
         "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/nlp/search": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

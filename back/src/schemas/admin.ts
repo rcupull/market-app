@@ -9,6 +9,16 @@ const AdminConfigShema = new Schema<AdminConfig>({
   termsAndConditions: { type: String },
   privacyPolicy: { type: String },
   price: { type: String },
+  features: {
+    type: [
+      {
+        _id: false,
+        key: { type: String, unique: true },
+        enabled: { type: Boolean },
+        description: { type: String },
+      },
+    ],
+  },
 });
 
 export const AdminConfigModel = model<AdminConfig>('AdminConfig', AdminConfigShema, 'admin_config');

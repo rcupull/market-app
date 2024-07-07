@@ -4,6 +4,8 @@ import { Navigate } from 'react-router-dom';
 import { SpinnerEllipsis } from 'components/spinner-ellipsis';
 import { TabItem, Tabs } from 'components/tabs';
 
+import { useAdminConfig } from 'features/api-slices/useAdminConfig';
+
 import { useRouter } from 'hooks/useRouter';
 
 import { Billing } from './billing';
@@ -27,10 +29,11 @@ import { BannerInfoTotalDebitBusiness } from 'pages/@common/banner-info-total-de
 import { LayoutPage } from 'pages/@common/layout-page';
 import { LayoutSection } from 'pages/@common/layout-section';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { isString } from 'utils/general';
+import { compact, isString } from 'utils/general';
 
 export const RouteName = () => {
   const { params, query, onChangeQuery } = useRouter();
+  const { getEnabledFeature } = useAdminConfig();
   const { routeName } = params;
 
   const businessOwnerData = useBusiness();
@@ -77,7 +80,7 @@ export const RouteName = () => {
     );
   }
 
-  const tabsItems: Array<TabItem & { q: BusinessTab }> = [
+  const tabsItems: Array<TabItem & { q: BusinessTab }> = compact([
     {
       q: 'products',
       label: getBusinessTabLabel('products'),
@@ -108,13 +111,13 @@ export const RouteName = () => {
       svg: SvgCogSolid,
       content: <Settings />,
     },
-    {
+    getEnabledFeature('BILLIING_THE_BUSINESS') && {
       q: 'billing',
       label: getBusinessTabLabel('billing'),
       content: <Billing />,
       svg: SvgMoneyBillAltSolid,
     },
-  ];
+  ]);
 
   const tabIndexToQuery = (tabIndex: number) => {
     return tabsItems[tabIndex]?.q;

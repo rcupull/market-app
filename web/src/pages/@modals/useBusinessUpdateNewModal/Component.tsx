@@ -5,6 +5,7 @@ import { Formux } from 'components/formux';
 
 import { useAddOneBusiness } from 'features/api/business/useAddOneBusiness';
 import { useGetAllBusiness } from 'features/api/business/useGetAllBusiness';
+import { useGetOneBusiness } from 'features/api/business/useGetOneBusiness';
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 
 import { useDebouncer } from 'hooks/useDebouncer';
@@ -25,6 +26,7 @@ export interface ComponentProps {
 
 export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) => {
   const { getAllBusiness } = useGetAllBusiness();
+  const { getOneBusiness } = useGetOneBusiness();
 
   const { addOneBusiness } = useAddOneBusiness();
   const { updateOneBusiness } = useUpdateOneBusiness();
@@ -35,16 +37,16 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
 
   return (
     <>
-      <Formux<Pick<Business, 'categories' | 'name' | 'currency'>>
+      <Formux<Pick<Business, 'postCategories' | 'name' | 'currency'>>
         value={{
-          categories: [],
+          postCategories: [],
           name: '',
           currency: 'CUP',
           ...(business || {}),
         }}
         validate={[
           {
-            field: 'categories',
+            field: 'postCategories',
             type: 'custom',
             customCb: (val) => {
               return val.length > 0;
@@ -58,19 +60,22 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
           {
             field: 'name',
             type: 'custom',
+            customCb: (value) => value.length <= 25,
+            message: 'El nombre del negocio no puede superar los 25 caracteres',
+          },
+          {
+            field: 'name',
+            type: 'custom',
             message: routeValidationErrorMessage,
             customCb: async (name) => {
               const routeName = getRouteName(name);
               return new Promise((resolve) => {
                 debouncer(() => {
-                  getAllBusiness.fetch(
-                    { routeNames: [routeName] },
+                  getOneBusiness.fetch(
+                    { routeName },
                     {
-                      onAfterSuccess: (response) => {
-                        const { data } = response;
-                        const exists = !!data.length;
-                        resolve(!exists);
-                      },
+                      onAfterSuccess: () => resolve(false),
+                      onAfterFailed: () => resolve(true),
                     }
                   );
                 }, 500);
@@ -86,6 +91,8 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                 id="business-name"
                 name="name"
                 autoComplete="business-name"
+                maxLength={25}
+                preventDefaultEnter
                 label={
                   <span className="flex flex-col sm:flex-row items-start sm:items-center">
                     {getRequiredLabel('Nombre del negocio')}
@@ -127,7 +134,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                 <FieldBusinessCategoriesSelect
                   label={getRequiredLabel('Categorías')}
                   className="mt-6"
-                  name="categories"
+                  name="postCategories"
                 />
               </>
 
@@ -152,11 +159,11 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                         }
                       );
                     } else {
-                      const { categories, name, currency } = value;
+                      const { postCategories, name, currency } = value;
 
                       addOneBusiness.fetch(
                         {
-                          categories,
+                          postCategories,
                           name,
                           currency,
                           routeName: getRouteName(name),

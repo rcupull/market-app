@@ -5,12 +5,12 @@ import { app } from './server';
 import fs from 'fs';
 import https from 'https';
 import http from 'http';
-import { telegramServices } from './features/telegram/services';
+import { telegramServicesInit } from './features/telegram/services';
 import { nlpServicesInit } from './features/nlp/services';
 
 connectDB();
 
-telegramServices.init();
+telegramServicesInit();
 notificationsServicesInit();
 nlpServicesInit();
 
