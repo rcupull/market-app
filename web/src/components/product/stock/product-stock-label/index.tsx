@@ -2,12 +2,12 @@ import { PostCardLayout } from 'types/business';
 import { Post } from 'types/post';
 import { cn, isNullOrUndefined } from 'utils/general';
 
-export interface CardPostStockAmountProps {
+export interface ProductStockLabelProps {
   post: Post;
   layout?: PostCardLayout;
 }
 
-export const CardPostStockAmount = ({ post, layout }: CardPostStockAmountProps) => {
+export const ProductStockLabel = ({ post, layout }: ProductStockLabelProps) => {
   const { stockAmountAvailable } = post;
 
   if (isNullOrUndefined(stockAmountAvailable)) {

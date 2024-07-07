@@ -94,9 +94,25 @@ const injectBusinessMetaMiddlware: RequestHandler = async (req, res, next) => {
       return `${hostname}/b/${business.routeName}`;
     };
 
+    const getDescription = () => {
+      if (business.seo?.description) {
+        return business.seo?.description;
+      }
+
+      return 'Emprendimiento cubano de la plataforma Asere Market.';
+    };
+
+    const getTitle = () => {
+      if (business.seo?.title) {
+        return business.seo?.title;
+      }
+
+      return business.name;
+    };
+
     req.htmlMeta = {
-      description: 'Emprendimiento cubano la plataforma Asere Market', //TODO
-      title: `${business.name}`,
+      description: getDescription(),
+      title: getTitle(),
       image: getImageSrc(),
       url: getBusinessUrl(),
     };
@@ -204,5 +220,5 @@ export const frontMiddlware = combineMiddleware(
   router.get('/b/:routeName/posts/:postId', injectPostMetaMiddlware),
   router.get('/b/:routeName/shopping/:shoppingId', injectShoppingMetaMiddlware),
   router.get('/b/:routeName*', injectBusinessMetaMiddlware),
-  injectDefaultMetaMiddlware,
+  injectDefaultMetaMiddlware
 );

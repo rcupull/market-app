@@ -27,7 +27,7 @@ export const AddNewBusinessButton = ({ className }: AddNewBusinessButtonProps) =
             if (newBussiness) {
               const { routeName } = newBussiness;
               pushRoute(getDashboardBusinessRoute({ routeName }), {}, { timeout: 100 });
-              allUserBusiness.init();
+              allUserBusiness.refresh();
             }
           },
         });

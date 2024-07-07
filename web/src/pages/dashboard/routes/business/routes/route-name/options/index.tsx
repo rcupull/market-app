@@ -9,9 +9,9 @@ import { IconView } from 'components/icon-view';
 import { Menu } from 'components/menu';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
+import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
 import { useModal } from 'features/modal/useModal';
 
-import { callAfarIds, useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
 
 import { BusinessTab, getBusinessTabLabel } from '../utils';
@@ -34,10 +34,10 @@ export interface OptionsProps {
 
 export const Options = ({ business, onRefresh }: OptionsProps) => {
   const { routeName, hidden } = business;
+  const allUserBusiness = useAllUserBusiness();
 
   const { pushModal } = useModal();
   const { pushRoute, onChangeQuery, query } = useRouter();
-  const { onCallAfar } = useCallFromAfar();
 
   const handleShowHide = () => {
     pushModal(
@@ -68,7 +68,7 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
                     {
                       onAfterSuccess: () => {
                         onRefresh();
-                        onCallAfar(callAfarIds.getAllUserBussiness); // update all the bussiness
+                        allUserBusiness.refresh();
                         onClose();
                       },
                     }

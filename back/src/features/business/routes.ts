@@ -13,7 +13,7 @@ router
   .get(pagination, businessHandles.get_business())
   .post(
     validators.body('name').notEmpty(),
-    validators.body('categories').notEmpty(),
+    validators.body('postCategories').notEmpty(),
     validators.body('routeName').notEmpty(),
     validators.handle,
     isLogged,

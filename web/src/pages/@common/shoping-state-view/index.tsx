@@ -38,20 +38,22 @@ export const ShoppingStateView = ({
     }
   }, [fetchStatus.isSuccess]);
 
-  if (state === 'REJECTED' || state === 'CANCELED' || state === 'DELIVERED') {
+  if (
+    state === ShoppingState.REJECTED ||
+    state === ShoppingState.CANCELED ||
+    state === ShoppingState.DELIVERED
+  ) {
     return <ShoppingStateLabel state={state} />;
   }
 
   const nextStates = (): Array<ShoppingState> => {
     switch (state) {
-      case 'REQUESTED':
-        return ['REQUESTED', 'APPROVED', 'REJECTED'];
-      case 'APPROVED':
-        return ['APPROVED', 'PROCESSING', 'REJECTED'];
-      case 'PROCESSING':
-        return ['PROCESSING' /*, 'READY_TO_DELIVER'*/, 'DELIVERED', 'REJECTED'];
-      // case 'READY_TO_DELIVER':
-      //   return ['READY_TO_DELIVER', 'DELIVERED', 'REJECTED'];
+      case ShoppingState.REQUESTED:
+        return [ShoppingState.REQUESTED, ShoppingState.APPROVED, ShoppingState.REJECTED];
+      case ShoppingState.APPROVED:
+        return [ShoppingState.APPROVED, ShoppingState.PROCESSING, ShoppingState.REJECTED];
+      case ShoppingState.PROCESSING:
+        return [ShoppingState.PROCESSING, ShoppingState.DELIVERED, ShoppingState.REJECTED];
       default:
         return [];
     }

@@ -5,7 +5,7 @@ import { useRouter } from 'hooks/useRouter';
 import { LayoutPage } from 'pages/@common/layout-page';
 import { ShoppingButtonStateHistory } from 'pages/@common/shopping-button-state-history';
 import { ShoppingDetails } from 'pages/@common/shopping-details';
-import { ShoppingState } from 'pages/@common/shopping-state';
+import { ShoppingStateBadge } from 'pages/@common/shopping-state-badge';
 import { useShoppingIdPersistent } from 'pages/@hooks/useShoppingIdPersistent';
 
 export const ShoppingId = () => {
@@ -39,7 +39,7 @@ export const ShoppingId = () => {
           getActions={({ shopping }) => {
             return (
               <>
-                <ShoppingState shopping={shopping} />
+                <ShoppingStateBadge shopping={shopping} />
                 <ShoppingButtonStateHistory shopping={shopping} />
               </>
             );
