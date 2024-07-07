@@ -8,7 +8,7 @@ import { LayoutPage } from 'pages/@common/layout-page';
 import { ShoppingButtonCancel } from 'pages/@common/shopping-button-cancel';
 import { ShoppingButtonStateHistory } from 'pages/@common/shopping-button-state-history';
 import { ShoppingDetails } from 'pages/@common/shopping-details';
-import { ShoppingState } from 'pages/@common/shopping-state';
+import { ShoppingStateBadge } from 'pages/@common/shopping-state-badge';
 import { getOneShoppingRoute } from 'utils/business';
 
 export interface HomeProps {
@@ -37,7 +37,7 @@ export const Home = ({ routeName }: HomeProps) => {
                 const { state } = shopping;
                 return (
                   <>
-                    <ShoppingState shopping={shopping} />
+                    <ShoppingStateBadge shopping={shopping} />
                     <ShoppingButtonStateHistory shopping={shopping} />
                     {state === 'REQUESTED' && (
                       <ShoppingButtonCancel shopping={shopping} onAfterSucess={onRefresh} />
