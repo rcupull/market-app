@@ -204,5 +204,5 @@ export const frontMiddlware = combineMiddleware(
   router.get('/b/:routeName/posts/:postId', injectPostMetaMiddlware),
   router.get('/b/:routeName/shopping/:shoppingId', injectShoppingMetaMiddlware),
   router.get('/b/:routeName*', injectBusinessMetaMiddlware),
-  injectDefaultMetaMiddlware,
+  injectDefaultMetaMiddlware
 );

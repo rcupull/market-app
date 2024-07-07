@@ -32,7 +32,6 @@ describe('business', () => {
                 "visible": false,
               },
               "bannerImages": [],
-              "categories": [],
               "createdAt": Anything,
               "createdBy": Anything,
               "currency": "CUP",
@@ -134,7 +133,13 @@ describe('business', () => {
         .send({
           name: 'newBusiness',
           routeName: 'newBusiness',
-          categories: ['clothing'],
+          postCategories: [
+            {
+              label: 'Recientes',
+              tag: 'recientes',
+              hidden: false,
+            },
+          ],
         })
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(401);
@@ -152,7 +157,13 @@ describe('business', () => {
         .send({
           name: 'newBusiness',
           routeName: business1User1.routeName, // exiting bussiness
-          categories: ['clothing'],
+          postCategories: [
+            {
+              label: 'Recientes',
+              tag: 'recientes',
+              hidden: false,
+            },
+          ],
         })
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(400);
@@ -170,7 +181,13 @@ describe('business', () => {
         .send({
           name: 'newBusiness',
           routeName: 'newBusiness',
-          categories: ['clothing'],
+          postCategories: [
+            {
+              label: 'Recientes',
+              tag: 'recientes',
+              hidden: false,
+            },
+          ],
           currency: 'CUP',
         })
         .auth(generateToken(user1._id), { type: 'bearer' })
@@ -198,7 +215,13 @@ describe('business', () => {
         .send({
           name: 'newBusiness',
           routeName: 'newBusiness',
-          categories: ['clothing'],
+          postCategories: [
+            {
+              label: 'Recientes',
+              tag: 'recientes',
+              hidden: false,
+            },
+          ],
         })
         .expect(401);
     });
@@ -231,7 +254,6 @@ describe('business', () => {
                 "visible": false,
               },
               "bannerImages": [],
-              "categories": [],
               "createdAt": Anything,
               "createdBy": Anything,
               "currency": "CUP",

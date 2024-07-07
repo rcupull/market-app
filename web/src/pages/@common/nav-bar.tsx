@@ -4,6 +4,7 @@ import { Menu } from 'components/menu';
 import { NavBar as NavBarBase } from 'components/nav-bar';
 import { UserAvatar } from 'components/user-avatar';
 
+import { useAdminConfig } from 'features/api-slices/useAdminConfig';
 import { useAuth } from 'features/api-slices/useAuth';
 import { useSignOut } from 'features/api-slices/useSignOut';
 
@@ -58,6 +59,7 @@ export const Navbar = ({ className }: NavbarProps) => {
   const { routeName } = params;
   const { business } = useBusiness();
   const authChangePasswordModal = useAuthChangePasswordModal();
+  const { getEnabledFeature } = useAdminConfig();
   const aboutUsPage = business?.aboutUsPage || {};
 
   const authSignInModal = useAuthSignInModal();
@@ -131,7 +133,7 @@ export const Navbar = ({ className }: NavbarProps) => {
             '!block': isOneBusinessPage,
           }),
         },
-        {
+        getEnabledFeature('BILLIING_THE_BUSINESS') && {
           label: 'Precios',
           onClick: () => pushRoute('/price'),
           svg: SvgDollarSignSolid,
@@ -231,7 +233,7 @@ export const Navbar = ({ className }: NavbarProps) => {
                 svg: SvgUsersSolid,
                 active: pathname === '/about-us',
               },
-              {
+              getEnabledFeature('BILLIING_THE_BUSINESS') && {
                 label: 'Precios',
                 onClick: () => pushRoute('/price'),
                 svg: SvgDollarSignSolid,
