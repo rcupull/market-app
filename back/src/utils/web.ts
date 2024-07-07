@@ -15,5 +15,5 @@ export const getBusinessUrl = ({ routeName }: { routeName: string }) => {
 };
 
 export const getBusinessOrdersTagUrl = ({ routeName }: { routeName: string }) => {
-  return `${hostname}/business/${routeName}?bussinessTab=shopping`;
+  return `${hostname}/dashboard/business/${routeName}?bussinessTab=shopping`;
 };
