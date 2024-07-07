@@ -4,6 +4,11 @@ export interface AdminConfig extends BaseIdentity {
   termsAndConditions?: string;
   privacyPolicy?: string;
   price?: string;
+  features?: Array<{
+    key: string;
+    enabled: boolean;
+    description: string;
+  }>;
 }
 
 export type Access =

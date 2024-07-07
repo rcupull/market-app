@@ -7,6 +7,7 @@ export const useAdminConfig = (): {
   init: () => void;
   reset: () => void;
   data: AdminConfig | null;
+  getEnabledFeature: (featureKey: string) => boolean;
 } => {
   const { getConfigAdmin } = useGetConfigAdmin();
 
@@ -17,6 +18,9 @@ export const useAdminConfig = (): {
     data,
     init: () => {
       fetch();
+    },
+    getEnabledFeature: (featureKey: string) => {
+      return data?.features?.find((feature) => feature.key === featureKey)?.enabled ?? false;
     },
   };
 };

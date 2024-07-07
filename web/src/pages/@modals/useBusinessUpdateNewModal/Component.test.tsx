@@ -52,6 +52,7 @@ describe('Component', () => {
                   autocomplete="business-name"
                   class="block w-full h-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:bg-gray-200 disabled:cursor-not-allowed"
                   id="business-name"
+                  maxlength="25"
                   name="name"
                   value=""
                 />
@@ -140,21 +141,60 @@ describe('Component', () => {
                 </label>
               </div>
               <div
-                class="grid  grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4"
+                class="flex flex-wrap gap-2 justify-between"
               >
                 <div
-                  class="absolute inset-0 bg-white opacity-55 flex items-center justify-center"
+                  class="relative"
                 >
-                  <div>
-                    <div
-                      class="rcs-ellipsis"
-                      style="--rcs-ellipsis-color: rgba(0,0,0, 0.5);"
-                    >
-                      <div />
-                      <div />
-                      <div />
-                      <div />
-                    </div>
+                  <div
+                    class="relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100 w-fit cursor-pointer"
+                  >
+                    Recientes
+                  </div>
+                </div>
+                <div
+                  class="relative"
+                >
+                  <div
+                    class="relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100 w-fit cursor-pointer"
+                  >
+                    Ofertas
+                  </div>
+                </div>
+                <div
+                  class="relative"
+                >
+                  <div
+                    class="relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100 w-fit cursor-pointer"
+                  >
+                    Ventas calientes
+                  </div>
+                </div>
+                <div
+                  class="relative"
+                >
+                  <div
+                    class="relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100 w-fit cursor-pointer"
+                  >
+                    Para hombres
+                  </div>
+                </div>
+                <div
+                  class="relative"
+                >
+                  <div
+                    class="relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100 w-fit cursor-pointer"
+                  >
+                    Para mujeres
+                  </div>
+                </div>
+                <div
+                  class="relative"
+                >
+                  <div
+                    class="relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100 w-fit cursor-pointer"
+                  >
+                    Para niños
                   </div>
                 </div>
               </div>

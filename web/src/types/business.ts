@@ -132,7 +132,6 @@ export enum BusinessNotificationFlags {
 
 export interface Business extends BaseIdentity {
   name: string;
-  categories: Array<BusinessCategory>;
   routeName: string;
   createdBy: string; // userId
   hidden?: boolean;
