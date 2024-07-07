@@ -8,8 +8,8 @@ import { LayoutPage } from 'pages/@common/layout-page';
 import { ShoppingButtonCancel } from 'pages/@common/shopping-button-cancel';
 import { ShoppingButtonStateHistory } from 'pages/@common/shopping-button-state-history';
 import { ShoppingDetails } from 'pages/@common/shopping-details';
-import { ShoppingState } from 'pages/@common/shopping-state';
-import { ShoppingState as StateType} from 'types/shopping';
+import { ShoppingStateBadge } from 'pages/@common/shopping-state-badge';
+import { ShoppingState } from 'types/shopping';
 import { getOneShoppingRoute } from 'utils/business';
 
 export interface HomeProps {
@@ -20,7 +20,7 @@ export const Home = ({ routeName }: HomeProps) => {
   const { getAllConstructedShopping } = useGetAllConstructedShopping();
   const { pushRoute } = useRouter();
 
-  const state_ne : StateType = 'CONSTRUCTION';
+  const state_ne = ShoppingState.CONSTRUCTION;
   const onRefresh = () => getAllConstructedShopping.fetch({ routeName, state_ne});
 
   useEffect(() => {
@@ -39,9 +39,9 @@ export const Home = ({ routeName }: HomeProps) => {
                 const { state } = shopping;
                 return (
                   <>
-                    <ShoppingState shopping={shopping} />
+                    <ShoppingStateBadge shopping={shopping} />
                     <ShoppingButtonStateHistory shopping={shopping} />
-                    {state === 'REQUESTED' && (
+                    {state === ShoppingState.REQUESTED && (
                       <ShoppingButtonCancel shopping={shopping} onAfterSucess={onRefresh} />
                     )}
                   </>

@@ -315,7 +315,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
           purchaserId: user._id,
         },
         update: {
-          state: 'REQUESTED',
+          state: ShoppingState.REQUESTED,
         },
       });
 
@@ -355,7 +355,7 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
 
       const state: ShoppingState = body.state;
 
-      if (state === 'CONSTRUCTION') {
+      if (state === ShoppingState.CONSTRUCTION) {
         return get400Response({
           res,
           json: { message: 'Can not change the state to CONSTRUCTION' },
@@ -370,7 +370,7 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
         return getShoppingNotFoundResponse({ res });
       }
 
-      if (shopping.state === 'CONSTRUCTION') {
+      if (shopping.state === ShoppingState.CONSTRUCTION) {
         return get400Response({
           res,
           json: { message: 'Can not change the state from CONSTRUCTION' },

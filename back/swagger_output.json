@@ -807,7 +807,7 @@
                   "name": {
                     "example": "any"
                   },
-                  "categories": {
+                  "postCategories": {
                     "example": "any"
                   },
                   "routeName": {
@@ -1453,16 +1453,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/general/business-categories": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }
