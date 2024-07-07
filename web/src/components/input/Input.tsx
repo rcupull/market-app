@@ -9,7 +9,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const { type } = props;
 
   const renderInput = (props: InputProps) => {
-    const { className, endElement, typeOnlyNumbers, preventDefaultEnter, typeMaxLength, ...omittedProps } = props;
+    const {
+      className,
+      endElement,
+      typeOnlyNumbers,
+      preventDefaultEnter,
+      typeMaxLength,
+      ...omittedProps
+    } = props;
 
     return (
       <div className={cn('relative h-9', className)}>

@@ -63,7 +63,6 @@ export const businessDummy: Business = {
   _id: 'id',
   createdAt: 'createdAt',
   currency: 'USD',
-  categories: [],
   createdBy: 'createdBy',
   name: 'name',
   routeName: 'routeName',

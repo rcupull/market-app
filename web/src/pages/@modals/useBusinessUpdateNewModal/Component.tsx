@@ -37,16 +37,16 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
 
   return (
     <>
-      <Formux<Pick<Business, 'categories' | 'name' | 'currency'>>
+      <Formux<Pick<Business, 'postCategories' | 'name' | 'currency'>>
         value={{
-          categories: [],
+          postCategories: [],
           name: '',
           currency: 'CUP',
           ...(business || {}),
         }}
         validate={[
           {
-            field: 'categories',
+            field: 'postCategories',
             type: 'custom',
             customCb: (val) => {
               return val.length > 0;
@@ -75,7 +75,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                     { routeName },
                     {
                       onAfterSuccess: () => resolve(false),
-                      onAfterFailed: () =>  resolve(true),
+                      onAfterFailed: () => resolve(true),
                     }
                   );
                 }, 500);
@@ -134,7 +134,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                 <FieldBusinessCategoriesSelect
                   label={getRequiredLabel('Categorías')}
                   className="mt-6"
-                  name="categories"
+                  name="postCategories"
                 />
               </>
 
@@ -159,11 +159,11 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                         }
                       );
                     } else {
-                      const { categories, name, currency } = value;
+                      const { postCategories, name, currency } = value;
 
                       addOneBusiness.fetch(
                         {
-                          categories,
+                          postCategories,
                           name,
                           currency,
                           routeName: getRouteName(name),
