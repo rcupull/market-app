@@ -46,7 +46,7 @@ export const telegramServicesInit = () => {
 
     bot.sendMessage(
       meta.chatId,
-      `Tiene 5 minutos para usar el siguiente código de activación: ${code}.`,
+      `Tiene 5 minutos para usar el siguiente código de activación: ${code}.`
     );
   });
 
@@ -68,7 +68,7 @@ export const telegramServicesInit = () => {
       `<a href='https://aseremarket.net/b/maria-s-garage/shopping/668883f4cb37e3248c4d46da'>Camisetas de niños</a>`,
       {
         parse_mode: 'HTML',
-      },
+      }
     );
   });
 

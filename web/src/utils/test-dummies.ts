@@ -4,7 +4,7 @@ import { AdminConfig } from 'types/admin';
 import { Paginator } from 'types/api';
 import { AuthData, User } from 'types/auth';
 import { Business } from 'types/business';
-import { Shopping } from 'types/shopping';
+import { Shopping, ShoppingState } from 'types/shopping';
 
 export const portalDummy: Portal = {
   getPortal: jest.fn(),
@@ -53,7 +53,7 @@ export const shoppingDummy: Shopping = {
   purchaserId: 'purchaserId',
   purchaserName: 'purchaserName',
   routeName: 'routeName',
-  state: 'CONSTRUCTION',
+  state: ShoppingState.CONSTRUCTION,
   billId: 'billId',
   billState: 'PENDING_TO_PAY',
   history: [],
@@ -63,7 +63,6 @@ export const businessDummy: Business = {
   _id: 'id',
   createdAt: 'createdAt',
   currency: 'USD',
-  categories: [],
   createdBy: 'createdBy',
   name: 'name',
   routeName: 'routeName',

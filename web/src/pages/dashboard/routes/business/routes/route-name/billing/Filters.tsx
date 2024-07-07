@@ -4,6 +4,7 @@ import { RadioGroup } from 'components/radio-group';
 import { GetAllBillsQuery } from 'types/api';
 import { BillState } from 'types/billing';
 import { StyleProps } from 'types/general';
+import { ShoppingState } from 'types/shopping';
 import { cn } from 'utils/general';
 
 type Value = BillState | 'ALL';
@@ -40,7 +41,7 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
         },
         {
           label: 'Chequeando Pago',
-          value: 'CANCELED',
+          value: ShoppingState.CANCELED,
         },
         {
           label: 'Pagado',

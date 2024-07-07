@@ -5,7 +5,7 @@ import { ShoppingModel } from '../schemas/shopping';
 import { UserModel } from '../schemas/user';
 import { Business } from '../types/business';
 import { Post } from '../types/post';
-import { Shopping } from '../types/shopping';
+import { Shopping, ShoppingState } from '../types/shopping';
 import { User } from '../types/user';
 
 export interface TestBDContent {
@@ -182,7 +182,7 @@ export const fillBD = async (args?: {
   });
 
   const shopping1Business1User1 = new ShoppingModel({
-    state: 'CONSTRUCTION',
+    state: ShoppingState.CONSTRUCTION,
     purchaserId: user1._id,
     routeName: business1User1.routeName,
     currency: business1User1.currency,
