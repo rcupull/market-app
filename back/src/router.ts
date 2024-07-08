@@ -10,6 +10,7 @@ import { router as shoppingRouter } from './features/shopping/routes';
 import { router as billingRouter } from './features/billing/routes';
 import { router as geolocationRouter } from './features/geolocation/routes';
 import { router as nlpRouter } from './features/nlp/routes';
+import { router as reviewRouter } from './features/review/routes';
 
 export const router = Router();
 
@@ -25,7 +26,8 @@ router.use(
   shoppingRouter,
   billingRouter,
   geolocationRouter,
-  nlpRouter
+  nlpRouter,
+  reviewRouter,
 );
 
 export default router;

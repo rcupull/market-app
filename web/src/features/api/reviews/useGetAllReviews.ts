@@ -1,21 +1,18 @@
 import { useFetch } from 'hooks/useFetch';
 
 import { defaultLimit } from 'constants/api';
-import { FetchResourceWithPagination, PaginatedData } from 'types/api';
-import { Shopping, ShoppingState } from 'types/shopping';
+import { FetchResourceWithPagination, GetAllReviewsQuery, PaginatedData } from 'types/api';
+import { Review } from 'types/reviews';
 import { getEndpoint } from 'utils/api';
 import { getPaginationResources } from 'utils/pagination';
 
-export const useGetAllShopping = (): {
-  getAllShopping: FetchResourceWithPagination<
-    { routeName: string; states?: Array<ShoppingState> },
-    Shopping
-  >;
+export const useGetAllReviews = (): {
+  getAllReviews: FetchResourceWithPagination<GetAllReviewsQuery, Review>;
 } => {
-  const fetch = useFetch<PaginatedData<Shopping>>();
+  const fetch = useFetch<PaginatedData<Review>>();
 
   return {
-    getAllShopping: {
+    getAllReviews: {
       ...getPaginationResources(fetch[0]),
       status: fetch[1],
       fetch: (query, options = {}) => {
@@ -23,7 +20,7 @@ export const useGetAllShopping = (): {
           {
             method: 'get',
             url: getEndpoint({
-              path: '/shopping',
+              path: '/reviews',
               query: { limit: defaultLimit, ...query },
             }),
           },

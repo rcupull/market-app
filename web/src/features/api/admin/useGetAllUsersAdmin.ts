@@ -1,5 +1,6 @@
 import { useFetch } from 'hooks/useFetch';
 
+import { defaultLimit } from 'constants/api';
 import { FetchResourceWithPagination, PaginatedData } from 'types/api';
 import { User } from 'types/auth';
 import { getEndpoint } from 'utils/api';
@@ -20,9 +21,10 @@ export const useGetAllUsersAdmin = (): {
             method: 'get',
             url: getEndpoint({
               path: '/admin/users',
+              query: { limit: defaultLimit },
             }),
           },
-          options
+          options,
         );
       },
       reset: fetch[3],
