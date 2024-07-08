@@ -1,4 +1,4 @@
-import { movRow, stringExtract } from './general';
+import { movRow, stringExtract, numberExtract } from './general';
 
 describe('movRow()', () => {
   it('should return a right value 1', async () => {
@@ -35,5 +35,16 @@ describe('stringExtract()', () => {
     [null, 'products.name.{val}.category.{val}', 'products.name.name1'],
   ])('should return %p when value = %p', (expected, exp, value) => {
     expect(stringExtract(exp, value)).toEqual(expected);
+  });
+});
+
+describe('numberExtract()', () => {
+  it.each([
+    [[78], 'el minimo es 78'],
+    [[78, 67], 'el minimo es 78 y el maximo es 67'],
+    [[78, 67, 90], 'el minimo es 78, maximo 67 y el intermedio es 90'],
+    [[78], 'el minimo ^(*&@!*  #!@#[]{}) es 78 *&*(&${}":?>,'],
+  ])('should return %p when value = %p', (expected, value) => {
+    expect(numberExtract(value)).toEqual(expected);
   });
 });
