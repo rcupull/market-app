@@ -53,7 +53,8 @@ export const ComponentProduct = ({
     postCategoriesTags: [],
     searchLayout: 'none',
     type: 'grid',
-    hidden: true,
+    showMobile: false,
+    showPC: false,
     postType: 'product',
     ...(section || {}),
   });
@@ -72,7 +73,10 @@ export const ComponentProduct = ({
       {({ value, isValid, hasChange }) => {
         return (
           <form className={className}>
-            <FieldCheckbox label="Oculta" name="hidden" />
+            <div className="flex gap-4">
+              <FieldCheckbox label="Mostrar en móviles" name="showMobile" />
+              <FieldCheckbox label="Mostrar en PC" name="showPC" />
+            </div>
 
             {/* //////////////////////////////////////////////////////////////////////////////////////////////// */}
             <Divider />

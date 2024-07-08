@@ -22,7 +22,9 @@ export type PostSectionType = 'post' | 'link';
 
 export interface PostsLayoutSection {
   _id: string;
-  hidden?: boolean;
+  //
+  showMobile?: boolean;
+  showPC?: boolean;
   //
   postType: PostType;
   //
@@ -171,7 +173,8 @@ export type PostsLayoutSectionPayload = Pick<
   | 'postCategoriesTags'
   | 'searchLayout'
   | 'hiddenName'
-  | 'hidden'
+  | 'showMobile'
+  | 'showPC'
   | 'type'
   | 'postType'
 >;

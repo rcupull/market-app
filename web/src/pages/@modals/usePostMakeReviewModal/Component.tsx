@@ -1,13 +1,11 @@
-import { useState } from 'react';
-
 import { Button } from 'components/button';
-import { ReviewAverage } from 'components/review-average';
+import { FieldReviewAverage } from 'components/field-review-average';
+import { FieldTextArea } from 'components/field-text-area';
+import { Formux } from 'components/formux';
 
-import { useMakeReviewPost } from 'features/api/posts/useMakeReviewPost';
+import { useAddOneReview } from 'features/api/reviews/useAddOneReview';
 
 import { Portal } from 'hooks/usePortal';
-
-import { isNumber } from 'utils/general';
 
 export interface ComponentProps {
   portal: Portal;
@@ -16,36 +14,63 @@ export interface ComponentProps {
 }
 
 export const Component = ({ portal, postId, onAfterSuccess }: ComponentProps) => {
-  const [state, setState] = useState<number>();
-
-  const { makeReviewPost } = useMakeReviewPost();
+  const { addOneReview } = useAddOneReview();
 
   return (
-    <div className="flex min-h-full flex-col justify-center">
-      <ReviewAverage value={state} onChange={setState} />
+    <Formux<{
+      star?: number;
+      comment?: string;
+    }>
+      value={{
+        star: undefined,
+        comment: '',
+      }}
+      validate={[
+        {
+          field: 'star',
+          type: 'required',
+          message: 'Cuantifica la calidad de este producto.',
+        },
+        {
+          field: 'comment',
+          type: 'required',
+          message: 'Tu opinión sobre este prodcuto es importante para nosotros.',
+        },
+      ]}
+    >
+      {({ value, isValid }) => {
+        return (
+          <form className="mt-10">
+            <FieldReviewAverage label="Review" name="star" />
 
-      {portal.getPortal(
-        <Button
-          label="Votar"
-          isBusy={makeReviewPost.status.isBusy}
-          disabled={!isNumber(state)}
-          onClick={() => {
-            if (!isNumber(state)) return;
+            <FieldTextArea label="Comentario" name="comment" className="mt-6" />
 
-            makeReviewPost.fetch(
-              {
-                postId,
-                value: state,
-              },
-              {
-                onAfterSuccess,
-              }
-            );
-          }}
-          className="w-full"
-        />
-      )}
-    </div>
+            {portal.getPortal(
+              <Button
+                label="Agregar reseña"
+                isBusy={addOneReview.status.isBusy}
+                disabled={!isValid}
+                onClick={() => {
+                  const { comment, star } = value;
+
+                  addOneReview.fetch(
+                    {
+                      postId,
+                      comment,
+                      star,
+                    },
+                    {
+                      onAfterSuccess,
+                    }
+                  );
+                }}
+                className="w-full"
+              />
+            )}
+          </form>
+        );
+      }}
+    </Formux>
   );
 };
 

@@ -20,7 +20,6 @@ export const useUpdateOnePost = (): {
         | 'images'
         | 'price'
         | 'name'
-        | 'reviews'
         | 'postCategoriesTags'
         | 'discount'
         | 'postPageLayout'

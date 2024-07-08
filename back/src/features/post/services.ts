@@ -47,9 +47,10 @@ export const postServicesGetAll: QueryHandle<
 export const postServicesGetOne: QueryHandle<
   {
     query: FilterQuery<Post> & { hidden?: boolean };
+    projection?: ProjectionType<Post>;
   },
   ModelDocument<Post> | null
-> = async ({ query }) => {
+> = async ({ query, projection }) => {
   const { hidden, ...omittedQuery } = query;
 
   const filterQuery: FilterQuery<Post> = omittedQuery;
@@ -58,7 +59,7 @@ export const postServicesGetOne: QueryHandle<
     filterQuery.hidden = hidden;
   }
 
-  const out = await PostModel.findOne(filterQuery);
+  const out = await PostModel.findOne(filterQuery, projection);
 
   return out;
 };

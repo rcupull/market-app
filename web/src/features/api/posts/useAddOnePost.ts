@@ -18,7 +18,6 @@ export const useAddOnePost = (): {
       | 'highlights'
       | 'name'
       | 'price'
-      | 'reviews'
       | 'images'
       | 'postCategoriesTags'
       | 'discount'
