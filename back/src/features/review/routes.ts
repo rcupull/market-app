@@ -11,3 +11,5 @@ router
   .route('/reviews')
   .get(pagination, reviewsHandles.get_reviews())
   .post(isLogged, reviewsHandles.post_reviews());
+
+router.route('/reviews/summary').get(reviewsHandles.get_reviews_summary());

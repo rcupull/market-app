@@ -12,3 +12,12 @@ export interface Review extends BaseIdentity {
   star?: number;
   comment?: string;
 }
+
+export interface ReviewDto extends Review {
+  reviewerName?: string;
+}
+
+export interface ReviewSummary {
+  starSummary: [number, number, number, number, number];
+  reviewerIds: Array<string>;
+}

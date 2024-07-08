@@ -162,14 +162,6 @@ describe('services', () => {
           ],
           "postType": "product",
           "price": 10,
-          "reviews": [
-            0,
-            0,
-            0,
-            0,
-            0,
-          ],
-          "reviewsUserIds": [],
           "routeName": "business1User1",
           "stockAmount": null,
         }

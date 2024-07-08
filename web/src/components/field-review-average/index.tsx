@@ -18,6 +18,12 @@ export const FieldReviewAverage = (props: FieldReviewAverageProps) => {
       <ReviewAverage
         value={field.value}
         onChange={(newValue) => {
+          field.onBlur({
+            target: {
+              name: field.name,
+            },
+          });
+
           field.onChange({
             target: {
               name: field.name,

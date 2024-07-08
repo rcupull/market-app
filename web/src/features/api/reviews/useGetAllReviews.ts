@@ -2,14 +2,14 @@ import { useFetch } from 'hooks/useFetch';
 
 import { defaultLimit } from 'constants/api';
 import { FetchResourceWithPagination, GetAllReviewsQuery, PaginatedData } from 'types/api';
-import { Review } from 'types/reviews';
+import { ReviewDto } from 'types/reviews';
 import { getEndpoint } from 'utils/api';
 import { getPaginationResources } from 'utils/pagination';
 
 export const useGetAllReviews = (): {
-  getAllReviews: FetchResourceWithPagination<GetAllReviewsQuery, Review>;
+  getAllReviews: FetchResourceWithPagination<GetAllReviewsQuery, ReviewDto>;
 } => {
-  const fetch = useFetch<PaginatedData<Review>>();
+  const fetch = useFetch<PaginatedData<ReviewDto>>();
 
   return {
     getAllReviews: {
@@ -24,7 +24,7 @@ export const useGetAllReviews = (): {
               query: { limit: defaultLimit, ...query },
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

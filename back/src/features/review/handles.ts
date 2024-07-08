@@ -13,12 +13,14 @@ import {
   reviewServicesGetAll,
   reviewServicesGetAllWithPagination,
 } from './services';
-import { ReviewType } from '../../types/reviews';
+import { Review, ReviewDto, ReviewSummary, ReviewType } from '../../types/reviews';
 import { postServicesGetOne } from '../post/services';
 import { Post } from '../../types/post';
 import { Business } from '../../types/business';
 import { businessServicesFindOne } from '../business/services';
-import { isEqualIds } from '../../utils/general';
+import { deepJsonCopy, isEqualIds, isNumber } from '../../utils/general';
+import { User } from '../../types/user';
+import { userServicesGetAll } from '../user/services';
 
 const get_reviews: () => RequestHandler = () => {
   return (req, res) => {
@@ -43,7 +45,79 @@ const get_reviews: () => RequestHandler = () => {
         },
       });
 
-      res.send(response);
+      const out = deepJsonCopy(response);
+
+      const reviewersData: Array<Pick<User, 'name' | '_id'>> = await userServicesGetAll({
+        query: {
+          _id: { $in: out.data.map(({ reviewerId }) => reviewerId) },
+        },
+        projection: {
+          name: 1,
+          _id: 1,
+        },
+      });
+
+      console.log('reviewersData', reviewersData);
+
+      const handleResolveDto = async (review: Review): Promise<ReviewDto> => {
+        const { reviewerId } = review;
+        const reviewer = reviewersData.find(({ _id }) => isEqualIds(_id, reviewerId));
+
+        return {
+          ...review,
+          reviewerName: reviewer?.name,
+        };
+      };
+
+      const promises = out.data.map((review) => {
+        return new Promise<ReviewDto>((resolve) => {
+          handleResolveDto(review).then(resolve);
+        });
+      });
+
+      out.data = await Promise.all(promises);
+
+      res.send(out);
+    });
+  };
+};
+
+const get_reviews_summary: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { query } = req;
+
+      const { postId, routeName } = query;
+
+      if (!postId && !routeName) {
+        return get400Response({
+          res,
+          json: {
+            message: 'Please provide a postId or a routeName',
+          },
+        });
+      }
+
+      const allReview = await reviewServicesGetAll({
+        query: {
+          reviewed: postId || routeName,
+        },
+      });
+
+      const out: ReviewSummary = {
+        starSummary: [0, 0, 0, 0, 0],
+        reviewerIds: [],
+      };
+
+      allReview.forEach(({ star, reviewerId }) => {
+        if (isNumber(star)) {
+          out.starSummary[star - 1] += 1;
+        }
+
+        out.reviewerIds.push(reviewerId.toString());
+      });
+
+      res.send(out);
     });
   };
 };
@@ -143,4 +217,5 @@ const post_reviews: () => RequestHandler = () => {
 export const reviewsHandles = {
   get_reviews,
   post_reviews,
+  get_reviews_summary,
 };
