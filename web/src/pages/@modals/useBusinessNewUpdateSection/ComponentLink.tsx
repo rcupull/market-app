@@ -48,7 +48,8 @@ export const ComponentLink = ({
     postCategoriesTags: [getRandomHash()],
     searchLayout: undefined,
     type: 'oneRowSlider',
-    hidden: true,
+    showMobile: false,
+    showPC: false,
     postType: 'link',
     ...(section || {}),
   });
@@ -67,7 +68,10 @@ export const ComponentLink = ({
       {({ value, isValid }) => {
         return (
           <form className={className}>
-            <FieldCheckbox label="Oculta" name="hidden" />
+            <div className="flex gap-4">
+              <FieldCheckbox label="Mostrar en móviles" name="showMobile" />
+              <FieldCheckbox label="Mostrar en PC" name="showPC" />
+            </div>
 
             {/* //////////////////////////////////////////////////////////////////////////////////////////////// */}
             <Divider />
