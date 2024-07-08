@@ -6,7 +6,7 @@ import { getEndpoint } from 'utils/api';
 
 export const useAddOneBusiness = (): {
   addOneBusiness: FetchResource<
-    Pick<Business, 'name' | 'routeName' | 'categories' | 'currency'>,
+    Pick<Business, 'name' | 'routeName' | 'postCategories' | 'currency'>,
     Business
   >;
 } => {

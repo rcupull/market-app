@@ -23,7 +23,6 @@ import {
 } from '../../types/business';
 import { Image, ModelDocument, RequestHandler } from '../../types/general';
 import { makeReshaper } from '../../utils/makeReshaper';
-import { getPostCategoriesFromBusinessCategories } from './utils';
 import { PaginateResult } from '../../middlewares/pagination';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { isEqualIds, movRow } from '../../utils/general';
@@ -252,14 +251,13 @@ const post_business: () => RequestHandler = () => {
 
       const { body } = req;
 
-      const { name, categories, routeName, currency } = body;
+      const { name, postCategories, routeName, currency } = body;
 
       const out = await businessServicesAddOne({
-        categories,
         name,
         routeName,
         createdBy: user._id,
-        postCategories: getPostCategoriesFromBusinessCategories(categories),
+        postCategories,
         currency,
       });
 
@@ -301,7 +299,6 @@ const put_business_routeName: () => RequestHandler = () => {
         },
         update: makeReshaper<Business, Business>({
           name: 'name',
-          categories: 'categories',
           hidden: 'hidden',
           socialLinks: 'socialLinks',
           bannerImages: 'bannerImages',
@@ -312,6 +309,7 @@ const put_business_routeName: () => RequestHandler = () => {
           postFormFields: 'postFormFields',
           shoppingMeta: 'shoppingMeta',
           notificationFlags: 'notificationFlags',
+          seo: 'seo',
         })(body),
       });
 

@@ -19,19 +19,18 @@ export interface FiltersProps extends StyleProps {
 }
 
 const allStates: Array<ShoppingState> = [
-  'CONSTRUCTION',
-  'REQUESTED',
-  'APPROVED',
-  'CANCELED',
-  'REJECTED',
-  'DELIVERED',
-  'PROCESSING',
-  // 'READY_TO_DELIVER',
+  ShoppingState.CONSTRUCTION,
+  ShoppingState.REQUESTED,
+  ShoppingState.APPROVED,
+  ShoppingState.CANCELED,
+  ShoppingState.REJECTED,
+  ShoppingState.DELIVERED,
+  ShoppingState.PROCESSING,
 ];
 
 export const Filters = ({ onChange, value, className }: FiltersProps) => {
   const useCall = () => useGetAllBusinessSummary().getAllBusinessSummary;
-  //
+
   return (
     <FiltersContainer
       onReset={() => {

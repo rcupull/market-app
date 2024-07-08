@@ -1,9 +1,16 @@
 import { BaseIdentity } from './general';
 
+export interface AdminConfigFeature {
+  key: string;
+  enabled: boolean;
+  description: string;
+}
+
 export interface AdminConfig extends BaseIdentity {
   termsAndConditions?: string;
   privacyPolicy?: string;
   price?: string;
+  features?: Array<AdminConfigFeature>;
 }
 
 export type Access =

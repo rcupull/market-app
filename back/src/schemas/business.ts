@@ -11,7 +11,6 @@ const BusinessSchema = new Schema<Business>({
   routeName: { type: String, required: true },
   hidden: { type: Boolean, default: false },
   currency: { type: String, enum: ['CUP', 'MLC', 'USD'], required: true },
-  categories: { type: [String], required: true },
   createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   postCategories: {
     type: [
@@ -21,6 +20,7 @@ const BusinessSchema = new Schema<Business>({
         hidden: { type: Boolean, default: false },
       },
     ],
+    required: true,
   },
   bannerImages: {
     type: [
@@ -136,6 +136,10 @@ const BusinessSchema = new Schema<Business>({
       'stockAmount',
       'images',
     ],
+  },
+  seo: {
+    title: { type: String },
+    description: { type: String },
   },
 });
 

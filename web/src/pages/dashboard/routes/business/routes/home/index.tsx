@@ -29,7 +29,7 @@ export const Home = () => {
           businessUpdateNewModal.open({
             onAfterSucess: (newBussiness) => {
               if (newBussiness) {
-                allUserBusiness.init();
+                allUserBusiness.refresh();
               }
             },
           });

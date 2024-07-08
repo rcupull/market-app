@@ -7,7 +7,6 @@ import { router as adminRouter } from './features/admin';
 import { router as catalogsRouter } from './features/catalogs/routes';
 import { router as imagesRouter } from './features/images/routes';
 import { router as shoppingRouter } from './features/shopping/routes';
-import { router as generalRouter } from './features/general/routes';
 import { router as billingRouter } from './features/billing/routes';
 import { router as geolocationRouter } from './features/geolocation/routes';
 import { router as nlpRouter } from './features/nlp/routes';
@@ -24,7 +23,6 @@ router.use(
   catalogsRouter,
   imagesRouter,
   shoppingRouter,
-  generalRouter,
   billingRouter,
   geolocationRouter,
   nlpRouter

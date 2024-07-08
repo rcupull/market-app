@@ -269,7 +269,7 @@ describe('shopping', () => {
           expect(shopping.purchaserId).toEqual(user1._id.toString());
           expect(shopping.purchaserName).toEqual(undefined);
           expect(shopping.routeName).toEqual(business1User1.routeName);
-          expect(shopping.state).toEqual('CONSTRUCTION');
+          expect(shopping.state).toEqual(ShoppingState.CONSTRUCTION);
           expect(shopping.posts[0].count).toEqual(5);
           expect(shopping.posts[0].postData._id).toContain(
             productPost1Business1User1._id.toString()
@@ -355,7 +355,7 @@ describe('shopping', () => {
           expect(shopping.purchaserId).toEqual(user1._id.toString());
           expect(shopping.purchaserName).toEqual(undefined);
           expect(shopping.routeName).toEqual(business1User1.routeName);
-          expect(shopping.state).toEqual('CONSTRUCTION');
+          expect(shopping.state).toEqual(ShoppingState.CONSTRUCTION);
 
           expect(shopping.posts[0].count).toEqual(5);
           expect(shopping.posts[0].postData._id).toContain(
@@ -460,7 +460,7 @@ describe('shopping', () => {
           expect(shopping.purchaserId).toEqual(user1._id.toString());
           expect(shopping.purchaserName).toEqual(undefined);
           expect(shopping.routeName).toEqual(business1User1.routeName);
-          expect(shopping.state).toEqual('CONSTRUCTION');
+          expect(shopping.state).toEqual(ShoppingState.CONSTRUCTION);
 
           expect(shopping.posts[0].count).toEqual(2);
           expect(shopping.posts[0].postData._id).toContain(
@@ -683,7 +683,7 @@ describe('shopping', () => {
           expect(shopping.purchaserId).toEqual(user1._id.toString());
           expect(shopping.purchaserName).toEqual(undefined);
           expect(shopping.routeName).toEqual(business1User1.routeName);
-          expect(shopping.state).toEqual('CONSTRUCTION');
+          expect(shopping.state).toEqual(ShoppingState.CONSTRUCTION);
 
           expect(shopping.posts.length).toEqual(1);
 
@@ -730,7 +730,7 @@ describe('shopping', () => {
       await dropTestDbConnectionAsync();
     });
 
-    it('should change the state to READY_TO_DELIVER', async () => {
+    it('should change the state to PROCESSING', async () => {
       const { user1, shopping1Business1User1 } = await fillBD({
         shopping1Business1User1: {
           state: ShoppingState.REQUESTED,
@@ -738,7 +738,7 @@ describe('shopping', () => {
       });
 
       // checking the state
-      expect(shopping1Business1User1.state).toEqual('REQUESTED');
+      expect(shopping1Business1User1.state).toEqual(ShoppingState.REQUESTED);
 
       // change the state
       await supertest(app)
@@ -750,7 +750,7 @@ describe('shopping', () => {
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .send({
-          state: 'READY_TO_DELIVER',
+          state: ShoppingState.PROCESSING,
         })
         .expect(200);
 
@@ -766,7 +766,7 @@ describe('shopping', () => {
         .expect(200)
         .then((response) => {
           const shopping: Shopping = response.body;
-          expect(shopping.state).toEqual('READY_TO_DELIVER');
+          expect(shopping.state).toEqual(ShoppingState.PROCESSING);
         });
     });
 
@@ -923,7 +923,7 @@ describe('shopping', () => {
     it('should change the state to DELIVERED', async () => {
       const { user1, shopping1Business1User1, productPost1Business1User1 } = await fillBD({
         shopping1Business1User1: {
-          state: ShoppingState.READY_TO_DELIVER,
+          state: ShoppingState.PROCESSING,
         },
         productPost1Business1User1: {
           stockAmount: 20,
@@ -947,7 +947,7 @@ describe('shopping', () => {
         });
 
       // checking the state
-      expect(shopping1Business1User1.state).toEqual(ShoppingState.READY_TO_DELIVER);
+      expect(shopping1Business1User1.state).toEqual(ShoppingState.PROCESSING);
 
       // change the state
       await supertest(app)
@@ -1012,7 +1012,7 @@ describe('shopping', () => {
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .send({
-          state: 'CONSTRUCTION',
+          state: ShoppingState.CONSTRUCTION,
         })
         .expect(400);
 
@@ -1028,7 +1028,7 @@ describe('shopping', () => {
         .expect(200)
         .then((response) => {
           const shopping: Shopping = response.body;
-          expect(shopping.state).toEqual('REQUESTED');
+          expect(shopping.state).toEqual(ShoppingState.REQUESTED);
         });
     });
 
@@ -1045,7 +1045,7 @@ describe('shopping', () => {
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .send({
-          state: 'READY_TO_DELIVER',
+          state: ShoppingState.PROCESSING,
         })
         .expect(400);
 
@@ -1061,7 +1061,7 @@ describe('shopping', () => {
         .expect(200)
         .then((response) => {
           const shopping: Shopping = response.body;
-          expect(shopping.state).toEqual('CONSTRUCTION');
+          expect(shopping.state).toEqual(ShoppingState.CONSTRUCTION);
         });
     });
   });

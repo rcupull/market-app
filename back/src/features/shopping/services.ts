@@ -44,7 +44,7 @@ export const shoppingServicesAddOne: QueryHandle<
   if (!businessData) return null;
 
   const newShopping = new ShoppingModel({
-    state: 'CONSTRUCTION',
+    state: ShoppingState.CONSTRUCTION,
     purchaserId: user._id,
     purchaserName: user.name,
     routeName,
@@ -137,7 +137,7 @@ export const shoppingServicesUpdateOrAddOne: QueryHandle<
 
   const existInConstruction = await ShoppingModel.findOne({
     purchaserId: user._id,
-    state: 'CONSTRUCTION',
+    state: ShoppingState.CONSTRUCTION,
     routeName: routeName,
   });
 
@@ -280,7 +280,6 @@ export const shoppingServicesGetDataFromPosts: QueryHandle<
           ShoppingState.REQUESTED,
           ShoppingState.APPROVED,
           ShoppingState.PROCESSING,
-          ShoppingState.READY_TO_DELIVER,
         ],
       },
     },

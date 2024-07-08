@@ -1,10 +1,7 @@
 import { BaseIdentity, Image, TelegramBotChat } from './general';
 import { Schema } from 'mongoose';
 import { Post, PostType } from './post';
-import { Path } from './paths';
-import { businessCategoryTree } from '../features/general/constants';
 
-export type BusinessCategory = Path<typeof businessCategoryTree>;
 export type BusinessCurrency = 'CUP' | 'MLC' | 'USD';
 
 export type PostsLayoutSectionType = 'grid' | 'oneRowSlider';
@@ -25,7 +22,9 @@ export type FooterLayoutType = 'none' | 'basic';
 export interface PostsLayoutSection {
   _id: string;
   name: string;
-  hidden?: boolean;
+  //
+  showMobile?: boolean;
+  showPC?: boolean;
   //
   postType: PostType;
   //
@@ -96,6 +95,11 @@ export interface BusinessAboutUsPage {
   description?: string; // checkeditor text
 }
 
+export interface BusinessSEO {
+  title?: string;
+  description?: string;
+}
+
 export interface BusinessPaymentRequest {
   shoppingId: string;
   shoppingDebit: number;
@@ -113,12 +117,11 @@ export enum BusinessNotificationFlags {
 export interface Business extends BaseIdentity {
   name: string;
   routeName: string;
-  categories: Array<BusinessCategory>;
   createdBy: Schema.Types.ObjectId; // userId
   hidden?: boolean;
   bannerImages?: Array<Image>;
   logo?: Image;
-  postCategories?: Array<PostCategory>;
+  postCategories: Array<PostCategory>;
   socialLinks: {
     face?: string;
     instagram?: string;
@@ -151,6 +154,7 @@ export interface Business extends BaseIdentity {
     >
   >;
   currency: BusinessCurrency;
+  seo?: BusinessSEO;
 }
 
 export interface BusinessDto extends Business {

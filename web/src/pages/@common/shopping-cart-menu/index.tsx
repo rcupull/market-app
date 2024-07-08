@@ -12,7 +12,7 @@ import { ShoppingCartRemoveAllButton } from '../shopping-cart-remove-all-button'
 import SvgCartPlusSolid from 'icons/CartPlusSolid';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useShopping } from 'pages/@hooks/useShopping';
+import { useCart } from 'pages/@hooks/useCart';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { useBuyProductsModal } from 'pages/@modals/useBuyProductsModal';
 import { StyleProps } from 'types/general';
@@ -23,7 +23,7 @@ export interface ShoppingCartMenuProps extends StyleProps {}
 export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
   const buyProductsModal = useBuyProductsModal();
   const { business } = useBusiness();
-  const shopping = useShopping();
+  const cart = useCart();
   const { pushRoute, isShoppingPage } = useRouter();
 
   const { isAuthenticated } = useAuth();
@@ -52,7 +52,7 @@ export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
       );
     }
 
-    if (!shopping.constructionShopping) {
+    if (!cart.constructionShopping) {
       return (
         <div>
           <div className="text-center font-semibold text-lg my-2">
@@ -77,7 +77,7 @@ export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
 
         <div className="mt-4">Tu selección hasta ahora:</div>
 
-        <ShoppingCartPosts value={shopping.constructionShopping} className="max-h-64" />
+        <ShoppingCartPosts value={cart.constructionShopping} className="max-h-64" />
 
         <div className="flex flex-col sm:flex-row gap-2 justify-between mt-2">
           <ShoppingCartRemoveAllButton />
@@ -100,7 +100,7 @@ export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
           <IconButton title="Carro de Compras" svg={<SvgShoppingCartSolid className="!size-8" />} />
           {isAuthenticated && (
             <span className="absolute text-gray-600 font-bold top-0 right-0">
-              {shopping.constructionShoppingProductsCount}
+              {cart.constructionShoppingProductsCount}
             </span>
           )}
         </div>

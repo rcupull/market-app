@@ -22,7 +22,9 @@ export type PostSectionType = 'post' | 'link';
 
 export interface PostsLayoutSection {
   _id: string;
-  hidden?: boolean;
+  //
+  showMobile?: boolean;
+  showPC?: boolean;
   //
   postType: PostType;
   //
@@ -130,9 +132,13 @@ export enum BusinessNotificationFlags {
   TELEGRAM_NEW_SHOPPING = 'TELEGRAM_NEW_SHOPPING',
 }
 
+export interface BusinessSEO {
+  title?: string;
+  description?: string;
+}
+
 export interface Business extends BaseIdentity {
   name: string;
-  categories: Array<BusinessCategory>;
   routeName: string;
   createdBy: string; // userId
   hidden?: boolean;
@@ -151,6 +157,7 @@ export interface Business extends BaseIdentity {
   shoppingDebit: number;
   postFormFields?: Array<PostFormField>;
   currency: BusinessCurrency;
+  seo?: BusinessSEO;
 }
 
 export interface BusinessSummary extends Pick<Business, '_id' | 'name' | 'routeName'> {
@@ -166,7 +173,8 @@ export type PostsLayoutSectionPayload = Pick<
   | 'postCategoriesTags'
   | 'searchLayout'
   | 'hiddenName'
-  | 'hidden'
+  | 'showMobile'
+  | 'showPC'
   | 'type'
   | 'postType'
 >;

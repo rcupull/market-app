@@ -4,7 +4,7 @@ import { ReduxState } from 'types/redux';
 
 export const slices = {
   useBusiness: createSimpleSlice<ReduxState['useBusiness']>('useBusiness', null),
-  useShopping: createSimpleSlice<ReduxState['useShopping']>('useShopping', null),
+  useCart: createSimpleSlice<ReduxState['useCart']>('useCart', null),
   useShoppingIdPersistent: createSimpleSlice<ReduxState['useShoppingIdPersistent']>(
     'useShoppingIdPersistent',
     null

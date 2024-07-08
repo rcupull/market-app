@@ -31,15 +31,15 @@ export const Default = (): JSX.Element => {
                 className="mt-6"
                 items={[
                   {
-                    value: 'CONSTRUCTION',
+                    value: ShoppingState.CONSTRUCTION,
                     label: 'Entregado',
                   },
                   {
-                    value: 'CANCELED',
+                    value: ShoppingState.CANCELED,
                     label: 'Cancelado',
                   },
                   {
-                    value: 'REQUESTED',
+                    value: ShoppingState.REQUESTED,
                     label: 'Solicitado',
                   },
                 ]}
@@ -63,15 +63,15 @@ export const Default = (): JSX.Element => {
                 className="mt-6"
                 items={[
                   {
-                    value: 'CONSTRUCTION',
+                    value: ShoppingState.CONSTRUCTION,
                     label: 'Entregado',
                   },
                   {
-                    value: 'CANCELED',
+                    value: ShoppingState.CANCELED,
                     label: 'Cancelado',
                   },
                   {
-                    value: 'REQUESTED',
+                    value: ShoppingState.REQUESTED,
                     label: 'Solicitado',
                   },
                 ]}

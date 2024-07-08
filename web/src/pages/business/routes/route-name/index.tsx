@@ -7,7 +7,7 @@ import { useRouter } from 'hooks/useRouter';
 
 import { LayoutPage } from 'pages/@common/layout-page';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useShopping } from 'pages/@hooks/useShopping';
+import { useCart } from 'pages/@hooks/useCart';
 import { getOneBusinessRoute } from 'utils/business';
 import { dynamic } from 'utils/makeLazy';
 
@@ -24,7 +24,7 @@ export const RouteName = () => {
   const { routeName } = params;
 
   const { business, onFetch, onReset, owner } = useBusiness();
-  const shopping = useShopping();
+  const cart = useCart();
 
   ////////////////////////////////////////////////////////////////////////////////////
 
@@ -44,13 +44,13 @@ export const RouteName = () => {
     if (!routeName) return;
 
     if (isAuthenticated) {
-      shopping.onFetch({ routeName });
+      cart.onFetch();
     } else {
-      shopping.onReset();
+      cart.onReset();
     }
 
     return () => {
-      shopping.onReset();
+      cart.onReset();
     };
   }, [routeName, isAuthenticated]);
   ////////////////////////////////////////////////////////////////////////////////////
