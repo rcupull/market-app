@@ -30,6 +30,7 @@ import { isEqualIds, movRow } from '../../utils/general';
 import { imagesServicesDeleteOldImages } from '../images/services';
 import { postServicesGetOne, postServicesUpdateMany } from '../post/services';
 import { nlpServicesProcessMainManager } from '../nlp/services';
+import handleNplTags from '../nlp/tagHandlers/handleNplTags';
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {
@@ -113,7 +114,6 @@ const get_business_search: () => RequestHandler = () => {
 
       const { search } = query;
 
-      //eslint-disable-next-line
       const nlpResponse = await nlpServicesProcessMainManager({ text: search });
 
       const relevantTags = 
@@ -124,9 +124,9 @@ const get_business_search: () => RequestHandler = () => {
       const out: Array<BusinessSearchDto> = [];
 
       for (const tag of relevantTags) {
-
+        const data = await handleNplTags(tag, search);
+        out.push(...data);
       }
-
       res.send(out);
     });
   };
