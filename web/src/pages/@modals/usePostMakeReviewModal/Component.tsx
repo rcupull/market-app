@@ -29,13 +29,13 @@ export const Component = ({ portal, postId, onAfterSuccess }: ComponentProps) =>
         {
           field: 'star',
           type: 'required',
-          message: 'Cuantifica la calidad de este producto.'
+          message: 'Cuantifica la calidad de este producto.',
         },
         {
           field: 'comment',
           type: 'required',
-          message: 'Tu opinión sobre este prodcuto es importante para nosotros.'
-        }
+          message: 'Tu opinión sobre este prodcuto es importante para nosotros.',
+        },
       ]}
     >
       {({ value, isValid }) => {

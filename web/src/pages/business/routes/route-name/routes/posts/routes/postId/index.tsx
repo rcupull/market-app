@@ -24,6 +24,7 @@ import { PostsReviews } from './PostsReviews';
 import { LayoutPage } from 'pages/@common/layout-page';
 import { UpdateSomethingContainer } from 'pages/@common/update-something-container';
 import { useBusiness } from 'pages/@hooks/useBusiness';
+import { useInfiniteScrolling } from 'pages/@hooks/useInfiniteScrolling';
 import { usePostIdPersistent } from 'pages/@hooks/usePostIdPersistent';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
@@ -41,14 +42,26 @@ export const PostId = () => {
   const authSignInModal = useAuthSignInModal();
   const postMakeReviewModal = usePostMakeReviewModal();
 
+  /**
+   * Summary review
+   */
   const { getOneReviewSummary } = useGetOneReviewSummary();
+
+  /**
+   * All review
+   */
   const { getAllReviews } = useGetAllReviews();
+
+  const infiniteScrollingAllReviews = useInfiniteScrolling({
+    fetchPaginatedResources: getAllReviews,
+    onFetch: ({ page }) => getAllReviews.fetch({ postId, page, limit: 3 }),
+  });
 
   useEffect(() => {
     if (postId) {
       postIdPersistent.fetch({ id: postId });
       getOneReviewSummary.fetch({ postId });
-      getAllReviews.fetch({ postId });
+      infiniteScrollingAllReviews.fetch();
 
       return () => {
         postIdPersistent.reset();
@@ -102,10 +115,8 @@ export const PostId = () => {
                   postMakeReviewModal.open({
                     postId: post._id,
                     onAfterSuccess: () => {
-                      postIdPersistent.fetch({ id: post._id });
-                      //
                       getOneReviewSummary.fetch({ postId: post._id });
-                      getAllReviews.fetch({ postId });
+                      infiniteScrollingAllReviews.fetch();
                     },
                   });
                 }}
@@ -128,7 +139,12 @@ export const PostId = () => {
         />
       </UpdateSomethingContainer>
 
-      <PostsReviews data={getAllReviews.data} />
+      <PostsReviews
+        data={infiniteScrollingAllReviews.data}
+        onScrollBottom={infiniteScrollingAllReviews.onScrollBottom}
+        isBusy={infiniteScrollingAllReviews.status.isBusy}
+        className="w-full max-w-[50rem]"
+      />
 
       <PostsRelatedView post={post} business={business} />
     </LayoutPage>
