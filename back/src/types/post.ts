@@ -23,8 +23,6 @@ export type PostColor =
 
 export type PostClothingSize = 'XXS' | 'XS' | 'S' | 'M' | 'L' | 'XL' | '2XL' | '3XL';
 
-export type PostReviews = [number, number, number, number, number];
-
 export interface PostPurshaseNotes {
   interestedByColors?: Array<PostColor>;
   interestedByClothingSizes?: Array<PostClothingSize>;
@@ -41,8 +39,6 @@ export interface Post extends BaseIdentity {
   name: string;
   price?: number;
   discount?: number;
-  reviews?: PostReviews;
-  reviewsUserIds?: Array<Schema.Types.ObjectId>;
   colors?: Array<PostColor>;
   highlights?: Array<string>;
   hidden?: boolean;

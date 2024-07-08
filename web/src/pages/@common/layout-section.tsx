@@ -1,9 +1,9 @@
 import { BackButton } from 'components/back-button';
 
-import { ChildrenProp } from 'types/general';
+import { ChildrenProp, StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
-export interface LayoutSectionProps extends ChildrenProp {
+export interface LayoutSectionProps extends ChildrenProp, StyleProps {
   backButton?: boolean;
   title?: string;
   topRightHeader?: React.ReactNode;
@@ -14,9 +14,10 @@ export const LayoutSection = ({
   title,
   children,
   topRightHeader,
+  className,
 }: LayoutSectionProps): JSX.Element => {
   return (
-    <div>
+    <div className={className}>
       <div className="flex items-center justify-between">
         {backButton && <BackButton />}
 

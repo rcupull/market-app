@@ -9,6 +9,7 @@ export const useInfiniteScrolling = <RowData extends AnyRecord = AnyRecord>(args
 }): {
   data: Array<RowData>;
   onScrollBottom: () => void;
+  fetch: () => void;
   status: FetchStatus;
 } => {
   const { onFetch, fetchPaginatedResources } = args;
@@ -32,6 +33,7 @@ export const useInfiniteScrolling = <RowData extends AnyRecord = AnyRecord>(args
   return {
     status,
     data: tableData,
+    fetch: () => onFetch({ page: 1 }),
     onScrollBottom: () => {
       if (paginator) {
         const { page, hasNextPage } = paginator;
