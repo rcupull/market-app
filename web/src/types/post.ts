@@ -3,8 +3,6 @@ import { BaseIdentity, Image, ImageFile } from './general';
 
 export type PostType = 'product' | 'link'; // el tipo de publicaciones que posee
 
-export type PostReviews = [number, number, number, number, number];
-
 export type PostLinkType = 'business' | 'external';
 export interface PostLink {
   type: PostLinkType;
@@ -17,7 +15,6 @@ export interface Post extends BaseIdentity {
   description?: string;
   name: string;
   price?: number;
-  reviews?: PostReviews;
   colors?: Array<PostColor>;
   highlights?: Array<string>;
   details?: string;

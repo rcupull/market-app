@@ -9,14 +9,17 @@ import { ProductHighLights1 } from 'components/product/hightlights/product-highl
 import { ProductImages2 } from 'components/product/images/product-images-2';
 import { ProductPrice1 } from 'components/product/price/product-price-1';
 import { ProductStockLabel } from 'components/product/stock/product-stock-label';
-import { Review } from 'components/review';
+import { ReviewSummaryView } from 'components/review-summary-view';
 
+import { useGetAllReviews } from 'features/api/reviews/useGetAllReviews';
+import { useGetOneReviewSummary } from 'features/api/reviews/useGetOneReviewSummary';
 import { useAuth } from 'features/api-slices/useAuth';
 
 import { useHotUpdateObjectData } from 'hooks/useHotUpdateObjectData';
 import { useRouter } from 'hooks/useRouter';
 
 import { PostsRelatedView } from './PostsRelatedView';
+import { PostsReviews } from './PostsReviews';
 
 import { LayoutPage } from 'pages/@common/layout-page';
 import { UpdateSomethingContainer } from 'pages/@common/update-something-container';
@@ -38,9 +41,14 @@ export const PostId = () => {
   const authSignInModal = useAuthSignInModal();
   const postMakeReviewModal = usePostMakeReviewModal();
 
+  const { getOneReviewSummary } = useGetOneReviewSummary();
+  const { getAllReviews } = useGetAllReviews();
+
   useEffect(() => {
     if (postId) {
       postIdPersistent.fetch({ id: postId });
+      getOneReviewSummary.fetch({ postId });
+      getAllReviews.fetch({ postId });
 
       return () => {
         postIdPersistent.reset();
@@ -83,8 +91,9 @@ export const PostId = () => {
             images: (props) => <ProductImages2 {...props} />,
             price: (props) => <ProductPrice1 {...props} />,
             review: (props) => (
-              <Review
+              <ReviewSummaryView
                 {...props}
+                reviewSummary={getOneReviewSummary.data}
                 onClickToSubmit={() => {
                   if (!isAuthenticated) {
                     authSignInModal.open({ redirect: false });
@@ -94,6 +103,9 @@ export const PostId = () => {
                     postId: post._id,
                     onAfterSuccess: () => {
                       postIdPersistent.fetch({ id: post._id });
+                      //
+                      getOneReviewSummary.fetch({ postId: post._id });
+                      getAllReviews.fetch({ postId });
                     },
                   });
                 }}
@@ -115,6 +127,8 @@ export const PostId = () => {
           }}
         />
       </UpdateSomethingContainer>
+
+      <PostsReviews data={getAllReviews.data} />
 
       <PostsRelatedView post={post} business={business} />
     </LayoutPage>

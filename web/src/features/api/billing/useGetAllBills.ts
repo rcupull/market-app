@@ -1,5 +1,6 @@
 import { useFetch } from 'hooks/useFetch';
 
+import { defaultLimit } from 'constants/api';
 import { FetchResourceWithPagination, GetAllBillsQuery, PaginatedData } from 'types/api';
 import { Bill } from 'types/billing';
 import { getEndpoint } from 'utils/api';
@@ -20,7 +21,7 @@ export const useGetAllBills = (): {
             method: 'get',
             url: getEndpoint({
               path: '/bills',
-              query: { routeName, states },
+              query: { limit: defaultLimit, routeName, states },
             }),
           },
           options
