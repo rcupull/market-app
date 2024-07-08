@@ -116,12 +116,16 @@ const get_business_search: () => RequestHandler = () => {
       //eslint-disable-next-line
       const nlpResponse = await nlpServicesProcessMainManager({ text: search });
 
-      /**
-       * TODO convert ths nlpResponse to a data
-       * shoul return a BusinessSearchDto[]
-       */
+      const relevantTags = 
+        nlpResponse.classifications
+          .filter(({ score }) => score > 0.5)
+          .map(({ intent }) => intent);
 
       const out: Array<BusinessSearchDto> = [];
+
+      for (const tag of relevantTags) {
+
+      }
 
       res.send(out);
     });
