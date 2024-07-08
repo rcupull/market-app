@@ -76,7 +76,8 @@ export const PostPageLayoutSchema = new Schema<PostPageLayout>({});
 export const PostsLayoutSectionSchema = new Schema<PostsLayoutSection>({
   name: { type: String },
   hiddenName: { type: Boolean, default: false },
-  hidden: { type: Boolean, default: false },
+  showMobile: { type: Boolean, default: false },
+  showPC: { type: Boolean, default: false },
   searchLayout: {
     type: String,
     enum: [

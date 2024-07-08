@@ -1,27 +1,27 @@
 import { useFetch } from 'hooks/useFetch';
 
 import { defaultLimit } from 'constants/api';
-import { FetchResourceWithPagination, PaginatedData } from 'types/api';
-import { User } from 'types/auth';
+import { FetchResourceWithPagination, GetAllReviewsQuery, PaginatedData } from 'types/api';
+import { ReviewDto } from 'types/reviews';
 import { getEndpoint } from 'utils/api';
 import { getPaginationResources } from 'utils/pagination';
 
-export const useGetAllUsersAdmin = (): {
-  getAllUsersAdmin: FetchResourceWithPagination<undefined, User>;
+export const useGetAllReviews = (): {
+  getAllReviews: FetchResourceWithPagination<GetAllReviewsQuery, ReviewDto>;
 } => {
-  const fetch = useFetch<PaginatedData<User>>();
+  const fetch = useFetch<PaginatedData<ReviewDto>>();
 
   return {
-    getAllUsersAdmin: {
+    getAllReviews: {
       ...getPaginationResources(fetch[0]),
       status: fetch[1],
-      fetch: (_, options = {}) => {
+      fetch: (query, options = {}) => {
         fetch[2](
           {
             method: 'get',
             url: getEndpoint({
-              path: '/admin/users',
-              query: { limit: defaultLimit },
+              path: '/reviews',
+              query: { limit: defaultLimit, ...query },
             }),
           },
           options

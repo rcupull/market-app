@@ -1280,6 +1280,13 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "states",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {

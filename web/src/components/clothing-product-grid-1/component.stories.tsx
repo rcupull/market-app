@@ -5,7 +5,7 @@ import { ProductDetails1 } from 'components/product/details/product-details-1';
 import { ProductHighLights1 } from 'components/product/hightlights/product-highlights-1';
 import { ProductImages1 } from 'components/product/images/product-images-1';
 import { ProductPrice1 } from 'components/product/price/product-price-1';
-import { Review } from 'components/review';
+import { ReviewSummaryView } from 'components/review-summary-view';
 
 import { ClothingProductGrid1 } from '.';
 
@@ -24,7 +24,7 @@ export const Default = (): JSX.Element => (
       render={{
         images: (props) => <ProductImages1 {...props} />,
         price: (props) => <ProductPrice1 {...props} />,
-        review: (props) => <Review {...props} />,
+        review: (props) => <ReviewSummaryView {...props} />,
         colors: (props) => <FieldColorSelect {...props} />,
         clothingSize: (props) => <FieldClothingSizeSelect {...props} />,
         description: (props) => <ProductDescription1 {...props} />,

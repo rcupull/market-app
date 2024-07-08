@@ -52,8 +52,6 @@ export const PostSchema = new Schema<Post>({
       required: true,
     },
   ],
-  reviews: { type: [Number], default: [0, 0, 0, 0, 0] },
-  reviewsUserIds: { type: [Schema.Types.ObjectId], default: [] },
   name: { type: String, required: true },
   price: { type: Number },
   discount: { type: Number },

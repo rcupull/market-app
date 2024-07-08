@@ -165,3 +165,35 @@ export const getFlattenUndefinedJson = <T extends AnyRecord = AnyRecord>(value: 
     {} as T
   );
 };
+
+export const stringExtract = (matcher: string, value: string): Array<string> | null => {
+  /**
+   *  matcher should has this structure +> 'products.name.{val}.max.{val}'. Use {val} where you want extract the values
+   */
+  const dotsInMather = matcher.split('.').length - 1;
+  const dotsInValue = value.split('.').length - 1;
+
+  if (dotsInMather !== dotsInValue) {
+    return null;
+  }
+
+  const exp = new RegExp(replaceAll(matcher, '{val}', '(.*)'));
+
+  const response = exp.exec(value);
+
+  if (!response) {
+    return null;
+  }
+
+  return response.slice(1);
+};
+
+export const numberExtract = (value: string): Array<number> | null => {
+  const response = value.match(/(\d+)/g);
+
+  if (!response) {
+    return null;
+  }
+
+  return response.map(Number);
+};

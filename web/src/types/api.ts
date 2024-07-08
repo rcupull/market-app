@@ -114,6 +114,11 @@ export interface GetAllShoppingQuery extends PaginationQuery {
   states?: Array<ShoppingState>;
 }
 
+export interface GetAllReviewsQuery extends PaginationQuery {
+  routeName?: string;
+  postId?: string;
+}
+
 export interface GetAllShoppingAdminQuery extends PaginationQuery {
   routeNames?: Array<string>;
   states?: Array<ShoppingState>;

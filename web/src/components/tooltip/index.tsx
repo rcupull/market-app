@@ -22,7 +22,7 @@ export const Tooltip = ({ children, content, className, openWhenHover }: Tooltip
         floatingAs={Fragment}
         portal
         autoPlacement={{
-          allowedPlacements: ['top-start', 'bottom-start'],
+          allowedPlacements: ['top-start', 'bottom-start', 'top-end', 'bottom-end'],
         }}
         {...(openWhenHover ? { show } : {})}
       >
