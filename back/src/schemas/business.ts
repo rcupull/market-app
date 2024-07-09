@@ -53,7 +53,7 @@ const BusinessSchema = new Schema<Business>({
       type: {
         type: String,
         enum: ['none', 'static', 'swipableClassic'],
-        default: 'static',
+        default: 'none',
       },
     },
     posts: {
@@ -157,7 +157,7 @@ BusinessSchema.pre('updateOne', async function (next) {
       },
       {
         hiddenBusiness: hidden,
-      }
+      },
     );
   }
 
@@ -167,5 +167,5 @@ BusinessSchema.pre('updateOne', async function (next) {
 export const BusinessModel = model<Business, PaginateModel<Business>>(
   'Business',
   BusinessSchema,
-  'business'
+  'business',
 );

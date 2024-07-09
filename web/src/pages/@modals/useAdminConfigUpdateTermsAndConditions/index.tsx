@@ -29,7 +29,7 @@ export const useAdminConfigUpdateTermsAndConditions = () => {
             };
           },
         },
-        { emergent: true }
+        { emergent: true },
       );
     },
   };

@@ -55,12 +55,12 @@ export const Component = ({ portal }: ComponentProps) => {
                           init();
                           onClose();
                         },
-                      }
+                      },
                     );
                   }}
                   variant="primary"
                   className="w-full"
-                />
+                />,
               )}
             </form>
           );

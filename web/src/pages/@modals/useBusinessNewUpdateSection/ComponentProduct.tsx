@@ -9,6 +9,7 @@ import { FieldPostCategoriesButtons } from 'components/field-post-categories-but
 import { FieldPostsSectionLayout } from 'components/field-posts-section-layout';
 import { FieldSearchLayout } from 'components/field-search-layout';
 import { FieldShowHide } from 'components/field-show-hide';
+import { FormFieldWrapper } from 'components/form-field-wrapper';
 import { Formux } from 'components/formux';
 
 import { useAddBusinessSection } from 'features/api/business/useAddBusinessSection';
@@ -53,8 +54,8 @@ export const ComponentProduct = ({
     postCategoriesTags: [],
     searchLayout: 'none',
     type: 'grid',
-    showMobile: false,
-    showPC: false,
+    showMobile: true,
+    showPC: true,
     postType: 'product',
     ...(section || {}),
   });
@@ -73,10 +74,12 @@ export const ComponentProduct = ({
       {({ value, isValid, hasChange }) => {
         return (
           <form className={className}>
-            <div className="flex gap-4">
-              <FieldCheckbox label="Mostrar en móviles" name="showMobile" />
-              <FieldCheckbox label="Mostrar en PC" name="showPC" />
-            </div>
+            <FormFieldWrapper label="Visibilidad">
+              <div className="flex gap-4">
+                <FieldCheckbox label="Mostrar en móviles" name="showMobile" />
+                <FieldCheckbox label="Mostrar en PC" name="showPC" />
+              </div>
+            </FormFieldWrapper>
 
             {/* //////////////////////////////////////////////////////////////////////////////////////////////// */}
             <Divider />
@@ -158,16 +161,16 @@ export const ComponentProduct = ({
                         },
                         {
                           onAfterSuccess,
-                        }
+                        },
                       )
                     : addBusinessSection.fetch(
                         { routeName: business.routeName, data: value },
-                        { onAfterSuccess }
+                        { onAfterSuccess },
                       );
                 }}
                 variant="primary"
                 className="w-full"
-              />
+              />,
             )}
           </form>
         );

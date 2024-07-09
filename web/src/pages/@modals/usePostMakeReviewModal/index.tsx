@@ -40,7 +40,7 @@ export const usePostMakeReviewModal = () => {
             };
           },
         },
-        { emergent: true }
+        { emergent: true },
       );
     },
   };

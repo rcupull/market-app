@@ -38,7 +38,7 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
             cart.onFetch();
             nextButtonProp.props.onClick();
           },
-        }
+        },
       );
     },
   });

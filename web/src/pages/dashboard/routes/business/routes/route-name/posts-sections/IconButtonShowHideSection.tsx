@@ -19,7 +19,7 @@ export const IconButtonShowHideSection = ({ rowData }: IconButtonShowHideSection
   const { showMobile, showPC } = rowData;
   const handleClick = (
     value: boolean,
-    field: Extract<keyof PostsLayoutSection, 'showMobile' | 'showPC'>
+    field: Extract<keyof PostsLayoutSection, 'showMobile' | 'showPC'>,
   ) => {
     pushModal(
       'Confirmation',
@@ -70,7 +70,7 @@ export const IconButtonShowHideSection = ({ rowData }: IconButtonShowHideSection
                         onFetch({ routeName: business.routeName });
                         onClose();
                       },
-                    }
+                    },
                   );
                 }}
               />
@@ -78,7 +78,7 @@ export const IconButtonShowHideSection = ({ rowData }: IconButtonShowHideSection
           };
         },
       },
-      { emergent: true }
+      { emergent: true },
     );
   };
 

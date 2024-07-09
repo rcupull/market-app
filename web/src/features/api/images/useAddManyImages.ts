@@ -49,7 +49,7 @@ export const useAddManyImages = (): {
                       src: response.imageSrc,
                     });
                   },
-                }
+                },
               );
             } else {
               resolve(image as Image);

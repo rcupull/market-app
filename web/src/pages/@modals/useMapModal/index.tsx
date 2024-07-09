@@ -32,7 +32,7 @@ export const useMapModal = () => {
             };
           },
         },
-        { emergent: true }
+        { emergent: true },
       );
     },
   };

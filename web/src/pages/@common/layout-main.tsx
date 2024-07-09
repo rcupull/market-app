@@ -79,7 +79,7 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
             'w-full overflow-auto max-h-[calc(100vh-64px)] min-h-[calc(100vh-64px)] flex flex-col',
             {
               'md:w-[calc(100%-16rem)]': isDashboardPage || isAdminPage,
-            }
+            },
           )}
         >
           {children}

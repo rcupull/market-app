@@ -28,7 +28,7 @@ export const NavBar = ({ items, preContent, postContent, className }: NavbarProp
       data-id="NavBar"
       className={cn(
         'w-full px-2 sm:px-8 bg-white flex shadow-lg items-center justify-center h-16 gap-1 sm:gap-6',
-        className
+        className,
       )}
     >
       {preContent}
@@ -49,7 +49,7 @@ export const NavBar = ({ items, preContent, postContent, className }: NavbarProp
                         ? 'bg-gray-300 text-gray-600'
                         : 'text-gray-700 hover:bg-gray-200 hover:text-gray-600',
                       'rounded-md px-3 py-2 text-sm font-medium text-nowrap',
-                      className
+                      className,
                     )}
                   >
                     {name}
@@ -69,7 +69,7 @@ export const NavBar = ({ items, preContent, postContent, className }: NavbarProp
                     ? 'bg-gray-300 text-gray-600'
                     : 'text-gray-700 hover:bg-gray-200 hover:text-gray-600',
                   'rounded-md px-3 py-2 text-sm font-medium text-nowrap',
-                  className
+                  className,
                 )}
                 aria-current={current ? 'page' : undefined}
               >

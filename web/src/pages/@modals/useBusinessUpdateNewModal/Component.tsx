@@ -76,7 +76,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                     {
                       onAfterSuccess: () => resolve(false),
                       onAfterFailed: () => resolve(true),
-                    }
+                    },
                   );
                 }, 500);
               });
@@ -97,8 +97,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                   <span className="flex flex-col sm:flex-row items-start sm:items-center">
                     {getRequiredLabel('Nombre del negocio')}
                     <span className="text-red-600 text-xs sm:ml-2">
-                      (Este valor <span className="font-bold">NO</span> se puede modificar una vez
-                      creado)
+                      (<span className="font-bold">NO</span> se puede modificar una vez creado)
                     </span>
                   </span>
                 }
@@ -156,7 +155,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                         },
                         {
                           onAfterSuccess,
-                        }
+                        },
                       );
                     } else {
                       const { postCategories, name, currency } = value;
@@ -170,13 +169,13 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                         },
                         {
                           onAfterSuccess,
-                        }
+                        },
                       );
                     }
                   }}
                   variant="primary"
                   className="w-full"
-                />
+                />,
               )}
             </form>
           );

@@ -29,7 +29,7 @@ export const useBusinessUpdateSeo = () => {
             };
           },
         },
-        { emergent: true }
+        { emergent: true },
       );
     },
   };

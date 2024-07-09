@@ -13,7 +13,7 @@ export function SvgStarHalf(props: StyleProps) {
     },
     createElement('path', {
       d: 'M16 2.133l-4.164 9.34-10.172 1.074 7.598 6.848L7.14 29.398 16 24.29z',
-    })
+    }),
   );
 }
 export default SvgStarHalf;

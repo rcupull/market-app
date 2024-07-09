@@ -46,7 +46,7 @@ export const PostsSectionSearch = ({
           onChange={(search) => filters.onMergeFilters({ search })}
           value={filters.value.search}
         />
-      </div>
+      </div>,
     );
   }
 
@@ -57,7 +57,7 @@ export const PostsSectionSearch = ({
           onChange={(search) => filters.onMergeFilters({ search })}
           value={filters.value.search}
         />
-      </div>
+      </div>,
     );
   }
 
@@ -68,7 +68,7 @@ export const PostsSectionSearch = ({
           onChange={(search) => filters.onMergeFilters({ search })}
           value={filters.value.search}
         />
-      </div>
+      </div>,
     );
   }
 
@@ -80,7 +80,7 @@ export const PostsSectionSearch = ({
         value={filters.value.postCategoriesTags}
         debounceDelay={1000}
         type="wrapped"
-      />
+      />,
     );
   }
 
@@ -92,7 +92,7 @@ export const PostsSectionSearch = ({
         value={filters.value.postCategoriesTags}
         debounceDelay={1000}
         type="scrollable"
-      />
+      />,
     );
   }
 
@@ -105,7 +105,7 @@ export const PostsSectionSearch = ({
         debounceDelay={1000}
         excluding
         type="wrapped"
-      />
+      />,
     );
   }
 
@@ -118,7 +118,7 @@ export const PostsSectionSearch = ({
         debounceDelay={1000}
         excluding
         type="scrollable"
-      />
+      />,
     );
   }
 

@@ -35,7 +35,7 @@ export const Skeleton = ({ searchLayoutType, className }: SkeletonProps) => {
     <div
       className={cn(
         'p-4 flex flex-col items-center gap-4 ring-1 ring-gray-400 m-1 rounded-md',
-        className
+        className,
       )}
     >
       {renderBanner()}

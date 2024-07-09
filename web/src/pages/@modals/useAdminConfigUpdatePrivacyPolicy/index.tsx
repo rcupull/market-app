@@ -29,7 +29,7 @@ export const useAdminConfigUpdatePrivacyPolicy = () => {
             };
           },
         },
-        { emergent: true }
+        { emergent: true },
       );
     },
   };

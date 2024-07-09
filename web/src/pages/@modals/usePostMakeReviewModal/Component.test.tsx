@@ -11,7 +11,7 @@ describe('Component', () => {
       <Component portal={portalDummy} onAfterSuccess={jest.fn()} postId="postId" />,
       {
         wrapper: getWrapper({ useModal: true, useRouter: true }),
-      }
+      },
     );
 
     expect(result.container).toMatchInlineSnapshot(`

@@ -25,7 +25,7 @@ export const PostsSections = () => {
         ...acc,
         [tag]: label,
       }),
-      {}
+      {},
     );
   }, [JSON.stringify(postCategories)]);
 

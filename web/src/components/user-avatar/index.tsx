@@ -27,7 +27,7 @@ export const UserAvatar = ({ className, size = 'small' }: UserAvatarProps) => {
             'size-10': size === 'small',
             'size-16': size === 'medium',
           },
-          className
+          className,
         )}
         src={profileImageSrc}
         alt=""
@@ -48,7 +48,7 @@ export const UserAvatar = ({ className, size = 'small' }: UserAvatarProps) => {
           'size-10': size === 'small',
           'size-16': size === 'medium',
         },
-        className
+        className,
       )}
     >
       <span

@@ -11,7 +11,7 @@ export function SvgBatteryEmptySolid(props: StyleProps) {
       height: '1em',
       ...props,
     },
-    createElement('path', { d: 'M3 8v16h24v-5h2v-6h-2V8zm2 2h20v12H5z' })
+    createElement('path', { d: 'M3 8v16h24v-5h2v-6h-2V8zm2 2h20v12H5z' }),
   );
 }
 export default SvgBatteryEmptySolid;

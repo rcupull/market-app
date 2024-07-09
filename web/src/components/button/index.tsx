@@ -88,7 +88,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
           ['!bg-gray-300']: variant === 'outlined' && disabled,
           ['!bg-red-300']: variant === 'error' && disabled,
         },
-        className
+        className,
       )}
       onClick={(e: MouseEvent) => {
         if (disabled) {

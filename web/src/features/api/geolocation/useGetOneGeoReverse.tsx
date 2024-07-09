@@ -21,7 +21,7 @@ export const useGetOneGeoReverse = (): {
             method: 'get',
             url: getEndpoint({ path: '/geolocation/reverse', query: { lat, lon } }),
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

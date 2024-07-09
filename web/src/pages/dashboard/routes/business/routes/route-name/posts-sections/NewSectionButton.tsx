@@ -99,7 +99,7 @@ export const NewSectionButton = () => {
                               }, 100);
                             }}
                             className="w-full sm:w-auto"
-                          />
+                          />,
                         )}
                       </form>
                     );
@@ -112,7 +112,7 @@ export const NewSectionButton = () => {
           };
         },
       },
-      { emergent: true }
+      { emergent: true },
     );
   };
 

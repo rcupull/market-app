@@ -17,7 +17,7 @@ describe('BusinessCardSimple', () => {
           salesAmount: 0,
         }}
       />,
-      { wrapper: BrowserRouter }
+      { wrapper: BrowserRouter },
     );
 
     expect(result.container).toMatchInlineSnapshot(`

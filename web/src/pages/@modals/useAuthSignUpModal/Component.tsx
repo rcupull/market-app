@@ -204,7 +204,7 @@ export const Component = ({ portal }: ComponentProps) => {
                                   };
                                 },
                               },
-                              { emergent: true }
+                              { emergent: true },
                             );
                           },
                           onAfterFailed: (e) => {
@@ -215,11 +215,11 @@ export const Component = ({ portal }: ComponentProps) => {
                               });
                             }
                           },
-                        }
+                        },
                       );
                     }}
                     className="w-full"
-                  />
+                  />,
                 )}
 
                 <div className="w-100 text-sm flex pt-4">

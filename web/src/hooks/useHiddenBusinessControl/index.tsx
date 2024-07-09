@@ -65,7 +65,7 @@ export const useHiddenBusinessControl = ({
           };
         },
       },
-      { emergent: true }
+      { emergent: true },
     );
   };
 
@@ -79,7 +79,7 @@ export const useHiddenBusinessControl = ({
         onAfterSuccess: () => {
           onRefresh();
         },
-      }
+      },
     );
   };
 
@@ -117,7 +117,7 @@ export const useHiddenBusinessControl = ({
           };
         },
       },
-      { emergent: true }
+      { emergent: true },
     );
   };
 
