@@ -5,8 +5,6 @@ import { useAuth } from 'features/api-slices/useAuth';
 
 import { useRouter } from 'hooks/useRouter';
 
-import { FavoritesBusinessBar } from './components/favorites-business-bar';
-
 import { LayoutPage } from 'pages/@common/layout-page';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useCart } from 'pages/@hooks/useCart';
@@ -70,8 +68,6 @@ export const RouteName = () => {
   }
 
   return (
-    <>
-      <FavoritesBusinessBar />
       <Routes>
         <Route path="/" element={<Home routeName={routeName} />} />
 
@@ -83,7 +79,6 @@ export const RouteName = () => {
 
         <Route path="*" element={<Navigate to={getOneBusinessRoute({ routeName })} />} />
       </Routes>
-    </>
   );
 };
 
