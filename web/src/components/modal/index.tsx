@@ -37,7 +37,6 @@ export const Modal = ({
       <Dialog
         as="div"
         className="relative z-30"
-        // initialFocus={cancelButtonRef}
         onClose={() => {}}
       >
         <Transition.Child
@@ -68,6 +67,7 @@ export const Modal = ({
                   'relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8  w-11/12 md:w-8/12 lg:w-8/12',
                   className
                 )}
+                autoFocus={true}
               >
                 <IconButton
                   className="!absolute top-0 right-0"
