@@ -20,12 +20,12 @@ export const BusinessConfig = ({ business }: BusinessConfigProps) => {
   const hasPosts = async (b: Business): Promise<boolean> => {
     return new Promise((resolve) => {
       getAllPosts.fetch(
-        { routeNames: [b.routeName] },
+        { routeNames: [b.routeName], includeHidden: true },
         {
           onAfterSuccess: ({ data }) => {
             resolve(!!data.length);
           },
-        }
+        },
       );
     });
   };
@@ -33,15 +33,30 @@ export const BusinessConfig = ({ business }: BusinessConfigProps) => {
   const handleIsMissing = async (b: Business): Promise<Array<BusinessOnboardingSteps>> => {
     const out: Array<BusinessOnboardingSteps> = [];
 
+    /**
+     * Si tiene notificaciones activas pero no tiene configuracion de telegram
+     */
     if (!isEmpty(b?.notificationFlags) && !b?.telegramBotChat) {
       out.push('notifications');
     }
-    if (isEmpty(b?.bannerImages)) {
+
+    /**
+     * si tiene config de banner activa pero no tiene imagenes en el banner
+     */
+    if (b?.layouts?.banner?.type !== 'none' && isEmpty(b?.bannerImages)) {
       out.push('banner');
     }
+
+    /**
+     * si no tienen secciones activas
+     */
     if (!b?.layouts?.posts?.sections.length) {
       out.push('section');
     }
+
+    /**
+     * si no tiene productos activos
+     */
     if (!(await hasPosts(b))) {
       out.push('products');
     }

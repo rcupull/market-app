@@ -40,7 +40,7 @@ export const FieldColorSelect = (props: FieldColorSelectProps) => {
               className={cn(
                 bgColor,
                 selectedRingColor,
-                'h-8 w-8 rounded-full border border-black border-opacity-10'
+                'h-8 w-8 rounded-full border border-black border-opacity-10',
               )}
             />
           </div>

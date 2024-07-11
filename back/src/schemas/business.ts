@@ -53,7 +53,7 @@ const BusinessSchema = new Schema<Business>({
       type: {
         type: String,
         enum: ['none', 'static', 'swipableClassic'],
-        default: 'static',
+        default: 'none',
       },
     },
     posts: {

@@ -71,7 +71,7 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
                         allUserBusiness.refresh();
                         onClose();
                       },
-                    }
+                    },
                   );
                 }}
               />
@@ -79,7 +79,7 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
           };
         },
       },
-      { emergent: true }
+      { emergent: true },
     );
   };
 

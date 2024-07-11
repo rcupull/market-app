@@ -839,7 +839,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayToday rdrDayWeekend rdrDayEndOfWeek"
+                  class="rdrDay rdrDayWeekend rdrDayEndOfWeek"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >
@@ -852,7 +852,7 @@ describe('DateTimePicker', () => {
                   </span>
                 </button>
                 <button
-                  class="rdrDay rdrDayStartOfWeek"
+                  class="rdrDay rdrDayToday rdrDayStartOfWeek"
                   style="color: rgb(61, 145, 255);"
                   type="button"
                 >

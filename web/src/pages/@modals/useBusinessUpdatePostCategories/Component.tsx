@@ -76,7 +76,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                 addRow(state, {
                   label,
                   tag: getPostCategoryTag(label),
-                })
+                }),
               );
               resetForm();
             };
@@ -104,7 +104,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                     onClick={() => handleAdd()}
                     variant="primary"
                     className="ml-4"
-                  />
+                  />,
                 )}
               </form>
             );
@@ -155,7 +155,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                         };
                       },
                     },
-                    { emergent: true }
+                    { emergent: true },
                   );
                 }}
               />
@@ -199,7 +199,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                         };
                       },
                     },
-                    { emergent: true }
+                    { emergent: true },
                   );
                 }}
               />
@@ -217,10 +217,10 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               { postCategories: state, routeName },
               {
                 onAfterSuccess,
-              }
+              },
             );
           }}
-        />
+        />,
       )}
     </>
   );

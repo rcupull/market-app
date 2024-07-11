@@ -3,7 +3,7 @@ import { cloneElement } from 'react';
 import { Portal, usePortal } from 'hooks/usePortal';
 
 export const useNextButtonPortal = (
-  nextButton: React.ReactElement
+  nextButton: React.ReactElement,
 ): {
   portal: Portal;
   nextAction: () => void;

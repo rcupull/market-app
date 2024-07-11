@@ -32,7 +32,7 @@ export const useDeleteManyPosts = (): {
               routeName,
             },
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

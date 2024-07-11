@@ -19,7 +19,7 @@ export const useAuthChangePassword = (): {
             url: getEndpoint({ path: '/auth/change-password' }),
             data: { newPassword },
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

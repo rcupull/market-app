@@ -13,7 +13,7 @@ export function SvgAlignLeftSolid(props: StyleProps) {
     },
     createElement('path', {
       d: 'M3 7v2h26V7zm0 4v2h18v-2zm0 4v2h26v-2zm0 4v2h18v-2zm0 4v2h26v-2z',
-    })
+    }),
   );
 }
 export default SvgAlignLeftSolid;

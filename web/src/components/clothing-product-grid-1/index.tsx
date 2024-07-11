@@ -10,7 +10,7 @@ import { ProductHighLightsProps } from 'components/product/hightlights/types';
 import { ProductImagesProps } from 'components/product/images/types';
 import { ProductPriceProps } from 'components/product/price/types';
 import { ProductStockLabelProps } from 'components/product/stock/product-stock-label';
-import { ReviewProps } from 'components/review';
+import { ReviewSummaryViewProps } from 'components/review-summary-view';
 
 import { usePortal } from 'hooks/usePortal';
 
@@ -23,7 +23,7 @@ export interface ClothingProductGrid1Props {
   render: {
     images?: (props: ProductImagesProps) => React.ReactNode;
     price?: (props: ProductPriceProps) => React.ReactNode;
-    review?: (props: ReviewProps) => React.ReactNode;
+    review?: (props: ReviewSummaryViewProps) => React.ReactNode;
     colors?: (props: FieldColorSelectProps) => React.ReactNode;
     clothingSize?: (props: FieldClothingSizeSelectProps) => React.ReactNode;
     description?: (props: ProductDescriptionProps) => React.ReactNode;
@@ -38,7 +38,7 @@ export const ClothingProductGrid1 = ({ post, render, currency }: ClothingProduct
 
   if (!post) return <></>;
 
-  const { colors, price, description, clothingSizes, details, highlights, reviews, images } = post;
+  const { colors, price, description, clothingSizes, details, highlights, images } = post;
 
   return (
     <div className="bg-white w-full">
@@ -61,7 +61,7 @@ export const ClothingProductGrid1 = ({ post, render, currency }: ClothingProduct
           {render.price?.({ currency, price })}
 
           {/* Reviews */}
-          {reviews && render.review?.({ value: reviews, className: 'mt-10' })}
+          {render.review?.({ className: 'mt-10' })}
 
           <Formux
             value={{
@@ -102,7 +102,7 @@ export const ClothingProductGrid1 = ({ post, render, currency }: ClothingProduct
                       layout="shoppingCart"
                       btnPostToCartVariant="button"
                       className="mt-4 w-full"
-                    />
+                    />,
                   )}
                 </form>
               );

@@ -22,7 +22,9 @@ export type FooterLayoutType = 'none' | 'basic';
 export interface PostsLayoutSection {
   _id: string;
   name: string;
-  hidden?: boolean;
+  //
+  showMobile?: boolean;
+  showPC?: boolean;
   //
   postType: PostType;
   //

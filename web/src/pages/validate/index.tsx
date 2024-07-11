@@ -34,7 +34,7 @@ export const Validate = () => {
           onAfterFailed: () => {
             setStatus('error');
           },
-        }
+        },
       );
     }
   }, [code]);

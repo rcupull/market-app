@@ -4,7 +4,6 @@ import {
   postServicesAddOne,
   postServicesDeleteMany,
   postServicesDeleteOne,
-  postServicesFindOneAndUpdate,
   postServicesGetAll,
   postServicesGetAllWithPagination,
   postServicesGetOne,
@@ -12,12 +11,7 @@ import {
   postServicesUpdateOne,
 } from './services';
 
-import {
-  get200Response,
-  get400Response,
-  getPostNotFoundResponse,
-  getUserNotFoundResponse,
-} from '../../utils/server-response';
+import { getPostNotFoundResponse, getUserNotFoundResponse } from '../../utils/server-response';
 import { deepJsonCopy, isEmpty, isEqual } from '../../utils/general';
 import { Post, PostDto } from '../../types/post';
 import { makeReshaper } from '../../utils/makeReshaper';
@@ -193,7 +187,7 @@ const post_posts_postId_duplicate: () => RequestHandler = () => {
 
       //these are omitted fields
       //eslint-disable-next-line
-      const { _id, createdAt, createdBy, reviews, images, ...propsToUse } = post.toJSON();
+      const { _id, createdAt, createdBy, images, stockAmount, ...propsToUse } = post.toJSON();
 
       req.body = propsToUse;
       req.body.name = `${req.body.name} (copy)`;
@@ -235,7 +229,6 @@ const put_posts_postId: () => RequestHandler = () => {
           images: 'images',
           name: 'name',
           price: 'price',
-          reviews: 'reviews',
           description: 'description',
           hidden: 'hidden',
           hiddenBusiness: 'hiddenBusiness',
@@ -435,39 +428,6 @@ const bulk_action_update: () => RequestHandler = () => {
   };
 };
 
-const post_make_review: () => RequestHandler = () => {
-  return async (req, res) => {
-    const { user } = req;
-    const { postId } = req.params;
-    const { value } = req.body;
-
-    if (value < 1 || value > 5) {
-      return get400Response({ res, json: { message: 'Invalid review value' } });
-    }
-
-    const out = await postServicesFindOneAndUpdate({
-      query: {
-        _id: postId,
-        createdBy: { $ne: user },
-        reviewsUserIds: { $nin: [user] },
-      },
-      update: {
-        $inc: { [`reviews.${value - 1}`]: 1 },
-        $push: { reviewsUserIds: user },
-      },
-    });
-
-    if (!out) {
-      return get400Response({
-        res,
-        json: { message: 'El post no existe o el usuario no puede hacer el review' },
-      });
-    }
-
-    return get200Response({ res, json: { message: 'Review was send correctly' } });
-  };
-};
-
 export const postHandles = {
   get_posts,
   post_posts,
@@ -480,5 +440,4 @@ export const postHandles = {
   //
   bulk_action_delete,
   bulk_action_update,
-  post_make_review,
 };

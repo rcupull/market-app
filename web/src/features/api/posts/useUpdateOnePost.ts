@@ -20,7 +20,6 @@ export const useUpdateOnePost = (): {
         | 'images'
         | 'price'
         | 'name'
-        | 'reviews'
         | 'postCategoriesTags'
         | 'discount'
         | 'postPageLayout'
@@ -51,7 +50,7 @@ export const useUpdateOnePost = (): {
             }),
             data,
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

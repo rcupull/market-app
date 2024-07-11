@@ -56,7 +56,7 @@ export const Component = ({
 
   const updateLinkInSections = async (
     sectionIds: Array<string>,
-    linkTag: string
+    linkTag: string,
   ): Promise<void> => {
     if (!business) return;
 
@@ -74,7 +74,7 @@ export const Component = ({
               data: {
                 postCategoriesTags: addStringToUniqueArray(
                   section.postCategoriesTags || [],
-                  linkTag
+                  linkTag,
                 ),
               },
             },
@@ -82,7 +82,7 @@ export const Component = ({
               onAfterSuccess: () => {
                 resolve();
               },
-            }
+            },
           );
         });
       });
@@ -333,10 +333,10 @@ export const Component = ({
                             },
                             {
                               onAfterSuccess,
-                            }
+                            },
                           );
                         },
-                      }
+                      },
                     );
                   };
                   const handelAddPost = () => {
@@ -359,7 +359,7 @@ export const Component = ({
                         onAfterSuccess: (response) => {
                           handelUpdatePost(response);
                         },
-                      }
+                      },
                     );
                   };
 
@@ -367,7 +367,7 @@ export const Component = ({
                 }}
                 variant="primary"
                 className="w-full"
-              />
+              />,
             )}
           </form>
         );
@@ -481,10 +481,10 @@ export const Component = ({
 
                                 onAfterSuccess();
                               },
-                            }
+                            },
                           );
                         },
-                      }
+                      },
                     );
                   };
                   const handelAddPost = () => {
@@ -501,7 +501,7 @@ export const Component = ({
                         onAfterSuccess: (response) => {
                           handelUpdatePost(response);
                         },
-                      }
+                      },
                     );
                   };
 
@@ -509,7 +509,7 @@ export const Component = ({
                 }}
                 variant="primary"
                 className="w-full"
-              />
+              />,
             )}
           </form>
         );

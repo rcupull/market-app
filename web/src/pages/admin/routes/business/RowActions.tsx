@@ -44,7 +44,7 @@ export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
 
                         onRefresh();
                       },
-                    }
+                    },
                   )
                 }
               />
@@ -52,7 +52,7 @@ export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
           };
         },
       },
-      { emergent: true }
+      { emergent: true },
     );
   };
 

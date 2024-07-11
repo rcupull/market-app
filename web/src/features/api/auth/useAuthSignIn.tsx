@@ -20,7 +20,7 @@ export const useAuthSignIn = (): {
             url: getEndpoint({ path: '/auth/sign-in' }),
             data: { username, password },
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

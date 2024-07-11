@@ -11,7 +11,7 @@ export function SvgSquare(props: StyleProps) {
       height: '1em',
       ...props,
     },
-    createElement('path', { d: 'M6 6v20h20V6zm2 2h16v16H8z' })
+    createElement('path', { d: 'M6 6v20h20V6zm2 2h16v16H8z' }),
   );
 }
 export default SvgSquare;

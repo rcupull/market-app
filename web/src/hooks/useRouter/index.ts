@@ -19,7 +19,7 @@ interface UseRouterReturn<Q extends Query = Query> {
     query?: AnyRecord,
     options?: {
       timeout?: number;
-    }
+    },
   ) => void;
   onBack: () => void;
   queryToSearch: (query: Q) => void;
@@ -44,7 +44,7 @@ interface UseRouterReturn<Q extends Query = Query> {
     options?: {
       timeout?: number;
       replaceAll?: boolean;
-    }
+    },
   ) => void;
 }
 

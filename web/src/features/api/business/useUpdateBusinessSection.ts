@@ -27,7 +27,7 @@ export const useUpdateBusinessSection = (): {
             }),
             data,
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

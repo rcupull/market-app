@@ -5,6 +5,7 @@ import { Divider } from 'components/divider';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInput } from 'components/field-input';
 import { FieldShowHide } from 'components/field-show-hide';
+import { FormFieldWrapper } from 'components/form-field-wrapper';
 import { Formux } from 'components/formux';
 
 import { useAddBusinessSection } from 'features/api/business/useAddBusinessSection';
@@ -48,7 +49,8 @@ export const ComponentLink = ({
     postCategoriesTags: [getRandomHash()],
     searchLayout: undefined,
     type: 'oneRowSlider',
-    hidden: true,
+    showMobile: true,
+    showPC: true,
     postType: 'link',
     ...(section || {}),
   });
@@ -67,7 +69,12 @@ export const ComponentLink = ({
       {({ value, isValid }) => {
         return (
           <form className={className}>
-            <FieldCheckbox label="Oculta" name="hidden" />
+            <FormFieldWrapper label="Visibilidad">
+              <div className="flex gap-4">
+                <FieldCheckbox label="Mostrar en móviles" name="showMobile" />
+                <FieldCheckbox label="Mostrar en PC" name="showPC" />
+              </div>
+            </FormFieldWrapper>
 
             {/* //////////////////////////////////////////////////////////////////////////////////////////////// */}
             <Divider />
@@ -107,16 +114,16 @@ export const ComponentLink = ({
                           sectionId: section._id,
                           data: value,
                         },
-                        { onAfterSuccess }
+                        { onAfterSuccess },
                       )
                     : addBusinessSection.fetch(
                         { routeName: business.routeName, data: value },
-                        { onAfterSuccess }
+                        { onAfterSuccess },
                       );
                 }}
                 variant="primary"
                 className="w-full"
-              />
+              />,
             )}
           </form>
         );

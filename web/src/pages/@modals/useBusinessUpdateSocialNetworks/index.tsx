@@ -29,7 +29,7 @@ export const useBusinessUpdateSocialNetworks = () => {
             };
           },
         },
-        { emergent: true }
+        { emergent: true },
       );
     },
   };

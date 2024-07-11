@@ -31,7 +31,7 @@ export const compact = <T = any>(value: Array<Nullable<T>>): Array<T> => {
 };
 
 export const isEmpty = <T = object>(
-  value: T | null | undefined
+  value: T | null | undefined,
 ): value is EmptyObjectOf<T> | null | undefined => {
   if (!value) return true;
 
@@ -49,7 +49,7 @@ export const getFlattenJson = <T extends AnyRecord = AnyRecord>(value: T): T => 
    */
   return Object.entries(value).reduce(
     (acc, [k, v]) => (isNullOrUndefinedOrEmptyString(v) ? acc : { ...acc, [k]: v }),
-    {} as T
+    {} as T,
   );
 };
 
@@ -59,13 +59,13 @@ export const getFlattenUndefinedJson = <T extends AnyRecord = AnyRecord>(value: 
    */
   return Object.entries(value).reduce(
     (acc, [k, v]) => (v === undefined ? acc : { ...acc, [k]: v }),
-    {} as T
+    {} as T,
   );
 };
 
 export const getFlattenArray = <T extends Array<any> = Array<any>>(
   value: T,
-  cbValid: (e: any) => boolean = Boolean
+  cbValid: (e: any) => boolean = Boolean,
 ): T => {
   return value.filter(cbValid) as T;
 };
@@ -91,7 +91,7 @@ export const deepJsonCopy = <T extends AnyRecord = AnyRecord>(json: T): T => {
 export const addRow = <T = any>(
   data: Array<T>,
   rowData: T,
-  position: 'start' | 'end' = 'end'
+  position: 'start' | 'end' = 'end',
 ): Array<T> => {
   const newData = [...data];
 
@@ -113,7 +113,7 @@ export const updateRow = <T = any>(data: Array<T>, rowData: T, index: number): A
 export const relocateRow = <T = any>(
   data: Array<T>,
   fromIndex: number,
-  toIndex: number
+  toIndex: number,
 ): Array<T> => {
   const newData = deepJsonCopy(data);
 
@@ -194,13 +194,13 @@ export const isEqualObj = (a: AnyRecord | undefined, b: AnyRecord | undefined): 
 
 export const addStringToUniqueArray = <T extends string = string>(
   array: Array<T>,
-  value: T
+  value: T,
 ): Array<T> => {
   return array.includes(value) ? array : addRow(array, value);
 };
 
 export const flatStringArrayToUniqueArray = <T extends string = string>(
-  array: Array<Array<T>>
+  array: Array<Array<T>>,
 ): Array<T> => {
   return array.reduce((acc, item) => {
     let out = acc;

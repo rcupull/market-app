@@ -61,12 +61,12 @@ export const Component = ({ portal, user, onAfterSuccess, allSpecialAccess }: Co
                       },
                       {
                         onAfterSuccess,
-                      }
+                      },
                     );
                   }}
                   variant="primary"
                   className="w-full"
-                />
+                />,
               )}
             </form>
           );

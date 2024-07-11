@@ -27,7 +27,7 @@ export const useRemoveOnePost = (): {
               urlParams: { id, userId },
             }),
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

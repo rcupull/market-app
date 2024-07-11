@@ -51,7 +51,7 @@ export const useAdminUpdateUserAccessModal = () => {
             };
           },
         },
-        { emergent: true }
+        { emergent: true },
       );
     },
   };

@@ -29,7 +29,7 @@ export const useBusinessUpdateAboutUs = () => {
             };
           },
         },
-        { emergent: true }
+        { emergent: true },
       );
     },
   };

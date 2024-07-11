@@ -11,7 +11,7 @@ export function SvgEqualsSolid(props: StyleProps) {
       height: '1em',
       ...props,
     },
-    createElement('path', { d: 'M5 12v2h22v-2zm0 6v2h22v-2z' })
+    createElement('path', { d: 'M5 12v2h22v-2zm0 6v2h22v-2z' }),
   );
 }
 export default SvgEqualsSolid;

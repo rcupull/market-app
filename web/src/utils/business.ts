@@ -81,17 +81,17 @@ export const getSearchLayoutLabel = (type: SearchLayoutType): string => {
     case 'none':
       return 'Ninguno';
     case 'left':
-      return 'Izquierda';
+      return 'Barra de búsqueda(izq)';
     case 'center':
-      return 'Centrado';
+      return 'Barra de búsqueda(cen)';
     case 'right':
-      return 'Derecha';
+      return 'Barra de búsqueda(der)';
     case 'postCategories':
-      return 'Categorías(seleccion múltiple)';
+      return 'Categorías(selección múltiple)';
     case 'postCategoriesScrollable':
       return 'Categorías(seleccion múltiple y deslizables)';
     case 'postCategoriesExcluded':
-      return 'Categorías(seleccion simple)';
+      return 'Categorías(selección simple)';
     case 'postCategoriesExcludedScrollable':
       return 'Categorías(selección simple y deslizable)';
     default:

@@ -33,7 +33,7 @@ export const useGetCatalogsImages = (): {
               query: { search },
             }),
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

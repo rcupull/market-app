@@ -29,7 +29,7 @@ export const useAdminConfigUpdatePrice = () => {
             };
           },
         },
-        { emergent: true }
+        { emergent: true },
       );
     },
   };

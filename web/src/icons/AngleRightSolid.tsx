@@ -13,7 +13,7 @@ export function SvgAngleRightSolid(props: StyleProps) {
     },
     createElement('path', {
       d: 'M12.969 4.281L11.53 5.72 21.812 16l-10.28 10.281 1.437 1.438 11-11 .687-.719-.687-.719z',
-    })
+    }),
   );
 }
 export default SvgAngleRightSolid;

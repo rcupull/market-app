@@ -62,7 +62,7 @@ export const Highlights = ({ className }: HighlightsProps) => {
     <div
       className={cn(
         'w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-16 md:gap-4',
-        className
+        className,
       )}
     >
       {items.map((item, index) => (

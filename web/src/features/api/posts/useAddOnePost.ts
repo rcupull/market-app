@@ -18,7 +18,6 @@ export const useAddOnePost = (): {
       | 'highlights'
       | 'name'
       | 'price'
-      | 'reviews'
       | 'images'
       | 'postCategoriesTags'
       | 'discount'
@@ -50,7 +49,7 @@ export const useAddOnePost = (): {
             }),
             data,
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

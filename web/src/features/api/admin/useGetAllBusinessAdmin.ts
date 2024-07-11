@@ -28,7 +28,7 @@ export const useGetAllBusinessAdmin = (): {
             method: 'get',
             url: getEndpoint({ path: '/admin/business', query: { limit: defaultLimit, ...query } }),
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

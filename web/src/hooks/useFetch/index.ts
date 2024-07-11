@@ -36,13 +36,13 @@ interface FetchFnCallArgs {
 
 export type FetchFnCall<Data = unknown> = (
   args?: FetchFnCallArgs | Array<FetchFnCallArgs>,
-  options?: Omit<FetchOptions<Data>, 'fetchWhenMount'>
+  options?: Omit<FetchOptions<Data>, 'fetchWhenMount'>,
 ) => void;
 export type UseFetchReturn<Data = unknown> = [
   FetchData<Data>,
   FetchStatus,
   FetchFnCall<Data>,
-  FetchFnReset
+  FetchFnReset,
 ];
 
 let fetchingTokenPromise: Promise<any> | null = null;

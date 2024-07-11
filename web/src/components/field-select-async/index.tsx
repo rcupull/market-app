@@ -14,7 +14,7 @@ import { getFlattenArray, isArray, isEqual } from 'utils/general';
 export interface FieldSelectAsyncProps<
   Option extends AnyRecord = AnyRecord,
   Value = any,
-  FetchArgs = AnyRecord
+  FetchArgs = AnyRecord,
 > extends StyleProps,
     FormFieldWrapperProps {
   useCall: () => FetchResourceWithPagination<FetchArgs, Option>;
@@ -50,7 +50,7 @@ export const FieldSelectAsync = <Option extends AnyRecord = AnyRecord>({
   const items = data || [];
 
   const itemToSelectOption = (
-    item: Option | undefined
+    item: Option | undefined,
   ): {
     value: any;
     label: React.ReactNode;
@@ -73,7 +73,7 @@ export const FieldSelectAsync = <Option extends AnyRecord = AnyRecord>({
 
     if (isArray(value)) {
       const foundItems = value.map((v) =>
-        items.find((item) => isEqual(optionToValue ? optionToValue(item) : item, v))
+        items.find((item) => isEqual(optionToValue ? optionToValue(item) : item, v)),
       );
       newState = foundItems.map(itemToSelectOption);
     } else {

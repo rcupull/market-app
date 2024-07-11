@@ -1,6 +1,6 @@
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
-import { IconButtonShowHide } from 'components/icon-button-show-hide';
+import { FieldCheckbox } from 'components/field-checkbox';
 
 import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusinessSection';
 import { useModal } from 'features/modal/useModal';
@@ -16,8 +16,11 @@ export const IconButtonShowHideSection = ({ rowData }: IconButtonShowHideSection
   const { pushModal } = useModal();
   const { business, onFetch } = useBusiness();
 
-  const { hidden } = rowData;
-  const handleClick = () => {
+  const { showMobile, showPC } = rowData;
+  const handleClick = (
+    value: boolean,
+    field: Extract<keyof PostsLayoutSection, 'showMobile' | 'showPC'>,
+  ) => {
     pushModal(
       'Confirmation',
       {
@@ -26,18 +29,24 @@ export const IconButtonShowHideSection = ({ rowData }: IconButtonShowHideSection
           const { updateBusinessSection } = useUpdateBusinessSection();
 
           return {
-            title: `${hidden ? 'Mostrar' : 'Ocultar'} sección`,
+            title: `${value ? 'Mostrar' : 'Ocultar'} sección`,
             content: (
               <>
-                {hidden ? (
+                {value ? (
                   <div>
-                    Esta sección será <span className="font-bold">visible</span> para todos sus
-                    clientes. Desea continuar?
+                    Esta sección será <span className="font-bold">visible</span> en{' '}
+                    <span className="font-bold">{`vista ${
+                      field === 'showMobile' ? 'móvil' : 'PC'
+                    }`}</span>{' '}
+                    para todos sus clientes. Desea continuar?
                   </div>
                 ) : (
                   <div>
-                    Esta sección será <span className="font-bold">oculta</span> para todos sus
-                    clientes. Desea continuar?
+                    Esta sección será <span className="font-bold">oculta</span> en{' '}
+                    <span className="font-bold">{`vista ${
+                      field === 'showMobile' ? 'móvil' : 'PC'
+                    }`}</span>{' '}
+                    para todos sus clientes. Desea continuar?
                   </div>
                 )}
               </>
@@ -45,7 +54,7 @@ export const IconButtonShowHideSection = ({ rowData }: IconButtonShowHideSection
             badge: <Badge variant="info" />,
             primaryBtn: (
               <Button
-                label={hidden ? 'Mostrar' : 'Ocultar'}
+                label={value ? 'Mostrar' : 'Ocultar'}
                 isBusy={updateBusinessSection.status.isBusy}
                 onClick={() => {
                   if (!business) return;
@@ -54,14 +63,14 @@ export const IconButtonShowHideSection = ({ rowData }: IconButtonShowHideSection
                     {
                       routeName: business.routeName,
                       sectionId: rowData._id,
-                      data: { hidden: !hidden },
+                      data: { [field]: value },
                     },
                     {
                       onAfterSuccess: () => {
                         onFetch({ routeName: business.routeName });
                         onClose();
                       },
-                    }
+                    },
                   );
                 }}
               />
@@ -69,9 +78,24 @@ export const IconButtonShowHideSection = ({ rowData }: IconButtonShowHideSection
           };
         },
       },
-      { emergent: true }
+      { emergent: true },
     );
   };
 
-  return <IconButtonShowHide hidden={hidden} onClick={handleClick} />;
+  return (
+    <div className="flex flex-col">
+      <FieldCheckbox
+        noUseFormik
+        label="Móviles"
+        value={showMobile}
+        onClick={() => handleClick(!showMobile, 'showMobile')}
+      />
+      <FieldCheckbox
+        noUseFormik
+        label="PCs"
+        value={showPC}
+        onClick={() => handleClick(!showPC, 'showPC')}
+      />
+    </div>
+  );
 };

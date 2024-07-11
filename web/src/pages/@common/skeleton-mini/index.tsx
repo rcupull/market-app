@@ -12,7 +12,7 @@ const Piece = ({ className, active }: PieceProps) => {
         {
           'bg-indigo-800': active,
         },
-        className
+        className,
       )}
     />
   );

@@ -91,7 +91,7 @@ export const ShoppingStateView = ({
                               onClose();
                               onAfterSuccess?.();
                             },
-                          }
+                          },
                         );
                       }}
                     />
@@ -108,7 +108,7 @@ export const ShoppingStateView = ({
                 };
               },
             },
-            { emergent: true }
+            { emergent: true },
           );
         }
       }}

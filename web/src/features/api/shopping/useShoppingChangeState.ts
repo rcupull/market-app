@@ -25,7 +25,7 @@ export const useShoppingChangeState = (): {
               state,
             },
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

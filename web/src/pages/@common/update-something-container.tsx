@@ -38,7 +38,7 @@ export const UpdateSomethingContainer = ({
           '!border-gray-200': !over,
           '!border-red-200': warning,
         },
-        className
+        className,
       )}
     >
       {children}

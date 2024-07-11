@@ -68,17 +68,17 @@ export const RouteName = () => {
   }
 
   return (
-    <Routes>
-      <Route path="/" element={<Home routeName={routeName} />} />
+      <Routes>
+        <Route path="/" element={<Home routeName={routeName} />} />
 
-      <Route path="about-us" element={<AboutUs routeName={routeName} />} />
+        <Route path="about-us" element={<AboutUs routeName={routeName} />} />
 
-      <Route path="shopping/*" element={<Shopping routeName={routeName} />} />
+        <Route path="shopping/*" element={<Shopping routeName={routeName} />} />
 
-      <Route path="posts/*" element={<Posts routeName={routeName} />} />
+        <Route path="posts/*" element={<Posts routeName={routeName} />} />
 
-      <Route path="*" element={<Navigate to={getOneBusinessRoute({ routeName })} />} />
-    </Routes>
+        <Route path="*" element={<Navigate to={getOneBusinessRoute({ routeName })} />} />
+      </Routes>
   );
 };
 

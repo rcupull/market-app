@@ -45,7 +45,7 @@ export const useUpdateOneBusiness = (): {
             }),
             data: update,
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

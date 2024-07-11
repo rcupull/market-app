@@ -17,7 +17,7 @@ export interface RemapRowsIndexRecord {
 }
 
 export type TablePropsPropcessor<RowData extends AnyRecord = AnyRecord> = (
-  props: TablePropsBase<RowData>
+  props: TablePropsBase<RowData>,
 ) => Partial<TablePropsBase<RowData>>;
 
 interface TablePropsBase<RowData extends AnyRecord = AnyRecord> extends StyleProps {

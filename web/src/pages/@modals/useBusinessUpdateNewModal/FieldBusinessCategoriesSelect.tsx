@@ -43,7 +43,7 @@ const defaultCategoriesLabels: Array<{ label: string }> = [
 ];
 
 export const FieldBusinessCategoriesSelect = (
-  props: FieldBusinessCategoriesSelectProps<AnyRecord>
+  props: FieldBusinessCategoriesSelectProps<AnyRecord>,
 ) => {
   return (
     <FieldRadioGroup<{ value: PostCategory }>

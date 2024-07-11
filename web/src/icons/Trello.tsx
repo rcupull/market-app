@@ -11,7 +11,7 @@ export function SvgTrello(props: StyleProps) {
       height: '1em',
       ...props,
     },
-    createElement('path', { d: 'M5 5v22h22V5zm2 2h8v14H7zm10 0h8v9h-8z' })
+    createElement('path', { d: 'M5 5v22h22V5zm2 2h8v14H7zm10 0h8v9h-8z' }),
   );
 }
 export default SvgTrello;

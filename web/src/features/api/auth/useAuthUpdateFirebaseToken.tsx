@@ -19,7 +19,7 @@ export const useAuthUpdateFirebaseToken = (): {
             url: getEndpoint({ path: '/auth/firebase/token' }),
             data,
           },
-          options
+          options,
         );
       },
       reset: fetch[3],
