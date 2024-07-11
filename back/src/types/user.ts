@@ -17,4 +17,9 @@ export interface User extends BaseIdentity {
   telegramBotChat?: TelegramBotChat;
   phone?: string;
   address?: Address;
+  favoritesBusinessRouteNames?: Array<string>;
+}
+
+export interface UserDto extends User {
+  favoritesBusinessNames?: Array<string>;
 }

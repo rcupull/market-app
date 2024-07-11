@@ -21,7 +21,7 @@ export type ButtonSvg = React.FunctionComponent<StyleProps> | React.ReactElement
 
 export interface ButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
-  variant?: 'primary' | 'outlined' | 'error' | 'link' | 'sublined' | 'transparent' | 'gray'
+  variant?: 'primary' | 'outlined' | 'error' | 'link' | 'sublined' | 'transparent' | 'gray';
   svgPosition?: 'left' | 'right';
   label?: React.ReactNode;
   isBusy?: boolean;

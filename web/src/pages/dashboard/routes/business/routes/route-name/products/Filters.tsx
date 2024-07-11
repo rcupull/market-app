@@ -51,7 +51,7 @@ export const Filters = ({ business, onChange, value, className }: FiltersProps) 
           postCategoriesMethod: undefined,
           search: undefined,
         });
-        
+
         setSearch('');
         setFilterType('categories');
       }}
@@ -128,8 +128,8 @@ export const Filters = ({ business, onChange, value, className }: FiltersProps) 
               onChange?.({ page: 1, search: newSearch });
             }, 500);
           }}
-          className='mt-2'
-          placeholder='Buscar productos'
+          className="mt-2"
+          placeholder="Buscar productos"
         />
       </div>
     </FiltersContainer>

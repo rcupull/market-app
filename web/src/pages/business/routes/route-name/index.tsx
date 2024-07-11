@@ -5,6 +5,8 @@ import { useAuth } from 'features/api-slices/useAuth';
 
 import { useRouter } from 'hooks/useRouter';
 
+import { FavoritesBusinessBar } from './components/favorites-business-bar';
+
 import { LayoutPage } from 'pages/@common/layout-page';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useCart } from 'pages/@hooks/useCart';
@@ -68,17 +70,20 @@ export const RouteName = () => {
   }
 
   return (
-    <Routes>
-      <Route path="/" element={<Home routeName={routeName} />} />
+    <>
+      <FavoritesBusinessBar />
+      <Routes>
+        <Route path="/" element={<Home routeName={routeName} />} />
 
-      <Route path="about-us" element={<AboutUs routeName={routeName} />} />
+        <Route path="about-us" element={<AboutUs routeName={routeName} />} />
 
-      <Route path="shopping/*" element={<Shopping routeName={routeName} />} />
+        <Route path="shopping/*" element={<Shopping routeName={routeName} />} />
 
-      <Route path="posts/*" element={<Posts routeName={routeName} />} />
+        <Route path="posts/*" element={<Posts routeName={routeName} />} />
 
-      <Route path="*" element={<Navigate to={getOneBusinessRoute({ routeName })} />} />
-    </Routes>
+        <Route path="*" element={<Navigate to={getOneBusinessRoute({ routeName })} />} />
+      </Routes>
+    </>
   );
 };
 

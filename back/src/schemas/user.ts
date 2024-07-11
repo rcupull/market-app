@@ -28,6 +28,7 @@ const UserSchema = new Schema<User>({
   telegramBotChat: TelegramBotChatDefinition,
   phone: { type: String },
   address: AddressDefinition,
+  favoritesBusinessRouteNames: [{ type: String }],
 });
 
 const updateUserPassword = (user: User): Promise<void> => {
