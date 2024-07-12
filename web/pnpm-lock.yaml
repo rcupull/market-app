@@ -21,7 +21,7 @@ importers:
         specifier: ^3.2.2
         version: 3.2.2(react@18.2.0)
       '@headlessui-float/react':
-        specifier: ^0.13.3
+        specifier: ^0.13.2
         version: 0.13.3(@headlessui/react@2.0.0-alpha.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@headlessui/react':
         specifier: 2.0.0-alpha.4
