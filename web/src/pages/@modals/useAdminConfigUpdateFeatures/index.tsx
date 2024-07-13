@@ -29,7 +29,7 @@ export const useAdminConfigUpdateFeatures = () => {
             };
           },
         },
-        { emergent: true },
+        { emergent: true }
       );
     },
   };

@@ -15,7 +15,7 @@ export const MutedBox = ({ className, active, onClick, children }: MutedBoxProps
         {
           'border-gray-500': active,
         },
-        className,
+        className
       )}
       onClick={onClick}
     >

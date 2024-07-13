@@ -1,4 +1,4 @@
-import { BaseIdentity, Image } from './general';
+import { Address, BaseIdentity, Image } from './general';
 import { PostFormField, PostType } from './post';
 
 export type BusinessCategory = string;
@@ -158,6 +158,7 @@ export interface Business extends BaseIdentity {
   postFormFields?: Array<PostFormField>;
   currency: BusinessCurrency;
   seo?: BusinessSEO;
+  addresses?: Array<Address>;
 }
 
 export interface BusinessSummary extends Pick<Business, '_id' | 'name' | 'routeName'> {

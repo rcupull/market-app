@@ -17,5 +17,5 @@ router.use(
   usersRouter,
   billsRouter,
   agendaRouter,
-  bdRouter,
+  bdRouter
 );

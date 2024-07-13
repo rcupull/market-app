@@ -20,7 +20,9 @@ export const PersonalData = ({ className, onValid }: PersonalDataProps) => {
 
   const user = authData?.user;
 
-  const { phone, address } = user || {};
+  const { phone, addresses } = user || {};
+
+  const address = addresses?.[0];
 
   const isValidAddress = !!address && getIsValidAddress(address);
   const isValidPhone = !!phone && getIsValidPhone(phone);

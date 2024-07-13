@@ -48,7 +48,7 @@ export const ClientData = ({ rowData }: ClientDataProps) => {
       {renderValue(
         purchaserAddress && getIsValidAddress(purchaserAddress) && (
           <AddressView address={purchaserAddress} />
-        ),
+        )
       )}
     </div>
   );

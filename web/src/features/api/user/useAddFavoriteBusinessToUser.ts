@@ -24,7 +24,7 @@ export const useAddFavoriteBusinessToUser = (): {
               routeName,
             },
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

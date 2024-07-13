@@ -14,7 +14,7 @@ export interface User extends BaseIdentity {
   specialAccess?: Array<Access>;
   telegramBotChat?: TelegramBotChat;
   phone?: string;
-  address?: Address;
+  addresses?: Array<Address>;
   favoritesBusinessRouteNames?: Array<string>;
 }
 

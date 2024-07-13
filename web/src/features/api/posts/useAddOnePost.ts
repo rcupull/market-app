@@ -49,7 +49,7 @@ export const useAddOnePost = (): {
             }),
             data,
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

@@ -11,7 +11,7 @@ export function SvgSignalSolid(props: StyleProps) {
       height: '1em',
       ...props,
     },
-    createElement('path', { d: 'M21 4v24h6V4zm-8 7v17h6V11zm-8 7v10h6V18z' }),
+    createElement('path', { d: 'M21 4v24h6V4zm-8 7v17h6V11zm-8 7v10h6V18z' })
   );
 }
 export default SvgSignalSolid;

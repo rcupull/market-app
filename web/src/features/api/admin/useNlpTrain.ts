@@ -20,7 +20,7 @@ export const useNlpTrain = (): {
               path: '/nlp/train',
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

@@ -27,7 +27,7 @@ const UserSchema = new Schema<User>({
   specialAccess: { type: [String], default: [] },
   telegramBotChat: TelegramBotChatDefinition,
   phone: { type: String },
-  address: AddressDefinition,
+  addresses: [AddressDefinition],
   favoritesBusinessRouteNames: [{ type: String }],
 });
 

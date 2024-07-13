@@ -11,7 +11,7 @@ export function SvgPauseSolid(props: StyleProps) {
       height: '1em',
       ...props,
     },
-    createElement('path', { d: 'M10 6v20h2V6zm10 0v20h2V6z' }),
+    createElement('path', { d: 'M10 6v20h2V6zm10 0v20h2V6z' })
   );
 }
 export default SvgPauseSolid;

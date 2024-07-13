@@ -76,7 +76,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                     {
                       onAfterSuccess: () => resolve(false),
                       onAfterFailed: () => resolve(true),
-                    },
+                    }
                   );
                 }, 500);
               });
@@ -155,7 +155,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                         },
                         {
                           onAfterSuccess,
-                        },
+                        }
                       );
                     } else {
                       const { postCategories, name, currency } = value;
@@ -169,13 +169,13 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                         },
                         {
                           onAfterSuccess,
-                        },
+                        }
                       );
                     }
                   }}
                   variant="primary"
                   className="w-full"
-                />,
+                />
               )}
             </form>
           );

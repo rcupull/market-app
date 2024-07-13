@@ -40,7 +40,7 @@ export const useUserUpdateSettings = () => {
             };
           },
         },
-        { emergent: true },
+        { emergent: true }
       );
     },
   };

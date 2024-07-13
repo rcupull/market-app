@@ -3,7 +3,7 @@ import { Business, BusinessNotificationFlags } from '../types/business';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { createdAtSchemaDefinition } from '../utils/schemas';
 import { PostModel } from './post';
-import { PostLayoutSchema, TelegramBotChatDefinition } from './common';
+import { AddressDefinition, PostLayoutSchema, TelegramBotChatDefinition } from './common';
 
 const BusinessSchema = new Schema<Business>({
   ...createdAtSchemaDefinition,
@@ -141,6 +141,7 @@ const BusinessSchema = new Schema<Business>({
     title: { type: String },
     description: { type: String },
   },
+  addresses: [AddressDefinition],
 });
 
 BusinessSchema.plugin(mongoosePaginate);

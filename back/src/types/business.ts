@@ -1,4 +1,4 @@
-import { BaseIdentity, Image, TelegramBotChat } from './general';
+import { Address, BaseIdentity, Image, TelegramBotChat } from './general';
 import { Schema } from 'mongoose';
 import { Post, PostType } from './post';
 
@@ -155,6 +155,7 @@ export interface Business extends BaseIdentity {
   >;
   currency: BusinessCurrency;
   seo?: BusinessSEO;
+  addresses?: Array<Address>;
 }
 
 export interface BusinessDto extends Business {

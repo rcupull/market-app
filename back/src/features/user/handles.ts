@@ -97,7 +97,7 @@ const put_users_userId: () => RequestHandler = () => {
           name: 'name',
           profileImage: 'profileImage',
           phone: 'phone',
-          address: 'address',
+          addresses: 'addresses',
         })(body),
       });
 

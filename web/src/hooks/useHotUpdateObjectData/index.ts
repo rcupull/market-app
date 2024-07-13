@@ -7,7 +7,7 @@ import { AnyRecord } from 'types/general';
 
 export const useHotUpdateObjectData = <
   T extends AnyRecord = AnyRecord,
-  Args extends AnyRecord = AnyRecord,
+  Args extends AnyRecord = AnyRecord
 >({
   updateKey,
   data,

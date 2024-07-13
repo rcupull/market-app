@@ -102,7 +102,7 @@ export const ClothingProductGrid1 = ({ post, render, currency }: ClothingProduct
                       layout="shoppingCart"
                       btnPostToCartVariant="button"
                       className="mt-4 w-full"
-                    />,
+                    />
                   )}
                 </form>
               );

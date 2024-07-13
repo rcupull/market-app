@@ -100,7 +100,7 @@ export const SideBar = ({ className }: SideBarProps) => {
                     getEndpoint({
                       path: '/admin/agenda/web/:agendaToken',
                       urlParams: { agendaToken },
-                    }),
+                    })
                   );
                 },
               });
