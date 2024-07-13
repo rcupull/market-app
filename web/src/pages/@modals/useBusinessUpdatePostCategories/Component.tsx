@@ -18,7 +18,7 @@ import { useBusiness } from '../../@hooks/useBusiness';
 
 import { PostCategory } from 'types/business';
 import { getPostCategoryTag } from 'utils/business';
-import { addRow, areEqualArrays, cn, isEqualObj, removeRow, updateRow } from 'utils/general';
+import { addRow, cn, isEqualObj, removeRow, updateRow } from 'utils/general';
 
 export interface ComponentProps {
   portal: Portal;
@@ -40,6 +40,10 @@ export const Component = ({ portal, onAfterSuccess, setHasUnsavedChanges }: Comp
   useEffect(() => {
     setState(initialCategories);
   }, [initialCategories]);
+
+  useEffect(() =>{
+    setHasUnsavedChanges(!isEqualObj(state, initialCategories))
+  }, [state])
 
   const { pushModal } = useModal();
 
@@ -69,7 +73,7 @@ export const Component = ({ portal, onAfterSuccess, setHasUnsavedChanges }: Comp
             },
           ]}
         >
-          {({ value, isValid, resetForm, hasChange }) => {
+          {({ value, isValid, resetForm }) => {
             const handleAdd = () => {
               const { label } = value;
               
@@ -80,9 +84,6 @@ export const Component = ({ portal, onAfterSuccess, setHasUnsavedChanges }: Comp
                   tag: getPostCategoryTag(label),
                 }),
               );
-
-              const change = hasChange || !areEqualArrays(state, initialCategories)
-              setHasUnsavedChanges(change)
               resetForm();
             };
             

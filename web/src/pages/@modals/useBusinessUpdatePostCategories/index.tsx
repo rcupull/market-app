@@ -15,36 +15,6 @@ const Component = dynamic(() => import('./Component').then((m) => m));
 export const useBusinessUpdatePostCategories = () => {
   const { pushModal } = useModal();
 
-  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const handleAttemptToClose = () => {
-    console.log("hasUnsavedChanges", hasUnsavedChanges)
-    if (!hasUnsavedChanges) 
-      return;
-    console.log("llegue hasta aqui")
-    pushModal(
-      'Confirmation', 
-      {
-        useProps: () => {
-          const { onClose } = useModal();
-          return {
-            title: 'Descartar cambios',
-            content: '¿Estás seguro de que deseas cerrar sin guardar los cambios?',
-            primaryBtn: (
-              <Button
-                label="Confirmar"
-                variant="primary"
-                onClick={() => {
-                  onClose();
-                }}
-              />
-            ),
-          };
-        },
-      },
-      { emergent : true},
-    );
-  };
-
   return {
     open: (args?: { onAfterSuccess: () => void }) => {
       pushModal(
@@ -52,7 +22,39 @@ export const useBusinessUpdatePostCategories = () => {
         {
           useProps: () => {
             const portal = usePortal();
-            const { onClose } = useModal();
+            const { onClose: onCloseParent } = useModal();
+
+            const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+            const handleAttemptToClose = () => {
+              console.log('hasUnsavedChanges', hasUnsavedChanges);
+              if (!hasUnsavedChanges){
+                onCloseParent();
+                return;
+              }
+              pushModal(
+                'Confirmation',
+                {
+                  useProps: () => {
+                    const { onClose } = useModal();
+                    return {
+                      title: 'Descartar cambios',
+                      content: '¿Estás seguro de que deseas cerrar sin guardar los cambios?',
+                      primaryBtn: (
+                        <Button
+                          label="Confirmar"
+                          variant="primary"
+                          onClick={() => {
+                            onClose();
+                            onCloseParent();
+                          }}
+                        />
+                      ),
+                    };
+                  },
+                },
+                { emergent: true },
+              );
+            };
 
             return {
               title: 'Categorías',
@@ -62,17 +64,11 @@ export const useBusinessUpdatePostCategories = () => {
                   setHasUnsavedChanges={setHasUnsavedChanges}
                   onAfterSuccess={() => {
                     args?.onAfterSuccess?.();
-                    onClose();
+                    onCloseParent();
                   }}
                 />
               ),
-              secondaryBtn: 
-                <ButtonClose 
-                  onClick={() => {
-                    handleAttemptToClose();
-                    onClose();
-                  }}
-                />,
+              secondaryBtn: <ButtonClose onClick={handleAttemptToClose} />,
               primaryBtn: <div ref={portal.ref} />,
             };
           },
