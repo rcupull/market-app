@@ -28,7 +28,7 @@ export const useUpdateBusinessPostCategories = (): {
               postCategories,
             },
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

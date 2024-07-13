@@ -35,7 +35,7 @@ export const useUpdateManyPosts = (): {
               routeName,
             },
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

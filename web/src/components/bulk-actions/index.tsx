@@ -17,7 +17,7 @@ type GetBulkRowNodes<RowData extends AnyRecord = AnyRecord> = (
   args: {
     rowData: RowData;
   },
-  nodes: Array<React.ReactNode>,
+  nodes: Array<React.ReactNode>
 ) => Array<React.ReactNode>;
 
 type GetBulkHeaderNodes = (nodes: Array<React.ReactNode>) => Array<React.ReactNode>;
@@ -33,7 +33,7 @@ interface BulkActionArgs<RowData extends AnyRecord = AnyRecord> {
 
 export interface BulkActionsProps<
   Action extends string = string,
-  RowData extends AnyRecord = AnyRecord,
+  RowData extends AnyRecord = AnyRecord
 > extends StyleProps {
   renderMenuNode: (args: { setAction: (action: Action) => void }) => React.ReactNode;
   getBulkActionBtnProps: (args: { action: Action }) => Partial<ButtonProps>;

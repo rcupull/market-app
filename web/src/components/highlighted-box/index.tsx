@@ -30,7 +30,7 @@ export const HighlightedBox = ({
           'ring-yellow-500': variant === 'warning',
           'ring-gray-500': variant === 'neutral',
         },
-        className,
+        className
       )}
     >
       <Badge variant={getBadgeVariant()} />

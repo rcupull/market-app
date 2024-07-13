@@ -38,7 +38,7 @@ export const useBusinessUpdateBanner = () => {
             };
           },
         },
-        { emergent: true },
+        { emergent: true }
       );
     },
   };

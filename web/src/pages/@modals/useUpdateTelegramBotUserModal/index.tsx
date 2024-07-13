@@ -38,7 +38,7 @@ export const useUpdateTelegramBotUserModal = () => {
             };
           },
         },
-        { emergent: true },
+        { emergent: true }
       );
     },
   };

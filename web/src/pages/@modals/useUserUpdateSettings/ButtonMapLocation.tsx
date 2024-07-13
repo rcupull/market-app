@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { ButtonSave } from 'components/button-save';
-import { IconButtonLocation } from 'components/icon-button-location';
+import { IconButtonLocation, IconButtonLocationProps } from 'components/icon-button-location';
 import { MapOlPosition } from 'components/map/types';
 
 import { useGetOneGeoReverse } from 'features/api/geolocation/useGetOneGeoReverse';
@@ -12,12 +12,13 @@ import { useMapModal } from '../useMapModal';
 import { Address } from 'types/general';
 import { getCurrentLocation } from 'utils/geolocation';
 
-export interface ButtonMapLocationProps {
+export interface ButtonMapLocationProps
+  extends Omit<IconButtonLocationProps, 'onChange' | 'value'> {
   onChange: (value: Address) => void;
   value: Address | undefined;
 }
 
-export const ButtonMapLocation = ({ onChange, value }: ButtonMapLocationProps) => {
+export const ButtonMapLocation = ({ onChange, value, ...props }: ButtonMapLocationProps) => {
   const mapModal = useMapModal();
 
   return (
@@ -72,6 +73,7 @@ export const ButtonMapLocation = ({ onChange, value }: ButtonMapLocationProps) =
           },
         });
       }}
+      {...props}
     />
   );
 };

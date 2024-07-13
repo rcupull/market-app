@@ -13,7 +13,7 @@ export function SvgLessThanEqualSolid(props: StyleProps) {
     },
     createElement('path', {
       d: 'M26 5L6 13.219v1.562L26 23v-2.156L9.469 14 26 7.156zM6 25v2h20v-2z',
-    }),
+    })
   );
 }
 export default SvgLessThanEqualSolid;

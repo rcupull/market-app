@@ -8,7 +8,7 @@ import { isNumber, updateRow } from 'utils/general';
 
 export const useHotUpdateTableData = <
   T extends AnyRecord = AnyRecord,
-  Args extends AnyRecord = AnyRecord,
+  Args extends AnyRecord = AnyRecord
 >({
   updateKey,
   data,

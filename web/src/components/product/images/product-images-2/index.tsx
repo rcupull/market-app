@@ -22,7 +22,7 @@ export const ProductImages2 = ({ value, className }: ProductImages2Props) => {
     <div
       className={cn(
         'flex flex-col-reverse sm:flex-row justify-center gap-2 w-full min-h-[20rem] lg:min-h-[30rem]',
-        className,
+        className
       )}
     >
       <div className="flex flex-row sm:flex-col gap-2 overflow-auto flex-shrink-0">

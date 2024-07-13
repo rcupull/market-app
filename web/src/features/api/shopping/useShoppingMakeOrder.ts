@@ -21,7 +21,7 @@ export const useShoppingMakeOrder = (): {
               urlParams: { shoppingId },
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

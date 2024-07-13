@@ -161,16 +161,16 @@ export const ComponentProduct = ({
                         },
                         {
                           onAfterSuccess,
-                        },
+                        }
                       )
                     : addBusinessSection.fetch(
                         { routeName: business.routeName, data: value },
-                        { onAfterSuccess },
+                        { onAfterSuccess }
                       );
                 }}
                 variant="primary"
                 className="w-full"
-              />,
+              />
             )}
           </form>
         );

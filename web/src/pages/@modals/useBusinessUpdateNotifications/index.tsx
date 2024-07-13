@@ -38,7 +38,7 @@ export const useBusinessUpdateNotifications = () => {
             };
           },
         },
-        { emergent: true },
+        { emergent: true }
       );
     },
   };

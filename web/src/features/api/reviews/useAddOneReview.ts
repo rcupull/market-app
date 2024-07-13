@@ -25,7 +25,7 @@ export const useAddOneReview = (): {
             }),
             data,
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

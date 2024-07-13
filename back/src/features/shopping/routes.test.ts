@@ -139,7 +139,7 @@ describe('shopping', () => {
     it('should return a new shopping APPROVED', async () => {
       const { user1, business1User1 } = await fillBD({
         user1: {
-          address: addressDummy,
+          addresses: [addressDummy],
         },
         shopping1Business1User1: {
           state: ShoppingState.APPROVED,

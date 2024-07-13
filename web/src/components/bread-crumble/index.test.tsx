@@ -12,7 +12,7 @@ describe('BreadCrumble', () => {
           { label: 'test2', route: '/test2' },
         ]}
       />,
-      { wrapper: BrowserRouter },
+      { wrapper: BrowserRouter }
     );
 
     expect(result.container).toMatchInlineSnapshot(`

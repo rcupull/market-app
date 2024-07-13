@@ -17,7 +17,7 @@ export const searchToQuery = (search: string): Query =>
   });
 
 export const getParamsFromPathname = (
-  pathname: string,
+  pathname: string
 ): {
   routeName?: string;
   postId?: string;

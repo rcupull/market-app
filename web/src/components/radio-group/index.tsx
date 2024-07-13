@@ -60,7 +60,7 @@ export const RadioGroup = <O extends any = any>({
                   }}
                   className={cn(
                     'relative',
-                    getOptionCutomStyles?.(item, { selected: !checked }) ?? '',
+                    getOptionCutomStyles?.(item, { selected: !checked }) ?? ''
                   )}
                 >
                   {renderOption({ checked, item, index })}

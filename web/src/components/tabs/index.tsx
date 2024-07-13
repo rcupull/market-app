@@ -35,7 +35,7 @@ const clasicItemRender: ItemRender = ({ selected, label, svg: Svg }) => {
         'w-full text-center p-2 bg-gray-50 rounded-sm hover:bg-gray-100 border-b-2 border-transparent text-nowrap flex items-center gap-2',
         {
           '!border-indigo-600': selected,
-        },
+        }
       )}
     >
       {Svg && <Svg className="h-6 w-6 text-gray-400" />}
@@ -70,7 +70,7 @@ export const Tabs = <L extends string = string>({
                       {
                         'cursor-default': disabledStepNavigation,
                       },
-                      itemContainerClassName?.({ selected, index }),
+                      itemContainerClassName?.({ selected, index })
                     )}
                     onClick={(e) => {
                       if (disabledStepNavigation) {

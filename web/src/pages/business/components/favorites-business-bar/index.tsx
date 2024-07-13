@@ -38,7 +38,7 @@ export const FavoritesBusinessBar = () => {
     <div className="flex items-center border-b-2 border-b-gray-200">
       <div className="hidden sm:flex items-center overflow-auto ">
         {renderFavorite()}
-        
+
         {authData?.user?.favoritesBusinessRouteNames?.map((routeName, index) => {
           const name = authData?.user?.favoritesBusinessNames?.[index];
 
@@ -92,7 +92,7 @@ export const FavoritesBusinessBar = () => {
               onAfterSuccess: () => {
                 onRefreshAuthUser();
               },
-            },
+            }
           );
         }}
       />

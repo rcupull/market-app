@@ -11,7 +11,7 @@ interface ApiPersistent<Args = any, D = any> extends FetchResource<Args, D> {
 
 export const useApiPersistent = <Args = any, D = any>(
   field: string,
-  resources: FetchResource<Args, D>,
+  resources: FetchResource<Args, D>
 ): ApiPersistent<Args, D> => {
   const { data: reduxData, reset, setData } = useSimpleSlice<SliceApiPersistentState>(field);
 
