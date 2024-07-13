@@ -49,7 +49,7 @@ export const UpdateSomethingContainer = ({
           onMouseEnter={() => setOver(true)}
           className={cn('absolute -top-2 -left-2')}
         >
-          <Tooltip content={warning} openWhenHover>
+          <Tooltip content={warning}>
             <SvgExclamationTriangleSolid className="size-6 fill-red-500" />
           </Tooltip>
         </div>
