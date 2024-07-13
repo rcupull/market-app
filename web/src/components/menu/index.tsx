@@ -1,19 +1,11 @@
-import { Menu as MenuBase, Transition } from '@headlessui/react';
-import { Float } from '@headlessui-float/react';
+import type { MenuItemsProps} from '@headlessui/react';
+import { Menu as MenuBase, MenuButton, MenuItem, MenuItems,Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
 import { Divider } from 'components/divider';
 
 import { Nullable, StyleProps } from 'types/general';
 import { cn, compact } from 'utils/general';
-
-type AllowedPlacements = Array<'bottom-start' | 'bottom-end' | 'top-start' | 'top-end'>;
-const defaultAllowedPlacements: AllowedPlacements = [
-  'bottom-start',
-  'bottom-end',
-  'top-start',
-  'top-end',
-];
 
 interface MenuItem extends StyleProps {
   label: string;
@@ -29,7 +21,7 @@ export interface MenuProps extends StyleProps {
   buttonElement: React.ReactNode;
   topElement?: React.ReactNode;
   bottomElement?: React.ReactNode;
-  allowedPlacements?: AllowedPlacements;
+  anchor?: MenuItemsProps['anchor'];
 }
 
 export const Menu = ({
@@ -38,23 +30,13 @@ export const Menu = ({
   items = [],
   topElement,
   bottomElement,
-  allowedPlacements = defaultAllowedPlacements,
+  anchor = 'bottom start',
 }: MenuProps) => {
   return (
     <MenuBase data-id="Menu" as="div" className={cn('relative', className)}>
-      <Float
-        as="div"
-        className="relative"
-        offset={4}
-        floatingAs={Fragment}
-        portal
-        autoPlacement={{
-          allowedPlacements,
-        }}
-      >
-        <MenuBase.Button as="div" className="cursor-pointer w-fit">
+        <MenuButton as="div" className="cursor-pointer w-fit">
           {buttonElement}
-        </MenuBase.Button>
+        </MenuButton>
         <Transition
           as={Fragment}
           enter="transition ease-out duration-100"
@@ -64,14 +46,14 @@ export const Menu = ({
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <MenuBase.Items className="absolute right-0 z-10 mt-2 w-max origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <MenuBase.Item key="header" as="div">
+          <MenuItems anchor={anchor}  className="absolute right-0 z-10 mt-2 w-max origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <MenuItem key="header" as="div">
               {topElement}
-            </MenuBase.Item>
+            </MenuItem>
 
             {compact(items).map(
               ({ label, onClick, svg: Svg, divider, className, active, disabled }, index) => (
-                <MenuBase.Item key={label}>
+                <MenuItem key={label}>
                   {() => {
                     return (
                       <div key={index} className={className}>
@@ -96,16 +78,15 @@ export const Menu = ({
                       </div>
                     );
                   }}
-                </MenuBase.Item>
+                </MenuItem>
               ),
             )}
 
-            <MenuBase.Item key="bottomElement" as="div">
+            <MenuItem key="bottomElement" as="div">
               {bottomElement}
-            </MenuBase.Item>
-          </MenuBase.Items>
+            </MenuItem>
+          </MenuItems>
         </Transition>
-      </Float>
     </MenuBase>
   );
 };
