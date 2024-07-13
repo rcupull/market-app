@@ -18,14 +18,15 @@ import { useBusiness } from '../../@hooks/useBusiness';
 
 import { PostCategory } from 'types/business';
 import { getPostCategoryTag } from 'utils/business';
-import { addRow, cn, isEqualObj, removeRow, updateRow } from 'utils/general';
+import { addRow, areEqualArrays, cn, isEqualObj, removeRow, updateRow } from 'utils/general';
 
 export interface ComponentProps {
   portal: Portal;
   onAfterSuccess: () => void;
+  setHasUnsavedChanges: (value: boolean) => void;
 }
 
-export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
+export const Component = ({ portal, onAfterSuccess, setHasUnsavedChanges }: ComponentProps) => {
   const { business } = useBusiness();
 
   const { routeName } = business || {};
@@ -68,19 +69,23 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
             },
           ]}
         >
-          {({ value, isValid, resetForm }) => {
+          {({ value, isValid, resetForm, hasChange }) => {
             const handleAdd = () => {
               const { label } = value;
-
+              
+              console.log(label);
               setState(
                 addRow(state, {
                   label,
                   tag: getPostCategoryTag(label),
                 }),
               );
+
+              const change = hasChange || !areEqualArrays(state, initialCategories)
+              setHasUnsavedChanges(change)
               resetForm();
             };
-
+            
             return (
               <form className="w-full">
                 <FieldInput

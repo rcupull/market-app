@@ -244,3 +244,14 @@ export const copyToClipboard = (text: string): void => {
   document.execCommand('copy');
   textField.remove();
 };
+
+export const areEqualArrays = <T>(a: Array<T>, b: Array<T>): boolean => {
+  if (a.length !== b.length) return false;
+  
+  const sortedA = a.slice().sort();
+  const sortedB = b.slice().sort();
+  for(let i = 0; i < sortedA.length; i++) {
+    if(sortedA[i] !== sortedB[i]) return false;
+  }
+  return true;
+}
