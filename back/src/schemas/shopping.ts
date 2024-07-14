@@ -1,8 +1,9 @@
 import { PaginateModel, Schema, SchemaDefinition, model } from 'mongoose';
 import { createdAtSchemaDefinition } from '../utils/schemas';
-import { Shopping, ShoppingPostData, ShoppingState } from '../types/shopping';
+import { Shopping, ShoppingDelivery, ShoppingPostData, ShoppingState } from '../types/shopping';
 import { PostPurshaseNotes } from '../types/post';
 import mongoosePaginate from 'mongoose-paginate-v2';
+import { DeliveryConfigType } from '../types/business';
 
 const shoppingState = {
   type: String,
@@ -27,6 +28,12 @@ const purshaseNotesSchemaDefinition: SchemaDefinition<PostPurshaseNotes> = {
     _id: false,
     type: [String],
   },
+};
+
+const shoppingDeliverySchemaDefinition: SchemaDefinition<ShoppingDelivery> = {
+  deliveryType: { type: String, enum: Object.values(DeliveryConfigType) },
+  distance: { type: Number },
+  price: { type: Number },
 };
 
 const postDataSchemaDefinition: SchemaDefinition<ShoppingPostData> = {
@@ -75,7 +82,7 @@ const ShoppingSchema = new Schema<Shopping>({
       },
     ],
   },
-  deliveryEnabled: { type: Boolean },
+  delivery: shoppingDeliverySchemaDefinition,
 });
 
 ShoppingSchema.plugin(mongoosePaginate);

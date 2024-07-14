@@ -12,7 +12,7 @@ import { useRouter } from 'hooks/useRouter';
 import SvgBookmarkSolid from 'icons/BookmarkSolid';
 import SvgTruckSolid from 'icons/TruckSolid';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { getIsEnabledDelivery, getOneBusinessRoute } from 'utils/business';
+import { getDeliveryUtils, getOneBusinessRoute } from 'utils/business';
 import { cn } from 'utils/general';
 
 export const BusinessMainBar = () => {
@@ -21,7 +21,9 @@ export const BusinessMainBar = () => {
 
   const user = authData?.user;
 
-  const isEnabledDelivery = getIsEnabledDelivery(business?.deliveryConfig);
+  const isEnabledDelivery = getDeliveryUtils().getIsEnabled({
+    deliveryConfig: business?.deliveryConfig,
+  });
 
   const { addFavoriteBusinessToUser } = useAddFavoriteBusinessToUser();
   const { removeFavoriteBusinessFromUser } = useRemoveFavoriteBusinessFromUser();
@@ -100,7 +102,7 @@ export const BusinessMainBar = () => {
                 onAfterSuccess: () => {
                   onRefreshAuthUser();
                 },
-              },
+              }
             );
           }}
         />

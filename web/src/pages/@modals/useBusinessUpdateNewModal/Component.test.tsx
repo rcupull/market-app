@@ -34,7 +34,7 @@ describe('Component', () => {
                     <span
                       class="text-red-600 text-xs sm:ml-2"
                     >
-                      (Este valor 
+                      (
                       <span
                         class="font-bold"
                       >
@@ -83,41 +83,38 @@ describe('Component', () => {
               </div>
               <div
                 class="relative"
+                data-headlessui-state=""
               >
-                <div
-                  class="relative"
+                <button
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  class="relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                  data-headlessui-state=""
+                  id="headlessui-listbox-button-:r2:"
+                  name="currency"
+                  type="button"
                 >
-                  <button
-                    aria-expanded="false"
-                    aria-haspopup="listbox"
-                    class="relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
-                    data-headlessui-state=""
-                    id="headlessui-listbox-button-:r2:"
-                    name="currency"
-                    type="button"
+                  <div
+                    class="flex items-center h-6"
                   >
-                    <div
-                      class="flex items-center h-6"
+                    CUP
+                  </div>
+                  <span
+                    class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="h-5 w-5 fill-gray-400"
+                      height="1em"
+                      viewBox="0 0 32 32"
+                      width="1em"
                     >
-                      CUP
-                    </div>
-                    <span
-                      class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2"
-                    >
-                      <svg
-                        aria-hidden="true"
-                        class="h-5 w-5 fill-gray-400"
-                        height="1em"
-                        viewBox="0 0 32 32"
-                        width="1em"
-                      >
-                        <path
-                          d="M3.594 12l1.687 1.719 10 10 .719.687.719-.687 10-10L28.406 12zm4.844 2h15.124L16 21.563z"
-                        />
-                      </svg>
-                    </span>
-                  </button>
-                </div>
+                      <path
+                        d="M3.594 12l1.687 1.719 10 10 .719.687.719-.687 10-10L28.406 12zm4.844 2h15.124L16 21.563z"
+                      />
+                    </svg>
+                  </span>
+                </button>
               </div>
             </div>
             <span

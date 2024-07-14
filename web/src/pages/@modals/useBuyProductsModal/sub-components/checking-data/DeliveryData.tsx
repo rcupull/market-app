@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 import { FieldCheckbox } from 'components/field-checkbox';
 import { LabelValuePair } from 'components/label-value-pair';
-import { MapOlPosition } from 'components/map/types';
 
 import { useAuth } from 'features/api-slices/useAuth';
 
@@ -11,28 +10,31 @@ import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useBusinessDeliveryModal } from 'pages/@modals/useBusinessDeliveryModal';
 import { DeliveryConfigType } from 'types/business';
 import { StyleProps } from 'types/general';
-import { getIsEnabledDelivery } from 'utils/business';
-import { getDeliveryConfigPrice } from 'utils/delivery';
-import { isNullOrUndefined } from 'utils/general';
-import { getDistanceBetweenPositions } from 'utils/geolocation';
+import { getDeliveryUtils } from 'utils/business';
 
 export interface DeliveryDataProps extends StyleProps {
-  onChange: (value: boolean) => void;
-  value: boolean;
+  onChangeTakeDelivery: (value: boolean) => void;
+  takeDelivery: boolean;
 }
 
-export const DeliveryData = ({ className, onChange, value }: DeliveryDataProps) => {
+export const DeliveryData = ({
+  className,
+  onChangeTakeDelivery,
+  takeDelivery,
+}: DeliveryDataProps) => {
   const { business } = useBusiness();
   const { authData } = useAuth();
   const businessDeliveryModal = useBusinessDeliveryModal();
 
-  const isEnabledDelivery = getIsEnabledDelivery(business?.deliveryConfig);
+  const isEnabledDelivery = getDeliveryUtils().getIsEnabled({
+    deliveryConfig: business?.deliveryConfig,
+  });
 
   const deliveryType = business?.deliveryConfig?.type;
 
   useEffect(() => {
     if (isEnabledDelivery) {
-      onChange(true);
+      onChangeTakeDelivery(true);
     }
   }, [isEnabledDelivery]);
 
@@ -65,68 +67,35 @@ export const DeliveryData = ({ className, onChange, value }: DeliveryDataProps) 
     );
   };
 
-  const getDistance = (): number | null => {
-    const businessPosition: MapOlPosition | undefined = business?.addresses
-      ? {
-          lat: business?.addresses?.[0]?.lat,
-          lon: business?.addresses?.[0]?.lon,
-        }
-      : undefined;
+  const { getDistance, getPrice } = getDeliveryUtils();
 
-    const userPosition: MapOlPosition | undefined = authData?.user?.addresses
-      ? {
-          lat: authData?.user?.addresses?.[0]?.lat,
-          lon: authData?.user?.addresses?.[0]?.lon,
-        }
-      : undefined;
+  const distance = getDistance({
+    businessAddress: business?.addresses?.[0],
+    userAddress: authData?.user?.addresses?.[0],
+  });
 
-    if (!businessPosition || !userPosition) {
-      return null;
-    }
+  //////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////
 
-    return getDistanceBetweenPositions(businessPosition, userPosition);
+  const price = getPrice({ distance, deliveryConfig: business?.deliveryConfig });
+
+  const renderDeliveryPrice = () => {
+    if (!takeDelivery) return null;
+    if (deliveryType === DeliveryConfigType.FREE) return null;
+
+    return (
+      <div className="flex justify-end w-full mt-2">
+        <div className="flex flex-col sm:flex-row gap-4 border-2 border-gray-400 rounded-xl px-2">
+          <LabelValuePair label="Distancia" value={`${distance} Kms`} />
+
+          <LabelValuePair label="Precio de envío" value={`${price} CUP`} />
+        </div>
+      </div>
+    );
   };
-
-  const distance = getDistance();
-
-  //////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////
-
-  const getPrice = (): number | null => {
-    if (isNullOrUndefined(distance)) {
-      return null;
-    }
-
-    switch (deliveryType) {
-      case DeliveryConfigType.OPTIONAL: {
-        if (!value) return 0;
-
-        const { price } = getDeliveryConfigPrice({
-          deliveryConfig: business?.deliveryConfig,
-          distance,
-        });
-
-        return price;
-      }
-      case DeliveryConfigType.REQUIRED: {
-        const { price } = getDeliveryConfigPrice({
-          deliveryConfig: business?.deliveryConfig,
-          distance,
-        });
-
-        return price;
-      }
-      default: {
-        return 0;
-      }
-    }
-  };
-
-  const price = getPrice()
-
   return renderContainer(
     <div className="p-2">
       {renderDeliveryMessage({
@@ -137,13 +106,17 @@ export const DeliveryData = ({ className, onChange, value }: DeliveryDataProps) 
 
       {renderDeliveryMessage({
         type: DeliveryConfigType.FREE,
-        message: 'Este negocio posee mensagería gratis para todos sus productos.',
+        message: (
+          <span className="text-green-600">
+            Este negocio posee mensagería gratis para todos sus productos.
+          </span>
+        ),
         checkboxNode: (
           <FieldCheckbox
             label="Haré uso del servicio de entrega"
             noUseFormik
-            onChange={(e) => onChange(e.target.checked)}
-            value={value}
+            onChange={(e) => onChangeTakeDelivery(e.target.checked)}
+            value={takeDelivery}
           />
         ),
       })}
@@ -155,8 +128,8 @@ export const DeliveryData = ({ className, onChange, value }: DeliveryDataProps) 
           <FieldCheckbox
             label="Incluir entraga al domicilio para esta orden"
             noUseFormik
-            onChange={(e) => onChange(e.target.checked)}
-            value={value}
+            onChange={(e) => onChangeTakeDelivery(e.target.checked)}
+            value={takeDelivery}
           />
         ),
       })}
@@ -171,13 +144,7 @@ export const DeliveryData = ({ className, onChange, value }: DeliveryDataProps) 
         checkboxNode: null,
       })}
 
-      <div className="flex justify-end w-full">
-        <div className="flex flex-col sm:flex-row gap-4 border-2 border-gray-400 rounded-xl px-2">
-          <LabelValuePair label="Distancia" value={`${distance} Kms`} />
-
-          <LabelValuePair label="Precio de envío" value={`${price} CUP`} />
-        </div>
-      </div>
-    </div>,
+      {renderDeliveryPrice()}
+    </div>
   );
 };

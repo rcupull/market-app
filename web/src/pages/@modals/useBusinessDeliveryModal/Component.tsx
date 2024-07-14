@@ -17,7 +17,7 @@ import { PriceTesting } from './PriceTesting';
 
 import { DeliveryConfig, DeliveryConfigType } from 'types/business';
 import { Address } from 'types/general';
-import { getIsEnabledDelivery } from 'utils/business';
+import { getDeliveryUtils } from 'utils/business';
 
 export interface ComponentProps {
   portal: Portal;
@@ -42,7 +42,9 @@ export const Component = ({ portal }: ComponentProps) => {
       }}
     >
       {({ value, isValid }) => {
-        const isEnabledDelivery = getIsEnabledDelivery(value.deliveryConfig);
+        const isEnabledDelivery = getDeliveryUtils().getIsEnabled({
+          deliveryConfig: value.deliveryConfig,
+        });
 
         return (
           <form className="w-full">
@@ -54,7 +56,7 @@ export const Component = ({ portal }: ComponentProps) => {
             />
 
             <Divider />
-            
+
             <FieldRadioGroup<{ value: DeliveryConfigType; label: string }>
               label="Tipo de entrega a domicilio"
               name="deliveryConfig.type"
@@ -109,7 +111,6 @@ export const Component = ({ portal }: ComponentProps) => {
 
             <Divider />
 
-
             {(value.deliveryConfig?.type === DeliveryConfigType.OPTIONAL ||
               value.deliveryConfig?.type === DeliveryConfigType.REQUIRED) && (
               <PriceTesting deliveryConfig={value.deliveryConfig} />
@@ -134,12 +135,12 @@ export const Component = ({ portal }: ComponentProps) => {
                         onFetch({ routeName });
                         onClose();
                       },
-                    },
+                    }
                   );
                 }}
                 variant="primary"
                 className="w-full"
-              />,
+              />
             )}
           </form>
         );

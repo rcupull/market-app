@@ -1,4 +1,4 @@
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ButtonSave } from 'components/button-save';
 import { IconButtonLocation, IconButtonLocationProps } from 'components/icon-button-location';
