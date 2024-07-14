@@ -280,7 +280,7 @@ const get_related_posts: () => RequestHandler = () => {
         return getPostNotFoundResponse({ res });
       }
 
-      const out = await postServicesGetAllWithPagination({
+      const related = await postServicesGetAllWithPagination({
         paginateOptions,
         query: {
           _id: { $ne: postId },
@@ -294,6 +294,26 @@ const get_related_posts: () => RequestHandler = () => {
           },
         },
       });
+
+
+      const { getPostData } = await shoppingServicesGetDataFromPosts({
+        posts: related.data,
+      });
+
+      const out = deepJsonCopy(related);
+
+      const getPostDto = async (post: Post): Promise<PostDto> => {
+        const { amountInProcess, stockAmountAvailable } = getPostData(post);
+
+        return {
+          ...post,
+          stockAmountAvailable,
+          amountInProcess,
+        };
+      };
+
+      const promises = out.data.map(getPostDto);
+      out.data = await Promise.all(promises);
 
       res.send(out);
     });
