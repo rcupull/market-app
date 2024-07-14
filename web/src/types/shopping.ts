@@ -1,5 +1,5 @@
 import { BillState } from './billing';
-import { BusinessCurrency } from './business';
+import { BusinessCurrency, DeliveryConfigType } from './business';
 import { Address, BaseIdentity } from './general';
 import { Post } from './post';
 
@@ -20,6 +20,13 @@ export type ShoppingStateHistory = Array<{
   lastUpdatedDate: string;
 }>;
 
+export interface ShoppingDelivery {
+  deliveryType: DeliveryConfigType;
+  price: number;
+  //
+  distance: number;
+}
+
 export interface Shopping extends BaseIdentity {
   posts: Array<{
     postData: ShoppingPostData;
@@ -37,4 +44,6 @@ export interface Shopping extends BaseIdentity {
   purchaserName?: string;
   purchaserAddress?: Address;
   purchaserPhone?: string;
+
+  delivery?: ShoppingDelivery;
 }

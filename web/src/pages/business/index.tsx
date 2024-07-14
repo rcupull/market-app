@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { FavoritesBusinessBar } from './components/favorites-business-bar';
+import { BusinessMainBar } from './components/business-main-bar';
 
 import { dynamic } from 'utils/makeLazy';
 const Home = dynamic(() => import('./routes/home').then((m) => ({ default: m.Home })));
@@ -11,7 +11,7 @@ const RouteName = dynamic(() =>
 export const Business = () => {
   return (
     <>
-      <FavoritesBusinessBar />
+      <BusinessMainBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path=":routeName/*" element={<RouteName />} />
