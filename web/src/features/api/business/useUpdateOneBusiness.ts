@@ -23,6 +23,8 @@ export const useUpdateOneBusiness = (): {
           | 'postFormFields'
           | 'notificationFlags'
           | 'seo'
+          | 'deliveryConfig'
+          | 'addresses'
         >
       >;
     },
@@ -45,7 +47,7 @@ export const useUpdateOneBusiness = (): {
             }),
             data: update,
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

@@ -75,6 +75,7 @@ const ShoppingSchema = new Schema<Shopping>({
       },
     ],
   },
+  deliveryEnabled: { type: Boolean },
 });
 
 ShoppingSchema.plugin(mongoosePaginate);

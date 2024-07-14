@@ -4,7 +4,7 @@ import { FetchResource } from 'types/api';
 import { getEndpoint } from 'utils/api';
 
 export const useShoppingMakeOrder = (): {
-  shoppingMakeOrder: FetchResource<{ shoppingId: string }, void>;
+  shoppingMakeOrder: FetchResource<{ shoppingId: string; deliveryEnabled?: boolean }, void>;
 } => {
   const fetch = useFetch();
 
@@ -12,7 +12,7 @@ export const useShoppingMakeOrder = (): {
     shoppingMakeOrder: {
       data: fetch[0],
       status: fetch[1],
-      fetch: ({ shoppingId }, options = {}) => {
+      fetch: ({ shoppingId, deliveryEnabled }, options = {}) => {
         fetch[2](
           {
             method: 'post',
@@ -20,6 +20,7 @@ export const useShoppingMakeOrder = (): {
               path: '/shopping/:shoppingId/makeOrder',
               urlParams: { shoppingId },
             }),
+            data: { deliveryEnabled },
           },
           options
         );

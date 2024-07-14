@@ -294,15 +294,14 @@ const post_shopping: () => RequestHandler<
 const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const user = req.user;
+      const { params, body, user } = req;
 
       if (!user) {
         return getUserNotFoundResponse({ res });
       }
 
-      const { params } = req;
-
       const { shoppingId } = params;
+      const { deliveryEnabled } = body;
 
       const shopping = await shoppingServicesFindAndUpdateOne({
         query: {
@@ -311,6 +310,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
         },
         update: {
           state: ShoppingState.REQUESTED,
+          deliveryEnabled,
         },
       });
 

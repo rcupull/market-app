@@ -34,6 +34,8 @@ export interface Shopping extends BaseIdentity {
     state: ShoppingState;
     lastUpdatedDate: Date;
   }>;
+
+  deliveryEnabled?: boolean;
 }
 
 export interface ShoppingDto extends Shopping {

@@ -10,15 +10,18 @@ import { useAuth } from 'features/api-slices/useAuth';
 import { useRouter } from 'hooks/useRouter';
 
 import SvgBookmarkSolid from 'icons/BookmarkSolid';
+import SvgTruckSolid from 'icons/TruckSolid';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { getOneBusinessRoute } from 'utils/business';
+import { getIsEnabledDelivery, getOneBusinessRoute } from 'utils/business';
 import { cn } from 'utils/general';
 
-export const FavoritesBusinessBar = () => {
+export const BusinessMainBar = () => {
   const { authData, onRefreshAuthUser } = useAuth();
   const { business } = useBusiness();
 
   const user = authData?.user;
+
+  const isEnabledDelivery = getIsEnabledDelivery(business?.deliveryConfig);
 
   const { addFavoriteBusinessToUser } = useAddFavoriteBusinessToUser();
   const { removeFavoriteBusinessFromUser } = useRemoveFavoriteBusinessFromUser();
@@ -73,29 +76,35 @@ export const FavoritesBusinessBar = () => {
         })}
       />
 
-      <IconButtonFavorite
-        fill={isFavorite}
-        className="ml-auto mr-3"
-        isBusy={
-          addFavoriteBusinessToUser.status.isBusy || removeFavoriteBusinessFromUser.status.isBusy
-        }
-        onClick={() => {
-          if (!user) return;
-          if (!business) return;
+      <div className="flex items-center gap-2 ml-auto mr-3">
+        {isEnabledDelivery && (
+          <div title="Tenemos entrega al domicilio">
+            <SvgTruckSolid className="fill-gray-500 size-6 8" />
+          </div>
+        )}
+        <IconButtonFavorite
+          fill={isFavorite}
+          isBusy={
+            addFavoriteBusinessToUser.status.isBusy || removeFavoriteBusinessFromUser.status.isBusy
+          }
+          onClick={() => {
+            if (!user) return;
+            if (!business) return;
 
-          (isFavorite ? removeFavoriteBusinessFromUser : addFavoriteBusinessToUser).fetch(
-            {
-              userId: user._id,
-              routeName: business.routeName,
-            },
-            {
-              onAfterSuccess: () => {
-                onRefreshAuthUser();
+            (isFavorite ? removeFavoriteBusinessFromUser : addFavoriteBusinessToUser).fetch(
+              {
+                userId: user._id,
+                routeName: business.routeName,
               },
-            }
-          );
-        }}
-      />
+              {
+                onAfterSuccess: () => {
+                  onRefreshAuthUser();
+                },
+              },
+            );
+          }}
+        />
+      </div>
     </div>
   );
 };

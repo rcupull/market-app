@@ -37,4 +37,6 @@ export interface Shopping extends BaseIdentity {
   purchaserName?: string;
   purchaserAddress?: Address;
   purchaserPhone?: string;
+
+  deliveryEnabled?: boolean;
 }

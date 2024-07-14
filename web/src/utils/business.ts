@@ -2,7 +2,7 @@ import { queryToSearch } from 'hooks/useRouter/utils';
 
 import { deepJsonCopy } from './general';
 
-import { Business, SearchLayoutType } from 'types/business';
+import { Business, DeliveryConfig, DeliveryConfigType, SearchLayoutType } from 'types/business';
 import { Post } from 'types/post';
 import { Shopping } from 'types/shopping';
 
@@ -129,4 +129,8 @@ export const getWhatsAppShoppingLink = (phoneNumber: string, shopping: Shopping)
   });
 
   return `https://wa.me/${phoneNumber}?${search}`;
+};
+
+export const getIsEnabledDelivery = (deliveryConfig: DeliveryConfig | undefined) => {
+  return deliveryConfig && deliveryConfig.type !== DeliveryConfigType.NONE;
 };

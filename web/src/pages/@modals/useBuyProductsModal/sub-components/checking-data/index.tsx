@@ -1,9 +1,12 @@
 import { cloneElement, useState } from 'react';
 
+import { Divider } from 'components/divider';
+
 import { useShoppingMakeOrder } from 'features/api/shopping/useShoppingMakeOrder';
 
 import { StepCommonProps } from '../../types';
 import { ButtonNavContainer } from '../button-nav-container';
+import { DeliveryData } from './DeliveryData';
 import { PersonalData } from './PersonalData';
 
 import { ShoppingDetails } from 'pages/@common/shopping-details';
@@ -17,6 +20,7 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
   const cart = useCart();
   const { business } = useBusiness();
   const [isValidPersonalData, setIsValidPersonalData] = useState(false);
+  const [deliveryEnabled, setDeliveryEnabled] = useState(false);
 
   if (!cart.constructionShopping) {
     return <></>;
@@ -32,22 +36,26 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
       const { _id: shoppingId } = cart.constructionShopping;
 
       shoppingMakeOrder.fetch(
-        { shoppingId },
+        { shoppingId, deliveryEnabled },
         {
           onAfterSuccess: () => {
             cart.onFetch();
             nextButtonProp.props.onClick();
           },
-        }
+        },
       );
     },
   });
 
   return (
     <>
-      <div className="flex justify-center">
-        <ShoppingDetails shopping={cart.constructionShopping} />
-      </div>
+      <ShoppingDetails shopping={cart.constructionShopping} />
+
+      <Divider className="!my-2" />
+
+      <DeliveryData className="mt-6" onChange={setDeliveryEnabled} value={deliveryEnabled} />
+
+      <Divider className="!my-2" />
 
       <PersonalData className="mt-6" onValid={setIsValidPersonalData} />
 
