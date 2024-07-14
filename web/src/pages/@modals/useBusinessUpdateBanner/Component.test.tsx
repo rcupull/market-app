@@ -37,6 +37,7 @@ describe('Component', () => {
               >
                 <div
                   aria-checked="true"
+                  data-checked=""
                   data-headlessui-state="checked"
                   id="headlessui-radiogroup-option-:r1:"
                   role="radio"

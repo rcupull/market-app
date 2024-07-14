@@ -25,7 +25,7 @@ export const ProductStockLabel = ({ post, layout }: ProductStockLabelProps) => {
   return (
     <span
       className={cn({
-        'text-gray-50 bg-green-800 px-2 py-0.5 rounded-xl': stockAmountAvailable !== 0,
+        'text-gray-50 bg-green-800 px-2 py-0.5 rounded-2xl': stockAmountAvailable !== 0,
         'text-red-500': stockAmountAvailable === 0,
         'text-xs !py-0 !px-1': layout?.size === 'small',
         'text-lg': layout?.size === 'medium',

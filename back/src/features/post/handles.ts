@@ -187,7 +187,7 @@ const post_posts_postId_duplicate: () => RequestHandler = () => {
 
       //these are omitted fields
       //eslint-disable-next-line
-      const { _id, createdAt, createdBy, images, ...propsToUse } = post.toJSON();
+      const { _id, createdAt, createdBy, images, stockAmount, ...propsToUse } = post.toJSON();
 
       req.body = propsToUse;
       req.body.name = `${req.body.name} (copy)`;

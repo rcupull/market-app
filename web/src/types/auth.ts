@@ -14,13 +14,18 @@ export interface User extends BaseIdentity {
   specialAccess?: Array<Access>;
   telegramBotChat?: TelegramBotChat;
   phone?: string;
-  address?: Address;
+  addresses?: Array<Address>;
+  favoritesBusinessRouteNames?: Array<string>;
+}
+
+export interface UserDto extends User {
+  favoritesBusinessNames?: Array<string>;
 }
 
 export type UserData = User | null;
 
 export interface AuthData {
-  user: User;
+  user: UserDto;
 }
 
 export interface AuthDataDto extends AuthData {

@@ -42,6 +42,7 @@ export const PostsSection = ({ routeName, layout, className }: PostsSectionProps
   const notRender = notRenderMovile || notRenderPC;
 
   const renderHiddenSection = notRender && owner;
+  const notRenderAtAll = notRender && !renderHiddenSection;
 
   const hotUpdateTableData = useHotUpdateTableData<
     Post,
@@ -71,16 +72,16 @@ export const PostsSection = ({ routeName, layout, className }: PostsSectionProps
   });
 
   useEffect(() => {
-    if (notRender) return;
+    if (notRenderAtAll) return;
 
     handleFilter(filters.value);
-  }, [JSON.stringify(postCategoriesTags), notRender]);
+  }, [JSON.stringify(postCategoriesTags), notRenderAtAll]);
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const businessNewUpdateSection = useBusinessNewUpdateSection();
 
-  if ((notRender && !renderHiddenSection) || !business) {
+  if (notRenderAtAll || !business) {
     return <></>;
   }
 
