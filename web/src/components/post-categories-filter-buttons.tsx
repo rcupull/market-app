@@ -81,7 +81,7 @@ export const PostCategoriesFilterButtons = ({
         return (
           <Button
             key={index}
-            {...(buttonType === 'button' ? { variant: selected ? 'primary' : 'outlined' } : {})}
+            {...(buttonType === 'button' ? { variant: selected ? 'gray' : 'outlined' } : {})}
             {...(buttonType === 'tab' ? { variant: selected ? 'sublined' : 'transparent' } : {})}
             onClick={(e) => {
               e.preventDefault();

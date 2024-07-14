@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import { Badge } from 'components/badge';
 import { FieldCheckbox } from 'components/field-checkbox';
+import { HighlightedBox } from 'components/highlighted-box';
 import { HtmlTextContainer } from 'components/html-text-container';
 import { WarningViewOnlyAdmin } from 'components/warning-view-only-admin';
 
@@ -39,8 +39,7 @@ export const ShoppingTermsAndConditions = ({
       className={className}
     >
       {info && (
-        <div className="w-full p-3 ring-2 ring-yellow-500 rounded-lg flex flex-col sm:flex-row items-center sm:items-start">
-          <Badge variant="warning" />
+        <HighlightedBox variant="warning">
           <div className="flex flex-col ml-4 mt-2 sm:mt-0">
             <span className="font-semibold text-center sm:text-left">
               Términos y condiciones para la compra en este negocio
@@ -56,7 +55,7 @@ export const ShoppingTermsAndConditions = ({
               className="mt-5"
             />
           </div>
-        </div>
+        </HighlightedBox>
       )}
 
       {!info && owner && (

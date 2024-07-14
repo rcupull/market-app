@@ -5,6 +5,7 @@ import { router as shoppingRouter } from './shopping/routes';
 import { router as businessRouter } from './business/routes';
 import { router as usersRouter } from './users/routes';
 import { router as billsRouter } from './bills/routes';
+import { router as bdRouter } from './bd/routes';
 
 export const router = Router();
 
@@ -15,5 +16,6 @@ router.use(
   businessRouter,
   usersRouter,
   billsRouter,
-  agendaRouter
+  agendaRouter,
+  bdRouter
 );

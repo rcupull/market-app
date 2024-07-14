@@ -94,7 +94,6 @@ export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
 
   return (
     <Menu
-      allowedPlacements={['bottom-end']}
       buttonElement={
         <div className="relative">
           <IconButton title="Carro de Compras" svg={<SvgShoppingCartSolid className="!size-8" />} />

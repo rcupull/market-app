@@ -5,6 +5,7 @@ import { Divider } from 'components/divider';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInput } from 'components/field-input';
 import { FieldShowHide } from 'components/field-show-hide';
+import { FormFieldWrapper } from 'components/form-field-wrapper';
 import { Formux } from 'components/formux';
 
 import { useAddBusinessSection } from 'features/api/business/useAddBusinessSection';
@@ -48,8 +49,8 @@ export const ComponentLink = ({
     postCategoriesTags: [getRandomHash()],
     searchLayout: undefined,
     type: 'oneRowSlider',
-    showMobile: false,
-    showPC: false,
+    showMobile: true,
+    showPC: true,
     postType: 'link',
     ...(section || {}),
   });
@@ -68,10 +69,12 @@ export const ComponentLink = ({
       {({ value, isValid }) => {
         return (
           <form className={className}>
-            <div className="flex gap-4">
-              <FieldCheckbox label="Mostrar en móviles" name="showMobile" />
-              <FieldCheckbox label="Mostrar en PC" name="showPC" />
-            </div>
+            <FormFieldWrapper label="Visibilidad">
+              <div className="flex gap-4">
+                <FieldCheckbox label="Mostrar en móviles" name="showMobile" />
+                <FieldCheckbox label="Mostrar en PC" name="showPC" />
+              </div>
+            </FormFieldWrapper>
 
             {/* //////////////////////////////////////////////////////////////////////////////////////////////// */}
             <Divider />

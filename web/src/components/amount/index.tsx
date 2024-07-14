@@ -62,7 +62,7 @@ export const Amount = ({
       }
 
       onChange?.(newValue);
-    }, 500);
+    }, 1000);
   };
 
   const getDisabledByMin = (): boolean => {

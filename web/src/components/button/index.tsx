@@ -5,6 +5,8 @@ import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
 const primaryStyles = 'bg-indigo-600 text-white fill-white hover:bg-indigo-500 hover:bg-indigo-500';
+const grayStyles = 'bg-gray-500 text-white fill-white hover:bg-gray-400 hover:bg-gray-400';
+
 const errorStyles = 'bg-red-600 text-white fill-white  hover:bg-red-500';
 const linkStyles =
   'text-indigo-600 fill-indigo-600 hover:text-indigo-500 !shadow-none !m-0 !p-0 h-fit';
@@ -19,7 +21,7 @@ export type ButtonSvg = React.FunctionComponent<StyleProps> | React.ReactElement
 
 export interface ButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'> {
-  variant?: 'primary' | 'outlined' | 'error' | 'link' | 'sublined' | 'transparent';
+  variant?: 'primary' | 'outlined' | 'error' | 'link' | 'sublined' | 'transparent' | 'gray';
   svgPosition?: 'left' | 'right';
   label?: React.ReactNode;
   isBusy?: boolean;
@@ -83,6 +85,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
           [linkStyles]: variant === 'link',
           [sublinedStyles]: variant === 'sublined',
           [transparentStyles]: variant === 'transparent',
+          [grayStyles]: variant === 'gray',
           ['cursor-not-allowed']: disabled,
           ['!bg-indigo-300']: variant === 'primary' && disabled,
           ['!bg-gray-300']: variant === 'outlined' && disabled,

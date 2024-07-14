@@ -85,6 +85,20 @@ export const PostId = () => {
     return <></>;
   }
 
+  const handleAddReview = () => {
+    if (!isAuthenticated) {
+      authSignInModal.open({ redirect: false });
+      return;
+    }
+    postMakeReviewModal.open({
+      postId: post._id,
+      onAfterSuccess: () => {
+        getOneReviewSummary.fetch({ postId: post._id });
+        infiniteScrollingAllReviews.fetch();
+      },
+    });
+  };
+
   return (
     <LayoutPage title={post?.name} backButton>
       <UpdateSomethingContainer
@@ -107,19 +121,7 @@ export const PostId = () => {
               <ReviewSummaryView
                 {...props}
                 reviewSummary={getOneReviewSummary.data}
-                onClickToSubmit={() => {
-                  if (!isAuthenticated) {
-                    authSignInModal.open({ redirect: false });
-                    return;
-                  }
-                  postMakeReviewModal.open({
-                    postId: post._id,
-                    onAfterSuccess: () => {
-                      getOneReviewSummary.fetch({ postId: post._id });
-                      infiniteScrollingAllReviews.fetch();
-                    },
-                  });
-                }}
+                onAddReview={handleAddReview}
               />
             ),
             colors: (props) => <FieldColorSelect {...props} />,
@@ -142,8 +144,9 @@ export const PostId = () => {
       <PostsReviews
         data={infiniteScrollingAllReviews.data}
         onScrollBottom={infiniteScrollingAllReviews.onScrollBottom}
-        isBusy={infiniteScrollingAllReviews.status.isBusy}
+        status={infiniteScrollingAllReviews.status}
         className="w-full max-w-[50rem]"
+        onAddReview={handleAddReview}
       />
 
       <PostsRelatedView post={post} business={business} />

@@ -58,12 +58,12 @@ export const ShoppingDetails = ({ shopping, onClick, getActions }: ShoppingDetai
         })}
 
         <div className="flex justify-end">
-          <div className="flex gap-4 border-2 border-gray-400 rounded-xl px-2">
+          <div className="flex flex-col sm:flex-row gap-4 border-2 border-gray-400 rounded-xl px-2">
             <LabelValuePair
               label="Total"
               value={` ${totalProducts} ${totalProducts === 1 ? 'unidad' : 'unidades'}`}
             />
-            <LabelValuePair label="Precio" value={` ${totalPrice} CUP`} />
+            <LabelValuePair label="Precio" value={` ${totalPrice} ${currency}`} />
           </div>
         </div>
       </div>
