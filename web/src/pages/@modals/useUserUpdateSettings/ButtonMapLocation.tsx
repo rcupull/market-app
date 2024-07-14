@@ -10,7 +10,6 @@ import { useModal } from 'features/modal/useModal';
 import { useMapModal } from '../useMapModal';
 
 import { Address } from 'types/general';
-import { getCurrentLocation } from 'utils/geolocation';
 
 export interface ButtonMapLocationProps
   extends Omit<IconButtonLocationProps, 'onChange' | 'value'> {
@@ -39,11 +38,6 @@ export const ButtonMapLocation = ({ onChange, value, ...props }: ButtonMapLocati
               if (value?.lat && value.lon) {
                 setCenter(value);
                 setSelectedPosition(value);
-              } else {
-                getCurrentLocation().then((position) => {
-                  setCenter(position);
-                  setSelectedPosition(position);
-                });
               }
             }, []);
 

@@ -307,6 +307,7 @@ const put_business_routeName: () => RequestHandler = () => {
           notificationFlags: 'notificationFlags',
           seo: 'seo',
           addresses: 'addresses',
+          deliveryConfig: 'deliveryConfig',
         })(body),
       });
 

@@ -12,6 +12,7 @@ import { useRouter } from 'hooks/useRouter';
 import { ClientData } from './ClientData';
 import { Filters } from './Filters';
 import { RowActions } from './RowActions';
+import { ShoppingDetails } from './ShoppingDetails';
 
 import { ShoppingStateView } from 'pages/@common/shoping-state-view';
 import { ShoppingButtonStateHistory } from 'pages/@common/shopping-button-state-history';
@@ -19,8 +20,6 @@ import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { GetAllShoppingQuery } from 'types/api';
 import { Shopping, ShoppingState } from 'types/shopping';
-import { getDateString } from 'utils/date';
-import { getShoppingData } from 'utils/shopping';
 
 export const ShoppingPage = () => {
   const { getShoppingOwner } = useGetShoppingOwner();
@@ -76,19 +75,11 @@ export const ShoppingPage = () => {
 
       <Table<Shopping>
         remapRowsIndex={{
-          xs: [[0, 1, 2, 3, 4, 5]],
-          lg: [
-            [0, 1, 2],
-            [3, 4, 5],
-          ],
-          xl: 'none',
+          xs: [[0, 1, 2, 3]],
+          lg: 'none',
         }}
-        heads={['Acciones', 'Cliente', 'Estado', 'Unidades', 'Precio total', 'Fecha de creación']}
+        heads={['Acciones', 'Cliente', 'Estado', 'Detalles']}
         getRowProps={(rowData) => {
-          const { createdAt } = rowData;
-
-          const { totalPrice, totalProducts } = getShoppingData(rowData);
-
           return {
             nodes: [
               <RowActions key="RowActions" rowData={rowData} />,
@@ -104,9 +95,7 @@ export const ShoppingPage = () => {
                 />
                 <ShoppingButtonStateHistory shopping={rowData} />
               </div>,
-              totalProducts,
-              <span key="price" className="text-nowrap">{`${totalPrice} CUP`}</span>,
-              getDateString({ date: createdAt, showTime: true }),
+              <ShoppingDetails key="ShoppingDetails" rowData={rowData} business={business} />,
             ],
           };
         }}

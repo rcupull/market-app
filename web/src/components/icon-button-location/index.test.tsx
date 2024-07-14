@@ -13,7 +13,7 @@ describe('IconButtonLocation', () => {
           title="Ubicación"
         >
           <svg
-            class="fill-indigo-600 h-5 w-5"
+            class="fill-indigo-600 h-5 w-5 !size-5"
             height="1em"
             viewBox="0 0 32 32"
             width="1em"

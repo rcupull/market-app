@@ -31,14 +31,20 @@ describe('business', () => {
               "aboutUsPage": {
                 "visible": false,
               },
+              "addresses": [],
               "bannerImages": [],
               "createdAt": Anything,
               "createdBy": Anything,
               "currency": "CUP",
+              "deliveryConfig": {
+                "minPrice": 0,
+                "priceByKm": 0,
+                "type": "NONE",
+              },
               "hidden": false,
               "layouts": {
                 "banner": {
-                  "type": "static",
+                  "type": "none",
                 },
                 "footer": {
                   "type": "basic",
@@ -253,14 +259,20 @@ describe('business', () => {
               "aboutUsPage": {
                 "visible": false,
               },
+              "addresses": [],
               "bannerImages": [],
               "createdAt": Anything,
               "createdBy": Anything,
               "currency": "CUP",
+              "deliveryConfig": {
+                "minPrice": 0,
+                "priceByKm": 0,
+                "type": "NONE",
+              },
               "hidden": false,
               "layouts": {
                 "banner": {
-                  "type": "static",
+                  "type": "none",
                 },
                 "footer": {
                   "type": "basic",

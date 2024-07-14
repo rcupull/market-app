@@ -137,6 +137,19 @@ export interface BusinessSEO {
   description?: string;
 }
 
+export enum DeliveryConfigType {
+  NONE = 'NONE',
+  FREE = 'FREE',
+  REQUIRED = 'REQUIRED',
+  OPTIONAL = 'OPTIONAL',
+}
+
+export interface DeliveryConfig {
+  minPrice?: number;
+  priceByKm?: number;
+  type?: DeliveryConfigType;
+}
+
 export interface Business extends BaseIdentity {
   name: string;
   routeName: string;
@@ -159,6 +172,7 @@ export interface Business extends BaseIdentity {
   currency: BusinessCurrency;
   seo?: BusinessSEO;
   addresses?: Array<Address>;
+  deliveryConfig?: DeliveryConfig;
 }
 
 export interface BusinessSummary extends Pick<Business, '_id' | 'name' | 'routeName'> {

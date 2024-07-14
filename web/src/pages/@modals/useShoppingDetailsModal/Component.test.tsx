@@ -91,7 +91,7 @@ describe('Component', () => {
               class="flex justify-end"
             >
               <div
-                class="flex gap-4 border-2 border-gray-400 rounded-xl px-2"
+                class="flex flex-col sm:flex-row gap-4 border-2 border-gray-400 rounded-xl px-2"
               >
                 <div
                   class="flex items-center"
@@ -116,7 +116,7 @@ describe('Component', () => {
                     :
                   </span>
                   <span>
-                     200 CUP
+                     200 USD
                   </span>
                 </div>
               </div>
