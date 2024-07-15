@@ -135,14 +135,14 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                 onAfterSuccess: () => {
                   onAfterSuccess?.();
                 },
-              },
+              }
             );
 
             if (code) {
               businessChatBotValidate.fetch({ code, routeName });
             }
           }}
-        />,
+        />
       )}
     </div>
   );

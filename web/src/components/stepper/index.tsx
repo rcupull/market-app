@@ -79,7 +79,7 @@ export const Stepper = ({
             {selected && <div className={cn('text-center font-semibold ml-4')}>{label}</div>}
           </div>
         )}
-        className='flex items-center'
+        className="flex items-center"
         items={compact(items).map(({ label, render }) => {
           return {
             label,

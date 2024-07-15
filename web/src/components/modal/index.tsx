@@ -1,4 +1,4 @@
-import { Dialog, DialogPanel,DialogTitle, Transition, TransitionChild } from '@headlessui/react';
+import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import React, { cloneElement, Fragment } from 'react';
 
 import { IconButton } from 'components/icon-button';
@@ -80,10 +80,7 @@ export const Modal = ({
                     {badge && <div className="mx-9 sm:mx-2 flex justify-center">{badge}</div>}
 
                     <div className="mt-3 sm:ml-4 sm:mt-0 w-full">
-                      <DialogTitle
-                        as="h3"
-                        className="text-xl font-semibold text-gray-900"
-                      >
+                      <DialogTitle as="h3" className="text-xl font-semibold text-gray-900">
                         {title}
                       </DialogTitle>
                       <div className="mt-4">{content}</div>

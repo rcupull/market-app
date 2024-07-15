@@ -11,7 +11,7 @@ interface MenuItem extends StyleProps {
   label: string;
   svg?: React.FunctionComponent<StyleProps>;
   onClick?: () => void;
-  divider?: boolean;
+  divider?: boolean | string;
   active?: boolean;
   disabled?: boolean;
 }
@@ -60,6 +60,17 @@ export const Menu = ({
                 {() => {
                   return (
                     <div key={index} className={className}>
+                      {divider && (
+                        <div className="relative flex justify-center">
+                          <Divider className="!mt-[6px] !mb-[8px]" />
+                          {typeof divider === 'string' && (
+                            <div className="bg-white absolute top-0 text-xs text-gray-500">
+                              {divider}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
                       <div
                         onClick={() => {
                           if (disabled) return;
@@ -77,7 +88,6 @@ export const Menu = ({
 
                         {label}
                       </div>
-                      {divider && <Divider className="!my-2" />}
                     </div>
                   );
                 }}

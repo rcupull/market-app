@@ -68,8 +68,6 @@ export const RouteName = () => {
     return <></>;
   }
 
-  const { hidden } = business;
-
   if (!businessOwnerData.owner) {
     return (
       <LayoutPage>
@@ -135,12 +133,6 @@ export const RouteName = () => {
             <BannerInfoTelegramBusiness className="hidden sm:flex" />
 
             <BannerInfoTotalDebitBusiness className="hidden sm:flex" />
-
-            {hidden && (
-              <div className="text-red-500 ring-1 ring-red-400 rounded-3xl px-2 py-1/2 text-sm sm:text-lg">
-                Oculto
-              </div>
-            )}
 
             <Options
               business={business}

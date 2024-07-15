@@ -8,11 +8,7 @@ export interface HighlightedBoxProps extends StyleProps {
   variant: 'warning' | 'info' | 'success' | 'error' | 'neutral';
 }
 
-export const HighlightedBox = ({
-  children,
-  className,
-  variant,
-}: HighlightedBoxProps) => {
+export const HighlightedBox = ({ children, className, variant }: HighlightedBoxProps) => {
   const getBadgeVariant = (): BadgeProps['variant'] => {
     if (variant === 'warning') return 'warning';
     if (variant === 'info') return 'info';
