@@ -63,12 +63,12 @@ export const Component = ({ portal }: ComponentProps) => {
                           onFetch({ routeName });
                           onClose();
                         },
-                      },
+                      }
                     );
                   }}
                   variant="primary"
                   className="w-full"
-                />,
+                />
               )}
             </form>
           );

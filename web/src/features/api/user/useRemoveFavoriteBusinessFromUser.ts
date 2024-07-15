@@ -24,7 +24,7 @@ export const useRemoveFavoriteBusinessFromUser = (): {
               routeName,
             },
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

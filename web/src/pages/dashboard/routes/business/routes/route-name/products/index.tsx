@@ -115,7 +115,7 @@ export const Products = () => {
                 <TopActions>
                   {buttonNew}
                   {buttonRefresh}
-                </TopActions>,
+                </TopActions>
               )}
             </div>
 

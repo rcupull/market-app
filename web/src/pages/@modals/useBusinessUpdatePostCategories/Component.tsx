@@ -82,7 +82,7 @@ export const Component = ({ portal, onAfterSuccess, setHasUnsavedChanges }: Comp
                 addRow(state, {
                   label,
                   tag: getPostCategoryTag(label),
-                }),
+                })
               );
               resetForm();
             };
@@ -110,7 +110,7 @@ export const Component = ({ portal, onAfterSuccess, setHasUnsavedChanges }: Comp
                     onClick={() => handleAdd()}
                     variant="primary"
                     className="ml-4"
-                  />,
+                  />
                 )}
               </form>
             );
@@ -161,7 +161,7 @@ export const Component = ({ portal, onAfterSuccess, setHasUnsavedChanges }: Comp
                         };
                       },
                     },
-                    { emergent: true },
+                    { emergent: true }
                   );
                 }}
               />
@@ -205,7 +205,7 @@ export const Component = ({ portal, onAfterSuccess, setHasUnsavedChanges }: Comp
                         };
                       },
                     },
-                    { emergent: true },
+                    { emergent: true }
                   );
                 }}
               />
@@ -223,10 +223,10 @@ export const Component = ({ portal, onAfterSuccess, setHasUnsavedChanges }: Comp
               { postCategories: state, routeName },
               {
                 onAfterSuccess,
-              },
+              }
             );
           }}
-        />,
+        />
       )}
     </>
   );

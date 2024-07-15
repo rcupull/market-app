@@ -61,11 +61,11 @@ export const Component = ({ portal, postId, onAfterSuccess }: ComponentProps) =>
                     },
                     {
                       onAfterSuccess,
-                    },
+                    }
                   );
                 }}
                 className="w-full"
-              />,
+              />
             )}
           </form>
         );

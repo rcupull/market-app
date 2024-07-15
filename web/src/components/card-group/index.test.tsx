@@ -7,7 +7,7 @@ describe('CardGroup', () => {
     const result = render(
       <CardGroup>
         <div /> <div />
-      </CardGroup>,
+      </CardGroup>
     );
 
     expect(result.container).toMatchInlineSnapshot(`

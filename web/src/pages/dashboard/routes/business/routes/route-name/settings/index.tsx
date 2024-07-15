@@ -9,9 +9,11 @@ import SvgMedrt from 'icons/Medrt';
 import SvgNetworkWiredSolid from 'icons/NetworkWiredSolid';
 import SvgShareAltSolid from 'icons/ShareAltSolid';
 import SvgTagsSolid from 'icons/TagsSolid';
+import SvgTruckSolid from 'icons/TruckSolid';
 import SvgUsersSolid from 'icons/UsersSolid';
 import SvgWpforms from 'icons/Wpforms';
 import { useBusiness } from 'pages/@hooks/useBusiness';
+import { useBusinessDeliveryModal } from 'pages/@modals/useBusinessDeliveryModal';
 import { useBusinessOnboardingModal } from 'pages/@modals/useBusinessOnboardingModal';
 import { useBusinessShoppingTermsAndConditionsModal } from 'pages/@modals/useBusinessShoppingTermsAndConditionsModal';
 import { useBusinessUpdateAboutUs } from 'pages/@modals/useBusinessUpdateAboutUs';
@@ -34,6 +36,7 @@ export const Settings = () => {
   const businessUpdatePostForm = useBusinessUpdatePostForm();
   const businessUpdateNotifications = useBusinessUpdateNotifications();
   const businessShoppingTermsAndConditionsModal = useBusinessShoppingTermsAndConditionsModal();
+  const businessDeliveryModal = useBusinessDeliveryModal();
 
   const { onFetch, business } = useBusiness();
 
@@ -141,12 +144,25 @@ export const Settings = () => {
         title="Términos y condiciones para la venta"
         description={
           <div>
-            <span>Establece con tu ckiente los términos para la venta de tus productos.</span>
+            <span>Establece con tu cliente los términos para la venta de tus productos.</span>
             <ButtonDescription description="Esta información será mostrada cuando el cliente esté creando la orden de compra." />
           </div>
         }
         svg={SvgHandshakeSolid}
         onClick={() => businessShoppingTermsAndConditionsModal.open()}
+      />
+
+      <SettingBox
+        title="Entrega al domicilio"
+        description={
+          <div>
+            <span>
+              Promueve un servicio completo. Tus productos hasta la puerta de tus clientes.
+            </span>
+          </div>
+        }
+        svg={SvgTruckSolid}
+        onClick={() => businessDeliveryModal.open()}
       />
     </div>
   );

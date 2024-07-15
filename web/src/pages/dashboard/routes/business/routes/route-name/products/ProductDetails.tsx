@@ -67,7 +67,7 @@ export const ProductDetails = ({ rowData, business, onRefresh }: ProductDetailsP
               onAfterSuccess={onRefresh}
               error={stockAmount === 0}
               min={amountInProcess}
-            />,
+            />
           )}
 
           <div className="my-2" />

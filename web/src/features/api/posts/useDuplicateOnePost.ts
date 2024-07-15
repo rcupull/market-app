@@ -28,7 +28,7 @@ export const useDuplicateOnePost = (): {
               urlParams: { userId, postId },
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

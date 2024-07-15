@@ -1,6 +1,4 @@
-import type {
-  ListboxOptionsProps
-} from '@headlessui/react';
+import type { ListboxOptionsProps } from '@headlessui/react';
 import {
   Listbox,
   ListboxButton,
@@ -30,11 +28,11 @@ export interface FieldSelectProps<Option extends AnyRecord = AnyRecord, Value = 
   name: string;
   multi?: boolean;
   disabled?: boolean;
-  anchor?: ListboxOptionsProps['anchor']
+  anchor?: ListboxOptionsProps['anchor'];
 }
 
 export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
-  props: FieldSelectProps<Option>,
+  props: FieldSelectProps<Option>
 ) => {
   const {
     items,
@@ -46,7 +44,7 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
     multi,
     disabled,
     description,
-    anchor = 'bottom'
+    anchor = 'bottom',
   } = props;
 
   const [state, setState] = useState<Option | Array<Option>>();
@@ -105,7 +103,7 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
                   {
                     'ring-1 rounded-md ring-red-500 focus:ring-red-500': !!error,
                     '!cursor-not-allowed !bg-gray-200': disabled,
-                  },
+                  }
                 )}
               >
                 <div className="flex items-center h-6">
@@ -131,7 +129,10 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
                 {/**
                  * https://headlessui.com/react/listbox#setting-the-dropdown-width
                  */}
-                <ListboxOptions anchor={anchor}   className="w-[var(--button-width)] absolute z-10 mt-1 max-h-56 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                <ListboxOptions
+                  anchor={anchor}
+                  className="w-[var(--button-width)] absolute z-10 mt-1 max-h-56 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                >
                   {items.map((item, index) => {
                     const selected = isArray(state)
                       ? state.find((s) => isEqualObj(s, item))
@@ -152,9 +153,9 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
                               selected
                                 ? removeRow(
                                     state,
-                                    state.findIndex((i) => isEqualObj(i, item)),
+                                    state.findIndex((i) => isEqualObj(i, item))
                                   )
-                                : [...state, item],
+                                : [...state, item]
                             );
                           } else {
                             if (!selected) {
@@ -177,7 +178,7 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
                             {selected && (
                               <span
                                 className={cn(
-                                  'bg-inherit absolute inset-y-0 right-0 flex items-center pr-4 fill-indigo-600',
+                                  'bg-inherit absolute inset-y-0 right-0 flex items-center pr-4 fill-indigo-600'
                                 )}
                               >
                                 <SvgCheckSolid className="h-5 w-5" aria-hidden="true" />

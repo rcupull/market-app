@@ -16,7 +16,7 @@ describe('Pagination', () => {
           hasPrevPage: false,
           hasNextPage: false,
         }}
-      />,
+      />
     );
 
     expect(result.container).toMatchInlineSnapshot(`

@@ -1,4 +1,4 @@
-import { BaseIdentity, Image, TelegramBotChat } from './general';
+import { Address, BaseIdentity, Image, TelegramBotChat } from './general';
 import { Schema } from 'mongoose';
 import { Post, PostType } from './post';
 
@@ -114,6 +114,19 @@ export enum BusinessNotificationFlags {
   TELEGRAM_NEW_SHOPPING = 'TELEGRAM_NEW_SHOPPING',
 }
 
+export enum DeliveryConfigType {
+  NONE = 'NONE',
+  FREE = 'FREE',
+  REQUIRED = 'REQUIRED',
+  OPTIONAL = 'OPTIONAL',
+}
+
+export interface DeliveryConfig {
+  minPrice?: number;
+  priceByKm?: number;
+  type?: DeliveryConfigType;
+}
+
 export interface Business extends BaseIdentity {
   name: string;
   routeName: string;
@@ -155,6 +168,8 @@ export interface Business extends BaseIdentity {
   >;
   currency: BusinessCurrency;
   seo?: BusinessSEO;
+  addresses?: Array<Address>;
+  deliveryConfig?: DeliveryConfig;
 }
 
 export interface BusinessDto extends Business {

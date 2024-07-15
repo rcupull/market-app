@@ -1,8 +1,13 @@
+import { MapOlPosition } from 'components/map/types';
+
 import { queryToSearch } from 'hooks/useRouter/utils';
 
-import { deepJsonCopy } from './general';
+import { getDeliveryConfigPrice } from './delivery';
+import { deepJsonCopy, isNullOrUndefined } from './general';
+import { getDistanceBetweenPositions } from './geolocation';
 
-import { Business, SearchLayoutType } from 'types/business';
+import { Business, DeliveryConfig, DeliveryConfigType, SearchLayoutType } from 'types/business';
+import { Address } from 'types/general';
 import { Post } from 'types/post';
 import { Shopping } from 'types/shopping';
 
@@ -129,4 +134,69 @@ export const getWhatsAppShoppingLink = (phoneNumber: string, shopping: Shopping)
   });
 
   return `https://wa.me/${phoneNumber}?${search}`;
+};
+
+interface GetDeliveryUtilsReturn {
+  getIsEnabled: (args: { deliveryConfig: DeliveryConfig | undefined }) => boolean;
+  getDistance: (args: {
+    businessAddress: Address | undefined;
+    userAddress: Address | undefined;
+  }) => number | null;
+  getPrice: (args: {
+    deliveryConfig: DeliveryConfig | undefined;
+    distance: number | null;
+  }) => number | null;
+}
+export const getDeliveryUtils = (): GetDeliveryUtilsReturn => {
+  const getIsEnabled: GetDeliveryUtilsReturn['getIsEnabled'] = ({ deliveryConfig }) => {
+    return !!deliveryConfig && deliveryConfig.type !== DeliveryConfigType.NONE;
+  };
+
+  const getDistance: GetDeliveryUtilsReturn['getDistance'] = ({
+    businessAddress,
+    userAddress,
+  }): number | null => {
+    if (!businessAddress?.lat || !businessAddress.lon || !userAddress?.lat || !userAddress.lon) {
+      return null;
+    }
+
+    const businessPosition: MapOlPosition = {
+      lat: businessAddress.lat,
+      lon: businessAddress.lon,
+    };
+
+    const userPosition: MapOlPosition = {
+      lat: userAddress.lat,
+      lon: userAddress.lon,
+    };
+
+    return getDistanceBetweenPositions(businessPosition, userPosition);
+  };
+
+  const getPrice: GetDeliveryUtilsReturn['getPrice'] = ({ distance, deliveryConfig }) => {
+    if (isNullOrUndefined(distance)) return null;
+
+    const { type } = deliveryConfig || {};
+
+    switch (type) {
+      case DeliveryConfigType.OPTIONAL:
+      case DeliveryConfigType.REQUIRED: {
+        const { price } = getDeliveryConfigPrice({
+          deliveryConfig,
+          distance,
+        });
+
+        return price;
+      }
+      default: {
+        return 0;
+      }
+    }
+  };
+
+  return {
+    getIsEnabled,
+    getDistance,
+    getPrice,
+  };
 };

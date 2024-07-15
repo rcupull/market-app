@@ -22,7 +22,7 @@ export const useGetOneReviewSummary = (): {
               query,
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

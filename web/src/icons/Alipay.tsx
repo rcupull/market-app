@@ -19,7 +19,7 @@ export function SvgAlipay(props: StyleProps) {
     createElement('path', { d: 'M18.116 16.486l8.544 3.036-1.416 2.656-7.769-4.224z' }),
     createElement('path', {
       d: 'M20 13c-.161 1.665-.649 3.286-1.585 4.675l-1.54-.864c.735-1.034 1.184-2.413 1.327-3.811H20z',
-    }),
+    })
   );
 }
 export default SvgAlipay;

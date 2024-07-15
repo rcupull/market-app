@@ -16,7 +16,7 @@ describe('Component', () => {
       />,
       {
         wrapper: getWrapper({ useModal: true, useRouter: true }),
-      },
+      }
     );
 
     expect(result.container).toMatchInlineSnapshot(`

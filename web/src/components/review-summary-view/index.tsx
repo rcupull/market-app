@@ -10,13 +10,13 @@ import { ReviewSummary } from 'types/reviews';
 
 export interface ReviewSummaryViewProps extends StyleProps {
   reviewSummary?: ReviewSummary | null;
-  onClickToSubmit?: () => void;
+  onAddReview?: () => void;
 }
 
 export const ReviewSummaryView = ({
   reviewSummary,
   className,
-  onClickToSubmit,
+  onAddReview,
 }: ReviewSummaryViewProps) => {
   const { starSummary, reviewerIds } = reviewSummary || {};
 
@@ -50,11 +50,7 @@ export const ReviewSummaryView = ({
           {`${totalCount} ${totalCount === 1 ? 'voto' : 'votos'}`}
         </span>
         {!alreadyReviewed && (
-          <Button
-            label="Dar mi opinión"
-            className="ml-2 !py-0"
-            onClick={() => onClickToSubmit?.()}
-          />
+          <Button label="Dar mi opinión" className="ml-2 !py-0" onClick={onAddReview} />
         )}
       </div>
     </div>

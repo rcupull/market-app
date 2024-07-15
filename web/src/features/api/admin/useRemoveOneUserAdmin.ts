@@ -21,7 +21,7 @@ export const useRemoveOneUserAdmin = (): {
               urlParams: { id },
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],
