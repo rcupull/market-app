@@ -1,5 +1,7 @@
 import { Schema, SchemaDefinitionProperty } from 'mongoose';
 import {
+  DeliveryConfig,
+  DeliveryConfigType,
   PostCardLayout,
   PostLayoutShoppingMethod,
   PostPageLayout,
@@ -17,6 +19,16 @@ export const TelegramBotChatDefinition: SchemaDefinitionProperty<TelegramBotChat
   chatId: { type: String },
   firstName: { type: String },
   userName: { type: String },
+};
+
+export const DeliveryConfigDefinition: SchemaDefinitionProperty<DeliveryConfig> = {
+  type: {
+    type: String,
+    enum: Object.values(DeliveryConfigType),
+    default: DeliveryConfigType.NONE,
+  },
+  minPrice: { type: Number, default: 0 },
+  priceByKm: { type: Number, default: 0 },
 };
 
 export const AddressDefinition: SchemaDefinitionProperty<Address> = {
@@ -76,7 +88,8 @@ export const PostPageLayoutSchema = new Schema<PostPageLayout>({});
 export const PostsLayoutSectionSchema = new Schema<PostsLayoutSection>({
   name: { type: String },
   hiddenName: { type: Boolean, default: false },
-  hidden: { type: Boolean, default: false },
+  showMobile: { type: Boolean, default: false },
+  showPC: { type: Boolean, default: false },
   searchLayout: {
     type: String,
     enum: [

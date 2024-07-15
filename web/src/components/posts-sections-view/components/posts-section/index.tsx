@@ -4,6 +4,7 @@ import { WarningViewOnlyAdmin } from 'components/warning-view-only-admin';
 
 import { useGetAllPosts } from 'features/api/posts/useGetAllPosts';
 
+import { useBreakpoints } from 'hooks/useBreakpoints';
 import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 import { useHotUpdateTableData } from 'hooks/useHotUpdateTableData';
 
@@ -27,13 +28,21 @@ export interface PostsSectionProps extends StyleProps {
 
 export const PostsSection = ({ routeName, layout, className }: PostsSectionProps) => {
   const { business, onFetch } = useBusiness();
-  const { name, hiddenName, postCategoriesTags, _id, hidden, postType } = layout;
+  const { name, hiddenName, postCategoriesTags, _id, showMobile, showPC, postType } = layout;
 
   const { getAllPosts } = useGetAllPosts();
   const { owner } = useBusiness();
+  const breakpoints = useBreakpoints({ sweep: true });
 
-  const notRender = hidden && !owner;
-  const renderHiddenSection = hidden && owner;
+  const isXs = breakpoints.xs && !breakpoints.sm;
+
+  const notRenderMovile = isXs && !showMobile;
+  const notRenderPC = !isXs && !showPC;
+
+  const notRender = notRenderMovile || notRenderPC;
+
+  const renderHiddenSection = notRender && owner;
+  const notRenderAtAll = notRender && !renderHiddenSection;
 
   const hotUpdateTableData = useHotUpdateTableData<
     Post,
@@ -63,16 +72,16 @@ export const PostsSection = ({ routeName, layout, className }: PostsSectionProps
   });
 
   useEffect(() => {
-    if (notRender) return;
+    if (notRenderAtAll) return;
 
     handleFilter(filters.value);
-  }, [JSON.stringify(postCategoriesTags)]);
+  }, [JSON.stringify(postCategoriesTags), notRenderAtAll]);
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   const businessNewUpdateSection = useBusinessNewUpdateSection();
 
-  if (notRender || !business) {
+  if (notRenderAtAll || !business) {
     return <></>;
   }
 

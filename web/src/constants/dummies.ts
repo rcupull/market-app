@@ -6,7 +6,6 @@ export const dummyPostClothing: Post = {
   price: 192,
   postType: 'product',
   _id: '123',
-  reviews: [200, 45, 7, 1, 1],
   createdAt: '2021-01-01',
   routeName: 'clothing',
   images: [

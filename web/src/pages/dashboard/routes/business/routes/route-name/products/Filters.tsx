@@ -3,8 +3,11 @@ import { useEffect, useState } from 'react';
 import { Button } from 'components/button';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FiltersContainer } from 'components/filters-container';
+import { Input } from 'components/input';
 import { PostCategoriesFilterButtons } from 'components/post-categories-filter-buttons';
 import { RadioGroup } from 'components/radio-group';
+
+import { useDebouncer } from 'hooks/useDebouncer';
 
 import { GetAllPostsQuery } from 'types/api';
 import { Business, PostsLayoutSection } from 'types/business';
@@ -26,6 +29,12 @@ export const Filters = ({ business, onChange, value, className }: FiltersProps) 
 
   const sections = layouts?.posts?.sections || [];
   const [selectedSection, setSelectedSection] = useState();
+  const [search, setSearch] = useState<string>();
+
+  useEffect(() => {
+    setSearch(value?.search);
+  }, [value?.search]);
+  const searchDebouncer = useDebouncer();
 
   useEffect(() => {
     if (filterType === 'categories') {
@@ -40,8 +49,10 @@ export const Filters = ({ business, onChange, value, className }: FiltersProps) 
           page: 1,
           postCategoriesTags: undefined,
           postCategoriesMethod: undefined,
+          search: undefined,
         });
 
+        setSearch('');
         setFilterType('categories');
       }}
       className={className}
@@ -83,7 +94,6 @@ export const Filters = ({ business, onChange, value, className }: FiltersProps) 
             }
             value={postCategoriesTags}
             type="wrapped"
-            buttonType="tab"
           />
         )}
 
@@ -101,12 +111,26 @@ export const Filters = ({ business, onChange, value, className }: FiltersProps) 
             }}
             items={sections}
             renderOption={({ checked, item }) => (
-              <Button label={item.name} variant={checked ? 'sublined' : 'transparent'} />
+              <Button label={item.name} variant={checked ? 'gray' : 'outlined'} />
             )}
             optionToValue={(option) => option}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 mb-4"
           />
         )}
+
+        <Input
+          value={search}
+          onChange={(e) => {
+            const newSearch = e.target.value;
+            setSearch(newSearch);
+
+            searchDebouncer(() => {
+              onChange?.({ page: 1, search: newSearch });
+            }, 500);
+          }}
+          className="mt-2"
+          placeholder="Buscar productos"
+        />
       </div>
     </FiltersContainer>
   );

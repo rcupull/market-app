@@ -74,13 +74,13 @@ export const PostsSections = () => {
           xs: [[0, 1, 2, 3, 4]],
           lg: 'none',
         }}
-        heads={['Acciones', 'Nombre', 'Tipo', 'Categorias', 'Oculto']}
+        heads={['Acciones', 'Nombre', 'Tipo', 'Categorias', 'Visible']}
         getRowProps={(rowData, rowIndex) => {
-          const { name, hiddenName, postType, hidden } = rowData;
+          const { name, hiddenName, postType, showMobile, showPC } = rowData;
 
           return {
             className: cn({
-              'bg-gray-100': hidden,
+              'bg-gray-100': !showMobile && !showPC,
             }),
             nodes: [
               <RowActions

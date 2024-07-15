@@ -22,19 +22,22 @@ describe('users', () => {
           expect(response.body).toMatchInlineSnapshot(
             setAnyString<User>('_id', 'createdAt'),
             `
-          {
-            "__v": 0,
-            "_id": Anything,
-            "canCreateBusiness": true,
-            "createdAt": Anything,
-            "email": "user1@gmail.com",
-            "name": "user1",
-            "profileImage": null,
-            "role": "user",
-            "specialAccess": [],
-            "validated": true,
-          }
-        `
+            {
+              "__v": 0,
+              "_id": Anything,
+              "addresses": [],
+              "canCreateBusiness": true,
+              "createdAt": Anything,
+              "email": "user1@gmail.com",
+              "favoritesBusinessNames": [],
+              "favoritesBusinessRouteNames": [],
+              "name": "user1",
+              "profileImage": null,
+              "role": "user",
+              "specialAccess": [],
+              "validated": true,
+            }
+          `
           );
         });
     });
@@ -84,23 +87,26 @@ describe('users', () => {
           expect(response.body).toMatchInlineSnapshot(
             setAnyString<User>('_id', 'createdAt'),
             `
-          {
-            "__v": 0,
-            "_id": Anything,
-            "canCreateBusiness": true,
-            "createdAt": Anything,
-            "email": "user1@gmail.com",
-            "name": "user1",
-            "profileImage": {
-              "height": 300,
-              "src": "http://link-src.com/image.png",
-              "width": 300,
-            },
-            "role": "user",
-            "specialAccess": [],
-            "validated": true,
-          }
-        `
+            {
+              "__v": 0,
+              "_id": Anything,
+              "addresses": [],
+              "canCreateBusiness": true,
+              "createdAt": Anything,
+              "email": "user1@gmail.com",
+              "favoritesBusinessNames": [],
+              "favoritesBusinessRouteNames": [],
+              "name": "user1",
+              "profileImage": {
+                "height": 300,
+                "src": "http://link-src.com/image.png",
+                "width": 300,
+              },
+              "role": "user",
+              "specialAccess": [],
+              "validated": true,
+            }
+          `
           );
         });
     });

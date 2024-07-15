@@ -1,28 +1,27 @@
 import { useFetch } from 'hooks/useFetch';
 
 import { FetchResource } from 'types/api';
-import { Post } from 'types/post';
 import { getEndpoint } from 'utils/api';
 
-export const useMakeReviewPost = (): {
-  makeReviewPost: FetchResource<{ postId: string; value: number }>;
+export const useAddFavoriteBusinessToUser = (): {
+  addFavoriteBusinessToUser: FetchResource<{ userId: string; routeName: string }, void>;
 } => {
-  const fetch = useFetch<Post>();
+  const fetch = useFetch();
 
   return {
-    makeReviewPost: {
+    addFavoriteBusinessToUser: {
       data: fetch[0],
       status: fetch[1],
-      fetch: ({ postId, value }, options = {}) => {
+      fetch: ({ userId, routeName }, options = {}) => {
         fetch[2](
           {
             method: 'post',
             url: getEndpoint({
-              path: '/posts/:postId/review',
-              urlParams: { postId },
+              path: '/user/:userId/favoriteBusiness',
+              urlParams: { userId },
             }),
             data: {
-              value,
+              routeName,
             },
           },
           options

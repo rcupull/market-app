@@ -306,6 +306,8 @@ const put_business_routeName: () => RequestHandler = () => {
           shoppingMeta: 'shoppingMeta',
           notificationFlags: 'notificationFlags',
           seo: 'seo',
+          addresses: 'addresses',
+          deliveryConfig: 'deliveryConfig',
         })(body),
       });
 

@@ -1,10 +1,11 @@
 import { useFetch } from 'hooks/useFetch';
 
 import { FetchResource } from 'types/api';
+import { ShoppingDelivery } from 'types/shopping';
 import { getEndpoint } from 'utils/api';
 
 export const useShoppingMakeOrder = (): {
-  shoppingMakeOrder: FetchResource<{ shoppingId: string }, void>;
+  shoppingMakeOrder: FetchResource<{ shoppingId: string; delivery?: ShoppingDelivery }, void>;
 } => {
   const fetch = useFetch();
 
@@ -12,7 +13,7 @@ export const useShoppingMakeOrder = (): {
     shoppingMakeOrder: {
       data: fetch[0],
       status: fetch[1],
-      fetch: ({ shoppingId }, options = {}) => {
+      fetch: ({ shoppingId, delivery }, options = {}) => {
         fetch[2](
           {
             method: 'post',
@@ -20,6 +21,7 @@ export const useShoppingMakeOrder = (): {
               path: '/shopping/:shoppingId/makeOrder',
               urlParams: { shoppingId },
             }),
+            data: { delivery },
           },
           options
         );

@@ -92,10 +92,10 @@ export const userServicesGetUserDataFromShopping: QueryHandle<
     } | null;
   }
 > = async ({ query }) => {
-  const usersData: Array<Pick<User, '_id' | 'name' | 'address' | 'phone'>> =
+  const usersData: Array<Pick<User, '_id' | 'name' | 'addresses' | 'phone'>> =
     await userServicesGetAll({
       query,
-      projection: { name: 1, address: 1, _id: 1, phone: 1 },
+      projection: { name: 1, addresses: 1, _id: 1, phone: 1 },
     });
 
   return {
@@ -104,7 +104,7 @@ export const userServicesGetUserDataFromShopping: QueryHandle<
       if (userData) {
         return {
           purchaserName: userData.name,
-          purchaserAddress: userData.address,
+          purchaserAddress: userData.addresses?.[0],
           purchaserPhone: userData.phone,
         };
       }

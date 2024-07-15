@@ -3,20 +3,30 @@ import { useMemo } from 'react';
 import { Button } from 'components/button';
 import { ReviewAverage } from 'components/review-average';
 
-import { StyleProps } from 'types/general';
-import { PostReviews } from 'types/post';
+import { useAuth } from 'features/api-slices/useAuth';
 
-export interface ReviewProps extends StyleProps {
-  value?: PostReviews;
-  onClickToSubmit?: () => void;
+import { StyleProps } from 'types/general';
+import { ReviewSummary } from 'types/reviews';
+
+export interface ReviewSummaryViewProps extends StyleProps {
+  reviewSummary?: ReviewSummary | null;
+  onAddReview?: () => void;
 }
 
-export const Review = ({ value, className, onClickToSubmit }: ReviewProps) => {
+export const ReviewSummaryView = ({
+  reviewSummary,
+  className,
+  onAddReview,
+}: ReviewSummaryViewProps) => {
+  const { starSummary, reviewerIds } = reviewSummary || {};
+
+  const { authData } = useAuth();
+
   const { average, totalCount } = useMemo(() => {
     let totalCount = 0;
     let totalSum = 0;
 
-    value?.forEach((count, index) => {
+    starSummary?.forEach((count, index) => {
       totalCount = totalCount + count;
       totalSum = totalSum + (index + 1) * count;
     });
@@ -25,9 +35,9 @@ export const Review = ({ value, className, onClickToSubmit }: ReviewProps) => {
       totalCount,
       average: totalSum / totalCount,
     };
-  }, [JSON.stringify(value)]);
+  }, [JSON.stringify(starSummary)]);
 
-  if (!value) return <></>;
+  const alreadyReviewed = authData?.user && reviewerIds?.includes(authData?.user._id);
 
   return (
     <div className={className}>
@@ -39,7 +49,9 @@ export const Review = ({ value, className, onClickToSubmit }: ReviewProps) => {
         <span className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500">
           {`${totalCount} ${totalCount === 1 ? 'voto' : 'votos'}`}
         </span>
-        <Button label="Votar" className="ml-2 !py-0" onClick={() => onClickToSubmit?.()} />
+        {!alreadyReviewed && (
+          <Button label="Dar mi opinión" className="ml-2 !py-0" onClick={onAddReview} />
+        )}
       </div>
     </div>
   );
