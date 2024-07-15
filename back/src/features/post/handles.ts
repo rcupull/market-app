@@ -295,7 +295,6 @@ const get_related_posts: () => RequestHandler = () => {
         },
       });
 
-
       const { getPostData } = await shoppingServicesGetDataFromPosts({
         posts: related.data,
       });
