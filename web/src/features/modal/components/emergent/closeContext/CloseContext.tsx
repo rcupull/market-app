@@ -1,5 +1,4 @@
-import {  createContext } from 'react';
-
+import { createContext } from 'react';
 
 export const CloseContext = createContext({
   //@ts-expect-error ignore

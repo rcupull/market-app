@@ -13,7 +13,7 @@ import { useRouter } from 'hooks/useRouter';
 
 import { useAuthSignUpModal } from '../useAuthSignUpModal';
 
-import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
+import { BusinessMarketBrand } from 'pages/@common/business-market-brand';
 import { getAdminRoute, getDashboardRoute } from 'utils/business';
 import { getRequiredLabel } from 'utils/form';
 import { isString } from 'utils/general';
@@ -52,9 +52,9 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
     <div className="flex min-h-full flex-col justify-center">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <div className="flex justify-center">
-          <BusinessMarketLogo className="!size-28" />
+          <BusinessMarketBrand />
         </div>
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        <h2 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Inicia sesión en tu cuenta
         </h2>
       </div>
