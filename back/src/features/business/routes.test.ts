@@ -61,7 +61,6 @@ describe('business', () => {
               "postCategories": [],
               "postFormFields": [
                 "name",
-                "currency",
                 "clothingSizes",
                 "colors",
                 "description",
@@ -69,7 +68,6 @@ describe('business', () => {
                 "details",
                 "postCategoriesTags",
                 "discount",
-                "postPageLayout",
                 "stockAmount",
                 "images",
               ],
@@ -289,7 +287,6 @@ describe('business', () => {
               "postCategories": [],
               "postFormFields": [
                 "name",
-                "currency",
                 "clothingSizes",
                 "colors",
                 "description",
@@ -297,7 +294,6 @@ describe('business', () => {
                 "details",
                 "postCategoriesTags",
                 "discount",
-                "postPageLayout",
                 "stockAmount",
                 "images",
               ],

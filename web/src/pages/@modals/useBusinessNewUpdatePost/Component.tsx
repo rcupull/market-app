@@ -111,9 +111,6 @@ export const Component = ({
         clothingSizes: [],
         images: [],
         postCategoriesTags: [],
-        postPageLayout: {
-          shoppingMethod: undefined,
-        },
         stockAmount: null,
         ...(post || {}),
       }}
@@ -267,17 +264,6 @@ export const Component = ({
               </>
             )}
 
-            {/* {postFormFields.includes('postPageLayout') && (
-              <>
-                <FieldPostPageLayout
-                  label="Página de la publicación"
-                  name="postPageLayout"
-                  className="w-full"
-                />
-                <Divider />
-              </>
-            )} */}
-
             {portal.getPortal(
               <Button
                 label="Guardar"
@@ -299,7 +285,6 @@ export const Component = ({
                     details,
                     postCategoriesTags,
                     discount,
-                    postPageLayout,
                     stockAmount,
                   } = value;
 
@@ -328,7 +313,6 @@ export const Component = ({
                               details,
                               postCategoriesTags,
                               discount,
-                              postPageLayout,
                               stockAmount,
                             },
                             {
@@ -351,7 +335,6 @@ export const Component = ({
                         routeName,
                         images: [],
                         discount,
-                        postPageLayout,
                         stockAmount,
                         postType,
                       },

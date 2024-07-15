@@ -4,7 +4,6 @@ import {
   DeliveryConfigType,
   PostCardLayout,
   PostLayoutShoppingMethod,
-  PostPageLayout,
   PostsLayout,
   PostsLayoutSection,
 } from '../types/business';
@@ -82,8 +81,6 @@ export const PostCardLayoutSchema = new Schema<PostCardLayout>({
   },
   shoppingMethod: PostLayoutShoppingMethodDefinition,
 });
-
-export const PostPageLayoutSchema = new Schema<PostPageLayout>({});
 
 export const PostsLayoutSectionSchema = new Schema<PostsLayoutSection>({
   name: { type: String },

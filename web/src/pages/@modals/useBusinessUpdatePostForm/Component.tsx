@@ -64,10 +64,6 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
                 }}
                 items={[
                   {
-                    label: 'Diseño de la página',
-                    value: 'postPageLayout',
-                  },
-                  {
                     label: 'Tallas de ropa',
                     value: 'clothingSizes',
                   },

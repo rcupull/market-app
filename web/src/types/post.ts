@@ -1,4 +1,3 @@
-import { PostPageLayout } from './business';
 import { BaseIdentity, Image, ImageFile } from './general';
 
 export type PostType = 'product' | 'link'; // el tipo de publicaciones que posee
@@ -27,8 +26,6 @@ export interface Post extends BaseIdentity {
   // clothing
   clothingSizes?: Array<PostClothingSize>;
   //
-  postPageLayout?: PostPageLayout;
-
   postType: PostType;
 
   postLink?: PostLink;
@@ -76,7 +73,6 @@ export type PostFormState = Pick<
   | 'details'
   | 'postCategoriesTags'
   | 'discount'
-  | 'postPageLayout'
   | 'stockAmount'
   | 'postLink'
 > & { images: Array<ImageFile | Image> };

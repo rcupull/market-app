@@ -190,7 +190,7 @@ describe('shopping', () => {
                 },
               ],
               "purchaserAddress": {
-                "_id": "6693c60c651b7e260fd0f6e5",
+                "_id": "6695a6ae5857ae034ff6ea36",
                 "apartment": 45,
                 "city": "Habana",
                 "country": "Cuba",

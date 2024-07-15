@@ -33,7 +33,6 @@ const obj = {
   name: 'Camisas para hombres',
   price: 200,
   stockAmount: null,
-  postPageLayout: {},
   __v: 0,
   discount: 10,
 };

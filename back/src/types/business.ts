@@ -41,8 +41,6 @@ export interface PostsLayout {
   sections?: Array<PostsLayoutSection>;
 }
 
-export interface PostPageLayout {}
-
 export type PostCardLayoutImages = 'static' | 'hoverZoom' | 'slider' | 'switch' | 'rounded';
 
 export type PostCardSize = 'small' | 'medium' | 'long';

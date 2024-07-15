@@ -67,8 +67,6 @@ export interface PostCardLayout {
   shoppingMethod?: PostLayoutShoppingMethod;
 }
 
-export interface PostPageLayout {}
-
 export interface BannerLayout {
   type: BannerLayoutType;
 }
