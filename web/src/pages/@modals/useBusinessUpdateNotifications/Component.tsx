@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { Divider } from 'components/divider';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldRadioGroup } from 'components/field-radio-group';
 import { Formux } from 'components/formux';
+import { HighlightedBox } from 'components/highlighted-box';
 
 import { useBusinessChatBotValidate } from 'features/api/business/useBusinessChatBotValidate';
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
@@ -40,6 +40,35 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   const [state, setState] = useState<State>(initialState);
 
   const { telegramBotChat } = business || {};
+
+  const renderTelegramActivationSteps = () => {
+    if (isEmpty(state.notificationFlags)) return null;
+
+    return (
+      <>
+        {telegramBotChat ? (
+          <HighlightedBox variant="success">
+            <div>
+              Este negocio ya posee una cuenta de Telegram activa con el usuario{' '}
+              <span className="font-bold">{`${telegramBotChat.firstName}.`}</span> Continúe los
+              siguientes pasos <span className="font-bold">solo si desea cambiar</span> la cuenta de
+              Telegram vinculada con este negocio.
+            </div>
+          </HighlightedBox>
+        ) : (
+          <HighlightedBox variant="warning">
+            <div className="text-center sm:text-left">
+              Es importante que continue los siguientes pasos para{' '}
+              <span className="font-bold">
+                activar su cuenta de Telegram en este negocio y poder recibir las notificaciones
+              </span>
+            </div>
+          </HighlightedBox>
+        )}
+        <TelegramActivationSteps value={state} onChange={setState} />
+      </>
+    );
+  };
 
   return (
     <div>
@@ -84,29 +113,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
         }}
       </Formux>
       <Divider />
-      {!isEmpty(state.notificationFlags) && !telegramBotChat && (
-        <div className="text-red-500 ring ring-red-400 rounded-xl p-2">
-          Es importante que continue los siguientes pasos para{' '}
-          <span className="font-bold">
-            activar su cuenta de Telegram en este negocio y poder recibir las notificaciones
-          </span>
-        </div>
-      )}
-      {telegramBotChat && (
-        <div className="flex flex-col items-center gap-5">
-          <div className="flex items-center gap-6 ring ring-green-400 rounded-xl p-2">
-            <Badge variant="success" />
-
-            <div>
-              Este negocio ya posee una cuenta de Telegram activa con el usuario{' '}
-              <span className="font-bold">{`${telegramBotChat.firstName}.`}</span> Continue los
-              siguientes pasos <span className="font-bold">solo si desea cambiar</span> la cuenta de
-              Telegram vinculada con este negocio.
-            </div>
-          </div>
-        </div>
-      )}
-      <TelegramActivationSteps value={state} onChange={setState} />
+      {renderTelegramActivationSteps()}
       {portal?.getPortal(
         <Button
           label="Activar"
@@ -128,14 +135,14 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                 onAfterSuccess: () => {
                   onAfterSuccess?.();
                 },
-              }
+              },
             );
 
             if (code) {
               businessChatBotValidate.fetch({ code, routeName });
             }
           }}
-        />
+        />,
       )}
     </div>
   );

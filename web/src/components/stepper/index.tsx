@@ -68,7 +68,7 @@ export const Stepper = ({
           <div className="flex items-center">
             <div
               className={cn(
-                'border-2 border-gray-400 rounded-full w-8 h-8 flex items-center justify-center',
+                'border-2 border-gray-400 rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0',
                 {
                   'font-semibold !border-indigo-500 !bg-indigo-500 !text-white': selected,
                 }
@@ -79,6 +79,7 @@ export const Stepper = ({
             {selected && <div className={cn('text-center font-semibold ml-4')}>{label}</div>}
           </div>
         )}
+        className='flex items-center'
         items={compact(items).map(({ label, render }) => {
           return {
             label,
