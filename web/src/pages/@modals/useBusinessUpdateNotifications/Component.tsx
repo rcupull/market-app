@@ -119,6 +119,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
           label="Activar"
           className="w-full"
           hasChange={!isEqual(state, initialState)}
+          isBusy={updateOneBusiness.status.isBusy}
           onClick={() => {
             if (!business) return;
             const { code, notificationFlags } = state;
