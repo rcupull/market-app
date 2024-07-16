@@ -216,13 +216,13 @@ export const Component = ({
               postFormFields.includes('discount') ||
               postFormFields.includes('stockAmount')) && (
               <>
-                <div className="flex flex-col sm:flex-row justify-center gap-6">
+                <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mt-0 sm:mt-6 ">
                   <FieldInput
                     id="post_price"
                     name="price"
                     label={getRequiredLabel('Precio')}
                     type="number"
-                    className="mt-6 w-full"
+                    className="w-full"
                   />
 
                   {postFormFields.includes('discount') && (
@@ -231,7 +231,7 @@ export const Component = ({
                       name="discount"
                       label="Descuento"
                       type="number"
-                      className="mt-6 w-full"
+                      className="w-full"
                     />
                   )}
 
@@ -254,7 +254,7 @@ export const Component = ({
                           los usuarios generen nuevas órdenes de compras con este producto.
                         </div>
                       }
-                      className="mt-6 w-full"
+                      className="w-full"
                     />
                   )}
                 </div>

@@ -62,9 +62,9 @@ export const Menu = ({
                     <div key={index} className={className}>
                       {divider && (
                         <div className="relative flex justify-center">
-                          <Divider className="!mt-[6px] !mb-[8px]" />
+                          <Divider className="!my-2" />
                           {typeof divider === 'string' && (
-                            <div className="bg-white absolute top-0 text-xs text-gray-500">
+                            <div className="bg-white absolute top-0 text-xs text-gray-700 font-bold px-1">
                               {divider}
                             </div>
                           )}

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 //eslint-disable-next-line
 import { Gallery, Image as GalleryImage } from 'react-grid-gallery';
 
-import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { ButtonClose } from 'components/button-close';
 import { FieldInput } from 'components/field-input';
@@ -144,7 +143,7 @@ export const CatalogsSearchImage = ({ onSelected, multi }: CatalogsSearchImagePr
       <p className="mt-3 text-gray-400">
         {`(${multi ? 'Seleccione una o varias imágenes' : 'Seleccione una imagen'})`}
       </p>
-      <div className="h-[calc(100vh-18rem)] overflow-y-auto">{renderImageGallery()}</div>
+      <div className="h-[calc(100vh-19rem)] overflow-y-auto">{renderImageGallery()}</div>
     </div>
   );
 
@@ -152,9 +151,9 @@ export const CatalogsSearchImage = ({ onSelected, multi }: CatalogsSearchImagePr
     <Modal
       title="Catálogos de imágenes"
       content={content}
-      badge={<Badge variant="info" />}
       primaryBtn={<Button label="Seleccionar" onClick={handleSubmit} />}
       secondaryBtn={<ButtonClose />}
+      className="max-h-[calc(100vh-2rem)]"
     />
   );
 };

@@ -84,6 +84,29 @@ export const Table = <RowData extends AnyRecord = AnyRecord>(props: TableProps<R
     heads = [null, ...heads];
   }
 
+  const renderUnderTable = () => {
+    if (isBusyBottom) {
+      return (
+        <div className="flex justify-center">
+          <SpinnerEllipsis />
+        </div>
+      );
+    }
+
+    if (isBusy) {
+      return <SpinnerBox />;
+    }
+
+    if (data && !data?.length) {
+      return (
+        <div className="flex items-center justify-center h-48 text-xl text-gray-500">
+          No hay elementos que mostrar
+        </div>
+      );
+    }
+
+    return null;
+  };
   return (
     <ReorderContainer onReorder={onReorder}>
       <div
@@ -121,12 +144,7 @@ export const Table = <RowData extends AnyRecord = AnyRecord>(props: TableProps<R
             })}
           </tbody>
         </table>
-        {isBusyBottom && (
-          <div className="flex justify-center">
-            <SpinnerEllipsis />
-          </div>
-        )}
-        {isBusy && <SpinnerBox />}
+        {renderUnderTable()}
       </div>
     </ReorderContainer>
   );
