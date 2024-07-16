@@ -17,6 +17,7 @@ import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusines
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
 import { useAddOnePost } from 'features/api/posts/useAddOnePost';
 import { useUpdateOnePost } from 'features/api/posts/useUpdateOnePost';
+import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
 
 import { useMemoizedHash } from 'hooks/useMemoizedHash';
 import { Portal } from 'hooks/usePortal';
@@ -26,7 +27,7 @@ import { useBusinessNewUpdateSection } from '../useBusinessNewUpdateSection';
 
 import { imagesDimensions } from 'constants/posts';
 import { StyleProps } from 'types/general';
-import { Post, PostFormState, PostType } from 'types/post';
+import { LinkFormState, Post, PostType, ProductFormState } from 'types/post';
 import { getRequiredLabel } from 'utils/form';
 import { addStringToUniqueArray, isNumber } from 'utils/general';
 
@@ -94,6 +95,21 @@ export const Component = ({
 
   const linkTag = useMemoizedHash();
 
+  const closeContext = useCloseContext<ProductFormState>({
+    initialValue: {
+      name: '',
+      price: undefined,
+      details: '',
+      description: '',
+      colors: [],
+      clothingSizes: [],
+      images: [],
+      postCategoriesTags: [],
+      stockAmount: null,
+      ...(post || {}),
+    },
+  });
+
   if (!business) {
     return <></>;
   }
@@ -101,7 +117,7 @@ export const Component = ({
   const { routeName, postFormFields = [] } = business;
 
   const productForm = (
-    <Formux<PostFormState>
+    <Formux<ProductFormState>
       value={{
         name: '',
         price: undefined,
@@ -114,6 +130,7 @@ export const Component = ({
         stockAmount: null,
         ...(post || {}),
       }}
+      onChange={closeContext.onChangeValue}
       validate={[
         {
           field: 'name',
@@ -363,7 +380,7 @@ export const Component = ({
   });
 
   const linkForm = (
-    <Formux<PostFormState & { sectionIds: Array<string> }>
+    <Formux<LinkFormState & { sectionIds: Array<string> }>
       value={{
         name: '',
         images: [],

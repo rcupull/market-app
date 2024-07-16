@@ -46,7 +46,6 @@ export interface Post extends BaseIdentity {
   stockAmount?: number;
   // clothing
   clothingSizes?: Array<PostClothingSize>;
-
   postType?: PostType;
 
   /**
