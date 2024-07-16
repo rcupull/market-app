@@ -65,7 +65,7 @@ export const Stepper = ({
         onSelect={setSelected}
         selected={selected}
         itemRender={({ label, selected, index }) => (
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
             <div
               className={cn(
                 'border-2 border-gray-400 rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0',
@@ -76,7 +76,7 @@ export const Stepper = ({
             >
               {index + 1}
             </div>
-            {selected && <div className={cn('text-center font-semibold ml-4')}>{label}</div>}
+            {selected && <div className={cn('text-center font-semibold')}>{label}</div>}
           </div>
         )}
         className="flex items-center"

@@ -11,7 +11,7 @@ export interface RadioGroupProps<O, V = any> extends StyleProps {
   items: Array<O>;
   value?: V;
   onChange?: (newValue: V) => void;
-  renderOption: (args: { checked: boolean; item: O; index: number }) => React.ReactElement;
+  renderOption: (args: { checked: boolean; item: O; index: number }) => React.ReactNode | null;
   optionToValue: (item: O) => V;
   disabledOption?: (args: { item: O; index: number }) => boolean;
   onBlur?: () => void;
@@ -43,6 +43,10 @@ export const RadioGroup = <O extends any = any>({
           <div className={className}>
             {items.map((item, index) => {
               const checked = !!selected[index];
+              const node = renderOption({ checked, item, index });
+
+              if (!node) return null;
+
               return (
                 <div
                   key={index}
@@ -60,10 +64,10 @@ export const RadioGroup = <O extends any = any>({
                   }}
                   className={cn(
                     'relative',
-                    getOptionCutomStyles?.(item, { selected: !checked }) ?? ''
+                    getOptionCutomStyles?.(item, { selected: !checked }) ?? '',
                   )}
                 >
-                  {renderOption({ checked, item, index })}
+                  {node}
 
                   {!!disabledOption?.({ item, index }) && (
                     <div

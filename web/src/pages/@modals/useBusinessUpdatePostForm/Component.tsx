@@ -1,8 +1,8 @@
-import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldRadioGroup } from 'components/field-radio-group';
 import { Formux } from 'components/formux';
+import { HighlightedBox } from 'components/highlighted-box';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 
@@ -12,7 +12,7 @@ import { useBusiness } from '../../@hooks/useBusiness';
 
 import { Business } from 'types/business';
 import { StyleProps } from 'types/general';
-import { PostFormField } from 'types/post';
+import { ProductFormField } from 'types/post';
 import { isEmpty } from 'utils/general';
 
 interface State extends Pick<Business, 'postFormFields'> {}
@@ -35,34 +35,53 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row items-center my-4">
-        <Badge variant="info" />
-        <span className="text-gray-600 ml-0  md:ml-4 mt-4 md:mt-0">
+      <HighlightedBox variant="info">
+        <span className="text-center sm:text-left">
           Campos del formulario de los productos que estarán disponibles para completar durante la
           creación o edición del mismo. Los campos{' '}
           <span className="font-bold">Nombre del producto</span> ,{' '}
           <span className="font-bold">Categorías</span> e{' '}
           <span className="font-bold">Imágenes</span> no se muestran porque son obligatorios.
         </span>
-      </div>
+      </HighlightedBox>
 
       <Formux<State>
         value={{
           postFormFields,
         }}
       >
-        {({ value, isValid, touched }) => {
+        {({ value, isValid, touched, hasChange }) => {
           return (
             <form className={className}>
-              <FieldRadioGroup<{ value: PostFormField; label: string }>
+              <FieldRadioGroup<{ value: ProductFormField; label: string; hidden?: boolean }>
                 name="postFormFields"
                 optionToValue={({ value }) => value}
                 multi
                 renderOption={({ item, checked }) => {
                   const { label } = item;
+
+                  if (item.hidden) {
+                    return null;
+                  }
+
                   return <FieldCheckbox noUseFormik value={checked} label={label} />;
                 }}
                 items={[
+                  {
+                    label: 'Nombre',
+                    value: 'name',
+                    hidden: true,
+                  },
+                  {
+                    label: 'Imágenes',
+                    value: 'images',
+                    hidden: true,
+                  },
+                  {
+                    label: 'Categorias',
+                    value: 'postCategoriesTags',
+                    hidden: true,
+                  },
                   {
                     label: 'Tallas de ropa',
                     value: 'clothingSizes',
@@ -93,13 +112,14 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
                   },
                 ]}
                 className="mt-6"
-                containerClassName="grid  grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"
+                containerClassName="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"
               />
 
               {portal.getPortal(
                 <Button
                   label="Guardar"
                   isBusy={updateOneBusiness.status.isBusy}
+                  hasChange={hasChange}
                   disabled={!isValid || isEmpty(touched)}
                   onClick={() => {
                     if (!business) return;
@@ -114,12 +134,12 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
                       },
                       {
                         onAfterSuccess,
-                      }
+                      },
                     );
                   }}
                   variant="primary"
                   className="w-full"
-                />
+                />,
               )}
             </form>
           );

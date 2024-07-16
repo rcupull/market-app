@@ -1,5 +1,5 @@
 import { Address, BaseIdentity, Image } from './general';
-import { PostFormField, PostType } from './post';
+import { PostType, ProductFormField } from './post';
 
 export type BusinessCategory = string;
 export type BusinessCurrency = 'CUP' | 'MLC' | 'USD';
@@ -166,11 +166,13 @@ export interface Business extends BaseIdentity {
     termsAndConditions?: string;
   };
   shoppingDebit: number;
-  postFormFields?: Array<PostFormField>;
+  postFormFields?: Array<ProductFormField>;
   currency: BusinessCurrency;
   seo?: BusinessSEO;
   addresses?: Array<Address>;
   deliveryConfig?: DeliveryConfig;
+  //
+  doneOnboarding?: boolean;
 }
 
 export interface BusinessSummary extends Pick<Business, '_id' | 'name' | 'routeName'> {

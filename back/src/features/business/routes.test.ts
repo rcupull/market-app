@@ -41,6 +41,7 @@ describe('business', () => {
                 "priceByKm": 0,
                 "type": "NONE",
               },
+              "doneOnboarding": false,
               "hidden": false,
               "layouts": {
                 "banner": {
@@ -267,6 +268,7 @@ describe('business', () => {
                 "priceByKm": 0,
                 "type": "NONE",
               },
+              "doneOnboarding": false,
               "hidden": false,
               "layouts": {
                 "banner": {

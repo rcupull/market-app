@@ -164,7 +164,8 @@ describe('shopping', () => {
               'createdAt',
               'posts.0.lastUpdatedDate',
               'posts.0.postData._id',
-              'purchaserId'
+              'purchaserId',
+              'purchaserAddress._id'
             ),
             `
             {
@@ -190,7 +191,7 @@ describe('shopping', () => {
                 },
               ],
               "purchaserAddress": {
-                "_id": "6695a6ae5857ae034ff6ea36",
+                "_id": Anything,
                 "apartment": 45,
                 "city": "Habana",
                 "country": "Cuba",

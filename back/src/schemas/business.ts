@@ -144,6 +144,7 @@ const BusinessSchema = new Schema<Business>({
   },
   addresses: [AddressDefinition],
   deliveryConfig: DeliveryConfigDefinition,
+  doneOnboarding: { type: Boolean, default: false },
 });
 
 BusinessSchema.plugin(mongoosePaginate);

@@ -63,7 +63,7 @@ export type PostColorMeta = Record<PostColor, PostColorValue>;
 
 export type PostClothingSize = 'XXS' | 'XS' | 'S' | 'M' | 'L' | 'XL' | '2XL' | '3XL';
 
-export type PostFormState = Pick<
+export type LinkFormState = Pick<
   Post,
   | 'name'
   | 'clothingSizes'
@@ -77,4 +77,17 @@ export type PostFormState = Pick<
   | 'postLink'
 > & { images: Array<ImageFile | Image> };
 
-export type PostFormField = keyof PostFormState;
+export type ProductFormState = Pick<
+  Post,
+  | 'name'
+  | 'clothingSizes'
+  | 'colors'
+  | 'description'
+  | 'price'
+  | 'details'
+  | 'postCategoriesTags'
+  | 'discount'
+  | 'stockAmount'
+> & { images: Array<ImageFile | Image> };
+
+export type ProductFormField = keyof ProductFormState;

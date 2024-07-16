@@ -168,6 +168,8 @@ export interface Business extends BaseIdentity {
   seo?: BusinessSEO;
   addresses?: Array<Address>;
   deliveryConfig?: DeliveryConfig;
+  //
+  doneOnboarding?: boolean;
 }
 
 export interface BusinessDto extends Business {

@@ -9,6 +9,7 @@ export const objectIds = {
 };
 
 export const addressDummy: Address = {
+  _id: '62a23958e5a9e9b88f853a10',
   apartment: 45,
   city: 'Habana',
   municipality: 'La Lisa',
