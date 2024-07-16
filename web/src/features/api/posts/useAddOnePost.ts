@@ -21,7 +21,6 @@ export const useAddOnePost = (): {
       | 'images'
       | 'postCategoriesTags'
       | 'discount'
-      | 'postPageLayout'
       | 'stockAmount'
       | 'postType'
       | 'postLink'

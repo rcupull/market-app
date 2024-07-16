@@ -23,7 +23,6 @@ import SvgDollarSignSolid from 'icons/DollarSignSolid';
 import SvgFileAltSolid from 'icons/FileAltSolid';
 import SvgHomeSolid from 'icons/HomeSolid';
 import SvgKeySolid from 'icons/KeySolid';
-import SvgLinkSolid from 'icons/LinkSolid';
 import SvgProductHunt from 'icons/ProductHunt';
 import SvgShoppingBagSolid from 'icons/ShoppingBagSolid';
 import SvgSignInAltSolid from 'icons/SignInAltSolid';
@@ -47,15 +46,14 @@ import {
   getOneBusinessRoute,
   getShoppingRoute,
 } from 'utils/business';
-import { cn, copyToClipboard } from 'utils/general';
+import { cn } from 'utils/general';
 
 export interface NavbarProps extends StyleProps {}
 export const Navbar = ({ className }: NavbarProps) => {
   const { isAdmin, isUser, isAuthenticated, authData, onRefreshAuthUser } = useAuth();
   const { signOut } = useSignOut();
   const { user } = authData || {};
-  const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute, isPostPage, pathname } =
-    useRouter();
+  const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute, pathname } = useRouter();
   const { routeName } = params;
   const { business } = useBusiness();
   const authChangePasswordModal = useAuthChangePasswordModal();
@@ -68,16 +66,16 @@ export const Navbar = ({ className }: NavbarProps) => {
   const callAfarResourcesRefreshUser = 'callAfarResourcesRefreshUser';
   useCallFromAfar(callAfarResourcesRefreshUser, onRefreshAuthUser);
 
-  const getCopyLinkLabel = () => {
-    if (isPostPage) {
-      return 'Copiar el link de este producto';
-    }
-    if (isOneBusinessPage) {
-      return 'Copiar el link de este negocio';
-    }
+  // const getCopyLinkLabel = () => {
+  //   if (isPostPage) {
+  //     return 'Copiar el link de este producto';
+  //   }
+  //   if (isOneBusinessPage) {
+  //     return 'Copiar el link de este negocio';
+  //   }
 
-    return 'Copiar link';
-  };
+  //   return 'Copiar link';
+  // };
 
   const navBarMenu = (
     <Menu
@@ -87,7 +85,7 @@ export const Navbar = ({ className }: NavbarProps) => {
       topElement={
         <>
           {user ? (
-            <div className="px-2 py-3 flex flex-col gap-3 items-center border">
+            <div className="px-2 py-3 flex flex-col gap-3 items-center">
               <span className="text-sm border px-2 py-1 rounded-2xl">{user.name}</span>
               <span className="text-xs">{user.email}</span>
               <BannerInfoTelegramUser />
@@ -108,13 +106,13 @@ export const Navbar = ({ className }: NavbarProps) => {
           onClick: () => routeName && pushRoute(getOneBusinessRoute({ routeName })),
           svg: SvgProductHunt,
           className: cn('lg:hidden'),
+          divider: 'En este negocio',
         },
         isOneBusinessPage && {
           label: 'Mis compras',
           onClick: () => routeName && pushRoute(getShoppingRoute({ routeName })),
           svg: SvgShoppingBagSolid,
           className: cn('lg:hidden'),
-          divider: true,
         },
         /////////////////////////////////////////////////////////////////////////////
         {
@@ -124,6 +122,7 @@ export const Navbar = ({ className }: NavbarProps) => {
           className: cn('lg:hidden', {
             '!block': isOneBusinessPage,
           }),
+          divider: 'Generales',
         },
         {
           label: 'Todos los negocios',
@@ -148,19 +147,19 @@ export const Navbar = ({ className }: NavbarProps) => {
           className: cn('lg:hidden', {
             '!block': isOneBusinessPage,
           }),
-          divider: true,
         },
-        {
-          label: getCopyLinkLabel(),
-          onClick: () => {
-            copyToClipboard(window.location.href);
-          },
-          svg: SvgLinkSolid,
-        },
+        // {
+        //   label: getCopyLinkLabel(),
+        //   onClick: () => {
+        //     copyToClipboard(window.location.href);
+        //   },
+        //   svg: SvgLinkSolid,
+        // },
         !isAuthenticated && {
           label: 'Iniciar sesión',
           onClick: () => authSignInModal.open(),
           svg: SvgSignInAltSolid,
+          divider: 'Mi cuenta',
         },
         !isAuthenticated && {
           label: 'Créate una cuenta',
@@ -181,6 +180,7 @@ export const Navbar = ({ className }: NavbarProps) => {
             setTimeout(() => signOut.fetch(), 200);
           },
           svg: SvgSignOutAltSolid,
+          divider: 'Mi cuenta',
         },
         isAuthenticated && {
           label: 'Cambiar contraseña',

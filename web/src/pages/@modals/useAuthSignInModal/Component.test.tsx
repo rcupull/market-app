@@ -22,18 +22,14 @@ describe('Component', () => {
             <div
               class="flex justify-center"
             >
-              <div
-                class="px-2 py-0.5 rounded-full bg-white h-12 sm:h-14 !size-28"
-              >
-                <img
-                  alt="Market Logo"
-                  class="h-full"
-                  src="/logo.png"
-                />
-              </div>
+              <img
+                alt="Market Logo"
+                class="h-36 sm:h-48"
+                src="/logo-2.png"
+              />
             </div>
             <h2
-              class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
+              class="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"
             >
               Inicia sesión en tu cuenta
             </h2>

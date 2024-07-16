@@ -3,7 +3,6 @@ import { Post } from '../types/post';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { createdAtSchemaDefinition } from '../utils/schemas';
 import { BusinessModel } from './business';
-import { PostPageLayoutSchema } from './common';
 
 export const PostSchema = new Schema<Post>({
   ...createdAtSchemaDefinition,
@@ -56,9 +55,6 @@ export const PostSchema = new Schema<Post>({
   price: { type: Number },
   discount: { type: Number },
   stockAmount: { type: Number, default: null },
-  postPageLayout: {
-    type: PostPageLayoutSchema,
-  },
   postType: {
     type: String,
     enum: ['product', 'link'],

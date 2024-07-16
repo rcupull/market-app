@@ -12,7 +12,7 @@ import { Portal } from 'hooks/usePortal';
 import { useAuthSignInModal } from '../useAuthSignInModal';
 import { useTermsAndConditionsModal } from '../useTermsAndConditionsModal';
 
-import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
+import { BusinessMarketBrand } from 'pages/@common/business-market-brand';
 import { getRequiredLabel } from 'utils/form';
 import { cn } from 'utils/general';
 import { getStrongPasswordTracking } from 'utils/password';
@@ -31,9 +31,9 @@ export const Component = ({ portal }: ComponentProps) => {
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-2 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <div className="flex justify-center">
-          <BusinessMarketLogo className="!size-28" />
+          <BusinessMarketBrand />
         </div>
-        <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        <h2 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Registrarse
         </h2>
       </div>

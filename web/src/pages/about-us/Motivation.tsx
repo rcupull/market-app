@@ -16,10 +16,11 @@ export const Motivation = () => {
           Estamos cambiando como las personas piensan
         </p>
 
+        <p className="mt-8 sm:mt-4 text-xl">Somos un equipo de desarrollo y comunicación.</p>
+
         <p className="mt-8 sm:mt-4 text-xl">
-          Somos un equipo tecnológico y de comunicación con el propósito de cambiar parte de la
-          realidad cubana, reduciendo los límites entre un emprendedor con ancias de éxito y un
-          mundo tecnológico dificil de tocar desde el interior de Cuba.
+          En nuestra plataforma ofrecemos un ecosistema de comercio. Ponemos en contacto
+          emprendedores y clientes, y facilitamos sus transacciones. ¿Qué esperas para unirte?
         </p>
       </div>
 
