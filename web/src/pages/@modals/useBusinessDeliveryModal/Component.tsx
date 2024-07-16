@@ -109,11 +109,12 @@ export const Component = ({ portal }: ComponentProps) => {
               />
             </div>
 
-            <Divider />
-
             {(value.deliveryConfig?.type === DeliveryConfigType.OPTIONAL ||
               value.deliveryConfig?.type === DeliveryConfigType.REQUIRED) && (
-              <PriceTesting deliveryConfig={value.deliveryConfig} />
+              <>
+                <Divider />
+                <PriceTesting deliveryConfig={value.deliveryConfig} />
+              </>
             )}
 
             {portal.getPortal(

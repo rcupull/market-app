@@ -32,6 +32,7 @@ export const Component = ({
     <Button
       variant="link"
       label="Ver la página del negocio"
+      isBusy={updateOneBusiness.status.isBusy}
       onClick={() => {
         if (!business) return;
 

@@ -16,7 +16,7 @@ import { getDeliveryUtils, getOneBusinessRoute } from 'utils/business';
 import { cn } from 'utils/general';
 
 export const BusinessMainBar = () => {
-  const { authData, onRefreshAuthUser } = useAuth();
+  const { authData, isAuthenticated, onRefreshAuthUser } = useAuth();
   const { business } = useBusiness();
 
   const user = authData?.user;
@@ -31,6 +31,10 @@ export const BusinessMainBar = () => {
   const isFavorite = !!business && user?.favoritesBusinessRouteNames?.includes(business.routeName);
 
   const { pushRoute } = useRouter();
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   const renderFavorite = () => {
     return (
