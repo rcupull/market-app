@@ -516,9 +516,6 @@
                   "images": {
                     "example": "any"
                   },
-                  "postPageLayout": {
-                    "example": "any"
-                  },
                   "price": {
                     "example": "any"
                   },
@@ -1413,6 +1410,13 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1458,6 +1462,20 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "delivery": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
           }
         }
       }

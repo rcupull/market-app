@@ -4,6 +4,8 @@ import { PostsSectionCards } from 'components/posts-sections-view/components/pos
 
 import { useGetRelatedPosts } from 'features/api/posts/useGetRelatedPosts';
 
+import { useHotUpdateTableData } from 'hooks/useHotUpdateTableData';
+
 import { LayoutSection } from 'pages/@common/layout-section';
 import { Business } from 'types/business';
 import { StyleProps } from 'types/general';
@@ -16,6 +18,16 @@ export interface RelatedSectionsViewProps extends StyleProps {
 
 export const PostsRelatedView = ({ post, business }: RelatedSectionsViewProps) => {
   const { getRelatedPosts } = useGetRelatedPosts();
+
+  const hotUpdateTableData = useHotUpdateTableData<
+    Post,
+    { postId: string; stockAmountAvailable: number }
+  >({
+    data: getRelatedPosts.data,
+    updateKey: `updatePostAmount`,
+    findCB: (rowData, { postId }) => rowData._id === postId,
+    changeCB: (rowData, { stockAmountAvailable }) => ({ ...rowData, stockAmountAvailable }),
+  });
 
   useEffect(() => {
     getRelatedPosts.fetch({ postId: post._id });
@@ -39,7 +51,7 @@ export const PostsRelatedView = ({ post, business }: RelatedSectionsViewProps) =
           postType: 'product',
           _id: 'dummyId',
         }}
-        posts={getRelatedPosts.data}
+        posts={hotUpdateTableData.data}
         business={business}
         onRefresh={() => {}}
       />

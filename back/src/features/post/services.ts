@@ -116,7 +116,6 @@ export const postServicesAddOne: QueryHandle<
     | 'details'
     | 'highlights'
     | 'createdBy'
-    | 'postPageLayout'
     | 'postCategoriesTags'
     | 'stockAmount'
     | 'postType'

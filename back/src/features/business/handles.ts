@@ -308,6 +308,7 @@ const put_business_routeName: () => RequestHandler = () => {
           seo: 'seo',
           addresses: 'addresses',
           deliveryConfig: 'deliveryConfig',
+          doneOnboarding: 'doneOnboarding',
         })(body),
       });
 

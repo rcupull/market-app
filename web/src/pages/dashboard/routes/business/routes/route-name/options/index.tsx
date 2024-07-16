@@ -9,6 +9,7 @@ import { IconView } from 'components/icon-view';
 import { Menu } from 'components/menu';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
+import { useAdminConfig } from 'features/api-slices/useAdminConfig';
 import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
 import { useModal } from 'features/modal/useModal';
 
@@ -39,6 +40,7 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
   const { pushModal } = useModal();
   const { pushRoute, onChangeQuery, query } = useRouter();
 
+  const { getEnabledFeature } = useAdminConfig();
   const handleShowHide = () => {
     pushModal(
       'Confirmation',
@@ -50,13 +52,12 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
           return {
             className: 'max-w-lg',
             content: hidden
-              ? 'Visualizar el negocio tambien mostrará todas las publicaciones qiue estaban visibles antes de ocultar el mismo. ¿Seguro que desea visualizar el negocio?'
-              : 'Ocultar el negocio ocultará tambien todas las publicaciones del negocio. ¿Seguro que desea ocultar?',
-            badge: <Badge variant="error" />,
+              ? 'Esta función mostrará todas tus publicaciones que no estén propiamente ocultas. ¿Estás seguro de continuar?'
+              : 'Esta función ocultará todas tus publicaciones. ¿Estás seguro de continuar?',
+            badge: <Badge variant="warning" />,
             primaryBtn: (
               <Button
                 label={hidden ? 'Mostrar' : 'Ocultar'}
-                variant={hidden ? 'primary' : 'error'}
                 onClick={() => {
                   updateOneBusiness.fetch(
                     {
@@ -83,101 +84,94 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
     );
   };
 
-  const xsContent = (
-    <div className="flex items-center">
+  return (
+    <div className="w-full flex items-center justify-between">
       {query.businessTab && (
         <span className="font-bold mr-2 sm:hidden">
           {getBusinessTabLabel(query.businessTab as BusinessTab)}
         </span>
       )}
-      <Menu
-        className="sm:hidden"
-        buttonElement={<IconButtonOptionsBars />}
-        bottomElement={
-          <div className="flex flex-col items-center gap-2 p-2">
-            <Divider className="!m-0" />
 
-            <BannerInfoTelegramBusiness className="flex sm:hidden" />
+      <div className="flex items-center">
+        <IconButtonShowHide
+          hidden={hidden}
+          title={`${hidden ? 'Mostrar' : 'Ocultar'} este negocio`}
+          onClick={handleShowHide}
+        />
 
-            <BannerInfoTotalDebitBusiness className="flex sm:hidden" />
-          </div>
-        }
-        items={[
-          {
-            label: 'Ver la página de este negocio',
-            onClick: () => {
-              pushRoute(getOneBusinessRoute({ routeName }));
+        <IconButtonView
+          title="Ver la página de este negocio"
+          onClick={() => {
+            pushRoute(getOneBusinessRoute({ routeName }));
+          }}
+        />
+
+        <Menu
+          className="sm:hidden"
+          buttonElement={<IconButtonOptionsBars />}
+          bottomElement={
+            <div className="flex flex-col items-center gap-2 p-2">
+              <Divider className="!m-0" />
+
+              <BannerInfoTelegramBusiness className="flex sm:hidden" />
+
+              <BannerInfoTotalDebitBusiness className="flex sm:hidden" />
+            </div>
+          }
+          items={[
+            {
+              label: 'Ver la página de este negocio',
+              onClick: () => {
+                pushRoute(getOneBusinessRoute({ routeName }));
+              },
+              svg: IconView,
+              divider: 'Generales del negocio',
             },
-            svg: IconView,
-          },
-          {
-            label: `${hidden ? 'Mostrar' : 'Ocultar'} este negocio`,
-            onClick: handleShowHide,
-            svg: ({ className }) => <IconShowHide hidden={hidden} className={className} />,
-          },
-          {
-            label: getBusinessTabLabel('products'),
-            onClick: () => onChangeQuery({ businessTab: 'products' }),
-            svg: SvgProductHunt,
-            active: query.businessTab === 'products',
-          },
-          {
-            label: getBusinessTabLabel('links'),
-            onClick: () => onChangeQuery({ businessTab: 'links' }),
-            svg: SvgLinkSolid,
-            active: query.businessTab === 'links',
-          },
-          {
-            label: getBusinessTabLabel('sections'),
-            onClick: () => onChangeQuery({ businessTab: 'sections' }),
-            svg: SvgLayerGroupSolid,
-            active: query.businessTab === 'sections',
-          },
-          {
-            label: getBusinessTabLabel('shopping'),
-            onClick: () => onChangeQuery({ businessTab: 'shopping' }),
-            svg: SvgShoppingCartSolid,
-            active: query.businessTab === 'shopping',
-          },
-          {
-            label: getBusinessTabLabel('settings'),
-            onClick: () => onChangeQuery({ businessTab: 'settings' }),
-            svg: SvgCogSolid,
-            active: query.businessTab === 'settings',
-            divider: true,
-          },
-          {
-            label: getBusinessTabLabel('billing'),
-            onClick: () => onChangeQuery({ businessTab: 'billing' }),
-            svg: SvgMoneyBillAltSolid,
-            active: query.businessTab === 'billing',
-          },
-        ]}
-      />
+            {
+              label: `${hidden ? 'Mostrar' : 'Ocultar'} este negocio`,
+              onClick: handleShowHide,
+              svg: ({ className }) => <IconShowHide hidden={hidden} className={className} />,
+            },
+            {
+              label: getBusinessTabLabel('settings'),
+              onClick: () => onChangeQuery({ businessTab: 'settings' }),
+              svg: SvgCogSolid,
+              active: query.businessTab === 'settings',
+            },
+            getEnabledFeature('BILLIING_THE_BUSINESS') && {
+              label: getBusinessTabLabel('billing'),
+              onClick: () => onChangeQuery({ businessTab: 'billing' }),
+              svg: SvgMoneyBillAltSolid,
+              active: query.businessTab === 'billing',
+            },
+            {
+              label: getBusinessTabLabel('products'),
+              onClick: () => onChangeQuery({ businessTab: 'products' }),
+              svg: SvgProductHunt,
+              active: query.businessTab === 'products',
+              divider: 'Tablas',
+            },
+            {
+              label: getBusinessTabLabel('links'),
+              onClick: () => onChangeQuery({ businessTab: 'links' }),
+              svg: SvgLinkSolid,
+              active: query.businessTab === 'links',
+            },
+            {
+              label: getBusinessTabLabel('sections'),
+              onClick: () => onChangeQuery({ businessTab: 'sections' }),
+              svg: SvgLayerGroupSolid,
+              active: query.businessTab === 'sections',
+            },
+            {
+              label: getBusinessTabLabel('shopping'),
+              onClick: () => onChangeQuery({ businessTab: 'shopping' }),
+              svg: SvgShoppingCartSolid,
+              active: query.businessTab === 'shopping',
+            },
+          ]}
+        />
+      </div>
     </div>
-  );
-
-  const smContent = (
-    <div className="items-center hidden sm:flex">
-      <IconButtonShowHide
-        hidden={hidden}
-        title={`${hidden ? 'Mostrar' : 'Ocultar'} este negocio`}
-        onClick={handleShowHide}
-      />
-
-      <IconButtonView
-        title="Ver la página de este negocio"
-        onClick={() => {
-          pushRoute(getOneBusinessRoute({ routeName }));
-        }}
-      />
-    </div>
-  );
-
-  return (
-    <>
-      {xsContent}
-      {smContent}
-    </>
   );
 };
