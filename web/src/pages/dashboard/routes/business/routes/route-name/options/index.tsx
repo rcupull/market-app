@@ -120,15 +120,15 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
           }
           items={[
             {
-              label: 'Ver la página de este negocio',
+              label: 'Ver la página',
               onClick: () => {
                 pushRoute(getOneBusinessRoute({ routeName }));
               },
               svg: IconView,
-              divider: 'Generales del negocio',
+              divider: 'Opciones del negocio',
             },
             {
-              label: `${hidden ? 'Mostrar' : 'Ocultar'} este negocio`,
+              label: `${hidden ? 'Mostrar' : 'Ocultar'}`,
               onClick: handleShowHide,
               svg: ({ className }) => <IconShowHide hidden={hidden} className={className} />,
             },
