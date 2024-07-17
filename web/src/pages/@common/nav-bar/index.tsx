@@ -1,9 +1,7 @@
 import { DevSwitchSession } from 'components/dev-switch-session';
-import { IconButton } from 'components/icon-button';
 import { NavBar as NavBarBase } from 'components/nav-bar';
 
 import { useAdminConfig } from 'features/api-slices/useAdminConfig';
-import { useAuth } from 'features/api-slices/useAuth';
 
 import { useRouter } from 'hooks/useRouter';
 
@@ -13,10 +11,8 @@ import { ShoppingCartMenu } from '../shopping-cart-menu';
 import { NavbarMenu } from './NavbarMenu';
 
 import SvgBookSolid from 'icons/BookSolid';
-import SvgCogSolid from 'icons/CogSolid';
 import SvgDollarSignSolid from 'icons/DollarSignSolid';
 import SvgFileAltSolid from 'icons/FileAltSolid';
-import SvgStoreSolid from 'icons/StoreSolid';
 import SvgUserSecretSolid from 'icons/UserSecretSolid';
 import SvgUsersSolid from 'icons/UsersSolid';
 import { useBusiness } from 'pages/@hooks/useBusiness';
@@ -24,15 +20,12 @@ import { StyleProps } from 'types/general';
 import {
   getBusinessAboutUsRoute,
   getBusinessRoute,
-  getDashboardBusinessRoute,
-  getDashboardRoute,
   getOneBusinessRoute,
   getShoppingRoute,
 } from 'utils/business';
 
 export interface NavbarProps extends StyleProps {}
 export const Navbar = ({ className }: NavbarProps) => {
-  const { isAdmin, isUser } = useAuth();
   const { isOneBusinessPage, params, pushRoute, pathname } = useRouter();
   const { routeName } = params;
   const { business } = useBusiness();

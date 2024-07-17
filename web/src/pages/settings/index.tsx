@@ -19,7 +19,7 @@ export const Settings = () => {
   }
 
   return (
-    <LayoutPage title="Preferencias" backButton>
+    <LayoutPage title="Preferencias">
       <Component portal={portal} user={user} onAfterSuccess={onRefreshAuthUser} />
 
       <div ref={portal.ref} className="w-full sm:w-auto ml-0 sm:ml-auto mt-10" />
