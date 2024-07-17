@@ -1,4 +1,3 @@
-
 import { ChildrenProp, StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
