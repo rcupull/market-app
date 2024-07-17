@@ -18,6 +18,7 @@ import { cn } from 'utils/general';
 export const BusinessMainBar = () => {
   const { authData, isAuthenticated, onRefreshAuthUser } = useAuth();
   const { business } = useBusiness();
+  const { isOneBusinessPage } = useRouter();
 
   const user = authData?.user;
 
@@ -88,28 +89,31 @@ export const BusinessMainBar = () => {
             <SvgTruckSolid className="fill-gray-500 size-6 8" />
           </div>
         )}
-        <IconButtonFavorite
-          fill={isFavorite}
-          isBusy={
-            addFavoriteBusinessToUser.status.isBusy || removeFavoriteBusinessFromUser.status.isBusy
-          }
-          onClick={() => {
-            if (!user) return;
-            if (!business) return;
+        {isOneBusinessPage && (
+          <IconButtonFavorite
+            fill={isFavorite}
+            isBusy={
+              addFavoriteBusinessToUser.status.isBusy ||
+              removeFavoriteBusinessFromUser.status.isBusy
+            }
+            onClick={() => {
+              if (!user) return;
+              if (!business) return;
 
-            (isFavorite ? removeFavoriteBusinessFromUser : addFavoriteBusinessToUser).fetch(
-              {
-                userId: user._id,
-                routeName: business.routeName,
-              },
-              {
-                onAfterSuccess: () => {
-                  onRefreshAuthUser();
+              (isFavorite ? removeFavoriteBusinessFromUser : addFavoriteBusinessToUser).fetch(
+                {
+                  userId: user._id,
+                  routeName: business.routeName,
                 },
-              }
-            );
-          }}
-        />
+                {
+                  onAfterSuccess: () => {
+                    onRefreshAuthUser();
+                  },
+                },
+              );
+            }}
+          />
+        )}
       </div>
     </div>
   );
