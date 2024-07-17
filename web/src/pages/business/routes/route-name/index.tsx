@@ -24,7 +24,7 @@ export const RouteName = () => {
   const { isAuthenticated } = useAuth();
   const { routeName } = params;
 
-  const { business, onFetch, onReset, owner } = useBusiness();
+  const { business, onFetch, onReset, owner, status } = useBusiness();
   const cart = useCart();
 
   ////////////////////////////////////////////////////////////////////////////////////
@@ -56,7 +56,7 @@ export const RouteName = () => {
   }, [routeName, isAuthenticated]);
   ////////////////////////////////////////////////////////////////////////////////////
 
-  if (!routeName || !business) {
+  if (!routeName || (status.wasCalled && !business)) {
     return <NotFound />;
   }
 

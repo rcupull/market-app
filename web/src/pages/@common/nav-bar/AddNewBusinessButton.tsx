@@ -18,10 +18,7 @@ export const AddNewBusinessButton = ({ className }: AddNewBusinessButtonProps) =
   return (
     <IconButtonAdd
       title="Agragar nuevo negocio"
-      onClick={(e) => {
-        e.stopPropagation();
-        e.preventDefault();
-
+      onClick={() => {
         businessUpdateNewModal.open({
           onAfterSucess: (newBussiness) => {
             if (newBussiness) {

@@ -125,7 +125,7 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
                 pushRoute(getOneBusinessRoute({ routeName }));
               },
               svg: IconView,
-              divider: 'Opciones del negocio',
+              divider: 'Generales del negocio',
             },
             {
               label: `${hidden ? 'Mostrar' : 'Ocultar'}`,
