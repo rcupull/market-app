@@ -82,12 +82,12 @@ export const Links = () => {
   const buttonRefresh = (
     <>
       <ButtonRefresh
-        onClick={filters.onRefresh}
+        onClick={onRefreshForce}
         isBusy={getAllPosts.status.isBusy}
         className="hidden sm:block"
       />
       <IconButtonRefresh
-        onClick={filters.onRefresh}
+        onClick={onRefreshForce}
         isBusy={getAllPosts.status.isBusy}
         className="block sm:hidden"
       />
@@ -109,7 +109,7 @@ export const Links = () => {
                 <TopActions>
                   {buttonNew}
                   {buttonRefresh}
-                </TopActions>
+                </TopActions>,
               )}
             </div>
 

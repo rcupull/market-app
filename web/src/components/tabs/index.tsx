@@ -1,4 +1,4 @@
-import { Tab } from '@headlessui/react';
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import { Fragment } from 'react';
 
 import { Nullable, StyleProps } from 'types/general';
@@ -57,8 +57,8 @@ export const Tabs = <L extends string = string>({
   const items = compact(itemsProp);
 
   return (
-    <Tab.Group selectedIndex={selected} onChange={onSelect}>
-      <Tab.List className={cn('flex gap-1 overflow-auto', className)}>
+    <TabGroup selectedIndex={selected} onChange={onSelect}>
+      <TabList className={cn('flex gap-1 overflow-auto', className)}>
         {items.map(({ label, svg }, index) => {
           return (
             <Tab key={index} as={Fragment}>
@@ -85,16 +85,16 @@ export const Tabs = <L extends string = string>({
             </Tab>
           );
         })}
-      </Tab.List>
-      <Tab.Panels>
+      </TabList>
+      <TabPanels>
         {items.map(({ content }, index) => {
           return (
-            <Tab.Panel className={cn('pt-4', contentClassName)} key={index}>
+            <TabPanel className={contentClassName} key={index}>
               {content}
-            </Tab.Panel>
+            </TabPanel>
           );
         })}
-      </Tab.Panels>
-    </Tab.Group>
+      </TabPanels>
+    </TabGroup>
   );
 };
