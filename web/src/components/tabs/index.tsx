@@ -23,9 +23,11 @@ export interface TabsProps<L extends string = string> extends StyleProps {
   itemRender?: ItemRender<L>;
   selected?: number;
   onSelect?: (newSelected: number) => void;
-  contentClassName?: string;
   itemContainerClassName?: (args: { selected: boolean; index: number }) => string;
   disabledStepNavigation?: boolean;
+  //
+  tabListClassName?: string;
+  tabPanelClassName?: string;
 }
 
 const clasicItemRender: ItemRender = ({ selected, label, svg: Svg }) => {
@@ -51,14 +53,16 @@ export const Tabs = <L extends string = string>({
   selected,
   itemRender = clasicItemRender,
   itemContainerClassName,
-  contentClassName,
+  //
+  tabListClassName,
+  tabPanelClassName,
   disabledStepNavigation,
 }: TabsProps<L>) => {
   const items = compact(itemsProp);
 
   return (
-    <TabGroup selectedIndex={selected} onChange={onSelect}>
-      <TabList className={cn('flex gap-1 overflow-auto', className)}>
+    <TabGroup selectedIndex={selected} onChange={onSelect} className={className}>
+      <TabList className={cn('flex gap-1 overflow-auto', tabListClassName)}>
         {items.map(({ label, svg }, index) => {
           return (
             <Tab key={index} as={Fragment}>
@@ -89,7 +93,7 @@ export const Tabs = <L extends string = string>({
       <TabPanels>
         {items.map(({ content }, index) => {
           return (
-            <TabPanel className={contentClassName} key={index}>
+            <TabPanel className={tabPanelClassName} key={index}>
               {content}
             </TabPanel>
           );

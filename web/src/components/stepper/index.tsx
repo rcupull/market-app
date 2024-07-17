@@ -13,13 +13,12 @@ export interface StepProps {
   nextButton: React.ReactElement;
 }
 export interface StepperProps
-  extends Pick<TabsProps, 'contentClassName' | 'disabledStepNavigation'> {
+  extends Pick<TabsProps, 'disabledStepNavigation'> {
   items: Array<Nullable<{ label: string; render: (props: StepProps) => React.ReactNode }>>;
 }
 
 export const Stepper = ({
   items,
-  contentClassName,
   disabledStepNavigation = true,
 }: StepperProps) => {
   const [selected, setSelected] = useState(0);
@@ -61,7 +60,7 @@ export const Stepper = ({
             'flex-grow flex justify-start': selected,
           })
         }
-        contentClassName={cn('w-full mt-8', contentClassName)}
+        tabPanelClassName={cn('w-full mt-8')}
         onSelect={setSelected}
         selected={selected}
         itemRender={({ label, selected, index }) => (
@@ -79,7 +78,7 @@ export const Stepper = ({
             {selected && <div className={cn('text-center font-semibold')}>{label}</div>}
           </div>
         )}
-        className="flex items-center"
+        tabListClassName="flex items-center"
         items={compact(items).map(({ label, render }) => {
           return {
             label,
