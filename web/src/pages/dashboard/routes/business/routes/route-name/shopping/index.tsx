@@ -53,12 +53,12 @@ export const ShoppingPage = () => {
   const refreshButton = (
     <>
       <ButtonRefresh
-        onClick={() => onRefreshForce()}
+        onClick={onRefreshForce}
         className="ml-auto hidden sm:block"
         isBusy={getShoppingOwner.status.isBusy}
       />
       <IconButtonRefresh
-        onClick={() => onRefreshForce()}
+        onClick={onRefreshForce}
         className="ml-auto sm:hidden"
         isBusy={getShoppingOwner.status.isBusy}
       />
