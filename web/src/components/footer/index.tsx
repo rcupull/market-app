@@ -2,13 +2,10 @@ import { Link } from 'react-router-dom';
 
 import { HtmlTextContainer } from 'components/html-text-container';
 
-import {
-  SocialNetworkFace,
-  SocialNetworkIg,
-  SocialNetworkIn,
-  SocialNetworkX,
-} from './components/social-network-icons';
-
+import SvgFacebookF from 'icons/FacebookF';
+import SvgInstagram from 'icons/Instagram';
+import SvgLinkedinIn from 'icons/LinkedinIn';
+import SvgTwitter from 'icons/Twitter';
 import { SocialLinks } from 'types/business';
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
@@ -20,7 +17,7 @@ export interface FooterProps extends StyleProps {
 export const Footer = ({ className, socialLinks }: FooterProps) => {
   const { face, instagram, linkedin, twitter } = socialLinks;
 
-  const renderSocialNetworkLink = (Icon: React.FunctionComponent, href?: string) => {
+  const renderSocialNetworkLink = (svg: React.ReactNode, href?: string) => {
     if (!href) {
       return null;
     }
@@ -35,7 +32,7 @@ export const Footer = ({ className, socialLinks }: FooterProps) => {
         target="_blank"
         rel="noreferrer"
       >
-        <Icon />
+        {svg}
       </a>
     );
   };
@@ -46,17 +43,23 @@ export const Footer = ({ className, socialLinks }: FooterProps) => {
           '-scale-y-100 flex flex-col items-center bg-white shadow-xl text-center text-gray-700'
         )}
       >
-        <div className="container px-6 pt-6 flex">
+        <div className="container px-6 pt-6 flex flex-col-reverse sm:flex-row sm:justify-between">
           <div className="flex flex-col">
             <Link to="/terms-and-conditions">Términos y Condiciones</Link>
             <Link to="/privacy-policy">Política de Privacidad</Link>
           </div>
 
           <div className="mb-6 flex justify-center">
-            {renderSocialNetworkLink(SocialNetworkFace, face)}
-            {renderSocialNetworkLink(SocialNetworkIg, instagram)}
-            {renderSocialNetworkLink(SocialNetworkIn, linkedin)}
-            {renderSocialNetworkLink(SocialNetworkX, twitter)}
+            {renderSocialNetworkLink(<SvgFacebookF className="size-7 fill-blue-700" />, face)}
+            {renderSocialNetworkLink(<SvgInstagram className="size-7 fill-red-500" />, instagram)}
+            {renderSocialNetworkLink(
+              <SvgLinkedinIn className="size-7 fill-white bg-blue-500 rounded-lg" />,
+              linkedin
+            )}
+            {renderSocialNetworkLink(
+              <SvgTwitter className="size-7 fill-white bg-blue-500 rounded-lg" />,
+              twitter
+            )}
           </div>
 
           {/* <div>
