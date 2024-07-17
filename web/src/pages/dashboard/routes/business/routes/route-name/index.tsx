@@ -128,6 +128,13 @@ export const RouteName = () => {
     <>
       <BusinessConfig business={business} />
       <LayoutSection
+        title={
+          query.businessTab && (
+            <span className="ml-2 sm:hidden">
+              {getBusinessTabLabel(query.businessTab as BusinessTab)}
+            </span>
+          )
+        }
         topRightHeader={
           <div className="flex items-center gap-6">
             <BannerInfoTelegramBusiness className="hidden sm:flex" />
@@ -149,7 +156,7 @@ export const RouteName = () => {
               { businessTab: tabIndexToQuery(tabIndex) },
               {
                 replaceAll: true,
-              }
+              },
             )
           }
           selected={isString(query.businessTab) ? tabQueryToIndex(query.businessTab) : undefined}

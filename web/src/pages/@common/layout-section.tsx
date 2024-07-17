@@ -5,7 +5,7 @@ import { cn } from 'utils/general';
 
 export interface LayoutSectionProps extends ChildrenProp, StyleProps {
   backButton?: boolean;
-  title?: string;
+  title?: React.ReactNode;
   topRightHeader?: React.ReactNode;
 }
 

@@ -106,29 +106,8 @@ export const Navbar = ({ className }: NavbarProps) => {
         <>
           <DevSwitchSession />
 
-          {isAdmin && (
-            <IconButton
-              title="Administración"
-              svg={<SvgCogSolid className="!size-7" />}
-              onClick={() => pushRoute('/admin')}
-              className="hidden sm:block"
-            />
-          )}
           {isOneBusinessPage && <ShoppingCartMenu />}
-          {isUser && (
-            <IconButton
-              title="Mi panel"
-              svg={<SvgStoreSolid className="!size-7" />}
-              onClick={() => {
-                if (routeName) {
-                  pushRoute(getDashboardBusinessRoute({ routeName }));
-                } else {
-                  pushRoute(getDashboardRoute());
-                }
-              }}
-              className="hidden sm:block"
-            />
-          )}
+
           <NavbarMenu />
         </>
       }

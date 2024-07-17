@@ -15,7 +15,7 @@ import { useModal } from 'features/modal/useModal';
 
 import { useRouter } from 'hooks/useRouter';
 
-import { BusinessTab, getBusinessTabLabel } from '../utils';
+import { getBusinessTabLabel } from '../utils';
 
 import SvgCogSolid from 'icons/CogSolid';
 import SvgLayerGroupSolid from 'icons/LayerGroupSolid';
@@ -72,7 +72,7 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
                         allUserBusiness.refresh();
                         onClose();
                       },
-                    }
+                    },
                   );
                 }}
               />
@@ -80,18 +80,12 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
           };
         },
       },
-      { emergent: true }
+      { emergent: true },
     );
   };
 
   return (
     <div className="w-full flex items-center justify-between">
-      {query.businessTab && (
-        <span className="font-bold mr-2 sm:hidden">
-          {getBusinessTabLabel(query.businessTab as BusinessTab)}
-        </span>
-      )}
-
       <div className="flex items-center">
         <IconButtonShowHide
           hidden={hidden}
