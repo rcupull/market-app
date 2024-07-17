@@ -49,7 +49,7 @@ export const DevSwitchSession = () => {
 
   return (
     <Menu
-      className={cn('hidden sm:block', { '!hidden': !DEVELOPMENT })}
+      className={cn({ '!hidden': !DEVELOPMENT })}
       buttonElement={
         <IconButton
           title="Switch session (only development)"
