@@ -62,7 +62,6 @@ describe('Tabs', () => {
           <div>
             <div
               aria-labelledby="headlessui-tabs-tab-:r0:"
-              class="pt-4"
               data-headlessui-state="selected"
               data-selected=""
               id="headlessui-tabs-panel-:r4:"

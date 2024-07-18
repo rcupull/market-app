@@ -11,7 +11,9 @@ import { PostType } from 'types/post';
 import { dynamic } from 'utils/makeLazy';
 
 //eslint-disable-next-line
-const Component = dynamic(() => import('./Component').then((m) => m));
+const ComponentProduct = dynamic(() => import('./ComponentProduct').then((m) => m));
+//eslint-disable-next-line
+const ComponentLink = dynamic(() => import('./ComponentLink').then((m) => m));
 
 export const useBusinessNewUpdatePost = () => {
   const { pushModal } = useModal();
@@ -40,11 +42,12 @@ export const useBusinessNewUpdatePost = () => {
                 return <></>;
               }
 
+              const Component = realPostType === 'product' ? ComponentProduct : ComponentLink;
+
               return (
                 <Component
                   portal={portal}
                   post={getOnePost.data}
-                  postType={realPostType}
                   onRefreshPost={() => postId && getOnePost.fetch({ id: postId })}
                   onAfterSuccess={() => {
                     onAfterSuccess?.();

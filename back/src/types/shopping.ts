@@ -23,13 +23,15 @@ export interface ShoppingDelivery {
   distance: number;
 }
 
+export interface ShoppingPostMeta {
+  postData: ShoppingPostData;
+  count: number;
+  purshaseNotes?: PostPurshaseNotes;
+  lastUpdatedDate: Date;
+}
+
 export interface Shopping extends BaseIdentity {
-  posts: Array<{
-    postData: ShoppingPostData;
-    purshaseNotes?: PostPurshaseNotes;
-    count: number;
-    lastUpdatedDate: Date;
-  }>;
+  posts: Array<ShoppingPostMeta>;
   //
   purchaserId: string;
   //

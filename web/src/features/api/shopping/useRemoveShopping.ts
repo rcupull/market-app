@@ -1,10 +1,14 @@
 import { useFetch } from 'hooks/useFetch';
 
 import { FetchResource } from 'types/api';
+import { PostPurshaseNotes } from 'types/post';
 import { getEndpoint } from 'utils/api';
 
 export const useRemoveShopping = (): {
-  removeShopping: FetchResource<{ routeName: string; postId?: string }, void>;
+  removeShopping: FetchResource<
+    { routeName: string; postId?: string; purshaseNotes?: PostPurshaseNotes },
+    void
+  >;
 } => {
   const fetch = useFetch();
 

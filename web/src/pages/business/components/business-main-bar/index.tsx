@@ -109,7 +109,7 @@ export const BusinessMainBar = () => {
                   onAfterSuccess: () => {
                     onRefreshAuthUser();
                   },
-                },
+                }
               );
             }}
           />

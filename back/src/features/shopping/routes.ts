@@ -4,6 +4,7 @@ import { addPostToReq, isLogged, isUserThisBusinessOwner } from '../../middlewar
 
 import { shoppingHandles } from './handles';
 import { pagination } from '../../middlewares/pagination';
+import { sortPurshaseNotesMiddlware } from '../../middlewares/sortPurshaseNotes';
 
 export const router = Router();
 
@@ -23,12 +24,14 @@ router
     validators.handle,
     isLogged,
     addPostToReq,
+    sortPurshaseNotesMiddlware,
     shoppingHandles.post_shopping()
   )
   .delete(
     validators.body('routeName').notEmpty(),
     validators.handle,
     isLogged,
+    sortPurshaseNotesMiddlware,
     shoppingHandles.delete_shopping()
   );
 
