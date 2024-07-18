@@ -1,3 +1,4 @@
+import { Button } from 'components/button';
 import { IconButton } from 'components/icon-button';
 import { IconShowHide } from 'components/icon-show-hide';
 import { Menu, MenuItem } from 'components/menu';
@@ -13,7 +14,6 @@ import { useSignOut } from 'features/api-slices/useSignOut';
 import { useRouter } from 'hooks/useRouter';
 
 import { BannerInfoTelegramUser } from '../banner-info-telegram-user';
-import { AddNewBusinessButton } from './AddNewBusinessButton';
 
 import SvgBarsSolid from 'icons/BarsSolid';
 import SvgCalendar from 'icons/Calendar';
@@ -37,6 +37,7 @@ import { useAuthChangePasswordModal } from 'pages/@modals/useAuthChangePasswordM
 import { useAuthForgotPasswordRequestModal } from 'pages/@modals/useAuthForgotPasswordRequestModal';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { useAuthSignUpModal } from 'pages/@modals/useAuthSignUpModal';
+import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewModal';
 import { Nullable } from 'types/general';
 import { getEndpoint } from 'utils/api';
 import {
@@ -55,6 +56,8 @@ export const NavbarMenu = () => {
   const { routeName } = params;
   const authChangePasswordModal = useAuthChangePasswordModal();
   const { getEnabledFeature } = useAdminConfig();
+
+  const businessUpdateNewModal = useBusinessUpdateNewModal();
 
   const authSignInModal = useAuthSignInModal();
   const authSignUpModal = useAuthSignUpModal();
@@ -75,7 +78,7 @@ export const NavbarMenu = () => {
 
   const addDividerToFirst = (
     items: Array<Nullable<MenuItem>>,
-    label: string
+    label: string,
   ): Array<Nullable<MenuItem>> => {
     const out = [...items];
     const firstNotNullElement = out.findIndex((item) => !!item);
@@ -100,7 +103,7 @@ export const NavbarMenu = () => {
               className,
               cn({
                 'fill-gray-500 ': hidden,
-              })
+              }),
             )}
             hidden={hidden}
           />
@@ -114,7 +117,23 @@ export const NavbarMenu = () => {
     out.push({
       label: (
         <div className="flex justify-center w-full -my-2">
-          <AddNewBusinessButton />
+          <Button
+            title="Agragar nuevo negocio"
+            label="Nuevo negocio"
+            variant="primary"
+            onClick={() => {
+              businessUpdateNewModal.open({
+                onAfterSucess: (newBussiness) => {
+                  if (newBussiness) {
+                    const { routeName } = newBussiness;
+                    pushRoute(getDashboardBusinessRoute({ routeName }), {}, { timeout: 100 });
+                    allUserBusiness.refresh();
+                  }
+                },
+              });
+            }}
+            className="!rounded-2xl !py-0 my-1"
+          />
         </div>
       ),
     });
@@ -165,7 +184,7 @@ export const NavbarMenu = () => {
                 getEndpoint({
                   path: '/admin/agenda/web/:agendaToken',
                   urlParams: { agendaToken },
-                })
+                }),
               );
             },
           });
