@@ -5,7 +5,7 @@ import { AnyRecord } from '../types/general';
 
 import { postServicesGetOne } from '../features/post/services';
 import { isEqualIds } from '../utils/general';
-import { passportJwtMiddleware } from './passport';
+import { middlewarePassportJwt } from './passport';
 import {
   get401Response,
   get404Response,
@@ -17,7 +17,7 @@ import {
 import { Access } from '../types/admin';
 import { businessServicesFindOne } from '../features/business/services';
 
-export const isLogged = passportJwtMiddleware;
+export const isLogged = middlewarePassportJwt;
 
 const getFieldInReqData = (req: Request, field: string) => {
   return req.body[field] || req.query[field] || req.params[field];
@@ -189,7 +189,7 @@ export type RequestWithUser<
   ResBody = any,
   ReqBody = any,
   ReqQuery = AnyRecord,
-  Locals extends Record<string, any> = Record<string, any>
+  Locals extends Record<string, any> = Record<string, any>,
 > = Request<P, ResBody, ReqBody, ReqQuery, Locals> & {
   user: User;
 };
