@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
 import { authHandles } from './handles';
-import { middlewareAutentication } from '../../middlewares/passport';
+import { middlewareAutentication } from '../../middlewares/middlewarePassport';
 import { isLogged } from '../../middlewares/verify';
 
 export const router = Router();

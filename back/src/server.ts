@@ -2,7 +2,7 @@ import express from 'express';
 import { router } from './router';
 import cors from 'cors';
 import swaggerUiExpress from 'swagger-ui-express';
-import { passportMiddlewareInitialize } from './middlewares/passport';
+import { passportMiddlewareInitialize } from './middlewares/middlewarePassport';
 import { middlewareCommaSeparateQuery } from './middlewares/middlewareCommaSeparateQuery';
 import { middlewareFront } from './middlewares/middlewareFront';
 import { join } from 'path';
@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'development') {
     //eslint-disable-next-line
     swaggerUiExpress.setup(require('../swagger_output.json'), {
       explorer: true,
-    })
+    }),
   );
 }
 

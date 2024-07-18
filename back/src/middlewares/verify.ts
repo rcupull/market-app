@@ -5,7 +5,7 @@ import { AnyRecord } from '../types/general';
 
 import { postServicesGetOne } from '../features/post/services';
 import { isEqualIds } from '../utils/general';
-import { middlewarePassportJwt } from './passport';
+import { middlewarePassportJwt } from './middlewarePassport';
 import {
   get401Response,
   get404Response,

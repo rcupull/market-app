@@ -4,7 +4,7 @@ import { addPostToReq, isLogged, isUserThisBusinessOwner } from '../../middlewar
 
 import { shoppingHandles } from './handles';
 import { middlewarePagination } from '../../middlewares/middlewarePagination';
-import { sortPurshaseNotesMiddlware } from '../../middlewares/sortPurshaseNotes';
+import { middlewareSortPurshaseNotes } from '../../middlewares/middlewareSortPurshaseNotes';
 
 export const router = Router();
 
@@ -17,22 +17,22 @@ router
     middlewareExpressValidator.handle,
     isLogged,
     middlewarePagination,
-    shoppingHandles.get_shopping()
+    shoppingHandles.get_shopping(),
   )
   .post(
     middlewareExpressValidator.body('postId').notEmpty(),
     middlewareExpressValidator.handle,
     isLogged,
     addPostToReq,
-    sortPurshaseNotesMiddlware,
-    shoppingHandles.post_shopping()
+    middlewareSortPurshaseNotes,
+    shoppingHandles.post_shopping(),
   )
   .delete(
     middlewareExpressValidator.body('routeName').notEmpty(),
     middlewareExpressValidator.handle,
     isLogged,
-    sortPurshaseNotesMiddlware,
-    shoppingHandles.delete_shopping()
+    middlewareSortPurshaseNotes,
+    shoppingHandles.delete_shopping(),
   );
 
 router
@@ -43,7 +43,7 @@ router
     isLogged,
     middlewarePagination,
     isUserThisBusinessOwner,
-    shoppingHandles.get_shopping_owner()
+    shoppingHandles.get_shopping_owner(),
   );
 
 router
@@ -52,7 +52,7 @@ router
     middlewareExpressValidator.param('shoppingId').notEmpty(),
     middlewareExpressValidator.handle,
     isLogged,
-    shoppingHandles.get_shopping_shoppingId()
+    shoppingHandles.get_shopping_shoppingId(),
   );
 
 router
@@ -61,7 +61,7 @@ router
     middlewareExpressValidator.param('shoppingId').notEmpty(),
     middlewareExpressValidator.handle,
     isLogged,
-    shoppingHandles.post_shopping_shoppingId_make_order()
+    shoppingHandles.post_shopping_shoppingId_make_order(),
   );
 
 router
@@ -71,5 +71,5 @@ router
     middlewareExpressValidator.body('state').notEmpty(),
     middlewareExpressValidator.handle,
     isLogged,
-    shoppingHandles.post_shopping_shoppingId_change_state()
+    shoppingHandles.post_shopping_shoppingId_change_state(),
   );
