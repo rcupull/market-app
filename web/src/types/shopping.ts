@@ -1,7 +1,7 @@
 import { BillState } from './billing';
 import { BusinessCurrency, DeliveryConfigType } from './business';
 import { Address, BaseIdentity } from './general';
-import { Post } from './post';
+import { Post, PostPurshaseNotes } from './post';
 
 export enum ShoppingState {
   CONSTRUCTION = 'CONSTRUCTION',
@@ -27,12 +27,15 @@ export interface ShoppingDelivery {
   distance: number;
 }
 
+export interface ShoppingPostMeta {
+  postData: ShoppingPostData;
+  count: number;
+  purshaseNotes?: PostPurshaseNotes;
+  lastUpdatedDate: string;
+}
+
 export interface Shopping extends BaseIdentity {
-  posts: Array<{
-    postData: ShoppingPostData;
-    count: number;
-    lastUpdatedDate: string;
-  }>;
+  posts: Array<ShoppingPostMeta>;
   purchaserId: string;
   routeName: string;
   currency: BusinessCurrency;
