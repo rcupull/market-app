@@ -13,7 +13,7 @@ export interface AddNewBusinessButtonProps extends StyleProps {}
 export const AddNewBusinessButton = ({ className }: AddNewBusinessButtonProps) => {
   const { pushRoute } = useRouter();
   const businessUpdateNewModal = useBusinessUpdateNewModal();
-  const allUserBusiness = useAllUserBusiness();
+  const { allUserBusiness } = useAllUserBusiness();
 
   return (
     <IconButtonAdd

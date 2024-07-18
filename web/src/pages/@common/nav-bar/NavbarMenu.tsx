@@ -60,7 +60,7 @@ export const NavbarMenu = () => {
   const authSignUpModal = useAuthSignUpModal();
   const authForgotPasswordRequestModal = useAuthForgotPasswordRequestModal();
 
-  const allUserBusiness = useAllUserBusiness();
+  const { allUserBusiness } = useAllUserBusiness();
 
   // const getCopyLinkLabel = () => {
   //   if (isPostPage) {

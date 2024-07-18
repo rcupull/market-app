@@ -35,7 +35,7 @@ export interface OptionsProps {
 
 export const Options = ({ business, onRefresh }: OptionsProps) => {
   const { routeName, hidden } = business;
-  const allUserBusiness = useAllUserBusiness();
+  const { allUserBusiness } = useAllUserBusiness();
 
   const { pushModal } = useModal();
   const { pushRoute, onChangeQuery, query } = useRouter();
