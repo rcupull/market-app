@@ -272,7 +272,7 @@ export const Component = ({
             {postFormFields.includes('clothingSizes') && (
               <>
                 <FieldClothingSizeSelect
-                  label="Tallas"
+                  label="Tallas disponibles"
                   name="clothingSizes"
                   className="mt-6"
                   multi

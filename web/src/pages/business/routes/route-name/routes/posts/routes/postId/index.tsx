@@ -100,7 +100,7 @@ export const PostId = () => {
   };
 
   return (
-    <LayoutPage title={post?.name} backButton>
+    <LayoutPage title={post?.name}>
       <UpdateSomethingContainer
         title="Editar esta publicación"
         onClick={() => {

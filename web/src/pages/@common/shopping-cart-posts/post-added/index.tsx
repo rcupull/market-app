@@ -1,6 +1,7 @@
 import { Amount } from 'components/amount';
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
+import { ColorCircle } from 'components/color-circle';
 import { EmptyImage } from 'components/empty-image';
 import { IconButtonRemove } from 'components/icon-button-remove';
 
@@ -11,26 +12,74 @@ import { useModal } from 'features/modal/useModal';
 import { IconButtonViewPostPage } from './IconButtonViewPostPage';
 
 import { useCart } from 'pages/@hooks/useCart';
-import { Image } from 'types/general';
+import { ShoppingPostMeta } from 'types/shopping';
 import { getImageEndpoint } from 'utils/api';
 
 export interface PostAddedProps {
-  count: number;
-  postId: string;
-  postImages?: Array<Image>;
-  postName: string;
   routeName: string;
+  shoppingPostMeta: ShoppingPostMeta;
 }
 
-export const PostAdded = ({ count, postId, postImages, postName, routeName }: PostAddedProps) => {
+export const PostAdded = ({ shoppingPostMeta, routeName }: PostAddedProps) => {
   const { updateAddOneShopping } = useUpdateAddOneShopping();
+
+  const { count, postData, purshaseNotes } = shoppingPostMeta;
+  const { name, images, _id: postId } = postData;
   const cart = useCart();
 
-  const mainImage = postImages?.[0];
+  const { interestedByClothingSizes, interestedByColors } = purshaseNotes || {};
+
+  const mainImage = images?.[0];
   const { pushModal } = useModal();
 
+  ////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
+  const renderColors = () => {
+    if (!interestedByColors?.length) return null;
+
+    return (
+      <div className="flex items-center gap-1">
+        <span className="text-sm font-semibold">Colores:</span>
+        {interestedByColors.map((postColor, index) => (
+          <ColorCircle size="small" key={index} postColor={postColor} />
+        ))}
+      </div>
+    );
+  };
+
+  const colorsNode = renderColors();
+
+  ////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
+
+  const renderClothingSizes = () => {
+    if (!interestedByClothingSizes?.length) return null;
+
+    return (
+      <div className="flex items-center gap-1">
+        <span className="text-sm font-semibold">Tallas:</span>
+        {interestedByClothingSizes.map((postClothingSize, index) => (
+          <span key={index} className="text-sm">
+            {`${index > 0 ? '/ ' : ''} ${postClothingSize}`}
+          </span>
+        ))}
+      </div>
+    );
+  };
+
+  const clothingSizesNode = renderClothingSizes();
+
+  ////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////
+
   return (
-    <div className="flex flex-col sm:flex-row items-center border border-gray-300 rounded-md p-1 gap-1">
+    <div className="flex flex-col items-center border border-gray-300 rounded-md p-1 gap-1">
       <div className="flex items-center gap-2">
         <div className="flex-shrink-0">
           {mainImage ? (
@@ -40,10 +89,17 @@ export const PostAdded = ({ count, postId, postImages, postName, routeName }: Po
           )}
         </div>
 
-        {postName}
+        {name}
       </div>
 
-      <div className="flex items-center sm:ml-auto">
+      {(colorsNode || clothingSizesNode) && (
+        <div className="flex items-center flex-wrap justify-center gap-6 w-full my-2">
+          {colorsNode}
+          {clothingSizesNode}
+        </div>
+      )}
+
+      <div className="flex items-center">
         <Amount
           value={count}
           isBusy={updateAddOneShopping.status.isBusy}
@@ -54,7 +110,7 @@ export const PostAdded = ({ count, postId, postImages, postName, routeName }: Po
                 onAfterSuccess: () => {
                   cart.onFetch();
                 },
-              }
+              },
             );
           }}
         />
@@ -79,13 +135,13 @@ export const PostAdded = ({ count, postId, postImages, postName, routeName }: Po
                         isBusy={removeShopping.status.isBusy}
                         onClick={() => {
                           removeShopping.fetch(
-                            { postId, routeName },
+                            { postId, routeName, purshaseNotes },
                             {
                               onAfterSuccess: () => {
                                 onClose();
                                 cart.onFetch();
                               },
-                            }
+                            },
                           );
                         }}
                       />
@@ -93,7 +149,7 @@ export const PostAdded = ({ count, postId, postImages, postName, routeName }: Po
                   };
                 },
               },
-              { emergent: true }
+              { emergent: true },
             );
           }}
         />

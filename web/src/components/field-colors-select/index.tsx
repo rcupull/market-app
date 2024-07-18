@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 
+import { ColorCircle } from 'components/color-circle';
 import { FieldRadioGroup, FieldRadioGroupProps } from 'components/field-radio-group';
 import { useFormField } from 'components/formux/useFormField';
 
 import { allColorMeta } from 'constants/posts';
-import { PostColor, PostColorValue } from 'types/post';
-import { cn } from 'utils/general';
+import { PostColor } from 'types/post';
 
 export interface FieldColorSelectProps
   extends Omit<FieldRadioGroupProps, 'items' | 'renderOption' | 'optionToValue'> {
@@ -13,40 +13,22 @@ export interface FieldColorSelectProps
 }
 
 export const FieldColorSelect = (props: FieldColorSelectProps) => {
-  const { items, ...omittedProps } = props;
+  const { items: itemsProp, ...omittedProps } = props;
 
   const { error } = useFormField(props);
-  const itemsMeta = useMemo(() => {
-    if (!items?.length) return Object.values(allColorMeta);
 
-    return items?.map((color) => allColorMeta[color]) || [];
-  }, [items]);
+  const items = useMemo<Array<PostColor>>(() => {
+    return itemsProp?.length ? itemsProp : Object.keys(allColorMeta) as Array<PostColor>
+  }, [itemsProp]);
 
   return (
-    <FieldRadioGroup<PostColorValue>
-      items={itemsMeta}
+    <FieldRadioGroup<PostColor>
+      items={items}
       containerClassName="flex gap-2 flex-wrap"
       renderOption={({ checked, item }) => {
-        const { bgColor, selectedRingColor } = item;
-
-        return (
-          <div
-            className={cn('rounded-full p-0.5', {
-              'ring-2 ring-red-500': !!error,
-              'ring-2 ring-indigo-600': checked,
-            })}
-          >
-            <div
-              className={cn(
-                bgColor,
-                selectedRingColor,
-                'h-8 w-8 rounded-full border border-black border-opacity-10'
-              )}
-            />
-          </div>
-        );
+        return <ColorCircle postColor={item} checked={checked} error={!!error} />;
       }}
-      optionToValue={({ name }) => name}
+      optionToValue={(postColor) => allColorMeta[postColor].name}
       {...omittedProps}
     />
   );

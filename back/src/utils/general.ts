@@ -31,20 +31,29 @@ export const isEqual = (a: any, b: any): boolean => {
 
   return a === b;
 };
-export const isEqualObj = (a: AnyRecord | undefined, b: AnyRecord | undefined): boolean => {
-  if (!a || !b) return false;
 
-  if (isArray(a) && isArray(b) && a.length !== b.length) {
+export const isEqualObj = (aArg: AnyRecord | undefined, bArg: AnyRecord | undefined): boolean => {
+  if (!aArg || !bArg) return false;
+
+  if (isArray(aArg) && isArray(bArg) && aArg.length !== bArg.length) {
     return false;
   }
 
-  for (const prop in a) {
+  const a = deepJsonCopy(aArg);
+  const b = deepJsonCopy(bArg);
+
+  const mergedObj = {
+    ...a,
+    ...b,
+  };
+
+  for (const prop in mergedObj) {
     //eslint-disable-next-line
     if (a.hasOwnProperty(prop)) {
       //eslint-disable-next-line
       if (b.hasOwnProperty(prop)) {
         //@ts-expect-error ignore
-        if (typeof a[prop] === 'object') {
+        if (typeof a[prop] === 'object' && a[prop] !== null) {
           //@ts-expect-error ignore
           if (!isEqualObj(a[prop], b[prop])) return false;
         } else {
@@ -54,11 +63,12 @@ export const isEqualObj = (a: AnyRecord | undefined, b: AnyRecord | undefined): 
       } else {
         return false;
       }
+    } else {
+      return false;
     }
   }
   return true;
 };
-
 export const combineMiddleware = (...mids: Array<RequestHandler>) => {
   return mids.reduce(function (a, b) {
     return function (req, res, next) {

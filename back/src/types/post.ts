@@ -20,7 +20,36 @@ export type PostColor =
   | 'cyan'
   | 'teal';
 
+export const allSortedColor: Array<PostColor> = [
+  'white',
+  'gray',
+  'black',
+  'blue',
+  'red',
+  'green',
+  'purple',
+  'orange',
+  'yellow',
+  'slate',
+  'pink',
+  'fuchsia',
+  'violet',
+  'cyan',
+  'teal',
+];
+
 export type PostClothingSize = 'XXS' | 'XS' | 'S' | 'M' | 'L' | 'XL' | '2XL' | '3XL';
+
+export const allSortedClothingSize: Array<PostClothingSize> = [
+  'XXS',
+  'XS',
+  'S',
+  'M',
+  'L',
+  'XL',
+  '2XL',
+  '3XL',
+];
 
 export interface PostPurshaseNotes {
   interestedByColors?: Array<PostColor>;
