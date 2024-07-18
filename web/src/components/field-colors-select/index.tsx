@@ -18,7 +18,7 @@ export const FieldColorSelect = (props: FieldColorSelectProps) => {
   const { error } = useFormField(props);
 
   const items = useMemo<Array<PostColor>>(() => {
-    return itemsProp?.length ? itemsProp : Object.keys(allColorMeta) as Array<PostColor>
+    return itemsProp?.length ? itemsProp : (Object.keys(allColorMeta) as Array<PostColor>);
   }, [itemsProp]);
 
   return (

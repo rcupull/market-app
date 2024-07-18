@@ -33,11 +33,11 @@ export const CloseContextProvider = ({ modalProps, children }: CloseContextProvi
 
               return {
                 title: 'Descartar cambios',
-                content: '¿Estás seguro de que deseas cerrar sin guardar los cambios?',
+                content: '¿Estás seguro que deseas cerrar sin guardar los cambios?',
                 primaryBtn: (
                   <Button
-                    label="Confirmar"
-                    variant="primary"
+                    label="Descartar"
+                    variant="error"
                     onClick={() => {
                       onCloseThis();
                       onClose();
@@ -45,6 +45,7 @@ export const CloseContextProvider = ({ modalProps, children }: CloseContextProvi
                   />
                 ),
                 secondaryBtn: <ButtonClose label="Cancelar" />,
+                className: '!w-96',
               };
             },
           },

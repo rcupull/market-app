@@ -25,7 +25,7 @@ export const useRemoveShopping = (): {
             }),
             data,
           },
-          options,
+          options
         );
       },
       reset: fetch[3],
