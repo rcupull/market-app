@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import { AddressView } from 'components/address-view';
 import { Button } from 'components/button';
+import { ButtonDescription } from 'components/button-decription';
 import { HighlightedBox } from 'components/highlighted-box';
 
 import { useAuth } from 'features/api-slices/useAuth';
@@ -40,7 +41,20 @@ export const PersonalData = ({ className, onValid }: PersonalDataProps) => {
   return (
     <HighlightedBox className={className} variant="info">
       <div className={cn('flex flex-col p-2 w-full')}>
-        <span className="text-center w-full font-bold">Contacto</span>
+        <div className="flex items-center justify-center">
+          <span className="text-center font-bold">Contacto</span>
+          <ButtonDescription
+            className="inline-block"
+            description={
+              <div>
+                Es requerido que los usuarios completen sus datos personales para poder solicitar
+                una orden de compra. Estos datos son usados por los comerciantes para poder realizar
+                las entregas a domicilio. Además la dirección es usada por nuestros algorimos de
+                localizacion de productos de interés.
+              </div>
+            }
+          />
+        </div>
 
         <div className="flex gap-1 mt-3">
           <span className="font-semibold">Teléfono:</span>
