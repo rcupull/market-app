@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
-import { pagination } from '../../middlewares/pagination';
+import { middlewarePagination } from '../../middlewares/middlewarePagination';
 import { businessHandles } from './handles';
 import { isLogged, isUserBusinessOwner, isUserThisBusinessOwner } from '../../middlewares/verify';
 
@@ -10,7 +10,7 @@ export const router = Router();
 
 router
   .route('/business')
-  .get(pagination, businessHandles.get_business())
+  .get(middlewarePagination, businessHandles.get_business())
   .post(
     middlewareExpressValidator.body('name').notEmpty(),
     middlewareExpressValidator.body('postCategories').notEmpty(),
@@ -21,7 +21,7 @@ router
     businessHandles.post_business()
   );
 
-router.route('/business/summary').get(pagination, businessHandles.get_business_summary());
+router.route('/business/summary').get(middlewarePagination, businessHandles.get_business_summary());
 router.route('/business/search').get(businessHandles.get_business_search());
 
 /////////////////////////////////////////////////////////////////

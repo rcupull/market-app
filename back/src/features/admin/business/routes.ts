@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { adminBusinessHandles } from './handles';
-import { pagination } from '../../../middlewares/pagination';
+import { middlewarePagination } from '../../../middlewares/middlewarePagination';
 import { hasAccess, isAdmin, isLogged } from '../../../middlewares/verify';
 import { middlewareExpressValidator } from '../../../middlewares/middlewareExpressValidator';
 
@@ -13,7 +13,7 @@ router
     isLogged,
     isAdmin,
     hasAccess('business__read'),
-    pagination,
+    middlewarePagination,
     adminBusinessHandles.get_admin_business()
   );
 

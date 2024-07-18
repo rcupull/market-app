@@ -3,7 +3,7 @@ import { middlewareExpressValidator } from '../../middlewares/middlewareExpressV
 import { addPostToReq, isLogged, isUserThisBusinessOwner } from '../../middlewares/verify';
 
 import { shoppingHandles } from './handles';
-import { pagination } from '../../middlewares/pagination';
+import { middlewarePagination } from '../../middlewares/middlewarePagination';
 import { sortPurshaseNotesMiddlware } from '../../middlewares/sortPurshaseNotes';
 
 export const router = Router();
@@ -16,7 +16,7 @@ router
     middlewareExpressValidator.query('routeName').notEmpty(),
     middlewareExpressValidator.handle,
     isLogged,
-    pagination,
+    middlewarePagination,
     shoppingHandles.get_shopping()
   )
   .post(
@@ -41,7 +41,7 @@ router
     middlewareExpressValidator.query('routeName').notEmpty(),
     middlewareExpressValidator.handle,
     isLogged,
-    pagination,
+    middlewarePagination,
     isUserThisBusinessOwner,
     shoppingHandles.get_shopping_owner()
   );

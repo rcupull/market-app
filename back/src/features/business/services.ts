@@ -3,7 +3,7 @@ import { ModelDocument, QueryHandle } from '../../types/general';
 import { Business } from '../../types/business';
 import { BusinessModel } from '../../schemas/business';
 import { postServicesDeleteMany } from '../post/services';
-import { PaginateResult } from '../../middlewares/pagination';
+import { PaginateResult } from '../../middlewares/middlewarePagination';
 
 import { UpdateOptions } from 'mongodb';
 import { GetAllBusinessArgs, UpdateQueryBusiness, getAllFilterQuery } from './utils';

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { pagination } from '../../middlewares/pagination';
+import { middlewarePagination } from '../../middlewares/middlewarePagination';
 import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
 import { billingHandles } from './handles';
 import { isLogged, isUserBusinessOwner, isUserThisBusinessOwner } from '../../middlewares/verify';
@@ -15,6 +15,6 @@ router
     isLogged,
     isUserBusinessOwner,
     isUserThisBusinessOwner,
-    pagination,
+    middlewarePagination,
     billingHandles.get_bills()
   );

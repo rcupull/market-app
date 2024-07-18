@@ -2,14 +2,20 @@ import { Router } from 'express';
 
 import { adminBillsHandles } from './handles';
 import { middlewareExpressValidator } from '../../../middlewares/middlewareExpressValidator';
-import { pagination } from '../../../middlewares/pagination';
+import { middlewarePagination } from '../../../middlewares/middlewarePagination';
 import { hasAccess, isAdmin, isLogged } from '../../../middlewares/verify';
 
 export const router = Router();
 
 router
   .route('/bills')
-  .get(isLogged, isAdmin, hasAccess('full'), pagination, adminBillsHandles.get_admin_bills())
+  .get(
+    isLogged,
+    isAdmin,
+    hasAccess('full'),
+    middlewarePagination,
+    adminBillsHandles.get_admin_bills()
+  )
   .post(
     isLogged,
     isAdmin,

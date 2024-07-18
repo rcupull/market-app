@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { pagination } from '../../middlewares/pagination';
+import { middlewarePagination } from '../../middlewares/middlewarePagination';
 import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
 import { postHandles } from './handles';
 import {
@@ -14,7 +14,7 @@ export const router = Router();
 
 router
   .route('/posts')
-  .get(pagination, postHandles.get_posts())
+  .get(middlewarePagination, postHandles.get_posts())
   .post(
     middlewareExpressValidator.body('routeName').notEmpty(),
     middlewareExpressValidator.body('name').notEmpty(),
@@ -65,7 +65,7 @@ router
   .get(
     middlewareExpressValidator.param('postId').notEmpty(),
     middlewareExpressValidator.handle,
-    pagination,
+    middlewarePagination,
     postHandles.get_related_posts()
   );
 /////////////////////////////////////////////////////////////////
