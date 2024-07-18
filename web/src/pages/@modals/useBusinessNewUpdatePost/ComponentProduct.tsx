@@ -204,7 +204,7 @@ export const ComponentProduct = ({
 
             {postFormFields.includes('colors') && (
               <>
-                <FieldColorSelect label="Colores" name="colors" className="mt-6" multi />
+                <FieldColorSelect label="Colores disponibles" name="colors" className="mt-6" multi />
                 <Divider />
               </>
             )}

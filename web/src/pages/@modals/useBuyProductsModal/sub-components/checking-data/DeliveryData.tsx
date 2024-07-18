@@ -97,7 +97,7 @@ export const DeliveryData = ({
     );
   };
   return renderContainer(
-    <div className="p-2">
+    <div className="p-2 text-center sm:text-start">
       {renderDeliveryMessage({
         type: DeliveryConfigType.REQUIRED,
         message: 'La entrega al domicilio es obligatoria para todos los productos en este negocio.',
@@ -137,7 +137,7 @@ export const DeliveryData = ({
       {renderDeliveryMessage({
         type: DeliveryConfigType.NONE,
         message: (
-          <span className="text-red-500">
+          <span className="text-indigo-500">
             Este negocio no ofrece servicio de entrega al domicilio.
           </span>
         ),
