@@ -12,15 +12,11 @@ export interface StepProps {
   backButton: React.ReactElement;
   nextButton: React.ReactElement;
 }
-export interface StepperProps
-  extends Pick<TabsProps, 'disabledStepNavigation'> {
+export interface StepperProps extends Pick<TabsProps, 'disabledStepNavigation'> {
   items: Array<Nullable<{ label: string; render: (props: StepProps) => React.ReactNode }>>;
 }
 
-export const Stepper = ({
-  items,
-  disabledStepNavigation = true,
-}: StepperProps) => {
+export const Stepper = ({ items, disabledStepNavigation = true }: StepperProps) => {
   const [selected, setSelected] = useState(0);
 
   /////////////////////////////////////////////////////////////////////////////////

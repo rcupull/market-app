@@ -27,7 +27,7 @@ export const ColorCircle = ({
           'ring-2 ring-red-500': !!error,
           'ring-2 ring-indigo-600': checked,
         },
-        className,
+        className
       )}
     >
       <div
@@ -38,7 +38,7 @@ export const ColorCircle = ({
           {
             'size-4': size === 'small',
             'size-8': size === 'medium',
-          },
+          }
         )}
       />
     </div>
