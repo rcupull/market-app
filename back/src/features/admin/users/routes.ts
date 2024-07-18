@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { adminUsersHandles } from './handles';
 import { hasAccess, isAdmin, isLogged } from '../../../middlewares/verify';
-import { validators } from '../../../middlewares/express-validator';
+import { middlewareExpressValidator } from '../../../middlewares/middlewareExpressValidator';
 import { pagination } from '../../../middlewares/pagination';
 export const router = Router();
 
@@ -17,8 +17,8 @@ router
   .delete(
     isLogged,
     isAdmin,
-    validators.param('userId').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.param('userId').notEmpty(),
+    middlewareExpressValidator.handle,
     hasAccess('user__remove'),
     adminUsersHandles.del_users_userId()
   );
@@ -28,9 +28,9 @@ router
   .put(
     isLogged,
     isAdmin,
-    validators.param('userId').notEmpty(),
-    validators.body('specialAccess').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.param('userId').notEmpty(),
+    middlewareExpressValidator.body('specialAccess').notEmpty(),
+    middlewareExpressValidator.handle,
     hasAccess('user_access__write'),
     adminUsersHandles.put_admin_users_userId_access()
   );

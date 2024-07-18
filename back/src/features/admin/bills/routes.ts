@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { adminBillsHandles } from './handles';
-import { validators } from '../../../middlewares/express-validator';
+import { middlewareExpressValidator } from '../../../middlewares/middlewareExpressValidator';
 import { pagination } from '../../../middlewares/pagination';
 import { hasAccess, isAdmin, isLogged } from '../../../middlewares/verify';
 
@@ -13,8 +13,8 @@ router
   .post(
     isLogged,
     isAdmin,
-    validators.body('routeName').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.body('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
     hasAccess('bills__write'),
     adminBillsHandles.post_admin_bills()
   );
@@ -24,8 +24,8 @@ router
   .delete(
     isLogged,
     isAdmin,
-    validators.param('billId').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.param('billId').notEmpty(),
+    middlewareExpressValidator.handle,
     hasAccess('bills__remove'),
     adminBillsHandles.del_admin_bills_billId()
   );
@@ -35,9 +35,9 @@ router
   .delete(
     isLogged,
     isAdmin,
-    validators.param('billId').notEmpty(),
-    validators.body('shoppingIds').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.param('billId').notEmpty(),
+    middlewareExpressValidator.body('shoppingIds').notEmpty(),
+    middlewareExpressValidator.handle,
     hasAccess('full'),
     adminBillsHandles.del_admin_bills_billId_shopping()
   );

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { pagination } from '../../middlewares/pagination';
-import { validators } from '../../middlewares/express-validator';
+import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
 import { postHandles } from './handles';
 import {
   isLogged,
@@ -16,9 +16,9 @@ router
   .route('/posts')
   .get(pagination, postHandles.get_posts())
   .post(
-    validators.body('routeName').notEmpty(),
-    validators.body('name').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.body('routeName').notEmpty(),
+    middlewareExpressValidator.body('name').notEmpty(),
+    middlewareExpressValidator.handle,
     isLogged,
     isUserBusinessOwner,
     isUserThisBusinessOwner,
@@ -28,8 +28,8 @@ router
 router
   .route('/posts/:postId/duplicate')
   .post(
-    validators.param('postId').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.param('postId').notEmpty(),
+    middlewareExpressValidator.handle,
     isLogged,
     isUserBusinessOwner,
     isUserThisPostOwner,
@@ -39,17 +39,21 @@ router
 
 router
   .route('/posts/:postId')
-  .get(validators.param('postId').notEmpty(), validators.handle, postHandles.get_posts_postId())
+  .get(
+    middlewareExpressValidator.param('postId').notEmpty(),
+    middlewareExpressValidator.handle,
+    postHandles.get_posts_postId()
+  )
   .put(
-    validators.param('postId').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.param('postId').notEmpty(),
+    middlewareExpressValidator.handle,
     isLogged,
     isUserThisPostOwner,
     postHandles.put_posts_postId()
   )
   .delete(
-    validators.param('postId').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.param('postId').notEmpty(),
+    middlewareExpressValidator.handle,
     isLogged,
     isUserThisPostOwner,
     postHandles.delete_posts_postId()
@@ -59,8 +63,8 @@ router
 router
   .route('/posts/:postId/related')
   .get(
-    validators.param('postId').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.param('postId').notEmpty(),
+    middlewareExpressValidator.handle,
     pagination,
     postHandles.get_related_posts()
   );
@@ -69,8 +73,8 @@ router
 router
   .route('/posts/bulkActions/delete')
   .delete(
-    validators.body('routeName').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.body('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
     isLogged,
     isUserThisBusinessOwner,
     postHandles.bulk_action_delete()
@@ -79,9 +83,9 @@ router
 router
   .route('/posts/bulkActions/update')
   .put(
-    validators.body('routeName').notEmpty(),
-    validators.body('update').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.body('routeName').notEmpty(),
+    middlewareExpressValidator.body('update').notEmpty(),
+    middlewareExpressValidator.handle,
     isLogged,
     isUserThisBusinessOwner,
     postHandles.bulk_action_update()

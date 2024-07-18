@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { validators } from '../../middlewares/express-validator';
+import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
 import { addPostToReq, isLogged, isUserThisBusinessOwner } from '../../middlewares/verify';
 
 import { shoppingHandles } from './handles';
@@ -13,23 +13,23 @@ export const router = Router();
 router
   .route('/shopping')
   .get(
-    validators.query('routeName').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.query('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
     isLogged,
     pagination,
     shoppingHandles.get_shopping()
   )
   .post(
-    validators.body('postId').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.body('postId').notEmpty(),
+    middlewareExpressValidator.handle,
     isLogged,
     addPostToReq,
     sortPurshaseNotesMiddlware,
     shoppingHandles.post_shopping()
   )
   .delete(
-    validators.body('routeName').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.body('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
     isLogged,
     sortPurshaseNotesMiddlware,
     shoppingHandles.delete_shopping()
@@ -38,8 +38,8 @@ router
 router
   .route('/shopping/owner')
   .get(
-    validators.query('routeName').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.query('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
     isLogged,
     pagination,
     isUserThisBusinessOwner,
@@ -49,8 +49,8 @@ router
 router
   .route('/shopping/:shoppingId')
   .get(
-    validators.param('shoppingId').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.param('shoppingId').notEmpty(),
+    middlewareExpressValidator.handle,
     isLogged,
     shoppingHandles.get_shopping_shoppingId()
   );
@@ -58,8 +58,8 @@ router
 router
   .route('/shopping/:shoppingId/makeOrder')
   .post(
-    validators.param('shoppingId').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.param('shoppingId').notEmpty(),
+    middlewareExpressValidator.handle,
     isLogged,
     shoppingHandles.post_shopping_shoppingId_make_order()
   );
@@ -67,9 +67,9 @@ router
 router
   .route('/shopping/:shoppingId/changeState')
   .post(
-    validators.param('shoppingId').notEmpty(),
-    validators.body('state').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.param('shoppingId').notEmpty(),
+    middlewareExpressValidator.body('state').notEmpty(),
+    middlewareExpressValidator.handle,
     isLogged,
     shoppingHandles.post_shopping_shoppingId_change_state()
   );

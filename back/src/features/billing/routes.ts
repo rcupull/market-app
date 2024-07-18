@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { pagination } from '../../middlewares/pagination';
-import { validators } from '../../middlewares/express-validator';
+import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
 import { billingHandles } from './handles';
 import { isLogged, isUserBusinessOwner, isUserThisBusinessOwner } from '../../middlewares/verify';
 
@@ -10,8 +10,8 @@ export const router = Router();
 router
   .route('/bills')
   .get(
-    validators.query('routeName').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.query('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
     isLogged,
     isUserBusinessOwner,
     isUserThisBusinessOwner,

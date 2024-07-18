@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { adminBusinessHandles } from './handles';
 import { pagination } from '../../../middlewares/pagination';
 import { hasAccess, isAdmin, isLogged } from '../../../middlewares/verify';
-import { validators } from '../../../middlewares/express-validator';
+import { middlewareExpressValidator } from '../../../middlewares/middlewareExpressValidator';
 
 export const router = Router();
 
@@ -22,8 +22,8 @@ router
   .delete(
     isLogged,
     isAdmin,
-    validators.param('routeName').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.param('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
     hasAccess('business__remove'),
     adminBusinessHandles.delete_admin_business_routeName()
   );
