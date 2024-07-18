@@ -3,7 +3,7 @@ import { router } from './router';
 import cors from 'cors';
 import swaggerUiExpress from 'swagger-ui-express';
 import { passportMiddlewareInitialize } from './middlewares/passport';
-import { commaSeparateQuery } from './middlewares/comma-separate-query';
+import { middlewareCommaSeparateQuery } from './middlewares/middlewareCommaSeparateQuery';
 import { frontMiddlware } from './middlewares/frontMiddlware';
 import { join } from 'path';
 import { appAssetsDir } from './config';
@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'development') {
     //eslint-disable-next-line
     swaggerUiExpress.setup(require('../swagger_output.json'), {
       explorer: true,
-    })
+    }),
   );
 }
 
@@ -26,7 +26,7 @@ app.use(cors({ origin: '*', optionsSuccessStatus: 200 }));
 app.use(passportMiddlewareInitialize);
 
 app.use(express.json());
-app.use(commaSeparateQuery);
+app.use(middlewareCommaSeparateQuery);
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/api-services', router);
