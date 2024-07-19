@@ -5,10 +5,10 @@ import { useUpdateChecksUser } from 'features/api/user/useUpdateChecksUser';
 import { useAuth } from 'features/api-slices/useAuth';
 
 export const UserTypeCheck = () => {
-  const { user, onRefreshAuthUser } = useAuth();
+  const { user, onRefreshAuthUser, isAuthenticated } = useAuth();
   const { updateChecksUser } = useUpdateChecksUser();
 
-  if (user?.checks?.requestUserTypeWhenStart) {
+  if (!isAuthenticated || user?.checks?.requestUserTypeWhenStart) {
     return <></>;
   }
 
