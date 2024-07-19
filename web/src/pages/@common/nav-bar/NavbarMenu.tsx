@@ -84,10 +84,13 @@ export const NavbarMenu = () => {
     label: string
   ): Array<Nullable<MenuItem>> => {
     const out = [...items];
+
     const firstNotNullElement = out.findIndex((item) => !!item);
 
-    if (firstNotNullElement >= 0 && out[firstNotNullElement]) {
-      out[firstNotNullElement].divider = label;
+    const firstItem = firstNotNullElement >= 0 ? out[firstNotNullElement] : null;
+
+    if (firstItem) {
+      firstItem.divider = label;
     }
 
     return out;
