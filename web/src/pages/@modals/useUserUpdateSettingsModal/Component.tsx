@@ -1,6 +1,7 @@
 import { AddressView } from 'components/address-view';
 import { Button } from 'components/button';
 import { FieldAddress } from 'components/field-address';
+import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldInput } from 'components/field-input';
 import { FieldInputImages } from 'components/field-input-images';
 import { Formux } from 'components/formux';
@@ -11,14 +12,14 @@ import { useUpdateOneUser } from 'features/api/user/useUpdateOneUser';
 
 import { Portal } from 'hooks/usePortal';
 
+import { useTermsAndConditionsModal } from '../useTermsAndConditionsModal';
+
 import { User } from 'types/auth';
 import { Address, Image } from 'types/general';
 import { getIsValidPhone } from 'utils/validation';
 
-interface State {
+interface State extends Pick<User, 'name' | 'phone' | 'canCreateBusiness' | 'canMakeDeliveries'> {
   profileImages: Array<Image>;
-  name: string;
-  phone?: string;
   address?: Address;
 }
 
@@ -32,6 +33,7 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
   const { addOneBusiness } = useAddOneBusiness();
   const { updateOneUser } = useUpdateOneUser();
   const { addManyImages } = useAddManyImages();
+  const termsAndConditions = useTermsAndConditionsModal();
 
   return (
     <Formux<State>
@@ -40,6 +42,8 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
         name: user.name,
         phone: user?.phone,
         address: user?.addresses?.[0],
+        canCreateBusiness: user?.canCreateBusiness,
+        canMakeDeliveries: user?.canMakeDeliveries,
       }}
       validate={[
         {
@@ -56,7 +60,41 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
       {({ value, isValid, hasChange }) => {
         return (
           <form className="w-full">
-            <FieldInput name="name" label="Nombre" />
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+              <FieldCheckbox
+                label="Comerciante"
+                name="canCreateBusiness"
+                disabled={user.canCreateBusiness}
+                description={
+                  <div className="text-center sm:text-start">
+                    Al activar la opción de <span className="font-bold">Comerciante</span> usted
+                    podrá <span className="font-bold">crear y administrar sus negocios</span> en la
+                    plataforma segun las regulaciones vigentes en nuestros{' '}
+                    <Button
+                      variant="link"
+                      className="!inline-block"
+                      onClick={() => termsAndConditions.open()}
+                      label="Términos y condiciones"
+                    />
+                  </div>
+                }
+              />
+
+              <FieldCheckbox
+                label="Mensajero"
+                name="canMakeDeliveries"
+                disabled={user.canMakeDeliveries}
+                description={
+                  <div className="text-center sm:text-start">
+                    Al activar la opción de <span className="font-bold">Mensajero</span> usted podrá
+                    ser elegido por los comerciantes para realizar las entregas de los productos.
+                    Algunos datos extras le serán requeridos para poder efectuar esta labor.
+                  </div>
+                }
+              />
+            </div>
+
+            <FieldInput name="name" label="Nombre" className="mt-6" />
 
             <FieldInput name="phone" label="Teléfono" className="mt-6" typeOnlyNumbers />
 
@@ -85,7 +123,14 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
                 }
                 disabled={!isValid || !hasChange}
                 onClick={() => {
-                  const { profileImages, name, address, phone } = value;
+                  const {
+                    profileImages,
+                    name,
+                    address,
+                    phone,
+                    canCreateBusiness,
+                    canMakeDeliveries,
+                  } = value;
 
                   const handleSubmit = (profileImage?: Image | null) => {
                     updateOneUser.fetch(
@@ -96,6 +141,8 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
                           name,
                           addresses: address ? [address] : undefined,
                           phone,
+                          canCreateBusiness,
+                          canMakeDeliveries,
                         },
                       },
                       {

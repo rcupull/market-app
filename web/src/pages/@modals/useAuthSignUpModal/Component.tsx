@@ -131,24 +131,6 @@ export const Component = ({ portal }: ComponentProps) => {
                   className="mt-6"
                 />
 
-                <div className="flex flex-col bg-red-100 mt-10 p-5 rounded-sm">
-                  <span className="text-sm">
-                    Regístrese como propietario de negocios marcando la siguiente casilla:
-                  </span>
-                  <FieldCheckbox
-                    name="canCreateBusiness"
-                    label="Propietario de negocios"
-                    description={
-                      <div>
-                        Los propietarios de negocios pueden crear negocios en nuestro sistema y
-                        publicar los productos que comercializan. Si usted no tiene productos para
-                        comercializar a través de Asere Market no necesita marcar esta opción.
-                      </div>
-                    }
-                    className="mt-2"
-                  />
-                </div>
-
                 <FieldCheckbox
                   name="termsAndConditionsAccepted"
                   label={
@@ -172,9 +154,9 @@ export const Component = ({ portal }: ComponentProps) => {
                     isBusy={authSignUp.status.isBusy}
                     disabled={!isValid}
                     onClick={() => {
-                      const { email, password, name, canCreateBusiness } = value;
+                      const { email, password, name } = value;
                       authSignUp.fetch(
-                        { email, password, name, canCreateBusiness },
+                        { email, password, name },
                         {
                           onAfterSuccess: () => {
                             onClose();

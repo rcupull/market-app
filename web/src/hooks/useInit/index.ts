@@ -11,7 +11,7 @@ import { useDebouncer } from 'hooks/useDebouncer';
 import { useInterval } from 'hooks/useInterval';
 
 export const useInit = () => {
-  const { isAuthenticated, onRefreshAuthUser, isUser } = useAuth();
+  const { isAuthenticated, onRefreshAuthUser, getIsBusinessUser, user } = useAuth();
 
   const { allUserBusiness } = useAllUserBusiness();
   const adminConfig = useAdminConfig();
@@ -29,7 +29,7 @@ export const useInit = () => {
   useEffect(() => {
     if (isAuthenticated) {
       debouncer(() => {
-        if (isUser) {
+        if (getIsBusinessUser(user)) {
           allUserBusiness.refresh();
         }
         onRefreshAuthUser();

@@ -9,6 +9,7 @@ import { useScrollBottom } from 'hooks/useScrollBottom';
 
 import { Filters } from './Filters';
 import { OwnBusiness } from './OwnBusiness';
+import { UserTypeCheck } from './UserTypeCheck';
 
 import { LayoutPage } from 'pages/@common/layout-page';
 import { LayoutPageSection } from 'pages/@common/layout-page-section';
@@ -39,6 +40,8 @@ export const Home = () => {
   return (
     <LayoutPage title="Todos los negocios">
       <OwnBusiness />
+
+      <UserTypeCheck />
 
       <Filters onChange={(e) => filters.onMergeFilters(e)} />
       <LayoutPageSection isBusy={getAllBusinessSummary.status.isBusy} className="mt-20">

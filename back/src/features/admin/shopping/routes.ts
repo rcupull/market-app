@@ -15,5 +15,5 @@ router
     middlewareIsAdmin,
     middlewareHasAccess('shopping__read'),
     middlewarePagination,
-    adminShoppingHandles.get_admin_shopping(),
+    adminShoppingHandles.get_admin_shopping()
   );

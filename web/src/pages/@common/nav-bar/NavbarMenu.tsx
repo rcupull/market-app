@@ -50,10 +50,15 @@ import {
 import { cn } from 'utils/general';
 
 export const NavbarMenu = () => {
-  const { isAuthenticated, authData, isUser, isAdmin, getHasSomeAccess, onRefreshAuthUser } =
-    useAuth();
+  const {
+    isAuthenticated,
+    getIsAdmin,
+    user,
+    getIsBusinessUser,
+    getHasSomeAccess,
+    onRefreshAuthUser,
+  } = useAuth();
   const { signOut } = useSignOut();
-  const { user } = authData || {};
   const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute } = useRouter();
   const { routeName } = params;
   const authChangePasswordModal = useAuthChangePasswordModal();
@@ -97,7 +102,7 @@ export const NavbarMenu = () => {
   };
 
   const getBusinessItems = (): Array<Nullable<MenuItem>> => {
-    if (!isAuthenticated || !isUser) return [];
+    if (!isAuthenticated || !getIsBusinessUser(user)) return [];
 
     const out: Array<MenuItem> = (allUserBusiness.data || []).map(({ name, routeName, hidden }) => {
       const isCurrentBusiness = params.routeName === routeName;
@@ -164,7 +169,7 @@ export const NavbarMenu = () => {
   const { adminBDScript } = useAdminBDScript();
 
   const getAdminItems = (): Array<Nullable<MenuItem>> => {
-    if (!isAuthenticated || !isAdmin) return [];
+    if (!isAuthenticated || !getIsAdmin(user)) return [];
 
     const out: Array<Nullable<MenuItem>> = [
       getHasSomeAccess('user__read') && {

@@ -16,7 +16,7 @@ router
     middlewareIsAdmin,
     middlewareHasAccess('full'),
     middlewarePagination,
-    adminBillsHandles.get_admin_bills(),
+    adminBillsHandles.get_admin_bills()
   )
   .post(
     middlewareIsLogged,
@@ -24,7 +24,7 @@ router
     middlewareExpressValidator.body('routeName').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareHasAccess('bills__write'),
-    adminBillsHandles.post_admin_bills(),
+    adminBillsHandles.post_admin_bills()
   );
 
 router
@@ -35,7 +35,7 @@ router
     middlewareExpressValidator.param('billId').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareHasAccess('bills__remove'),
-    adminBillsHandles.del_admin_bills_billId(),
+    adminBillsHandles.del_admin_bills_billId()
   );
 
 router
@@ -47,5 +47,5 @@ router
     middlewareExpressValidator.body('shoppingIds').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareHasAccess('full'),
-    adminBillsHandles.del_admin_bills_billId_shopping(),
+    adminBillsHandles.del_admin_bills_billId_shopping()
   );

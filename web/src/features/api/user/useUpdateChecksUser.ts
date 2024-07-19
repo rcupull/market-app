@@ -1,24 +1,14 @@
 import { useFetch } from 'hooks/useFetch';
 
 import { FetchResource } from 'types/api';
-import { User } from 'types/auth';
+import { UserChecks } from 'types/auth';
 import { getEndpoint } from 'utils/api';
 
-export const useUpdateOneUser = (): {
-  updateOneUser: FetchResource<
+export const useUpdateChecksUser = (): {
+  updateChecksUser: FetchResource<
     {
       userId: string;
-      update: Partial<
-        Pick<
-          User,
-          | 'profileImage'
-          | 'name'
-          | 'addresses'
-          | 'phone'
-          | 'canCreateBusiness'
-          | 'canMakeDeliveries'
-        >
-      >;
+      update: UserChecks;
     },
     void
   >;
@@ -26,7 +16,7 @@ export const useUpdateOneUser = (): {
   const fetch = useFetch();
 
   return {
-    updateOneUser: {
+    updateChecksUser: {
       data: fetch[0],
       status: fetch[1],
       fetch: ({ userId, update }, options = {}) => {
@@ -34,7 +24,7 @@ export const useUpdateOneUser = (): {
           {
             method: 'put',
             url: getEndpoint({
-              path: '/user/:userId',
+              path: '/user/:userId/checks',
               urlParams: { userId },
             }),
             data: update,
