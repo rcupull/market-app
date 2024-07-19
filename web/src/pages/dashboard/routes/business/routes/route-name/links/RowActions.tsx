@@ -16,7 +16,7 @@ import { useRouter } from 'hooks/useRouter';
 
 import { RowActionsContainer } from 'pages/@common/row-actions-container';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
+import { useBusinessNewUpdatePostModal } from 'pages/@modals/useBusinessNewUpdatePostModal';
 import { Post } from 'types/post';
 import { getOnePostRoute } from 'utils/business';
 
@@ -27,7 +27,7 @@ export interface RowActionsProps {
 export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
   const { pushModal } = useModal();
 
-  const businessNewUpdatePost = useBusinessNewUpdatePost();
+  const businessNewUpdatePost = useBusinessNewUpdatePostModal();
   const { pushRoute } = useRouter();
   const { business } = useBusiness();
 

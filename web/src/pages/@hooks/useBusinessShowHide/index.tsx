@@ -28,9 +28,9 @@ export const useBusinessShowHide = (): {
             const { onClose } = useModal();
             const { updateOneBusiness } = useUpdateOneBusiness();
             const { updateOneBusinessAdmin } = useUpdateOneBusinessAdmin();
-            const { isAdmin } = useAuth();
+            const { getIsAdmin, user } = useAuth();
 
-            const apiResource = isAdmin ? updateOneBusinessAdmin : updateOneBusiness;
+            const apiResource = getIsAdmin(user) ? updateOneBusinessAdmin : updateOneBusiness;
 
             return {
               className: 'max-w-lg',

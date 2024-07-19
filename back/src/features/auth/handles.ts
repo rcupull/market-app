@@ -134,13 +134,12 @@ const post_signOut: () => RequestHandler = () => {
 const post_signUp: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const { email, password, name, canCreateBusiness } = req.body;
+      const { email, password, name } = req.body;
 
       const newUser = await userServicesAddOne({
         email,
         name,
         password,
-        canCreateBusiness,
       });
 
       if (!newUser) return getUserNotFoundResponse({ res });

@@ -4,13 +4,13 @@ import { LabelValuePair } from 'components/label-value-pair';
 import SvgCheckCircleSolid from 'icons/CheckCircleSolid';
 import SvgTimesCircleSolid from 'icons/TimesCircleSolid';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useBusinessUpdateNotifications } from 'pages/@modals/useBusinessUpdateNotifications';
+import { useBusinessUpdateNotificationsModal } from 'pages/@modals/useBusinessUpdateNotificationsModal';
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
 export const BannerInfoTelegramBusiness = ({ className }: StyleProps) => {
   const { business, onFetch } = useBusiness();
-  const businessUpdateNotifications = useBusinessUpdateNotifications();
+  const businessUpdateNotifications = useBusinessUpdateNotificationsModal();
 
   if (!business) {
     return <></>;
