@@ -19,7 +19,7 @@ export const UserTypeCheck = () => {
           Parece que entras a nuestro sistema por primera vez. En tus{' '}
           <span className="font-bold">Preferencias de usuario</span> puedes seleccionar otros roles
           que tenemos para ti y convertirte en <span className="font-bold">comerciante</span> o{' '}
-          <span className="font-bold">mensajero</span> en nuestra plataforma.
+          <span className="font-bold">mensajero</span> de nuestra plataforma.
         </span>
         <Button
           label="Entendido"
