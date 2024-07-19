@@ -171,6 +171,7 @@ export interface Business extends BaseIdentity {
   deliveryConfig?: DeliveryConfig;
   //
   doneOnboarding?: boolean;
+  favoritesUserIds?: Array<Schema.Types.ObjectId>;
 }
 
 export interface BusinessAdminDto extends Business {

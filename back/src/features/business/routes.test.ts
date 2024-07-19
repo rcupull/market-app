@@ -42,6 +42,7 @@ describe('business', () => {
                 "type": "NONE",
               },
               "doneOnboarding": false,
+              "favoritesUserIds": [],
               "hidden": false,
               "layouts": {
                 "banner": {
@@ -269,6 +270,7 @@ describe('business', () => {
                 "type": "NONE",
               },
               "doneOnboarding": false,
+              "favoritesUserIds": [],
               "hidden": false,
               "layouts": {
                 "banner": {

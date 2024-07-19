@@ -5,17 +5,17 @@ import { useApiPersistent } from 'features/slices/useApiPersistent';
 
 import { Access } from 'types/admin';
 import { FetchResource } from 'types/api';
-import { AuthData, User } from 'types/auth';
+import { AuthData, UserDto } from 'types/auth';
 import { wait } from 'utils/general';
 
 type UseAuthMeta = {
   authData: AuthData | null;
   authSignIn: FetchResource<{ email: string; password: string }, AuthData>;
-  user: User | undefined;
-  getIsSimpleUser: (user: User | undefined) => boolean;
-  getIsDeliveryUser: (user: User | undefined) => boolean;
-  getIsBusinessUser: (user: User | undefined) => boolean;
-  getIsAdmin: (user: User | undefined) => boolean;
+  user: UserDto | undefined;
+  getIsSimpleUser: (user: UserDto | undefined) => boolean;
+  getIsDeliveryUser: (user: UserDto | undefined) => boolean;
+  getIsBusinessUser: (user: UserDto | undefined) => boolean;
+  getIsAdmin: (user: UserDto | undefined) => boolean;
   isAuthenticated: boolean;
   onRefreshAuthUser: () => void;
   getHasSomeAccess: (...access: Array<Access>) => boolean;
