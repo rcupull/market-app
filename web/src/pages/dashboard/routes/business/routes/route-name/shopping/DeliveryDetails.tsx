@@ -22,6 +22,7 @@ export const DeliveryDetails = ({ rowData, className }: DeliveryDetailsProps) =>
       return (
         <>
           {distanceNode}
+          -
           (Gratis)
         </>
       );
@@ -30,6 +31,7 @@ export const DeliveryDetails = ({ rowData, className }: DeliveryDetailsProps) =>
     return (
       <>
         {distanceNode}
+        -
         <span>{`${price} CUP`}</span>
       </>
     );
@@ -43,7 +45,7 @@ export const DeliveryDetails = ({ rowData, className }: DeliveryDetailsProps) =>
           'fill-red-500': !delivery,
         })}
       />
-
+  
       {renderDistancePrice()}
     </div>
   );
