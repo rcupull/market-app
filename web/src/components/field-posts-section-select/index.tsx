@@ -2,7 +2,7 @@ import { FieldSelect, FieldSelectProps } from 'components/field-select';
 import { IconButtonAdd } from 'components/icon-button-add';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useBusinessNewUpdateSection } from 'pages/@modals/useBusinessNewUpdateSection';
+import { useBusinessNewUpdateSectionModal } from 'pages/@modals/useBusinessNewUpdateSectionModal';
 
 export interface FieldPostsSectionLayoutProps
   extends Omit<
@@ -13,7 +13,7 @@ export interface FieldPostsSectionLayoutProps
 export const FieldPostsSectionSelect = ({ label, ...props }: FieldPostsSectionLayoutProps) => {
   const { business, onFetch } = useBusiness();
   const sections = business?.layouts?.posts?.sections || [];
-  const businessNewUpdateSection = useBusinessNewUpdateSection();
+  const businessNewUpdateSection = useBusinessNewUpdateSectionModal();
 
   return (
     <FieldSelect<{ id: string; name: string }>

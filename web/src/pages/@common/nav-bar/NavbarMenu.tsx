@@ -38,7 +38,7 @@ import { useAuthForgotPasswordRequestModal } from 'pages/@modals/useAuthForgotPa
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { useAuthSignUpModal } from 'pages/@modals/useAuthSignUpModal';
 import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewModal';
-import { useUserUpdateSettings } from 'pages/@modals/useUserUpdateSettings';
+import { useUserUpdateSettingsModal } from 'pages/@modals/useUserUpdateSettingsModal';
 import { Nullable } from 'types/general';
 import { getEndpoint } from 'utils/api';
 import {
@@ -57,7 +57,7 @@ export const NavbarMenu = () => {
   const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute } = useRouter();
   const { routeName } = params;
   const authChangePasswordModal = useAuthChangePasswordModal();
-  const userUpdateSettings = useUserUpdateSettings();
+  const userUpdateSettings = useUserUpdateSettingsModal();
   const { getEnabledFeature } = useAdminConfig();
 
   const businessUpdateNewModal = useBusinessUpdateNewModal();
@@ -81,7 +81,7 @@ export const NavbarMenu = () => {
 
   const addDividerToFirst = (
     items: Array<Nullable<MenuItem>>,
-    label: string,
+    label: string
   ): Array<Nullable<MenuItem>> => {
     const out = [...items];
 
@@ -120,7 +120,7 @@ export const NavbarMenu = () => {
               cn({
                 'fill-gray-500 ': hidden,
                 'fill-indigo-600': isCurrentBusiness,
-              }),
+              })
             )}
             hidden={hidden}
           />
@@ -198,7 +198,7 @@ export const NavbarMenu = () => {
                 getEndpoint({
                   path: '/admin/agenda/web/:agendaToken',
                   urlParams: { agendaToken },
-                }),
+                })
               );
             },
           });

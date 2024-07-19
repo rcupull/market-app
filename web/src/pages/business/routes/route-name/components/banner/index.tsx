@@ -3,7 +3,7 @@ import { Swiper } from 'components/swiper';
 
 import { UpdateSomethingContainer } from 'pages/@common/update-something-container';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useBusinessUpdateBanner } from 'pages/@modals/useBusinessUpdateBanner';
+import { useBusinessUpdateBannerModal } from 'pages/@modals/useBusinessUpdateBannerModal';
 import { StyleProps } from 'types/general';
 import { getImageEndpoint } from 'utils/api';
 import { cn } from 'utils/general';
@@ -11,7 +11,7 @@ import { cn } from 'utils/general';
 export interface BannerProps extends StyleProps {}
 
 export const Banner = ({ className }: BannerProps) => {
-  const businessUpdateBanner = useBusinessUpdateBanner();
+  const businessUpdateBanner = useBusinessUpdateBannerModal();
   const { business, onFetch } = useBusiness();
   const { bannerImages, layouts } = business || {};
 
