@@ -3,12 +3,10 @@ import { Router } from 'express';
 import { middlewarePagination } from '../../middlewares/middlewarePagination';
 import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
 import { postHandles } from './handles';
-import {
-  isLogged,
-  isUserBusinessOwner,
-  isUserThisBusinessOwner,
-  isUserThisPostOwner,
-} from '../../middlewares/verify';
+import { middlewareIsLogged } from '../../middlewares/middlewareIsLogged';
+import { middlewareIsUserBusinessOwner } from '../../middlewares/middlewareIsUserBusinessOwner';
+import { middlewareIsUserThisBusinessOwner } from '../../middlewares/middlewareIsUserThisBusinessOwner';
+import { middlewareIsUserThisPostOwner } from '../../middlewares/middlewareIsUserThisPostOwner';
 
 export const router = Router();
 
@@ -19,10 +17,10 @@ router
     middlewareExpressValidator.body('routeName').notEmpty(),
     middlewareExpressValidator.body('name').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserBusinessOwner,
-    isUserThisBusinessOwner,
-    postHandles.post_posts()
+    middlewareIsLogged,
+    middlewareIsUserBusinessOwner,
+    middlewareIsUserThisBusinessOwner,
+    postHandles.post_posts(),
   );
 
 router
@@ -30,10 +28,10 @@ router
   .post(
     middlewareExpressValidator.param('postId').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserBusinessOwner,
-    isUserThisPostOwner,
-    postHandles.post_posts_postId_duplicate()
+    middlewareIsLogged,
+    middlewareIsUserBusinessOwner,
+    middlewareIsUserThisPostOwner,
+    postHandles.post_posts_postId_duplicate(),
   );
 ///////////////////////////////////////////////////////////////////////////
 
@@ -42,21 +40,21 @@ router
   .get(
     middlewareExpressValidator.param('postId').notEmpty(),
     middlewareExpressValidator.handle,
-    postHandles.get_posts_postId()
+    postHandles.get_posts_postId(),
   )
   .put(
     middlewareExpressValidator.param('postId').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserThisPostOwner,
-    postHandles.put_posts_postId()
+    middlewareIsLogged,
+    middlewareIsUserThisPostOwner,
+    postHandles.put_posts_postId(),
   )
   .delete(
     middlewareExpressValidator.param('postId').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserThisPostOwner,
-    postHandles.delete_posts_postId()
+    middlewareIsLogged,
+    middlewareIsUserThisPostOwner,
+    postHandles.delete_posts_postId(),
   );
 
 /////////////////////////////////////////////////////////////////
@@ -66,7 +64,7 @@ router
     middlewareExpressValidator.param('postId').notEmpty(),
     middlewareExpressValidator.handle,
     middlewarePagination,
-    postHandles.get_related_posts()
+    postHandles.get_related_posts(),
   );
 /////////////////////////////////////////////////////////////////
 
@@ -75,9 +73,9 @@ router
   .delete(
     middlewareExpressValidator.body('routeName').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserThisBusinessOwner,
-    postHandles.bulk_action_delete()
+    middlewareIsLogged,
+    middlewareIsUserThisBusinessOwner,
+    postHandles.bulk_action_delete(),
   );
 
 router
@@ -86,7 +84,7 @@ router
     middlewareExpressValidator.body('routeName').notEmpty(),
     middlewareExpressValidator.body('update').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserThisBusinessOwner,
-    postHandles.bulk_action_update()
+    middlewareIsLogged,
+    middlewareIsUserThisBusinessOwner,
+    postHandles.bulk_action_update(),
   );

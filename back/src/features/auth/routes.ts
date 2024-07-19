@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
 import { authHandles } from './handles';
 import { middlewareAutentication } from '../../middlewares/middlewarePassport';
-import { isLogged } from '../../middlewares/verify';
+import { middlewareIsLogged } from '../../middlewares/middlewareIsLogged';
 
 export const router = Router();
 /////////////////////////////////////////////////////////////////
@@ -78,7 +78,7 @@ router
   .post(
     middlewareExpressValidator.body('newPassword').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
+    middlewareIsLogged,
     authHandles.post_change_password(),
   );
 
@@ -87,6 +87,6 @@ router
   .put(
     middlewareExpressValidator.body('firebaseToken').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
+    middlewareIsLogged,
     authHandles.put_firebase_token(),
   );

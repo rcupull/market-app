@@ -3,7 +3,9 @@ import { Router } from 'express';
 import { middlewarePagination } from '../../middlewares/middlewarePagination';
 import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
 import { billingHandles } from './handles';
-import { isLogged, isUserBusinessOwner, isUserThisBusinessOwner } from '../../middlewares/verify';
+import { middlewareIsLogged } from '../../middlewares/middlewareIsLogged';
+import { middlewareIsUserBusinessOwner } from '../../middlewares/middlewareIsUserBusinessOwner';
+import { middlewareIsUserThisBusinessOwner } from '../../middlewares/middlewareIsUserThisBusinessOwner';
 
 export const router = Router();
 
@@ -12,9 +14,9 @@ router
   .get(
     middlewareExpressValidator.query('routeName').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserBusinessOwner,
-    isUserThisBusinessOwner,
+    middlewareIsLogged,
+    middlewareIsUserBusinessOwner,
+    middlewareIsUserThisBusinessOwner,
     middlewarePagination,
-    billingHandles.get_bills()
+    billingHandles.get_bills(),
   );

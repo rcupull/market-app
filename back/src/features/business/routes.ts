@@ -2,7 +2,9 @@ import { Router } from 'express';
 import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
 import { middlewarePagination } from '../../middlewares/middlewarePagination';
 import { businessHandles } from './handles';
-import { isLogged, isUserBusinessOwner, isUserThisBusinessOwner } from '../../middlewares/verify';
+import { middlewareIsLogged } from '../../middlewares/middlewareIsLogged';
+import { middlewareIsUserBusinessOwner } from '../../middlewares/middlewareIsUserBusinessOwner';
+import { middlewareIsUserThisBusinessOwner } from '../../middlewares/middlewareIsUserThisBusinessOwner';
 
 export const router = Router();
 
@@ -16,9 +18,9 @@ router
     middlewareExpressValidator.body('postCategories').notEmpty(),
     middlewareExpressValidator.body('routeName').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserBusinessOwner,
-    businessHandles.post_business()
+    middlewareIsLogged,
+    middlewareIsUserBusinessOwner,
+    businessHandles.post_business(),
   );
 
 router.route('/business/summary').get(middlewarePagination, businessHandles.get_business_summary());
@@ -31,14 +33,14 @@ router
   .get(
     middlewareExpressValidator.param('routeName').notEmpty(),
     middlewareExpressValidator.handle,
-    businessHandles.get_business_routeName()
+    businessHandles.get_business_routeName(),
   )
   .put(
     middlewareExpressValidator.param('routeName').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserThisBusinessOwner,
-    businessHandles.put_business_routeName()
+    middlewareIsLogged,
+    middlewareIsUserThisBusinessOwner,
+    businessHandles.put_business_routeName(),
   );
 
 ////////////////////////////////////////////////////////
@@ -48,10 +50,10 @@ router
     middlewareExpressValidator.param('routeName').notEmpty(),
     middlewareExpressValidator.body('postCategories').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserBusinessOwner,
-    isUserThisBusinessOwner,
-    businessHandles.update_business_post_categories()
+    middlewareIsLogged,
+    middlewareIsUserBusinessOwner,
+    middlewareIsUserThisBusinessOwner,
+    businessHandles.update_business_post_categories(),
   );
 
 router
@@ -59,9 +61,9 @@ router
   .post(
     middlewareExpressValidator.param('routeName').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserThisBusinessOwner,
-    businessHandles.post_business_routeName_sections()
+    middlewareIsLogged,
+    middlewareIsUserThisBusinessOwner,
+    businessHandles.post_business_routeName_sections(),
   );
 
 router
@@ -71,9 +73,9 @@ router
     middlewareExpressValidator.body('fromIndex').notEmpty(),
     middlewareExpressValidator.body('toIndex').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserThisBusinessOwner,
-    businessHandles.put_business_section_reorder()
+    middlewareIsLogged,
+    middlewareIsUserThisBusinessOwner,
+    businessHandles.put_business_section_reorder(),
   );
 
 router
@@ -82,17 +84,17 @@ router
     middlewareExpressValidator.param('routeName').notEmpty(),
     middlewareExpressValidator.param('sectionId').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserThisBusinessOwner,
-    businessHandles.put_business_routeName_sections_sectionId()
+    middlewareIsLogged,
+    middlewareIsUserThisBusinessOwner,
+    businessHandles.put_business_routeName_sections_sectionId(),
   )
   .delete(
     middlewareExpressValidator.param('routeName').notEmpty(),
     middlewareExpressValidator.param('sectionId').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserThisBusinessOwner,
-    businessHandles.del_business_routeName_sections_sectionId()
+    middlewareIsLogged,
+    middlewareIsUserThisBusinessOwner,
+    businessHandles.del_business_routeName_sections_sectionId(),
   );
 
 router
@@ -101,7 +103,7 @@ router
     middlewareExpressValidator.param('routeName').notEmpty(),
     middlewareExpressValidator.body('code').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserThisBusinessOwner,
-    businessHandles.post_business_routeName_chatbot_validate()
+    middlewareIsLogged,
+    middlewareIsUserThisBusinessOwner,
+    businessHandles.post_business_routeName_chatbot_validate(),
   );

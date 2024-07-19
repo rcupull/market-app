@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
-import { addPostToReq, isLogged, isUserThisBusinessOwner } from '../../middlewares/verify';
 
 import { shoppingHandles } from './handles';
 import { middlewarePagination } from '../../middlewares/middlewarePagination';
 import { middlewareSortPurshaseNotes } from '../../middlewares/middlewareSortPurshaseNotes';
+import { middlewareIsLogged } from '../../middlewares/middlewareIsLogged';
+import { middlewareAddPostToReq } from '../../middlewares/middlewareAddPostToReq';
+import { middlewareIsUserThisBusinessOwner } from '../../middlewares/middlewareIsUserThisBusinessOwner';
 
 export const router = Router();
 
@@ -15,22 +17,22 @@ router
   .get(
     middlewareExpressValidator.query('routeName').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
+    middlewareIsLogged,
     middlewarePagination,
     shoppingHandles.get_shopping(),
   )
   .post(
     middlewareExpressValidator.body('postId').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    addPostToReq,
+    middlewareIsLogged,
+    middlewareAddPostToReq,
     middlewareSortPurshaseNotes,
     shoppingHandles.post_shopping(),
   )
   .delete(
     middlewareExpressValidator.body('routeName').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
+    middlewareIsLogged,
     middlewareSortPurshaseNotes,
     shoppingHandles.delete_shopping(),
   );
@@ -40,9 +42,9 @@ router
   .get(
     middlewareExpressValidator.query('routeName').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
+    middlewareIsLogged,
     middlewarePagination,
-    isUserThisBusinessOwner,
+    middlewareIsUserThisBusinessOwner,
     shoppingHandles.get_shopping_owner(),
   );
 
@@ -51,7 +53,7 @@ router
   .get(
     middlewareExpressValidator.param('shoppingId').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
+    middlewareIsLogged,
     shoppingHandles.get_shopping_shoppingId(),
   );
 
@@ -60,7 +62,7 @@ router
   .post(
     middlewareExpressValidator.param('shoppingId').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
+    middlewareIsLogged,
     shoppingHandles.post_shopping_shoppingId_make_order(),
   );
 
@@ -70,6 +72,6 @@ router
     middlewareExpressValidator.param('shoppingId').notEmpty(),
     middlewareExpressValidator.body('state').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
+    middlewareIsLogged,
     shoppingHandles.post_shopping_shoppingId_change_state(),
   );

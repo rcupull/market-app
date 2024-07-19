@@ -1,8 +1,9 @@
 import { Router } from 'express';
 import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
-import { isLogged, isUserIdAccessible } from '../../middlewares/verify';
 
 import { userHandles } from './handles';
+import { middlewareIsLogged } from '../../middlewares/middlewareIsLogged';
+import { middlewareIsUserIdAccessible } from '../../middlewares/middlewareIsUserIdAccessible';
 
 export const router = Router();
 
@@ -13,16 +14,16 @@ router
   .get(
     middlewareExpressValidator.param('userId').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserIdAccessible,
-    userHandles.get_users_userId()
+    middlewareIsLogged,
+    middlewareIsUserIdAccessible,
+    userHandles.get_users_userId(),
   )
   .put(
     middlewareExpressValidator.param('userId').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserIdAccessible,
-    userHandles.put_users_userId()
+    middlewareIsLogged,
+    middlewareIsUserIdAccessible,
+    userHandles.put_users_userId(),
   );
 
 ///////////////////////////////////////////////////////////////////
@@ -35,17 +36,17 @@ router
     middlewareExpressValidator.param('userId').notEmpty(),
     middlewareExpressValidator.body('routeName').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserIdAccessible,
-    userHandles.post_users_userId_favorite_business()
+    middlewareIsLogged,
+    middlewareIsUserIdAccessible,
+    userHandles.post_users_userId_favorite_business(),
   )
   .delete(
     middlewareExpressValidator.param('userId').notEmpty(),
     middlewareExpressValidator.body('routeName').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    isUserIdAccessible,
-    userHandles.del_users_userId_favorite_business()
+    middlewareIsLogged,
+    middlewareIsUserIdAccessible,
+    userHandles.del_users_userId_favorite_business(),
   );
 
 ///////////////////////////////////////////////////////////////////
@@ -57,6 +58,6 @@ router
     middlewareExpressValidator.param('userId').notEmpty(),
     middlewareExpressValidator.body('code').notEmpty(),
     middlewareExpressValidator.handle,
-    isLogged,
-    userHandles.post_user_userId_chatbot_validate()
+    middlewareIsLogged,
+    userHandles.post_user_userId_chatbot_validate(),
   );
