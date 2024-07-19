@@ -1,5 +1,5 @@
 import { Access } from './admin';
-import { TelegramBotChat } from './business';
+import { Business, TelegramBotChat } from './business';
 import { Address, BaseIdentity, Image } from './general';
 
 export type UserRole = 'user' | 'admin';
@@ -20,12 +20,11 @@ export interface User extends BaseIdentity {
   telegramBotChat?: TelegramBotChat;
   phone?: string;
   addresses?: Array<Address>;
-  favoritesBusinessRouteNames?: Array<string>;
   checks?: UserChecks;
 }
 
 export interface UserDto extends User {
-  favoritesBusinessNames?: Array<string>;
+  favoritesBusiness?: Array<Pick<Business, 'routeName' | 'name'>>;
 }
 
 export type UserData = User | null;

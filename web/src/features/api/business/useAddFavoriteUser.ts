@@ -3,13 +3,13 @@ import { useFetch } from 'hooks/useFetch';
 import { FetchResource } from 'types/api';
 import { getEndpoint } from 'utils/api';
 
-export const useAddFavoriteBusinessToUser = (): {
-  addFavoriteBusinessToUser: FetchResource<{ userId: string; routeName: string }, void>;
+export const useAddFavoriteUser = (): {
+  addFavoriteUser: FetchResource<{ userId: string; routeName: string }, void>;
 } => {
   const fetch = useFetch();
 
   return {
-    addFavoriteBusinessToUser: {
+    addFavoriteUser: {
       data: fetch[0],
       status: fetch[1],
       fetch: ({ userId, routeName }, options = {}) => {
@@ -17,11 +17,11 @@ export const useAddFavoriteBusinessToUser = (): {
           {
             method: 'post',
             url: getEndpoint({
-              path: '/user/:userId/favoriteBusiness',
-              urlParams: { userId },
+              path: '/business/:routeName/favoriteUsers',
+              urlParams: { routeName },
             }),
             data: {
-              routeName,
+              userId,
             },
           },
           options
