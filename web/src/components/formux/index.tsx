@@ -50,10 +50,19 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
 
   const getErrors = () => {
     /**
-     * Only get errors for touched fields
+     * Get errors for all fields
+     * (current behavior)
      */
-    //@ts-expect-error ignore this error
-    return Object.keys(touched).reduce((acc, key) => ({ ...acc, [key]: errors[key] }), {});
+
+    return errors;
+
+    ////////////////////////////////////////////////////////////////////
+
+    /**
+     * Only get errors for touched fields
+     * (deplecated behavior)
+     */
+    // return Object.keys(touched).reduce((acc, key) => ({ ...acc, [key]: errors[key] }), {});
   };
 
   const state: ContextState<Value> = {
