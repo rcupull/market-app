@@ -17,7 +17,7 @@ router
     middlewareIsAdmin,
     middlewareHasAccess('user__read'),
     middlewarePagination,
-    adminUsersHandles.get_users(),
+    adminUsersHandles.get_users()
   );
 
 router
@@ -28,7 +28,7 @@ router
     middlewareExpressValidator.param('userId').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareHasAccess('user__remove'),
-    adminUsersHandles.del_users_userId(),
+    adminUsersHandles.del_users_userId()
   );
 //////////////////////////
 router
@@ -40,7 +40,7 @@ router
     middlewareExpressValidator.body('specialAccess').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareHasAccess('user_access__write'),
-    adminUsersHandles.put_admin_users_userId_access(),
+    adminUsersHandles.put_admin_users_userId_access()
   );
 
 router
@@ -49,5 +49,5 @@ router
     middlewareIsLogged,
     middlewareIsAdmin,
     middlewareHasAccess('access__read'),
-    adminUsersHandles.get_admin_access(),
+    adminUsersHandles.get_admin_access()
   );

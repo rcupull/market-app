@@ -3,6 +3,10 @@ import { Address, BaseIdentity, Image, TelegramBotChat } from './general';
 
 export type UserRole = 'user' | 'admin';
 
+export interface UserChecks {
+  requestUserTypeWhenStart?: boolean;
+}
+
 export interface User extends BaseIdentity {
   name: string;
   email: string;
@@ -19,6 +23,7 @@ export interface User extends BaseIdentity {
   phone?: string;
   addresses?: Array<Address>;
   favoritesBusinessRouteNames?: Array<string>;
+  checks?: UserChecks;
 }
 
 export interface UserDto extends User {

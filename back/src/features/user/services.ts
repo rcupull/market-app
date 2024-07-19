@@ -68,6 +68,17 @@ export const userServicesUpdateOne: QueryHandle<
   await UserModel.updateOne(query, update, options);
 };
 
+export const userServicesUpdateAll: QueryHandle<
+  {
+    query: FilterQuery<User>;
+    update: UpdateQuery<User>;
+    options?: UpdateOptions;
+  },
+  void
+> = async ({ query, update, options }) => {
+  await UserModel.updateMany(query, update, options);
+};
+
 export const userServicesFindOneAndUpdate: QueryHandle<
   {
     query: FilterQuery<User>;

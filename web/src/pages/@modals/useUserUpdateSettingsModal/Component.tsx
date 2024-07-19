@@ -60,39 +60,39 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
       {({ value, isValid, hasChange }) => {
         return (
           <form className="w-full">
-            <FieldCheckbox
-              label="Comerciante"
-              className="mt-6"
-              name="canCreateBusiness"
-              disabled={user.canCreateBusiness}
-              description={
-                <div className="text-center sm:text-start">
-                  Al activar la opción de <span className="font-bold">Comerciante</span> usted podrá{' '}
-                  <span className="font-bold">crear y administrar sus negocios</span> en la
-                  plataforma segun las regulaciones vigentes en nuestros{' '}
-                  <Button
-                    variant="link"
-                    className="!inline-block"
-                    onClick={() => termsAndConditions.open()}
-                    label="Términos y condiciones"
-                  />
-                </div>
-              }
-            />
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+              <FieldCheckbox
+                label="Comerciante"
+                name="canCreateBusiness"
+                disabled={user.canCreateBusiness}
+                description={
+                  <div className="text-center sm:text-start">
+                    Al activar la opción de <span className="font-bold">Comerciante</span> usted
+                    podrá <span className="font-bold">crear y administrar sus negocios</span> en la
+                    plataforma segun las regulaciones vigentes en nuestros{' '}
+                    <Button
+                      variant="link"
+                      className="!inline-block"
+                      onClick={() => termsAndConditions.open()}
+                      label="Términos y condiciones"
+                    />
+                  </div>
+                }
+              />
 
-            <FieldCheckbox
-              label="Mensajero"
-              className="mt-6"
-              name="canMakeDeliveries"
-              disabled={user.canMakeDeliveries}
-              description={
-                <div className="text-center sm:text-start">
-                  Al activar la opción de <span className="font-bold">Mensajero</span> usted podrá
-                  ser elegido por los comerciantes para realizar las entregas de los productos.
-                  Algunos datos extras le serán requeridos para poder efectuar esta labor.
-                </div>
-              }
-            />
+              <FieldCheckbox
+                label="Mensajero"
+                name="canMakeDeliveries"
+                disabled={user.canMakeDeliveries}
+                description={
+                  <div className="text-center sm:text-start">
+                    Al activar la opción de <span className="font-bold">Mensajero</span> usted podrá
+                    ser elegido por los comerciantes para realizar las entregas de los productos.
+                    Algunos datos extras le serán requeridos para poder efectuar esta labor.
+                  </div>
+                }
+              />
+            </div>
 
             <FieldInput name="name" label="Nombre" className="mt-6" />
 

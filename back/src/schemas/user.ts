@@ -30,6 +30,7 @@ const UserSchema = new Schema<User>({
   phone: { type: String },
   addresses: [AddressDefinition],
   favoritesBusinessRouteNames: [{ type: String }],
+  checks: { type: Schema.Types.Mixed },
 });
 
 const updateUserPassword = (user: User): Promise<void> => {

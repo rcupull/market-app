@@ -2,7 +2,7 @@ import { RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
 
 import { userServicesGetOne, userServicesUpdateOne } from './services';
-import { User, UserDto } from '../../types/user';
+import { User, UserChecks, UserDto } from '../../types/user';
 import {
   get400Response,
   get404Response,
@@ -186,6 +186,36 @@ const post_user_userId_chatbot_validate: () => RequestHandler = () => {
   };
 };
 
+const put_user_userId_checks: () => RequestHandler = () => {
+  return async (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { body, user } = req;
+
+      if (!user) {
+        return getUserNotFoundResponse({ res });
+      }
+
+      const newChecks = makeReshaper<UserChecks, UserChecks>({
+        requestUserTypeWhenStart: 'requestUserTypeWhenStart',
+      })(body);
+
+      await userServicesUpdateOne({
+        query: {
+          _id: user._id,
+        },
+        update: {
+          checks: {
+            ...(user.checks || {}),
+            ...Object.keys(newChecks).reduce((acc, key) => ({ ...acc, [key]: true }), {}),
+          },
+        },
+      });
+
+      res.send({});
+    });
+  };
+};
+
 /**
  *  //////////////////////////////////////////POSTS
  */
@@ -245,4 +275,5 @@ export const userHandles = {
   //
   post_users_userId_favorite_business,
   del_users_userId_favorite_business,
+  put_user_userId_checks,
 };
