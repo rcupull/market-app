@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { AuthenticatedAdmin } from 'components/autenticated-admin';
 
@@ -13,8 +13,6 @@ import { dynamic } from 'utils/makeLazy';
 const Dashboard = dynamic(() => import('pages/dashboard').then((m) => m));
 const Validate = dynamic(() => import('pages/validate').then((m) => m));
 const ForgotPassword = dynamic(() => import('pages/forgot-password').then((m) => m));
-const Settings = dynamic(() => import('pages/settings').then((m) => m));
-
 const Admin = dynamic(() => import('pages/admin').then((m) => m));
 const Docs = dynamic(() => import('pages/docs').then((m) => m));
 
@@ -51,8 +49,6 @@ export const App = (): JSX.Element => {
         element={withPageProviders(<ForgotPassword />, LayoutMain)}
       />
 
-      <Route path="/settings/*" element={withPageProviders(<Settings />, LayoutMain)} />
-
       <Route
         path="/admin/*"
         element={withPageProviders(<Admin />, AuthenticatedAdmin, LayoutMain)}
@@ -66,6 +62,8 @@ export const App = (): JSX.Element => {
       />
 
       <Route path="/b/*" element={withPageProviders(<Business />, LayoutMain)} />
+
+      <Route path="*" element={<Navigate to="/not-found" />} />
     </Routes>
   );
 };

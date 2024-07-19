@@ -19,20 +19,12 @@ export const DeliveryDetails = ({ rowData, className }: DeliveryDetailsProps) =>
     const distanceNode = <span>{`${distance} kms`}</span>;
 
     if (delivery.deliveryType === DeliveryConfigType.FREE) {
-      return (
-        <>
-          {distanceNode}
-          -
-          (Gratis)
-        </>
-      );
+      return <>{distanceNode}- (Gratis)</>;
     }
 
     return (
       <>
-        {distanceNode}
-        -
-        <span>{`${price} CUP`}</span>
+        {distanceNode}-<span>{`${price} CUP`}</span>
       </>
     );
   };
@@ -45,7 +37,7 @@ export const DeliveryDetails = ({ rowData, className }: DeliveryDetailsProps) =>
           'fill-red-500': !delivery,
         })}
       />
-  
+
       {renderDistancePrice()}
     </div>
   );

@@ -38,6 +38,7 @@ import { useAuthForgotPasswordRequestModal } from 'pages/@modals/useAuthForgotPa
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { useAuthSignUpModal } from 'pages/@modals/useAuthSignUpModal';
 import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewModal';
+import { useUserUpdateSettings } from 'pages/@modals/useUserUpdateSettings';
 import { Nullable } from 'types/general';
 import { getEndpoint } from 'utils/api';
 import {
@@ -49,12 +50,14 @@ import {
 import { cn } from 'utils/general';
 
 export const NavbarMenu = () => {
-  const { isAuthenticated, authData, isUser, isAdmin, getHasSomeAccess } = useAuth();
+  const { isAuthenticated, authData, isUser, isAdmin, getHasSomeAccess, onRefreshAuthUser } =
+    useAuth();
   const { signOut } = useSignOut();
   const { user } = authData || {};
   const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute } = useRouter();
   const { routeName } = params;
   const authChangePasswordModal = useAuthChangePasswordModal();
+  const userUpdateSettings = useUserUpdateSettings();
   const { getEnabledFeature } = useAdminConfig();
 
   const businessUpdateNewModal = useBusinessUpdateNewModal();
@@ -248,7 +251,9 @@ export const NavbarMenu = () => {
       },
       isAuthenticated && {
         label: 'Preferencias de usuario',
-        onClick: () => pushRoute('/settings'),
+        onClick: () => {
+          user && userUpdateSettings.open({ user, onAfterSuccess: () => onRefreshAuthUser() });
+        },
         svg: SvgCogSolid,
       },
     ];
