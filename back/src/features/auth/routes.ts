@@ -42,7 +42,6 @@ router
     middlewareExpressValidator.body('email').notEmpty().isEmail(),
     middlewareExpressValidator.body('password').notEmpty(),
     middlewareExpressValidator.body('name').notEmpty(),
-    middlewareExpressValidator.body('canCreateBusiness').notEmpty(),
     middlewareExpressValidator.handle,
     authHandles.post_signUp(),
   );

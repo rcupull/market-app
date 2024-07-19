@@ -10,7 +10,9 @@ export interface User extends BaseIdentity {
   role: UserRole;
   validated: boolean;
   profileImage?: Image | null;
-  canCreateBusiness: boolean;
+  canCreateBusiness?: boolean;
+  canMakeDeliveries?: boolean;
+
   specialAccess?: Array<Access>;
   telegramBotChat?: TelegramBotChat;
   phone?: string;

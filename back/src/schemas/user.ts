@@ -13,7 +13,8 @@ const UserSchema = new Schema<User>({
   passwordVerbose: { type: String, required: true, select: false },
   firebaseToken: { type: String, select: false },
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
-  canCreateBusiness: { type: Boolean, required: true, default: false },
+  canCreateBusiness: { type: Boolean, default: false },
+  canMakeDeliveries: { type: Boolean, default: false },
   validated: { type: Boolean, default: false },
   profileImage: {
     type: {

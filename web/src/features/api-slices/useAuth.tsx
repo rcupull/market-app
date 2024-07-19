@@ -34,7 +34,7 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
   const authData = data;
 
   const getIsUser: UseAuthMeta['getIsUser'] = (user) => {
-    return user?.role === 'user' && user?.canCreateBusiness;
+    return user?.role === 'user' && !!user?.canCreateBusiness;
   };
 
   const getIsAdmin: UseAuthMeta['getIsAdmin'] = (user) => {
@@ -75,7 +75,7 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
     getIsAdmin,
     isUser: getIsUser(authData?.user),
     isBasicUser: authData?.user?.role === 'user' && !authData?.user?.canCreateBusiness,
-    userCanCreateBusiness: authData?.user?.role === 'user' && authData?.user?.canCreateBusiness,
+    userCanCreateBusiness: authData?.user?.role === 'user' && !!authData?.user?.canCreateBusiness,
     authData,
     authSignIn: {
       data: authData,

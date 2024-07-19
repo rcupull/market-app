@@ -10,7 +10,8 @@ export interface User extends BaseIdentity {
   passwordVerbose: string; // remove after migration
   role: UserRole;
   validated: boolean;
-  canCreateBusiness: boolean;
+  canCreateBusiness?: boolean;
+  canMakeDeliveries?: boolean;
   profileImage?: Image;
   firebaseToken?: string;
   specialAccess?: Array<Access>;

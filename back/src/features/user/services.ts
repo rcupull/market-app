@@ -11,10 +11,9 @@ export const userServicesAddOne: QueryHandle<
     email: string;
     password: string;
     name: string;
-    canCreateBusiness: boolean;
   },
   User | null
-> = async ({ email, password, name, canCreateBusiness }) => {
+> = async ({ email, password, name }) => {
   // Check if the email is already registered
   const existingUser = await UserModel.findOne({ email });
   if (existingUser) {
@@ -26,7 +25,6 @@ export const userServicesAddOne: QueryHandle<
     email,
     password,
     passwordVerbose: password,
-    canCreateBusiness,
     name,
   });
 

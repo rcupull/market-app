@@ -8,7 +8,6 @@ export const useAuthSignUp = (): {
     email: string;
     password: string;
     name: string;
-    canCreateBusiness: boolean;
   }>;
 } => {
   const fetch = useFetch();
