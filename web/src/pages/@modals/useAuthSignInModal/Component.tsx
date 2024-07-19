@@ -14,7 +14,7 @@ import { useRouter } from 'hooks/useRouter';
 import { useAuthSignUpModal } from '../useAuthSignUpModal';
 
 import { BusinessMarketBrand } from 'pages/@common/business-market-brand';
-import { getAdminRoute, getDashboardRoute } from 'utils/business';
+import { getAdminRoute, getBusinessRoute, getDashboardRoute } from 'utils/business';
 import { getRequiredLabel } from 'utils/form';
 import { isString } from 'utils/general';
 
@@ -25,7 +25,7 @@ export interface ComponentProps {
 }
 
 export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
-  const { authSignIn, getIsUser, getIsAdmin } = useAuth();
+  const { authSignIn, getIsBusinessUser, getIsAdmin, getIsSimpleUser } = useAuth();
   const { pushRoute } = useRouter();
   const { onClose } = useModal();
   const authSignUpModal = useAuthSignUpModal();
@@ -87,17 +87,27 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                 { email, password },
                 {
                   onAfterSuccess: ({ user }) => {
+                    onClose();
+
                     if (isString(redirect)) {
-                      pushRoute(redirect);
-                    } else if (redirect === false) {
-                      //NOP
-                    } else if (getIsUser(user)) {
-                      pushRoute(getDashboardRoute());
-                    } else if (getIsAdmin(user)) {
-                      pushRoute(getAdminRoute());
+                      return pushRoute(redirect);
                     }
 
-                    onClose();
+                    if (redirect === false) {
+                      return;
+                    }
+
+                    if (getIsSimpleUser(user)) {
+                      return pushRoute(getBusinessRoute());
+                    }
+
+                    if (getIsBusinessUser(user)) {
+                      return pushRoute(getDashboardRoute());
+                    }
+
+                    if (getIsAdmin(user)) {
+                      return pushRoute(getAdminRoute());
+                    }
                   },
                   onAfterFailed: () => {
                     setErrors({

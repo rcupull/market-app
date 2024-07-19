@@ -123,7 +123,14 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
                 }
                 disabled={!isValid || !hasChange}
                 onClick={() => {
-                  const { profileImages, name, address, phone, canCreateBusiness, canMakeDeliveries } = value;
+                  const {
+                    profileImages,
+                    name,
+                    address,
+                    phone,
+                    canCreateBusiness,
+                    canMakeDeliveries,
+                  } = value;
 
                   const handleSubmit = (profileImage?: Image | null) => {
                     updateOneUser.fetch(
@@ -140,7 +147,7 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
                       },
                       {
                         onAfterSuccess: () => onAfterSuccess(),
-                      },
+                      }
                     );
                   };
 
@@ -151,7 +158,7 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
                         onAfterSuccess: (images) => {
                           handleSubmit(images[0]);
                         },
-                      },
+                      }
                     );
                   } else {
                     handleSubmit(null);
@@ -159,7 +166,7 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
                 }}
                 variant="primary"
                 className="w-full"
-              />,
+              />
             )}
           </form>
         );

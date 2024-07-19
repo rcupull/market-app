@@ -11,12 +11,11 @@ import { wait } from 'utils/general';
 type UseAuthMeta = {
   authData: AuthData | null;
   authSignIn: FetchResource<{ email: string; password: string }, AuthData>;
-  isAdmin: boolean;
-  isUser: boolean;
-  userCanCreateBusiness: boolean;
-  getIsUser: (user: User | undefined) => boolean;
+  user: User | undefined;
+  getIsSimpleUser: (user: User | undefined) => boolean;
+  getIsDeliveryUser: (user: User | undefined) => boolean;
+  getIsBusinessUser: (user: User | undefined) => boolean;
   getIsAdmin: (user: User | undefined) => boolean;
-  isBasicUser: boolean;
   isAuthenticated: boolean;
   onRefreshAuthUser: () => void;
   getHasSomeAccess: (...access: Array<Access>) => boolean;
@@ -33,15 +32,32 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
 
   const authData = data;
 
-  const getIsUser: UseAuthMeta['getIsUser'] = (user) => {
-    return user?.role === 'user' && !!user?.canCreateBusiness;
-  };
-
   const getIsAdmin: UseAuthMeta['getIsAdmin'] = (user) => {
     return user?.role === 'admin';
   };
 
+  const getIsBusinessUser: UseAuthMeta['getIsBusinessUser'] = (user) => {
+    if (getIsAdmin(user)) return false;
+    return !!user?.canCreateBusiness;
+  };
+
+  const getIsDeliveryUser: UseAuthMeta['getIsDeliveryUser'] = (user) => {
+    if (getIsAdmin(user)) return false;
+    return !!user?.canMakeDeliveries;
+  };
+
+  const getIsSimpleUser: UseAuthMeta['getIsSimpleUser'] = (user) => {
+    if (getIsAdmin(user)) return false;
+    if (getIsBusinessUser(user)) return false;
+    if (getIsDeliveryUser(user)) return false;
+
+    return true;
+  };
+
   return {
+    getIsDeliveryUser,
+    getIsSimpleUser,
+    getIsBusinessUser,
     getHasSomeAccess: (...access) => {
       const { specialAccess } = authData?.user || {};
 
@@ -70,12 +86,8 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
       );
     },
     isAuthenticated: !!authData,
-    isAdmin: authData?.user?.role === 'admin',
-    getIsUser,
+    user: authData?.user,
     getIsAdmin,
-    isUser: getIsUser(authData?.user),
-    isBasicUser: authData?.user?.role === 'user' && !authData?.user?.canCreateBusiness,
-    userCanCreateBusiness: authData?.user?.role === 'user' && !!authData?.user?.canCreateBusiness,
     authData,
     authSignIn: {
       data: authData,
