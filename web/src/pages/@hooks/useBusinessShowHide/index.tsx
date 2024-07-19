@@ -28,9 +28,9 @@ export const useBusinessShowHide = (): {
             const { onClose } = useModal();
             const { updateOneBusiness } = useUpdateOneBusiness();
             const { updateOneBusinessAdmin } = useUpdateOneBusinessAdmin();
-            const { isAdmin } = useAuth()
+            const { isAdmin } = useAuth();
 
-            const apiResource  = isAdmin ? updateOneBusinessAdmin : updateOneBusiness;
+            const apiResource = isAdmin ? updateOneBusinessAdmin : updateOneBusiness;
 
             return {
               className: 'max-w-lg',
@@ -55,7 +55,7 @@ export const useBusinessShowHide = (): {
                           onAfterSuccess?.(response);
                           onClose();
                         },
-                      },
+                      }
                     );
                   }}
                 />
@@ -63,7 +63,7 @@ export const useBusinessShowHide = (): {
             };
           },
         },
-        { emergent: true },
+        { emergent: true }
       );
     },
   };
