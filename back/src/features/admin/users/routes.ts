@@ -1,40 +1,53 @@
 import { Router } from 'express';
 
 import { adminUsersHandles } from './handles';
-import { hasAccess, isAdmin, isLogged } from '../../../middlewares/verify';
-import { validators } from '../../../middlewares/express-validator';
-import { pagination } from '../../../middlewares/pagination';
+import { middlewareExpressValidator } from '../../../middlewares/middlewareExpressValidator';
+import { middlewarePagination } from '../../../middlewares/middlewarePagination';
+import { middlewareIsLogged } from '../../../middlewares/middlewareIsLogged';
+import { middlewareIsAdmin } from '../../../middlewares/middlewareIsAdmin';
+import { middlewareHasAccess } from '../../../middlewares/middlewareHasAccess';
 export const router = Router();
 
 /////////////////////////////////////////////////////////////////
 
 router
   .route('/users')
-  .get(isLogged, isAdmin, hasAccess('user__read'), pagination, adminUsersHandles.get_users());
+  .get(
+    middlewareIsLogged,
+    middlewareIsAdmin,
+    middlewareHasAccess('user__read'),
+    middlewarePagination,
+    adminUsersHandles.get_users(),
+  );
 
 router
   .route('/users/:userId')
   .delete(
-    isLogged,
-    isAdmin,
-    validators.param('userId').notEmpty(),
-    validators.handle,
-    hasAccess('user__remove'),
-    adminUsersHandles.del_users_userId()
+    middlewareIsLogged,
+    middlewareIsAdmin,
+    middlewareExpressValidator.param('userId').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareHasAccess('user__remove'),
+    adminUsersHandles.del_users_userId(),
   );
 //////////////////////////
 router
   .route('/users/:userId/access')
   .put(
-    isLogged,
-    isAdmin,
-    validators.param('userId').notEmpty(),
-    validators.body('specialAccess').notEmpty(),
-    validators.handle,
-    hasAccess('user_access__write'),
-    adminUsersHandles.put_admin_users_userId_access()
+    middlewareIsLogged,
+    middlewareIsAdmin,
+    middlewareExpressValidator.param('userId').notEmpty(),
+    middlewareExpressValidator.body('specialAccess').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareHasAccess('user_access__write'),
+    adminUsersHandles.put_admin_users_userId_access(),
   );
 
 router
   .route('/access')
-  .get(isLogged, isAdmin, hasAccess('access__read'), adminUsersHandles.get_admin_access());
+  .get(
+    middlewareIsLogged,
+    middlewareIsAdmin,
+    middlewareHasAccess('access__read'),
+    adminUsersHandles.get_admin_access(),
+  );

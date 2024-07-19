@@ -84,6 +84,10 @@ export const ComponentProduct = ({
         },
         postFormFields.includes('price') && {
           field: 'price',
+          type: 'required',
+        },
+        postFormFields.includes('price') && {
+          field: 'price',
           type: 'custom',
           customCb: (priceVal) => isNumber(priceVal) && priceVal > 0,
           message: 'Precio inválido',
@@ -204,7 +208,12 @@ export const ComponentProduct = ({
 
             {postFormFields.includes('colors') && (
               <>
-                <FieldColorSelect label="Colores disponibles" name="colors" className="mt-6" multi />
+                <FieldColorSelect
+                  label="Colores disponibles"
+                  name="colors"
+                  className="mt-6"
+                  multi
+                />
                 <Divider />
               </>
             )}

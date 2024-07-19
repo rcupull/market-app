@@ -76,6 +76,10 @@ export const ShoppingPage = () => {
       <Table<Shopping>
         remapRowsIndex={{
           xs: [[0, 1, 2, 3]],
+          sm: [
+            [0, 1],
+            [2, 3],
+          ],
           lg: 'none',
         }}
         heads={['Acciones', 'Cliente', 'Estado', 'Detalles']}

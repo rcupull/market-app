@@ -1,4 +1,5 @@
-import { ColorCircle } from 'components/color-circle';
+import { ClothingSizeGroup } from 'components/clothing-size-group';
+import { ColorCircleGroup } from 'components/color-circle-group';
 import { EmptyImage } from 'components/empty-image';
 import { LabelValuePair } from 'components/label-value-pair';
 
@@ -34,52 +35,6 @@ export const ShoppingDetails = ({ shopping, onClick, getActions }: ShoppingDetai
 
           const mainImage = images?.[0];
 
-          ////////////////////////////////////////////////////////////////////////
-          ////////////////////////////////////////////////////////////////////////
-          ////////////////////////////////////////////////////////////////////////
-          ////////////////////////////////////////////////////////////////////////
-          const renderColors = () => {
-            if (!interestedByColors?.length) return null;
-
-            return (
-              <div className="flex items-center gap-1">
-                <span className="text-sm font-semibold">Colores:</span>
-                {interestedByColors.map((postColor, index) => (
-                  <ColorCircle size="small" key={index} postColor={postColor} />
-                ))}
-              </div>
-            );
-          };
-
-          const colorsNode = renderColors();
-
-          ////////////////////////////////////////////////////////////////////////
-          ////////////////////////////////////////////////////////////////////////
-          ////////////////////////////////////////////////////////////////////////
-          ////////////////////////////////////////////////////////////////////////
-
-          const renderClothingSizes = () => {
-            if (!interestedByClothingSizes?.length) return null;
-
-            return (
-              <div className="flex items-center gap-1">
-                <span className="text-sm font-semibold">Tallas:</span>
-                {interestedByClothingSizes.map((postClothingSize, index) => (
-                  <span key={index} className="text-sm">
-                    {`${index > 0 ? '/ ' : ''} ${postClothingSize}`}
-                  </span>
-                ))}
-              </div>
-            );
-          };
-
-          const clothingSizesNode = renderClothingSizes();
-
-          ////////////////////////////////////////////////////////////////////////
-          ////////////////////////////////////////////////////////////////////////
-          ////////////////////////////////////////////////////////////////////////
-          ////////////////////////////////////////////////////////////////////////
-
           return (
             <div key={index} className="bg-gray-100 rounded-lg border-2 border-gray-200  p-2">
               <div className="flex flex-col sm:flex-row gap-2 items-center justify-between  rounded-md">
@@ -101,10 +56,10 @@ export const ShoppingDetails = ({ shopping, onClick, getActions }: ShoppingDetai
                 </div>
               </div>
 
-              {(colorsNode || clothingSizesNode) && (
-                <div className="flex items-center justify-center sm:justify-start flex-wrap gap-6 w-full my-2">
-                  {colorsNode}
-                  {clothingSizesNode}
+              {(!!interestedByColors?.length || !!interestedByClothingSizes?.length) && (
+                <div className="flex items-center flex-wrap justify-center gap-6 w-full my-2">
+                  <ColorCircleGroup value={interestedByColors} size="small" />
+                  <ClothingSizeGroup value={interestedByClothingSizes} />
                 </div>
               )}
             </div>

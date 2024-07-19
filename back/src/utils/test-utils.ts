@@ -4,7 +4,7 @@ import { set } from './general';
 import mongose, { PaginateOptions, Schema } from 'mongoose';
 import jwt from 'jsonwebtoken';
 import { secretAccessToken } from '../config';
-import { paginationCustomLabels } from '../middlewares/pagination';
+import { paginationCustomLabels } from '../middlewares/middlewarePagination';
 
 const dbTestUrl = 'mongodb://127.0.0.1:27017/community_test_db';
 

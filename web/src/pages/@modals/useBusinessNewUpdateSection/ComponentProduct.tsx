@@ -69,6 +69,12 @@ export const ComponentProduct = ({
           field: 'name',
           type: 'required',
         },
+        {
+          field: 'postCategoriesTags',
+          type: 'custom',
+          customCb: (value) => value?.length,
+          message: 'Debe seleccionar al menos una categoría',
+        },
       ]}
     >
       {({ value, isValid, hasChange }) => {
@@ -124,7 +130,7 @@ export const ComponentProduct = ({
                   <span>Siempre será recomendable clasificar correctamente sus productos.</span>
                 </div>
               }
-              label="Categorías"
+              label={getRequiredLabel("Categorías")}
               name="postCategoriesTags"
             />
 

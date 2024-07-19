@@ -1,6 +1,6 @@
 import { PaginateOptions, ProjectionType, QueryOptions } from 'mongoose';
 import { ModelDocument, QueryHandle } from '../../types/general';
-import { PaginateResult } from '../../middlewares/pagination';
+import { PaginateResult } from '../../middlewares/middlewarePagination';
 
 import { getSortQuery } from '../../utils/schemas';
 import { getAllFilterQuery, GetAllReviewArgs } from './utils';

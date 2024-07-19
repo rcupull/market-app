@@ -13,7 +13,7 @@ import { useInterval } from 'hooks/useInterval';
 export const useInit = () => {
   const { isAuthenticated, onRefreshAuthUser, isUser } = useAuth();
 
-  const allUserBusiness = useAllUserBusiness();
+  const { allUserBusiness } = useAllUserBusiness();
   const adminConfig = useAdminConfig();
 
   const debouncer = useDebouncer();

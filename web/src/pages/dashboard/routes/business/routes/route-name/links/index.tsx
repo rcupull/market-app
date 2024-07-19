@@ -120,7 +120,7 @@ export const Links = () => {
               className="!max-h-[calc(100vh-25rem)]"
               remapRowsIndex={{
                 xs: [[0, 1, 2, 3, 4]],
-                lg: 'none',
+                md: 'none',
               }}
               heads={['Acciones', 'Nombre', 'Imágen', 'Fecha de Creación', 'Detalles']}
               getRowProps={(rowData) => {

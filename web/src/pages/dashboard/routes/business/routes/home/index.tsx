@@ -8,7 +8,7 @@ import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewMod
 import { getDashboardBusinessRoute } from 'utils/business';
 
 export const Home = () => {
-  const allUserBusiness = useAllUserBusiness();
+  const { allUserBusiness } = useAllUserBusiness();
   const businessUpdateNewModal = useBusinessUpdateNewModal();
 
   const firstBusiness = allUserBusiness.data?.[0];
