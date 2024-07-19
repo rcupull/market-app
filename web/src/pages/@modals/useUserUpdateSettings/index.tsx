@@ -24,7 +24,7 @@ export const useUserUpdateSettings = () => {
             const portal = usePortal();
 
             return {
-              title: 'Preferencias',
+              title: 'Preferencias de usuario',
               content: (
                 <Component
                   portal={portal}

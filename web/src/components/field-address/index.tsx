@@ -42,7 +42,7 @@ export const FieldAddress = (props: FieldAddressProps) => {
 
     return (
       <div className="p-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="flex flex-col items-center start-0 col-span-2">
+        <div className="flex flex-col items-center start-0 col-span-1 sm:col-span-2">
           <div className="flex items-center justify-center text-gray-500 w-full ">
             <ButtonMapLocation
               size="medium"
