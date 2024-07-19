@@ -72,6 +72,11 @@ export const PostsSections = () => {
       <Table<PostsLayoutSection>
         remapRowsIndex={{
           xs: [[0, 1, 2, 3, 4]],
+          sm: [
+            [0, 1, 2],
+            [3, 4],
+          ],
+          md: [[0, 1, 2], [3], [4]],
           lg: 'none',
         }}
         heads={['Acciones', 'Nombre', 'Tipo', 'Categorias', 'Visible']}

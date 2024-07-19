@@ -1,17 +1,19 @@
 import { Router } from 'express';
 
 import { adminShoppingHandles } from './handles';
-import { hasAccess, isAdmin, isLogged } from '../../../middlewares/verify';
-import { pagination } from '../../../middlewares/pagination';
+import { middlewarePagination } from '../../../middlewares/middlewarePagination';
+import { middlewareIsLogged } from '../../../middlewares/middlewareIsLogged';
+import { middlewareIsAdmin } from '../../../middlewares/middlewareIsAdmin';
+import { middlewareHasAccess } from '../../../middlewares/middlewareHasAccess';
 
 export const router = Router();
 
 router
   .route('/shopping')
   .get(
-    isLogged,
-    isAdmin,
-    hasAccess('shopping__read'),
-    pagination,
-    adminShoppingHandles.get_admin_shopping()
+    middlewareIsLogged,
+    middlewareIsAdmin,
+    middlewareHasAccess('shopping__read'),
+    middlewarePagination,
+    adminShoppingHandles.get_admin_shopping(),
   );

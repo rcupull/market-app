@@ -215,7 +215,7 @@ const injectShoppingMetaMiddlware: RequestHandler = async (req, res, next) => {
 
 const router = Router();
 
-export const frontMiddlware = combineMiddleware(
+export const middlewareFront = combineMiddleware(
   router.get(/\/*(.png|.css|.js)/, express.static(join(process.cwd(), appFrontDir))),
   router.get('/b/:routeName/posts/:postId', injectPostMetaMiddlware),
   router.get('/b/:routeName/shopping/:shoppingId', injectShoppingMetaMiddlware),

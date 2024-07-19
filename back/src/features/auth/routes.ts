@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import { validators } from '../../middlewares/express-validator';
+import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
 import { authHandles } from './handles';
-import { autenticationMiddleware } from '../../middlewares/passport';
-import { isLogged } from '../../middlewares/verify';
+import { middlewareAutentication } from '../../middlewares/middlewarePassport';
+import { middlewareIsLogged } from '../../middlewares/middlewareIsLogged';
 
 export const router = Router();
 /////////////////////////////////////////////////////////////////
@@ -11,70 +11,82 @@ export const router = Router();
 router
   .route('/auth/sign-in')
   .post(
-    validators.body('username').notEmpty(),
-    validators.body('password').notEmpty(),
-    validators.handle,
-    autenticationMiddleware,
-    authHandles.post_signIn()
+    middlewareExpressValidator.body('username').notEmpty(),
+    middlewareExpressValidator.body('password').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareAutentication,
+    authHandles.post_signIn(),
   );
 
 router
   .route('/auth/refresh')
-  .post(validators.body('refreshToken').notEmpty(), validators.handle, authHandles.post_refresh());
+  .post(
+    middlewareExpressValidator.body('refreshToken').notEmpty(),
+    middlewareExpressValidator.handle,
+    authHandles.post_refresh(),
+  );
 /////////////////////////////////////////////////////////////////
 
 router
   .route('/auth/sign-out')
-  .post(validators.body('refreshToken').notEmpty(), validators.handle, authHandles.post_signOut());
+  .post(
+    middlewareExpressValidator.body('refreshToken').notEmpty(),
+    middlewareExpressValidator.handle,
+    authHandles.post_signOut(),
+  );
 /////////////////////////////////////////////////////////////////
 
 router
   .route('/auth/sign-up')
   .post(
-    validators.body('email').notEmpty().isEmail(),
-    validators.body('password').notEmpty(),
-    validators.body('name').notEmpty(),
-    validators.body('canCreateBusiness').notEmpty(),
-    validators.handle,
-    authHandles.post_signUp()
+    middlewareExpressValidator.body('email').notEmpty().isEmail(),
+    middlewareExpressValidator.body('password').notEmpty(),
+    middlewareExpressValidator.body('name').notEmpty(),
+    middlewareExpressValidator.body('canCreateBusiness').notEmpty(),
+    middlewareExpressValidator.handle,
+    authHandles.post_signUp(),
   );
 /////////////////////////////////////////////////////////////////
 
 router
   .route('/auth/validate')
-  .post(validators.body('code').notEmpty(), validators.handle, authHandles.post_validate());
+  .post(
+    middlewareExpressValidator.body('code').notEmpty(),
+    middlewareExpressValidator.handle,
+    authHandles.post_validate(),
+  );
 
 router
   .route('/auth/forgot-password-request')
   .post(
-    validators.body('email').notEmpty(),
-    validators.handle,
-    authHandles.post_forgot_password_request()
+    middlewareExpressValidator.body('email').notEmpty(),
+    middlewareExpressValidator.handle,
+    authHandles.post_forgot_password_request(),
   );
 
 router
   .route('/auth/forgot-password-validate')
   .post(
-    validators.body('newPassword').notEmpty(),
-    validators.body('code').notEmpty(),
-    validators.handle,
-    authHandles.post_forgot_password_validate()
+    middlewareExpressValidator.body('newPassword').notEmpty(),
+    middlewareExpressValidator.body('code').notEmpty(),
+    middlewareExpressValidator.handle,
+    authHandles.post_forgot_password_validate(),
   );
 
 router
   .route('/auth/change-password')
   .post(
-    validators.body('newPassword').notEmpty(),
-    validators.handle,
-    isLogged,
-    authHandles.post_change_password()
+    middlewareExpressValidator.body('newPassword').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    authHandles.post_change_password(),
   );
 
 router
   .route('/auth/firebase/token')
   .put(
-    validators.body('firebaseToken').notEmpty(),
-    validators.handle,
-    isLogged,
-    authHandles.put_firebase_token()
+    middlewareExpressValidator.body('firebaseToken').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    authHandles.put_firebase_token(),
   );

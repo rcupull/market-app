@@ -46,22 +46,23 @@ export const ShoppingDetails = ({ rowData, business }: ShoppingDetailsProps) => 
 
   return (
     <div className="w-48 sm:w-60">
+      {renderKey('Entrega')}
       <DeliveryDetails rowData={rowData} business={business} />
+
+      <Divider className="!my-1" />
 
       {renderKey('Fecha')}
       {renderValue(getDateString({ date: createdAt, showTime: true }))}
 
       <Divider className="!my-1" />
 
-      {renderKey('Precio')}
+      {renderKey('Precio de los productos')}
       {renderValue(`${totalPrice} ${currency}`)}
 
       <Divider className="!my-1" />
 
       {renderKey('Total de productos')}
       {renderValue(totalProducts)}
-
-      <Divider className="!my-1" />
     </div>
   );
 };

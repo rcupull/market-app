@@ -43,7 +43,7 @@ export const RouteName = () => {
       businessOwnerData.onFetch({ routeName });
 
       if (!query.businessTab) {
-        const businessTab: BusinessTab = 'products';
+        const businessTab: BusinessTab = 'shopping';
         onChangeQuery({ businessTab });
       }
     }
@@ -80,6 +80,18 @@ export const RouteName = () => {
 
   const tabsItems: Array<TabItem & { q: BusinessTab }> = compact([
     {
+      q: 'shopping',
+      label: getBusinessTabLabel('shopping'),
+      content: <ShoppingPage />,
+      svg: SvgShoppingCartSolid,
+    },
+    {
+      q: 'sections',
+      label: getBusinessTabLabel('sections'),
+      content: <PostsSections />,
+      svg: SvgLayerGroupSolid,
+    },
+    {
       q: 'products',
       label: getBusinessTabLabel('products'),
       content: <Products />,
@@ -90,18 +102,6 @@ export const RouteName = () => {
       label: getBusinessTabLabel('links'),
       content: <Links />,
       svg: SvgLinkSolid,
-    },
-    {
-      q: 'sections',
-      label: getBusinessTabLabel('sections'),
-      content: <PostsSections />,
-      svg: SvgLayerGroupSolid,
-    },
-    {
-      q: 'shopping',
-      label: getBusinessTabLabel('shopping'),
-      content: <ShoppingPage />,
-      svg: SvgShoppingCartSolid,
     },
     {
       q: 'settings',

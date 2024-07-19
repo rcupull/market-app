@@ -10,6 +10,7 @@ import { RowActions } from './RowActions';
 import { LayoutPageSection } from 'pages/@common/layout-page-section';
 import { TopActions } from 'pages/@common/top-actions';
 import { getDateString } from 'utils/date';
+import { cn } from 'utils/general';
 
 export const BusinessPage = () => {
   const { getAllBusinessAdmin } = useGetAllBusinessAdmin();
@@ -33,7 +34,7 @@ export const BusinessPage = () => {
         }}
         heads={['Acciones', 'Nombre', 'Usuario', 'Routename', 'Posts', 'Fecha de Creación']}
         getRowProps={(rowData) => {
-          const { name, createdAt, routeName, userData, postCount } = rowData;
+          const { name, createdAt, routeName, userData, postCount, hidden } = rowData;
 
           return {
             nodes: [
@@ -48,6 +49,9 @@ export const BusinessPage = () => {
               postCount,
               getDateString({ date: createdAt, showTime: true }),
             ],
+            className: cn({
+              'bg-gray-100': hidden,
+            }),
           };
         }}
         data={getAllBusinessAdmin.data}

@@ -13,6 +13,7 @@ type UseAuthMeta = {
   authSignIn: FetchResource<{ email: string; password: string }, AuthData>;
   isAdmin: boolean;
   isUser: boolean;
+  userCanCreateBusiness: boolean;
   getIsUser: (user: User | undefined) => boolean;
   getIsAdmin: (user: User | undefined) => boolean;
   isBasicUser: boolean;
@@ -74,6 +75,7 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
     getIsAdmin,
     isUser: getIsUser(authData?.user),
     isBasicUser: authData?.user?.role === 'user' && !authData?.user?.canCreateBusiness,
+    userCanCreateBusiness: authData?.user?.role === 'user' && authData?.user?.canCreateBusiness,
     authData,
     authSignIn: {
       data: authData,

@@ -1,5 +1,5 @@
 import { ModelDocument, QueryHandle } from '../../types/general';
-import { PaginateResult } from '../../middlewares/pagination';
+import { PaginateResult } from '../../middlewares/middlewarePagination';
 import { Bill, BillState } from '../../types/billing';
 import { BillingModel } from '../../schemas/billing';
 import { GetAllBillsArgs, getAllBillFilterQuery } from './utils';

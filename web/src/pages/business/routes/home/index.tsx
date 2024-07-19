@@ -8,6 +8,7 @@ import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 import { useScrollBottom } from 'hooks/useScrollBottom';
 
 import { Filters } from './Filters';
+import { OwnBusiness } from './OwnBusiness';
 
 import { LayoutPage } from 'pages/@common/layout-page';
 import { LayoutPageSection } from 'pages/@common/layout-page-section';
@@ -37,6 +38,8 @@ export const Home = () => {
 
   return (
     <LayoutPage title="Todos los negocios">
+      <OwnBusiness />
+
       <Filters onChange={(e) => filters.onMergeFilters(e)} />
       <LayoutPageSection isBusy={getAllBusinessSummary.status.isBusy} className="mt-20">
         <div ref={refCardContainer} onScroll={onScroll} className="overflow-y-auto max-h-50rem">

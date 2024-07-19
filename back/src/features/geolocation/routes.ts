@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import { geolocationHandles } from './handles';
-import { isLogged } from '../../middlewares/verify';
+import { middlewareIsLogged } from '../../middlewares/middlewareIsLogged';
 
 export const router = Router();
 
-router.route('/geolocation/reverse').get(isLogged, geolocationHandles.get_geolocation_reverse());
+router
+  .route('/geolocation/reverse')
+  .get(middlewareIsLogged, geolocationHandles.get_geolocation_reverse());

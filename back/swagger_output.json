@@ -1339,6 +1339,9 @@
                 "properties": {
                   "postId": {
                     "example": "any"
+                  },
+                  "purshaseNotes": {
+                    "example": "any"
                   }
                 }
               }
@@ -1359,6 +1362,9 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "purshaseNotes": {
+                    "example": "any"
+                  },
                   "routeName": {
                     "example": "any"
                   },

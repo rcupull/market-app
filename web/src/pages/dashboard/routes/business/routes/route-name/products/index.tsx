@@ -132,6 +132,10 @@ export const Products = () => {
               propsPreprocessors={[tablePropsProcessor]}
               remapRowsIndex={{
                 xs: [[0, 1, 2, 3, 4, 5]],
+                sm: [
+                  [0, 1, 2, 3],
+                  [4, 5],
+                ],
                 lg: 'none',
               }}
               heads={[

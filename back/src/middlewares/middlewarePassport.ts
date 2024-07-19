@@ -34,7 +34,7 @@ passport.use(
     } catch (err) {
       return done(err);
     }
-  })
+  }),
 );
 
 passport.use(
@@ -53,26 +53,16 @@ passport.use(
             message: 'Token not matched.',
           });
         });
-    }
-  )
+    },
+  ),
 );
 
-export const autenticationMiddleware = passport.authenticate('local', {
+export const middlewareAutentication = passport.authenticate('local', {
   session: false,
 });
 
 export const passportMiddlewareInitialize = passport.initialize();
 
-export const passportJwtMiddleware = passport.authenticate('jwt', {
+export const middlewarePassportJwt = passport.authenticate('jwt', {
   session: false,
 });
-
-// passport.serializeUser(function (user: any, done) {
-//   done(null, user._id);
-// });
-
-// passport.deserializeUser(function (id, done) {
-//   UserModel.findById(id, function (err: any, user: any) {
-//     done(err, user);
-//   });
-// });

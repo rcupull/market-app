@@ -1,5 +1,3 @@
-import { Badge } from 'components/badge';
-import { Button } from 'components/button';
 import { Divider } from 'components/divider';
 import { IconButtonOptionsBars } from 'components/icon-button-options-bars';
 import { IconButtonShowHide } from 'components/icon-button-show-hide';
@@ -8,10 +6,8 @@ import { IconShowHide } from 'components/icon-show-hide';
 import { IconView } from 'components/icon-view';
 import { Menu } from 'components/menu';
 
-import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useAdminConfig } from 'features/api-slices/useAdminConfig';
 import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
-import { useModal } from 'features/modal/useModal';
 
 import { useRouter } from 'hooks/useRouter';
 
@@ -25,6 +21,7 @@ import SvgProductHunt from 'icons/ProductHunt';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { BannerInfoTelegramBusiness } from 'pages/@common/banner-info-telegram-business';
 import { BannerInfoTotalDebitBusiness } from 'pages/@common/banner-info-total-debit-business';
+import { useBusinessShowHide } from 'pages/@hooks/useBusinessShowHide';
 import { Business } from 'types/business';
 import { getOneBusinessRoute } from 'utils/business';
 
@@ -35,54 +32,13 @@ export interface OptionsProps {
 
 export const Options = ({ business, onRefresh }: OptionsProps) => {
   const { routeName, hidden } = business;
-  const allUserBusiness = useAllUserBusiness();
+  const { allUserBusiness } = useAllUserBusiness();
 
-  const { pushModal } = useModal();
   const { pushRoute, onChangeQuery, query } = useRouter();
 
   const { getEnabledFeature } = useAdminConfig();
-  const handleShowHide = () => {
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { onClose } = useModal();
-          const { updateOneBusiness } = useUpdateOneBusiness();
 
-          return {
-            className: 'max-w-lg',
-            content: hidden
-              ? 'Esta función mostrará todas tus publicaciones que no estén propiamente ocultas. ¿Estás seguro de continuar?'
-              : 'Esta función ocultará todas tus publicaciones. ¿Estás seguro de continuar?',
-            badge: <Badge variant="warning" />,
-            primaryBtn: (
-              <Button
-                label={hidden ? 'Mostrar' : 'Ocultar'}
-                onClick={() => {
-                  updateOneBusiness.fetch(
-                    {
-                      routeName,
-                      update: {
-                        hidden: !hidden,
-                      },
-                    },
-                    {
-                      onAfterSuccess: () => {
-                        onRefresh();
-                        allUserBusiness.refresh();
-                        onClose();
-                      },
-                    }
-                  );
-                }}
-              />
-            ),
-          };
-        },
-      },
-      { emergent: true }
-    );
-  };
+  const { onBusinessShowHide } = useBusinessShowHide();
 
   return (
     <div className="w-full flex items-center justify-between">
@@ -90,7 +46,14 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
         <IconButtonShowHide
           hidden={hidden}
           title={`${hidden ? 'Mostrar' : 'Ocultar'} este negocio`}
-          onClick={handleShowHide}
+          onClick={() => {
+            onBusinessShowHide(business, {
+              onAfterSuccess: () => {
+                onRefresh();
+                allUserBusiness.refresh();
+              },
+            });
+          }}
         />
 
         <IconButtonView
@@ -123,7 +86,14 @@ export const Options = ({ business, onRefresh }: OptionsProps) => {
             },
             {
               label: `${hidden ? 'Mostrar' : 'Ocultar'}`,
-              onClick: handleShowHide,
+              onClick: () => {
+                onBusinessShowHide(business, {
+                  onAfterSuccess: () => {
+                    onRefresh();
+                    allUserBusiness.refresh();
+                  },
+                });
+              },
               svg: ({ className }) => <IconShowHide hidden={hidden} className={className} />,
             },
             {

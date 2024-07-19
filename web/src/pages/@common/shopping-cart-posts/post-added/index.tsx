@@ -1,7 +1,8 @@
 import { Amount } from 'components/amount';
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
-import { ColorCircle } from 'components/color-circle';
+import { ClothingSizeGroup } from 'components/clothing-size-group';
+import { ColorCircleGroup } from 'components/color-circle-group';
 import { EmptyImage } from 'components/empty-image';
 import { IconButtonRemove } from 'components/icon-button-remove';
 
@@ -36,47 +37,6 @@ export const PostAdded = ({ shoppingPostMeta, routeName }: PostAddedProps) => {
   ////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////
-  const renderColors = () => {
-    if (!interestedByColors?.length) return null;
-
-    return (
-      <div className="flex items-center gap-1">
-        <span className="text-sm font-semibold">Colores:</span>
-        {interestedByColors.map((postColor, index) => (
-          <ColorCircle size="small" key={index} postColor={postColor} />
-        ))}
-      </div>
-    );
-  };
-
-  const colorsNode = renderColors();
-
-  ////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////
-
-  const renderClothingSizes = () => {
-    if (!interestedByClothingSizes?.length) return null;
-
-    return (
-      <div className="flex items-center gap-1">
-        <span className="text-sm font-semibold">Tallas:</span>
-        {interestedByClothingSizes.map((postClothingSize, index) => (
-          <span key={index} className="text-sm">
-            {`${index > 0 ? '/ ' : ''} ${postClothingSize}`}
-          </span>
-        ))}
-      </div>
-    );
-  };
-
-  const clothingSizesNode = renderClothingSizes();
-
-  ////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////
 
   return (
     <div className="flex flex-col items-center border border-gray-300 rounded-md p-1 gap-1">
@@ -92,10 +52,10 @@ export const PostAdded = ({ shoppingPostMeta, routeName }: PostAddedProps) => {
         {name}
       </div>
 
-      {(colorsNode || clothingSizesNode) && (
+      {(!!interestedByColors?.length || !!interestedByClothingSizes?.length) && (
         <div className="flex items-center flex-wrap justify-center gap-6 w-full my-2">
-          {colorsNode}
-          {clothingSizesNode}
+          <ColorCircleGroup value={interestedByColors} size="small" />
+          <ClothingSizeGroup value={interestedByClothingSizes} />
         </div>
       )}
 

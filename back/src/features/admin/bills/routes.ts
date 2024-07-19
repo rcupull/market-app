@@ -1,43 +1,51 @@
 import { Router } from 'express';
 
 import { adminBillsHandles } from './handles';
-import { validators } from '../../../middlewares/express-validator';
-import { pagination } from '../../../middlewares/pagination';
-import { hasAccess, isAdmin, isLogged } from '../../../middlewares/verify';
+import { middlewareExpressValidator } from '../../../middlewares/middlewareExpressValidator';
+import { middlewarePagination } from '../../../middlewares/middlewarePagination';
+import { middlewareIsLogged } from '../../../middlewares/middlewareIsLogged';
+import { middlewareIsAdmin } from '../../../middlewares/middlewareIsAdmin';
+import { middlewareHasAccess } from '../../../middlewares/middlewareHasAccess';
 
 export const router = Router();
 
 router
   .route('/bills')
-  .get(isLogged, isAdmin, hasAccess('full'), pagination, adminBillsHandles.get_admin_bills())
+  .get(
+    middlewareIsLogged,
+    middlewareIsAdmin,
+    middlewareHasAccess('full'),
+    middlewarePagination,
+    adminBillsHandles.get_admin_bills(),
+  )
   .post(
-    isLogged,
-    isAdmin,
-    validators.body('routeName').notEmpty(),
-    validators.handle,
-    hasAccess('bills__write'),
-    adminBillsHandles.post_admin_bills()
+    middlewareIsLogged,
+    middlewareIsAdmin,
+    middlewareExpressValidator.body('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareHasAccess('bills__write'),
+    adminBillsHandles.post_admin_bills(),
   );
 
 router
   .route('/bills/:billId')
   .delete(
-    isLogged,
-    isAdmin,
-    validators.param('billId').notEmpty(),
-    validators.handle,
-    hasAccess('bills__remove'),
-    adminBillsHandles.del_admin_bills_billId()
+    middlewareIsLogged,
+    middlewareIsAdmin,
+    middlewareExpressValidator.param('billId').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareHasAccess('bills__remove'),
+    adminBillsHandles.del_admin_bills_billId(),
   );
 
 router
   .route('/bills/:billId/shopping')
   .delete(
-    isLogged,
-    isAdmin,
-    validators.param('billId').notEmpty(),
-    validators.body('shoppingIds').notEmpty(),
-    validators.handle,
-    hasAccess('full'),
-    adminBillsHandles.del_admin_bills_billId_shopping()
+    middlewareIsLogged,
+    middlewareIsAdmin,
+    middlewareExpressValidator.param('billId').notEmpty(),
+    middlewareExpressValidator.body('shoppingIds').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareHasAccess('full'),
+    adminBillsHandles.del_admin_bills_billId_shopping(),
   );

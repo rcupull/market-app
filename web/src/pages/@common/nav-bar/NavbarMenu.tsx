@@ -1,3 +1,4 @@
+import { Button } from 'components/button';
 import { IconButton } from 'components/icon-button';
 import { IconShowHide } from 'components/icon-show-hide';
 import { Menu, MenuItem } from 'components/menu';
@@ -13,7 +14,6 @@ import { useSignOut } from 'features/api-slices/useSignOut';
 import { useRouter } from 'hooks/useRouter';
 
 import { BannerInfoTelegramUser } from '../banner-info-telegram-user';
-import { AddNewBusinessButton } from './AddNewBusinessButton';
 
 import SvgBarsSolid from 'icons/BarsSolid';
 import SvgCalendar from 'icons/Calendar';
@@ -37,6 +37,8 @@ import { useAuthChangePasswordModal } from 'pages/@modals/useAuthChangePasswordM
 import { useAuthForgotPasswordRequestModal } from 'pages/@modals/useAuthForgotPasswordRequestModal';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { useAuthSignUpModal } from 'pages/@modals/useAuthSignUpModal';
+import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewModal';
+import { useUserUpdateSettings } from 'pages/@modals/useUserUpdateSettings';
 import { Nullable } from 'types/general';
 import { getEndpoint } from 'utils/api';
 import {
@@ -48,19 +50,23 @@ import {
 import { cn } from 'utils/general';
 
 export const NavbarMenu = () => {
-  const { isAuthenticated, authData, isUser, isAdmin, getHasSomeAccess } = useAuth();
+  const { isAuthenticated, authData, isUser, isAdmin, getHasSomeAccess, onRefreshAuthUser } =
+    useAuth();
   const { signOut } = useSignOut();
   const { user } = authData || {};
   const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute } = useRouter();
   const { routeName } = params;
   const authChangePasswordModal = useAuthChangePasswordModal();
+  const userUpdateSettings = useUserUpdateSettings();
   const { getEnabledFeature } = useAdminConfig();
+
+  const businessUpdateNewModal = useBusinessUpdateNewModal();
 
   const authSignInModal = useAuthSignInModal();
   const authSignUpModal = useAuthSignUpModal();
   const authForgotPasswordRequestModal = useAuthForgotPasswordRequestModal();
 
-  const allUserBusiness = useAllUserBusiness();
+  const { allUserBusiness } = useAllUserBusiness();
 
   // const getCopyLinkLabel = () => {
   //   if (isPostPage) {
@@ -75,13 +81,16 @@ export const NavbarMenu = () => {
 
   const addDividerToFirst = (
     items: Array<Nullable<MenuItem>>,
-    label: string
+    label: string,
   ): Array<Nullable<MenuItem>> => {
     const out = [...items];
+
     const firstNotNullElement = out.findIndex((item) => !!item);
 
-    if (firstNotNullElement >= 0 && out[firstNotNullElement]) {
-      out[firstNotNullElement].divider = label;
+    const firstItem = firstNotNullElement >= 0 ? out[firstNotNullElement] : null;
+
+    if (firstItem) {
+      firstItem.divider = label;
     }
 
     return out;
@@ -91,8 +100,18 @@ export const NavbarMenu = () => {
     if (!isAuthenticated || !isUser) return [];
 
     const out: Array<MenuItem> = (allUserBusiness.data || []).map(({ name, routeName, hidden }) => {
+      const isCurrentBusiness = params.routeName === routeName;
+
       return {
-        label: name,
+        label: (
+          <div
+            className={cn({
+              'text-indigo-600 font-semibold': isCurrentBusiness,
+            })}
+          >
+            {name}
+          </div>
+        ),
         onClick: () => pushRoute(getDashboardBusinessRoute({ routeName })),
         svg: ({ className }) => (
           <IconShowHide
@@ -100,21 +119,35 @@ export const NavbarMenu = () => {
               className,
               cn({
                 'fill-gray-500 ': hidden,
-              })
+                'fill-indigo-600': isCurrentBusiness,
+              }),
             )}
             hidden={hidden}
           />
         ),
-        className: cn({
-          'bg-gray-100': hidden,
-        }),
       };
     });
 
     out.push({
       label: (
         <div className="flex justify-center w-full -my-2">
-          <AddNewBusinessButton />
+          <Button
+            title="Agragar nuevo negocio"
+            label="Nuevo negocio"
+            variant="primary"
+            onClick={() => {
+              businessUpdateNewModal.open({
+                onAfterSucess: (newBussiness) => {
+                  if (newBussiness) {
+                    const { routeName } = newBussiness;
+                    pushRoute(getDashboardBusinessRoute({ routeName }), {}, { timeout: 100 });
+                    allUserBusiness.refresh();
+                  }
+                },
+              });
+            }}
+            className="!rounded-2xl !py-0 my-1"
+          />
         </div>
       ),
     });
@@ -165,7 +198,7 @@ export const NavbarMenu = () => {
                 getEndpoint({
                   path: '/admin/agenda/web/:agendaToken',
                   urlParams: { agendaToken },
-                })
+                }),
               );
             },
           });
@@ -229,7 +262,9 @@ export const NavbarMenu = () => {
       },
       isAuthenticated && {
         label: 'Preferencias de usuario',
-        onClick: () => pushRoute('/settings'),
+        onClick: () => {
+          user && userUpdateSettings.open({ user, onAfterSuccess: () => onRefreshAuthUser() });
+        },
         svg: SvgCogSolid,
       },
     ];

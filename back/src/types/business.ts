@@ -1,6 +1,7 @@
 import { Address, BaseIdentity, Image, TelegramBotChat } from './general';
 import { Schema } from 'mongoose';
 import { Post, PostType } from './post';
+import { User } from './user';
 
 export type BusinessCurrency = 'CUP' | 'MLC' | 'USD';
 
@@ -172,6 +173,10 @@ export interface Business extends BaseIdentity {
   doneOnboarding?: boolean;
 }
 
+export interface BusinessAdminDto extends Business {
+  userData?: Pick<User, 'name'>;
+  postCount?: number;
+}
 export interface BusinessDto extends Business {
   shoppingDebit: number;
 }

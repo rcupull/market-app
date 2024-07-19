@@ -22,7 +22,7 @@ const handle: RequestHandler = (req: Request, res: Response, next: NextFunction)
   next();
 };
 
-export const validators = {
+export const middlewareExpressValidator = {
   query,
   param,
   body,
