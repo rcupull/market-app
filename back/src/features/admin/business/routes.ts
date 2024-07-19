@@ -21,6 +21,14 @@ router
 
 router
   .route('/business/:routeName')
+  .put(
+    middlewareIsLogged,
+    middlewareIsAdmin,
+    middlewareExpressValidator.param('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareHasAccess('business__write'),
+    adminBusinessHandles.put_admin_business_routeName(),
+  )
   .delete(
     middlewareIsLogged,
     middlewareIsAdmin,

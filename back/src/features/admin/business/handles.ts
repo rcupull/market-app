@@ -1,12 +1,14 @@
-import { Business } from '../../../types/business';
+import { Business, BusinessAdminDto } from '../../../types/business';
 import { RequestHandler } from '../../../types/general';
 import { Post } from '../../../types/post';
 import { User } from '../../../types/user';
 import { withTryCatch } from '../../../utils/error';
 import { deepJsonCopy, isEqualIds } from '../../../utils/general';
+import { makeReshaper } from '../../../utils/makeReshaper';
 import {
   businessServicesDeleteOne,
   businessServicesGetAllWithPagination,
+  businessServicesUpdateOne,
 } from '../../business/services';
 import { postServicesGetAll } from '../../post/services';
 import { userServicesGetAll } from '../../user/services';
@@ -30,10 +32,6 @@ const delete_admin_business_routeName: () => RequestHandler = () => {
   };
 };
 
-interface BusinessAdminDto extends Business {
-  userData?: Pick<User, 'name'>;
-  postCount?: number;
-}
 const get_admin_business: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
@@ -103,7 +101,28 @@ const get_admin_business: () => RequestHandler = () => {
   };
 };
 
+const put_admin_business_routeName: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { params, body } = req;
+      const { routeName } = params;
+
+      const out = await businessServicesUpdateOne({
+        query: {
+          routeName,
+        },
+        update: makeReshaper<Business, Business>({
+          hidden: 'hidden',
+        })(body),
+      });
+
+      res.send(out);
+    });
+  };
+};
+
 export const adminBusinessHandles = {
   delete_admin_business_routeName,
+  put_admin_business_routeName,
   get_admin_business,
 };
