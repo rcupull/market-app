@@ -81,7 +81,7 @@ export const NavbarMenu = () => {
 
   const addDividerToFirst = (
     items: Array<Nullable<MenuItem>>,
-    label: string
+    label: string,
   ): Array<Nullable<MenuItem>> => {
     const out = [...items];
 
@@ -100,8 +100,18 @@ export const NavbarMenu = () => {
     if (!isAuthenticated || !isUser) return [];
 
     const out: Array<MenuItem> = (allUserBusiness.data || []).map(({ name, routeName, hidden }) => {
+      const isCurrentBusiness = params.routeName === routeName;
+
       return {
-        label: name,
+        label: (
+          <div
+            className={cn({
+              'text-indigo-600 font-semibold': isCurrentBusiness,
+            })}
+          >
+            {name}
+          </div>
+        ),
         onClick: () => pushRoute(getDashboardBusinessRoute({ routeName })),
         svg: ({ className }) => (
           <IconShowHide
@@ -109,14 +119,12 @@ export const NavbarMenu = () => {
               className,
               cn({
                 'fill-gray-500 ': hidden,
-              })
+                'fill-indigo-600': isCurrentBusiness,
+              }),
             )}
             hidden={hidden}
           />
         ),
-        className: cn({
-          'bg-gray-100': hidden,
-        }),
       };
     });
 
@@ -190,7 +198,7 @@ export const NavbarMenu = () => {
                 getEndpoint({
                   path: '/admin/agenda/web/:agendaToken',
                   urlParams: { agendaToken },
-                })
+                }),
               );
             },
           });
