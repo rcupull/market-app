@@ -38,7 +38,7 @@ import { useAuthForgotPasswordRequestModal } from 'pages/@modals/useAuthForgotPa
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { useAuthSignUpModal } from 'pages/@modals/useAuthSignUpModal';
 import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewModal';
-import { useUserUpdateSettings } from 'pages/@modals/useUserUpdateSettings';
+import { useUserUpdateSettingsModal } from 'pages/@modals/useUserUpdateSettingsModal';
 import { Nullable } from 'types/general';
 import { getEndpoint } from 'utils/api';
 import {
@@ -50,14 +50,19 @@ import {
 import { cn } from 'utils/general';
 
 export const NavbarMenu = () => {
-  const { isAuthenticated, authData, isUser, isAdmin, getHasSomeAccess, onRefreshAuthUser } =
-    useAuth();
+  const {
+    isAuthenticated,
+    getIsAdmin,
+    user,
+    getIsBusinessUser,
+    getHasSomeAccess,
+    onRefreshAuthUser,
+  } = useAuth();
   const { signOut } = useSignOut();
-  const { user } = authData || {};
   const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute } = useRouter();
   const { routeName } = params;
   const authChangePasswordModal = useAuthChangePasswordModal();
-  const userUpdateSettings = useUserUpdateSettings();
+  const userUpdateSettings = useUserUpdateSettingsModal();
   const { getEnabledFeature } = useAdminConfig();
 
   const businessUpdateNewModal = useBusinessUpdateNewModal();
@@ -81,7 +86,7 @@ export const NavbarMenu = () => {
 
   const addDividerToFirst = (
     items: Array<Nullable<MenuItem>>,
-    label: string,
+    label: string
   ): Array<Nullable<MenuItem>> => {
     const out = [...items];
 
@@ -97,7 +102,7 @@ export const NavbarMenu = () => {
   };
 
   const getBusinessItems = (): Array<Nullable<MenuItem>> => {
-    if (!isAuthenticated || !isUser) return [];
+    if (!isAuthenticated || !getIsBusinessUser(user)) return [];
 
     const out: Array<MenuItem> = (allUserBusiness.data || []).map(({ name, routeName, hidden }) => {
       const isCurrentBusiness = params.routeName === routeName;
@@ -120,7 +125,7 @@ export const NavbarMenu = () => {
               cn({
                 'fill-gray-500 ': hidden,
                 'fill-indigo-600': isCurrentBusiness,
-              }),
+              })
             )}
             hidden={hidden}
           />
@@ -164,7 +169,7 @@ export const NavbarMenu = () => {
   const { adminBDScript } = useAdminBDScript();
 
   const getAdminItems = (): Array<Nullable<MenuItem>> => {
-    if (!isAuthenticated || !isAdmin) return [];
+    if (!isAuthenticated || !getIsAdmin(user)) return [];
 
     const out: Array<Nullable<MenuItem>> = [
       getHasSomeAccess('user__read') && {
@@ -198,7 +203,7 @@ export const NavbarMenu = () => {
                 getEndpoint({
                   path: '/admin/agenda/web/:agendaToken',
                   urlParams: { agendaToken },
-                }),
+                })
               );
             },
           });

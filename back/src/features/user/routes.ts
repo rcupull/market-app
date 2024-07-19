@@ -16,14 +16,14 @@ router
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareIsUserIdAccessible,
-    userHandles.get_users_userId(),
+    userHandles.get_users_userId()
   )
   .put(
     middlewareExpressValidator.param('userId').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareIsUserIdAccessible,
-    userHandles.put_users_userId(),
+    userHandles.put_users_userId()
   );
 
 ///////////////////////////////////////////////////////////////////
@@ -38,7 +38,7 @@ router
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareIsUserIdAccessible,
-    userHandles.post_users_userId_favorite_business(),
+    userHandles.post_users_userId_favorite_business()
   )
   .delete(
     middlewareExpressValidator.param('userId').notEmpty(),
@@ -46,7 +46,7 @@ router
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareIsUserIdAccessible,
-    userHandles.del_users_userId_favorite_business(),
+    userHandles.del_users_userId_favorite_business()
   );
 
 ///////////////////////////////////////////////////////////////////
@@ -59,5 +59,18 @@ router
     middlewareExpressValidator.body('code').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
-    userHandles.post_user_userId_chatbot_validate(),
+    userHandles.post_user_userId_chatbot_validate()
+  );
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+router
+  .route('/user/:userId/checks')
+  .put(
+    middlewareExpressValidator.param('userId').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareIsUserIdAccessible,
+    userHandles.put_user_userId_checks()
   );

@@ -20,7 +20,7 @@ router
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareIsUserBusinessOwner,
-    businessHandles.post_business(),
+    businessHandles.post_business()
   );
 
 router.route('/business/summary').get(middlewarePagination, businessHandles.get_business_summary());
@@ -33,14 +33,14 @@ router
   .get(
     middlewareExpressValidator.param('routeName').notEmpty(),
     middlewareExpressValidator.handle,
-    businessHandles.get_business_routeName(),
+    businessHandles.get_business_routeName()
   )
   .put(
     middlewareExpressValidator.param('routeName').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareIsUserThisBusinessOwner,
-    businessHandles.put_business_routeName(),
+    businessHandles.put_business_routeName()
   );
 
 ////////////////////////////////////////////////////////
@@ -53,7 +53,7 @@ router
     middlewareIsLogged,
     middlewareIsUserBusinessOwner,
     middlewareIsUserThisBusinessOwner,
-    businessHandles.update_business_post_categories(),
+    businessHandles.update_business_post_categories()
   );
 
 router
@@ -63,7 +63,7 @@ router
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareIsUserThisBusinessOwner,
-    businessHandles.post_business_routeName_sections(),
+    businessHandles.post_business_routeName_sections()
   );
 
 router
@@ -75,7 +75,7 @@ router
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareIsUserThisBusinessOwner,
-    businessHandles.put_business_section_reorder(),
+    businessHandles.put_business_section_reorder()
   );
 
 router
@@ -86,7 +86,7 @@ router
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareIsUserThisBusinessOwner,
-    businessHandles.put_business_routeName_sections_sectionId(),
+    businessHandles.put_business_routeName_sections_sectionId()
   )
   .delete(
     middlewareExpressValidator.param('routeName').notEmpty(),
@@ -94,7 +94,7 @@ router
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareIsUserThisBusinessOwner,
-    businessHandles.del_business_routeName_sections_sectionId(),
+    businessHandles.del_business_routeName_sections_sectionId()
   );
 
 router
@@ -105,5 +105,5 @@ router
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareIsUserThisBusinessOwner,
-    businessHandles.post_business_routeName_chatbot_validate(),
+    businessHandles.post_business_routeName_chatbot_validate()
   );

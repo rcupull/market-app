@@ -7,7 +7,7 @@ import { HighlightedBox } from 'components/highlighted-box';
 
 import { useAuth } from 'features/api-slices/useAuth';
 
-import { useUserUpdateSettings } from 'pages/@modals/useUserUpdateSettings';
+import { useUserUpdateSettingsModal } from 'pages/@modals/useUserUpdateSettingsModal';
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 import { getIsValidAddress, getIsValidPhone } from 'utils/validation';
@@ -18,7 +18,7 @@ export interface PersonalDataProps extends StyleProps {
 
 export const PersonalData = ({ className, onValid }: PersonalDataProps) => {
   const { authData, onRefreshAuthUser } = useAuth();
-  const userUpdateSettings = useUserUpdateSettings();
+  const userUpdateSettings = useUserUpdateSettingsModal();
 
   const user = authData?.user;
 

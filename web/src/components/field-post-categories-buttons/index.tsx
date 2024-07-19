@@ -7,7 +7,7 @@ import { IconButtonAdd } from 'components/icon-button-add';
 import { PostCategoriesFilterButtons } from '../post-categories-filter-buttons';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useBusinessUpdatePostCategories } from 'pages/@modals/useBusinessUpdatePostCategories';
+import { useBusinessUpdatePostCategoriesModal } from 'pages/@modals/useBusinessUpdatePostCategoriesModal';
 
 type State = Array<string>;
 
@@ -25,7 +25,7 @@ export const FieldPostCategoriesButtons = (props: FieldPostCategoriesButtonsProp
 
   const { business, onFetch } = useBusiness();
 
-  const businessUpdatePostCategories = useBusinessUpdatePostCategories();
+  const businessUpdatePostCategories = useBusinessUpdatePostCategoriesModal();
 
   useEffect(() => {
     setState(value);

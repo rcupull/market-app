@@ -13,7 +13,7 @@ import { PostsSectionSearch } from '../posts-section-search';
 
 import { UpdateSomethingContainer } from 'pages/@common/update-something-container';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useBusinessNewUpdateSection } from 'pages/@modals/useBusinessNewUpdateSection';
+import { useBusinessNewUpdateSectionModal } from 'pages/@modals/useBusinessNewUpdateSectionModal';
 import { GetAllPostsQuery } from 'types/api';
 import { PostsLayoutSection } from 'types/business';
 import { StyleProps } from 'types/general';
@@ -79,7 +79,7 @@ export const PostsSection = ({ routeName, layout, className }: PostsSectionProps
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const businessNewUpdateSection = useBusinessNewUpdateSection();
+  const businessNewUpdateSection = useBusinessNewUpdateSectionModal();
 
   if (notRenderAtAll || !business) {
     return <></>;

@@ -9,7 +9,7 @@ import { dynamic } from 'utils/makeLazy';
 const Business = dynamic(() => import('./routes/business').then((m) => m));
 
 export const Dashboard = () => {
-  const { isUser } = useAuth();
+  const { getIsBusinessUser, user } = useAuth();
 
   const businessOwnerData = useBusiness();
 
@@ -19,7 +19,7 @@ export const Dashboard = () => {
     };
   }, []);
 
-  if (!isUser) {
+  if (!getIsBusinessUser(user)) {
     return <Navigate to="/" />;
   }
 

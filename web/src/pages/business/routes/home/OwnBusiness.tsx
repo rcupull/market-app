@@ -10,12 +10,12 @@ import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewMod
 import { getDashboardBusinessRoute } from 'utils/business';
 
 export const OwnBusiness = () => {
-  const { userCanCreateBusiness } = useAuth();
+  const { getIsBusinessUser, user } = useAuth();
   const businessUpdateNewModal = useBusinessUpdateNewModal();
   const { allUserBusiness } = useAllUserBusiness();
   const { pushRoute } = useRouter();
 
-  if (!userCanCreateBusiness) {
+  if (!getIsBusinessUser(user)) {
     return <></>;
   }
 

@@ -4,7 +4,7 @@ import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-w
 import { useFormField } from 'components/formux/useFormField';
 
 import SvgExclamationTriangleSolid from 'icons/ExclamationTriangleSolid';
-import { ButtonMapLocation } from 'pages/@modals/useUserUpdateSettings/ButtonMapLocation';
+import { ButtonMapLocation } from 'pages/@modals/useUserUpdateSettingsModal/ButtonMapLocation';
 import { Address } from 'types/general';
 import { getImportantLabel } from 'utils/form';
 import { cn } from 'utils/general';

@@ -8,7 +8,17 @@ export const useUpdateOneUser = (): {
   updateOneUser: FetchResource<
     {
       userId: string;
-      update: Partial<Pick<User, 'profileImage' | 'name' | 'addresses' | 'phone'>>;
+      update: Partial<
+        Pick<
+          User,
+          | 'profileImage'
+          | 'name'
+          | 'addresses'
+          | 'phone'
+          | 'canCreateBusiness'
+          | 'canMakeDeliveries'
+        >
+      >;
     },
     void
   >;

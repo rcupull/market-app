@@ -18,5 +18,5 @@ router
     middlewareIsUserBusinessOwner,
     middlewareIsUserThisBusinessOwner,
     middlewarePagination,
-    billingHandles.get_bills(),
+    billingHandles.get_bills()
   );

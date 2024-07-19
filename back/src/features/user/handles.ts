@@ -2,8 +2,12 @@ import { RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
 
 import { userServicesGetOne, userServicesUpdateOne } from './services';
-import { User, UserDto } from '../../types/user';
-import { get404Response, getUserNotFoundResponse } from '../../utils/server-response';
+import { User, UserChecks, UserDto } from '../../types/user';
+import {
+  get400Response,
+  get404Response,
+  getUserNotFoundResponse,
+} from '../../utils/server-response';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { imagesServicesDeleteOldImages } from '../images/services';
 import { makeReshaper } from '../../utils/makeReshaper';
@@ -89,6 +93,31 @@ const put_users_userId: () => RequestHandler = () => {
       /**
        * Update
        */
+
+      /**
+       * The user can not remove this option. Only the admin can
+       */
+      if (body.canCreateBusiness === false || body.canCreateBusiness === null) {
+        return get400Response({
+          res,
+          json: {
+            message: 'The user can not remove canCreateBusiness option',
+          },
+        });
+      }
+
+      /**
+       * The user can not remove this option. Only the admin can
+       */
+      if (body.canMakeDeliveries === false || body.canMakeDeliveries === null) {
+        return get400Response({
+          res,
+          json: {
+            message: 'The user can not remove canMakeDeliveries option',
+          },
+        });
+      }
+
       const out = await userServicesUpdateOne({
         query: {
           _id: userId,
@@ -98,6 +127,8 @@ const put_users_userId: () => RequestHandler = () => {
           profileImage: 'profileImage',
           phone: 'phone',
           addresses: 'addresses',
+          canCreateBusiness: 'canCreateBusiness',
+          canMakeDeliveries: 'canMakeDeliveries',
         })(body),
       });
 
@@ -147,6 +178,36 @@ const post_user_userId_chatbot_validate: () => RequestHandler = () => {
         },
         update: {
           telegramBotChat: meta,
+        },
+      });
+
+      res.send({});
+    });
+  };
+};
+
+const put_user_userId_checks: () => RequestHandler = () => {
+  return async (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { body, user } = req;
+
+      if (!user) {
+        return getUserNotFoundResponse({ res });
+      }
+
+      const newChecks = makeReshaper<UserChecks, UserChecks>({
+        requestUserTypeWhenStart: 'requestUserTypeWhenStart',
+      })(body);
+
+      await userServicesUpdateOne({
+        query: {
+          _id: user._id,
+        },
+        update: {
+          checks: {
+            ...(user.checks || {}),
+            ...Object.keys(newChecks).reduce((acc, key) => ({ ...acc, [key]: true }), {}),
+          },
         },
       });
 
@@ -214,4 +275,5 @@ export const userHandles = {
   //
   post_users_userId_favorite_business,
   del_users_userId_favorite_business,
+  put_user_userId_checks,
 };

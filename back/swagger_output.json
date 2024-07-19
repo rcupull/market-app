@@ -92,9 +92,6 @@
                   },
                   "name": {
                     "example": "any"
-                  },
-                  "canCreateBusiness": {
-                    "example": "any"
                   }
                 }
               }
@@ -268,6 +265,12 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "canCreateBusiness": {
+                    "example": "any"
+                  },
+                  "canMakeDeliveries": {
+                    "example": "any"
+                  },
                   "profileImage": {
                     "example": "any"
                   }

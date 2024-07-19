@@ -10,13 +10,13 @@ import { useModal } from 'features/modal/useModal';
 import { usePortal } from 'hooks/usePortal';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useBusinessNewUpdateSection } from 'pages/@modals/useBusinessNewUpdateSection';
+import { useBusinessNewUpdateSectionModal } from 'pages/@modals/useBusinessNewUpdateSectionModal';
 import { PostType } from 'types/post';
 
 export const NewSectionButton = () => {
   const { business, onFetch } = useBusiness();
   const { pushModal } = useModal();
-  const businessNewUpdateSection = useBusinessNewUpdateSection();
+  const businessNewUpdateSection = useBusinessNewUpdateSectionModal();
 
   const handleClick = () => {
     pushModal(
