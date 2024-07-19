@@ -11,7 +11,7 @@ import {
 import { ValidationCodeModel } from '../../schemas/auth';
 import { imagesServicesDeleteOldImages } from '../images/services';
 import { makeReshaper } from '../../utils/makeReshaper';
-import { deepJsonCopy } from '../../utils/general';
+import { deepJsonCopy, includesId } from '../../utils/general';
 import { businessServicesGetAll } from '../business/services';
 import { Business } from '../../types/business';
 
@@ -32,24 +32,46 @@ const get_users_userId: () => RequestHandler = () => {
         return getUserNotFoundResponse({ res });
       }
 
-      const businessData: Array<Pick<Business, 'routeName' | 'name'>> =
+      const businessData: Array<Pick<Business, 'routeName' | 'name' | 'favoritesUserIds'>> =
         await businessServicesGetAll({
           query: {
-            routeNames: response.favoritesBusinessRouteNames,
+            favoritesUserIds: { $in: userId },
           },
           projection: {
             name: 1,
             routeName: 1,
+            favoritesUserIds: 1,
           },
         });
+
+      const getFavoritesBusiness = () => {
+        return businessData.reduce(
+          (acc, { favoritesUserIds = [], name, routeName }) => {
+            const isFavorite = includesId(favoritesUserIds, userId);
+
+            if (isFavorite) {
+              return [
+                ...acc,
+                {
+                  name,
+                  routeName,
+                },
+              ];
+            }
+
+            return acc;
+          },
+          [] as Array<{
+            name: string;
+            routeName: string;
+          }>,
+        );
+      };
 
       const getUserDto = async (user: User): Promise<UserDto> => {
         return {
           ...user,
-          favoritesBusinessNames: user.favoritesBusinessRouteNames?.map((routeName) => {
-            const business = businessData.find((b) => routeName === b.routeName);
-            return business?.name || '<unknown name>';
-          }),
+          favoritesBusiness: getFavoritesBusiness(),
         };
       };
 
@@ -220,60 +242,9 @@ const put_user_userId_checks: () => RequestHandler = () => {
  *  //////////////////////////////////////////POSTS
  */
 
-const post_users_userId_favorite_business: () => RequestHandler = () => {
-  return (req, res) => {
-    withTryCatch(req, res, async () => {
-      const { params, body } = req;
-
-      const { userId } = params;
-      const { routeName } = body;
-
-      await userServicesUpdateOne({
-        query: {
-          _id: userId,
-        },
-        update: {
-          $push: {
-            favoritesBusinessRouteNames: routeName,
-          },
-        },
-      });
-
-      res.send({});
-    });
-  };
-};
-
-const del_users_userId_favorite_business: () => RequestHandler = () => {
-  return (req, res) => {
-    withTryCatch(req, res, async () => {
-      const { params, body } = req;
-
-      const { userId } = params;
-      const { routeName } = body;
-
-      await userServicesUpdateOne({
-        query: {
-          _id: userId,
-        },
-        update: {
-          $pull: {
-            favoritesBusinessRouteNames: routeName,
-          },
-        },
-      });
-
-      res.send({});
-    });
-  };
-};
-
 export const userHandles = {
   get_users_userId,
   put_users_userId,
   post_user_userId_chatbot_validate,
-  //
-  post_users_userId_favorite_business,
-  del_users_userId_favorite_business,
   put_user_userId_checks,
 };

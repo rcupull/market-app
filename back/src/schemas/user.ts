@@ -29,7 +29,6 @@ const UserSchema = new Schema<User>({
   telegramBotChat: TelegramBotChatDefinition,
   phone: { type: String },
   addresses: [AddressDefinition],
-  favoritesBusinessRouteNames: [{ type: String }],
   checks: { type: Schema.Types.Mixed },
 });
 

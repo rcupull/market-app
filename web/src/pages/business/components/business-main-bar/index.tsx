@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { IconButtonFavorite } from 'components/icon-button-favorite';
 import { Menu } from 'components/menu';
 
-import { useAddFavoriteBusinessToUser } from 'features/api/user/useAddFavoriteBusinessToUser';
-import { useRemoveFavoriteBusinessFromUser } from 'features/api/user/useRemoveFavoriteBusinessFromUser';
+import { useAddFavoriteUser } from 'features/api/business/useAddFavoriteUser';
+import { useRemoveFavoriteUser } from 'features/api/business/useRemoveFavoriteUser';
 import { useAuth } from 'features/api-slices/useAuth';
 
 import { useRouter } from 'hooks/useRouter';
@@ -16,20 +16,20 @@ import { getDeliveryUtils, getOneBusinessRoute } from 'utils/business';
 import { cn } from 'utils/general';
 
 export const BusinessMainBar = () => {
-  const { authData, isAuthenticated, onRefreshAuthUser } = useAuth();
+  const { user, isAuthenticated, onRefreshAuthUser } = useAuth();
   const { business } = useBusiness();
   const { isOneBusinessPage } = useRouter();
-
-  const user = authData?.user;
 
   const isEnabledDelivery = getDeliveryUtils().getIsEnabled({
     deliveryConfig: business?.deliveryConfig,
   });
 
-  const { addFavoriteBusinessToUser } = useAddFavoriteBusinessToUser();
-  const { removeFavoriteBusinessFromUser } = useRemoveFavoriteBusinessFromUser();
+  const { addFavoriteUser } = useAddFavoriteUser();
+  const { removeFavoriteUser } = useRemoveFavoriteUser();
 
-  const isFavorite = !!business && user?.favoritesBusinessRouteNames?.includes(business.routeName);
+  const isFavorite = !!user?.favoritesBusiness?.find(
+    ({ routeName }) => business?.routeName === routeName
+  );
 
   const { pushRoute } = useRouter();
 
@@ -49,13 +49,11 @@ export const BusinessMainBar = () => {
       <div className="hidden sm:flex items-center overflow-auto ">
         {renderFavorite()}
 
-        {authData?.user?.favoritesBusinessRouteNames?.map((routeName, index) => {
-          const name = authData?.user?.favoritesBusinessNames?.[index];
-
+        {user?.favoritesBusiness?.map(({ name, routeName }, index) => {
           return (
             <Link
               to={getOneBusinessRoute({ routeName })}
-              key={routeName}
+              key={index}
               className={cn('p-2 hover:bg-gray-200 text-nowrap', {
                 'bg-gray-100 border-b-2 border-indigo-500': routeName === business?.routeName,
               })}
@@ -69,9 +67,7 @@ export const BusinessMainBar = () => {
       <Menu
         className={cn('sm:hidden')}
         buttonElement={renderFavorite()}
-        items={(authData?.user?.favoritesBusinessRouteNames || []).map((routeName, index) => {
-          const name = authData?.user?.favoritesBusinessNames?.[index];
-
+        items={(user?.favoritesBusiness || []).map(({ name, routeName }) => {
           return {
             label: name || '<unknown name>',
             active: routeName === business?.routeName,
@@ -92,15 +88,12 @@ export const BusinessMainBar = () => {
         {isOneBusinessPage && (
           <IconButtonFavorite
             fill={isFavorite}
-            isBusy={
-              addFavoriteBusinessToUser.status.isBusy ||
-              removeFavoriteBusinessFromUser.status.isBusy
-            }
+            isBusy={addFavoriteUser.status.isBusy || removeFavoriteUser.status.isBusy}
             onClick={() => {
               if (!user) return;
               if (!business) return;
 
-              (isFavorite ? removeFavoriteBusinessFromUser : addFavoriteBusinessToUser).fetch(
+              (isFavorite ? removeFavoriteUser : addFavoriteUser).fetch(
                 {
                   userId: user._id,
                   routeName: business.routeName,
