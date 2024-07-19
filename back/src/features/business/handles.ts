@@ -23,7 +23,7 @@ import {
 } from '../../types/business';
 import { Image, ModelDocument, RequestHandler } from '../../types/general';
 import { makeReshaper } from '../../utils/makeReshaper';
-import { PaginateResult } from '../../middlewares/pagination';
+import { PaginateResult } from '../../middlewares/middlewarePagination';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { isEqualIds, movRow } from '../../utils/general';
 import { imagesServicesDeleteOldImages } from '../images/services';

@@ -1,20 +1,22 @@
 import { Router } from 'express';
 
-import { pagination } from '../../middlewares/pagination';
-import { validators } from '../../middlewares/express-validator';
+import { middlewarePagination } from '../../middlewares/middlewarePagination';
+import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
 import { billingHandles } from './handles';
-import { isLogged, isUserBusinessOwner, isUserThisBusinessOwner } from '../../middlewares/verify';
+import { middlewareIsLogged } from '../../middlewares/middlewareIsLogged';
+import { middlewareIsUserBusinessOwner } from '../../middlewares/middlewareIsUserBusinessOwner';
+import { middlewareIsUserThisBusinessOwner } from '../../middlewares/middlewareIsUserThisBusinessOwner';
 
 export const router = Router();
 
 router
   .route('/bills')
   .get(
-    validators.query('routeName').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserBusinessOwner,
-    isUserThisBusinessOwner,
-    pagination,
-    billingHandles.get_bills()
+    middlewareExpressValidator.query('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareIsUserBusinessOwner,
+    middlewareIsUserThisBusinessOwner,
+    middlewarePagination,
+    billingHandles.get_bills(),
   );

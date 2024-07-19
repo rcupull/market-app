@@ -1,5 +1,5 @@
 import { RequestHandler } from '../../types/general';
-import { uploadImageMiddleware } from '../../middlewares/files';
+import { middlewareUploadImage } from '../../middlewares/middlewareUploadImage';
 import { withTryCatch } from '../../utils/error';
 
 import {
@@ -16,7 +16,7 @@ import {
 const post_images: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      uploadImageMiddleware(req, res, async (err) => {
+      middlewareUploadImage(req, res, async (err) => {
         if (err) {
           return get400Response({ res, json: { message: err.message } });
         }
@@ -60,7 +60,7 @@ const post_images: () => RequestHandler = () => {
 const post_image_checkeditor: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      uploadImageMiddleware(req, res, async (err) => {
+      middlewareUploadImage(req, res, async (err) => {
         if (err) {
           return get400Response({ res, json: { message: err.message } });
         }

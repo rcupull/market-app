@@ -6,7 +6,7 @@ import { Shopping, ShoppingState } from '../../types/shopping';
 import { Post, PostPurshaseNotes } from '../../types/post';
 import { isEqual, isEqualIds, isNullOrUndefined, isNumber } from '../../utils/general';
 import { User } from '../../types/user';
-import { PaginateResult } from '../../middlewares/pagination';
+import { PaginateResult } from '../../middlewares/middlewarePagination';
 import {
   GetAllShoppingArgs,
   getAllShoppingFilterQuery,
