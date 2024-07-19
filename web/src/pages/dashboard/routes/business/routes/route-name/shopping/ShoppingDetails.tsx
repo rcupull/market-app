@@ -60,8 +60,6 @@ export const ShoppingDetails = ({ rowData, business }: ShoppingDetailsProps) => 
 
       {renderKey('Total de productos')}
       {renderValue(totalProducts)}
-
-      <Divider className="!my-1" />
     </div>
   );
 };
