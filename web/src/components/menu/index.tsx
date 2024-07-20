@@ -62,7 +62,7 @@ export const Menu = ({
                     <div className={className}>
                       {divider && (
                         <div className="relative flex justify-center bg-white">
-                          <Divider className="!my-2" />
+                          <Divider narrow />
                           {typeof divider === 'string' && (
                             <div className="bg-white absolute top-0 text-xs text-gray-700 font-bold px-1">
                               {divider}
