@@ -27,7 +27,7 @@ describe('SideBar', () => {
           data-id="SideBar"
         >
           <div
-            class="w-full mt-8 mb-4 border-t-2 border-gray-300 !mt-3 !mb-1"
+            class="w-full border-t-2 border-gray-300 mt-8 mb-4 !mt-3 !mb-1"
           />
         </div>
       </div>

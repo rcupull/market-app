@@ -3,7 +3,7 @@ import { RequestHandler } from '../../../types/general';
 import { withTryCatch } from '../../../utils/error';
 import { get200Response } from '../../../utils/server-response';
 import { imagesServicesDeleteBulk } from '../../images/services';
-import { userServicesUpdateOne } from '../../user/services';
+import { userServicesGetAllWithPagination, userServicesUpdateOne } from '../../user/services';
 
 import { specialAccessRecord } from './utils';
 
@@ -12,12 +12,12 @@ const get_users: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { paginateOptions } = req;
 
-      const out = await UserModel.paginate(
-        {
+      const out = await userServicesGetAllWithPagination({
+        paginateOptions,
+        query: {
           role: { $in: ['user', 'admin'] },
         },
-        paginateOptions
-      );
+      });
 
       res.send(out);
     });

@@ -4,8 +4,8 @@ import { middlewarePagination } from '../../middlewares/middlewarePagination';
 import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
 import { billingHandles } from './handles';
 import { middlewareIsLogged } from '../../middlewares/middlewareIsLogged';
-import { middlewareIsUserBusinessOwner } from '../../middlewares/middlewareIsUserBusinessOwner';
-import { middlewareIsUserThisBusinessOwner } from '../../middlewares/middlewareIsUserThisBusinessOwner';
+import { middlewareUserCanCreateBusiness } from '../../middlewares/middlewareUserCanCreateBusiness';
+import { middlewareBusinessManIsOwnerOfThis } from '../../middlewares/middlewareBusinessManIsOwnerOfThis';
 
 export const router = Router();
 
@@ -15,8 +15,8 @@ router
     middlewareExpressValidator.query('routeName').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
-    middlewareIsUserBusinessOwner,
-    middlewareIsUserThisBusinessOwner,
+    middlewareUserCanCreateBusiness,
+    middlewareBusinessManIsOwnerOfThis,
     middlewarePagination,
     billingHandles.get_bills()
   );

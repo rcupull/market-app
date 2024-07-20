@@ -82,7 +82,7 @@ export const FieldPostCardLayout = ({ className, label, ...props }: FieldPostCar
               containerClassName="flex items-center flex-wrap gap-4"
             />
 
-            <Divider className="!my-2" />
+            <Divider narrow />
 
             <FieldRadioGroup<{ value: PostCardSize; label: string }>
               label="Tamaño"
@@ -108,7 +108,7 @@ export const FieldPostCardLayout = ({ className, label, ...props }: FieldPostCar
               containerClassName="flex items-center flex-wrap gap-4"
             />
 
-            <Divider className="!my-2" />
+            <Divider narrow />
 
             <FieldRadioGroup<{ value: PostCardLayoutMetaLayout; label: string }>
               label="Diseño de los metadatos"
@@ -137,7 +137,7 @@ export const FieldPostCardLayout = ({ className, label, ...props }: FieldPostCar
               containerClassName="flex items-center flex-wrap gap-4"
             />
 
-            <Divider className="!my-2" />
+            <Divider narrow />
 
             <FieldRadioGroup<{ value: PostCardLayoutName; label: string }>
               label="Nombre"
@@ -159,7 +159,7 @@ export const FieldPostCardLayout = ({ className, label, ...props }: FieldPostCar
               containerClassName="flex items-center flex-wrap gap-4"
             />
 
-            <Divider className="!my-2" />
+            <Divider narrow />
 
             <FieldRadioGroup<{ value: PostCardLayoutPrice; label: string }>
               label="Precio"
@@ -189,7 +189,7 @@ export const FieldPostCardLayout = ({ className, label, ...props }: FieldPostCar
               containerClassName="flex items-center flex-wrap gap-4"
             />
 
-            <Divider className="!my-2" />
+            <Divider narrow />
 
             <FieldRadioGroup<{ value: PostCardLayoutDiscount; label: string }>
               label="Descuento"
@@ -215,7 +215,7 @@ export const FieldPostCardLayout = ({ className, label, ...props }: FieldPostCar
               containerClassName="flex items-center flex-wrap gap-4"
             />
 
-            <Divider className="!my-2" />
+            <Divider narrow />
 
             <FieldPostShoppingMethodSelect
               name={getNestedFieldName('shoppingMethod')}

@@ -2,10 +2,11 @@ import { Divider } from 'components/divider';
 
 import { DeliveryDetails } from './DeliveryDetails';
 
+import { ListDetailsKey } from 'pages/@common/list-details-key';
+import { ListDetailsValue } from 'pages/@common/list-details-value';
 import { Business } from 'types/business';
 import { Shopping } from 'types/shopping';
 import { getDateString } from 'utils/date';
-import { cn } from 'utils/general';
 import { getShoppingData } from 'utils/shopping';
 
 export interface ShoppingDetailsProps {
@@ -17,52 +18,25 @@ export const ShoppingDetails = ({ rowData, business }: ShoppingDetailsProps) => 
   const { currency } = business || {};
   const { totalPrice, totalProducts } = getShoppingData(rowData);
 
-  const renderKey = (label: string, options?: { error?: boolean }) => {
-    const { error } = options || {};
-    return (
-      <div
-        className={cn('font-bold text-xs text-gray-400', {
-          'text-red-500': error,
-        })}
-      >
-        {label}
-      </div>
-    );
-  };
-
-  const renderValue = (value: React.ReactNode, options?: { error?: boolean }) => {
-    const { error } = options || {};
-
-    return (
-      <div
-        className={cn('font-semibold', {
-          'text-red-500': error,
-        })}
-      >
-        {value}
-      </div>
-    );
-  };
-
   return (
     <div className="w-48 sm:w-60">
-      {renderKey('Entrega')}
-      <DeliveryDetails rowData={rowData} business={business} />
+      <ListDetailsKey label="Entrega" />
+      <ListDetailsValue value={<DeliveryDetails rowData={rowData} business={business} />} />
 
-      <Divider className="!my-1" />
+      <Divider narrow />
 
-      {renderKey('Fecha')}
-      {renderValue(getDateString({ date: createdAt, showTime: true }))}
+      <ListDetailsKey label="Fecha" />
+      <ListDetailsValue value={getDateString({ date: createdAt, showTime: true })} />
 
-      <Divider className="!my-1" />
+      <Divider narrow />
 
-      {renderKey('Precio de los productos')}
-      {renderValue(`${totalPrice} ${currency}`)}
+      <ListDetailsKey label="Precio de los productos" />
+      <ListDetailsValue value={`${totalPrice} ${currency}`} />
 
-      <Divider className="!my-1" />
+      <Divider narrow />
 
-      {renderKey('Total de productos')}
-      {renderValue(totalProducts)}
+      <ListDetailsKey label="Total de productos" />
+      <ListDetailsValue value={totalProducts} />
     </div>
   );
 };
