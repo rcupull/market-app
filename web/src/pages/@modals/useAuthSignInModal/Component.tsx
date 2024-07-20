@@ -144,9 +144,9 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
 
                 {portal.getPortal(
                   <Button
+                    formuxSubmit
                     label="Iniciar sesión"
                     isBusy={authSignIn.status.isBusy}
-                    disabled={!isValid}
                     onClick={handleSubmit}
                     className="w-full"
                   />

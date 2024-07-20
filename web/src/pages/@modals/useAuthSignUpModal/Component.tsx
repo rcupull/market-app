@@ -89,7 +89,7 @@ export const Component = ({ portal }: ComponentProps) => {
             },
           ]}
         >
-          {({ isValid, value, setErrors, errors }) => {
+          {({ value, setErrors, errors }) => {
             return (
               <form>
                 <FieldInput
@@ -151,8 +151,8 @@ export const Component = ({ portal }: ComponentProps) => {
                 {portal.getPortal(
                   <Button
                     label="Registrarse"
+                    formuxSubmit
                     isBusy={authSignUp.status.isBusy}
-                    disabled={!isValid}
                     onClick={() => {
                       const { email, password, name } = value;
                       authSignUp.fetch(
