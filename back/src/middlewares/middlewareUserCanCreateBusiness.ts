@@ -2,7 +2,7 @@ import { RequestHandler } from 'express';
 
 import { get401Response, get404Response } from '../utils/server-response';
 
-export const middlewareIsUserBusinessOwner: RequestHandler = async (req, res, next) => {
+export const middlewareUserCanCreateBusiness: RequestHandler = async (req, res, next) => {
   const { user } = req;
 
   if (!user) {

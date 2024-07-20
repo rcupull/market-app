@@ -30,7 +30,7 @@ const renderState = ({
           </div>
         )}
       </div>
-      <Divider className="!my-1" />
+      <Divider narrow />
     </div>
   );
 };

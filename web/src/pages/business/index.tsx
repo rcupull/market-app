@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { BusinessMainBar } from './components/business-main-bar';
+import { BusinessMainBar } from '../@common/business-main-bar';
 
 import { dynamic } from 'utils/makeLazy';
 const Home = dynamic(() => import('./routes/home').then((m) => ({ default: m.Home })));

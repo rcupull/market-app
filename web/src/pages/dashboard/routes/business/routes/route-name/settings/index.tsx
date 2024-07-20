@@ -7,12 +7,14 @@ import SvgFighterJetSolid from 'icons/FighterJetSolid';
 import SvgHandshakeSolid from 'icons/HandshakeSolid';
 import SvgMedrt from 'icons/Medrt';
 import SvgNetworkWiredSolid from 'icons/NetworkWiredSolid';
+import SvgPeopleCarrySolid from 'icons/PeopleCarrySolid';
 import SvgShareAltSolid from 'icons/ShareAltSolid';
+import SvgShippingFastSolid from 'icons/ShippingFastSolid';
 import SvgTagsSolid from 'icons/TagsSolid';
-import SvgTruckSolid from 'icons/TruckSolid';
 import SvgUsersSolid from 'icons/UsersSolid';
 import SvgWpforms from 'icons/Wpforms';
 import { useBusiness } from 'pages/@hooks/useBusiness';
+import { useBusinessDeliveryManModal } from 'pages/@modals/useBusinessDeliveryManModal';
 import { useBusinessDeliveryModal } from 'pages/@modals/useBusinessDeliveryModal';
 import { useBusinessOnboardingModal } from 'pages/@modals/useBusinessOnboardingModal';
 import { useBusinessShoppingTermsAndConditionsModal } from 'pages/@modals/useBusinessShoppingTermsAndConditionsModal';
@@ -24,6 +26,7 @@ import { useBusinessUpdatePostCategoriesModal } from 'pages/@modals/useBusinessU
 import { useBusinessUpdatePostFormModal } from 'pages/@modals/useBusinessUpdatePostFormModal';
 import { useBusinessUpdateSeoModal } from 'pages/@modals/useBusinessUpdateSeoModal';
 import { useBusinessUpdateSocialNetworksModal } from 'pages/@modals/useBusinessUpdateSocialNetworksModal';
+import { getDeliveryUtils } from 'utils/business';
 
 export const Settings = () => {
   const businessUpdateSocialNetworks = useBusinessUpdateSocialNetworksModal();
@@ -37,11 +40,17 @@ export const Settings = () => {
   const businessUpdateNotifications = useBusinessUpdateNotificationsModal();
   const businessShoppingTermsAndConditionsModal = useBusinessShoppingTermsAndConditionsModal();
   const businessDeliveryModal = useBusinessDeliveryModal();
+  const businessDeliveryManModal = useBusinessDeliveryManModal();
 
   const { onFetch, business } = useBusiness();
+  const { getIsEnabled } = getDeliveryUtils();
+
+  const enabledDelivery = getIsEnabled({
+    deliveryConfig: business?.deliveryConfig,
+  });
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-10 p-2 sm:p-6 place-items-center">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-10 p-2 sm:p-6 place-items-center">
       {DEVELOPMENT && (
         <SettingBox
           title="Configuración rápida(DEV)"
@@ -161,9 +170,22 @@ export const Settings = () => {
             </span>
           </div>
         }
-        svg={SvgTruckSolid}
+        svg={SvgShippingFastSolid}
         onClick={() => businessDeliveryModal.open()}
       />
+
+      {enabledDelivery && (
+        <SettingBox
+          title="Mensajeros"
+          description={
+            <div>
+              <span>Selecciona los mensajeros para tus entregas.</span>
+            </div>
+          }
+          svg={SvgPeopleCarrySolid}
+          onClick={() => businessDeliveryManModal.open()}
+        />
+      )}
     </div>
   );
 };

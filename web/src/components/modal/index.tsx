@@ -98,7 +98,10 @@ export const Modal = ({
 
                     {secondaryBtn &&
                       cloneElement(secondaryBtn, {
-                        className: 'w-full sm:w-auto mt-3 sm:mt-0 ml-0 sm:ml-3',
+                        className: cn('w-full sm:w-auto mt-3 sm:mt-0', {
+                          'ml-0 sm:ml-3': primaryBtn || customBtn,
+                          'ml-0 sm:ml-auto': !primaryBtn && !customBtn,
+                        }),
                       })}
                   </div>
                 )}

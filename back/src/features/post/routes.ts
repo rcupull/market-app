@@ -4,8 +4,8 @@ import { middlewarePagination } from '../../middlewares/middlewarePagination';
 import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
 import { postHandles } from './handles';
 import { middlewareIsLogged } from '../../middlewares/middlewareIsLogged';
-import { middlewareIsUserBusinessOwner } from '../../middlewares/middlewareIsUserBusinessOwner';
-import { middlewareIsUserThisBusinessOwner } from '../../middlewares/middlewareIsUserThisBusinessOwner';
+import { middlewareUserCanCreateBusiness } from '../../middlewares/middlewareUserCanCreateBusiness';
+import { middlewareBusinessManIsOwnerOfThis } from '../../middlewares/middlewareBusinessManIsOwnerOfThis';
 import { middlewareIsUserThisPostOwner } from '../../middlewares/middlewareIsUserThisPostOwner';
 
 export const router = Router();
@@ -18,8 +18,8 @@ router
     middlewareExpressValidator.body('name').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
-    middlewareIsUserBusinessOwner,
-    middlewareIsUserThisBusinessOwner,
+    middlewareUserCanCreateBusiness,
+    middlewareBusinessManIsOwnerOfThis,
     postHandles.post_posts()
   );
 
@@ -29,7 +29,7 @@ router
     middlewareExpressValidator.param('postId').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
-    middlewareIsUserBusinessOwner,
+    middlewareUserCanCreateBusiness,
     middlewareIsUserThisPostOwner,
     postHandles.post_posts_postId_duplicate()
   );
@@ -74,7 +74,7 @@ router
     middlewareExpressValidator.body('routeName').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
-    middlewareIsUserThisBusinessOwner,
+    middlewareBusinessManIsOwnerOfThis,
     postHandles.bulk_action_delete()
   );
 
@@ -85,6 +85,6 @@ router
     middlewareExpressValidator.body('update').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
-    middlewareIsUserThisBusinessOwner,
+    middlewareBusinessManIsOwnerOfThis,
     postHandles.bulk_action_update()
   );

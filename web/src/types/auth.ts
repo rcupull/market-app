@@ -7,6 +7,12 @@ export type UserRole = 'user' | 'admin';
 export interface UserChecks {
   requestUserTypeWhenStart?: boolean;
 }
+
+interface UserDeliveryBusinessData {
+  routeName: string;
+  updatedAt: Date;
+}
+
 export interface User extends BaseIdentity {
   name: string;
   email: string;
@@ -14,8 +20,10 @@ export interface User extends BaseIdentity {
   validated: boolean;
   profileImage?: Image | null;
   canCreateBusiness?: boolean;
+  //
   canMakeDeliveries?: boolean;
-
+  deliveryBusiness?: Array<UserDeliveryBusinessData>;
+  //
   specialAccess?: Array<Access>;
   telegramBotChat?: TelegramBotChat;
   phone?: string;
