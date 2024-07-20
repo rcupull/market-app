@@ -27,14 +27,14 @@ import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useInfiniteScrolling } from 'pages/@hooks/useInfiniteScrolling';
 import { usePostIdPersistent } from 'pages/@hooks/usePostIdPersistent';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
-import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
+import { useBusinessNewUpdatePostModal } from 'pages/@modals/useBusinessNewUpdatePostModal';
 import { usePostMakeReviewModal } from 'pages/@modals/usePostMakeReviewModal';
 import { Post } from 'types/post';
 
 export const PostId = () => {
   const { params } = useRouter();
   const { postId } = params;
-  const businessNewUpdatePost = useBusinessNewUpdatePost();
+  const businessNewUpdatePost = useBusinessNewUpdatePostModal();
 
   const postIdPersistent = usePostIdPersistent();
   const businessPageData = useBusiness();
@@ -100,7 +100,7 @@ export const PostId = () => {
   };
 
   return (
-    <LayoutPage title={post?.name} backButton>
+    <LayoutPage title={post?.name}>
       <UpdateSomethingContainer
         title="Editar esta publicación"
         onClick={() => {

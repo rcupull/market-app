@@ -43,7 +43,7 @@ export const RouteName = () => {
       businessOwnerData.onFetch({ routeName });
 
       if (!query.businessTab) {
-        const businessTab: BusinessTab = 'products';
+        const businessTab: BusinessTab = 'shopping';
         onChangeQuery({ businessTab });
       }
     }
@@ -68,8 +68,6 @@ export const RouteName = () => {
     return <></>;
   }
 
-  const { hidden } = business;
-
   if (!businessOwnerData.owner) {
     return (
       <LayoutPage>
@@ -82,6 +80,18 @@ export const RouteName = () => {
 
   const tabsItems: Array<TabItem & { q: BusinessTab }> = compact([
     {
+      q: 'shopping',
+      label: getBusinessTabLabel('shopping'),
+      content: <ShoppingPage />,
+      svg: SvgShoppingCartSolid,
+    },
+    {
+      q: 'sections',
+      label: getBusinessTabLabel('sections'),
+      content: <PostsSections />,
+      svg: SvgLayerGroupSolid,
+    },
+    {
       q: 'products',
       label: getBusinessTabLabel('products'),
       content: <Products />,
@@ -92,18 +102,6 @@ export const RouteName = () => {
       label: getBusinessTabLabel('links'),
       content: <Links />,
       svg: SvgLinkSolid,
-    },
-    {
-      q: 'sections',
-      label: getBusinessTabLabel('sections'),
-      content: <PostsSections />,
-      svg: SvgLayerGroupSolid,
-    },
-    {
-      q: 'shopping',
-      label: getBusinessTabLabel('shopping'),
-      content: <ShoppingPage />,
-      svg: SvgShoppingCartSolid,
     },
     {
       q: 'settings',
@@ -130,17 +128,18 @@ export const RouteName = () => {
     <>
       <BusinessConfig business={business} />
       <LayoutSection
+        title={
+          query.businessTab && (
+            <span className="ml-2 sm:hidden">
+              {getBusinessTabLabel(query.businessTab as BusinessTab)}
+            </span>
+          )
+        }
         topRightHeader={
           <div className="flex items-center gap-6">
             <BannerInfoTelegramBusiness className="hidden sm:flex" />
 
             <BannerInfoTotalDebitBusiness className="hidden sm:flex" />
-
-            {hidden && (
-              <div className="text-red-500 ring-1 ring-red-400 rounded-3xl px-2 py-1/2 text-sm sm:text-lg">
-                Oculto
-              </div>
-            )}
 
             <Options
               business={business}
@@ -150,8 +149,8 @@ export const RouteName = () => {
         }
       >
         <Tabs
-          className="mt-4 shadow-lg hidden sm:flex"
-          contentClassName="w-full overflow-y-auto h-[calc(100vh-12rem)]"
+          tabListClassName="mt-4 shadow-lg hidden sm:flex"
+          tabPanelClassName="w-full overflow-y-auto h-[calc(100vh-12rem)]"
           onSelect={(tabIndex) =>
             onChangeQuery(
               { businessTab: tabIndexToQuery(tabIndex) },

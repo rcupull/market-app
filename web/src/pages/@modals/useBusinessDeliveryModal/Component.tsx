@@ -41,7 +41,7 @@ export const Component = ({ portal }: ComponentProps) => {
         address: business.addresses?.[0],
       }}
     >
-      {({ value, isValid }) => {
+      {({ value }) => {
         const isEnabledDelivery = getDeliveryUtils().getIsEnabled({
           deliveryConfig: value.deliveryConfig,
         });
@@ -109,18 +109,19 @@ export const Component = ({ portal }: ComponentProps) => {
               />
             </div>
 
-            <Divider />
-
             {(value.deliveryConfig?.type === DeliveryConfigType.OPTIONAL ||
               value.deliveryConfig?.type === DeliveryConfigType.REQUIRED) && (
-              <PriceTesting deliveryConfig={value.deliveryConfig} />
+              <>
+                <Divider />
+                <PriceTesting deliveryConfig={value.deliveryConfig} />
+              </>
             )}
 
             {portal.getPortal(
               <Button
                 label="Guardar"
                 isBusy={updateOneBusiness.status.isBusy}
-                disabled={!isValid}
+                formuxSubmit
                 onClick={() => {
                   updateOneBusiness.fetch(
                     {

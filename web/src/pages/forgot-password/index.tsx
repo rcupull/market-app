@@ -10,7 +10,7 @@ import { usePortal } from 'hooks/usePortal';
 import { useRouter } from 'hooks/useRouter';
 
 import SvgCheckCircle from 'icons/CheckCircle';
-import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
+import { BusinessMarketBrand } from 'pages/@common/business-market-brand';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { getRequiredLabel } from 'utils/form';
 import { getStrongPasswordTracking } from 'utils/password';
@@ -45,10 +45,10 @@ export const ForgotPassword = () => {
     <>
       <div>
         <div className="flex justify-center">
-          <BusinessMarketLogo className="!size-28" />
+          <BusinessMarketBrand />
         </div>
 
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        <h2 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Restablecer contraseña
         </h2>
       </div>
@@ -79,7 +79,7 @@ export const ForgotPassword = () => {
             },
           ]}
         >
-          {({ isValid, value }) => {
+          {({ value }) => {
             return (
               <form>
                 <FieldInput
@@ -103,7 +103,7 @@ export const ForgotPassword = () => {
                   <Button
                     label="Restablecer"
                     isBusy={authForgotPasswordValidate.status.isBusy}
-                    disabled={!isValid}
+                    formuxSubmit
                     onClick={() => {
                       if (!code) return;
 

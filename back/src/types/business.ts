@@ -1,6 +1,7 @@
 import { Address, BaseIdentity, Image, TelegramBotChat } from './general';
 import { Schema } from 'mongoose';
 import { Post, PostType } from './post';
+import { User } from './user';
 
 export type BusinessCurrency = 'CUP' | 'MLC' | 'USD';
 
@@ -40,8 +41,6 @@ export interface PostsLayoutSection {
 export interface PostsLayout {
   sections?: Array<PostsLayoutSection>;
 }
-
-export interface PostPageLayout {}
 
 export type PostCardLayoutImages = 'static' | 'hoverZoom' | 'slider' | 'switch' | 'rounded';
 
@@ -170,8 +169,15 @@ export interface Business extends BaseIdentity {
   seo?: BusinessSEO;
   addresses?: Array<Address>;
   deliveryConfig?: DeliveryConfig;
+  //
+  doneOnboarding?: boolean;
+  favoritesUserIds?: Array<Schema.Types.ObjectId>;
 }
 
+export interface BusinessAdminDto extends Business {
+  userData?: Pick<User, 'name'>;
+  postCount?: number;
+}
 export interface BusinessDto extends Business {
   shoppingDebit: number;
 }

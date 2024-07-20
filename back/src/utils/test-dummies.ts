@@ -1,5 +1,6 @@
 import mongose from 'mongoose';
 import { Address } from '../types/general';
+import { PostPurshaseNotes } from '../types/post';
 
 //Business
 export const objectIds = {
@@ -9,6 +10,7 @@ export const objectIds = {
 };
 
 export const addressDummy: Address = {
+  _id: '62a23958e5a9e9b88f853a10',
   apartment: 45,
   city: 'Habana',
   municipality: 'La Lisa',
@@ -23,4 +25,9 @@ export const addressDummy: Address = {
   lon: 7,
   placeId: 'asdasd',
   postCode: 'asdasda',
+};
+
+export const purshaseNotesDummy: PostPurshaseNotes = {
+  interestedByClothingSizes: [],
+  interestedByColors: [],
 };

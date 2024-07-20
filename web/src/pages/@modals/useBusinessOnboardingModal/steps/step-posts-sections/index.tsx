@@ -4,7 +4,7 @@ import { OnboardingStepProps } from '../../types';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useNextButtonPortal } from 'pages/@hooks/useNextButtonPortal';
-import { ComponentProduct as Component } from 'pages/@modals/useBusinessNewUpdateSection/ComponentProduct';
+import { ComponentProduct as Component } from 'pages/@modals/useBusinessNewUpdateSectionModal/ComponentProduct';
 
 export interface StepPostsSectionsProps extends OnboardingStepProps {}
 

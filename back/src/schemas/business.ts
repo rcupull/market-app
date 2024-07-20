@@ -113,7 +113,6 @@ const BusinessSchema = new Schema<Business>({
         type: String,
         enum: [
           'name',
-          'currency',
           'clothingSizes',
           'colors',
           'description',
@@ -121,7 +120,6 @@ const BusinessSchema = new Schema<Business>({
           'details',
           'postCategoriesTags',
           'discount',
-          'postPageLayout',
           'stockAmount',
           'images',
         ],
@@ -129,7 +127,6 @@ const BusinessSchema = new Schema<Business>({
     ],
     default: [
       'name',
-      'currency',
       'clothingSizes',
       'colors',
       'description',
@@ -137,7 +134,6 @@ const BusinessSchema = new Schema<Business>({
       'details',
       'postCategoriesTags',
       'discount',
-      'postPageLayout',
       'stockAmount',
       'images',
     ],
@@ -148,6 +144,8 @@ const BusinessSchema = new Schema<Business>({
   },
   addresses: [AddressDefinition],
   deliveryConfig: DeliveryConfigDefinition,
+  doneOnboarding: { type: Boolean, default: false },
+  favoritesUserIds: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
 BusinessSchema.plugin(mongoosePaginate);

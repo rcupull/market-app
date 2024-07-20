@@ -23,7 +23,7 @@ import {
 } from '../../types/business';
 import { Image, ModelDocument, RequestHandler } from '../../types/general';
 import { makeReshaper } from '../../utils/makeReshaper';
-import { PaginateResult } from '../../middlewares/pagination';
+import { PaginateResult } from '../../middlewares/middlewarePagination';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { isEqualIds, movRow } from '../../utils/general';
 import { imagesServicesDeleteOldImages } from '../images/services';
@@ -308,6 +308,7 @@ const put_business_routeName: () => RequestHandler = () => {
           seo: 'seo',
           addresses: 'addresses',
           deliveryConfig: 'deliveryConfig',
+          doneOnboarding: 'doneOnboarding',
         })(body),
       });
 
@@ -505,6 +506,54 @@ const post_business_routeName_chatbot_validate: () => RequestHandler = () => {
   };
 };
 
+const post_business_routeName_favorite_users: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { params, body } = req;
+
+      const { routeName } = params;
+      const { userId } = body;
+
+      await businessServicesUpdateOne({
+        query: {
+          routeName,
+        },
+        update: {
+          $push: {
+            favoritesUserIds: userId,
+          },
+        },
+      });
+
+      res.send({});
+    });
+  };
+};
+
+const del_business_routeName_favorite_users: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { params, body } = req;
+
+      const { routeName } = params;
+      const { userId } = body;
+
+      await businessServicesUpdateOne({
+        query: {
+          routeName,
+        },
+        update: {
+          $pull: {
+            favoritesUserIds: userId,
+          },
+        },
+      });
+
+      res.send({});
+    });
+  };
+};
+
 export const businessHandles = {
   get_business,
   get_business_routeName,
@@ -523,4 +572,7 @@ export const businessHandles = {
   get_business_search,
 
   post_business_routeName_chatbot_validate,
+  //
+  post_business_routeName_favorite_users,
+  del_business_routeName_favorite_users,
 };

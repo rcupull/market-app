@@ -7,41 +7,50 @@ import SvgFighterJetSolid from 'icons/FighterJetSolid';
 import SvgHandshakeSolid from 'icons/HandshakeSolid';
 import SvgMedrt from 'icons/Medrt';
 import SvgNetworkWiredSolid from 'icons/NetworkWiredSolid';
+import SvgPeopleCarrySolid from 'icons/PeopleCarrySolid';
 import SvgShareAltSolid from 'icons/ShareAltSolid';
+import SvgShippingFastSolid from 'icons/ShippingFastSolid';
 import SvgTagsSolid from 'icons/TagsSolid';
-import SvgTruckSolid from 'icons/TruckSolid';
 import SvgUsersSolid from 'icons/UsersSolid';
 import SvgWpforms from 'icons/Wpforms';
 import { useBusiness } from 'pages/@hooks/useBusiness';
+import { useBusinessDeliveryManModal } from 'pages/@modals/useBusinessDeliveryManModal';
 import { useBusinessDeliveryModal } from 'pages/@modals/useBusinessDeliveryModal';
 import { useBusinessOnboardingModal } from 'pages/@modals/useBusinessOnboardingModal';
 import { useBusinessShoppingTermsAndConditionsModal } from 'pages/@modals/useBusinessShoppingTermsAndConditionsModal';
-import { useBusinessUpdateAboutUs } from 'pages/@modals/useBusinessUpdateAboutUs';
-import { useBusinessUpdateBanner } from 'pages/@modals/useBusinessUpdateBanner';
-import { useBusinessUpdateLogo } from 'pages/@modals/useBusinessUpdateLogo';
-import { useBusinessUpdateNotifications } from 'pages/@modals/useBusinessUpdateNotifications';
-import { useBusinessUpdatePostCategories } from 'pages/@modals/useBusinessUpdatePostCategories';
-import { useBusinessUpdatePostForm } from 'pages/@modals/useBusinessUpdatePostForm';
-import { useBusinessUpdateSeo } from 'pages/@modals/useBusinessUpdateSeo';
-import { useBusinessUpdateSocialNetworks } from 'pages/@modals/useBusinessUpdateSocialNetworks';
+import { useBusinessUpdateAboutUsModal } from 'pages/@modals/useBusinessUpdateAboutUsModal';
+import { useBusinessUpdateBannerModal } from 'pages/@modals/useBusinessUpdateBannerModal';
+import { useBusinessUpdateLogoModal } from 'pages/@modals/useBusinessUpdateLogoModal';
+import { useBusinessUpdateNotificationsModal } from 'pages/@modals/useBusinessUpdateNotificationsModal';
+import { useBusinessUpdatePostCategoriesModal } from 'pages/@modals/useBusinessUpdatePostCategoriesModal';
+import { useBusinessUpdatePostFormModal } from 'pages/@modals/useBusinessUpdatePostFormModal';
+import { useBusinessUpdateSeoModal } from 'pages/@modals/useBusinessUpdateSeoModal';
+import { useBusinessUpdateSocialNetworksModal } from 'pages/@modals/useBusinessUpdateSocialNetworksModal';
+import { getDeliveryUtils } from 'utils/business';
 
 export const Settings = () => {
-  const businessUpdateSocialNetworks = useBusinessUpdateSocialNetworks();
+  const businessUpdateSocialNetworks = useBusinessUpdateSocialNetworksModal();
   const businessOnboardingModal = useBusinessOnboardingModal();
-  const businessUpdateBanner = useBusinessUpdateBanner();
-  const businessUpdateAboutUs = useBusinessUpdateAboutUs();
-  const businessUpdateLogo = useBusinessUpdateLogo();
-  const businessUpdateSeo = useBusinessUpdateSeo();
-  const businessUpdatePostCategories = useBusinessUpdatePostCategories();
-  const businessUpdatePostForm = useBusinessUpdatePostForm();
-  const businessUpdateNotifications = useBusinessUpdateNotifications();
+  const businessUpdateBanner = useBusinessUpdateBannerModal();
+  const businessUpdateAboutUs = useBusinessUpdateAboutUsModal();
+  const businessUpdateLogo = useBusinessUpdateLogoModal();
+  const businessUpdateSeo = useBusinessUpdateSeoModal();
+  const businessUpdatePostCategories = useBusinessUpdatePostCategoriesModal();
+  const businessUpdatePostForm = useBusinessUpdatePostFormModal();
+  const businessUpdateNotifications = useBusinessUpdateNotificationsModal();
   const businessShoppingTermsAndConditionsModal = useBusinessShoppingTermsAndConditionsModal();
   const businessDeliveryModal = useBusinessDeliveryModal();
+  const businessDeliveryManModal = useBusinessDeliveryManModal();
 
   const { onFetch, business } = useBusiness();
+  const { getIsEnabled } = getDeliveryUtils();
+
+  const enabledDelivery = getIsEnabled({
+    deliveryConfig: business?.deliveryConfig,
+  });
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-10 p-2 sm:p-6 place-items-center">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 lg:gap-10 p-2 sm:p-6 place-items-center">
       {DEVELOPMENT && (
         <SettingBox
           title="Configuración rápida(DEV)"
@@ -161,9 +170,22 @@ export const Settings = () => {
             </span>
           </div>
         }
-        svg={SvgTruckSolid}
+        svg={SvgShippingFastSolid}
         onClick={() => businessDeliveryModal.open()}
       />
+
+      {enabledDelivery && (
+        <SettingBox
+          title="Mensajeros"
+          description={
+            <div>
+              <span>Selecciona los mensajeros para tus entregas.</span>
+            </div>
+          }
+          svg={SvgPeopleCarrySolid}
+          onClick={() => businessDeliveryManModal.open()}
+        />
+      )}
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { FilterQuery, PaginateOptions, QueryOptions, UpdateQuery } from 'mongoos
 import { ModelDocument, QueryHandle } from '../../types/general';
 import { PostModel } from '../../schemas/post';
 import { Post } from '../../types/post';
-import { PaginateResult } from '../../middlewares/pagination';
+import { PaginateResult } from '../../middlewares/middlewarePagination';
 
 import { isNumber } from '../../utils/general';
 import { GetAllPostArgs, getAllFilterQuery } from './utils';
@@ -116,7 +116,6 @@ export const postServicesAddOne: QueryHandle<
     | 'details'
     | 'highlights'
     | 'createdBy'
-    | 'postPageLayout'
     | 'postCategoriesTags'
     | 'stockAmount'
     | 'postType'

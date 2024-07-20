@@ -8,10 +8,10 @@ import {
   shoppingServicesFindOneAndDelete,
   shoppingServicesGetDataFromPosts,
 } from './services';
-import { isEmpty, isNumber } from '../../utils/general';
+import { compact, isEmpty, isNumber } from '../../utils/general';
 import { postServicesGetAll, postServicesGetOne } from '../post/services';
 import { makeReshaper } from '../../utils/makeReshaper';
-import { Post } from '../../types/post';
+import { allSortedClothingSize, allSortedColor, Post, PostPurshaseNotes } from '../../types/post';
 import { FilterQuery, Schema } from 'mongoose';
 import { setFilterQueryWithDates } from '../../utils/schemas';
 import { notificationsServicesSendUpdateStockAmountMessage } from '../notifications/services';
@@ -29,7 +29,8 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
   routeName: string;
   postId: string;
   user: User;
-}> = async ({ postId, routeName, user }) => {
+  purshaseNotes: PostPurshaseNotes | undefined;
+}> = async ({ postId, routeName, user, purshaseNotes }) => {
   const post = await postServicesGetOne({
     query: {
       _id: postId,
@@ -52,6 +53,7 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
       $pull: {
         posts: {
           'postData._id': postId,
+          purshaseNotes,
         },
       },
     },
@@ -212,4 +214,25 @@ export const wasApprovedShopping = (shopping: Shopping): boolean => {
     state === ShoppingState.APPROVED ||
     !!history?.find(({ state }) => state === ShoppingState.APPROVED)
   );
+};
+
+export const sortPurshaseNotes = (
+  purshaseNotes: PostPurshaseNotes | undefined
+): PostPurshaseNotes | undefined => {
+  if (!purshaseNotes) {
+    return purshaseNotes;
+  }
+
+  return {
+    interestedByColors: compact(
+      allSortedColor.map((color) => {
+        return purshaseNotes?.interestedByColors?.includes?.(color) ? color : null;
+      })
+    ),
+    interestedByClothingSizes: compact(
+      allSortedClothingSize.map((size) => {
+        return purshaseNotes?.interestedByClothingSizes?.includes?.(size) ? size : null;
+      })
+    ),
+  };
 };

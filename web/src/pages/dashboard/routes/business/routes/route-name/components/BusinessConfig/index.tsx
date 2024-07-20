@@ -2,12 +2,11 @@ import { useEffect } from 'react';
 
 import { useGetAllPosts } from 'features/api/posts/useGetAllPosts';
 
-import { useInterval } from 'hooks/useInterval';
-
 import { useBusinessOnboardingModal } from 'pages/@modals/useBusinessOnboardingModal';
 import { BusinessOnboardingSteps } from 'pages/@modals/useBusinessOnboardingModal/types';
 import { Business } from 'types/business';
 import { isEmpty } from 'utils/general';
+import { getAllProductsFields } from 'utils/products';
 
 export interface BusinessConfigProps {
   business: Business;
@@ -29,7 +28,6 @@ export const BusinessConfig = ({ business }: BusinessConfigProps) => {
       );
     });
   };
-  const interval = useInterval();
   const handleIsMissing = async (b: Business): Promise<Array<BusinessOnboardingSteps>> => {
     const out: Array<BusinessOnboardingSteps> = [];
 
@@ -61,26 +59,25 @@ export const BusinessConfig = ({ business }: BusinessConfigProps) => {
       out.push('products');
     }
 
+    /**
+     * si no ha podificado el formulario de los productos
+     */
+    if (b.postFormFields?.length === getAllProductsFields().length) {
+      out.push('productsForm');
+    }
+
     return out;
   };
 
   const handleCheck = async (b: Business) => {
-    const steps = await handleIsMissing(b);
-
-    if (steps.length) {
+    if (!business.doneOnboarding) {
+      const steps = await handleIsMissing(b);
       businessOnboardingModal.open({ steps });
     }
   };
 
   useEffect(() => {
-    interval.cancel();
-
     handleCheck(business);
-    interval(() => handleCheck(business), 5 * 60 * 1000);
-
-    return () => {
-      interval.cancel();
-    };
   }, [business.routeName]);
 
   return <></>;

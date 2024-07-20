@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
+import { NotFound } from 'components/not-found';
+
 import { useAuth } from 'features/api-slices/useAuth';
 
 import { useRouter } from 'hooks/useRouter';
 
-import { LayoutPage } from 'pages/@common/layout-page';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useCart } from 'pages/@hooks/useCart';
 import { getOneBusinessRoute } from 'utils/business';
@@ -23,7 +24,7 @@ export const RouteName = () => {
   const { isAuthenticated } = useAuth();
   const { routeName } = params;
 
-  const { business, onFetch, onReset, owner } = useBusiness();
+  const { business, onFetch, onReset, owner, status } = useBusiness();
   const cart = useCart();
 
   ////////////////////////////////////////////////////////////////////////////////////
@@ -55,16 +56,12 @@ export const RouteName = () => {
   }, [routeName, isAuthenticated]);
   ////////////////////////////////////////////////////////////////////////////////////
 
-  if (!routeName || !business) return <></>;
+  if (!routeName || (status.wasCalled && !business)) {
+    return <NotFound />;
+  }
 
   if (business?.hidden && !owner) {
-    return (
-      <LayoutPage>
-        <div className="flex items-center justify-center h-96 w-full text-2xl text-gray-500">
-          Este negocio no está disponible por ahora
-        </div>
-      </LayoutPage>
-    );
+    return <NotFound />;
   }
 
   return (

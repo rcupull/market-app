@@ -8,7 +8,17 @@ export const useUpdateOneUser = (): {
   updateOneUser: FetchResource<
     {
       userId: string;
-      update: Partial<Pick<User, 'profileImage' | 'name' | 'addresses' | 'phone'>>;
+      update: Partial<
+        Pick<
+          User,
+          | 'profileImage'
+          | 'name'
+          | 'addresses'
+          | 'phone'
+          | 'canCreateBusiness'
+          | 'canMakeDeliveries'
+        >
+      >;
     },
     void
   >;
@@ -24,7 +34,7 @@ export const useUpdateOneUser = (): {
           {
             method: 'put',
             url: getEndpoint({
-              path: '/user/:userId',
+              path: '/users/:userId',
               urlParams: { userId },
             }),
             data: update,

@@ -92,9 +92,6 @@
                   },
                   "name": {
                     "example": "any"
-                  },
-                  "canCreateBusiness": {
-                    "example": "any"
                   }
                 }
               }
@@ -226,7 +223,47 @@
         }
       }
     },
-    "/user/{userId}": {
+    "/users/deliveryMan": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "pagination",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
       "get": {
         "description": "",
         "parameters": [
@@ -268,6 +305,12 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "canCreateBusiness": {
+                    "example": "any"
+                  },
+                  "canMakeDeliveries": {
+                    "example": "any"
+                  },
                   "profileImage": {
                     "example": "any"
                   }
@@ -278,7 +321,61 @@
         }
       }
     },
-    "/user/{userId}/favoriteBusiness": {
+    "/users/{userId}/chatbotValidate": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}/checks": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/{userId}/deliveryBusiness": {
       "post": {
         "description": "",
         "parameters": [
@@ -335,40 +432,6 @@
                 "type": "object",
                 "properties": {
                   "routeName": {
-                    "example": "any"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/user/{userId}/chatbotValidate": {
-      "post": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "code": {
                     "example": "any"
                   }
                 }
@@ -514,9 +577,6 @@
                     "example": "any"
                   },
                   "images": {
-                    "example": "any"
-                  },
-                  "postPageLayout": {
                     "example": "any"
                   },
                   "price": {
@@ -1173,6 +1233,72 @@
         }
       }
     },
+    "/business/{routeName}/favoriteUsers": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "routeName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "routeName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/agenda/token": {
       "get": {
         "description": "",
@@ -1342,6 +1468,9 @@
                 "properties": {
                   "postId": {
                     "example": "any"
+                  },
+                  "purshaseNotes": {
+                    "example": "any"
                   }
                 }
               }
@@ -1362,6 +1491,9 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "purshaseNotes": {
+                    "example": "any"
+                  },
                   "routeName": {
                     "example": "any"
                   },
@@ -1413,6 +1545,13 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1458,6 +1597,20 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "delivery": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
           }
         }
       }

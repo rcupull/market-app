@@ -53,12 +53,12 @@ export const ShoppingPage = () => {
   const refreshButton = (
     <>
       <ButtonRefresh
-        onClick={() => onRefreshForce()}
+        onClick={onRefreshForce}
         className="ml-auto hidden sm:block"
         isBusy={getShoppingOwner.status.isBusy}
       />
       <IconButtonRefresh
-        onClick={() => onRefreshForce()}
+        onClick={onRefreshForce}
         className="ml-auto sm:hidden"
         isBusy={getShoppingOwner.status.isBusy}
       />
@@ -76,6 +76,10 @@ export const ShoppingPage = () => {
       <Table<Shopping>
         remapRowsIndex={{
           xs: [[0, 1, 2, 3]],
+          sm: [
+            [0, 1],
+            [2, 3],
+          ],
           lg: 'none',
         }}
         heads={['Acciones', 'Cliente', 'Estado', 'Detalles']}

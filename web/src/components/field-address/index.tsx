@@ -4,7 +4,7 @@ import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-w
 import { useFormField } from 'components/formux/useFormField';
 
 import SvgExclamationTriangleSolid from 'icons/ExclamationTriangleSolid';
-import { ButtonMapLocation } from 'pages/@modals/useUserUpdateSettings/ButtonMapLocation';
+import { ButtonMapLocation } from 'pages/@modals/useUserUpdateSettingsModal/ButtonMapLocation';
 import { Address } from 'types/general';
 import { getImportantLabel } from 'utils/form';
 import { cn } from 'utils/general';
@@ -42,7 +42,7 @@ export const FieldAddress = (props: FieldAddressProps) => {
 
     return (
       <div className="p-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="flex flex-col items-center start-0 col-span-2">
+        <div className="flex flex-col items-center start-0 col-span-1 sm:col-span-2">
           <div className="flex items-center justify-center text-gray-500 w-full ">
             <ButtonMapLocation
               size="medium"

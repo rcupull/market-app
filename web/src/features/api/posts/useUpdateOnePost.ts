@@ -22,7 +22,6 @@ export const useUpdateOnePost = (): {
         | 'name'
         | 'postCategoriesTags'
         | 'discount'
-        | 'postPageLayout'
         | 'stockAmount'
         | 'postLink'
       >

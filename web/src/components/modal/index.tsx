@@ -1,4 +1,4 @@
-import { Dialog, Transition } from '@headlessui/react';
+import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import React, { cloneElement, Fragment } from 'react';
 
 import { IconButton } from 'components/icon-button';
@@ -33,14 +33,14 @@ export const Modal = ({
   const { onClose } = useModal();
 
   return (
-    <Transition.Root show={true} as={Fragment}>
+    <Transition show={true} as={Fragment}>
       <Dialog
         as="div"
         className="relative z-30"
         // initialFocus={cancelButtonRef}
         onClose={() => {}}
       >
-        <Transition.Child
+        <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -50,11 +50,11 @@ export const Modal = ({
           leaveTo="opacity-0"
         >
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-        </Transition.Child>
+        </TransitionChild>
 
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center sm:items-center sm:p-0">
-            <Transition.Child
+            <TransitionChild
               as={Fragment}
               enter="ease-out duration-300"
               enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
@@ -63,7 +63,7 @@ export const Modal = ({
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel
+              <DialogPanel
                 className={cn(
                   'relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8  w-11/12 md:w-8/12 lg:w-8/12',
                   className
@@ -80,13 +80,10 @@ export const Modal = ({
                     {badge && <div className="mx-9 sm:mx-2 flex justify-center">{badge}</div>}
 
                     <div className="mt-3 sm:ml-4 sm:mt-0 w-full">
-                      <Dialog.Title
-                        as="h3"
-                        className="text-xl font-semibold leading-10 text-gray-900"
-                      >
+                      <DialogTitle as="h3" className="text-xl font-semibold text-gray-900">
                         {title}
-                      </Dialog.Title>
-                      <div className="mt-2">{content}</div>
+                      </DialogTitle>
+                      <div className="mt-4">{content}</div>
                     </div>
                   </div>
                 </div>
@@ -101,16 +98,19 @@ export const Modal = ({
 
                     {secondaryBtn &&
                       cloneElement(secondaryBtn, {
-                        className: 'w-full sm:w-auto mt-3 sm:mt-0 ml-0 sm:ml-3',
+                        className: cn('w-full sm:w-auto mt-3 sm:mt-0', {
+                          'ml-0 sm:ml-3': primaryBtn || customBtn,
+                          'ml-0 sm:ml-auto': !primaryBtn && !customBtn,
+                        }),
                       })}
                   </div>
                 )}
                 {isBusy && <SpinnerBox />}
-              </Dialog.Panel>
-            </Transition.Child>
+              </DialogPanel>
+            </TransitionChild>
           </div>
         </div>
       </Dialog>
-    </Transition.Root>
+    </Transition>
   );
 };

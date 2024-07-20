@@ -6,7 +6,7 @@ import { User } from '../../types/user';
 import { fillBD } from '../../utils/test-BD';
 
 describe('users', () => {
-  describe('GET: /user/:userId', () => {
+  describe('GET: /users/:userId', () => {
     afterEach(async () => {
       await dropTestDbConnectionAsync();
     });
@@ -15,7 +15,7 @@ describe('users', () => {
       const { user1 } = await fillBD();
 
       await supertest(app)
-        .get(`/api-services/user/${user1._id}`)
+        .get(`/api-services/users/${user1._id}`)
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
         .then((response) => {
@@ -27,10 +27,11 @@ describe('users', () => {
               "_id": Anything,
               "addresses": [],
               "canCreateBusiness": true,
+              "canMakeDeliveries": false,
               "createdAt": Anything,
+              "deliveryBusiness": [],
               "email": "user1@gmail.com",
-              "favoritesBusinessNames": [],
-              "favoritesBusinessRouteNames": [],
+              "favoritesBusiness": [],
               "name": "user1",
               "profileImage": null,
               "role": "user",
@@ -45,20 +46,20 @@ describe('users', () => {
     it('should fail if not autenticated', async () => {
       const { user1 } = await fillBD();
 
-      await supertest(app).get(`/api-services/user/${user1._id}`).expect(401);
+      await supertest(app).get(`/api-services/users/${user1._id}`).expect(401);
     });
 
     it('should fail if the user has no access', async () => {
       const { user1, user2 } = await fillBD();
 
       await supertest(app)
-        .get(`/api-services/user/${user2._id}`) // wrong id
+        .get(`/api-services/users/${user2._id}`) // wrong id
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(401);
     });
   });
 
-  describe('PUT: /user/:userId', () => {
+  describe('PUT: /users/:userId', () => {
     afterEach(async () => {
       await dropTestDbConnectionAsync();
     });
@@ -74,13 +75,13 @@ describe('users', () => {
 
       //change the profileImage
       await supertest(app)
-        .put(`/api-services/user/${user1._id}`)
+        .put(`/api-services/users/${user1._id}`)
         .send({ profileImage })
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200);
 
       await supertest(app)
-        .get(`/api-services/user/${user1._id}`)
+        .get(`/api-services/users/${user1._id}`)
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
         .then((response) => {
@@ -92,10 +93,11 @@ describe('users', () => {
               "_id": Anything,
               "addresses": [],
               "canCreateBusiness": true,
+              "canMakeDeliveries": false,
               "createdAt": Anything,
+              "deliveryBusiness": [],
               "email": "user1@gmail.com",
-              "favoritesBusinessNames": [],
-              "favoritesBusinessRouteNames": [],
+              "favoritesBusiness": [],
               "name": "user1",
               "profileImage": {
                 "height": 300,
@@ -114,14 +116,14 @@ describe('users', () => {
     it('should fail if not autenticated', async () => {
       const { user1 } = await fillBD();
 
-      await supertest(app).put(`/api-services/user/${user1._id}`).expect(401);
+      await supertest(app).put(`/api-services/users/${user1._id}`).expect(401);
     });
 
     it('should fail if the user has no access', async () => {
       const { user1, user2 } = await fillBD();
 
       await supertest(app)
-        .put(`/api-services/user/${user2._id}`) // wrong id
+        .put(`/api-services/users/${user2._id}`) // wrong id
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(401);
     });

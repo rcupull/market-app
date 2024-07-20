@@ -8,7 +8,7 @@ import { OnboardingStepProps } from '../../types';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useNextButtonPortal } from 'pages/@hooks/useNextButtonPortal';
-import { Component } from 'pages/@modals/useBusinessNewUpdatePost/Component';
+import { ComponentProduct } from 'pages/@modals/useBusinessNewUpdatePostModal/ComponentProduct';
 
 export interface StepPostProps extends OnboardingStepProps {}
 
@@ -29,10 +29,9 @@ export const StepPost = ({ backButton, nextButton }: StepPostProps) => {
 
   return (
     <div>
-      <Component
+      <ComponentProduct
         portal={portal}
         post={getAllPosts.data?.[0]}
-        postType="product"
         onAfterSuccess={() => {
           nextAction();
         }}

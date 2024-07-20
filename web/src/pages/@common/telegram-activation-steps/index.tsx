@@ -65,7 +65,7 @@ export const TelegramActivationSteps = ({
           }}
           {...omittedProps}
         >
-          {({ value, resetForm, hasChange }) => {
+          {({ value, resetForm }) => {
             const overrydeBtnProps = getSubmitBtnProps?.({ value, resetForm }) || {};
 
             return (
@@ -83,12 +83,7 @@ export const TelegramActivationSteps = ({
                 />
 
                 {portal?.getPortal(
-                  <Button
-                    label="Activar"
-                    hasChange={hasChange}
-                    className="w-full"
-                    {...overrydeBtnProps}
-                  />
+                  <Button formuxSubmit label="Activar" className="w-full" {...overrydeBtnProps} />
                 )}
               </form>
             );

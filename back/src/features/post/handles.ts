@@ -134,7 +134,6 @@ const post_posts: () => RequestHandler<AnyRecord, any, Post> = () => {
         details,
         highlights,
         images,
-        postPageLayout,
         price,
         postCategoriesTags,
         stockAmount,
@@ -153,7 +152,6 @@ const post_posts: () => RequestHandler<AnyRecord, any, Post> = () => {
         details,
         highlights,
         images,
-        postPageLayout,
         price,
         postCategoriesTags,
         stockAmount,
@@ -234,7 +232,6 @@ const put_posts_postId: () => RequestHandler = () => {
           hiddenBusiness: 'hiddenBusiness',
           postCategoriesTags: 'postCategoriesTags',
           discount: 'discount',
-          postPageLayout: 'postPageLayout',
           stockAmount: 'stockAmount',
           postLink: 'postLink',
         })(body),
@@ -294,7 +291,6 @@ const get_related_posts: () => RequestHandler = () => {
           },
         },
       });
-
 
       const { getPostData } = await shoppingServicesGetDataFromPosts({
         posts: related.data,

@@ -241,6 +241,7 @@ const post_shopping: () => RequestHandler<
             amountToAdd: stockAmountAvailable,
             post,
             user,
+            purshaseNotes,
           });
 
           /**
@@ -264,6 +265,7 @@ const post_shopping: () => RequestHandler<
           amountToAdd: amountToAdd,
           post,
           user,
+          purshaseNotes,
         });
 
         /**
@@ -466,10 +468,14 @@ const delete_shopping: () => RequestHandler = () => {
         return getUserNotFoundResponse({ res });
       }
 
-      const { routeName, postId } = body;
+      const { routeName, postId, purshaseNotes } = body;
+
+      if (postId && !purshaseNotes) {
+        return get400Response({ res, json: { message: 'The purshaseNotes are required' } });
+      }
 
       postId
-        ? await deleteOnePostFromShoppingInContruction({ routeName, user, postId })
+        ? await deleteOnePostFromShoppingInContruction({ routeName, user, postId, purshaseNotes })
         : await deleteShoppingInConstruction({ routeName, user });
 
       res.send({});

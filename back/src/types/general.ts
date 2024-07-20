@@ -79,6 +79,7 @@ export interface TelegramBotChat {
 }
 
 export interface Address {
+  _id: string;
   city: string;
   country: string;
   countryCode: string;

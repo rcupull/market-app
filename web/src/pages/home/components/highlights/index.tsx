@@ -13,7 +13,7 @@ const items: Array<HighlightProps> = [
   {
     svg: SvgGlobeAmericasSolid,
     label: 'Espacio único',
-    description: <div>Organice sus productos y garantice una venta satisfactoria.</div>,
+    description: <div>Organiza tus productos individualmente, tus clientes te lo agradecerán.</div>,
   },
   {
     svg: SvgUniversalAccessSolid,
@@ -27,31 +27,34 @@ const items: Array<HighlightProps> = [
     label: 'Flexibilidad',
     description: (
       <div>
-        ¡Puede plasmar la identidad de su negocio con solo un click! Con nuestra tecnología de punta
-        puede ajustar su marketplace a su gusto.
+        ¡Puedes promocionar tu negocio con solo un click! Nuestra tecnología de punta permite que
+        ajustes el diseño de tu marketplace para reforzar tu imagen.
       </div>
     ),
   },
   {
     svg: SvgBoxesSolid,
     label: 'Manejo de stock',
-    description: <div>Garantizamos la actualización de sus productos en almacén</div>,
+    description: (
+      <div>
+        Actualizamos tus productos disponibles en el almacén, así tienes más tiempo para vender.
+      </div>
+    ),
   },
   {
     svg: SvgUserTagSolid,
     label: 'Suscripciones',
     description: (
-      <div>Actualizamos a los clientes de los nuevos productos y ofertas especiales.</div>
+      <div>
+        Recomendamos tus productos y servicios a los clientes y le hacemos llegar tus ofertas
+        especiales.
+      </div>
     ),
   },
   {
     svg: SvgCalendarAlt,
     label: 'Disponibilidad',
-    description: (
-      <div>
-        Mantenga su negocio vivo, activo y productivo, no pierdas ventas. !EL TIEMPO ES DINERO!
-      </div>
-    ),
+    description: <div>Mantén tu negocio en constante actividad. ¡El tiempo es dinero!</div>,
   },
 ];
 

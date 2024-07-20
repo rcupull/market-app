@@ -13,7 +13,15 @@ const UserSchema = new Schema<User>({
   passwordVerbose: { type: String, required: true, select: false },
   firebaseToken: { type: String, select: false },
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
-  canCreateBusiness: { type: Boolean, required: true, default: false },
+  canCreateBusiness: { type: Boolean, default: false },
+  canMakeDeliveries: { type: Boolean, default: false },
+  deliveryBusiness: [
+    {
+      _id: false,
+      routeName: { type: String },
+      updatedAt: { type: Date, default: Date.now },
+    },
+  ],
   validated: { type: Boolean, default: false },
   profileImage: {
     type: {
@@ -28,7 +36,7 @@ const UserSchema = new Schema<User>({
   telegramBotChat: TelegramBotChatDefinition,
   phone: { type: String },
   addresses: [AddressDefinition],
-  favoritesBusinessRouteNames: [{ type: String }],
+  checks: { type: Schema.Types.Mixed },
 });
 
 const updateUserPassword = (user: User): Promise<void> => {

@@ -15,7 +15,7 @@ describe('Component', () => {
         <div>
           <div
             aria-orientation="horizontal"
-            class="flex gap-1 overflow-auto"
+            class="flex gap-1 overflow-auto flex items-center"
             role="tablist"
           >
             <div
@@ -29,15 +29,15 @@ describe('Component', () => {
               tabindex="0"
             >
               <div
-                class="flex items-center"
+                class="flex items-center gap-2"
               >
                 <div
-                  class="border-2 border-gray-400 rounded-full w-8 h-8 flex items-center justify-center font-semibold !border-indigo-500 !bg-indigo-500 !text-white"
+                  class="border-2 border-gray-400 rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 font-semibold !border-indigo-500 !bg-indigo-500 !text-white"
                 >
                   1
                 </div>
                 <div
-                  class="text-center font-semibold ml-4"
+                  class="text-center font-semibold"
                 >
                   Productos
                 </div>
@@ -53,10 +53,10 @@ describe('Component', () => {
               tabindex="-1"
             >
               <div
-                class="flex items-center"
+                class="flex items-center gap-2"
               >
                 <div
-                  class="border-2 border-gray-400 rounded-full w-8 h-8 flex items-center justify-center"
+                  class="border-2 border-gray-400 rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0"
                 >
                   2
                 </div>
@@ -72,10 +72,10 @@ describe('Component', () => {
               tabindex="-1"
             >
               <div
-                class="flex items-center"
+                class="flex items-center gap-2"
               >
                 <div
-                  class="border-2 border-gray-400 rounded-full w-8 h-8 flex items-center justify-center"
+                  class="border-2 border-gray-400 rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0"
                 >
                   3
                 </div>
@@ -85,7 +85,7 @@ describe('Component', () => {
           <div>
             <div
               aria-labelledby="headlessui-tabs-tab-:r0:"
-              class="pt-4 w-full mt-8"
+              class="w-full mt-8"
               data-headlessui-state="selected"
               data-selected=""
               id="headlessui-tabs-panel-:r6:"

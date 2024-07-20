@@ -7,7 +7,7 @@ import { useModal } from 'features/modal/useModal';
 
 import { Portal } from 'hooks/usePortal';
 
-import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
+import { BusinessMarketBrand } from 'pages/@common/business-market-brand';
 import { getRequiredLabel } from 'utils/form';
 import { getStrongPasswordTracking } from 'utils/password';
 
@@ -23,10 +23,10 @@ export const Component = ({ portal }: ComponentProps) => {
     <div className="flex min-h-full flex-col justify-center">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <div className="flex justify-center">
-          <BusinessMarketLogo className="!size-28" />
+          <BusinessMarketBrand />
         </div>
 
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        <h2 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Cambia tu contraseña
         </h2>
       </div>
@@ -57,7 +57,7 @@ export const Component = ({ portal }: ComponentProps) => {
             },
           ]}
         >
-          {({ isValid, value }) => {
+          {({ value }) => {
             return (
               <form>
                 <FieldInput
@@ -83,7 +83,7 @@ export const Component = ({ portal }: ComponentProps) => {
                   <Button
                     label="Cambiar contraseña"
                     isBusy={authChangePassword.status.isBusy}
-                    disabled={!isValid}
+                    formuxSubmit
                     onClick={() => {
                       const { newPassword } = value;
 

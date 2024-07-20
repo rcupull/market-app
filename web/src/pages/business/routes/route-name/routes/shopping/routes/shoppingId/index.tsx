@@ -32,7 +32,7 @@ export const ShoppingId = () => {
   }
 
   return (
-    <LayoutPage title="Órden de compra" backButton>
+    <LayoutPage title="Órden de compra">
       <div className="w-full flex justify-center">
         <ShoppingDetails
           shopping={shopping}

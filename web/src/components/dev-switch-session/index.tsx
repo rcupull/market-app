@@ -39,6 +39,14 @@ const sessions: Array<{ email: string | null; password: string | null }> = [
     email: 'rcupull+user2@gmail.com',
     password: 'Qwerty@123',
   },
+  {
+    email: 'rcupull+mensajero1@gmail.com',
+    password: 'Qwerty@123',
+  },
+  {
+    email: 'rcupull+mensajero2@gmail.com',
+    password: 'Qwerty@123',
+  },
 ];
 
 export const DevSwitchSession = () => {
@@ -49,7 +57,7 @@ export const DevSwitchSession = () => {
 
   return (
     <Menu
-      className={cn('hidden sm:block', { '!hidden': !DEVELOPMENT })}
+      className={cn({ '!hidden': !DEVELOPMENT })}
       buttonElement={
         <IconButton
           title="Switch session (only development)"

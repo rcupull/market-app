@@ -12,16 +12,11 @@ export interface StepProps {
   backButton: React.ReactElement;
   nextButton: React.ReactElement;
 }
-export interface StepperProps
-  extends Pick<TabsProps, 'contentClassName' | 'disabledStepNavigation'> {
+export interface StepperProps extends Pick<TabsProps, 'disabledStepNavigation'> {
   items: Array<Nullable<{ label: string; render: (props: StepProps) => React.ReactNode }>>;
 }
 
-export const Stepper = ({
-  items,
-  contentClassName,
-  disabledStepNavigation = true,
-}: StepperProps) => {
+export const Stepper = ({ items, disabledStepNavigation = true }: StepperProps) => {
   const [selected, setSelected] = useState(0);
 
   /////////////////////////////////////////////////////////////////////////////////
@@ -61,14 +56,14 @@ export const Stepper = ({
             'flex-grow flex justify-start': selected,
           })
         }
-        contentClassName={cn('w-full mt-8', contentClassName)}
+        tabPanelClassName={cn('w-full mt-8')}
         onSelect={setSelected}
         selected={selected}
         itemRender={({ label, selected, index }) => (
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
             <div
               className={cn(
-                'border-2 border-gray-400 rounded-full w-8 h-8 flex items-center justify-center',
+                'border-2 border-gray-400 rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0',
                 {
                   'font-semibold !border-indigo-500 !bg-indigo-500 !text-white': selected,
                 }
@@ -76,9 +71,10 @@ export const Stepper = ({
             >
               {index + 1}
             </div>
-            {selected && <div className={cn('text-center font-semibold ml-4')}>{label}</div>}
+            {selected && <div className={cn('text-center font-semibold')}>{label}</div>}
           </div>
         )}
+        tabListClassName="flex items-center"
         items={compact(items).map(({ label, render }) => {
           return {
             label,

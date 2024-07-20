@@ -13,7 +13,7 @@ import { useModal } from 'features/modal/useModal';
 
 import { RowActionsContainer } from 'pages/@common/row-actions-container';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useBusinessNewUpdateSection } from 'pages/@modals/useBusinessNewUpdateSection';
+import { useBusinessNewUpdateSectionModal } from 'pages/@modals/useBusinessNewUpdateSectionModal';
 import { PostsLayoutSection } from 'types/business';
 
 export interface RowActionsProps {
@@ -70,7 +70,7 @@ export const RowActions = ({ rowData, allSections, rowIndex }: RowActionsProps) 
     );
   };
 
-  const businessNewUpdateSection = useBusinessNewUpdateSection();
+  const businessNewUpdateSection = useBusinessNewUpdateSectionModal();
   const handleUpdate = () => {
     businessNewUpdateSection.open({
       sectionId: rowData._id,

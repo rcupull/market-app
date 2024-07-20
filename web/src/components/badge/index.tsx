@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import SvgCheckCircleSolid from 'icons/CheckCircleSolid';
 import SvgExclamationTriangleSolid from 'icons/ExclamationTriangleSolid';
 import SvgInfoCircleSolid from 'icons/InfoCircleSolid';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
@@ -14,7 +15,7 @@ export interface BadgeProps {
 export const Badge = ({ variant, className }: BadgeProps) => {
   const IconComponent = useMemo(() => {
     if (variant === 'error') return SvgExclamationTriangleSolid;
-    if (variant === 'success') return SvgInfoCircleSolid;
+    if (variant === 'success') return SvgCheckCircleSolid;
     if (variant === 'info') return SvgInfoCircleSolid;
     if (variant === 'warning') return SvgExclamationTriangleSolid;
     if (variant === 'cart') return SvgShoppingCartSolid;

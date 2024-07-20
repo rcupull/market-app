@@ -41,6 +41,8 @@ describe('business', () => {
                 "priceByKm": 0,
                 "type": "NONE",
               },
+              "doneOnboarding": false,
+              "favoritesUserIds": [],
               "hidden": false,
               "layouts": {
                 "banner": {
@@ -61,7 +63,6 @@ describe('business', () => {
               "postCategories": [],
               "postFormFields": [
                 "name",
-                "currency",
                 "clothingSizes",
                 "colors",
                 "description",
@@ -69,7 +70,6 @@ describe('business', () => {
                 "details",
                 "postCategoriesTags",
                 "discount",
-                "postPageLayout",
                 "stockAmount",
                 "images",
               ],
@@ -269,6 +269,8 @@ describe('business', () => {
                 "priceByKm": 0,
                 "type": "NONE",
               },
+              "doneOnboarding": false,
+              "favoritesUserIds": [],
               "hidden": false,
               "layouts": {
                 "banner": {
@@ -289,7 +291,6 @@ describe('business', () => {
               "postCategories": [],
               "postFormFields": [
                 "name",
-                "currency",
                 "clothingSizes",
                 "colors",
                 "description",
@@ -297,7 +298,6 @@ describe('business', () => {
                 "details",
                 "postCategoriesTags",
                 "discount",
-                "postPageLayout",
                 "stockAmount",
                 "images",
               ],

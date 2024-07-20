@@ -79,15 +79,15 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
     <>
       <ShoppingDetails shopping={cart.constructionShopping} />
 
-      <Divider className="!my-2" />
+      <Divider narrow />
 
       <DeliveryData
-        className="mt-6"
+        className="my-4"
         onChangeTakeDelivery={setTakeDelivery}
         takeDelivery={takeDelivery}
       />
 
-      <Divider className="!my-2" />
+      <Divider narrow />
 
       <PersonalData className="mt-6" onValid={setIsValidPersonalData} />
 

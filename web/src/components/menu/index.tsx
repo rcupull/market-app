@@ -7,11 +7,11 @@ import { Divider } from 'components/divider';
 import { Nullable, StyleProps } from 'types/general';
 import { cn, compact } from 'utils/general';
 
-interface MenuItem extends StyleProps {
-  label: string;
+export interface MenuItem extends StyleProps {
+  label: React.ReactNode;
   svg?: React.FunctionComponent<StyleProps>;
   onClick?: () => void;
-  divider?: boolean;
+  divider?: boolean | string;
   active?: boolean;
   disabled?: boolean;
 }
@@ -56,17 +56,28 @@ export const Menu = ({
 
           {compact(items).map(
             ({ label, onClick, svg: Svg, divider, className, active, disabled }, index) => (
-              <MenuItem key={label}>
+              <MenuItem key={index}>
                 {() => {
                   return (
-                    <div key={index} className={className}>
+                    <div className={className}>
+                      {divider && (
+                        <div className="relative flex justify-center bg-white">
+                          <Divider narrow />
+                          {typeof divider === 'string' && (
+                            <div className="bg-white absolute top-0 text-xs text-gray-700 font-bold px-1">
+                              {divider}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
                       <div
                         onClick={() => {
                           if (disabled) return;
                           onClick?.();
                         }}
                         className={cn(
-                          'cursor-pointer px-4 py-2 text-sm text-gray-700 flex items-center',
+                          'cursor-pointer px-4 py-2 text-sm text-gray-700 flex items-center border-b-2 border-b-white',
                           {
                             'bg-gray-100': active,
                             '!cursor-not-allowed !text-gray-300': disabled,
@@ -77,7 +88,6 @@ export const Menu = ({
 
                         {label}
                       </div>
-                      {divider && <Divider className="!my-2" />}
                     </div>
                   );
                 }}

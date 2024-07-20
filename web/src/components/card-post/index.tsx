@@ -8,7 +8,7 @@ import { CardPostName } from './CardPostName';
 import { CardPostPrice } from './CardPostPrice';
 
 import { UpdateSomethingContainer } from 'pages/@common/update-something-container';
-import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
+import { useBusinessNewUpdatePostModal } from 'pages/@modals/useBusinessNewUpdatePostModal';
 import { BusinessCurrency, PostCardLayout } from 'types/business';
 import { Post } from 'types/post';
 import { cn } from 'utils/general';
@@ -32,7 +32,7 @@ export const CardPost = ({
   onRefresh,
   currency,
 }: CardPostProps) => {
-  const businessNewUpdatePost = useBusinessNewUpdatePost();
+  const businessNewUpdatePost = useBusinessNewUpdatePostModal();
   const { metaLayout, size } = layout || {};
 
   const renderMeta = () => {
