@@ -103,7 +103,7 @@ export const Component = ({ portal }: ComponentProps) => {
                   id="email"
                   name="email"
                   type="email"
-                  autoComplete="email"
+                  autoComplete="off"
                   label={getRequiredLabel('Correo electrónico')}
                   className="mt-6"
                 />
@@ -113,7 +113,7 @@ export const Component = ({ portal }: ComponentProps) => {
                     id="password"
                     name="password"
                     type="password"
-                    autoComplete="password"
+                    autoComplete="new-password"
                     label={getRequiredLabel('Contraseña')}
                     className="mt-6"
                   />
