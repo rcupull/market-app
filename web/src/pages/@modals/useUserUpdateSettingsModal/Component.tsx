@@ -57,7 +57,7 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
         },
       ]}
     >
-      {({ value, isValid, hasChange }) => {
+      {({ value }) => {
         return (
           <form className="w-full">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
@@ -116,12 +116,12 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
             {portal.getPortal(
               <Button
                 label="Guardar"
+                formuxSubmit
                 isBusy={
                   addOneBusiness.status.isBusy ||
                   updateOneUser.status.isBusy ||
                   addManyImages.status.isBusy
                 }
-                disabled={!isValid || !hasChange}
                 onClick={() => {
                   const {
                     profileImages,

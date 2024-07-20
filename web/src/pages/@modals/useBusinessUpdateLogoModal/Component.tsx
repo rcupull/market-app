@@ -1,5 +1,3 @@
-import { useMemo } from 'react';
-
 import { Button } from 'components/button';
 import { FieldInputImages } from 'components/field-input-images';
 import { Formux } from 'components/formux';
@@ -33,20 +31,17 @@ export const Component = ({ portal }: ComponentProps) => {
   const { updateOneBusiness } = useUpdateOneBusiness();
   const { addManyImages } = useAddManyImages();
 
-  const value = useMemo<State>(
-    () => ({
-      logoField: [logo],
-    }),
-    [logo]
-  );
-
   if (!routeName) {
     return <></>;
   }
 
   return (
-    <Formux<State> value={value}>
-      {({ value: values, isValid }) => {
+    <Formux<State>
+      value={{
+        logoField: [logo],
+      }}
+    >
+      {({ value }) => {
         return (
           <form>
             <FieldInputImages id="logoField" name="logoField" className="mt-6" />
@@ -54,11 +49,11 @@ export const Component = ({ portal }: ComponentProps) => {
             {portal.getPortal(
               <Button
                 label="Guardar"
+                formuxSubmit
                 isBusy={updateOneBusiness.status.isBusy || addManyImages.status.isBusy}
-                disabled={!isValid || value.logoField === values.logoField}
                 onClick={() => {
                   if (!business) return;
-                  const { logoField } = values;
+                  const { logoField } = value;
 
                   const [logo] = logoField;
 

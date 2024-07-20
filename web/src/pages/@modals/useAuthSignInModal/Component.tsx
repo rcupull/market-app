@@ -77,10 +77,8 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
             },
           ]}
         >
-          {({ isValid, value, setErrors }) => {
+          {({ value, setErrors }) => {
             const handleSubmit = () => {
-              if (!isValid) return;
-
               const { email, password } = value;
 
               authSignIn.fetch(
