@@ -15,6 +15,13 @@ const UserSchema = new Schema<User>({
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
   canCreateBusiness: { type: Boolean, default: false },
   canMakeDeliveries: { type: Boolean, default: false },
+  deliveryBusiness: [
+    {
+      _id: false,
+      routeName: { type: String },
+      updatedAt: { type: Date, default: Date.now },
+    },
+  ],
   validated: { type: Boolean, default: false },
   profileImage: {
     type: {

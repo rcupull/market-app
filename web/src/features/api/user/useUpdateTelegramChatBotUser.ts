@@ -23,14 +23,14 @@ export const useUpdateTelegramChatBotUser = (): {
           {
             method: 'post',
             url: getEndpoint({
-              path: '/user/:userId/chatbotValidate',
+              path: '/users/:userId/chatbotValidate',
               urlParams: { userId },
             }),
             data: {
               code,
             },
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

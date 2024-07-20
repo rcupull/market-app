@@ -1,10 +1,12 @@
 import { Address, ModelDocument, QueryHandle } from '../../types/general';
 import { User } from '../../types/user';
 import { UserModel } from '../../schemas/user';
-import { FilterQuery, ProjectionType, UpdateQuery } from 'mongoose';
+import { FilterQuery, PaginateOptions, ProjectionType, UpdateQuery } from 'mongoose';
 import { UpdateOptions } from 'mongodb';
 import { Shopping } from '../../types/shopping';
 import { isEqualIds } from '../../utils/general';
+import { PaginateResult } from '../../middlewares/middlewarePagination';
+import { getSortQuery } from '../../utils/schemas';
 
 export const userServicesAddOne: QueryHandle<
   {
@@ -43,6 +45,22 @@ export const userServicesGetOne: QueryHandle<
   const user = await UserModel.findOne(query, projection);
 
   return user;
+};
+
+export const userServicesGetAllWithPagination: QueryHandle<
+  {
+    paginateOptions?: PaginateOptions;
+    query: FilterQuery<User>;
+    sort?: string;
+  },
+  PaginateResult<User>
+> = async ({ query, sort, paginateOptions = {} }) => {
+  const out = await UserModel.paginate(query, {
+    ...paginateOptions,
+    sort: getSortQuery(sort),
+  });
+
+  return out as unknown as PaginateResult<User>;
 };
 
 export const userServicesGetAll: QueryHandle<

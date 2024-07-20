@@ -34,12 +34,12 @@ export const useUpdateOneUser = (): {
           {
             method: 'put',
             url: getEndpoint({
-              path: '/user/:userId',
+              path: '/users/:userId',
               urlParams: { userId },
             }),
             data: update,
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

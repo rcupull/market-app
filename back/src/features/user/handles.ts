@@ -1,15 +1,40 @@
 import { RequestHandler } from '../../types/general';
 import { withTryCatch } from '../../utils/error';
 
-import { userServicesGetOne, userServicesUpdateOne } from './services';
+import {
+  userServicesGetAllWithPagination,
+  userServicesGetOne,
+  userServicesUpdateOne,
+} from './services';
 import { User, UserChecks, UserDto } from '../../types/user';
-import { get404Response, getUserNotFoundResponse } from '../../utils/server-response';
+import {
+  get400Response,
+  get404Response,
+  getUserNotFoundResponse,
+} from '../../utils/server-response';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { imagesServicesDeleteOldImages } from '../images/services';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { deepJsonCopy, includesId } from '../../utils/general';
 import { businessServicesGetAll } from '../business/services';
 import { Business } from '../../types/business';
+
+const get_users_delivery_man: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { paginateOptions } = req;
+
+      const out = await userServicesGetAllWithPagination({
+        paginateOptions,
+        query: {
+          canMakeDeliveries: true,
+        },
+      });
+
+      res.send(out);
+    });
+  };
+};
 
 const get_users_userId: () => RequestHandler = () => {
   return (req, res) => {
@@ -60,7 +85,7 @@ const get_users_userId: () => RequestHandler = () => {
           [] as Array<{
             name: string;
             routeName: string;
-          }>,
+          }>
         );
       };
 
@@ -145,7 +170,7 @@ const put_users_userId: () => RequestHandler = () => {
   };
 };
 
-const post_user_userId_chatbot_validate: () => RequestHandler = () => {
+const post_users_userId_chatbot_validate: () => RequestHandler = () => {
   return async (req, res) => {
     withTryCatch(req, res, async () => {
       const { body, user } = req;
@@ -194,7 +219,7 @@ const post_user_userId_chatbot_validate: () => RequestHandler = () => {
   };
 };
 
-const put_user_userId_checks: () => RequestHandler = () => {
+const put_users_userId_checks: () => RequestHandler = () => {
   return async (req, res) => {
     withTryCatch(req, res, async () => {
       const { body, user } = req;
@@ -224,13 +249,106 @@ const put_user_userId_checks: () => RequestHandler = () => {
   };
 };
 
-/**
- *  //////////////////////////////////////////POSTS
- */
+const post_users_userId_delivery_business: () => RequestHandler = () => {
+  return async (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { body, params } = req;
+      const { userId } = params;
+      const { routeName } = body;
+
+      const deliveryMan = await userServicesGetOne({
+        query: {
+          _id: userId,
+          canMakeDeliveries: true,
+        },
+      });
+
+      if (!deliveryMan) {
+        return getUserNotFoundResponse({ res });
+      }
+
+      const hasBusiness = deliveryMan.deliveryBusiness
+        ? deliveryMan.deliveryBusiness.some((business) => business.routeName === routeName)
+        : false;
+
+      if (hasBusiness) {
+        return get400Response({
+          res,
+          json: {
+            message: 'This user has this bussiness',
+          },
+        });
+      }
+
+      await userServicesUpdateOne({
+        query: {
+          _id: userId,
+        },
+        update: {
+          deliveryBusiness: [
+            ...(deliveryMan.deliveryBusiness || []),
+            {
+              routeName,
+            },
+          ],
+        },
+      });
+
+      res.send({});
+    });
+  };
+};
+
+const del_users_userId_delivery_business: () => RequestHandler = () => {
+  return async (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { body, params } = req;
+      const { userId } = params;
+      const { routeName } = body;
+
+      const deliveryMan = await userServicesGetOne({
+        query: {
+          _id: userId,
+          canMakeDeliveries: true,
+        },
+      });
+
+      if (!deliveryMan) {
+        return getUserNotFoundResponse({ res });
+      }
+
+      const hasBusiness = deliveryMan.deliveryBusiness
+        ? deliveryMan.deliveryBusiness.some((business) => business.routeName === routeName)
+        : false;
+
+      if (!hasBusiness || !deliveryMan.deliveryBusiness) {
+        return res.send({});
+      }
+
+      await userServicesUpdateOne({
+        query: {
+          _id: userId,
+        },
+        update: {
+          deliveryBusiness: deliveryMan.deliveryBusiness.filter(
+            (business) => business.routeName !== routeName
+          ),
+        },
+      });
+
+      res.send({});
+    });
+  };
+};
 
 export const userHandles = {
   get_users_userId,
   put_users_userId,
-  post_user_userId_chatbot_validate,
-  put_user_userId_checks,
+  post_users_userId_chatbot_validate,
+  put_users_userId_checks,
+  //
+  post_users_userId_delivery_business,
+  del_users_userId_delivery_business,
+  //
+  get_users_delivery_man,
 };
