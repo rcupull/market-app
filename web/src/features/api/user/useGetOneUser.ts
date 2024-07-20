@@ -18,7 +18,7 @@ export const useGetOneUser = (): {
           {
             method: 'get',
             url: getEndpoint({
-              path: '/user/:userId',
+              path: '/users/:userId',
               urlParams: {
                 userId,
               },

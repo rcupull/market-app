@@ -39,6 +39,14 @@ const sessions: Array<{ email: string | null; password: string | null }> = [
     email: 'rcupull+user2@gmail.com',
     password: 'Qwerty@123',
   },
+  {
+    email: 'rcupull+mensajero1@gmail.com',
+    password: 'Qwerty@123',
+  },
+  {
+    email: 'rcupull+mensajero2@gmail.com',
+    password: 'Qwerty@123',
+  },
 ];
 
 export const DevSwitchSession = () => {

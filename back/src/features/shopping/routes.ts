@@ -6,7 +6,7 @@ import { middlewarePagination } from '../../middlewares/middlewarePagination';
 import { middlewareSortPurshaseNotes } from '../../middlewares/middlewareSortPurshaseNotes';
 import { middlewareIsLogged } from '../../middlewares/middlewareIsLogged';
 import { middlewareAddPostToReq } from '../../middlewares/middlewareAddPostToReq';
-import { middlewareIsUserThisBusinessOwner } from '../../middlewares/middlewareIsUserThisBusinessOwner';
+import { middlewareBusinessManIsOwnerOfThis } from '../../middlewares/middlewareBusinessManIsOwnerOfThis';
 
 export const router = Router();
 
@@ -44,7 +44,7 @@ router
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewarePagination,
-    middlewareIsUserThisBusinessOwner,
+    middlewareBusinessManIsOwnerOfThis,
     shoppingHandles.get_shopping_owner()
   );
 

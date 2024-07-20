@@ -10,7 +10,7 @@ import {
 import { businessServicesFindOne } from '../features/business/services';
 import { getFieldInReqData } from './utils';
 
-export const middlewareIsUserThisBusinessOwner: RequestHandler = async (req, res, next) => {
+export const middlewareBusinessManIsOwnerOfThis: RequestHandler = async (req, res, next) => {
   const { user } = req;
   const routeName = getFieldInReqData(req, 'routeName');
 

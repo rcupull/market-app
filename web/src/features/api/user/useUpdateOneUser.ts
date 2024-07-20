@@ -34,7 +34,7 @@ export const useUpdateOneUser = (): {
           {
             method: 'put',
             url: getEndpoint({
-              path: '/user/:userId',
+              path: '/users/:userId',
               urlParams: { userId },
             }),
             data: update,
