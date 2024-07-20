@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
 
-import { IconButtonFavorite } from 'components/icon-button-favorite';
 import { Menu } from 'components/menu';
 
-import { useAddFavoriteUser } from 'features/api/business/useAddFavoriteUser';
-import { useRemoveFavoriteUser } from 'features/api/business/useRemoveFavoriteUser';
 import { useAuth } from 'features/api-slices/useAuth';
 
 import { useRouter } from 'hooks/useRouter';
+
+import { BusinessFavoriteButton } from './business-favorite-button';
 
 import SvgBookmarkSolid from 'icons/BookmarkSolid';
 import SvgTruckSolid from 'icons/TruckSolid';
@@ -16,20 +15,13 @@ import { getDeliveryUtils, getOneBusinessRoute } from 'utils/business';
 import { cn } from 'utils/general';
 
 export const BusinessMainBar = () => {
-  const { user, isAuthenticated, onRefreshAuthUser } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const { business } = useBusiness();
   const { isOneBusinessPage } = useRouter();
 
   const isEnabledDelivery = getDeliveryUtils().getIsEnabled({
     deliveryConfig: business?.deliveryConfig,
   });
-
-  const { addFavoriteUser } = useAddFavoriteUser();
-  const { removeFavoriteUser } = useRemoveFavoriteUser();
-
-  const isFavorite = !!user?.favoritesBusiness?.find(
-    ({ routeName }) => business?.routeName === routeName
-  );
 
   const { pushRoute } = useRouter();
 
@@ -85,28 +77,8 @@ export const BusinessMainBar = () => {
             <SvgTruckSolid className="fill-gray-500 size-6 8" />
           </div>
         )}
-        {isOneBusinessPage && (
-          <IconButtonFavorite
-            fill={isFavorite}
-            isBusy={addFavoriteUser.status.isBusy || removeFavoriteUser.status.isBusy}
-            onClick={() => {
-              if (!user) return;
-              if (!business) return;
 
-              (isFavorite ? removeFavoriteUser : addFavoriteUser).fetch(
-                {
-                  userId: user._id,
-                  routeName: business.routeName,
-                },
-                {
-                  onAfterSuccess: () => {
-                    onRefreshAuthUser();
-                  },
-                }
-              );
-            }}
-          />
-        )}
+        {isOneBusinessPage && business && <BusinessFavoriteButton routeName={business.routeName} />}
       </div>
     </div>
   );

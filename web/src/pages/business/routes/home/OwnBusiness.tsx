@@ -19,7 +19,7 @@ export const OwnBusiness = () => {
     return <></>;
   }
 
-  if (!allUserBusiness.data?.length) {
+  if (allUserBusiness.data && !allUserBusiness.data.length) {
     return (
       <HighlightedBox variant="info">
         <div className="flex flex-col sm:flex-row text-center sm:text-start items-center sm:items-start gap-3 sm:justify-between w-full text-lg text-gray-700">
