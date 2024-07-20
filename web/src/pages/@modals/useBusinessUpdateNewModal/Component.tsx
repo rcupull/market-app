@@ -84,7 +84,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
           },
         ]}
       >
-        {({ errors, value, isValid }) => {
+        {({ errors, value }) => {
           return (
             <form>
               <FieldInput
@@ -97,8 +97,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                   <span className="flex flex-col sm:flex-row items-start sm:items-center">
                     {getRequiredLabel('Nombre del negocio')}
                     <span className="text-red-600 text-xs sm:ml-2">
-                      (Este valor <span className="font-bold">NO</span> se puede modificar una vez
-                      creado)
+                      (<span className="font-bold">NO</span> se puede modificar una vez creado)
                     </span>
                   </span>
                 }
@@ -142,7 +141,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                 <Button
                   label="Guardar"
                   isBusy={addOneBusiness.status.isBusy || getAllBusiness.status.isBusy}
-                  disabled={!isValid}
+                  formuxSubmit
                   onClick={() => {
                     if (business) {
                       const { name } = value;

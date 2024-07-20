@@ -1,12 +1,14 @@
 import { createContext } from 'react';
 
-import { ContextState } from './types';
+import { FormContextState } from './types';
 
-export const FormContext = createContext<ContextState>({
+export const FormContext = createContext<FormContextState>({
   value: {},
   setValue: () => {},
   errors: {},
   setErrors: () => {},
+  errorMode: 'touched',
+  setErrorMode: () => {},
   isValid: true,
   touched: {},
   setTouched: () => {},

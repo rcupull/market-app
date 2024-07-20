@@ -1,5 +1,6 @@
 import { useFetch } from 'hooks/useFetch';
 
+import { defaultLimit } from 'constants/api';
 import { FetchResourceWithPagination, PaginatedData } from 'types/api';
 import { Shopping, ShoppingState } from 'types/shopping';
 import { getEndpoint } from 'utils/api';
@@ -23,7 +24,7 @@ export const useGetAllShopping = (): {
             method: 'get',
             url: getEndpoint({
               path: '/shopping',
-              query,
+              query: { limit: defaultLimit, ...query },
             }),
           },
           options

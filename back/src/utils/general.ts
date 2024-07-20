@@ -31,20 +31,29 @@ export const isEqual = (a: any, b: any): boolean => {
 
   return a === b;
 };
-export const isEqualObj = (a: AnyRecord | undefined, b: AnyRecord | undefined): boolean => {
-  if (!a || !b) return false;
 
-  if (isArray(a) && isArray(b) && a.length !== b.length) {
+export const isEqualObj = (aArg: AnyRecord | undefined, bArg: AnyRecord | undefined): boolean => {
+  if (!aArg || !bArg) return false;
+
+  if (isArray(aArg) && isArray(bArg) && aArg.length !== bArg.length) {
     return false;
   }
 
-  for (const prop in a) {
+  const a = deepJsonCopy(aArg);
+  const b = deepJsonCopy(bArg);
+
+  const mergedObj = {
+    ...a,
+    ...b,
+  };
+
+  for (const prop in mergedObj) {
     //eslint-disable-next-line
     if (a.hasOwnProperty(prop)) {
       //eslint-disable-next-line
       if (b.hasOwnProperty(prop)) {
         //@ts-expect-error ignore
-        if (typeof a[prop] === 'object') {
+        if (typeof a[prop] === 'object' && a[prop] !== null) {
           //@ts-expect-error ignore
           if (!isEqualObj(a[prop], b[prop])) return false;
         } else {
@@ -54,11 +63,12 @@ export const isEqualObj = (a: AnyRecord | undefined, b: AnyRecord | undefined): 
       } else {
         return false;
       }
+    } else {
+      return false;
     }
   }
   return true;
 };
-
 export const combineMiddleware = (...mids: Array<RequestHandler>) => {
   return mids.reduce(function (a, b) {
     return function (req, res, next) {
@@ -164,4 +174,36 @@ export const getFlattenUndefinedJson = <T extends AnyRecord = AnyRecord>(value: 
     (acc, [k, v]) => (v === undefined ? acc : { ...acc, [k]: v }),
     {} as T
   );
+};
+
+export const stringExtract = (matcher: string, value: string): Array<string> | null => {
+  /**
+   *  matcher should has this structure +> 'products.name.{val}.max.{val}'. Use {val} where you want extract the values
+   */
+  const dotsInMather = matcher.split('.').length - 1;
+  const dotsInValue = value.split('.').length - 1;
+
+  if (dotsInMather !== dotsInValue) {
+    return null;
+  }
+
+  const exp = new RegExp(replaceAll(matcher, '{val}', '(.*)'));
+
+  const response = exp.exec(value);
+
+  if (!response) {
+    return null;
+  }
+
+  return response.slice(1);
+};
+
+export const numberExtract = (value: string): Array<number> | null => {
+  const response = value.match(/(\d+)/g);
+
+  if (!response) {
+    return null;
+  }
+
+  return response.map(Number);
 };

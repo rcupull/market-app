@@ -8,7 +8,7 @@ import { PostDto } from '../../types/post';
 import { agendaServices as agendaServicesBase } from '../agenda/services';
 import { isEqualIds } from '../../utils/general';
 import { mockNotificationsServicesSendUpdateStockAmountMessage } from '../../utils/test-mocks/mockNotificationsServices';
-import { addressDummy } from '../../utils/test-dummies';
+import { addressDummy, purshaseNotesDummy } from '../../utils/test-dummies';
 
 jest.mock('../agenda/services', () => ({
   agenda: {
@@ -42,6 +42,7 @@ const handleAddPostsToOrder = async ({
     )
     .send({
       postId: productPost1Business1User1._id,
+      purshaseNotes: purshaseNotesDummy,
       amountToAdd: 5,
     })
     .auth(generateToken(user1._id), { type: 'bearer' })
@@ -139,7 +140,7 @@ describe('shopping', () => {
     it('should return a new shopping APPROVED', async () => {
       const { user1, business1User1 } = await fillBD({
         user1: {
-          address: addressDummy,
+          addresses: [addressDummy],
         },
         shopping1Business1User1: {
           state: ShoppingState.APPROVED,
@@ -164,7 +165,8 @@ describe('shopping', () => {
               'createdAt',
               'posts.0.lastUpdatedDate',
               'posts.0.postData._id',
-              'purchaserId'
+              'purchaserId',
+              'purchaserAddress._id'
             ),
             `
             {
@@ -190,6 +192,7 @@ describe('shopping', () => {
                 },
               ],
               "purchaserAddress": {
+                "_id": Anything,
                 "apartment": 45,
                 "city": "Habana",
                 "country": "Cuba",
@@ -662,6 +665,7 @@ describe('shopping', () => {
         .send({
           routeName: business1User1.routeName,
           postId: productPost1Business1User1._id, // remove only the post1 from ths shopping
+          purshaseNotes: purshaseNotesDummy,
         })
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200);

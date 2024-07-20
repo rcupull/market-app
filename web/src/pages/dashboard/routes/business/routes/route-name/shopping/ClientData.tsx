@@ -1,8 +1,9 @@
 import { AddressView } from 'components/address-view';
 import { Divider } from 'components/divider';
 
+import { ListDetailsKey } from 'pages/@common/list-details-key';
+import { ListDetailsValue } from 'pages/@common/list-details-value';
 import { Shopping } from 'types/shopping';
-import { cn } from 'utils/general';
 import { wasApprovedShopping } from 'utils/shopping';
 import { getIsValidAddress } from 'utils/validation';
 
@@ -16,40 +17,25 @@ export const ClientData = ({ rowData }: ClientDataProps) => {
     return <span className="text-gray-400">Visible al aceptar la orden</span>;
   }
 
-  const renderKey = (label: string) => {
-    return <div className="font-bold text-xs text-gray-400">{label}</div>;
-  };
-
-  const renderValue = (value: React.ReactNode) => {
-    return (
-      <div
-        className={cn('font-semibold', {
-          'text-red-500 font-normal': !value,
-        })}
-      >
-        {value || '(Incompleto)'}
-      </div>
-    );
-  };
-
   return (
     <div className="w-48 sm:w-60">
-      {renderKey('Nombre')}
-      {renderValue(purchaserName)}
+      <ListDetailsKey label="Nombre" />
+      <ListDetailsValue value={purchaserName} />
 
-      <Divider className="!my-1" />
+      <Divider narrow />
 
-      {renderKey('Teléfono')}
-      {renderValue(purchaserPhone)}
+      <ListDetailsKey label="Teléfono" />
+      <ListDetailsValue value={purchaserPhone} />
 
-      <Divider className="!my-1" />
+      <Divider narrow />
 
-      {renderKey('Dirección')}
-      {renderValue(
-        purchaserAddress && getIsValidAddress(purchaserAddress) && (
-          <AddressView address={purchaserAddress} />
-        )
-      )}
+      <ListDetailsKey label="Dirección" />
+      <ListDetailsValue
+        value={
+          purchaserAddress &&
+          getIsValidAddress(purchaserAddress) && <AddressView address={purchaserAddress} />
+        }
+      />
     </div>
   );
 };

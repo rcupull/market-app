@@ -1,5 +1,5 @@
-import { BaseIdentity, Image } from './general';
-import { PostFormField, PostType } from './post';
+import { Address, BaseIdentity, Image } from './general';
+import { PostType, ProductFormField } from './post';
 
 export type BusinessCategory = string;
 export type BusinessCurrency = 'CUP' | 'MLC' | 'USD';
@@ -22,7 +22,9 @@ export type PostSectionType = 'post' | 'link';
 
 export interface PostsLayoutSection {
   _id: string;
-  hidden?: boolean;
+  //
+  showMobile?: boolean;
+  showPC?: boolean;
   //
   postType: PostType;
   //
@@ -64,8 +66,6 @@ export interface PostCardLayout {
   discount?: PostCardLayoutDiscount;
   shoppingMethod?: PostLayoutShoppingMethod;
 }
-
-export interface PostPageLayout {}
 
 export interface BannerLayout {
   type: BannerLayoutType;
@@ -135,6 +135,19 @@ export interface BusinessSEO {
   description?: string;
 }
 
+export enum DeliveryConfigType {
+  NONE = 'NONE',
+  FREE = 'FREE',
+  REQUIRED = 'REQUIRED',
+  OPTIONAL = 'OPTIONAL',
+}
+
+export interface DeliveryConfig {
+  minPrice?: number;
+  priceByKm?: number;
+  type?: DeliveryConfigType;
+}
+
 export interface Business extends BaseIdentity {
   name: string;
   routeName: string;
@@ -153,9 +166,13 @@ export interface Business extends BaseIdentity {
     termsAndConditions?: string;
   };
   shoppingDebit: number;
-  postFormFields?: Array<PostFormField>;
+  postFormFields?: Array<ProductFormField>;
   currency: BusinessCurrency;
   seo?: BusinessSEO;
+  addresses?: Array<Address>;
+  deliveryConfig?: DeliveryConfig;
+  //
+  doneOnboarding?: boolean;
 }
 
 export interface BusinessSummary extends Pick<Business, '_id' | 'name' | 'routeName'> {
@@ -171,7 +188,8 @@ export type PostsLayoutSectionPayload = Pick<
   | 'postCategoriesTags'
   | 'searchLayout'
   | 'hiddenName'
-  | 'hidden'
+  | 'showMobile'
+  | 'showPC'
   | 'type'
   | 'postType'
 >;

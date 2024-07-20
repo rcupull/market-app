@@ -6,7 +6,20 @@ import { getEndpoint } from 'utils/api';
 
 export const useUpdateOneUser = (): {
   updateOneUser: FetchResource<
-    { userId: string; update: Partial<Pick<User, 'profileImage' | 'name' | 'address' | 'phone'>> },
+    {
+      userId: string;
+      update: Partial<
+        Pick<
+          User,
+          | 'profileImage'
+          | 'name'
+          | 'addresses'
+          | 'phone'
+          | 'canCreateBusiness'
+          | 'canMakeDeliveries'
+        >
+      >;
+    },
     void
   >;
 } => {
@@ -21,7 +34,7 @@ export const useUpdateOneUser = (): {
           {
             method: 'put',
             url: getEndpoint({
-              path: '/user/:userId',
+              path: '/users/:userId',
               urlParams: { userId },
             }),
             data: update,

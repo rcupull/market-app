@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { FormContext } from './context';
-import { ContextState, FormErrors, FormProps, FormTouched } from './types';
+import { FormContextState, FormErrorMode, FormErrors, FormProps, FormTouched } from './types';
 import { useGetFormErrors } from './useGetFormErrors';
 
 import { AnyRecord } from 'types/general';
@@ -16,8 +16,11 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
   const getFormErrors = useGetFormErrors<Value>();
 
   const [formState, setFormState] = useState<Value>(value);
+  //
   const [errors, setErrors] = useState<FormErrors<Value>>({});
   const [touched, setTouched] = useState<FormTouched<Value>>({});
+  const [errorMode, setErrorMode] = useState<FormErrorMode>('touched');
+  //
   const [isValid, setIsValid] = useState<boolean>(true);
   const initialValue = useMemo(() => deepJsonCopy(value), []);
   const refMounted = useRef(false);
@@ -49,14 +52,28 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
   }, []);
 
   const getErrors = () => {
+    if (errorMode === 'all') {
+      /**
+       * Get errors for all fields
+       */
+      return errors;
+    }
+
+    if (errorMode === 'touched') {
+      /**
+       * Only get errors for touched fields
+       */
+      //@ts-expect-error ignore types
+      return Object.keys(touched).reduce((acc, key) => ({ ...acc, [key]: errors[key] }), {});
+    }
+
     /**
-     * Only get errors for touched fields
+     * No return errors for undefined mode
      */
-    //@ts-expect-error ignore this error
-    return Object.keys(touched).reduce((acc, key) => ({ ...acc, [key]: errors[key] }), {});
+    return {};
   };
 
-  const state: ContextState<Value> = {
+  const state: FormContextState<Value> = {
     value: formState,
     hasChange: !isEqual(initialValue, formState),
     isValid,
@@ -65,6 +82,10 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
     setTouched,
     touched,
     setValue: setFormState,
+    //
+    setErrorMode,
+    errorMode,
+    //
     resetForm: () => {
       setFormState(initialValue);
       setErrors({});

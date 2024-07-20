@@ -2,10 +2,12 @@ import { useEffect } from 'react';
 
 import { AddressView } from 'components/address-view';
 import { Button } from 'components/button';
+import { ButtonDescription } from 'components/button-decription';
+import { HighlightedBox } from 'components/highlighted-box';
 
 import { useAuth } from 'features/api-slices/useAuth';
 
-import { useUserUpdateSettings } from 'pages/@modals/useUserUpdateSettings';
+import { useUserUpdateSettingsModal } from 'pages/@modals/useUserUpdateSettingsModal';
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 import { getIsValidAddress, getIsValidPhone } from 'utils/validation';
@@ -16,11 +18,13 @@ export interface PersonalDataProps extends StyleProps {
 
 export const PersonalData = ({ className, onValid }: PersonalDataProps) => {
   const { authData, onRefreshAuthUser } = useAuth();
-  const userUpdateSettings = useUserUpdateSettings();
+  const userUpdateSettings = useUserUpdateSettingsModal();
 
   const user = authData?.user;
 
-  const { phone, address } = user || {};
+  const { phone, addresses } = user || {};
+
+  const address = addresses?.[0];
 
   const isValidAddress = !!address && getIsValidAddress(address);
   const isValidPhone = !!phone && getIsValidPhone(phone);
@@ -35,39 +39,54 @@ export const PersonalData = ({ className, onValid }: PersonalDataProps) => {
   }
 
   return (
-    <div className={cn('flex flex-col ring ring-yellow-500 rounded-lg p-2', className)}>
-      <span className="text-center w-full font-bold">Contacto</span>
+    <HighlightedBox className={className} variant="info">
+      <div className={cn('flex flex-col p-2 w-full')}>
+        <div className="flex items-center justify-center">
+          <span className="text-center font-bold">Contacto</span>
+          <ButtonDescription
+            className="inline-block"
+            description={
+              <div>
+                Es requerido que los usuarios completen sus datos personales para poder solicitar
+                una orden de compra. Estos datos son usados por los comerciantes para poder realizar
+                las entregas a domicilio. Además la dirección es usada por nuestros algorimos de
+                localizacion de productos de interés.
+              </div>
+            }
+          />
+        </div>
 
-      <div className="flex gap-1 mt-3">
-        <span className="font-semibold">Teléfono:</span>
-        {isValidPhone ? <span>{phone}</span> : <span className="text-red-500">Incompleto</span>}
+        <div className="flex gap-1 mt-3">
+          <span className="font-semibold">Teléfono:</span>
+          {isValidPhone ? <span>{phone}</span> : <span className="text-red-500">Incompleto</span>}
+        </div>
+
+        <div className="flex mt-2 gap-1">
+          <span className="font-semibold text-nowrap">Dirección: </span>
+
+          {isValidAddress ? (
+            <AddressView address={address} />
+          ) : (
+            <span className="text-red-500">Incompleta</span>
+          )}
+        </div>
+
+        <div className="flex w-full">
+          <Button
+            label="Editar"
+            variant="link"
+            onClick={() =>
+              userUpdateSettings.open({
+                user,
+                onAfterSuccess: () => {
+                  onRefreshAuthUser();
+                },
+              })
+            }
+            className="!ml-auto"
+          />
+        </div>
       </div>
-
-      <div className="flex mt-2 gap-1">
-        <span className="font-semibold text-nowrap">Dirección: </span>
-
-        {isValidAddress ? (
-          <AddressView address={address} />
-        ) : (
-          <span className="text-red-500">Incompleta</span>
-        )}
-      </div>
-
-      <div className="flex w-full">
-        <Button
-          label="Editar"
-          variant="link"
-          onClick={() =>
-            userUpdateSettings.open({
-              user,
-              onAfterSuccess: () => {
-                onRefreshAuthUser();
-              },
-            })
-          }
-          className="!ml-auto"
-        />
-      </div>
-    </div>
+    </HighlightedBox>
   );
 };

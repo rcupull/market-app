@@ -11,3 +11,13 @@ export const getIsValidAddress = (address: Address): boolean => {
 export const getIsValidPhone = (phone: string): boolean => {
   return VALID_PHONE_REGEXP.test(phone);
 };
+
+export const getIsValidNumber = (number: string): boolean => {
+  const value = Number(number);
+  return !isNaN(value);
+};
+
+export const getIsValidPositiveNumber = (number: string): boolean => {
+  const isValidNumber = getIsValidNumber(number);
+  return isValidNumber && Number(number) >= 0;
+};

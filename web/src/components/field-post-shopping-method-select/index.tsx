@@ -20,8 +20,8 @@ export const FieldPostShoppingMethodSelect = (props: FieldPostShoppingMethodSele
       description={
         <div>
           Se mostrará el botón <SvgCartPlusSolid className="size-6 inline fill-gray-500" /> para
-          agregar el producto al carro de compras. Si el grupo tendrá publicaciones de enlace a
-          otras páginas no debe tener activa esta opcion.
+          agregar el producto al carro de compras. Se recomienda activarla para mejorar la
+          experiencia del usuario en la plataforma.
         </div>
       }
       renderOption={({ checked, item }) => {

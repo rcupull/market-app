@@ -1,6 +1,7 @@
-import { BaseIdentity, Image, TelegramBotChat } from './general';
+import { Address, BaseIdentity, Image, TelegramBotChat } from './general';
 import { Schema } from 'mongoose';
 import { Post, PostType } from './post';
+import { User } from './user';
 
 export type BusinessCurrency = 'CUP' | 'MLC' | 'USD';
 
@@ -22,7 +23,9 @@ export type FooterLayoutType = 'none' | 'basic';
 export interface PostsLayoutSection {
   _id: string;
   name: string;
-  hidden?: boolean;
+  //
+  showMobile?: boolean;
+  showPC?: boolean;
   //
   postType: PostType;
   //
@@ -38,8 +41,6 @@ export interface PostsLayoutSection {
 export interface PostsLayout {
   sections?: Array<PostsLayoutSection>;
 }
-
-export interface PostPageLayout {}
 
 export type PostCardLayoutImages = 'static' | 'hoverZoom' | 'slider' | 'switch' | 'rounded';
 
@@ -112,6 +113,19 @@ export enum BusinessNotificationFlags {
   TELEGRAM_NEW_SHOPPING = 'TELEGRAM_NEW_SHOPPING',
 }
 
+export enum DeliveryConfigType {
+  NONE = 'NONE',
+  FREE = 'FREE',
+  REQUIRED = 'REQUIRED',
+  OPTIONAL = 'OPTIONAL',
+}
+
+export interface DeliveryConfig {
+  minPrice?: number;
+  priceByKm?: number;
+  type?: DeliveryConfigType;
+}
+
 export interface Business extends BaseIdentity {
   name: string;
   routeName: string;
@@ -153,8 +167,17 @@ export interface Business extends BaseIdentity {
   >;
   currency: BusinessCurrency;
   seo?: BusinessSEO;
+  addresses?: Array<Address>;
+  deliveryConfig?: DeliveryConfig;
+  //
+  doneOnboarding?: boolean;
+  favoritesUserIds?: Array<Schema.Types.ObjectId>;
 }
 
+export interface BusinessAdminDto extends Business {
+  userData?: Pick<User, 'name'>;
+  postCount?: number;
+}
 export interface BusinessDto extends Business {
   shoppingDebit: number;
 }

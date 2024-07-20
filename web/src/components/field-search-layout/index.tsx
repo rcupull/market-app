@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldRadioGroup, FieldRadioGroupProps } from 'components/field-radio-group';
 import { useFormField } from 'components/formux/useFormField';
+import { ShowPreview } from 'components/show-preview';
 
 import { Skeleton } from './skeleton';
 
@@ -52,31 +53,31 @@ export const FieldSearchLayout = (props: FieldSearchLayoutProps) => {
           {
             value: 'postCategories',
           },
-          {
-            value: 'postCategoriesScrollable',
-          },
+          // {
+          //   value: 'postCategoriesScrollable',
+          // },
           {
             value: 'postCategoriesExcluded',
           },
-          {
-            value: 'postCategoriesExcludedScrollable',
-          },
+          // {
+          //   value: 'postCategoriesExcludedScrollable',
+          // },
         ]}
-        containerClassName={cn('grid gap-2', {
-          'grid-cols-2': !showPreview,
-          'grid-cols-1': showPreview,
-        })}
+        containerClassName={cn('flex flex-wrap gap-4', {})}
         {...props}
         label={
           <div className="flex flex-wrap gap-1">
             <span>{label}</span>
-            <div
-              className="text-indigo-500 cursor-pointer"
-              onClick={() => setShowPreview(!showPreview)}
-            >{`${showPreview ? '(Ocultar vista previa)' : '(Mostrar vista previa)'}`}</div>
+            <ShowPreview
+              value={showPreview}
+              onChange={setShowPreview}
+              className="hidden sm:block"
+            />
           </div>
         }
       />
+
+      <ShowPreview value={showPreview} onChange={setShowPreview} className="mt-2 sm:hidden" />
 
       {showPreview && (
         <Skeleton

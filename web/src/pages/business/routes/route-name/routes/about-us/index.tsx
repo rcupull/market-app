@@ -5,7 +5,7 @@ import { HtmlTextContainer } from 'components/html-text-container';
 import { LayoutPage } from 'pages/@common/layout-page';
 import { UpdateSomethingContainer } from 'pages/@common/update-something-container';
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { useBusinessUpdateAboutUs } from 'pages/@modals/useBusinessUpdateAboutUs';
+import { useBusinessUpdateAboutUsModal } from 'pages/@modals/useBusinessUpdateAboutUsModal';
 import { getOneBusinessRoute } from 'utils/business';
 
 export interface AboutUsProps {
@@ -14,7 +14,7 @@ export interface AboutUsProps {
 
 export const AboutUs = ({ routeName }: AboutUsProps) => {
   const { business } = useBusiness();
-  const businessUpdateAboutUs = useBusinessUpdateAboutUs();
+  const businessUpdateAboutUs = useBusinessUpdateAboutUsModal();
 
   if (!business) {
     return <></>;

@@ -1,78 +1,69 @@
 import { Router } from 'express';
 
-import { pagination } from '../../middlewares/pagination';
-import { validators } from '../../middlewares/express-validator';
+import { middlewarePagination } from '../../middlewares/middlewarePagination';
+import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
 import { postHandles } from './handles';
-import {
-  isLogged,
-  isUserBusinessOwner,
-  isUserThisBusinessOwner,
-  isUserThisPostOwner,
-} from '../../middlewares/verify';
+import { middlewareIsLogged } from '../../middlewares/middlewareIsLogged';
+import { middlewareUserCanCreateBusiness } from '../../middlewares/middlewareUserCanCreateBusiness';
+import { middlewareBusinessManIsOwnerOfThis } from '../../middlewares/middlewareBusinessManIsOwnerOfThis';
+import { middlewareIsUserThisPostOwner } from '../../middlewares/middlewareIsUserThisPostOwner';
 
 export const router = Router();
 
 router
   .route('/posts')
-  .get(pagination, postHandles.get_posts())
+  .get(middlewarePagination, postHandles.get_posts())
   .post(
-    validators.body('routeName').notEmpty(),
-    validators.body('name').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserBusinessOwner,
-    isUserThisBusinessOwner,
+    middlewareExpressValidator.body('routeName').notEmpty(),
+    middlewareExpressValidator.body('name').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareUserCanCreateBusiness,
+    middlewareBusinessManIsOwnerOfThis,
     postHandles.post_posts()
   );
 
 router
   .route('/posts/:postId/duplicate')
   .post(
-    validators.param('postId').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserBusinessOwner,
-    isUserThisPostOwner,
+    middlewareExpressValidator.param('postId').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareUserCanCreateBusiness,
+    middlewareIsUserThisPostOwner,
     postHandles.post_posts_postId_duplicate()
   );
 ///////////////////////////////////////////////////////////////////////////
 
 router
   .route('/posts/:postId')
-  .get(validators.param('postId').notEmpty(), validators.handle, postHandles.get_posts_postId())
+  .get(
+    middlewareExpressValidator.param('postId').notEmpty(),
+    middlewareExpressValidator.handle,
+    postHandles.get_posts_postId()
+  )
   .put(
-    validators.param('postId').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserThisPostOwner,
+    middlewareExpressValidator.param('postId').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareIsUserThisPostOwner,
     postHandles.put_posts_postId()
   )
   .delete(
-    validators.param('postId').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserThisPostOwner,
+    middlewareExpressValidator.param('postId').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareIsUserThisPostOwner,
     postHandles.delete_posts_postId()
   );
 
-//////////////////////////////////////////////////////////////////
-
-router
-  .route('/posts/:postId/review')
-  .post(
-    validators.param('postId').notEmpty(),
-    validators.body('value').notEmpty(),
-    validators.handle,
-    isLogged,
-    postHandles.post_make_review()
-  );
 /////////////////////////////////////////////////////////////////
 router
   .route('/posts/:postId/related')
   .get(
-    validators.param('postId').notEmpty(),
-    validators.handle,
-    pagination,
+    middlewareExpressValidator.param('postId').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewarePagination,
     postHandles.get_related_posts()
   );
 /////////////////////////////////////////////////////////////////
@@ -80,20 +71,20 @@ router
 router
   .route('/posts/bulkActions/delete')
   .delete(
-    validators.body('routeName').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserThisBusinessOwner,
+    middlewareExpressValidator.body('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareBusinessManIsOwnerOfThis,
     postHandles.bulk_action_delete()
   );
 
 router
   .route('/posts/bulkActions/update')
   .put(
-    validators.body('routeName').notEmpty(),
-    validators.body('update').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserThisBusinessOwner,
+    middlewareExpressValidator.body('routeName').notEmpty(),
+    middlewareExpressValidator.body('update').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareBusinessManIsOwnerOfThis,
     postHandles.bulk_action_update()
   );

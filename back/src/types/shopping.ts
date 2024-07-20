@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 import { Address, BaseIdentity } from './general';
 import { Post, PostPurshaseNotes } from './post';
-import { BusinessCurrency } from './business';
+import { BusinessCurrency, DeliveryConfigType } from './business';
 import { BillState } from './billing';
 
 export enum ShoppingState {
@@ -16,13 +16,22 @@ export enum ShoppingState {
 
 export type ShoppingPostData = Pick<Post, '_id' | 'price' | 'images' | 'name'>;
 
+export interface ShoppingDelivery {
+  deliveryType: DeliveryConfigType;
+  price: number;
+  //
+  distance: number;
+}
+
+export interface ShoppingPostMeta {
+  postData: ShoppingPostData;
+  count: number;
+  purshaseNotes?: PostPurshaseNotes;
+  lastUpdatedDate: Date;
+}
+
 export interface Shopping extends BaseIdentity {
-  posts: Array<{
-    postData: ShoppingPostData;
-    purshaseNotes?: PostPurshaseNotes;
-    count: number;
-    lastUpdatedDate: Date;
-  }>;
+  posts: Array<ShoppingPostMeta>;
   //
   purchaserId: string;
   //
@@ -34,6 +43,8 @@ export interface Shopping extends BaseIdentity {
     state: ShoppingState;
     lastUpdatedDate: Date;
   }>;
+
+  delivery?: ShoppingDelivery;
 }
 
 export interface ShoppingDto extends Shopping {

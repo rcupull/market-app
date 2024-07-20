@@ -118,10 +118,11 @@ const get_shopping_owner: () => RequestHandler = () => {
       }
 
       const { routeName } = business;
-      const { states } = query;
+      const { states, sort = defaultQuerySort } = query;
 
       const shoppings = await shoppingServicesGetAllWithPagination({
         paginateOptions,
+        sort,
         query: {
           routeName,
           states,
@@ -240,6 +241,7 @@ const post_shopping: () => RequestHandler<
             amountToAdd: stockAmountAvailable,
             post,
             user,
+            purshaseNotes,
           });
 
           /**
@@ -263,6 +265,7 @@ const post_shopping: () => RequestHandler<
           amountToAdd: amountToAdd,
           post,
           user,
+          purshaseNotes,
         });
 
         /**
@@ -294,15 +297,14 @@ const post_shopping: () => RequestHandler<
 const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const user = req.user;
+      const { params, body, user } = req;
 
       if (!user) {
         return getUserNotFoundResponse({ res });
       }
 
-      const { params } = req;
-
       const { shoppingId } = params;
+      const { delivery } = body;
 
       const shopping = await shoppingServicesFindAndUpdateOne({
         query: {
@@ -311,6 +313,7 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
         },
         update: {
           state: ShoppingState.REQUESTED,
+          delivery,
         },
       });
 
@@ -465,10 +468,14 @@ const delete_shopping: () => RequestHandler = () => {
         return getUserNotFoundResponse({ res });
       }
 
-      const { routeName, postId } = body;
+      const { routeName, postId, purshaseNotes } = body;
+
+      if (postId && !purshaseNotes) {
+        return get400Response({ res, json: { message: 'The purshaseNotes are required' } });
+      }
 
       postId
-        ? await deleteOnePostFromShoppingInContruction({ routeName, user, postId })
+        ? await deleteOnePostFromShoppingInContruction({ routeName, user, postId, purshaseNotes })
         : await deleteShoppingInConstruction({ routeName, user });
 
       res.send({});

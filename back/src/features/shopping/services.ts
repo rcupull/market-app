@@ -4,9 +4,9 @@ import { UpdateOptions } from 'mongodb';
 import { ShoppingModel } from '../../schemas/shopping';
 import { Shopping, ShoppingState } from '../../types/shopping';
 import { Post, PostPurshaseNotes } from '../../types/post';
-import { isEqualIds, isNullOrUndefined, isNumber } from '../../utils/general';
+import { isEqual, isEqualIds, isNullOrUndefined, isNumber } from '../../utils/general';
 import { User } from '../../types/user';
-import { PaginateResult } from '../../middlewares/pagination';
+import { PaginateResult } from '../../middlewares/middlewarePagination';
 import {
   GetAllShoppingArgs,
   getAllShoppingFilterQuery,
@@ -69,65 +69,36 @@ export const shoppingServicesAddPostToOne: QueryHandle<
     amountToAdd?: number;
     post: Post;
     currentShopping: ModelDocument<Shopping>;
+    purshaseNotes?: PostPurshaseNotes;
   },
   void
-> = async ({ amountToAdd = 1, post, currentShopping }) => {
+> = async ({ amountToAdd = 1, post, currentShopping, purshaseNotes }) => {
   const { _id: postId } = post;
 
-  const existsPost = currentShopping.posts.find((e) => {
-    return isEqualIds(e.postData._id, postId);
+  const existsIndex = currentShopping.posts.findIndex((p) => {
+    return isEqualIds(p.postData._id, postId) && isEqual(p.purshaseNotes, purshaseNotes);
   });
 
-  if (existsPost) {
-    await ShoppingModel.updateOne(
-      {
-        _id: currentShopping._id,
-      },
-      {
-        $set: {
-          'posts.$[p].lastUpdatedDate': new Date(),
-        },
-        $inc: {
-          'posts.$[p].count': amountToAdd,
-        },
-      },
-      {
-        arrayFilters: [
-          {
-            'p.postData._id': postId,
-          },
-        ],
-      }
-    );
+  if (existsIndex >= 0) {
+    currentShopping.posts[existsIndex].lastUpdatedDate = new Date();
+    currentShopping.posts[existsIndex].count += amountToAdd;
   } else {
-    await ShoppingModel.updateOne(
-      {
-        _id: currentShopping._id,
-      },
-      {
-        $push: {
-          posts: {
-            postData: postToShoppingPostDataReshaper(post),
-            count: amountToAdd,
-            lastUpdatedDate: new Date(),
-          },
-        },
-      },
-      {
-        arrayFilters: [
-          {
-            'p.post._id': postId,
-          },
-        ],
-      }
-    );
+    currentShopping.posts.push({
+      //@ts-expect-error ignore
+      postData: postToShoppingPostDataReshaper(post),
+      lastUpdatedDate: new Date(),
+      count: amountToAdd,
+      purshaseNotes,
+    });
   }
+
+  await currentShopping.save();
 };
 
 export const shoppingServicesUpdateOrAddOne: QueryHandle<
   {
-    amountToAdd?: number;
-    purshaseNotes?: PostPurshaseNotes;
+    amountToAdd: number | undefined;
+    purshaseNotes: PostPurshaseNotes | undefined;
     user: User;
     post: Post;
   },
@@ -142,7 +113,12 @@ export const shoppingServicesUpdateOrAddOne: QueryHandle<
   });
 
   if (existInConstruction) {
-    await shoppingServicesAddPostToOne({ amountToAdd, post, currentShopping: existInConstruction });
+    await shoppingServicesAddPostToOne({
+      amountToAdd,
+      post,
+      purshaseNotes,
+      currentShopping: existInConstruction,
+    });
     await agendaServices.scheduleRemoveOrderInConstruction({
       orderId: existInConstruction._id.toString(),
     });

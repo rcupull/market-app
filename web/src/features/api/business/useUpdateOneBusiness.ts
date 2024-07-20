@@ -23,6 +23,9 @@ export const useUpdateOneBusiness = (): {
           | 'postFormFields'
           | 'notificationFlags'
           | 'seo'
+          | 'deliveryConfig'
+          | 'addresses'
+          | 'doneOnboarding'
         >
       >;
     },

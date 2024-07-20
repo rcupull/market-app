@@ -2,7 +2,7 @@ import { FilterQuery, PaginateOptions, QueryOptions, UpdateQuery } from 'mongoos
 import { ModelDocument, QueryHandle } from '../../types/general';
 import { PostModel } from '../../schemas/post';
 import { Post } from '../../types/post';
-import { PaginateResult } from '../../middlewares/pagination';
+import { PaginateResult } from '../../middlewares/middlewarePagination';
 
 import { isNumber } from '../../utils/general';
 import { GetAllPostArgs, getAllFilterQuery } from './utils';
@@ -47,9 +47,10 @@ export const postServicesGetAll: QueryHandle<
 export const postServicesGetOne: QueryHandle<
   {
     query: FilterQuery<Post> & { hidden?: boolean };
+    projection?: ProjectionType<Post>;
   },
   ModelDocument<Post> | null
-> = async ({ query }) => {
+> = async ({ query, projection }) => {
   const { hidden, ...omittedQuery } = query;
 
   const filterQuery: FilterQuery<Post> = omittedQuery;
@@ -58,7 +59,7 @@ export const postServicesGetOne: QueryHandle<
     filterQuery.hidden = hidden;
   }
 
-  const out = await PostModel.findOne(filterQuery);
+  const out = await PostModel.findOne(filterQuery, projection);
 
   return out;
 };
@@ -115,7 +116,6 @@ export const postServicesAddOne: QueryHandle<
     | 'details'
     | 'highlights'
     | 'createdBy'
-    | 'postPageLayout'
     | 'postCategoriesTags'
     | 'stockAmount'
     | 'postType'

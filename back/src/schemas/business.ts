@@ -3,7 +3,12 @@ import { Business, BusinessNotificationFlags } from '../types/business';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { createdAtSchemaDefinition } from '../utils/schemas';
 import { PostModel } from './post';
-import { PostLayoutSchema, TelegramBotChatDefinition } from './common';
+import {
+  AddressDefinition,
+  DeliveryConfigDefinition,
+  PostLayoutSchema,
+  TelegramBotChatDefinition,
+} from './common';
 
 const BusinessSchema = new Schema<Business>({
   ...createdAtSchemaDefinition,
@@ -53,7 +58,7 @@ const BusinessSchema = new Schema<Business>({
       type: {
         type: String,
         enum: ['none', 'static', 'swipableClassic'],
-        default: 'static',
+        default: 'none',
       },
     },
     posts: {
@@ -108,7 +113,6 @@ const BusinessSchema = new Schema<Business>({
         type: String,
         enum: [
           'name',
-          'currency',
           'clothingSizes',
           'colors',
           'description',
@@ -116,7 +120,6 @@ const BusinessSchema = new Schema<Business>({
           'details',
           'postCategoriesTags',
           'discount',
-          'postPageLayout',
           'stockAmount',
           'images',
         ],
@@ -124,7 +127,6 @@ const BusinessSchema = new Schema<Business>({
     ],
     default: [
       'name',
-      'currency',
       'clothingSizes',
       'colors',
       'description',
@@ -132,7 +134,6 @@ const BusinessSchema = new Schema<Business>({
       'details',
       'postCategoriesTags',
       'discount',
-      'postPageLayout',
       'stockAmount',
       'images',
     ],
@@ -141,6 +142,10 @@ const BusinessSchema = new Schema<Business>({
     title: { type: String },
     description: { type: String },
   },
+  addresses: [AddressDefinition],
+  deliveryConfig: DeliveryConfigDefinition,
+  doneOnboarding: { type: Boolean, default: false },
+  favoritesUserIds: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
 BusinessSchema.plugin(mongoosePaginate);

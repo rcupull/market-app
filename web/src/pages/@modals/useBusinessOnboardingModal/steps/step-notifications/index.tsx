@@ -4,7 +4,7 @@ import { OnboardingStepProps } from '../../types';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useNextButtonPortal } from 'pages/@hooks/useNextButtonPortal';
-import { Component } from 'pages/@modals/useBusinessUpdateNotifications/Component';
+import { Component } from 'pages/@modals/useBusinessUpdateNotificationsModal/Component';
 
 export interface StepNotificationsProps extends OnboardingStepProps {}
 

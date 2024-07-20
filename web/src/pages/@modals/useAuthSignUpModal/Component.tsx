@@ -12,7 +12,7 @@ import { Portal } from 'hooks/usePortal';
 import { useAuthSignInModal } from '../useAuthSignInModal';
 import { useTermsAndConditionsModal } from '../useTermsAndConditionsModal';
 
-import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
+import { BusinessMarketBrand } from 'pages/@common/business-market-brand';
 import { getRequiredLabel } from 'utils/form';
 import { cn } from 'utils/general';
 import { getStrongPasswordTracking } from 'utils/password';
@@ -31,9 +31,9 @@ export const Component = ({ portal }: ComponentProps) => {
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-2 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <div className="flex justify-center">
-          <BusinessMarketLogo className="!size-28" />
+          <BusinessMarketBrand />
         </div>
-        <h2 className="mt-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        <h2 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Registrarse
         </h2>
       </div>
@@ -89,7 +89,7 @@ export const Component = ({ portal }: ComponentProps) => {
             },
           ]}
         >
-          {({ isValid, value, setErrors, errors }) => {
+          {({ value, setErrors, errors }) => {
             return (
               <form>
                 <FieldInput
@@ -131,24 +131,6 @@ export const Component = ({ portal }: ComponentProps) => {
                   className="mt-6"
                 />
 
-                <div className="flex flex-col bg-red-100 mt-10 p-5 rounded-sm">
-                  <span className="text-sm">
-                    Regístrese como propietario de negocios marcando la siguiente casilla:
-                  </span>
-                  <FieldCheckbox
-                    name="canCreateBusiness"
-                    label="Propietario de negocios"
-                    description={
-                      <div>
-                        Los propietarios de negocios pueden crear negocios en nuestro sistema y
-                        publicar los productos que comercializan. Si usted no tiene productos para
-                        comercializar a través de Asere Market no necesita marcar esta opción.
-                      </div>
-                    }
-                    className="mt-2"
-                  />
-                </div>
-
                 <FieldCheckbox
                   name="termsAndConditionsAccepted"
                   label={
@@ -169,12 +151,12 @@ export const Component = ({ portal }: ComponentProps) => {
                 {portal.getPortal(
                   <Button
                     label="Registrarse"
+                    formuxSubmit
                     isBusy={authSignUp.status.isBusy}
-                    disabled={!isValid}
                     onClick={() => {
-                      const { email, password, name, canCreateBusiness } = value;
+                      const { email, password, name } = value;
                       authSignUp.fetch(
-                        { email, password, name, canCreateBusiness },
+                        { email, password, name },
                         {
                           onAfterSuccess: () => {
                             onClose();

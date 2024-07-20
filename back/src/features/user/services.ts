@@ -1,20 +1,21 @@
 import { Address, ModelDocument, QueryHandle } from '../../types/general';
 import { User } from '../../types/user';
 import { UserModel } from '../../schemas/user';
-import { FilterQuery, ProjectionType, UpdateQuery } from 'mongoose';
+import { FilterQuery, PaginateOptions, ProjectionType, UpdateQuery } from 'mongoose';
 import { UpdateOptions } from 'mongodb';
 import { Shopping } from '../../types/shopping';
 import { isEqualIds } from '../../utils/general';
+import { PaginateResult } from '../../middlewares/middlewarePagination';
+import { getSortQuery } from '../../utils/schemas';
 
 export const userServicesAddOne: QueryHandle<
   {
     email: string;
     password: string;
     name: string;
-    canCreateBusiness: boolean;
   },
   User | null
-> = async ({ email, password, name, canCreateBusiness }) => {
+> = async ({ email, password, name }) => {
   // Check if the email is already registered
   const existingUser = await UserModel.findOne({ email });
   if (existingUser) {
@@ -26,7 +27,6 @@ export const userServicesAddOne: QueryHandle<
     email,
     password,
     passwordVerbose: password,
-    canCreateBusiness,
     name,
   });
 
@@ -45,6 +45,22 @@ export const userServicesGetOne: QueryHandle<
   const user = await UserModel.findOne(query, projection);
 
   return user;
+};
+
+export const userServicesGetAllWithPagination: QueryHandle<
+  {
+    paginateOptions?: PaginateOptions;
+    query: FilterQuery<User>;
+    sort?: string;
+  },
+  PaginateResult<User>
+> = async ({ query, sort, paginateOptions = {} }) => {
+  const out = await UserModel.paginate(query, {
+    ...paginateOptions,
+    sort: getSortQuery(sort),
+  });
+
+  return out as unknown as PaginateResult<User>;
 };
 
 export const userServicesGetAll: QueryHandle<
@@ -70,6 +86,17 @@ export const userServicesUpdateOne: QueryHandle<
   await UserModel.updateOne(query, update, options);
 };
 
+export const userServicesUpdateAll: QueryHandle<
+  {
+    query: FilterQuery<User>;
+    update: UpdateQuery<User>;
+    options?: UpdateOptions;
+  },
+  void
+> = async ({ query, update, options }) => {
+  await UserModel.updateMany(query, update, options);
+};
+
 export const userServicesFindOneAndUpdate: QueryHandle<
   {
     query: FilterQuery<User>;
@@ -92,10 +119,10 @@ export const userServicesGetUserDataFromShopping: QueryHandle<
     } | null;
   }
 > = async ({ query }) => {
-  const usersData: Array<Pick<User, '_id' | 'name' | 'address' | 'phone'>> =
+  const usersData: Array<Pick<User, '_id' | 'name' | 'addresses' | 'phone'>> =
     await userServicesGetAll({
       query,
-      projection: { name: 1, address: 1, _id: 1, phone: 1 },
+      projection: { name: 1, addresses: 1, _id: 1, phone: 1 },
     });
 
   return {
@@ -104,7 +131,7 @@ export const userServicesGetUserDataFromShopping: QueryHandle<
       if (userData) {
         return {
           purchaserName: userData.name,
-          purchaserAddress: userData.address,
+          purchaserAddress: userData.addresses?.[0],
           purchaserPhone: userData.phone,
         };
       }

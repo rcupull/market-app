@@ -6,9 +6,11 @@ import { useAuth } from './useAuth';
 import { Business } from 'types/business';
 
 export const useAllUserBusiness = (): {
-  refresh: () => void;
-  reset: () => void;
-  data: Array<Business> | null;
+  allUserBusiness: {
+    refresh: () => void;
+    reset: () => void;
+    data: Array<Business> | null;
+  };
 } => {
   const { getAllBusiness } = useGetAllBusiness();
 
@@ -16,14 +18,16 @@ export const useAllUserBusiness = (): {
   const { authData } = useAuth();
 
   return {
-    reset,
-    data,
-    refresh: () => {
-      fetch({
-        includeHidden: true,
-        pagination: false,
-        userId: authData?.user._id,
-      });
+    allUserBusiness: {
+      reset,
+      data,
+      refresh: () => {
+        fetch({
+          includeHidden: true,
+          pagination: false,
+          userId: authData?.user._id,
+        });
+      },
     },
   };
 };

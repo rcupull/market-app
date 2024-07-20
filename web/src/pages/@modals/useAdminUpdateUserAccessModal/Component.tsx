@@ -29,7 +29,7 @@ export const Component = ({ portal, user, onAfterSuccess, allSpecialAccess }: Co
           specialAccess: user.specialAccess || [],
         }}
       >
-        {({ value, isValid }) => {
+        {({ value }) => {
           return (
             <form className="w-full">
               <FieldRadioGroup<{ value: string }>
@@ -50,7 +50,7 @@ export const Component = ({ portal, user, onAfterSuccess, allSpecialAccess }: Co
                 <Button
                   label="Guardar"
                   isBusy={updateUserAccessAdmin.status.isBusy}
-                  disabled={!isValid}
+                  formuxSubmit
                   onClick={() => {
                     const { specialAccess } = value;
 

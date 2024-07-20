@@ -31,14 +31,22 @@ describe('business', () => {
               "aboutUsPage": {
                 "visible": false,
               },
+              "addresses": [],
               "bannerImages": [],
               "createdAt": Anything,
               "createdBy": Anything,
               "currency": "CUP",
+              "deliveryConfig": {
+                "minPrice": 0,
+                "priceByKm": 0,
+                "type": "NONE",
+              },
+              "doneOnboarding": false,
+              "favoritesUserIds": [],
               "hidden": false,
               "layouts": {
                 "banner": {
-                  "type": "static",
+                  "type": "none",
                 },
                 "footer": {
                   "type": "basic",
@@ -55,7 +63,6 @@ describe('business', () => {
               "postCategories": [],
               "postFormFields": [
                 "name",
-                "currency",
                 "clothingSizes",
                 "colors",
                 "description",
@@ -63,7 +70,6 @@ describe('business', () => {
                 "details",
                 "postCategoriesTags",
                 "discount",
-                "postPageLayout",
                 "stockAmount",
                 "images",
               ],
@@ -253,14 +259,22 @@ describe('business', () => {
               "aboutUsPage": {
                 "visible": false,
               },
+              "addresses": [],
               "bannerImages": [],
               "createdAt": Anything,
               "createdBy": Anything,
               "currency": "CUP",
+              "deliveryConfig": {
+                "minPrice": 0,
+                "priceByKm": 0,
+                "type": "NONE",
+              },
+              "doneOnboarding": false,
+              "favoritesUserIds": [],
               "hidden": false,
               "layouts": {
                 "banner": {
-                  "type": "static",
+                  "type": "none",
                 },
                 "footer": {
                   "type": "basic",
@@ -277,7 +291,6 @@ describe('business', () => {
               "postCategories": [],
               "postFormFields": [
                 "name",
-                "currency",
                 "clothingSizes",
                 "colors",
                 "description",
@@ -285,7 +298,6 @@ describe('business', () => {
                 "details",
                 "postCategoriesTags",
                 "discount",
-                "postPageLayout",
                 "stockAmount",
                 "images",
               ],

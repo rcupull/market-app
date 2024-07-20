@@ -1,36 +1,86 @@
 import { Router } from 'express';
-import { validators } from '../../middlewares/express-validator';
-import { isLogged, isUserIdAccessible } from '../../middlewares/verify';
+import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
 
 import { userHandles } from './handles';
+import { middlewareIsLogged } from '../../middlewares/middlewareIsLogged';
+import { middlewareIsUserIdAccessible } from '../../middlewares/middlewareIsUserIdAccessible';
+import { middlewarePagination } from '../../middlewares/middlewarePagination';
+import { middlewareUserCanCreateBusiness } from '../../middlewares/middlewareUserCanCreateBusiness';
 
 export const router = Router();
 
 /////////////////////////////////////////////////////////////////
 
 router
-  .route('/user/:userId')
+  .route('/users/deliveryMan')
   .get(
-    validators.param('userId').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserIdAccessible,
+    middlewareIsLogged,
+    middlewareUserCanCreateBusiness,
+    middlewarePagination,
+    userHandles.get_users_delivery_man()
+  );
+
+/////////////////////////////////////////////////////////////////
+
+router
+  .route('/users/:userId')
+  .get(
+    middlewareExpressValidator.param('userId').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareIsUserIdAccessible,
     userHandles.get_users_userId()
   )
   .put(
-    validators.param('userId').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserIdAccessible,
+    middlewareExpressValidator.param('userId').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareIsUserIdAccessible,
     userHandles.put_users_userId()
   );
 
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
 router
-  .route('/user/:userId/chatbotValidate')
+  .route('/users/:userId/chatbotValidate')
   .post(
-    validators.param('userId').notEmpty(),
-    validators.body('code').notEmpty(),
-    validators.handle,
-    isLogged,
-    userHandles.post_user_userId_chatbot_validate()
+    middlewareExpressValidator.param('userId').notEmpty(),
+    middlewareExpressValidator.body('code').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    userHandles.post_users_userId_chatbot_validate()
+  );
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+router
+  .route('/users/:userId/checks')
+  .put(
+    middlewareExpressValidator.param('userId').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareIsUserIdAccessible,
+    userHandles.put_users_userId_checks()
+  );
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+router
+  .route('/users/:userId/deliveryBusiness')
+  .post(
+    middlewareExpressValidator.param('userId').notEmpty(),
+    middlewareExpressValidator.body('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    userHandles.post_users_userId_delivery_business()
+  )
+  .delete(
+    middlewareExpressValidator.param('userId').notEmpty(),
+    middlewareExpressValidator.body('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    userHandles.del_users_userId_delivery_business()
   );

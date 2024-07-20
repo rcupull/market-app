@@ -35,7 +35,7 @@ export const Component = ({ portal }: ComponentProps) => {
           termsAndConditions: shoppingMeta.termsAndConditions || '',
         }}
       >
-        {({ value, isValid }) => {
+        {({ value }) => {
           return (
             <form className="w-full">
               <FieldCheckEditor
@@ -50,7 +50,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 <Button
                   label="Guardar"
                   isBusy={updateOneBusiness.status.isBusy}
-                  disabled={!isValid}
+                  formuxSubmit
                   onClick={() => {
                     const { termsAndConditions } = value;
                     updateOneBusiness.fetch(

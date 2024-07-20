@@ -30,19 +30,15 @@ describe('Menu', () => {
           data-id="Menu"
         >
           <div
-            class="relative"
+            aria-expanded="false"
+            aria-haspopup="menu"
+            class="cursor-pointer w-fit"
+            data-headlessui-state=""
+            id="headlessui-menu-button-:r2:"
           >
-            <div
-              aria-expanded="false"
-              aria-haspopup="menu"
-              class="cursor-pointer w-fit"
-              data-headlessui-state=""
-              id="headlessui-menu-button-:r2:"
-            >
-              <button>
-                Button
-              </button>
-            </div>
+            <button>
+              Button
+            </button>
           </div>
         </div>
       </div>

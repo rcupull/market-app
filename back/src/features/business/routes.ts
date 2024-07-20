@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import { validators } from '../../middlewares/express-validator';
-import { pagination } from '../../middlewares/pagination';
+import { middlewareExpressValidator } from '../../middlewares/middlewareExpressValidator';
+import { middlewarePagination } from '../../middlewares/middlewarePagination';
 import { businessHandles } from './handles';
-import { isLogged, isUserBusinessOwner, isUserThisBusinessOwner } from '../../middlewares/verify';
+import { middlewareIsLogged } from '../../middlewares/middlewareIsLogged';
+import { middlewareUserCanCreateBusiness } from '../../middlewares/middlewareUserCanCreateBusiness';
+import { middlewareBusinessManIsOwnerOfThis } from '../../middlewares/middlewareBusinessManIsOwnerOfThis';
 
 export const router = Router();
 
@@ -10,18 +12,18 @@ export const router = Router();
 
 router
   .route('/business')
-  .get(pagination, businessHandles.get_business())
+  .get(middlewarePagination, businessHandles.get_business())
   .post(
-    validators.body('name').notEmpty(),
-    validators.body('postCategories').notEmpty(),
-    validators.body('routeName').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserBusinessOwner,
+    middlewareExpressValidator.body('name').notEmpty(),
+    middlewareExpressValidator.body('postCategories').notEmpty(),
+    middlewareExpressValidator.body('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareUserCanCreateBusiness,
     businessHandles.post_business()
   );
 
-router.route('/business/summary').get(pagination, businessHandles.get_business_summary());
+router.route('/business/summary').get(middlewarePagination, businessHandles.get_business_summary());
 router.route('/business/search').get(businessHandles.get_business_search());
 
 /////////////////////////////////////////////////////////////////
@@ -29,15 +31,15 @@ router.route('/business/search').get(businessHandles.get_business_search());
 router
   .route('/business/:routeName')
   .get(
-    validators.param('routeName').notEmpty(),
-    validators.handle,
+    middlewareExpressValidator.param('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
     businessHandles.get_business_routeName()
   )
   .put(
-    validators.param('routeName').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserThisBusinessOwner,
+    middlewareExpressValidator.param('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareBusinessManIsOwnerOfThis,
     businessHandles.put_business_routeName()
   );
 
@@ -45,63 +47,84 @@ router
 router
   .route('/business/:routeName/postCategories')
   .put(
-    validators.param('routeName').notEmpty(),
-    validators.body('postCategories').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserBusinessOwner,
-    isUserThisBusinessOwner,
+    middlewareExpressValidator.param('routeName').notEmpty(),
+    middlewareExpressValidator.body('postCategories').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareUserCanCreateBusiness,
+    middlewareBusinessManIsOwnerOfThis,
     businessHandles.update_business_post_categories()
   );
 
 router
   .route('/business/:routeName/sections')
   .post(
-    validators.param('routeName').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserThisBusinessOwner,
+    middlewareExpressValidator.param('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareBusinessManIsOwnerOfThis,
     businessHandles.post_business_routeName_sections()
   );
 
 router
   .route('/business/:routeName/sections/reorder')
   .put(
-    validators.param('routeName').notEmpty(),
-    validators.body('fromIndex').notEmpty(),
-    validators.body('toIndex').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserThisBusinessOwner,
+    middlewareExpressValidator.param('routeName').notEmpty(),
+    middlewareExpressValidator.body('fromIndex').notEmpty(),
+    middlewareExpressValidator.body('toIndex').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareBusinessManIsOwnerOfThis,
     businessHandles.put_business_section_reorder()
   );
 
 router
   .route('/business/:routeName/sections/:sectionId')
   .put(
-    validators.param('routeName').notEmpty(),
-    validators.param('sectionId').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserThisBusinessOwner,
+    middlewareExpressValidator.param('routeName').notEmpty(),
+    middlewareExpressValidator.param('sectionId').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareBusinessManIsOwnerOfThis,
     businessHandles.put_business_routeName_sections_sectionId()
   )
   .delete(
-    validators.param('routeName').notEmpty(),
-    validators.param('sectionId').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserThisBusinessOwner,
+    middlewareExpressValidator.param('routeName').notEmpty(),
+    middlewareExpressValidator.param('sectionId').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareBusinessManIsOwnerOfThis,
     businessHandles.del_business_routeName_sections_sectionId()
   );
 
 router
   .route('/business/:routeName/chatbotValidate')
   .post(
-    validators.param('routeName').notEmpty(),
-    validators.body('code').notEmpty(),
-    validators.handle,
-    isLogged,
-    isUserThisBusinessOwner,
+    middlewareExpressValidator.param('routeName').notEmpty(),
+    middlewareExpressValidator.body('code').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareBusinessManIsOwnerOfThis,
     businessHandles.post_business_routeName_chatbot_validate()
+  );
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+router
+  .route('/business/:routeName/favoriteUsers')
+  .post(
+    middlewareExpressValidator.param('routeName').notEmpty(),
+    middlewareExpressValidator.body('userId').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    businessHandles.post_business_routeName_favorite_users()
+  )
+  .delete(
+    middlewareExpressValidator.param('routeName').notEmpty(),
+    middlewareExpressValidator.body('userId').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    businessHandles.del_business_routeName_favorite_users()
   );

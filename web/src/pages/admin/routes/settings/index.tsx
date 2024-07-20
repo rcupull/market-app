@@ -5,16 +5,16 @@ import SvgFileInvoiceSolid from 'icons/FileInvoiceSolid';
 import SvgHandHoldingUsdSolid from 'icons/HandHoldingUsdSolid';
 import SvgUserSecretSolid from 'icons/UserSecretSolid';
 import { LayoutPageSection } from 'pages/@common/layout-page-section';
-import { useAdminConfigUpdateFeatures } from 'pages/@modals/useAdminConfigUpdateFeatures';
-import { useAdminConfigUpdatePrice } from 'pages/@modals/useAdminConfigUpdatePrice';
-import { useAdminConfigUpdatePrivacyPolicy } from 'pages/@modals/useAdminConfigUpdatePrivacyPolicy';
-import { useAdminConfigUpdateTermsAndConditions } from 'pages/@modals/useAdminConfigUpdateTermsAndConditions';
+import { useAdminConfigUpdateFeaturesModal } from 'pages/@modals/useAdminConfigUpdateFeaturesModal';
+import { useAdminConfigUpdatePriceModal } from 'pages/@modals/useAdminConfigUpdatePriceModal';
+import { useAdminConfigUpdatePrivacyPolicyModal } from 'pages/@modals/useAdminConfigUpdatePrivacyPolicyModal';
+import { useAdminConfigUpdateTermsAndConditionsModal } from 'pages/@modals/useAdminConfigUpdateTermsAndConditionsModal';
 
 export const Settings = () => {
-  const adminConfigUpdateTermsAndConditions = useAdminConfigUpdateTermsAndConditions();
-  const adminConfigUpdatePrivacyPolicy = useAdminConfigUpdatePrivacyPolicy();
-  const adminConfigUpdatePrice = useAdminConfigUpdatePrice();
-  const adminConfigUpdateFeatures = useAdminConfigUpdateFeatures();
+  const adminConfigUpdateTermsAndConditions = useAdminConfigUpdateTermsAndConditionsModal();
+  const adminConfigUpdatePrivacyPolicy = useAdminConfigUpdatePrivacyPolicyModal();
+  const adminConfigUpdatePrice = useAdminConfigUpdatePriceModal();
+  const adminConfigUpdateFeatures = useAdminConfigUpdateFeaturesModal();
 
   return (
     <LayoutPageSection title="Configuración">

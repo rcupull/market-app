@@ -13,8 +13,8 @@ import { useRouter } from 'hooks/useRouter';
 
 import { useAuthSignUpModal } from '../useAuthSignUpModal';
 
-import { BusinessMarketLogo } from 'pages/@common/business-market-logo';
-import { getAdminRoute, getDashboardRoute } from 'utils/business';
+import { BusinessMarketBrand } from 'pages/@common/business-market-brand';
+import { getAdminRoute, getBusinessRoute, getDashboardRoute } from 'utils/business';
 import { getRequiredLabel } from 'utils/form';
 import { isString } from 'utils/general';
 
@@ -25,7 +25,7 @@ export interface ComponentProps {
 }
 
 export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
-  const { authSignIn, getIsUser, getIsAdmin } = useAuth();
+  const { authSignIn, getIsBusinessUser, getIsAdmin, getIsSimpleUser } = useAuth();
   const { pushRoute } = useRouter();
   const { onClose } = useModal();
   const authSignUpModal = useAuthSignUpModal();
@@ -52,9 +52,9 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
     <div className="flex min-h-full flex-col justify-center">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <div className="flex justify-center">
-          <BusinessMarketLogo className="!size-28" />
+          <BusinessMarketBrand />
         </div>
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        <h2 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Inicia sesión en tu cuenta
         </h2>
       </div>
@@ -77,27 +77,35 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
             },
           ]}
         >
-          {({ isValid, value, setErrors }) => {
+          {({ value, setErrors }) => {
             const handleSubmit = () => {
-              if (!isValid) return;
-
               const { email, password } = value;
 
               authSignIn.fetch(
                 { email, password },
                 {
                   onAfterSuccess: ({ user }) => {
+                    onClose();
+
                     if (isString(redirect)) {
-                      pushRoute(redirect);
-                    } else if (redirect === false) {
-                      //NOP
-                    } else if (getIsUser(user)) {
-                      pushRoute(getDashboardRoute());
-                    } else if (getIsAdmin(user)) {
-                      pushRoute(getAdminRoute());
+                      return pushRoute(redirect);
                     }
 
-                    onClose();
+                    if (redirect === false) {
+                      return;
+                    }
+
+                    if (getIsSimpleUser(user)) {
+                      return pushRoute(getBusinessRoute());
+                    }
+
+                    if (getIsBusinessUser(user)) {
+                      return pushRoute(getDashboardRoute());
+                    }
+
+                    if (getIsAdmin(user)) {
+                      return pushRoute(getAdminRoute());
+                    }
                   },
                   onAfterFailed: () => {
                     setErrors({
@@ -134,9 +142,9 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
 
                 {portal.getPortal(
                   <Button
+                    formuxSubmit
                     label="Iniciar sesión"
                     isBusy={authSignIn.status.isBusy}
-                    disabled={!isValid}
                     onClick={handleSubmit}
                     className="w-full"
                   />

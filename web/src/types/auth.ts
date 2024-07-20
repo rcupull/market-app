@@ -1,8 +1,17 @@
 import { Access } from './admin';
-import { TelegramBotChat } from './business';
+import { Business, TelegramBotChat } from './business';
 import { Address, BaseIdentity, Image } from './general';
 
 export type UserRole = 'user' | 'admin';
+
+export interface UserChecks {
+  requestUserTypeWhenStart?: boolean;
+}
+
+interface UserDeliveryBusinessData {
+  routeName: string;
+  updatedAt: Date;
+}
 
 export interface User extends BaseIdentity {
   name: string;
@@ -10,17 +19,26 @@ export interface User extends BaseIdentity {
   role: UserRole;
   validated: boolean;
   profileImage?: Image | null;
-  canCreateBusiness: boolean;
+  canCreateBusiness?: boolean;
+  //
+  canMakeDeliveries?: boolean;
+  deliveryBusiness?: Array<UserDeliveryBusinessData>;
+  //
   specialAccess?: Array<Access>;
   telegramBotChat?: TelegramBotChat;
   phone?: string;
-  address?: Address;
+  addresses?: Array<Address>;
+  checks?: UserChecks;
+}
+
+export interface UserDto extends User {
+  favoritesBusiness?: Array<Pick<Business, 'routeName' | 'name'>>;
 }
 
 export type UserData = User | null;
 
 export interface AuthData {
-  user: User;
+  user: UserDto;
 }
 
 export interface AuthDataDto extends AuthData {

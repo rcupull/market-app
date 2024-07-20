@@ -16,7 +16,7 @@ import { RowActions } from './RowActions';
 import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useInfiniteScrolling } from 'pages/@hooks/useInfiniteScrolling';
-import { useBusinessNewUpdatePost } from 'pages/@modals/useBusinessNewUpdatePost';
+import { useBusinessNewUpdatePostModal } from 'pages/@modals/useBusinessNewUpdatePostModal';
 import { GetAllPostsQuery } from 'types/api';
 import { getImageEndpoint } from 'utils/api';
 import { getDateString } from 'utils/date';
@@ -25,7 +25,7 @@ import { viewUtils } from 'utils/view';
 
 export const Links = () => {
   const { getAllPosts } = useGetAllPosts();
-  const businessNewUpdatePost = useBusinessNewUpdatePost();
+  const businessNewUpdatePost = useBusinessNewUpdatePostModal();
   const { business } = useBusiness();
 
   const infiniteScrolling = useInfiniteScrolling({
@@ -82,12 +82,12 @@ export const Links = () => {
   const buttonRefresh = (
     <>
       <ButtonRefresh
-        onClick={filters.onRefresh}
+        onClick={onRefreshForce}
         isBusy={getAllPosts.status.isBusy}
         className="hidden sm:block"
       />
       <IconButtonRefresh
-        onClick={filters.onRefresh}
+        onClick={onRefreshForce}
         isBusy={getAllPosts.status.isBusy}
         className="block sm:hidden"
       />
@@ -120,7 +120,7 @@ export const Links = () => {
               className="!max-h-[calc(100vh-25rem)]"
               remapRowsIndex={{
                 xs: [[0, 1, 2, 3, 4]],
-                lg: 'none',
+                md: 'none',
               }}
               heads={['Acciones', 'Nombre', 'Imágen', 'Fecha de Creación', 'Detalles']}
               getRowProps={(rowData) => {

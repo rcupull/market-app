@@ -1,7 +1,17 @@
 import { Access } from './admin';
+import { Business } from './business';
 import { Address, BaseIdentity, Image, TelegramBotChat } from './general';
 
 export type UserRole = 'user' | 'admin';
+
+export interface UserChecks {
+  requestUserTypeWhenStart?: boolean;
+}
+
+interface UserDeliveryBusinessData {
+  routeName: string;
+  updatedAt: Date;
+}
 
 export interface User extends BaseIdentity {
   name: string;
@@ -10,11 +20,20 @@ export interface User extends BaseIdentity {
   passwordVerbose: string; // remove after migration
   role: UserRole;
   validated: boolean;
-  canCreateBusiness: boolean;
+  canCreateBusiness?: boolean;
+  //
+  canMakeDeliveries?: boolean;
+  deliveryBusiness?: Array<UserDeliveryBusinessData>;
+  //
   profileImage?: Image;
   firebaseToken?: string;
   specialAccess?: Array<Access>;
   telegramBotChat?: TelegramBotChat;
   phone?: string;
-  address?: Address;
+  addresses?: Array<Address>;
+  checks?: UserChecks;
+}
+
+export interface UserDto extends User {
+  favoritesBusiness?: Array<Pick<Business, 'routeName' | 'name'>>;
 }

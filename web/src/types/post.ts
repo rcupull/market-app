@@ -1,9 +1,6 @@
-import { PostPageLayout } from './business';
 import { BaseIdentity, Image, ImageFile } from './general';
 
 export type PostType = 'product' | 'link'; // el tipo de publicaciones que posee
-
-export type PostReviews = [number, number, number, number, number];
 
 export type PostLinkType = 'business' | 'external';
 export interface PostLink {
@@ -17,7 +14,6 @@ export interface Post extends BaseIdentity {
   description?: string;
   name: string;
   price?: number;
-  reviews?: PostReviews;
   colors?: Array<PostColor>;
   highlights?: Array<string>;
   details?: string;
@@ -30,8 +26,6 @@ export interface Post extends BaseIdentity {
   // clothing
   clothingSizes?: Array<PostClothingSize>;
   //
-  postPageLayout?: PostPageLayout;
-
   postType: PostType;
 
   postLink?: PostLink;
@@ -69,7 +63,7 @@ export type PostColorMeta = Record<PostColor, PostColorValue>;
 
 export type PostClothingSize = 'XXS' | 'XS' | 'S' | 'M' | 'L' | 'XL' | '2XL' | '3XL';
 
-export type PostFormState = Pick<
+export type LinkFormState = Pick<
   Post,
   | 'name'
   | 'clothingSizes'
@@ -79,9 +73,21 @@ export type PostFormState = Pick<
   | 'details'
   | 'postCategoriesTags'
   | 'discount'
-  | 'postPageLayout'
   | 'stockAmount'
   | 'postLink'
 > & { images: Array<ImageFile | Image> };
 
-export type PostFormField = keyof PostFormState;
+export type ProductFormState = Pick<
+  Post,
+  | 'name'
+  | 'clothingSizes'
+  | 'colors'
+  | 'description'
+  | 'price'
+  | 'details'
+  | 'postCategoriesTags'
+  | 'discount'
+  | 'stockAmount'
+> & { images: Array<ImageFile | Image> };
+
+export type ProductFormField = keyof ProductFormState;

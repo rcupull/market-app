@@ -3,7 +3,7 @@ import { ModelDocument, QueryHandle } from '../../types/general';
 import { Business } from '../../types/business';
 import { BusinessModel } from '../../schemas/business';
 import { postServicesDeleteMany } from '../post/services';
-import { PaginateResult } from '../../middlewares/pagination';
+import { PaginateResult } from '../../middlewares/middlewarePagination';
 
 import { UpdateOptions } from 'mongodb';
 import { GetAllBusinessArgs, UpdateQueryBusiness, getAllFilterQuery } from './utils';
@@ -33,12 +33,13 @@ export const businessServicesGetAllWithPagination: QueryHandle<
 export const businessServicesGetAll: QueryHandle<
   {
     query: GetAllBusinessArgs;
+    projection?: ProjectionType<Business>;
   },
   Array<Business>
-> = async ({ query }) => {
+> = async ({ query, projection }) => {
   const filterQuery = getAllFilterQuery(query);
 
-  const out = await BusinessModel.find(filterQuery);
+  const out = await BusinessModel.find(filterQuery, projection);
 
   return out;
 };

@@ -5,17 +5,17 @@ import { useApiPersistent } from 'features/slices/useApiPersistent';
 
 import { Access } from 'types/admin';
 import { FetchResource } from 'types/api';
-import { AuthData, User } from 'types/auth';
+import { AuthData, UserDto } from 'types/auth';
 import { wait } from 'utils/general';
 
 type UseAuthMeta = {
   authData: AuthData | null;
   authSignIn: FetchResource<{ email: string; password: string }, AuthData>;
-  isAdmin: boolean;
-  isUser: boolean;
-  getIsUser: (user: User | undefined) => boolean;
-  getIsAdmin: (user: User | undefined) => boolean;
-  isBasicUser: boolean;
+  user: UserDto | undefined;
+  getIsSimpleUser: (user: UserDto | undefined) => boolean;
+  getIsDeliveryUser: (user: UserDto | undefined) => boolean;
+  getIsBusinessUser: (user: UserDto | undefined) => boolean;
+  getIsAdmin: (user: UserDto | undefined) => boolean;
   isAuthenticated: boolean;
   onRefreshAuthUser: () => void;
   getHasSomeAccess: (...access: Array<Access>) => boolean;
@@ -32,15 +32,32 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
 
   const authData = data;
 
-  const getIsUser: UseAuthMeta['getIsUser'] = (user) => {
-    return user?.role === 'user' && user?.canCreateBusiness;
-  };
-
   const getIsAdmin: UseAuthMeta['getIsAdmin'] = (user) => {
     return user?.role === 'admin';
   };
 
+  const getIsBusinessUser: UseAuthMeta['getIsBusinessUser'] = (user) => {
+    if (getIsAdmin(user)) return false;
+    return !!user?.canCreateBusiness;
+  };
+
+  const getIsDeliveryUser: UseAuthMeta['getIsDeliveryUser'] = (user) => {
+    if (getIsAdmin(user)) return false;
+    return !!user?.canMakeDeliveries;
+  };
+
+  const getIsSimpleUser: UseAuthMeta['getIsSimpleUser'] = (user) => {
+    if (getIsAdmin(user)) return false;
+    if (getIsBusinessUser(user)) return false;
+    if (getIsDeliveryUser(user)) return false;
+
+    return true;
+  };
+
   return {
+    getIsDeliveryUser,
+    getIsSimpleUser,
+    getIsBusinessUser,
     getHasSomeAccess: (...access) => {
       const { specialAccess } = authData?.user || {};
 
@@ -69,11 +86,8 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
       );
     },
     isAuthenticated: !!authData,
-    isAdmin: authData?.user?.role === 'admin',
-    getIsUser,
+    user: authData?.user,
     getIsAdmin,
-    isUser: getIsUser(authData?.user),
-    isBasicUser: authData?.user?.role === 'user' && !authData?.user?.canCreateBusiness,
     authData,
     authSignIn: {
       data: authData,
