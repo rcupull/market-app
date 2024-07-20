@@ -1,6 +1,8 @@
 import { cloneElement, forwardRef, isValidElement, ReactElement } from 'react';
 import { Ellipsis } from 'react-css-spinners';
 
+import { FormuxDataContainer } from './FormuxDataContainer';
+
 import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
@@ -31,6 +33,7 @@ export interface ButtonProps
   hasChange?: boolean;
   onClick?: (e: MouseEvent) => void;
   as?: 'div';
+  formuxSubmit?: boolean;
 }
 
 //@ts-expect-error ignore types
@@ -51,6 +54,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
     onClick,
     svgPosition = 'left',
     as,
+    formuxSubmit,
     ...omittedProps
   } = props;
 
@@ -72,6 +76,84 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
   };
 
   const Component = as === 'div' ? DivElement : ButtonElement;
+
+  if (formuxSubmit) {
+    return (
+      <FormuxDataContainer>
+        {({ hasChange, isValid, errorMode, setErrorMode }) => {
+          const buttonDisabled = disabled || !isValid;
+
+          return (
+            <Component
+              hasChange={hasChange}
+              //
+              ref={ref}
+              className={cn(
+                'relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit',
+                {
+                  [primaryStyles]: variant === 'primary',
+                  [outlinedStyles]: variant === 'outlined',
+                  [errorStyles]: variant === 'error',
+                  [linkStyles]: variant === 'link',
+                  [sublinedStyles]: variant === 'sublined',
+                  [transparentStyles]: variant === 'transparent',
+                  [grayStyles]: variant === 'gray',
+                  ['cursor-not-allowed']: buttonDisabled,
+                  ['!bg-indigo-300']: variant === 'primary' && buttonDisabled,
+                  ['!bg-gray-300']: variant === 'outlined' && buttonDisabled,
+                  ['!bg-red-300']: variant === 'error' && buttonDisabled,
+                },
+                className
+              )}
+              onClick={(e: MouseEvent) => {
+                /**
+                 * Cuando se monta el formulario el mode de error es 'touched' mostrando los errores de validacion en los fields que has sido "tocados"
+                 * Pero una vez hecho click en el boton de submit se mustran los restantes erres aunque no hayan sido tocados los fields
+                 */
+                if (errorMode === 'touched') {
+                  setErrorMode('all');
+                }
+
+                if (buttonDisabled) {
+                  return;
+                }
+                if (stopPropagation) {
+                  e.stopPropagation();
+                }
+
+                if (preventDefault) {
+                  e.preventDefault();
+                }
+
+                onClick?.(e);
+              }}
+              {...omittedProps}
+            >
+              {svg && svgPosition === 'left' && getSvg(svg)}
+              {label}
+              {svg && svgPosition === 'right' && getSvg(svg)}
+
+              {isBusy && (
+                <Ellipsis
+                  size={40}
+                  style={{
+                    position: 'absolute',
+                    top: '0px',
+                    height: '1rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    ...(variant === 'link' ? { top: '-7px' } : {}),
+                  }}
+                  {...(variant === 'link' ? { color: 'gray' } : {})}
+                />
+              )}
+            </Component>
+          );
+        }}
+      </FormuxDataContainer>
+    );
+  }
 
   return (
     <Component

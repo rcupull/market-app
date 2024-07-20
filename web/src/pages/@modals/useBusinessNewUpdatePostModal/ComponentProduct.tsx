@@ -94,7 +94,7 @@ export const ComponentProduct = ({
         },
       ]}
     >
-      {({ value, isValid, hasChange }) => {
+      {({ value }) => {
         return (
           <form className={className}>
             {/** ALWAYS VISIBLE */}
@@ -232,14 +232,13 @@ export const ComponentProduct = ({
 
             {portal.getPortal(
               <Button
+                formuxSubmit
                 label="Guardar"
                 isBusy={
                   addOnePost.status.isBusy ||
                   updateOnePost.status.isBusy ||
                   addManyImages.status.isBusy
                 }
-                disabled={!isValid}
-                hasChange={hasChange}
                 onClick={() => {
                   const {
                     images,
