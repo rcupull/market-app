@@ -72,13 +72,11 @@ export const telegramServicesInit = () => {
     );
     bot.sendMessage(
       meta.chatId,
-      `<a href='${getBusinessOrdersTagUrl(
-        { routeName: 'maria-s-garage'}
-      )}'>aquí</a>.`,
+      `<a href='${getBusinessOrdersTagUrl({ routeName: 'maria-s-garage' })}'>aquí</a>.`,
       {
         parse_mode: 'HTML',
       }
-    )
+    );
   });
 
   bot.on('message', (msg) => {
