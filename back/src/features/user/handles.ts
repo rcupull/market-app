@@ -3,11 +3,7 @@ import { withTryCatch } from '../../utils/error';
 
 import { userServicesGetOne, userServicesUpdateOne } from './services';
 import { User, UserChecks, UserDto } from '../../types/user';
-import {
-  get400Response,
-  get404Response,
-  getUserNotFoundResponse,
-} from '../../utils/server-response';
+import { get404Response, getUserNotFoundResponse } from '../../utils/server-response';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { imagesServicesDeleteOldImages } from '../images/services';
 import { makeReshaper } from '../../utils/makeReshaper';
@@ -117,27 +113,17 @@ const put_users_userId: () => RequestHandler = () => {
        */
 
       /**
-       * The user can not remove this option. Only the admin can
+       * The user can not remove this option. He can set to tru. Only the admin can change to false
        */
       if (body.canCreateBusiness === false || body.canCreateBusiness === null) {
-        return get400Response({
-          res,
-          json: {
-            message: 'The user can not remove canCreateBusiness option',
-          },
-        });
+        delete body.canCreateBusiness;
       }
 
       /**
-       * The user can not remove this option. Only the admin can
+       * The user can not remove this option. He can set to tru. Only the admin can change to false
        */
       if (body.canMakeDeliveries === false || body.canMakeDeliveries === null) {
-        return get400Response({
-          res,
-          json: {
-            message: 'The user can not remove canMakeDeliveries option',
-          },
-        });
+        delete body.canMakeDeliveries;
       }
 
       const out = await userServicesUpdateOne({
