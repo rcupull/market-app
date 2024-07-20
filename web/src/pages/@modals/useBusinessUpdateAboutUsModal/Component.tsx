@@ -53,7 +53,7 @@ export const Component = ({ portal }: ComponentProps) => {
   return (
     <>
       <Formux<State> value={initialValue}>
-        {({ value, isValid }) => {
+        {({ value }) => {
           return (
             <form className="w-full">
               <FieldToggleButton
@@ -101,7 +101,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 <Button
                   label="Guardar"
                   isBusy={updateOneBusiness.status.isBusy}
-                  disabled={!isValid}
+                  formuxSubmit
                   onClick={() => {
                     /**
                      * remove all images added and remove according initial images

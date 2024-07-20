@@ -57,7 +57,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
           : undefined
       }
     >
-      {({ value, isValid, hasChange }) => {
+      {({ value }) => {
         return (
           <form>
             <FieldRadioGroup<{
@@ -99,8 +99,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               <Button
                 label="Guardar"
                 isBusy={updateOneBusiness.status.isBusy || addManyImages.status.isBusy}
-                disabled={!isValid}
-                hasChange={hasChange}
+                formuxSubmit
                 onClick={() => {
                   if (!business) return;
 

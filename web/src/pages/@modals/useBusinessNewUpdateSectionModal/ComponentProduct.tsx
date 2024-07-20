@@ -77,7 +77,7 @@ export const ComponentProduct = ({
         },
       ]}
     >
-      {({ value, isValid, hasChange }) => {
+      {({ value }) => {
         return (
           <form className={className}>
             <FormFieldWrapper label="Visibilidad">
@@ -154,8 +154,7 @@ export const ComponentProduct = ({
             {portal.getPortal(
               <ButtonSave
                 isBusy={addBusinessSection.status.isBusy || updateBusinessSection.status.isBusy}
-                disabled={!isValid}
-                hasChange={hasChange}
+                formuxSubmit
                 onClick={() => {
                   if (!business) return;
                   section

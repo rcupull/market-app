@@ -38,7 +38,7 @@ export const Component = ({ portal }: ComponentProps) => {
   return (
     <>
       <Formux<State> value={initialValue}>
-        {({ value, isValid }) => {
+        {({ value }) => {
           return (
             <form className="w-full">
               <FieldInput label="Título de la página" name="title" className="mt-6" />
@@ -49,7 +49,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 <Button
                   label="Guardar"
                   isBusy={updateOneBusiness.status.isBusy}
-                  disabled={!isValid}
+                  formuxSubmit
                   onClick={() => {
                     updateOneBusiness.fetch(
                       {

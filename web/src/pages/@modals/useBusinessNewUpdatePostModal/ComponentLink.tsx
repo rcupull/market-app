@@ -115,7 +115,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
         },
       ]}
     >
-      {({ value, isValid }) => {
+      {({ value }) => {
         return (
           <form className={className}>
             <FieldInput name="name" label={getRequiredLabel('Nombre del enlace')} />
@@ -169,7 +169,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
                   updateBusinessSection.status.isBusy ||
                   addManyImages.status.isBusy
                 }
-                disabled={!isValid}
+                formuxSubmit
                 onClick={() => {
                   const { images, name, postCategoriesTags, sectionIds, postLink } = value;
 

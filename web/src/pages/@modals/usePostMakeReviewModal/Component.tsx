@@ -31,14 +31,14 @@ export const Component = ({ portal, postId, onAfterSuccess }: ComponentProps) =>
           type: 'required',
           message: 'Cuantifica la calidad de este producto.',
         },
-        {
-          field: 'comment',
-          type: 'required',
-          message: 'Tu opinión sobre este prodcuto es importante para nosotros.',
-        },
+        // {
+        //   field: 'comment',
+        //   type: 'required',
+        //   message: 'Tu opinión sobre este producto es importante para nosotros.',
+        // },
       ]}
     >
-      {({ value, isValid }) => {
+      {({ value }) => {
         return (
           <form className="mt-10">
             <FieldReviewAverage label="Review" name="star" />
@@ -49,7 +49,7 @@ export const Component = ({ portal, postId, onAfterSuccess }: ComponentProps) =>
               <Button
                 label="Agregar reseña"
                 isBusy={addOneReview.status.isBusy}
-                disabled={!isValid}
+                formuxSubmit
                 onClick={() => {
                   const { comment, star } = value;
 

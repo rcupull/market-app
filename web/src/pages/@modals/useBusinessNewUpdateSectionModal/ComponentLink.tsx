@@ -66,7 +66,7 @@ export const ComponentLink = ({
         },
       ]}
     >
-      {({ value, isValid }) => {
+      {({ value }) => {
         return (
           <form className={className}>
             <FormFieldWrapper label="Visibilidad">
@@ -104,7 +104,7 @@ export const ComponentLink = ({
             {portal.getPortal(
               <ButtonSave
                 isBusy={addBusinessSection.status.isBusy || updateBusinessSection.status.isBusy}
-                disabled={!isValid}
+                formuxSubmit
                 onClick={() => {
                   if (!business) return;
                   section

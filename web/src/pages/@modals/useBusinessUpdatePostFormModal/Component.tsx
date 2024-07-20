@@ -13,7 +13,6 @@ import { useBusiness } from '../../@hooks/useBusiness';
 import { Business } from 'types/business';
 import { StyleProps } from 'types/general';
 import { ProductFormField } from 'types/post';
-import { isEmpty } from 'utils/general';
 
 interface State extends Pick<Business, 'postFormFields'> {}
 
@@ -50,7 +49,7 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
           postFormFields,
         }}
       >
-        {({ value, isValid, touched, hasChange }) => {
+        {({ value }) => {
           return (
             <form className={className}>
               <FieldRadioGroup<{ value: ProductFormField; label: string; hidden?: boolean }>
@@ -119,8 +118,7 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
                 <Button
                   label="Guardar"
                   isBusy={updateOneBusiness.status.isBusy}
-                  hasChange={hasChange}
-                  disabled={!isValid || isEmpty(touched)}
+                  formuxSubmit
                   onClick={() => {
                     if (!business) return;
                     const { postFormFields } = value;

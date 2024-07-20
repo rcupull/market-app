@@ -161,13 +161,15 @@ export const ComponentProduct = ({
               postFormFields.includes('stockAmount')) && (
               <>
                 <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 mt-0 sm:mt-6 ">
-                  <FieldInput
-                    id="post_price"
-                    name="price"
-                    label={getRequiredLabel('Precio')}
-                    type="number"
-                    className="w-full"
-                  />
+                  {postFormFields.includes('price') && (
+                    <FieldInput
+                      id="post_price"
+                      name="price"
+                      label={getRequiredLabel('Precio')}
+                      type="number"
+                      className="w-full"
+                    />
+                  )}
 
                   {postFormFields.includes('discount') && (
                     <FieldInput

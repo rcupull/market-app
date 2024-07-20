@@ -81,7 +81,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
     return (
       <FormuxDataContainer>
         {({ hasChange, isValid, errorMode, setErrorMode }) => {
-          const buttonDisabled = disabled || !isValid;
+          const buttonDisabled = disabled || !isValid || !hasChange;
 
           return (
             <Component
