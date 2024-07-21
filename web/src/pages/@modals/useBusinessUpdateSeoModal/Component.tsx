@@ -4,6 +4,7 @@ import { FieldTextArea } from 'components/field-text-area';
 import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
+import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
 import { useModal } from 'features/modal/useModal';
 
 import { Portal } from 'hooks/usePortal';
@@ -23,6 +24,13 @@ export const Component = ({ portal }: ComponentProps) => {
   const { onClose } = useModal();
 
   const { updateOneBusiness } = useUpdateOneBusiness();
+  
+  const initialValue: State = {
+    title: business?.seo?.title || '',
+    description: business?.seo?.description || '',
+  };
+
+  const closeContext = useCloseContext<State>({initialValue});
 
   if (!business) {
     return <></>;
@@ -30,14 +38,10 @@ export const Component = ({ portal }: ComponentProps) => {
 
   const { routeName } = business;
 
-  const initialValue: State = {
-    title: business?.seo?.title || '',
-    description: business?.seo?.description || '',
-  };
 
   return (
     <>
-      <Formux<State> value={initialValue}>
+      <Formux<State> value={initialValue} onChange={closeContext.onChangeValue}>
         {({ value }) => {
           return (
             <form className="w-full">
