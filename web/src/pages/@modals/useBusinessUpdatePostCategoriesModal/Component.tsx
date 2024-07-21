@@ -10,6 +10,7 @@ import { IconButtonRemove } from 'components/icon-button-remove';
 import { IconButtonShowHide } from 'components/icon-button-show-hide';
 
 import { useUpdateBusinessPostCategories } from 'features/api/business/useUpdateBusinessPostCategories';
+import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
 import { useModal } from 'features/modal/useModal';
 
 import { Portal, usePortal } from 'hooks/usePortal';
@@ -20,6 +21,10 @@ import { PostCategory } from 'types/business';
 import { getPostCategoryTag } from 'utils/business';
 import { addRow, cn, isEqualObj, removeRow, updateRow } from 'utils/general';
 
+export interface State {
+  label: string;
+  categories: Array<PostCategory>;
+}
 export interface ComponentProps {
   portal: Portal;
   onAfterSuccess: () => void;
@@ -42,6 +47,13 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
 
   const { pushModal } = useModal();
 
+  const initialValue : State = {
+    label: '',
+    categories: state,
+  };
+
+  const closeContext = useCloseContext<State>({initialValue});
+
   if (!routeName) {
     return <></>;
   }
@@ -49,10 +61,9 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   return (
     <>
       <div className="flex">
-        <Formux
-          value={{
-            label: '',
-          }}
+        <Formux<State>
+          value={initialValue}
+          onChange={closeContext.onChangeValue}
           validate={[
             {
               field: 'label',
