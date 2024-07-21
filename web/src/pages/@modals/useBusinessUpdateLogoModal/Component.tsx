@@ -4,6 +4,7 @@ import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
+import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
 import { useModal } from 'features/modal/useModal';
 
 import { Portal } from 'hooks/usePortal';
@@ -31,15 +32,20 @@ export const Component = ({ portal }: ComponentProps) => {
   const { updateOneBusiness } = useUpdateOneBusiness();
   const { addManyImages } = useAddManyImages();
 
+  const initialValue : State = {
+    logoField: [logo],
+  }
+
+  const closeContext = useCloseContext<State>({initialValue});
+
   if (!routeName) {
     return <></>;
   }
 
   return (
     <Formux<State>
-      value={{
-        logoField: [logo],
-      }}
+      value={initialValue}
+      onChange={closeContext.onChangeValue}
     >
       {({ value }) => {
         return (
