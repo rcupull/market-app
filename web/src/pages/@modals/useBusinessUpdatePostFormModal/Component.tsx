@@ -5,6 +5,7 @@ import { Formux } from 'components/formux';
 import { HighlightedBox } from 'components/highlighted-box';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
+import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
 
 import { Portal } from 'hooks/usePortal';
 
@@ -28,6 +29,14 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
 
   const { updateOneBusiness } = useUpdateOneBusiness();
 
+  const initialValue : State = {
+    postFormFields: postFormFields,
+  }
+
+  const closeContext = useCloseContext<State>({
+    initialValue,
+  });
+  
   if (!routeName) {
     return <></>;
   }
@@ -48,6 +57,7 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
         value={{
           postFormFields,
         }}
+        onChange={closeContext.onChangeValue}
       >
         {({ value }) => {
           return (
