@@ -8,6 +8,7 @@ import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
+import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
 
 import { Portal } from 'hooks/usePortal';
 
@@ -31,19 +32,26 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
 
   const { bannerImages, routeName } = business || {};
 
-  const initialState: State = {
+  const initialValue: State = {
     bannerImages: bannerImages || [],
     bannerLayoutType: business?.layouts?.banner?.type || 'none',
   };
 
-  const [state, setState] = useState<State>(initialState);
+  const closeContext = useCloseContext<State>({initialValue});
+
+  const [state, setState] = useState<State>(initialValue);
+
+  const onChange = (currentValue: State) => {
+    closeContext.onChangeValue(currentValue);
+    setState(currentValue);
+  }
 
   const { updateOneBusiness } = useUpdateOneBusiness();
   const { addManyImages } = useAddManyImages();
 
   return (
     <Formux<State>
-      onChange={setState}
+      onChange={onChange}
       value={state}
       validate={
         state.bannerLayoutType !== 'none'
