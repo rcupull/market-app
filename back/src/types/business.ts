@@ -126,6 +126,10 @@ export interface DeliveryConfig {
   type?: DeliveryConfigType;
 }
 
+export interface BusinessChecks {
+  doneOnboarding?: boolean;
+}
+
 export interface Business extends BaseIdentity {
   name: string;
   routeName: string;
@@ -169,9 +173,9 @@ export interface Business extends BaseIdentity {
   seo?: BusinessSEO;
   addresses?: Array<Address>;
   deliveryConfig?: DeliveryConfig;
-  //
-  doneOnboarding?: boolean;
   favoritesUserIds?: Array<Schema.Types.ObjectId>;
+
+  checks?: BusinessChecks;
 }
 
 export interface BusinessAdminDto extends Business {

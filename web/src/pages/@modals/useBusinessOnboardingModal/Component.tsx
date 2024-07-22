@@ -1,73 +1,62 @@
 import { Stepper } from 'components/stepper';
 
-import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
+import { useUpdateChecksBusiness } from 'features/api/business/useUpdateChecksBusiness';
 import { useModal } from 'features/modal/useModal';
-
-import { useRouter } from 'hooks/useRouter';
 
 import { StepBanner } from './steps/step-banner';
 import { StepNotifications } from './steps/step-notifications';
 import { StepPost } from './steps/step-post';
 import { StepPostForm } from './steps/step-post-form';
 import { StepPostsSections } from './steps/step-posts-sections';
-import { BusinessOnboardingSteps, OnboardingStepProps } from './types';
+import { OnboardingStepProps } from './types';
 
 import { useBusiness } from 'pages/@hooks/useBusiness';
-import { getOneBusinessRoute } from 'utils/business';
-import { compact } from 'utils/general';
-export interface ComponentProps {
-  steps?: Array<BusinessOnboardingSteps>;
-}
 
-export const Component = ({
-  steps = ['banner', 'products', 'notifications', 'section', 'productsForm'],
-}: ComponentProps) => {
+export const Component = () => {
   const { onClose } = useModal();
-  const { pushRoute } = useRouter();
-  const { business } = useBusiness();
-  const { updateOneBusiness } = useUpdateOneBusiness();
+  const { business, onFetch } = useBusiness();
+  const { updateChecksBusiness } = useUpdateChecksBusiness();
 
-
-  const compactSteps: Array<BusinessOnboardingSteps> = compact([
-    steps.includes('notifications') && 'notifications',
-    steps.includes('section') && 'section',
-    steps.includes('productsForm') && 'productsForm',
-    steps.includes('products') && 'products',
-    steps.includes('banner') && 'banner',
-  ]);
-
-  const lastStep = compactSteps[compactSteps.length - 1];
+  const handleCheckAndClose = () => {
+    if (!business) return;
+    updateChecksBusiness.fetch(
+      {
+        routeName: business?.routeName,
+        update: {
+          doneOnboarding: true,
+        },
+      },
+      {
+        onAfterSuccess: () => {
+          onClose();
+          onFetch({ routeName: business?.routeName });
+        },
+      },
+    );
+  };
 
   const getStepProps = (
     stepperProps: OnboardingStepProps,
-    step: BusinessOnboardingSteps,
+    isLast: boolean,
   ): OnboardingStepProps => {
-    if (lastStep === step) {
+    if (isLast) {
       return {
         ...stepperProps,
         nextBtnProps: {
           ...stepperProps.nextBtnProps,
-          label: 'Ver la página del negocio',
-          isBusy: updateOneBusiness.status.isBusy,
+          label: 'Finalizar',
+          isBusy: updateChecksBusiness.status.isBusy,
           onClick: () => {
-            if (!business) return;
-            updateOneBusiness.fetch(
-              {
-                routeName: business?.routeName,
-                update: {
-                  doneOnboarding: true,
-                },
-              },
-              {
-                onAfterSuccess: () => {
-                  onClose();
-                  pushRoute(getOneBusinessRoute({ routeName: business.routeName }));
-                },
-              },
-            );
+            handleCheckAndClose();
           },
         },
-        centerBtnProps: { className: 'hidden' },
+        centerBtnProps: {
+          ...stepperProps.centerBtnProps,
+          isBusy: updateChecksBusiness.status.isBusy,
+          onClick: () => {
+            handleCheckAndClose();
+          },
+        },
       };
     }
 
@@ -77,25 +66,25 @@ export const Component = ({
   return (
     <Stepper
       items={[
-        compactSteps.includes('notifications') && {
+        {
           label: 'Notificaciones',
-          render: (props) => <StepNotifications {...getStepProps(props, 'notifications')} />,
+          render: (props) => <StepNotifications {...getStepProps(props, false)} />,
         },
-        compactSteps.includes('section') && {
+        {
           label: 'Agregue su primera sección de productos',
-          render: (props) => <StepPostsSections {...getStepProps(props, 'section')} />,
+          render: (props) => <StepPostsSections {...getStepProps(props, false)} />,
         },
-        compactSteps.includes('productsForm') && {
+        {
           label: 'Formulario de productos',
-          render: (props) => <StepPostForm {...getStepProps(props, 'productsForm')} />,
+          render: (props) => <StepPostForm {...getStepProps(props, false)} />,
         },
-        compactSteps.includes('products') && {
+        {
           label: 'Agregue su primer producto',
-          render: (props) => <StepPost {...getStepProps(props, 'products')} />,
+          render: (props) => <StepPost {...getStepProps(props, false)} />,
         },
-        compactSteps.includes('banner') && {
+        {
           label: 'Banner publicitario',
-          render: (props) => <StepBanner {...getStepProps(props, 'banner')} />,
+          render: (props) => <StepBanner {...getStepProps(props, true)} />,
         },
       ]}
     />
