@@ -1,3 +1,4 @@
+import { Button } from 'components/button';
 import { StepperButtonContainer } from 'components/stepper/StepperButtonContainer';
 
 import { OnboardingStepProps } from '../../types';
@@ -8,8 +9,12 @@ import { ComponentProduct as Component } from 'pages/@modals/useBusinessNewUpdat
 
 export interface StepPostsSectionsProps extends OnboardingStepProps {}
 
-export const StepPostsSections = ({ backButton, nextButton }: StepPostsSectionsProps) => {
-  const { nextAction, portal, rightButton } = useNextButtonPortal(nextButton);
+export const StepPostsSections = ({
+  backButton,
+  nextBtnProps,
+  centerBtnProps,
+}: StepPostsSectionsProps) => {
+  const { nextAction, portal, rightButton } = useNextButtonPortal({ nextBtnProps });
   const { onFetch, business, getSections } = useBusiness();
 
   const firstSection = getSections()[0];
@@ -27,7 +32,11 @@ export const StepPostsSections = ({ backButton, nextButton }: StepPostsSectionsP
         }}
         className="max-h-[70vh] overflow-y-auto"
       />
-      <StepperButtonContainer leftButton={backButton} rightButton={rightButton} />
+      <StepperButtonContainer
+        leftButton={backButton}
+        rightButton={rightButton}
+        centerButton={<Button {...centerBtnProps} />}
+      />
     </div>
   );
 };

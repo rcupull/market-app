@@ -1,3 +1,4 @@
+import { Button } from 'components/button';
 import { StepperButtonContainer } from 'components/stepper/StepperButtonContainer';
 
 import { OnboardingStepProps } from '../../types';
@@ -8,8 +9,8 @@ import { Component } from 'pages/@modals/useBusinessUpdateBannerModal/Component'
 
 export interface StepBannerProps extends OnboardingStepProps {}
 
-export const StepBanner = ({ backButton, nextButton }: StepBannerProps) => {
-  const { nextAction, portal, rightButton } = useNextButtonPortal(nextButton);
+export const StepBanner = ({ backButton, nextBtnProps, centerBtnProps }: StepBannerProps) => {
+  const { nextAction, portal, rightButton } = useNextButtonPortal({ nextBtnProps });
   const { business, onFetch } = useBusiness();
 
   return (
@@ -21,7 +22,11 @@ export const StepBanner = ({ backButton, nextButton }: StepBannerProps) => {
           business && onFetch({ routeName: business.routeName });
         }}
       />
-      <StepperButtonContainer leftButton={backButton} rightButton={rightButton} />
+      <StepperButtonContainer
+        leftButton={backButton}
+        rightButton={rightButton}
+        centerButton={<Button {...centerBtnProps} />}
+      />
     </div>
   );
 };

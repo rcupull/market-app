@@ -9,7 +9,6 @@ import { useAdminConfig } from 'features/api-slices/useAdminConfig';
 import { useRouter } from 'hooks/useRouter';
 
 import { Billing } from './billing';
-import { BusinessConfig } from './components/BusinessConfig';
 import { Links } from './links';
 import { Options } from './options';
 import { PostsSections } from './posts-sections';
@@ -24,6 +23,7 @@ import SvgLinkSolid from 'icons/LinkSolid';
 import SvgMoneyBillAltSolid from 'icons/MoneyBillAltSolid';
 import SvgProductHunt from 'icons/ProductHunt';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
+import { AdvertisementsBusinessOnboarding } from 'pages/@advertisements/business-onboarding';
 import { BannerInfoTelegramBusiness } from 'pages/@common/banner-info-telegram-business';
 import { BannerInfoTotalDebitBusiness } from 'pages/@common/banner-info-total-debit-business';
 import { LayoutPage } from 'pages/@common/layout-page';
@@ -126,7 +126,6 @@ export const RouteName = () => {
 
   return (
     <>
-      <BusinessConfig business={business} />
       <LayoutSection
         title={
           query.businessTab && (
@@ -148,6 +147,8 @@ export const RouteName = () => {
           </div>
         }
       >
+        <AdvertisementsBusinessOnboarding />
+
         <Tabs
           tabListClassName="mt-4 shadow-lg hidden sm:flex"
           tabPanelClassName="w-full overflow-y-auto h-[calc(100vh-12rem)]"

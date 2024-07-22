@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { FormContext } from './context';
-import { FormContextState, FormErrorMode, FormErrors, FormProps, FormTouched } from './types';
+import { FormContextState, FormErrorMode, FormErrors, FormTouched, FormuxProps } from './types';
 import { useGetFormErrors } from './useGetFormErrors';
 
 import { AnyRecord } from 'types/general';
@@ -12,7 +12,7 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
   children,
   onChange,
   value,
-}: FormProps<Value>) => {
+}: FormuxProps<Value>) => {
   const getFormErrors = useGetFormErrors<Value>();
 
   const [formState, setFormState] = useState<Value>(value);

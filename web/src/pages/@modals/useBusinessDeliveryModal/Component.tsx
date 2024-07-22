@@ -8,6 +8,7 @@ import { FieldRadioGroup } from 'components/field-radio-group';
 import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
+import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
 import { useModal } from 'features/modal/useModal';
 
 import { Portal } from 'hooks/usePortal';
@@ -19,6 +20,10 @@ import { DeliveryConfig, DeliveryConfigType } from 'types/business';
 import { Address } from 'types/general';
 import { getDeliveryUtils } from 'utils/business';
 
+export interface State {
+  deliveryConfig?: DeliveryConfig;
+  address?: Address;
+}
 export interface ComponentProps {
   portal: Portal;
 }
@@ -28,6 +33,15 @@ export const Component = ({ portal }: ComponentProps) => {
 
   const { updateOneBusiness } = useUpdateOneBusiness();
 
+  const initialValue = business
+    ? {
+        deliveryConfig: business.deliveryConfig,
+        address: business.addresses?.[0],
+      }
+    : {};
+
+  const closeContext = useCloseContext<State>({ initialValue });
+
   if (!business) {
     return <></>;
   }
@@ -35,12 +49,7 @@ export const Component = ({ portal }: ComponentProps) => {
   const { routeName } = business;
 
   return (
-    <Formux<{ deliveryConfig?: DeliveryConfig; address?: Address }>
-      value={{
-        deliveryConfig: business.deliveryConfig,
-        address: business.addresses?.[0],
-      }}
-    >
+    <Formux<State> value={initialValue} onChange={closeContext.onChangeValue}>
       {({ value }) => {
         const isEnabledDelivery = getDeliveryUtils().getIsEnabled({
           deliveryConfig: value.deliveryConfig,

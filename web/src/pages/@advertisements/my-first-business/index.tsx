@@ -9,7 +9,7 @@ import { useRouter } from 'hooks/useRouter';
 import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewModal';
 import { getDashboardBusinessRoute } from 'utils/business';
 
-export const OwnBusiness = () => {
+export const AdvertisementsMyFirstBusiness = () => {
   const { getIsBusinessUser, user } = useAuth();
   const businessUpdateNewModal = useBusinessUpdateNewModal();
   const { allUserBusiness } = useAllUserBusiness();
