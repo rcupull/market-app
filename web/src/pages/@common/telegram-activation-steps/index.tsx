@@ -1,95 +1,102 @@
-import { Button, ButtonProps } from 'components/button';
+import { useState } from 'react';
+
 import { FieldInput } from 'components/field-input';
 import { Formux } from 'components/formux';
 import { HtmlTextContainer } from 'components/html-text-container';
 import { QrCode } from 'components/qr-code';
+import { SpinnerBox } from 'components/spinner-box';
 
-import { useKeyBoard } from 'hooks/useKeyBoard';
-import { Portal } from 'hooks/usePortal';
+import { useDebouncer } from 'hooks/useDebouncer';
+import { FetchOptions } from 'hooks/useFetch';
 
+import { FetchStatus } from 'types/api';
 import { getTelegramUrl } from 'utils/api';
+import { cn } from 'utils/general';
 
 interface FormValue {
   code?: string;
 }
 
 export interface TelegramActivationStepsProps {
-  getSubmitBtnProps?: (args: { value: FormValue; resetForm: () => void }) => Partial<ButtonProps>;
-  portal?: Portal;
-  value?: FormValue;
-  onChange?: (newValue: FormValue) => void;
+  onFetch: (args: { value: FormValue } & FetchOptions) => void;
+  status: FetchStatus;
 }
 
-export const TelegramActivationSteps = ({
-  getSubmitBtnProps,
-  portal,
-  ...omittedProps
-}: TelegramActivationStepsProps) => {
-  const codeKeyboard = useKeyBoard<{
-    handleSubmit: () => void;
-  }>({
-    Enter: (e, { handleSubmit }) => {
-      e.preventDefault();
-      handleSubmit();
-    },
-  });
+export const TelegramActivationSteps = ({ onFetch, status }: TelegramActivationStepsProps) => {
+  const initialValue: FormValue = { code: '' };
+
+  const [state, setState] = useState<FormValue>(initialValue);
+  const [error, setError] = useState(false);
+
+  const debouncer = useDebouncer();
 
   return (
-    <HtmlTextContainer>
-      <ol className="mt-4 text-left">
-        <li>
-          De click en el enlace o escanee el QR siguiente.
-          <div className="flex flex-col items-center gap-4 mt-4">
-            <a href={getTelegramUrl()} target="_blank" rel="noreferrer">
-              {getTelegramUrl()}
-            </a>
+    <Formux<FormValue>
+      value={state}
+      onChange={(newState) => {
+        setError(false);
 
-            <QrCode value={getTelegramUrl()} className="size-40" />
-          </div>
-        </li>
+        debouncer(() => {
+          if (!newState.code) return;
+          if (newState.code.length < 4) return;
 
-        <li className="mt-4">
-          De click sobre el botón <span className="font-bold">Iniciar</span>. En caso de que{' '}
-          <span className="font-bold">no aparezca</span> dicho botón envie un mensaje con el texto{' '}
-          <span className="font-bold">&quot;/start&quot;</span>
-        </li>
+          onFetch({
+            value: newState,
+            onAfterSuccess: () => {
+              setState(initialValue);
+            },
+            onAfterFailed: () => {
+              setError(true);
+            },
+          });
+        }, 500);
 
-        <li className="mt-4">
-          Copie el código enviado a su cuenta de Telegram, péguelo en el campo siguiente y de click
-          en <span className="font-bold">Activar</span>.
-        </li>
+        setState(newState);
+      }}
+    >
+      {() => {
+        return (
+          <form className="mt-4">
+            <HtmlTextContainer>
+              <ol className="mt-4 text-left">
+                <li>
+                  De click en el enlace o escanee el QR siguiente.
+                  <div className="flex flex-col items-center gap-4 mt-4">
+                    <a href={getTelegramUrl()} target="_blank" rel="noreferrer">
+                      {getTelegramUrl()}
+                    </a>
 
-        <Formux<FormValue>
-          value={{
-            code: '',
-          }}
-          {...omittedProps}
-        >
-          {({ value, resetForm }) => {
-            const overrydeBtnProps = getSubmitBtnProps?.({ value, resetForm }) || {};
+                    <QrCode value={getTelegramUrl()} className="size-40" />
+                  </div>
+                </li>
 
-            return (
-              <form className="mt-4">
-                <FieldInput
-                  name="code"
-                  label="Código de activación"
-                  placeholder="Escriba el código de activación"
-                  {...codeKeyboard({
-                    handleSubmit: () => {
-                      //@ts-expect-error ignore the click event in this input
-                      overrydeBtnProps.onClick?.();
-                    },
-                  })}
-                />
+                <li className="mt-4">
+                  De click sobre el botón <span className="font-bold">Iniciar</span>. En caso de que{' '}
+                  <span className="font-bold">no aparezca</span> dicho botón envie un mensaje con el
+                  texto <span className="font-bold">&quot;/start&quot;</span>
+                </li>
 
-                {portal?.getPortal(
-                  <Button formuxSubmit label="Activar" className="w-full" {...overrydeBtnProps} />
-                )}
-              </form>
-            );
-          }}
-        </Formux>
-      </ol>
-    </HtmlTextContainer>
+                <li className="mt-4">
+                  Copie el código enviado a su cuenta de Telegram, péguelo en el campo siguiente y
+                  de click en <span className="font-bold">Activar</span>.
+                </li>
+
+                <div className="relative">
+                  <FieldInput
+                    name="code"
+                    label="Código de activación"
+                    placeholder="Escriba el código de activación"
+                    className={cn('mt-4')}
+                    typeOnlyNumbers
+                    error={error && 'Por favor, proporcione un código válido'}
+                  />
+                  {status.isBusy && <SpinnerBox className="mt-10" />}
+                </div>
+              </ol>
+            </HtmlTextContainer>
+          </form>
+        );
+      }}
+    </Formux>
   );
 };

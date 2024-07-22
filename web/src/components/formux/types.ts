@@ -30,7 +30,7 @@ export type FormTouched<Value extends AnyRecord = AnyRecord> = Partial<
   Record<Path<Value>, boolean>
 >;
 
-export interface FormProps<Value extends AnyRecord = AnyRecord> {
+export interface FormuxProps<Value extends AnyRecord = AnyRecord> {
   children: (args: FormContextState<Value>) => React.ReactNode;
   value: Value;
   onChange?: (value: Value) => void;
