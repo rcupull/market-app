@@ -4,6 +4,8 @@ import { HighlightedBox } from 'components/highlighted-box';
 import { useUpdateChecksUser } from 'features/api/user/useUpdateChecksUser';
 import { useAuth } from 'features/api-slices/useAuth';
 
+import { GotItBox } from '../GotItBox';
+
 import { useUserUpdateSettingsModal } from 'pages/@modals/useUserUpdateSettingsModal';
 
 export const AdvertisementsUserTypeCheck = () => {
@@ -27,13 +29,19 @@ export const AdvertisementsUserTypeCheck = () => {
       },
       {
         onAfterSuccess: () => onRefreshAuthUser(),
-      }
+      },
     );
   };
 
   return (
     <HighlightedBox variant="info">
-      <div className="flex flex-col sm:flex-row text-center sm:text-start items-center sm:items-start gap-3 sm:justify-between w-full text-lg text-gray-700">
+      <GotItBox
+        gotItButtonProps={{
+          onClick: handleUpdateFlag,
+          isBusy: updateChecksUser.status.isBusy,
+          label: 'Entendido',
+        }}
+      >
         <span>
           Parece que entras a nuestro sistema por primera vez. En tus{' '}
           <Button
@@ -51,12 +59,7 @@ export const AdvertisementsUserTypeCheck = () => {
           <span className="font-bold">comerciante</span> o{' '}
           <span className="font-bold">mensajero</span> de nuestra plataforma.
         </span>
-        <Button
-          label="Entendido"
-          isBusy={updateChecksUser.status.isBusy}
-          onClick={handleUpdateFlag}
-        />
-      </div>
+      </GotItBox>
     </HighlightedBox>
   );
 };

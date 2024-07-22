@@ -4,19 +4,27 @@ import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-w
 import { useFormField } from 'components/formux/useFormField';
 import { Input, InputProps } from 'components/input';
 
+import { Nullable } from 'types/general';
 import { cn, isNullOrUndefined } from 'utils/general';
 
-export interface FieldInputProps extends InputProps, FormFieldWrapperProps {}
+export interface FieldInputProps extends InputProps, FormFieldWrapperProps {
+  error?: Nullable<string>;
+}
 
 export const FieldInput = forwardRef<HTMLInputElement, FieldInputProps>((props, ref) => {
-  const { className, label, description, ...omittedProps } = props;
+  const { className, label, description, error: errorProp, ...omittedProps } = props;
 
   const { field, error } = useFormField(props);
 
   const { value, ...restField } = field;
 
   return (
-    <FormFieldWrapper label={label} error={error} description={description} className={className}>
+    <FormFieldWrapper
+      label={label}
+      error={errorProp ?? error}
+      description={description}
+      className={className}
+    >
       <Input
         ref={ref}
         className={cn({

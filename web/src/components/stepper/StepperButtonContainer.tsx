@@ -3,11 +3,13 @@ import { cn } from 'utils/general';
 export interface StepperButtonContainerProps {
   leftButton?: React.ReactNode;
   rightButton?: React.ReactNode;
+  centerButton?: React.ReactNode;
 }
 
 export const StepperButtonContainer = ({
   leftButton,
   rightButton,
+  centerButton,
 }: StepperButtonContainerProps) => {
   return (
     <div
@@ -18,7 +20,10 @@ export const StepperButtonContainer = ({
       })}
     >
       {leftButton}
-      {rightButton}
+      <div className="flex items-center gap-4">
+        {centerButton}
+        {rightButton}
+      </div>
     </div>
   );
 };
