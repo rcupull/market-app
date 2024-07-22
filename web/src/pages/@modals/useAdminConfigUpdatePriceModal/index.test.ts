@@ -1,11 +1,25 @@
-import { act, renderHook, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, renderHook, screen, waitFor } from '@testing-library/react';
 
 import { useAdminConfigUpdatePriceModal } from '.';
 
 import { getWrapper } from 'utils/test-utils';
 
 describe('useAdminConfigUpdatePriceModal', () => {
-  it('render', async () => {
+  it.skip('should close when click on the close button', async () => {
+    const { result } = renderHook(() => useAdminConfigUpdatePriceModal(), {
+      wrapper: getWrapper({ useRouter: true, useModal: true }),
+    });
+
+    act(() => result.current.open());
+
+    await waitFor(() => expect(screen.getByTestId('Modal')));
+
+    fireEvent.click(screen.getByText('Cerrar'));
+
+    await waitFor(() => expect(screen.queryByTestId('Modal')).toBeNull());
+  });
+
+  it('should match snapshot', async () => {
     const { result } = renderHook(() => useAdminConfigUpdatePriceModal(), {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });

@@ -1,11 +1,25 @@
-import { act, renderHook, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, renderHook, screen, waitFor } from '@testing-library/react';
 
 import { usePrivacyPolicyModal } from '.';
 
 import { getWrapper } from 'utils/test-utils';
 
 describe('usePrivacyPolicyModal', () => {
-  it('render', async () => {
+  it('should close when click on the close button', async () => {
+    const { result } = renderHook(() => usePrivacyPolicyModal(), {
+      wrapper: getWrapper({ useRouter: true, useModal: true }),
+    });
+
+    act(() => result.current.open());
+
+    await waitFor(() => expect(screen.getByTestId('Modal')));
+
+    fireEvent.click(screen.getByText('Cerrar'));
+
+    await waitFor(() => expect(screen.queryByTestId('Modal')).toBeNull());
+  });
+
+  it('should match snapshot', async () => {
     const { result } = renderHook(() => usePrivacyPolicyModal(), {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
@@ -15,12 +29,13 @@ describe('usePrivacyPolicyModal', () => {
     await waitFor(() =>
       expect(screen.getByTestId('Modal')).toMatchInlineSnapshot(`
         <div
+          aria-labelledby="headlessui-dialog-title-:rh:"
           aria-modal="true"
           class="relative z-30"
           data-headlessui-state="open"
           data-open=""
           data-testid="Modal"
-          id="headlessui-dialog-:r0:"
+          id="headlessui-dialog-:r9:"
           role="dialog"
           tabindex="-1"
         >
@@ -37,7 +52,7 @@ describe('usePrivacyPolicyModal', () => {
                 class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 w-11/12 md:w-8/12 lg:w-8/12 !w-[95vw] !sm:w-[80vw]"
                 data-headlessui-state="open"
                 data-open=""
-                id="headlessui-dialog-panel-:r7:"
+                id="headlessui-dialog-panel-:rg:"
               >
                 <button
                   class="relative px-3 py-1.5 text-sm shadow-sm font-semibold rounded-md flex items-center justify-center leading-6 whitespace-nowrap h-fit bg-transparent text-gray-600 fill-gray-600 ring-2 ring-gray-300 hover:bg-gray-100 !rounded-full !p-2 !ring-0 !shadow-none !absolute top-0 right-0"
@@ -66,7 +81,7 @@ describe('usePrivacyPolicyModal', () => {
                         class="text-xl font-semibold text-gray-900"
                         data-headlessui-state="open"
                         data-open=""
-                        id="headlessui-dialog-title-:r8:"
+                        id="headlessui-dialog-title-:rh:"
                       >
                         Políticas de privacidad
                       </h3>
