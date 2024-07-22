@@ -18,7 +18,7 @@ export const AdvertisementsMyFirstBusiness = () => {
   if (!getIsBusinessUser(user)) {
     return <></>;
   }
-  
+
   if (allUserBusiness.data && !allUserBusiness.data.length) {
     return (
       <HighlightedBox variant="info">

@@ -27,7 +27,7 @@ export const AdvertisementsUserTypeCheck = () => {
       },
       {
         onAfterSuccess: () => onRefreshAuthUser(),
-      },
+      }
     );
   };
 
@@ -37,15 +37,15 @@ export const AdvertisementsUserTypeCheck = () => {
         <span>
           Parece que entras a nuestro sistema por primera vez. En tus{' '}
           <Button
-          variant='link'
+            variant="link"
             onClick={() => {
               if (!user) return;
               userUpdateSettings.open({ user, onAfterSuccess: onRefreshAuthUser });
 
               handleUpdateFlag();
             }}
-            label='preferencias de usuario'
-            className='!inline-block !text-lg !mx-1'
+            label="preferencias de usuario"
+            className="!inline-block !text-lg !mx-1"
           />
           puedes seleccionar otros roles que tenemos para ti y convertirte en{' '}
           <span className="font-bold">comerciante</span> o{' '}
