@@ -18,7 +18,7 @@ export const useNextButtonPortal = ({
   const { onClick, ...omittedProps } = nextBtnProps;
 
   return {
-    nextAction: ()=>onClick?.(),
+    nextAction: () => onClick?.(),
     rightButton: <div ref={portal.ref} />,
     portal: {
       ...portal,

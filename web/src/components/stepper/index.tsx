@@ -52,7 +52,7 @@ export const Stepper = ({ items, disabledStepNavigation = true }: StepperProps) 
     label: 'Omitir',
     variant: 'outlined',
     className: '!rounded-3xl !py-0.5',
-    onClick: nextBtnProps.onClick
+    onClick: nextBtnProps.onClick,
   };
 
   const backButton = <Button {...backBtnProps} />;
@@ -94,7 +94,7 @@ export const Stepper = ({ items, disabledStepNavigation = true }: StepperProps) 
               nextButton,
               nextBtnProps,
               backBtnProps,
-              centerBtnProps
+              centerBtnProps,
             }),
           };
         })}

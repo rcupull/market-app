@@ -31,13 +31,13 @@ export const Component = () => {
           onClose();
           onFetch({ routeName: business?.routeName });
         },
-      },
+      }
     );
   };
 
   const getStepProps = (
     stepperProps: OnboardingStepProps,
-    isLast: boolean,
+    isLast: boolean
   ): OnboardingStepProps => {
     if (isLast) {
       return {

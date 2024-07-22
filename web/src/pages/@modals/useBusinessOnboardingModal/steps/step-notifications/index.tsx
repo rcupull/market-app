@@ -24,7 +24,7 @@ export const StepNotifications = ({ nextBtnProps, centerBtnProps }: StepNotifica
       />
       <StepperButtonContainer
         rightButton={rightButton}
-        centerButton={<Button {...centerBtnProps}  />}
+        centerButton={<Button {...centerBtnProps} />}
       />
     </div>
   );

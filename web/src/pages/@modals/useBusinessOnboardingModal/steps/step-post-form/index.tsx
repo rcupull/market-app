@@ -23,10 +23,10 @@ export const StepPostForm = ({ backButton, nextBtnProps, centerBtnProps }: StepP
         }}
         className="max-h-[70vh] overflow-y-auto"
       />
-      <StepperButtonContainer leftButton={backButton} rightButton={rightButton} 
-      
-      centerButton={<Button {...centerBtnProps}  />}
-      
+      <StepperButtonContainer
+        leftButton={backButton}
+        rightButton={rightButton}
+        centerButton={<Button {...centerBtnProps} />}
       />
     </div>
   );

@@ -19,7 +19,7 @@ export const useBusinessOnboardingModal = () => {
 
             return {
               title: 'Configuración básica del negocio',
-              content: <Component  />,
+              content: <Component />,
               className: 'w-[98vw] !sm:w-[80vw]',
               isBusy: status.isBusy,
             };

@@ -9,7 +9,11 @@ import { ComponentProduct as Component } from 'pages/@modals/useBusinessNewUpdat
 
 export interface StepPostsSectionsProps extends OnboardingStepProps {}
 
-export const StepPostsSections = ({ backButton, nextBtnProps , centerBtnProps}: StepPostsSectionsProps) => {
+export const StepPostsSections = ({
+  backButton,
+  nextBtnProps,
+  centerBtnProps,
+}: StepPostsSectionsProps) => {
   const { nextAction, portal, rightButton } = useNextButtonPortal({ nextBtnProps });
   const { onFetch, business, getSections } = useBusiness();
 
@@ -31,7 +35,7 @@ export const StepPostsSections = ({ backButton, nextBtnProps , centerBtnProps}: 
       <StepperButtonContainer
         leftButton={backButton}
         rightButton={rightButton}
-        centerButton={<Button {...centerBtnProps}  />}
+        centerButton={<Button {...centerBtnProps} />}
       />
     </div>
   );
