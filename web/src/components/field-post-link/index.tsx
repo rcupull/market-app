@@ -7,6 +7,7 @@ import { useFormField } from 'components/formux/useFormField';
 import { useGetAllBusiness } from 'features/api/business/useGetAllBusiness';
 
 import { PostLinkType } from 'types/post';
+import { getRequiredLabel } from 'utils/form';
 
 export interface FieldPostsSectionLayoutProps
   extends Omit<FieldRadioGroupProps, 'items' | 'renderOption' | 'optionToValue'> {}
@@ -34,7 +35,7 @@ export const FieldPostLink = (props: FieldPostsSectionLayoutProps) => {
           },
         ]}
         containerClassName="flex items-center gap-4"
-        label="Tipo de enlace"
+        label={getRequiredLabel('Tipo de enlace')}
         name={getNestedFieldName('type')}
         onChange={() =>
           field.onChange({

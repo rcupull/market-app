@@ -22,7 +22,7 @@ import { useBusinessNewUpdateSectionModal } from '../useBusinessNewUpdateSection
 
 import { imagesDimensions } from 'constants/posts';
 import { StyleProps } from 'types/general';
-import { LinkFormState, Post, PostLink, ProductFormState } from 'types/post';
+import { LinkFormState, Post, ProductFormState } from 'types/post';
 import { getRequiredLabel } from 'utils/form';
 import { addStringToUniqueArray } from 'utils/general';
 
@@ -118,13 +118,13 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
           type: 'required',
         },
         {
-          field: 'postLink',
-          type: 'custom',
-          customCb: (value) =>{
-            const link = value as PostLink;
-            return link && link.value.length > 0;
-          },
-          message: 'Debe ingresar un enlace',
+          field: 'postLink.type',
+          type: 'required',
+        },
+        {
+          field: 'postLink.value',
+          type: 'required',     
+          message: 'Debe ingresar un enlace',     
         },
       ]}
     >
