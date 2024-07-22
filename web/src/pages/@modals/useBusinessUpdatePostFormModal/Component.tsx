@@ -29,14 +29,14 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
 
   const { updateOneBusiness } = useUpdateOneBusiness();
 
-  const initialValue : State = {
+  const initialValue: State = {
     postFormFields: postFormFields,
-  }
+  };
 
   const closeContext = useCloseContext<State>({
     initialValue,
   });
-  
+
   if (!routeName) {
     return <></>;
   }

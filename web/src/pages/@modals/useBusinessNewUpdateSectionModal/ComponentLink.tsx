@@ -36,7 +36,7 @@ export const ComponentLink = ({
   const { updateBusinessSection } = useUpdateBusinessSection();
   const { addBusinessSection } = useAddBusinessSection();
 
-  const initialValue : State = {
+  const initialValue: State = {
     name: '',
     postCardLayout: {
       images: 'rounded',
@@ -55,7 +55,7 @@ export const ComponentLink = ({
   };
 
   const closeContext = useCloseContext<State>({
-    initialValue
+    initialValue,
   });
 
   return (

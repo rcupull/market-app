@@ -37,14 +37,14 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
     bannerLayoutType: business?.layouts?.banner?.type || 'none',
   };
 
-  const closeContext = useCloseContext<State>({initialValue});
+  const closeContext = useCloseContext<State>({ initialValue });
 
   const [state, setState] = useState<State>(initialValue);
 
   const onChange = (currentValue: State) => {
     closeContext.onChangeValue(currentValue);
     setState(currentValue);
-  }
+  };
 
   const { updateOneBusiness } = useUpdateOneBusiness();
   const { addManyImages } = useAddManyImages();

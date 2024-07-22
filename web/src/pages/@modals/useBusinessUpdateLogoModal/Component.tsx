@@ -32,21 +32,18 @@ export const Component = ({ portal }: ComponentProps) => {
   const { updateOneBusiness } = useUpdateOneBusiness();
   const { addManyImages } = useAddManyImages();
 
-  const initialValue : State = {
+  const initialValue: State = {
     logoField: [logo],
-  }
+  };
 
-  const closeContext = useCloseContext<State>({initialValue});
+  const closeContext = useCloseContext<State>({ initialValue });
 
   if (!routeName) {
     return <></>;
   }
 
   return (
-    <Formux<State>
-      value={initialValue}
-      onChange={closeContext.onChangeValue}
-    >
+    <Formux<State> value={initialValue} onChange={closeContext.onChangeValue}>
       {({ value }) => {
         return (
           <form>

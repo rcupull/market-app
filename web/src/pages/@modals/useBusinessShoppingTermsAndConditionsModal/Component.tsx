@@ -22,26 +22,22 @@ export const Component = ({ portal }: ComponentProps) => {
   const { onClose } = useModal();
 
   const { updateOneBusiness } = useUpdateOneBusiness();
-  
-  
+
   const { routeName = '', shoppingMeta = {} } = business != null ? business : {};
-  
+
   const initialValue = {
     termsAndConditions: shoppingMeta.termsAndConditions || '',
   };
-  
-  const closeContext = useCloseContext<State>({initialValue})
-  
+
+  const closeContext = useCloseContext<State>({ initialValue });
+
   if (!business) {
     return <></>;
   }
 
   return (
     <>
-      <Formux<State>
-        value={initialValue}
-        onChange={closeContext.onChangeValue}
-      >
+      <Formux<State> value={initialValue} onChange={closeContext.onChangeValue}>
         {({ value }) => {
           return (
             <form className="w-full">

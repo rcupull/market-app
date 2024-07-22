@@ -43,10 +43,10 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
     address: user?.addresses?.[0],
     canCreateBusiness: user?.canCreateBusiness,
     canMakeDeliveries: user?.canMakeDeliveries,
-  }
+  };
 
   const closeContext = useCloseContext<State>({
-    initialValue
+    initialValue,
   });
 
   return (

@@ -24,20 +24,19 @@ export const Component = ({ portal }: ComponentProps) => {
   const { onClose } = useModal();
 
   const { updateOneBusiness } = useUpdateOneBusiness();
-  
+
   const initialValue: State = {
     title: business?.seo?.title || '',
     description: business?.seo?.description || '',
   };
 
-  const closeContext = useCloseContext<State>({initialValue});
+  const closeContext = useCloseContext<State>({ initialValue });
 
   if (!business) {
     return <></>;
   }
 
   const { routeName } = business;
-
 
   return (
     <>

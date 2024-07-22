@@ -20,10 +20,9 @@ import { DeliveryConfig, DeliveryConfigType } from 'types/business';
 import { Address } from 'types/general';
 import { getDeliveryUtils } from 'utils/business';
 
-
 export interface State {
   deliveryConfig?: DeliveryConfig;
-  address?: Address 
+  address?: Address;
 }
 export interface ComponentProps {
   portal: Portal;
@@ -34,12 +33,14 @@ export const Component = ({ portal }: ComponentProps) => {
 
   const { updateOneBusiness } = useUpdateOneBusiness();
 
-  const initialValue = business? {
-    deliveryConfig: business.deliveryConfig,
-    address: business.addresses?.[0],
-  } : {};
+  const initialValue = business
+    ? {
+        deliveryConfig: business.deliveryConfig,
+        address: business.addresses?.[0],
+      }
+    : {};
 
-  const closeContext = useCloseContext<State>({initialValue});
+  const closeContext = useCloseContext<State>({ initialValue });
 
   if (!business) {
     return <></>;
@@ -48,10 +49,7 @@ export const Component = ({ portal }: ComponentProps) => {
   const { routeName } = business;
 
   return (
-    <Formux<State>
-      value={initialValue}
-      onChange={closeContext.onChangeValue}
-    >
+    <Formux<State> value={initialValue} onChange={closeContext.onChangeValue}>
       {({ value }) => {
         const isEnabledDelivery = getDeliveryUtils().getIsEnabled({
           deliveryConfig: value.deliveryConfig,

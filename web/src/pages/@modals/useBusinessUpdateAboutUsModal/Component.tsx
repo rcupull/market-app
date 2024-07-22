@@ -31,15 +31,15 @@ export const Component = ({ portal }: ComponentProps) => {
   const { updateOneBusiness } = useUpdateOneBusiness();
 
   const { deleteImages } = useDeleteImages();
-  
+
   const initialValue: State = {
     visible: business?.aboutUsPage?.visible || false,
     title: business?.aboutUsPage?.title || '',
     description: business?.aboutUsPage?.description || '',
   };
 
-  const closeContext = useCloseContext<State>({initialValue});
-  
+  const closeContext = useCloseContext<State>({ initialValue });
+
   if (!business) {
     return <></>;
   }
