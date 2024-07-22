@@ -123,8 +123,9 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
           customCb: (value) =>{
             const link = value as PostLink;
             return link && link.value.length > 0;
-          }
-        }
+          },
+          message: 'Debe ingresar un enlace',
+        },
       ]}
     >
       {({ value }) => {
@@ -136,7 +137,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
             <FieldRadioGroup<{ label: string; value: string }>
               label={
                 <div className="flex items-center">
-                  Incluir en las secciones
+                  {getRequiredLabel('Incluir en las secciones')}
                   <IconButtonAdd
                     title="Agregar nueva sección de enlaces"
                     className="text-green-600 font-bold ml-2"
