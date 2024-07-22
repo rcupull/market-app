@@ -61,7 +61,7 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
         {
           field: 'phone',
           type: 'custom',
-          customCb: getIsValidPhone,
+          customCb: (value)=> value ? getIsValidPhone(value) : true,
         },
       ]}
     >

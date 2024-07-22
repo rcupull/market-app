@@ -7,9 +7,9 @@ import { useGetAllBusinessSummary } from 'features/api/business/useGetAllBusines
 import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 import { useScrollBottom } from 'hooks/useScrollBottom';
 
+import { AdvertisementsMyFirstBusiness } from '../../../@advertisements/my-first-business';
+import { AdvertisementsUserTypeCheck } from '../../../@advertisements/user-type-check';
 import { Filters } from './Filters';
-import { OwnBusiness } from './OwnBusiness';
-import { UserTypeCheck } from './UserTypeCheck';
 
 import { LayoutPage } from 'pages/@common/layout-page';
 import { LayoutPageSection } from 'pages/@common/layout-page-section';
@@ -39,9 +39,9 @@ export const Home = () => {
 
   return (
     <LayoutPage title="Todos los negocios">
-      <OwnBusiness />
+      <AdvertisementsMyFirstBusiness />
 
-      <UserTypeCheck />
+      <AdvertisementsUserTypeCheck />
 
       <Filters onChange={(e) => filters.onMergeFilters(e)} />
       <LayoutPageSection isBusy={getAllBusinessSummary.status.isBusy} className="mt-20">
