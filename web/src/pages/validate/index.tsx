@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { Button } from 'components/button';
 import { SpinnerEllipsis } from 'components/spinner-ellipsis';
@@ -12,6 +11,7 @@ import { useRouter } from 'hooks/useRouter';
 import SvgCheckCircle from 'icons/CheckCircle';
 import SvgExclamationTriangleSolid from 'icons/ExclamationTriangleSolid';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
+import { getBusinessRoute } from 'utils/business';
 
 export const Validate = () => {
   const { params } = useRouter();
@@ -23,7 +23,7 @@ export const Validate = () => {
 
   const { authValidate } = useAuthValidate();
 
-  const navigate = useNavigate();
+  const { pushRoute } = useRouter()
 
   const { code } = params;
 
@@ -39,7 +39,7 @@ export const Validate = () => {
           onAfterFailed: () => {
             setStatus('error');
             if(isAuthenticated){
-              navigate('/b')
+              pushRoute(getBusinessRoute())
             }
             else{
               authSignInModal.open()
