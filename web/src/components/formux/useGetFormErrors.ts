@@ -35,6 +35,10 @@ export type FormValidations<V extends AnyRecord, F extends Path<V> = Path<V>> = 
   Nullable<Validation<V, F>>
 >;
 
+export type FormValidationsGetter<V extends AnyRecord, F extends Path<V> = Path<V>> = (arg: {
+  state: V;
+}) => Array<Nullable<Validation<V, F>>>;
+
 export type GetFormErrors<V extends AnyRecord, F extends Path<V> = Path<V>> = (
   value: V,
   validations: FormValidations<V, F>
