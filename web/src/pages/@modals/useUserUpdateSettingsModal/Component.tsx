@@ -34,7 +34,7 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
   const { addOneBusiness } = useAddOneBusiness();
   const { updateOneUser } = useUpdateOneUser();
   const { addManyImages } = useAddManyImages();
-  const termsAndConditions = useTermsAndConditionsModal();
+  const { termsAndConditionsModal } = useTermsAndConditionsModal();
 
   const initialValue = {
     profileImages: user?.profileImage ? [user?.profileImage] : [],
@@ -81,7 +81,7 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
                     <Button
                       variant="link"
                       className="!inline-block"
-                      onClick={() => termsAndConditions.open()}
+                      onClick={() => termsAndConditionsModal.open()}
                       label="Términos y condiciones"
                     />
                   </div>

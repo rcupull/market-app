@@ -10,7 +10,7 @@ import { cn } from 'utils/general';
 
 export const BannerInfoTelegramBusiness = ({ className }: StyleProps) => {
   const { business, onFetch } = useBusiness();
-  const businessUpdateNotifications = useBusinessUpdateNotificationsModal();
+  const { businessUpdateNotificationsModal } = useBusinessUpdateNotificationsModal();
 
   if (!business) {
     return <></>;
@@ -31,7 +31,7 @@ export const BannerInfoTelegramBusiness = ({ className }: StyleProps) => {
                 label="Activar"
                 variant="link"
                 onClick={() => {
-                  businessUpdateNotifications.open({
+                  businessUpdateNotificationsModal.open({
                     onAfterSuccess: () => {
                       business && onFetch({ routeName: business?.routeName });
                     },

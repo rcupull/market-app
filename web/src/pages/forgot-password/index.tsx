@@ -19,7 +19,7 @@ export const ForgotPassword = () => {
   const { params } = useRouter();
 
   const { authForgotPasswordValidate } = useAuthForgotPasswordValidate();
-  const authSignInModal = useAuthSignInModal();
+  const { authSignInModal } = useAuthSignInModal();
   const { code } = params;
 
   const [email, setEmail] = useState<string>();

@@ -13,7 +13,7 @@ export const useAuthSignUpModal = () => {
   const { pushModal } = useModal();
 
   return {
-    useAuthSignUpModal: {
+    authSignUpModal: {
       open: () => {
         pushModal(
           'Emergent',

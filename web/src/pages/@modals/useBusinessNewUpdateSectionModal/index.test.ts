@@ -29,7 +29,6 @@ describe('useBusinessNewUpdateSectionModal', () => {
     await waitFor(() =>
       expect(screen.getByTestId('Modal')).toMatchInlineSnapshot(`
         <div
-          aria-labelledby="headlessui-dialog-title-:rn:"
           aria-modal="true"
           class="relative z-30"
           data-headlessui-state="open"

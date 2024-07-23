@@ -18,7 +18,7 @@ export const useBusinessUpdateNewModal = () => {
   const { pushModal } = useModal();
 
   return {
-    businessUpdateLogoModal: {
+    businessUpdateNewModal: {
       open: (args?: { routeName?: string; onAfterSucess?: (response?: Business) => void }) => {
         pushModal(
           'Emergent',

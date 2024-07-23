@@ -10,7 +10,7 @@ describe('useBusinessUpdateNewModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.businessUpdateLogoModal.open());
+    act(() => result.current.businessUpdateNewModal.open());
 
     await waitFor(() => expect(screen.getByTestId('Modal')));
 
@@ -24,7 +24,7 @@ describe('useBusinessUpdateNewModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.businessUpdateLogoModal.open());
+    act(() => result.current.businessUpdateNewModal.open());
 
     await waitFor(() =>
       expect(screen.getByTestId('Modal')).toMatchInlineSnapshot(`

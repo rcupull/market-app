@@ -11,7 +11,7 @@ export const useUpdateTelegramBotUserModal = () => {
   const { pushModal } = useModal();
 
   return {
-    termsAndConditionsModal: {
+    updateTelegramBotUserModal: {
       open: (args?: { onAfterSuccess?: () => void }) => {
         pushModal(
           'Emergent',

@@ -10,7 +10,7 @@ describe('useUpdateTelegramBotUserModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.termsAndConditionsModal.open());
+    act(() => result.current.updateTelegramBotUserModal.open());
 
     await waitFor(() => expect(screen.getByTestId('Modal')));
 
@@ -24,7 +24,7 @@ describe('useUpdateTelegramBotUserModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.termsAndConditionsModal.open());
+    act(() => result.current.updateTelegramBotUserModal.open());
 
     await waitFor(() =>
       expect(screen.getByTestId('Modal')).toMatchInlineSnapshot(`
