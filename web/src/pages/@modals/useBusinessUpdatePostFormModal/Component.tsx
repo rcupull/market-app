@@ -29,13 +29,7 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
 
   const { updateOneBusiness } = useUpdateOneBusiness();
 
-  const initialValue: State = {
-    postFormFields: postFormFields,
-  };
-
-  const closeContext = useCloseContext<State>({
-    initialValue,
-  });
+  const { onChangeUnsavedChanges } = useCloseContext();
 
   if (!routeName) {
     return <></>;
@@ -57,9 +51,10 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
         value={{
           postFormFields,
         }}
-        onChange={closeContext.onChangeValue}
       >
-        {({ value }) => {
+        {({ value, hasChange }) => {
+          onChangeUnsavedChanges(hasChange);
+
           return (
             <form className={className}>
               <FieldRadioGroup<{ value: ProductFormField; label: string; hidden?: boolean }>

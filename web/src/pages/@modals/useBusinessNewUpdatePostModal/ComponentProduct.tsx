@@ -44,22 +44,7 @@ export const ComponentProduct = ({
   const { updateOnePost } = useUpdateOnePost();
   const { addManyImages } = useAddManyImages();
 
-  const initialValue: ProductFormState = {
-    name: '',
-    price: undefined,
-    details: '',
-    description: '',
-    colors: [],
-    clothingSizes: [],
-    images: [],
-    postCategoriesTags: [],
-    stockAmount: null,
-    ...(post || {}),
-  };
-
-  const closeContext = useCloseContext<ProductFormState>({
-    initialValue,
-  });
+  const { onChangeUnsavedChanges } = useCloseContext();
 
   if (!business) {
     return <></>;
@@ -69,8 +54,18 @@ export const ComponentProduct = ({
 
   return (
     <Formux<ProductFormState>
-      value={initialValue}
-      onChange={closeContext.onChangeValue}
+      value={{
+        name: '',
+        price: undefined,
+        details: '',
+        description: '',
+        colors: [],
+        clothingSizes: [],
+        images: [],
+        postCategoriesTags: [],
+        stockAmount: null,
+        ...(post || {}),
+      }}
       validate={[
         {
           field: 'name',
@@ -94,7 +89,9 @@ export const ComponentProduct = ({
         },
       ]}
     >
-      {({ value }) => {
+      {({ value, hasChange }) => {
+        onChangeUnsavedChanges(hasChange);
+
         return (
           <form className={className}>
             {/** ALWAYS VISIBLE */}

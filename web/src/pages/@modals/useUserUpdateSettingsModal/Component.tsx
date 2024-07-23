@@ -45,14 +45,11 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
     canMakeDeliveries: user?.canMakeDeliveries,
   };
 
-  const closeContext = useCloseContext<State>({
-    initialValue,
-  });
+  const { onChangeUnsavedChanges } = useCloseContext();
 
   return (
     <Formux<State>
       value={initialValue}
-      onChange={closeContext.onChangeValue}
       validate={[
         {
           field: 'name',
@@ -65,7 +62,9 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
         },
       ]}
     >
-      {({ value }) => {
+      {({ value, hasChange }) => {
+        onChangeUnsavedChanges(hasChange);
+
         return (
           <form className="w-full">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">

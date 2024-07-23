@@ -39,33 +39,29 @@ export const ComponentProduct = ({
   const { updateBusinessSection } = useUpdateBusinessSection();
   const { addBusinessSection } = useAddBusinessSection();
 
-  const initialValue: State = {
-    name: '',
-    postCardLayout: {
-      images: 'static',
-      size: 'medium',
-      metaLayout: 'basic',
-      discount: 'none',
-      name: 'basic',
-      price: 'smallerCurrency',
-      shoppingMethod: 'shoppingCart',
-    },
-    postCategoriesTags: [],
-    searchLayout: 'none',
-    type: 'grid',
-    showMobile: true,
-    showPC: true,
-    postType: 'product',
-    ...(section || {}),
-  };
+  const { onChangeUnsavedChanges } = useCloseContext();
 
-  const closeContext = useCloseContext<State>({
-    initialValue,
-  });
   return (
     <Formux<State>
-      value={initialValue}
-      onChange={closeContext.onChangeValue}
+      value={{
+        name: '',
+        postCardLayout: {
+          images: 'static',
+          size: 'medium',
+          metaLayout: 'basic',
+          discount: 'none',
+          name: 'basic',
+          price: 'smallerCurrency',
+          shoppingMethod: 'shoppingCart',
+        },
+        postCategoriesTags: [],
+        searchLayout: 'none',
+        type: 'grid',
+        showMobile: true,
+        showPC: true,
+        postType: 'product',
+        ...(section || {}),
+      }}
       validate={[
         {
           field: 'name',
@@ -79,7 +75,9 @@ export const ComponentProduct = ({
         },
       ]}
     >
-      {({ value }) => {
+      {({ value, hasChange }) => {
+        onChangeUnsavedChanges(hasChange);
+
         return (
           <form className={className}>
             <FormFieldWrapper label="Visibilidad">
