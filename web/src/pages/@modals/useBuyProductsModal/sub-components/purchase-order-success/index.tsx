@@ -1,11 +1,23 @@
+import { Button } from 'components/button';
+
+import { useModal } from 'features/modal/useModal';
+
+import { useRouter } from 'hooks/useRouter';
+
 import { StepCommonProps } from '../../types';
 import { ButtonNavContainer } from '../button-nav-container';
 
 import SvgCheckCircleSolid from 'icons/CheckCircleSolid';
+import { useBusiness } from 'pages/@hooks/useBusiness';
+import { getOneBusinessRoute } from 'utils/business';
 
 export interface PurchaseOrderSuccessProps extends StepCommonProps {}
 
-export const PurchaseOrderSuccess = ({ finishButton }: PurchaseOrderSuccessProps) => {
+export const PurchaseOrderSuccess = ({ nextBtnProps }: PurchaseOrderSuccessProps) => {
+  const { onClose } = useModal();
+  const { business } = useBusiness();
+  const { pushRoute } = useRouter();
+
   return (
     <>
       <div className="flex flex-col items-center">
@@ -17,7 +29,18 @@ export const PurchaseOrderSuccess = ({ finishButton }: PurchaseOrderSuccessProps
         </span>
       </div>
 
-      <ButtonNavContainer rightButton={finishButton} />
+      <ButtonNavContainer
+        rightButton={
+          <Button
+            {...nextBtnProps}
+            label="Cerrar"
+            onClick={() => {
+              onClose();
+              business && pushRoute(getOneBusinessRoute({ routeName: business.routeName }));
+            }}
+          />
+        }
+      />
     </>
   );
 };
