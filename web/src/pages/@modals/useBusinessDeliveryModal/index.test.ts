@@ -10,7 +10,7 @@ describe('useBusinessDeliveryModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.open());
+    act(() => result.current.businessDeliveryModal.open());
 
     await waitFor(() => expect(screen.getByTestId('Modal')));
 
@@ -24,11 +24,12 @@ describe('useBusinessDeliveryModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.open());
+    act(() => result.current.businessDeliveryModal.open());
 
     await waitFor(() =>
       expect(screen.getByTestId('Modal')).toMatchInlineSnapshot(`
         <div
+          aria-labelledby="headlessui-dialog-title-:rh:"
           aria-modal="true"
           class="relative z-30"
           data-headlessui-state="open"

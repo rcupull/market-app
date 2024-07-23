@@ -13,24 +13,26 @@ export const useAdminConfigUpdatePrivacyPolicyModal = () => {
   const { pushModal } = useModal();
 
   return {
-    open: () => {
-      pushModal(
-        'Emergent',
-        {
-          useProps: () => {
-            const portal = usePortal();
+    adminConfigUpdatePrivacyPolicyModal: {
+      open: () => {
+        pushModal(
+          'Emergent',
+          {
+            useProps: () => {
+              const portal = usePortal();
 
-            return {
-              title: 'Política de privacidad',
-              content: <Component portal={portal} />,
-              secondaryBtn: <ButtonClose />,
-              primaryBtn: <div ref={portal.ref} />,
-              className: '!w-[95vw]',
-            };
+              return {
+                title: 'Política de privacidad',
+                content: <Component portal={portal} />,
+                secondaryBtn: <ButtonClose />,
+                primaryBtn: <div ref={portal.ref} />,
+                className: '!w-[95vw]',
+              };
+            },
           },
-        },
-        { emergent: true }
-      );
+          { emergent: true }
+        );
+      },
     },
   };
 };

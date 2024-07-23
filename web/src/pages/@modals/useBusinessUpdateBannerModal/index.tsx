@@ -13,33 +13,35 @@ export const useBusinessUpdateBannerModal = () => {
   const { pushModal } = useModal();
 
   return {
-    open: (args?: { onAfterSuccess?: () => void }) => {
-      pushModal(
-        'Emergent',
-        {
-          useProps: () => {
-            const { onAfterSuccess } = args || {};
-            const { onClose } = useModal();
-            const portal = usePortal();
+    businessUpdateBannerModal: {
+      open: (args?: { onAfterSuccess?: () => void }) => {
+        pushModal(
+          'Emergent',
+          {
+            useProps: () => {
+              const { onAfterSuccess } = args || {};
+              const { onClose } = useModal();
+              const portal = usePortal();
 
-            return {
-              title: 'Banner',
-              content: (
-                <Component
-                  portal={portal}
-                  onAfterSuccess={() => {
-                    onClose();
-                    onAfterSuccess?.();
-                  }}
-                />
-              ),
-              secondaryBtn: <ButtonClose />,
-              primaryBtn: <div ref={portal.ref} />,
-            };
+              return {
+                title: 'Banner',
+                content: (
+                  <Component
+                    portal={portal}
+                    onAfterSuccess={() => {
+                      onClose();
+                      onAfterSuccess?.();
+                    }}
+                  />
+                ),
+                secondaryBtn: <ButtonClose />,
+                primaryBtn: <div ref={portal.ref} />,
+              };
+            },
           },
-        },
-        { emergent: true }
-      );
+          { emergent: true }
+        );
+      },
     },
   };
 };
