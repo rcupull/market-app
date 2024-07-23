@@ -3,6 +3,7 @@ import { FieldCheckEditor } from 'components/field-check-editor';
 import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
+import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
 import { useModal } from 'features/modal/useModal';
 
 import { Portal } from 'hooks/usePortal';
@@ -22,20 +23,22 @@ export const Component = ({ portal }: ComponentProps) => {
 
   const { updateOneBusiness } = useUpdateOneBusiness();
 
+  const { routeName = '', shoppingMeta = {} } = business != null ? business : {};
+
+  const initialValue = {
+    termsAndConditions: shoppingMeta.termsAndConditions || '',
+  };
+
+  const closeContext = useCloseContext<State>({ initialValue });
+
   if (!business) {
     return <></>;
   }
 
-  const { routeName, shoppingMeta = {} } = business;
-
   return (
     <>
-      <Formux<State>
-        value={{
-          termsAndConditions: shoppingMeta.termsAndConditions || '',
-        }}
-      >
-        {({ value, isValid }) => {
+      <Formux<State> value={initialValue} onChange={closeContext.onChangeValue}>
+        {({ value }) => {
           return (
             <form className="w-full">
               <FieldCheckEditor
@@ -50,7 +53,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 <Button
                   label="Guardar"
                   isBusy={updateOneBusiness.status.isBusy}
-                  disabled={!isValid}
+                  formuxSubmit
                   onClick={() => {
                     const { termsAndConditions } = value;
                     updateOneBusiness.fetch(

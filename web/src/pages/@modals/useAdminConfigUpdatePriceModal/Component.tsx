@@ -28,7 +28,7 @@ export const Component = ({ portal }: ComponentProps) => {
           price: data?.price || '',
         }}
       >
-        {({ value, isValid }) => {
+        {({ value }) => {
           return (
             <form className="w-full">
               <FieldCheckEditor
@@ -41,9 +41,9 @@ export const Component = ({ portal }: ComponentProps) => {
 
               {portal.getPortal(
                 <Button
+                  formuxSubmit
                   label="Guardar"
                   isBusy={updateConfigAdmin.status.isBusy}
-                  disabled={!isValid}
                   onClick={() => {
                     const { price } = value;
                     updateConfigAdmin.fetch(

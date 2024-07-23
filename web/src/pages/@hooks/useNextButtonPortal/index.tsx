@@ -1,33 +1,29 @@
 import { cloneElement } from 'react';
 
+import { StepperBtnProps } from 'components/stepper';
+
 import { Portal, usePortal } from 'hooks/usePortal';
 
-export const useNextButtonPortal = (
-  nextButton: React.ReactElement
-): {
+export const useNextButtonPortal = ({
+  nextBtnProps,
+}: {
+  nextBtnProps: StepperBtnProps;
+}): {
   portal: Portal;
   nextAction: () => void;
   rightButton: React.ReactNode;
 } => {
   const portal = usePortal();
 
+  const { onClick, ...omittedProps } = nextBtnProps;
+
   return {
-    nextAction: () => nextButton.props.onClick(),
+    nextAction: () => onClick?.(),
     rightButton: <div ref={portal.ref} />,
     portal: {
       ...portal,
       getPortal: (node: React.ReactElement) => {
-        const { onClick, disabled, isBusy, hasChange } = node.props;
-
-        const el = hasChange
-          ? cloneElement(nextButton, {
-              onClick,
-              disabled,
-              isBusy,
-            })
-          : nextButton;
-
-        return portal.getPortal(el);
+        return portal.getPortal(cloneElement(node, omittedProps));
       },
     },
   };

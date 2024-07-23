@@ -148,6 +148,10 @@ export interface DeliveryConfig {
   type?: DeliveryConfigType;
 }
 
+export interface BusinessChecks {
+  doneOnboarding?: boolean;
+}
+
 export interface Business extends BaseIdentity {
   name: string;
   routeName: string;
@@ -172,7 +176,7 @@ export interface Business extends BaseIdentity {
   addresses?: Array<Address>;
   deliveryConfig?: DeliveryConfig;
   //
-  doneOnboarding?: boolean;
+  checks?: BusinessChecks;
 }
 
 export interface BusinessSummary extends Pick<Business, '_id' | 'name' | 'routeName'> {

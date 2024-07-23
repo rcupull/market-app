@@ -45,7 +45,7 @@ export const Component = ({ portal }: ComponentProps) => {
             },
           ]}
         >
-          {({ isValid, value }) => {
+          {({ value }) => {
             return (
               <form>
                 <FieldInput
@@ -59,7 +59,7 @@ export const Component = ({ portal }: ComponentProps) => {
                   <Button
                     label="Enviar"
                     isBusy={authForgotPasswordRequest.status.isBusy}
-                    disabled={!isValid}
+                    formuxSubmit
                     onClick={() => {
                       const { email } = value;
 

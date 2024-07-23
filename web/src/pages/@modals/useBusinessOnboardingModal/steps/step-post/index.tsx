@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { Button } from 'components/button';
 import { StepperButtonContainer } from 'components/stepper/StepperButtonContainer';
 
 import { useGetAllPosts } from 'features/api/posts/useGetAllPosts';
@@ -12,8 +13,8 @@ import { ComponentProduct } from 'pages/@modals/useBusinessNewUpdatePostModal/Co
 
 export interface StepPostProps extends OnboardingStepProps {}
 
-export const StepPost = ({ backButton, nextButton }: StepPostProps) => {
-  const { nextAction, portal, rightButton } = useNextButtonPortal(nextButton);
+export const StepPost = ({ backButton, nextBtnProps, centerBtnProps }: StepPostProps) => {
+  const { nextAction, portal, rightButton } = useNextButtonPortal({ nextBtnProps });
   const { business } = useBusiness();
 
   const { getAllPosts } = useGetAllPosts();
@@ -37,7 +38,11 @@ export const StepPost = ({ backButton, nextButton }: StepPostProps) => {
         }}
         className="max-h-[70vh] overflow-y-auto"
       />
-      <StepperButtonContainer leftButton={backButton} rightButton={rightButton} />
+      <StepperButtonContainer
+        leftButton={backButton}
+        rightButton={rightButton}
+        centerButton={<Button {...centerBtnProps} />}
+      />
     </div>
   );
 };
