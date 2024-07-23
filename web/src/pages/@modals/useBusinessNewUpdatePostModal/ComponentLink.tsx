@@ -89,7 +89,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
     name: '',
     images: [],
     postCategoriesTags: [linkTag],
-    postLink: undefined,
+    postLink: { type: 'business', value: '' },
     sectionIds: sections.map((section) => section._id),
     ...(post || {}),
   };
@@ -124,7 +124,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
         {
           field: 'postLink.value',
           type: 'required',     
-          message: 'Debe ingresar un enlace',     
+          message: 'Debe escribir un enlace',     
         },
       ]}
     >
