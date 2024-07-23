@@ -57,7 +57,7 @@ export const Component = ({ portal }: ComponentProps) => {
             },
           ]}
         >
-          {({ isValid, value }) => {
+          {({ value }) => {
             return (
               <form>
                 <FieldInput
@@ -83,7 +83,7 @@ export const Component = ({ portal }: ComponentProps) => {
                   <Button
                     label="Cambiar contraseña"
                     isBusy={authChangePassword.status.isBusy}
-                    disabled={!isValid}
+                    formuxSubmit
                     onClick={() => {
                       const { newPassword } = value;
 

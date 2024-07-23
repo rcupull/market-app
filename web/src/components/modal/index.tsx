@@ -35,6 +35,7 @@ export const Modal = ({
   return (
     <Transition show={true} as={Fragment}>
       <Dialog
+        data-testid="Modal"
         as="div"
         className="relative z-30"
         // initialFocus={cancelButtonRef}

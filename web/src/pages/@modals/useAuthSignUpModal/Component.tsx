@@ -113,7 +113,7 @@ export const Component = ({ portal }: ComponentProps) => {
                     id="password"
                     name="password"
                     type="password"
-                    autoComplete="password"
+                    autoComplete="new-password"
                     label={getRequiredLabel('Contraseña')}
                     className="mt-6"
                   />

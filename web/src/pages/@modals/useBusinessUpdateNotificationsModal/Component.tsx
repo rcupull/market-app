@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Button } from 'components/button';
+import { ButtonSave } from 'components/button-save';
 import { Divider } from 'components/divider';
 import { FieldCheckbox } from 'components/field-checkbox';
 import { FieldRadioGroup } from 'components/field-radio-group';
@@ -16,59 +16,29 @@ import { useBusiness } from '../../@hooks/useBusiness';
 
 import { TelegramActivationSteps } from 'pages/@common/telegram-activation-steps';
 import { Business, BusinessNotificationFlags } from 'types/business';
-import { isEmpty, isEqual } from 'utils/general';
+import { isEmpty } from 'utils/general';
 
 export interface ComponentProps {
   portal: Portal;
   onAfterSuccess?: () => void;
 }
 
-interface State extends Pick<Business, 'notificationFlags'> {
-  code?: string;
-}
+interface State extends Pick<Business, 'notificationFlags'> {}
 
 export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
-  const { business } = useBusiness();
+  const { business, onFetch } = useBusiness();
 
   const { businessChatBotValidate } = useBusinessChatBotValidate();
   const { updateOneBusiness } = useUpdateOneBusiness();
 
   const initialState: State = {
     notificationFlags: business?.notificationFlags,
-    code: '',
   };
   const [state, setState] = useState<State>(initialState);
 
-  const { telegramBotChat } = business || {};
+  const { telegramBotChat, routeName } = business || {};
 
-  const renderTelegramActivationSteps = () => {
-    if (isEmpty(state.notificationFlags)) return null;
-
-    return (
-      <>
-        {telegramBotChat ? (
-          <HighlightedBox variant="success">
-            <div>
-              Este negocio ya posee una cuenta de Telegram activa con el usuario{' '}
-              <span className="font-bold">{`${telegramBotChat.firstName}.`}</span> Continúe los
-              siguientes pasos <span className="font-bold">solo si desea cambiar</span> la cuenta de
-              Telegram vinculada con este negocio.
-            </div>
-          </HighlightedBox>
-        ) : (
-          <HighlightedBox variant="warning">
-            <div className="text-center sm:text-left">
-              Es importante que continue los siguientes pasos para{' '}
-              <span className="font-bold">
-                activar su cuenta de Telegram en este negocio y poder recibir las notificaciones
-              </span>
-            </div>
-          </HighlightedBox>
-        )}
-        <TelegramActivationSteps value={state} onChange={setState} />
-      </>
-    );
-  };
+  const hasEnabledSomeNotification = !isEmpty(state.notificationFlags);
 
   return (
     <div>
@@ -76,7 +46,25 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
       órdenes de compra y otras informaciones importantes.
       <Divider />
       <Formux<State> value={state} onChange={setState}>
-        {() => {
+        {({ value }) => {
+          const handleSubmit = () => {
+            if (!business) return;
+            const { notificationFlags } = value;
+            updateOneBusiness.fetch(
+              {
+                routeName: business.routeName,
+                update: {
+                  notificationFlags,
+                },
+              },
+              {
+                onAfterSuccess: () => {
+                  onAfterSuccess?.();
+                },
+              }
+            );
+          };
+
           return (
             <form>
               <FieldRadioGroup<{
@@ -108,43 +96,64 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                 ]}
                 containerClassName="flex items-center flex-wrap gap-4"
               />
+
+              {portal?.getPortal(
+                <ButtonSave
+                  formuxSubmit
+                  className="w-full"
+                  isBusy={updateOneBusiness.status.isBusy}
+                  onClick={handleSubmit}
+                />
+              )}
             </form>
           );
         }}
       </Formux>
-      <Divider />
-      {renderTelegramActivationSteps()}
-      {portal?.getPortal(
-        <Button
-          label="Activar"
-          className="w-full"
-          hasChange={!isEqual(state, initialState)}
-          isBusy={updateOneBusiness.status.isBusy}
-          onClick={() => {
-            if (!business) return;
-            const { code, notificationFlags } = state;
-            const { routeName } = business;
+      {hasEnabledSomeNotification && (
+        <>
+          <Divider />
+          {telegramBotChat ? (
+            <HighlightedBox variant="success">
+              <div>
+                Este negocio ya posee una cuenta de Telegram activa con el usuario{' '}
+                <span className="font-bold">{`${telegramBotChat.firstName}.`}</span> Continúe los
+                siguientes pasos <span className="font-bold">solo si desea cambiar</span> la cuenta
+                de Telegram vinculada con este negocio.
+              </div>
+            </HighlightedBox>
+          ) : (
+            <HighlightedBox variant="warning">
+              <div className="text-center sm:text-left">
+                Es importante que continue los siguientes pasos para{' '}
+                <span className="font-bold">
+                  activar su cuenta de Telegram en este negocio y poder recibir las notificaciones
+                </span>
+              </div>
+            </HighlightedBox>
+          )}
+          <TelegramActivationSteps
+            status={businessChatBotValidate.status}
+            onFetch={(formArgs) => {
+              const { code } = formArgs.value;
 
-            updateOneBusiness.fetch(
-              {
-                routeName: business.routeName,
-                update: {
-                  notificationFlags,
-                },
-              },
-              {
-                onAfterSuccess: () => {
-                  onAfterSuccess?.();
-                },
+              if (code && routeName) {
+                businessChatBotValidate.fetch(
+                  { code, routeName },
+                  {
+                    onAfterSuccess: (response) => {
+                      formArgs.onAfterSuccess?.(response);
+
+                      business && onFetch({ routeName: business?.routeName });
+                    },
+                    onAfterFailed: formArgs.onAfterFailed,
+                  }
+                );
               }
-            );
-
-            if (code) {
-              businessChatBotValidate.fetch({ code, routeName });
-            }
-          }}
-        />
+            }}
+          />
+        </>
       )}
+      <Divider />
     </div>
   );
 };

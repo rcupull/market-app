@@ -5,6 +5,7 @@ import { Formux } from 'components/formux';
 import { HighlightedBox } from 'components/highlighted-box';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
+import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
 
 import { Portal } from 'hooks/usePortal';
 
@@ -13,7 +14,6 @@ import { useBusiness } from '../../@hooks/useBusiness';
 import { Business } from 'types/business';
 import { StyleProps } from 'types/general';
 import { ProductFormField } from 'types/post';
-import { isEmpty } from 'utils/general';
 
 interface State extends Pick<Business, 'postFormFields'> {}
 
@@ -28,6 +28,14 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
   const { postFormFields = [], routeName } = business || {};
 
   const { updateOneBusiness } = useUpdateOneBusiness();
+
+  const initialValue: State = {
+    postFormFields: postFormFields,
+  };
+
+  const closeContext = useCloseContext<State>({
+    initialValue,
+  });
 
   if (!routeName) {
     return <></>;
@@ -49,8 +57,9 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
         value={{
           postFormFields,
         }}
+        onChange={closeContext.onChangeValue}
       >
-        {({ value, isValid, touched, hasChange }) => {
+        {({ value }) => {
           return (
             <form className={className}>
               <FieldRadioGroup<{ value: ProductFormField; label: string; hidden?: boolean }>
@@ -119,8 +128,7 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
                 <Button
                   label="Guardar"
                   isBusy={updateOneBusiness.status.isBusy}
-                  hasChange={hasChange}
-                  disabled={!isValid || isEmpty(touched)}
+                  formuxSubmit
                   onClick={() => {
                     if (!business) return;
                     const { postFormFields } = value;

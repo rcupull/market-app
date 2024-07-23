@@ -2,8 +2,6 @@ import { ButtonClose } from 'components/button-close';
 
 import { useModal } from 'features/modal/useModal';
 
-import { usePortal } from 'hooks/usePortal';
-
 import { dynamic } from 'utils/makeLazy';
 
 //eslint-disable-next-line
@@ -20,13 +18,11 @@ export const useUpdateTelegramBotUserModal = () => {
           useProps: () => {
             const { onAfterSuccess } = args || {};
             const { onClose } = useModal();
-            const portal = usePortal();
 
             return {
               title: 'Bot de Telegram',
               content: (
                 <Component
-                  portal={portal}
                   onAfterSuccess={() => {
                     onClose();
                     onAfterSuccess?.();
@@ -34,7 +30,6 @@ export const useUpdateTelegramBotUserModal = () => {
                 />
               ),
               secondaryBtn: <ButtonClose />,
-              primaryBtn: <div ref={portal.ref} />,
             };
           },
         },

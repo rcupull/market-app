@@ -63,7 +63,7 @@ export const Component = ({ portal, options }: ComponentProps) => {
         youtube: business?.socialLinks?.youtube || '',
       }}
     >
-      {({ value, isValid }) => {
+      {({ value }) => {
         return (
           <form className="w-full">
             {renderFieldLink(
@@ -87,7 +87,7 @@ export const Component = ({ portal, options }: ComponentProps) => {
               <Button
                 label="Guardar"
                 isBusy={updateOneBusiness.status.isBusy}
-                disabled={!isValid}
+                formuxSubmit
                 onClick={() => {
                   const { face, instagram, twitter, linkedin, youtube } = value;
 

@@ -79,7 +79,7 @@ export const ForgotPassword = () => {
             },
           ]}
         >
-          {({ isValid, value }) => {
+          {({ value }) => {
             return (
               <form>
                 <FieldInput
@@ -103,7 +103,7 @@ export const ForgotPassword = () => {
                   <Button
                     label="Restablecer"
                     isBusy={authForgotPasswordValidate.status.isBusy}
-                    disabled={!isValid}
+                    formuxSubmit
                     onClick={() => {
                       if (!code) return;
 

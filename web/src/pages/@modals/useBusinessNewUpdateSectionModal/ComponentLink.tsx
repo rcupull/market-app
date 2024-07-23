@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { ButtonSave } from 'components/button-save';
 import { Divider } from 'components/divider';
 import { FieldCheckbox } from 'components/field-checkbox';
@@ -10,6 +8,7 @@ import { Formux } from 'components/formux';
 
 import { useAddBusinessSection } from 'features/api/business/useAddBusinessSection';
 import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusinessSection';
+import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
 
 import { Portal } from 'hooks/usePortal';
 
@@ -37,7 +36,7 @@ export const ComponentLink = ({
   const { updateBusinessSection } = useUpdateBusinessSection();
   const { addBusinessSection } = useAddBusinessSection();
 
-  const [state, setState] = useState<State>({
+  const initialValue: State = {
     name: '',
     postCardLayout: {
       images: 'rounded',
@@ -53,12 +52,16 @@ export const ComponentLink = ({
     showPC: true,
     postType: 'link',
     ...(section || {}),
+  };
+
+  const closeContext = useCloseContext<State>({
+    initialValue,
   });
 
   return (
     <Formux<State>
-      value={state}
-      onChange={setState}
+      value={initialValue}
+      onChange={closeContext.onChangeValue}
       validate={[
         {
           field: 'name',
@@ -66,7 +69,7 @@ export const ComponentLink = ({
         },
       ]}
     >
-      {({ value, isValid }) => {
+      {({ value }) => {
         return (
           <form className={className}>
             <FormFieldWrapper label="Visibilidad">
@@ -104,7 +107,7 @@ export const ComponentLink = ({
             {portal.getPortal(
               <ButtonSave
                 isBusy={addBusinessSection.status.isBusy || updateBusinessSection.status.isBusy}
-                disabled={!isValid}
+                formuxSubmit
                 onClick={() => {
                   if (!business) return;
                   section

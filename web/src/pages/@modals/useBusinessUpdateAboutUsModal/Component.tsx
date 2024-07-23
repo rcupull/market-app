@@ -8,6 +8,7 @@ import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useDeleteImages } from 'features/api/images/useDeleteImages';
+import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
 import { useModal } from 'features/modal/useModal';
 
 import { Portal } from 'hooks/usePortal';
@@ -31,17 +32,19 @@ export const Component = ({ portal }: ComponentProps) => {
 
   const { deleteImages } = useDeleteImages();
 
-  if (!business) {
-    return <></>;
-  }
-
-  const { routeName } = business;
-
   const initialValue: State = {
     visible: business?.aboutUsPage?.visible || false,
     title: business?.aboutUsPage?.title || '',
     description: business?.aboutUsPage?.description || '',
   };
+
+  const closeContext = useCloseContext<State>({ initialValue });
+
+  if (!business) {
+    return <></>;
+  }
+
+  const { routeName } = business;
 
   const handleRemoveImageSrc = (urls: Array<string>) => {
     if (!urls.length) return;
@@ -52,8 +55,8 @@ export const Component = ({ portal }: ComponentProps) => {
 
   return (
     <>
-      <Formux<State> value={initialValue}>
-        {({ value, isValid }) => {
+      <Formux<State> value={initialValue} onChange={closeContext.onChangeValue}>
+        {({ value }) => {
           return (
             <form className="w-full">
               <FieldToggleButton
@@ -101,7 +104,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 <Button
                   label="Guardar"
                   isBusy={updateOneBusiness.status.isBusy}
-                  disabled={!isValid}
+                  formuxSubmit
                   onClick={() => {
                     /**
                      * remove all images added and remove according initial images

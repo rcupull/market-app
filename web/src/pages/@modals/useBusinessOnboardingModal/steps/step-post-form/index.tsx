@@ -1,3 +1,4 @@
+import { Button } from 'components/button';
 import { StepperButtonContainer } from 'components/stepper/StepperButtonContainer';
 
 import { OnboardingStepProps } from '../../types';
@@ -8,8 +9,8 @@ import { Component } from 'pages/@modals/useBusinessUpdatePostFormModal/Componen
 
 export interface StepPostFormProps extends OnboardingStepProps {}
 
-export const StepPostForm = ({ backButton, nextButton }: StepPostFormProps) => {
-  const { nextAction, portal, rightButton } = useNextButtonPortal(nextButton);
+export const StepPostForm = ({ backButton, nextBtnProps, centerBtnProps }: StepPostFormProps) => {
+  const { nextAction, portal, rightButton } = useNextButtonPortal({ nextBtnProps });
   const { onFetch, business } = useBusiness();
 
   return (
@@ -22,7 +23,11 @@ export const StepPostForm = ({ backButton, nextButton }: StepPostFormProps) => {
         }}
         className="max-h-[70vh] overflow-y-auto"
       />
-      <StepperButtonContainer leftButton={backButton} rightButton={rightButton} />
+      <StepperButtonContainer
+        leftButton={backButton}
+        rightButton={rightButton}
+        centerButton={<Button {...centerBtnProps} />}
+      />
     </div>
   );
 };

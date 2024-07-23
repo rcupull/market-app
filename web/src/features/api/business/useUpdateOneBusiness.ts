@@ -25,7 +25,6 @@ export const useUpdateOneBusiness = (): {
           | 'seo'
           | 'deliveryConfig'
           | 'addresses'
-          | 'doneOnboarding'
         >
       >;
     },

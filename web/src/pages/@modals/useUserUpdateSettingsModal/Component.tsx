@@ -9,6 +9,7 @@ import { Formux } from 'components/formux';
 import { useAddOneBusiness } from 'features/api/business/useAddOneBusiness';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
 import { useUpdateOneUser } from 'features/api/user/useUpdateOneUser';
+import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
 
 import { Portal } from 'hooks/usePortal';
 
@@ -35,16 +36,23 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
   const { addManyImages } = useAddManyImages();
   const termsAndConditions = useTermsAndConditionsModal();
 
+  const initialValue = {
+    profileImages: user?.profileImage ? [user?.profileImage] : [],
+    name: user.name,
+    phone: user?.phone,
+    address: user?.addresses?.[0],
+    canCreateBusiness: user?.canCreateBusiness,
+    canMakeDeliveries: user?.canMakeDeliveries,
+  };
+
+  const closeContext = useCloseContext<State>({
+    initialValue,
+  });
+
   return (
     <Formux<State>
-      value={{
-        profileImages: user?.profileImage ? [user?.profileImage] : [],
-        name: user.name,
-        phone: user?.phone,
-        address: user?.addresses?.[0],
-        canCreateBusiness: user?.canCreateBusiness,
-        canMakeDeliveries: user?.canMakeDeliveries,
-      }}
+      value={initialValue}
+      onChange={closeContext.onChangeValue}
       validate={[
         {
           field: 'name',
@@ -53,11 +61,11 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
         {
           field: 'phone',
           type: 'custom',
-          customCb: getIsValidPhone,
+          customCb: (value) => (value ? getIsValidPhone(value) : true),
         },
       ]}
     >
-      {({ value, isValid, hasChange }) => {
+      {({ value }) => {
         return (
           <form className="w-full">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
@@ -116,12 +124,12 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
             {portal.getPortal(
               <Button
                 label="Guardar"
+                formuxSubmit
                 isBusy={
                   addOneBusiness.status.isBusy ||
                   updateOneUser.status.isBusy ||
                   addManyImages.status.isBusy
                 }
-                disabled={!isValid || !hasChange}
                 onClick={() => {
                   const {
                     profileImages,

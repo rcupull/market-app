@@ -2,7 +2,7 @@ import type { Config } from 'jest';
 
 const config: Config = {
   prettierPath: require.resolve('prettier-2'),
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.tsx'],
   verbose: true,
   maxWorkers: 4,
   moduleNameMapper: {

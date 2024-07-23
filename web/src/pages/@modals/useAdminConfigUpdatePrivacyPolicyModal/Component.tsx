@@ -28,7 +28,7 @@ export const Component = ({ portal }: ComponentProps) => {
           privacyPolicy: data?.privacyPolicy || '',
         }}
       >
-        {({ value, isValid }) => {
+        {({ value }) => {
           return (
             <form className="w-full">
               <FieldCheckEditor
@@ -43,7 +43,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 <Button
                   label="Guardar"
                   isBusy={updateConfigAdmin.status.isBusy}
-                  disabled={!isValid}
+                  formuxSubmit
                   onClick={() => {
                     const { privacyPolicy } = value;
                     updateConfigAdmin.fetch(

@@ -84,7 +84,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
           },
         ]}
       >
-        {({ errors, value, isValid }) => {
+        {({ errors, value }) => {
           return (
             <form>
               <FieldInput
@@ -141,7 +141,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                 <Button
                   label="Guardar"
                   isBusy={addOneBusiness.status.isBusy || getAllBusiness.status.isBusy}
-                  disabled={!isValid}
+                  formuxSubmit
                   onClick={() => {
                     if (business) {
                       const { name } = value;

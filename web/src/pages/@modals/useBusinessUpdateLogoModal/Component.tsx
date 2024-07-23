@@ -1,11 +1,10 @@
-import { useMemo } from 'react';
-
 import { Button } from 'components/button';
 import { FieldInputImages } from 'components/field-input-images';
 import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
+import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
 import { useModal } from 'features/modal/useModal';
 
 import { Portal } from 'hooks/usePortal';
@@ -33,20 +32,19 @@ export const Component = ({ portal }: ComponentProps) => {
   const { updateOneBusiness } = useUpdateOneBusiness();
   const { addManyImages } = useAddManyImages();
 
-  const value = useMemo<State>(
-    () => ({
-      logoField: [logo],
-    }),
-    [logo]
-  );
+  const initialValue: State = {
+    logoField: [logo],
+  };
+
+  const closeContext = useCloseContext<State>({ initialValue });
 
   if (!routeName) {
     return <></>;
   }
 
   return (
-    <Formux<State> value={value}>
-      {({ value: values, isValid }) => {
+    <Formux<State> value={initialValue} onChange={closeContext.onChangeValue}>
+      {({ value }) => {
         return (
           <form>
             <FieldInputImages id="logoField" name="logoField" className="mt-6" />
@@ -54,11 +52,11 @@ export const Component = ({ portal }: ComponentProps) => {
             {portal.getPortal(
               <Button
                 label="Guardar"
+                formuxSubmit
                 isBusy={updateOneBusiness.status.isBusy || addManyImages.status.isBusy}
-                disabled={!isValid || value.logoField === values.logoField}
                 onClick={() => {
                   if (!business) return;
-                  const { logoField } = values;
+                  const { logoField } = value;
 
                   const [logo] = logoField;
 

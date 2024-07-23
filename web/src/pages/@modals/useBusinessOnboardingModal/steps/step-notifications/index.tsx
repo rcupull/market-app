@@ -1,3 +1,4 @@
+import { Button } from 'components/button';
 import { StepperButtonContainer } from 'components/stepper/StepperButtonContainer';
 
 import { OnboardingStepProps } from '../../types';
@@ -8,8 +9,8 @@ import { Component } from 'pages/@modals/useBusinessUpdateNotificationsModal/Com
 
 export interface StepNotificationsProps extends OnboardingStepProps {}
 
-export const StepNotifications = ({ nextButton }: StepNotificationsProps) => {
-  const { nextAction, portal, rightButton } = useNextButtonPortal(nextButton);
+export const StepNotifications = ({ nextBtnProps, centerBtnProps }: StepNotificationsProps) => {
+  const { nextAction, portal, rightButton } = useNextButtonPortal({ nextBtnProps });
   const { onFetch, business } = useBusiness();
 
   return (
@@ -21,7 +22,10 @@ export const StepNotifications = ({ nextButton }: StepNotificationsProps) => {
           nextAction();
         }}
       />
-      <StepperButtonContainer rightButton={rightButton} />
+      <StepperButtonContainer
+        rightButton={rightButton}
+        centerButton={<Button {...centerBtnProps} />}
+      />
     </div>
   );
 };

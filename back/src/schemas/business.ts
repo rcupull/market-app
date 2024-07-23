@@ -144,8 +144,8 @@ const BusinessSchema = new Schema<Business>({
   },
   addresses: [AddressDefinition],
   deliveryConfig: DeliveryConfigDefinition,
-  doneOnboarding: { type: Boolean, default: false },
   favoritesUserIds: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  checks: { type: Schema.Types.Mixed },
 });
 
 BusinessSchema.plugin(mongoosePaginate);
@@ -162,7 +162,7 @@ BusinessSchema.pre('updateOne', async function (next) {
       },
       {
         hiddenBusiness: hidden,
-      }
+      },
     );
   }
 
@@ -172,5 +172,5 @@ BusinessSchema.pre('updateOne', async function (next) {
 export const BusinessModel = model<Business, PaginateModel<Business>>(
   'Business',
   BusinessSchema,
-  'business'
+  'business',
 );

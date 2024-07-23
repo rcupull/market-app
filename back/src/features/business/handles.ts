@@ -16,6 +16,7 @@ import {
 } from '../../utils/server-response';
 import {
   Business,
+  BusinessChecks,
   BusinessDto,
   BusinessSearchDto,
   BusinessSummary,
@@ -308,7 +309,6 @@ const put_business_routeName: () => RequestHandler = () => {
           seo: 'seo',
           addresses: 'addresses',
           deliveryConfig: 'deliveryConfig',
-          doneOnboarding: 'doneOnboarding',
         })(body),
       });
 
@@ -398,7 +398,7 @@ const put_business_routeName_sections_sectionId: () => RequestHandler = () => {
       }
 
       const currentSection = business.layouts?.posts?.sections?.find((section) =>
-        isEqualIds(sectionId, section._id)
+        isEqualIds(sectionId, section._id),
       );
 
       await businessServicesUpdateOne({
@@ -554,6 +554,46 @@ const del_business_routeName_favorite_users: () => RequestHandler = () => {
   };
 };
 
+const put_business_routeName_checks: () => RequestHandler = () => {
+  return async (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { body, params } = req;
+      const { routeName } = params;
+
+      const businessData: Pick<Business, 'checks'> | null = await businessServicesFindOne({
+        query: {
+          routeName,
+        },
+        projection: {
+          checks: 1,
+        },
+      });
+
+      if (!businessData) {
+        return getBusinessNotFoundResponse({ res });
+      }
+
+      const newChecks = makeReshaper<BusinessChecks, BusinessChecks>({
+        doneOnboarding: 'doneOnboarding',
+      })(body);
+
+      await businessServicesUpdateOne({
+        query: {
+          routeName,
+        },
+        update: {
+          checks: {
+            ...(businessData.checks || {}),
+            ...Object.keys(newChecks).reduce((acc, key) => ({ ...acc, [key]: true }), {}),
+          },
+        },
+      });
+
+      res.send({});
+    });
+  };
+};
+
 export const businessHandles = {
   get_business,
   get_business_routeName,
@@ -575,4 +615,6 @@ export const businessHandles = {
   //
   post_business_routeName_favorite_users,
   del_business_routeName_favorite_users,
+
+  put_business_routeName_checks,
 };

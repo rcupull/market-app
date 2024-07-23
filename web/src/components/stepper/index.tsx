@@ -1,16 +1,22 @@
 import { useState } from 'react';
 
-import { Button } from 'components/button';
+import { Button, ButtonProps } from 'components/button';
 import { Tabs, TabsProps } from 'components/tabs';
 
-import SvgAngleLeftSolid from 'icons/AngleLeftSolid';
-import SvgAngleRightSolid from 'icons/AngleRightSolid';
 import { Nullable } from 'types/general';
 import { cn, compact } from 'utils/general';
+
+export interface StepperBtnProps
+  extends Pick<ButtonProps, 'svg' | 'svgPosition' | 'label' | 'className' | 'variant' | 'isBusy'> {
+  onClick?: () => void;
+}
 
 export interface StepProps {
   backButton: React.ReactElement;
   nextButton: React.ReactElement;
+  nextBtnProps: StepperBtnProps;
+  centerBtnProps: StepperBtnProps;
+  backBtnProps: StepperBtnProps;
 }
 export interface StepperProps extends Pick<TabsProps, 'disabledStepNavigation'> {
   items: Array<Nullable<{ label: string; render: (props: StepProps) => React.ReactNode }>>;
@@ -20,32 +26,37 @@ export const Stepper = ({ items, disabledStepNavigation = true }: StepperProps) 
   const [selected, setSelected] = useState(0);
 
   /////////////////////////////////////////////////////////////////////////////////
-  const backButton = (
-    <Button
-      label="Atrás"
-      svg={SvgAngleLeftSolid}
-      variant="link"
-      onClick={() => {
-        if (selected > 0) {
-          setSelected(selected - 1);
-        }
-      }}
-    />
-  );
 
-  const nextButton = (
-    <Button
-      label="Siguiente"
-      svg={SvgAngleRightSolid}
-      svgPosition="right"
-      variant="link"
-      onClick={() => {
-        if (selected < items.length - 1) {
-          setSelected(selected + 1);
-        }
-      }}
-    />
-  );
+  const nextBtnProps: StepProps['nextBtnProps'] = {
+    label: 'Siguiente',
+    className: '!rounded-3xl !py-0.5',
+    onClick: () => {
+      if (selected < items.length - 1) {
+        setSelected(selected + 1);
+      }
+    },
+  };
+
+  const backBtnProps: StepProps['backBtnProps'] = {
+    label: 'Atrás',
+    variant: 'outlined',
+    className: '!rounded-3xl !py-0.5',
+    onClick: () => {
+      if (selected > 0) {
+        setSelected(selected - 1);
+      }
+    },
+  };
+
+  const centerBtnProps: StepProps['centerBtnProps'] = {
+    label: 'Omitir',
+    variant: 'outlined',
+    className: '!rounded-3xl !py-0.5',
+    onClick: nextBtnProps.onClick,
+  };
+
+  const backButton = <Button {...backBtnProps} />;
+  const nextButton = <Button {...nextBtnProps} />;
 
   return (
     <>
@@ -81,6 +92,9 @@ export const Stepper = ({ items, disabledStepNavigation = true }: StepperProps) 
             content: render({
               backButton,
               nextButton,
+              nextBtnProps,
+              backBtnProps,
+              centerBtnProps,
             }),
           };
         })}

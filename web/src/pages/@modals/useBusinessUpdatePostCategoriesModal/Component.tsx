@@ -68,7 +68,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
             },
           ]}
         >
-          {({ value, isValid, resetForm }) => {
+          {({ value, resetForm }) => {
             const handleAdd = () => {
               const { label } = value;
 
@@ -99,7 +99,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                 {portalAdd.getPortal(
                   <Button
                     label="Agregar categoría"
-                    disabled={!isValid}
+                    formuxSubmit
                     stopPropagation
                     onClick={() => handleAdd()}
                     variant="primary"
