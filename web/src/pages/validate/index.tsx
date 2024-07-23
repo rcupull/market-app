@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Button } from 'components/button';
 import { SpinnerEllipsis } from 'components/spinner-ellipsis';
 
 import { useAuthValidate } from 'features/api/auth/useAuthValidate';
+import { useAuth } from 'features/api-slices/useAuth';
 
 import { useRouter } from 'hooks/useRouter';
 
@@ -17,8 +19,11 @@ export const Validate = () => {
   const [status, setStatus] = useState<'pending' | 'success' | 'error'>('pending');
   const [email, setEmail] = useState('');
   const authSignInModal = useAuthSignInModal();
+  const { isAuthenticated } = useAuth();
 
   const { authValidate } = useAuthValidate();
+
+  const navigate = useNavigate();
 
   const { code } = params;
 
@@ -33,6 +38,12 @@ export const Validate = () => {
           },
           onAfterFailed: () => {
             setStatus('error');
+            if(isAuthenticated){
+              navigate('/b')
+            }
+            else{
+              authSignInModal.open()
+            }
           },
         }
       );
