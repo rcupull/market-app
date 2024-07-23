@@ -18,7 +18,7 @@ export interface ButtonMapLocationProps
 }
 
 export const ButtonMapLocation = ({ onChange, value, ...props }: ButtonMapLocationProps) => {
-  const mapModal = useMapModal();
+  const { mapModal } = useMapModal();
 
   return (
     <IconButtonLocation

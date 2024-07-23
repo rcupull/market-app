@@ -34,13 +34,13 @@ import { Post } from 'types/post';
 export const PostId = () => {
   const { params } = useRouter();
   const { postId } = params;
-  const businessNewUpdatePost = useBusinessNewUpdatePostModal();
+  const { businessNewUpdatePostModal } = useBusinessNewUpdatePostModal();
 
   const postIdPersistent = usePostIdPersistent();
   const businessPageData = useBusiness();
   const { isAuthenticated } = useAuth();
-  const authSignInModal = useAuthSignInModal();
-  const postMakeReviewModal = usePostMakeReviewModal();
+  const { authSignInModal } = useAuthSignInModal();
+  const { postMakeReviewModal } = usePostMakeReviewModal();
 
   /**
    * Summary review
@@ -104,7 +104,7 @@ export const PostId = () => {
       <UpdateSomethingContainer
         title="Editar esta publicación"
         onClick={() => {
-          businessNewUpdatePost.open({
+          businessNewUpdatePostModal.open({
             postId: post._id,
             onAfterSuccess: () => postIdPersistent.fetch({ id: post._id }),
           });

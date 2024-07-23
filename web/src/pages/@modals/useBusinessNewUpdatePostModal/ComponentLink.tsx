@@ -36,7 +36,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
   const { business, onFetch, getSections } = useBusiness();
 
   const { updateBusinessSection } = useUpdateBusinessSection();
-  const businessNewUpdateSection = useBusinessNewUpdateSectionModal();
+  const { businessNewUpdateSectionModal } = useBusinessNewUpdateSectionModal();
   const { addOnePost } = useAddOnePost();
   const { updateOnePost } = useUpdateOnePost();
   const { addManyImages } = useAddManyImages();
@@ -131,7 +131,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      businessNewUpdateSection.open({
+                      businessNewUpdateSectionModal.open({
                         postType: 'link',
                         onAfterSuccess: () =>
                           business && onFetch({ routeName: business.routeName }),

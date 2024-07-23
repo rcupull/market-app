@@ -27,7 +27,7 @@ import { cn } from 'utils/general';
 
 export const Products = () => {
   const { getAllPosts } = useGetAllPosts();
-  const businessNewUpdatePost = useBusinessNewUpdatePostModal();
+  const { businessNewUpdatePostModal } = useBusinessNewUpdatePostModal();
   const { business } = useBusiness();
 
   const infiniteScrolling = useInfiniteScrolling({
@@ -64,7 +64,7 @@ export const Products = () => {
       <ButtonNew
         label="Nuevo producto"
         onClick={() => {
-          businessNewUpdatePost.open({
+          businessNewUpdatePostModal.open({
             postType: 'product',
             onAfterSuccess: () => onRefreshForce(),
           });
@@ -74,7 +74,7 @@ export const Products = () => {
       <IconButtonAdd
         title="Nuevo producto"
         onClick={() => {
-          businessNewUpdatePost.open({
+          businessNewUpdatePostModal.open({
             postType: 'product',
             onAfterSuccess: () => onRefreshForce(),
           });

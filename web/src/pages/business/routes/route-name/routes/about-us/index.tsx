@@ -14,7 +14,7 @@ export interface AboutUsProps {
 
 export const AboutUs = ({ routeName }: AboutUsProps) => {
   const { business } = useBusiness();
-  const businessUpdateAboutUs = useBusinessUpdateAboutUsModal();
+  const { businessUpdateAboutUsModal } = useBusinessUpdateAboutUsModal();
 
   if (!business) {
     return <></>;
@@ -31,7 +31,7 @@ export const AboutUs = ({ routeName }: AboutUsProps) => {
   return (
     <UpdateSomethingContainer
       title="Editar la descripción de mi negocio"
-      onClick={() => businessUpdateAboutUs.open()}
+      onClick={() => businessUpdateAboutUsModal.open()}
     >
       <LayoutPage title={title}>
         {description && (

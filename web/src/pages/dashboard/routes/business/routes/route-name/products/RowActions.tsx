@@ -27,7 +27,7 @@ export interface RowActionsProps {
 export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
   const { pushModal } = useModal();
 
-  const businessNewUpdatePost = useBusinessNewUpdatePostModal();
+  const { businessNewUpdatePostModal } = useBusinessNewUpdatePostModal();
   const { pushRoute } = useRouter();
   const { business } = useBusiness();
 
@@ -130,7 +130,7 @@ export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
   };
 
   const handleUpdate = () => {
-    businessNewUpdatePost.open({
+    businessNewUpdatePostModal.open({
       postId: rowData._id,
       onAfterSuccess: () => {
         onRefreshForce();

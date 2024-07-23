@@ -17,7 +17,7 @@ export interface ShoppingProps {
 
 export const Shopping = ({ routeName }: ShoppingProps) => {
   const { isAuthenticated } = useAuth();
-  const authSignInModal = useAuthSignInModal();
+  const { authSignInModal } = useAuthSignInModal();
 
   useEffect(() => {
     if (!isAuthenticated) {

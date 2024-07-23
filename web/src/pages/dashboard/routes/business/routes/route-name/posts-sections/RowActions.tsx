@@ -70,9 +70,9 @@ export const RowActions = ({ rowData, allSections, rowIndex }: RowActionsProps) 
     );
   };
 
-  const businessNewUpdateSection = useBusinessNewUpdateSectionModal();
+  const { businessNewUpdateSectionModal } = useBusinessNewUpdateSectionModal();
   const handleUpdate = () => {
-    businessNewUpdateSection.open({
+    businessNewUpdateSectionModal.open({
       sectionId: rowData._id,
       onAfterSuccess: () => business && onFetch({ routeName: business.routeName }),
     });

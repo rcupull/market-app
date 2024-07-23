@@ -13,35 +13,37 @@ export const usePostMakeReviewModal = () => {
   const { pushModal } = useModal();
 
   return {
-    open: (args: { postId: string; onAfterSuccess: () => void }) => {
-      pushModal(
-        'Emergent',
-        {
-          useProps: () => {
-            const { onAfterSuccess, postId } = args || {};
-            const portal = usePortal();
-            const { onClose } = useModal();
+    postMakeReviewModal: {
+      open: (args: { postId: string; onAfterSuccess: () => void }) => {
+        pushModal(
+          'Emergent',
+          {
+            useProps: () => {
+              const { onAfterSuccess, postId } = args || {};
+              const portal = usePortal();
+              const { onClose } = useModal();
 
-            return {
-              title: 'Reseña',
-              content: (
-                <Component
-                  portal={portal}
-                  onAfterSuccess={() => {
-                    onAfterSuccess?.();
-                    onClose();
-                  }}
-                  postId={postId}
-                />
-              ),
-              secondaryBtn: <ButtonClose />,
-              primaryBtn: <div ref={portal.ref} />,
-              className: '!w-[30rem]',
-            };
+              return {
+                title: 'Reseña',
+                content: (
+                  <Component
+                    portal={portal}
+                    onAfterSuccess={() => {
+                      onAfterSuccess?.();
+                      onClose();
+                    }}
+                    postId={postId}
+                  />
+                ),
+                secondaryBtn: <ButtonClose />,
+                primaryBtn: <div ref={portal.ref} />,
+                className: '!w-[30rem]',
+              };
+            },
           },
-        },
-        { emergent: true }
-      );
+          { emergent: true }
+        );
+      },
     },
   };
 };

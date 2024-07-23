@@ -8,8 +8,8 @@ import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { useAuthSignUpModal } from 'pages/@modals/useAuthSignUpModal';
 
 export const HeroSectionCentered = () => {
-  const authSignUpModal = useAuthSignUpModal();
-  const authSignInModal = useAuthSignInModal();
+  const { authSignUpModal } = useAuthSignUpModal();
+  const { authSignInModal } = useAuthSignInModal();
   const { isAuthenticated } = useAuth();
 
   return (

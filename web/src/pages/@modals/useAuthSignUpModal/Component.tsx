@@ -23,9 +23,9 @@ export interface ComponentProps {
 
 export const Component = ({ portal }: ComponentProps) => {
   const { authSignUp } = useAuthSignUp();
-  const authSignInModal = useAuthSignInModal();
+  const { authSignInModal } = useAuthSignInModal();
   const { onClose, pushModal } = useModal();
-  const termsAndConditionsModal = useTermsAndConditionsModal();
+  const { termsAndConditionsModal } = useTermsAndConditionsModal();
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-2 lg:px-8">
