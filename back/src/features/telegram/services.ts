@@ -122,7 +122,7 @@ export const telegramServicesSendNewOrderMessage: QueryHandle<{
   telegramServicesSendMessage({
     chatId,
     message: `Una nueva orden de compra ha sido generada en su negocio "${name}" de nuestra plataforma Asere Market. Puede ver los detalles <a href='${getBusinessOrdersTagUrl(
-      { routeName: business.name }
+      { routeName: business.routeName }
     )}'>aquí</a>.`,
     options: {
       parse_mode: 'HTML',
