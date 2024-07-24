@@ -13,7 +13,7 @@ import { ComponentProduct } from 'pages/@modals/useBusinessNewUpdatePostModal/Co
 
 export interface StepPostProps extends OnboardingStepProps {}
 
-export const StepPost = ({ backButton, nextBtnProps, centerBtnProps }: StepPostProps) => {
+export const StepPost = ({ backBtnProps, nextBtnProps, centerBtnProps }: StepPostProps) => {
   const { nextAction, portal, rightButton } = useNextButtonPortal({ nextBtnProps });
   const { business } = useBusiness();
 
@@ -39,7 +39,7 @@ export const StepPost = ({ backButton, nextBtnProps, centerBtnProps }: StepPostP
         className="max-h-[70vh] overflow-y-auto"
       />
       <StepperButtonContainer
-        leftButton={backButton}
+        leftButton={<Button {...backBtnProps} />}
         rightButton={rightButton}
         centerButton={<Button {...centerBtnProps} />}
       />

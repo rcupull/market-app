@@ -21,14 +21,14 @@ import { getShoppingRoute } from 'utils/business';
 export interface ShoppingCartMenuProps extends StyleProps {}
 
 export const ShoppingCartMenu = ({ className }: ShoppingCartMenuProps) => {
-  const buyProductsModal = useBuyProductsModal();
+  const { buyProductsModal } = useBuyProductsModal();
   const { business } = useBusiness();
   const cart = useCart();
   const { pushRoute, isShoppingPage } = useRouter();
 
   const { isAuthenticated } = useAuth();
 
-  const authSignInModal = useAuthSignInModal();
+  const { authSignInModal } = useAuthSignInModal();
 
   if (!business) {
     return <></>;

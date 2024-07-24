@@ -9,7 +9,7 @@ import { Component } from 'pages/@modals/useBusinessUpdateBannerModal/Component'
 
 export interface StepBannerProps extends OnboardingStepProps {}
 
-export const StepBanner = ({ backButton, nextBtnProps, centerBtnProps }: StepBannerProps) => {
+export const StepBanner = ({ backBtnProps, nextBtnProps, centerBtnProps }: StepBannerProps) => {
   const { nextAction, portal, rightButton } = useNextButtonPortal({ nextBtnProps });
   const { business, onFetch } = useBusiness();
 
@@ -23,7 +23,7 @@ export const StepBanner = ({ backButton, nextBtnProps, centerBtnProps }: StepBan
         }}
       />
       <StepperButtonContainer
-        leftButton={backButton}
+        leftButton={<Button {...backBtnProps} />}
         rightButton={rightButton}
         centerButton={<Button {...centerBtnProps} />}
       />

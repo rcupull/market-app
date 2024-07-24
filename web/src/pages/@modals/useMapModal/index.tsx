@@ -12,28 +12,30 @@ export const useMapModal = () => {
   const { pushModal } = useModal();
 
   return {
-    open: (args: {
-      useMapModalArgs: () => { modalTitle?: string; primaryBtn: React.ReactElement } & MapOlProps;
-    }) => {
-      pushModal(
-        'Emergent',
-        {
-          useProps: () => {
-            const { useMapModalArgs } = args;
+    mapModal: {
+      open: (args: {
+        useMapModalArgs: () => { modalTitle?: string; primaryBtn: React.ReactElement } & MapOlProps;
+      }) => {
+        pushModal(
+          'Emergent',
+          {
+            useProps: () => {
+              const { useMapModalArgs } = args;
 
-            const { modalTitle = 'Mapa', primaryBtn, ...mapProps } = useMapModalArgs();
+              const { modalTitle = 'Mapa', primaryBtn, ...mapProps } = useMapModalArgs();
 
-            return {
-              title: modalTitle,
-              content: <Component {...mapProps} />,
-              secondaryBtn: <ButtonClose />,
-              primaryBtn,
-              className: '!w-[95vw]',
-            };
+              return {
+                title: modalTitle,
+                content: <Component {...mapProps} />,
+                secondaryBtn: <ButtonClose />,
+                primaryBtn,
+                className: '!w-[95vw]',
+              };
+            },
           },
-        },
-        { emergent: true }
-      );
+          { emergent: true }
+        );
+      },
     },
   };
 };

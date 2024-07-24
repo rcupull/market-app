@@ -16,7 +16,7 @@ export const AutenticatedRole = ({
   const { authData } = useAuth();
   const { pathname } = useRouter();
 
-  const authSignInModal = useAuthSignInModal();
+  const { authSignInModal } = useAuthSignInModal();
 
   const role = authData?.user?.role;
 

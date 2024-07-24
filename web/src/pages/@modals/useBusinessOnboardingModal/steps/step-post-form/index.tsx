@@ -9,7 +9,7 @@ import { Component } from 'pages/@modals/useBusinessUpdatePostFormModal/Componen
 
 export interface StepPostFormProps extends OnboardingStepProps {}
 
-export const StepPostForm = ({ backButton, nextBtnProps, centerBtnProps }: StepPostFormProps) => {
+export const StepPostForm = ({ backBtnProps, nextBtnProps, centerBtnProps }: StepPostFormProps) => {
   const { nextAction, portal, rightButton } = useNextButtonPortal({ nextBtnProps });
   const { onFetch, business } = useBusiness();
 
@@ -24,7 +24,7 @@ export const StepPostForm = ({ backButton, nextBtnProps, centerBtnProps }: StepP
         className="max-h-[70vh] overflow-y-auto"
       />
       <StepperButtonContainer
-        leftButton={backButton}
+        leftButton={<Button {...backBtnProps} />}
         rightButton={rightButton}
         centerButton={<Button {...centerBtnProps} />}
       />

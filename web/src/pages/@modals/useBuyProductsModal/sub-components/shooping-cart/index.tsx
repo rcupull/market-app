@@ -1,4 +1,6 @@
-import { cloneElement, useState } from 'react';
+import { useState } from 'react';
+
+import { Button } from 'components/button';
 
 import { StepCommonProps } from '../../types';
 import { ButtonNavContainer } from '../button-nav-container';
@@ -10,14 +12,13 @@ import { useCart } from 'pages/@hooks/useCart';
 
 export interface ShoppingCartProps extends StepCommonProps {}
 
-export const ShoppingCart = ({ nextButton: nextButtonProp }: ShoppingCartProps) => {
+export const ShoppingCart = ({ nextBtnProps }: ShoppingCartProps) => {
   const cart = useCart();
   const [approved, setApproved] = useState(false);
 
   if (!cart.constructionShopping) {
     return <div className="font-semibold">No tiene productos en la bolsa</div>;
   }
-  const nextButton = cloneElement(nextButtonProp, { disabled: !approved });
 
   return (
     <>
@@ -31,7 +32,7 @@ export const ShoppingCart = ({ nextButton: nextButtonProp }: ShoppingCartProps) 
         <ShoppingTermsAndConditions className="mt-4" approved={approved} onApprobed={setApproved} />
       </div>
 
-      <ButtonNavContainer rightButton={nextButton} />
+      <ButtonNavContainer rightButton={<Button {...nextBtnProps} disabled={!approved} />} />
     </>
   );
 };

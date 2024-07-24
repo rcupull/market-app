@@ -32,7 +32,7 @@ export const CardPost = ({
   onRefresh,
   currency,
 }: CardPostProps) => {
-  const businessNewUpdatePost = useBusinessNewUpdatePostModal();
+  const { businessNewUpdatePostModal } = useBusinessNewUpdatePostModal();
   const { metaLayout, size } = layout || {};
 
   const renderMeta = () => {
@@ -104,7 +104,7 @@ export const CardPost = ({
       title="Editar esta publicación"
       className="w-full height-webkit-fill-available"
       onClick={() =>
-        businessNewUpdatePost.open({
+        businessNewUpdatePostModal.open({
           postId: post._id,
           onAfterSuccess: () => {
             onRefresh();

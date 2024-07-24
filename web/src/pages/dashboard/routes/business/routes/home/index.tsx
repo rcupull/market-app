@@ -9,7 +9,7 @@ import { getDashboardBusinessRoute } from 'utils/business';
 
 export const Home = () => {
   const { allUserBusiness } = useAllUserBusiness();
-  const businessUpdateNewModal = useBusinessUpdateNewModal();
+  const { businessUpdateNewModal } = useBusinessUpdateNewModal();
 
   const firstBusiness = allUserBusiness.data?.[0];
 

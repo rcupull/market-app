@@ -1299,6 +1299,26 @@
         }
       }
     },
+    "/business/{routeName}/checks": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "routeName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/agenda/token": {
       "get": {
         "description": "",

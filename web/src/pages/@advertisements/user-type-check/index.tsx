@@ -11,7 +11,7 @@ import { useUserUpdateSettingsModal } from 'pages/@modals/useUserUpdateSettingsM
 export const AdvertisementsUserTypeCheck = () => {
   const { user, onRefreshAuthUser, isAuthenticated } = useAuth();
   const { updateChecksUser } = useUpdateChecksUser();
-  const userUpdateSettings = useUserUpdateSettingsModal();
+  const { userUpdateSettingsModal } = useUserUpdateSettingsModal();
 
   if (!isAuthenticated || user?.checks?.requestUserTypeWhenStart) {
     return <></>;
@@ -48,7 +48,7 @@ export const AdvertisementsUserTypeCheck = () => {
             variant="link"
             onClick={() => {
               if (!user) return;
-              userUpdateSettings.open({ user, onAfterSuccess: onRefreshAuthUser });
+              userUpdateSettingsModal.open({ user, onAfterSuccess: onRefreshAuthUser });
 
               handleUpdateFlag();
             }}

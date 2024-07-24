@@ -32,19 +32,21 @@ export const Component = ({ portal }: ComponentProps) => {
   const { updateOneBusiness } = useUpdateOneBusiness();
   const { addManyImages } = useAddManyImages();
 
-  const initialValue: State = {
-    logoField: [logo],
-  };
-
-  const closeContext = useCloseContext<State>({ initialValue });
+  const { onChangeUnsavedChanges } = useCloseContext();
 
   if (!routeName) {
     return <></>;
   }
 
   return (
-    <Formux<State> value={initialValue} onChange={closeContext.onChangeValue}>
-      {({ value }) => {
+    <Formux<State>
+      value={{
+        logoField: [logo],
+      }}
+    >
+      {({ value, hasChange }) => {
+        onChangeUnsavedChanges(hasChange);
+
         return (
           <form>
             <FieldInputImages id="logoField" name="logoField" className="mt-6" />

@@ -15,6 +15,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh', 'simple-import-sort', 'import'],
   rules: {
+    'import/named': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/display-name': 'off',
     'react/no-unescaped-entities': 'off',

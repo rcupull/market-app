@@ -79,7 +79,7 @@ export const PostsSection = ({ routeName, layout, className }: PostsSectionProps
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  const businessNewUpdateSection = useBusinessNewUpdateSectionModal();
+  const { businessNewUpdateSectionModal } = useBusinessNewUpdateSectionModal();
 
   if (notRenderAtAll || !business) {
     return <></>;
@@ -89,7 +89,7 @@ export const PostsSection = ({ routeName, layout, className }: PostsSectionProps
     <UpdateSomethingContainer
       title="Editar esta sección"
       onClick={() => {
-        businessNewUpdateSection.open({
+        businessNewUpdateSectionModal.open({
           sectionId: _id,
           onAfterSuccess: () => {
             business && onFetch({ routeName: business.routeName });
