@@ -32,13 +32,7 @@ export const Component = ({ portal }: ComponentProps) => {
 
   const { deleteImages } = useDeleteImages();
 
-  const initialValue: State = {
-    visible: business?.aboutUsPage?.visible || false,
-    title: business?.aboutUsPage?.title || '',
-    description: business?.aboutUsPage?.description || '',
-  };
-
-  const closeContext = useCloseContext<State>({ initialValue });
+  const { onChangeUnsavedChanges } = useCloseContext();
 
   if (!business) {
     return <></>;
@@ -55,8 +49,16 @@ export const Component = ({ portal }: ComponentProps) => {
 
   return (
     <>
-      <Formux<State> value={initialValue} onChange={closeContext.onChangeValue}>
-        {({ value }) => {
+      <Formux<State>
+        value={{
+          visible: business?.aboutUsPage?.visible || false,
+          title: business?.aboutUsPage?.title || '',
+          description: business?.aboutUsPage?.description || '',
+        }}
+      >
+        {({ value, hasChange }) => {
+          onChangeUnsavedChanges(hasChange);
+
           return (
             <form className="w-full">
               <FieldToggleButton
