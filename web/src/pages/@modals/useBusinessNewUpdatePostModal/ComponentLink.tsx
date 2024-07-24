@@ -85,18 +85,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
     tags: post?.postCategoriesTags || [],
   });
 
-  const initialValue: LinkFormState & { sectionIds: Array<string> } = {
-    name: '',
-    images: [],
-    postCategoriesTags: [linkTag],
-    postLink: { type: 'business', value: '' },
-    sectionIds: sections.map((section) => section._id),
-    ...(post || {}),
-  };
-
-  const closeContext = useCloseContext<ProductFormState>({
-    initialValue,
-  });
+  const { onChangeUnsavedChanges } = useCloseContext();
 
   if (!business) {
     return <></>;
@@ -110,11 +99,11 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
         name: '',
         images: [],
         postCategoriesTags: [linkTag],
-        postLink: undefined,
+        postLink: {type: 'business', value: ''},
         sectionIds: sections.map((section) => section._id),
         ...(post || {}),
       }}
-      validate={[
+      validate={({state}) => [
         {
           field: 'name',
           type: 'required',
@@ -130,7 +119,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
         {
           field: 'postLink.value',
           type: 'required',     
-          message: 'Debe escribir un enlace',     
+          message: state.postLink?.type === 'business'? 'Debe escoger un negocio' : 'Debe escribir un enlace',     
         },
       ]}
     >
