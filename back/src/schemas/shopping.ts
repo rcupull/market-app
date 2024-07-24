@@ -7,15 +7,7 @@ import { DeliveryConfigType } from '../types/business';
 
 const shoppingState = {
   type: String,
-  enum: [
-    ShoppingState.CONSTRUCTION,
-    ShoppingState.REQUESTED,
-    ShoppingState.APPROVED,
-    ShoppingState.PROCESSING,
-    ShoppingState.DELIVERED,
-    ShoppingState.CANCELED,
-    ShoppingState.REJECTED,
-  ],
+  enum: Object.values(ShoppingState),
   required: true,
 };
 
@@ -90,5 +82,5 @@ ShoppingSchema.plugin(mongoosePaginate);
 export const ShoppingModel = model<Shopping, PaginateModel<Shopping>>(
   'Shopping',
   ShoppingSchema,
-  'shopping'
+  'shopping',
 );

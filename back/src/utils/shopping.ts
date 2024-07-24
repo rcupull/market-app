@@ -7,6 +7,7 @@ export const getShoppingStateLabel = (state: ShoppingState): string => {
     CANCELED: 'Cancelado',
     REJECTED: 'Rechazado',
     PROCESSING: 'En proceso',
+    READY_TO_DELIVERY: 'Listo para entregar',
     DELIVERED: 'Entregado',
     APPROVED: 'Aceptado',
   };
