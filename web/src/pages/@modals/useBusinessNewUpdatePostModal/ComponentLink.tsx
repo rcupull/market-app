@@ -99,11 +99,11 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
         name: '',
         images: [],
         postCategoriesTags: [linkTag],
-        postLink: {type: 'business', value: ''},
+        postLink: { type: 'business', value: '' },
         sectionIds: sections.map((section) => section._id),
         ...(post || {}),
       }}
-      validate={({state}) => [
+      validate={({ state }) => [
         {
           field: 'name',
           type: 'required',
@@ -118,8 +118,11 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
         },
         {
           field: 'postLink.value',
-          type: 'required',     
-          message: state.postLink?.type === 'business'? 'Debe escoger un negocio' : 'Debe escribir un enlace',     
+          type: 'required',
+          message:
+            state.postLink?.type === 'business'
+              ? 'Debe escoger un negocio'
+              : 'Debe escribir un enlace',
         },
       ]}
     >
