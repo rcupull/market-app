@@ -100,7 +100,8 @@ export const ShoppingStateView = ({
                   content: (
                     <span>
                       Seguro que desea actualizar el estado de esta orden de compra hacia{' '}
-                      <span className='font-bold'>{getShoppingStateLabel(newFormState.state)}</span>?
+                      <span className="font-bold">{getShoppingStateLabel(newFormState.state)}</span>
+                      ?
                     </span>
                   ),
                   badge: <Badge variant="warning" />,
@@ -119,7 +120,7 @@ export const ShoppingStateView = ({
                               onClose();
                               onAfterSuccess?.();
                             },
-                          },
+                          }
                         );
                       }}
                     />
@@ -136,7 +137,7 @@ export const ShoppingStateView = ({
                 };
               },
             },
-            { emergent: true },
+            { emergent: true }
           );
         }
       }}

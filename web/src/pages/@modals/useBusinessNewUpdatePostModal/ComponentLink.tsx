@@ -99,14 +99,30 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
         name: '',
         images: [],
         postCategoriesTags: [linkTag],
-        postLink: undefined,
+        postLink: { type: 'business', value: '' },
         sectionIds: sections.map((section) => section._id),
         ...(post || {}),
       }}
-      validate={[
+      validate={({ state }) => [
         {
           field: 'name',
           type: 'required',
+        },
+        {
+          field: 'sectionIds',
+          type: 'required',
+        },
+        {
+          field: 'postLink.type',
+          type: 'required',
+        },
+        {
+          field: 'postLink.value',
+          type: 'required',
+          message:
+            state.postLink?.type === 'business'
+              ? 'Debe escoger un negocio'
+              : 'Debe escribir un enlace',
         },
       ]}
     >
@@ -121,7 +137,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
             <FieldRadioGroup<{ label: string; value: string }>
               label={
                 <div className="flex items-center">
-                  Incluir en las secciones
+                  {getRequiredLabel('Incluir en las secciones')}
                   <IconButtonAdd
                     title="Agregar nueva sección de enlaces"
                     className="text-green-600 font-bold ml-2"

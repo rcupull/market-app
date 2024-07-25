@@ -23,7 +23,7 @@ export const Validate = () => {
 
   const { authValidate } = useAuthValidate();
 
-  const { pushRoute } = useRouter()
+  const { pushRoute } = useRouter();
 
   const { code } = params;
 
@@ -38,11 +38,10 @@ export const Validate = () => {
           },
           onAfterFailed: () => {
             setStatus('error');
-            if(isAuthenticated){
-              pushRoute(getBusinessRoute())
-            }
-            else{
-              authSignInModal.open()
+            if (isAuthenticated) {
+              pushRoute(getBusinessRoute());
+            } else {
+              authSignInModal.open();
             }
           },
         }

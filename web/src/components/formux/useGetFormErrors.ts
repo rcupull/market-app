@@ -57,11 +57,35 @@ export const useGetFormErrors = <V extends AnyRecord, F extends Path<V> = Path<V
     const getValidationPromise = async (validation: Validation<V, F>): Promise<void> => {
       const { field, type, message, equalField, customCb } = validation;
 
+      const getErrorMessage = () => {
+        if (message) return message;
+
+        switch (type) {
+          case 'required':
+            return 'Campo requerido.';
+          case 'email':
+            return 'Email inválido.';
+          case 'equal':
+            if (!equalField) return '<unknown error>';
+            return `El campo debe ser ${equalField.toString()}.`;
+          case 'custom':
+            return `Campo inválido.`;
+          default: {
+            return '<unknown error>';
+          }
+        }
+      };
+
+      const errorMessage = getErrorMessage();
+
       if (errors[field]) return; //return if has error
 
       const fieldValue = get(value, field);
 
-      if (type !== 'equal' && refValues.current && get(refValues.current, field) === fieldValue) {
+      const hasFieldChanges = refValues.current && get(refValues.current, field) === fieldValue;
+      const hasSameErrorMessage = refErrors.current && refErrors.current[field] === errorMessage;
+
+      if (type !== 'equal' && hasFieldChanges && hasSameErrorMessage) {
         /**
          * // return de same error if has not change the value
          * if type = 'equal' the validation depends of two values. It is necessary ignore this rule
@@ -71,11 +95,11 @@ export const useGetFormErrors = <V extends AnyRecord, F extends Path<V> = Path<V
       }
 
       if (type === 'required' && !validationsCallback.required(fieldValue)) {
-        errors[field] = message || `Campo requerido.`;
+        errors[field] = errorMessage;
       }
 
       if (type === 'email' && !validationsCallback.email(fieldValue)) {
-        errors[field] = message || `Email inválido.`;
+        errors[field] = errorMessage;
       }
 
       if (type === 'custom') {
@@ -84,7 +108,7 @@ export const useGetFormErrors = <V extends AnyRecord, F extends Path<V> = Path<V
         }
 
         if (!(await customCb(fieldValue))) {
-          errors[field] = message || `Campo inválido`;
+          errors[field] = errorMessage;
         }
       }
 
@@ -94,7 +118,7 @@ export const useGetFormErrors = <V extends AnyRecord, F extends Path<V> = Path<V
         }
 
         if (!validationsCallback.equal(fieldValue, get(value, equalField))) {
-          errors[field] = message || `El campo debe ser ${equalField.toString()}.`;
+          errors[field] = errorMessage;
         }
       }
     };
