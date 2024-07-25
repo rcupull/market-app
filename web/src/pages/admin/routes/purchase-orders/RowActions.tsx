@@ -9,7 +9,7 @@ export interface RowActionsProps {
   onRefresh: () => void;
 }
 export const RowActions = ({ rowData }: RowActionsProps) => {
-  const shoppingDetailsModal = useShoppingDetailsModal();
+  const { shoppingDetailsModal } = useShoppingDetailsModal();
 
   return (
     <RowActionsContainer>

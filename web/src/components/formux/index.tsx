@@ -5,10 +5,10 @@ import { FormContextState, FormErrorMode, FormErrors, FormTouched, FormuxProps }
 import { useGetFormErrors } from './useGetFormErrors';
 
 import { AnyRecord } from 'types/general';
-import { deepJsonCopy, getFlattenJson, isEmpty, isEqual } from 'utils/general';
+import { deepJsonCopy, getFlattenJson, isEmpty, isEqual, isFunction } from 'utils/general';
 
 export const Formux = <Value extends AnyRecord = AnyRecord>({
-  validate,
+  validate: validateProp,
   children,
   onChange,
   value,
@@ -34,6 +34,8 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
 
     onChange?.(formState);
   }, [JSON.stringify(formState)]);
+
+  const validate = isFunction(validateProp) ? validateProp({ state: formState }) : validateProp;
 
   useEffect(() => {
     if (validate) {

@@ -29,18 +29,18 @@ import { useBusinessUpdateSocialNetworksModal } from 'pages/@modals/useBusinessU
 import { getDeliveryUtils } from 'utils/business';
 
 export const Settings = () => {
-  const businessUpdateSocialNetworks = useBusinessUpdateSocialNetworksModal();
-  const businessOnboardingModal = useBusinessOnboardingModal();
-  const businessUpdateBanner = useBusinessUpdateBannerModal();
-  const businessUpdateAboutUs = useBusinessUpdateAboutUsModal();
-  const businessUpdateLogo = useBusinessUpdateLogoModal();
-  const businessUpdateSeo = useBusinessUpdateSeoModal();
-  const businessUpdatePostCategories = useBusinessUpdatePostCategoriesModal();
-  const businessUpdatePostForm = useBusinessUpdatePostFormModal();
-  const businessUpdateNotifications = useBusinessUpdateNotificationsModal();
-  const businessShoppingTermsAndConditionsModal = useBusinessShoppingTermsAndConditionsModal();
-  const businessDeliveryModal = useBusinessDeliveryModal();
-  const businessDeliveryManModal = useBusinessDeliveryManModal();
+  const { businessUpdateSocialNetworksModal } = useBusinessUpdateSocialNetworksModal();
+  const { businessOnboardingModal } = useBusinessOnboardingModal();
+  const { businessUpdateBannerModal } = useBusinessUpdateBannerModal();
+  const { businessUpdateAboutUsModal } = useBusinessUpdateAboutUsModal();
+  const { businessUpdateLogoModal } = useBusinessUpdateLogoModal();
+  const { businessUpdateSeoModal } = useBusinessUpdateSeoModal();
+  const { businessUpdatePostCategoriesModal } = useBusinessUpdatePostCategoriesModal();
+  const { businessUpdatePostFormModal } = useBusinessUpdatePostFormModal();
+  const { businessUpdateNotificationsModal } = useBusinessUpdateNotificationsModal();
+  const { businessShoppingTermsAndConditionsModal } = useBusinessShoppingTermsAndConditionsModal();
+  const { businessDeliveryModal } = useBusinessDeliveryModal();
+  const { businessDeliveryManModal } = useBusinessDeliveryManModal();
 
   const { onFetch, business } = useBusiness();
   const { getIsEnabled } = getDeliveryUtils();
@@ -70,7 +70,7 @@ export const Settings = () => {
         description="Reciba las notificaciones de su negocio por Telegram en tiempo real."
         svg={SvgBell}
         onClick={() =>
-          businessUpdateNotifications.open({
+          businessUpdateNotificationsModal.open({
             onAfterSuccess: () => {
               business && onFetch({ routeName: business?.routeName });
             },
@@ -83,7 +83,7 @@ export const Settings = () => {
         svg={SvgShareAltSolid}
         description="No dejes de lado tus redes sociales y compártelas con tus clientes."
         onClick={() =>
-          businessUpdateSocialNetworks.open({
+          businessUpdateSocialNetworksModal.open({
             onAfterSuccess: () => {
               business && onFetch({ routeName: business?.routeName });
             },
@@ -96,7 +96,7 @@ export const Settings = () => {
         svg={SvgWpforms}
         description="Personalice su formulario de  publicaciones."
         onClick={() =>
-          businessUpdatePostForm.open({
+          businessUpdatePostFormModal.open({
             onAfterSuccess: () => {
               business && onFetch({ routeName: business?.routeName });
             },
@@ -109,7 +109,7 @@ export const Settings = () => {
         svg={SvgBootstrap}
         description="Personaliza tu mejores ofertas con tu banner promocional."
         onClick={() =>
-          businessUpdateBanner.open({
+          businessUpdateBannerModal.open({
             onAfterSuccess: () => {
               business && onFetch({ routeName: business?.routeName });
             },
@@ -121,7 +121,7 @@ export const Settings = () => {
         title="Logo"
         description="Representa tu negocio con tu logo personalizado."
         svg={SvgMedrt}
-        onClick={() => businessUpdateLogo.open()}
+        onClick={() => businessUpdateLogoModal.open()}
       />
 
       <SettingBox
@@ -129,7 +129,7 @@ export const Settings = () => {
         svg={SvgTagsSolid}
         description="Categoriza tus productos y mejorarás tus ventas."
         onClick={() =>
-          businessUpdatePostCategories.open({
+          businessUpdatePostCategoriesModal.open({
             onAfterSuccess: () => business && onFetch({ routeName: business?.routeName }),
           })
         }
@@ -139,14 +139,14 @@ export const Settings = () => {
         title="Presentación del negocio"
         description="Aprobecha este espacio para comunicarle a tus clientes los matices de tu negocio."
         svg={SvgUsersSolid}
-        onClick={() => businessUpdateAboutUs.open()}
+        onClick={() => businessUpdateAboutUsModal.open()}
       />
 
       <SettingBox
         title="SEO"
         description="Optimiza los motores de busqueda y mejora la localización de tu negocio en internet."
         svg={SvgNetworkWiredSolid}
-        onClick={() => businessUpdateSeo.open()}
+        onClick={() => businessUpdateSeoModal.open()}
       />
 
       <SettingBox

@@ -25,7 +25,7 @@ import { viewUtils } from 'utils/view';
 
 export const Links = () => {
   const { getAllPosts } = useGetAllPosts();
-  const businessNewUpdatePost = useBusinessNewUpdatePostModal();
+  const { businessNewUpdatePostModal } = useBusinessNewUpdatePostModal();
   const { business } = useBusiness();
 
   const infiniteScrolling = useInfiniteScrolling({
@@ -58,7 +58,7 @@ export const Links = () => {
       <ButtonNew
         label="Nuevo enlace"
         onClick={() => {
-          businessNewUpdatePost.open({
+          businessNewUpdatePostModal.open({
             postType: 'link',
             onAfterSuccess: () => onRefreshForce(),
           });
@@ -68,7 +68,7 @@ export const Links = () => {
       <IconButtonAdd
         title="Nuevo enlace"
         onClick={() => {
-          businessNewUpdatePost.open({
+          businessNewUpdatePostModal.open({
             postType: 'link',
             onAfterSuccess: () => onRefreshForce(),
           });

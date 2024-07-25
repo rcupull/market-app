@@ -18,8 +18,8 @@ export const Validate = () => {
 
   const [status, setStatus] = useState<'pending' | 'success' | 'error'>('pending');
   const [email, setEmail] = useState('');
-  const authSignInModal = useAuthSignInModal();
   const { isAuthenticated } = useAuth();
+  const { authSignInModal } = useAuthSignInModal();
 
   const { authValidate } = useAuthValidate();
 

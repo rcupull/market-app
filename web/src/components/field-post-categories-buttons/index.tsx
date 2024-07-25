@@ -25,7 +25,7 @@ export const FieldPostCategoriesButtons = (props: FieldPostCategoriesButtonsProp
 
   const { business, onFetch } = useBusiness();
 
-  const businessUpdatePostCategories = useBusinessUpdatePostCategoriesModal();
+  const { businessUpdatePostCategoriesModal } = useBusinessUpdatePostCategoriesModal();
 
   useEffect(() => {
     setState(value);
@@ -44,7 +44,7 @@ export const FieldPostCategoriesButtons = (props: FieldPostCategoriesButtonsProp
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        businessUpdatePostCategories.open({
+        businessUpdatePostCategoriesModal.open({
           onAfterSuccess: () => business && onFetch({ routeName: business.routeName }),
         });
       }}

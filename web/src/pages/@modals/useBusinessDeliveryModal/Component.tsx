@@ -33,14 +33,7 @@ export const Component = ({ portal }: ComponentProps) => {
 
   const { updateOneBusiness } = useUpdateOneBusiness();
 
-  const initialValue = business
-    ? {
-        deliveryConfig: business.deliveryConfig,
-        address: business.addresses?.[0],
-      }
-    : {};
-
-  const closeContext = useCloseContext<State>({ initialValue });
+  const { onChangeUnsavedChanges } = useCloseContext();
 
   if (!business) {
     return <></>;
@@ -49,8 +42,15 @@ export const Component = ({ portal }: ComponentProps) => {
   const { routeName } = business;
 
   return (
-    <Formux<State> value={initialValue} onChange={closeContext.onChangeValue}>
-      {({ value }) => {
+    <Formux<State>
+      value={{
+        deliveryConfig: business.deliveryConfig,
+        address: business.addresses?.[0],
+      }}
+    >
+      {({ value, hasChange }) => {
+        onChangeUnsavedChanges(hasChange);
+
         const isEnabledDelivery = getDeliveryUtils().getIsEnabled({
           deliveryConfig: value.deliveryConfig,
         });

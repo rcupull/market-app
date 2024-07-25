@@ -10,7 +10,7 @@ describe('useAdminConfigUpdatePriceModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.open());
+    act(() => result.current.adminConfigUpdatePriceModal.open());
 
     await waitFor(() => expect(screen.getByTestId('Modal')));
 
@@ -24,7 +24,7 @@ describe('useAdminConfigUpdatePriceModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.open());
+    act(() => result.current.adminConfigUpdatePriceModal.open());
 
     await waitFor(() =>
       expect(screen.getByTestId('Modal')).toMatchInlineSnapshot(`

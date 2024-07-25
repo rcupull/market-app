@@ -12,22 +12,24 @@ export const useShoppingDetailsModal = () => {
   const { pushModal } = useModal();
 
   return {
-    open: (args: { shopping: Shopping }) => {
-      pushModal(
-        'Emergent',
-        {
-          useProps: () => {
-            const { shopping } = args;
+    shoppingDetailsModal: {
+      open: (args: { shopping: Shopping }) => {
+        pushModal(
+          'Emergent',
+          {
+            useProps: () => {
+              const { shopping } = args;
 
-            return {
-              title: 'Detalles de la orden de compra',
-              content: <Component shopping={shopping} />,
-              customBtn: <ButtonClose className="ml-auto" />,
-            };
+              return {
+                title: 'Detalles de la orden de compra',
+                content: <Component shopping={shopping} />,
+                customBtn: <ButtonClose className="ml-auto" />,
+              };
+            },
           },
-        },
-        { emergent: true }
-      );
+          { emergent: true }
+        );
+      },
     },
   };
 };

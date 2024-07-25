@@ -12,21 +12,23 @@ export const useBusinessDeliveryManModal = () => {
   const { pushModal } = useModal();
 
   return {
-    open: () => {
-      pushModal(
-        'Emergent',
-        {
-          useProps: () => {
-            return {
-              title: 'Mensajeros',
-              badge: <Badge variant="truck" />,
-              content: <Component />,
-              secondaryBtn: <ButtonClose />,
-            };
+    businessDeliveryManModal: {
+      open: () => {
+        pushModal(
+          'Emergent',
+          {
+            useProps: () => {
+              return {
+                title: 'Mensajeros',
+                badge: <Badge variant="truck" />,
+                content: <Component />,
+                secondaryBtn: <ButtonClose />,
+              };
+            },
           },
-        },
-        { emergent: true }
-      );
+          { emergent: true }
+        );
+      },
     },
   };
 };

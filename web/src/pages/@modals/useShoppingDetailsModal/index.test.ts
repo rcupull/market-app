@@ -11,7 +11,7 @@ describe('useShoppingDetailsModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.open({ shopping: shoppingDummy }));
+    act(() => result.current.shoppingDetailsModal.open({ shopping: shoppingDummy }));
 
     await waitFor(() => expect(screen.getByTestId('Modal')));
 
@@ -25,7 +25,7 @@ describe('useShoppingDetailsModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.open({ shopping: shoppingDummy }));
+    act(() => result.current.shoppingDetailsModal.open({ shopping: shoppingDummy }));
 
     await waitFor(() =>
       expect(screen.getByTestId('Modal')).toMatchInlineSnapshot(`

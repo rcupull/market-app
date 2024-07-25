@@ -11,7 +11,7 @@ import { getDashboardBusinessRoute } from 'utils/business';
 
 export const AdvertisementsMyFirstBusiness = () => {
   const { getIsBusinessUser, user } = useAuth();
-  const businessUpdateNewModal = useBusinessUpdateNewModal();
+  const { businessUpdateNewModal } = useBusinessUpdateNewModal();
   const { allUserBusiness } = useAllUserBusiness();
   const { pushRoute } = useRouter();
 

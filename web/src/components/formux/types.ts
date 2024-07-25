@@ -1,4 +1,4 @@
-import { FormValidations } from './useGetFormErrors';
+import { FormValidations, FormValidationsGetter } from './useGetFormErrors';
 
 import { AnyRecord } from 'types/general';
 import { Path } from 'types/paths';
@@ -34,5 +34,5 @@ export interface FormuxProps<Value extends AnyRecord = AnyRecord> {
   children: (args: FormContextState<Value>) => React.ReactNode;
   value: Value;
   onChange?: (value: Value) => void;
-  validate?: FormValidations<Value>;
+  validate?: FormValidations<Value> | FormValidationsGetter<Value>;
 }

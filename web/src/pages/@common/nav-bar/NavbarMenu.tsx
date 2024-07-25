@@ -61,15 +61,15 @@ export const NavbarMenu = () => {
   const { signOut } = useSignOut();
   const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute } = useRouter();
   const { routeName } = params;
-  const authChangePasswordModal = useAuthChangePasswordModal();
-  const userUpdateSettings = useUserUpdateSettingsModal();
+  const { authChangePasswordModal } = useAuthChangePasswordModal();
+  const { userUpdateSettingsModal } = useUserUpdateSettingsModal();
   const { getEnabledFeature } = useAdminConfig();
 
-  const businessUpdateNewModal = useBusinessUpdateNewModal();
+  const { businessUpdateNewModal } = useBusinessUpdateNewModal();
 
-  const authSignInModal = useAuthSignInModal();
-  const authSignUpModal = useAuthSignUpModal();
-  const authForgotPasswordRequestModal = useAuthForgotPasswordRequestModal();
+  const { authSignInModal } = useAuthSignInModal();
+  const { authSignUpModal } = useAuthSignUpModal();
+  const { authForgotPasswordRequestModal } = useAuthForgotPasswordRequestModal();
 
   const { allUserBusiness } = useAllUserBusiness();
 
@@ -268,7 +268,7 @@ export const NavbarMenu = () => {
       isAuthenticated && {
         label: 'Preferencias de usuario',
         onClick: () => {
-          user && userUpdateSettings.open({ user, onAfterSuccess: () => onRefreshAuthUser() });
+          user && userUpdateSettingsModal.open({ user, onAfterSuccess: () => onRefreshAuthUser() });
         },
         svg: SvgCogSolid,
       },
