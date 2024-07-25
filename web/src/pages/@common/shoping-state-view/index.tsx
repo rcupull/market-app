@@ -14,6 +14,7 @@ import { ShoppingStateLabel } from '../shopping-state-label';
 import { FetchStatus } from 'types/api';
 import { Shopping, ShoppingState } from 'types/shopping';
 import { isEqual } from 'utils/general';
+import { getShoppingStateLabel } from 'utils/shopping';
 
 interface State {
   state: ShoppingState;
@@ -22,11 +23,13 @@ export interface ShoppingStateViewProps {
   shopping: Shopping;
   onAfterSuccess?: () => void;
   fetchStatus: FetchStatus;
+  businessHasDelivery: boolean;
 }
 export const ShoppingStateView = ({
   shopping,
   onAfterSuccess,
   fetchStatus,
+  businessHasDelivery,
 }: ShoppingStateViewProps) => {
   const { state, _id } = shopping;
   const [formState, setFormState] = useState<State>({ state });
@@ -47,6 +50,25 @@ export const ShoppingStateView = ({
   }
 
   const nextStates = (): Array<ShoppingState> => {
+    if (businessHasDelivery) {
+      switch (state) {
+        case ShoppingState.REQUESTED:
+          return [ShoppingState.REQUESTED, ShoppingState.APPROVED, ShoppingState.REJECTED];
+        case ShoppingState.APPROVED:
+          return [ShoppingState.APPROVED, ShoppingState.PROCESSING, ShoppingState.REJECTED];
+        case ShoppingState.PROCESSING:
+          return [
+            ShoppingState.PROCESSING,
+            ShoppingState.READY_TO_DELIVERY,
+            ShoppingState.REJECTED,
+          ];
+        case ShoppingState.READY_TO_DELIVERY:
+          return [ShoppingState.READY_TO_DELIVERY, ShoppingState.DELIVERED, ShoppingState.REJECTED];
+        default:
+          return [];
+      }
+    }
+
     switch (state) {
       case ShoppingState.REQUESTED:
         return [ShoppingState.REQUESTED, ShoppingState.APPROVED, ShoppingState.REJECTED];
@@ -75,8 +97,14 @@ export const ShoppingStateView = ({
                 const { shoppingChangeState } = useShoppingChangeState();
 
                 return {
-                  content: 'Seguro que desea actualizar el estado de esta orden de compra?',
+                  content: (
+                    <span>
+                      Seguro que desea actualizar el estado de esta orden de compra hacia{' '}
+                      <span className='font-bold'>{getShoppingStateLabel(newFormState.state)}</span>?
+                    </span>
+                  ),
                   badge: <Badge variant="warning" />,
+                  className: '!w-[30rem]',
                   primaryBtn: (
                     <ButtonSave
                       label="Actualizar"
@@ -91,7 +119,7 @@ export const ShoppingStateView = ({
                               onClose();
                               onAfterSuccess?.();
                             },
-                          }
+                          },
                         );
                       }}
                     />
@@ -108,14 +136,14 @@ export const ShoppingStateView = ({
                 };
               },
             },
-            { emergent: true }
+            { emergent: true },
           );
         }
       }}
     >
       {() => {
         return (
-          <form className="w-36">
+          <form className="w-48">
             <FieldSelect<{ value: ShoppingState }>
               name="state"
               optionToValue={({ value }) => value}

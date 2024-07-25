@@ -2,12 +2,15 @@ import { FieldCheckbox } from 'components/field-checkbox';
 import { FiltersContainer } from 'components/filters-container';
 import { RadioGroup } from 'components/radio-group';
 
-import { allStatesQuery } from './utils';
+import { getAllStatesQuery } from './utils';
 
+import { useBusiness } from 'pages/@hooks/useBusiness';
 import { GetAllShoppingQuery } from 'types/api';
 import { StyleProps } from 'types/general';
 import { ShoppingState } from 'types/shopping';
+import { getDeliveryUtils } from 'utils/business';
 import { cn } from 'utils/general';
+import { getShoppingStateLabel } from 'utils/shopping';
 
 type Value = ShoppingState | 'ALL';
 
@@ -17,13 +20,18 @@ export interface FiltersProps extends StyleProps {
 }
 
 export const Filters = ({ onChange, value, className }: FiltersProps) => {
+  const { business } = useBusiness();
   const getValue = (): Value => {
     return value?.states?.length === 1 ? value.states[0] : 'ALL';
   };
 
+  const businessHasDelivery = getDeliveryUtils().getIsEnabled({
+    deliveryConfig: business?.deliveryConfig,
+  });
+
   const handleChange = (state: Value) => {
     if (state === 'ALL') {
-      return onChange?.({ page: 1, states: allStatesQuery });
+      return onChange?.({ page: 1, states: getAllStatesQuery({ businessHasDelivery }) });
     }
     onChange?.({ page: 1, states: [state] });
   };
@@ -34,36 +42,35 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
         onChange?.({ page: 1, states: [ShoppingState.REQUESTED] });
       }}
     >
-      <RadioGroup<{ label: string; value: Value }>
+      <RadioGroup<{ value: Value }>
         onChange={handleChange}
         value={getValue()}
-        renderOption={({ checked, item }) => (
-          <FieldCheckbox noUseFormik value={checked} label={item.label} />
-        )}
+        renderOption={({ checked, item }) => {
+          const label = item.value === 'ALL' ? 'Todas' : getShoppingStateLabel(item.value);
+
+          return <FieldCheckbox noUseFormik value={checked} label={label} />;
+        }}
         optionToValue={({ value }) => value}
         items={[
           {
-            label: 'Todas',
             value: 'ALL',
           },
           {
-            label: 'Solicitados',
             value: ShoppingState.REQUESTED,
           },
           {
-            label: 'Aceptados',
             value: ShoppingState.APPROVED,
           },
           {
-            label: 'En proceso',
             value: ShoppingState.PROCESSING,
           },
+          businessHasDelivery && {
+            value: ShoppingState.READY_TO_DELIVERY,
+          },
           {
-            label: 'Entregados',
             value: ShoppingState.DELIVERED,
           },
           {
-            label: 'Rechazadas',
             value: ShoppingState.REJECTED,
           },
         ]}

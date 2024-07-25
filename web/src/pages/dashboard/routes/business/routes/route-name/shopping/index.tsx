@@ -20,6 +20,7 @@ import { TopActions } from 'pages/@common/top-actions';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { GetAllShoppingQuery } from 'types/api';
 import { Shopping, ShoppingState } from 'types/shopping';
+import { getDeliveryUtils } from 'utils/business';
 
 export const ShoppingPage = () => {
   const { getShoppingOwner } = useGetShoppingOwner();
@@ -64,6 +65,7 @@ export const ShoppingPage = () => {
       />
     </>
   );
+
   return (
     <>
       <TopActions>{refreshButton}</TopActions>
@@ -90,6 +92,9 @@ export const ShoppingPage = () => {
               <ClientData key="ClientData" rowData={rowData} />,
               <div key="ShoppingState" className="flex items-center">
                 <ShoppingStateView
+                  businessHasDelivery={getDeliveryUtils().getIsEnabled({
+                    deliveryConfig: business?.deliveryConfig,
+                  })}
                   shopping={rowData}
                   fetchStatus={getShoppingOwner.status}
                   onAfterSuccess={() => {

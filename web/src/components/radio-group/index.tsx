@@ -4,11 +4,11 @@ import { SpinnerEllipsis } from 'components/spinner-ellipsis';
 
 import { MultiContainer } from './MultiContainer';
 
-import { StyleProps } from 'types/general';
-import { cn, getFlattenJson } from 'utils/general';
+import { Nullable, StyleProps } from 'types/general';
+import { cn, compact, getFlattenJson } from 'utils/general';
 
 export interface RadioGroupProps<O, V = any> extends StyleProps {
-  items: Array<O>;
+  items: Array<Nullable<O>>;
   value?: V;
   onChange?: (newValue: V) => void;
   renderOption: (args: { checked: boolean; item: O; index: number }) => React.ReactNode | null;
@@ -24,7 +24,7 @@ export interface RadioGroupProps<O, V = any> extends StyleProps {
 //eslint-disable-next-line
 export const RadioGroup = <O extends any = any>({
   className,
-  items,
+  items: itemsProp,
   value,
   onChange,
   onBlur,
@@ -36,6 +36,8 @@ export const RadioGroup = <O extends any = any>({
   onOptionClicked,
   getOptionCutomStyles,
 }: RadioGroupProps<O>) => {
+  const items = compact(itemsProp);
+
   if (multi) {
     return (
       <MultiContainer items={items} optionToValue={optionToValue} value={value}>
@@ -64,7 +66,7 @@ export const RadioGroup = <O extends any = any>({
                   }}
                   className={cn(
                     'relative',
-                    getOptionCutomStyles?.(item, { selected: !checked }) ?? ''
+                    getOptionCutomStyles?.(item, { selected: !checked }) ?? '',
                   )}
                 >
                   {node}
