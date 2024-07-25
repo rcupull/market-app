@@ -11,7 +11,7 @@ import { cn } from 'utils/general';
 export interface BannerProps extends StyleProps {}
 
 export const Banner = ({ className }: BannerProps) => {
-  const businessUpdateBanner = useBusinessUpdateBannerModal();
+  const { businessUpdateBannerModal } = useBusinessUpdateBannerModal();
   const { business, onFetch } = useBusiness();
   const { bannerImages, layouts } = business || {};
 
@@ -25,7 +25,7 @@ export const Banner = ({ className }: BannerProps) => {
     <UpdateSomethingContainer
       title="Editar el banner"
       onClick={() =>
-        businessUpdateBanner.open({
+        businessUpdateBannerModal.open({
           onAfterSuccess: () => {
             business && onFetch({ routeName: business.routeName });
           },

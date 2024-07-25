@@ -18,6 +18,11 @@ export const isString = (value: unknown): value is string => {
   return typeof value === 'string';
 };
 
+//eslint-disable-next-line @typescript-eslint/ban-types
+export const isFunction = (value: unknown): value is Function => {
+  return typeof value === 'function';
+};
+
 export const isArray = (value: unknown): value is Array<any> => {
   return Array.isArray(value);
 };

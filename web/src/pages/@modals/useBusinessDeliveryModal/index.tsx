@@ -14,24 +14,26 @@ export const useBusinessDeliveryModal = () => {
   const { pushModal } = useModal();
 
   return {
-    open: () => {
-      pushModal(
-        'Emergent',
-        {
-          useProps: () => {
-            const portal = usePortal();
+    businessDeliveryModal: {
+      open: () => {
+        pushModal(
+          'Emergent',
+          {
+            useProps: () => {
+              const portal = usePortal();
 
-            return {
-              title: 'Entrega a domicilio',
-              badge: <Badge variant="truck" />,
-              content: <Component portal={portal} />,
-              secondaryBtn: <ButtonClose />,
-              primaryBtn: <div ref={portal.ref} />,
-            };
+              return {
+                title: 'Entrega a domicilio',
+                badge: <Badge variant="truck" />,
+                content: <Component portal={portal} />,
+                secondaryBtn: <ButtonClose />,
+                primaryBtn: <div ref={portal.ref} />,
+              };
+            },
           },
-        },
-        { emergent: true }
-      );
+          { emergent: true }
+        );
+      },
     },
   };
 };

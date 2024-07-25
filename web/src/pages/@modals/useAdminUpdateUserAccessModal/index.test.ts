@@ -11,7 +11,12 @@ describe('useAdminUpdateUserAccessModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.open({ user: userDummy, onAfterSuccess: jest.fn() }));
+    act(() =>
+      result.current.adminUpdateUserAccessModal.open({
+        user: userDummy,
+        onAfterSuccess: jest.fn(),
+      })
+    );
 
     await waitFor(() => expect(screen.getByTestId('Modal')));
 
@@ -25,7 +30,12 @@ describe('useAdminUpdateUserAccessModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.open({ user: userDummy, onAfterSuccess: jest.fn() }));
+    act(() =>
+      result.current.adminUpdateUserAccessModal.open({
+        user: userDummy,
+        onAfterSuccess: jest.fn(),
+      })
+    );
 
     await waitFor(() =>
       expect(screen.getByTestId('Modal')).toMatchInlineSnapshot(`

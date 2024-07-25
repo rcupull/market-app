@@ -36,6 +36,7 @@ export const getShoppingStateLabel = (state: ShoppingState): string => {
     [ShoppingState.CANCELED]: 'Cancelado',
     [ShoppingState.REJECTED]: 'Rechazado',
     [ShoppingState.PROCESSING]: 'En proceso',
+    [ShoppingState.READY_TO_DELIVERY]: 'Listo para entregar',
     [ShoppingState.DELIVERED]: 'Entregado',
     [ShoppingState.APPROVED]: 'Aceptado',
   };

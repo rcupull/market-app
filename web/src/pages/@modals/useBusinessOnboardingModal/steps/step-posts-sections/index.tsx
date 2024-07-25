@@ -10,7 +10,7 @@ import { ComponentProduct as Component } from 'pages/@modals/useBusinessNewUpdat
 export interface StepPostsSectionsProps extends OnboardingStepProps {}
 
 export const StepPostsSections = ({
-  backButton,
+  backBtnProps,
   nextBtnProps,
   centerBtnProps,
 }: StepPostsSectionsProps) => {
@@ -33,7 +33,7 @@ export const StepPostsSections = ({
         className="max-h-[70vh] overflow-y-auto"
       />
       <StepperButtonContainer
-        leftButton={backButton}
+        leftButton={<Button {...backBtnProps} />}
         rightButton={rightButton}
         centerButton={<Button {...centerBtnProps} />}
       />

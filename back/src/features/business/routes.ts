@@ -140,3 +140,17 @@ router
     middlewareIsLogged,
     businessHandles.put_business_routeName_checks(),
   );
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+router
+  .route('/business/:routeName/deliveries')
+  .get(
+    middlewareExpressValidator.query('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewarePagination,
+    businessHandles.get_business_routeName_deliveries(),
+  );

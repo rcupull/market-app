@@ -11,7 +11,7 @@ describe('usePostMakeReviewModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.open({ user: userDummy }));
+    act(() => result.current.userUpdateSettingsModal.open({ user: userDummy }));
 
     await waitFor(() => expect(screen.getByTestId('Modal')));
 
@@ -25,7 +25,7 @@ describe('usePostMakeReviewModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.open({ user: userDummy }));
+    act(() => result.current.userUpdateSettingsModal.open({ user: userDummy }));
 
     await waitFor(() =>
       expect(screen.getByTestId('Modal')).toMatchInlineSnapshot(`

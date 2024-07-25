@@ -28,7 +28,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
   const { authSignIn, getIsBusinessUser, getIsAdmin, getIsSimpleUser } = useAuth();
   const { pushRoute } = useRouter();
   const { onClose } = useModal();
-  const authSignUpModal = useAuthSignUpModal();
+  const { authSignUpModal } = useAuthSignUpModal();
 
   const refPassword = useRef<HTMLInputElement>(null);
 

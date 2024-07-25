@@ -10,7 +10,7 @@ describe('useBusinessDeliveryModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.open());
+    act(() => result.current.businessDeliveryModal.open());
 
     await waitFor(() => expect(screen.getByTestId('Modal')));
 
@@ -24,7 +24,7 @@ describe('useBusinessDeliveryModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.open());
+    act(() => result.current.businessDeliveryModal.open());
 
     await waitFor(() =>
       expect(screen.getByTestId('Modal')).toMatchInlineSnapshot(`

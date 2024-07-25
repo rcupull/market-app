@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Button, ButtonProps } from 'components/button';
+import { ButtonProps } from 'components/button';
 import { Tabs, TabsProps } from 'components/tabs';
 
 import { Nullable } from 'types/general';
@@ -12,8 +12,6 @@ export interface StepperBtnProps
 }
 
 export interface StepProps {
-  backButton: React.ReactElement;
-  nextButton: React.ReactElement;
   nextBtnProps: StepperBtnProps;
   centerBtnProps: StepperBtnProps;
   backBtnProps: StepperBtnProps;
@@ -55,9 +53,6 @@ export const Stepper = ({ items, disabledStepNavigation = true }: StepperProps) 
     onClick: nextBtnProps.onClick,
   };
 
-  const backButton = <Button {...backBtnProps} />;
-  const nextButton = <Button {...nextBtnProps} />;
-
   return (
     <>
       <Tabs
@@ -90,8 +85,6 @@ export const Stepper = ({ items, disabledStepNavigation = true }: StepperProps) 
           return {
             label,
             content: render({
-              backButton,
-              nextButton,
               nextBtnProps,
               backBtnProps,
               centerBtnProps,

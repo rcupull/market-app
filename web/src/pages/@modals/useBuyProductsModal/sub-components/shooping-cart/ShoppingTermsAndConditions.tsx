@@ -21,7 +21,7 @@ export const ShoppingTermsAndConditions = ({
   onApprobed,
   className,
 }: ShoppingTermsAndConditionsProps) => {
-  const businessShoppingTermsAndConditionsModal = useBusinessShoppingTermsAndConditionsModal();
+  const { businessShoppingTermsAndConditionsModal } = useBusinessShoppingTermsAndConditionsModal();
   const { business, owner } = useBusiness();
 
   const info = business?.shoppingMeta?.termsAndConditions;

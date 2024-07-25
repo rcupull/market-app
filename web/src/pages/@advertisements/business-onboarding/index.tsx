@@ -9,7 +9,7 @@ import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useBusinessOnboardingModal } from 'pages/@modals/useBusinessOnboardingModal';
 
 export const AdvertisementsBusinessOnboarding = () => {
-  const businessOnboardingModal = useBusinessOnboardingModal();
+  const { businessOnboardingModal } = useBusinessOnboardingModal();
   const { business, onFetch } = useBusiness();
 
   const { updateChecksBusiness } = useUpdateChecksBusiness();

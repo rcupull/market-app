@@ -11,7 +11,7 @@ import { cn } from 'utils/general';
 
 export const BannerInfoTelegramUser = ({ className }: StyleProps) => {
   const { authData, onRefreshAuthUser } = useAuth();
-  const updateTelegramBotUserModal = useUpdateTelegramBotUserModal();
+  const { updateTelegramBotUserModal } = useUpdateTelegramBotUserModal();
 
   const user = authData?.user;
 

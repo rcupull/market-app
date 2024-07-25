@@ -24,7 +24,7 @@ export const DeliveryData = ({
 }: DeliveryDataProps) => {
   const { business } = useBusiness();
   const { authData } = useAuth();
-  const businessDeliveryModal = useBusinessDeliveryModal();
+  const { businessDeliveryModal } = useBusinessDeliveryModal();
 
   const isEnabledDelivery = getDeliveryUtils().getIsEnabled({
     deliveryConfig: business?.deliveryConfig,

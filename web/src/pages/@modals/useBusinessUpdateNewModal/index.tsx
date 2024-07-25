@@ -18,45 +18,47 @@ export const useBusinessUpdateNewModal = () => {
   const { pushModal } = useModal();
 
   return {
-    open: (args?: { routeName?: string; onAfterSucess?: (response?: Business) => void }) => {
-      pushModal(
-        'Emergent',
-        {
-          useProps: () => {
-            const { routeName, onAfterSucess } = args || {};
-            const portal = usePortal();
-            const { onClose } = useModal();
-            const { getOneBusiness } = useGetOneBusiness();
-            const business = getOneBusiness.data;
+    businessUpdateNewModal: {
+      open: (args?: { routeName?: string; onAfterSucess?: (response?: Business) => void }) => {
+        pushModal(
+          'Emergent',
+          {
+            useProps: () => {
+              const { routeName, onAfterSucess } = args || {};
+              const portal = usePortal();
+              const { onClose } = useModal();
+              const { getOneBusiness } = useGetOneBusiness();
+              const business = getOneBusiness.data;
 
-            useEffect(() => {
-              if (routeName) {
-                getOneBusiness.fetch({ routeName });
-              }
-            }, []);
+              useEffect(() => {
+                if (routeName) {
+                  getOneBusiness.fetch({ routeName });
+                }
+              }, []);
 
-            return {
-              title: business ? 'Editar negocio' : 'Crear negocio',
-              badge: <Badge variant="info" />,
-              content: (
-                <Component
-                  portal={portal}
-                  business={business}
-                  onAfterSuccess={(response?: Business) => {
-                    onClose();
-                    onAfterSucess?.(response);
-                  }}
-                />
-              ),
-              secondaryBtn: <ButtonClose />,
-              primaryBtn: <div ref={portal.ref} />,
-              isBusy: getOneBusiness.status.isBusy,
-              className: '!w-[95vw] !lg:w-[90vw]',
-            };
+              return {
+                title: business ? 'Editar negocio' : 'Crear negocio',
+                badge: <Badge variant="info" />,
+                content: (
+                  <Component
+                    portal={portal}
+                    business={business}
+                    onAfterSuccess={(response?: Business) => {
+                      onClose();
+                      onAfterSucess?.(response);
+                    }}
+                  />
+                ),
+                secondaryBtn: <ButtonClose />,
+                primaryBtn: <div ref={portal.ref} />,
+                isBusy: getOneBusiness.status.isBusy,
+                className: '!w-[95vw] !lg:w-[90vw]',
+              };
+            },
           },
-        },
-        { emergent: true }
-      );
+          { emergent: true }
+        );
+      },
     },
   };
 };
