@@ -236,6 +236,7 @@ export const NavbarMenu = () => {
         label: 'Iniciar sesión',
         onClick: () => authSignInModal.open(),
         svg: SvgSignInAltSolid,
+        className: 'bg-green-100'
       },
       !isAuthenticated && {
         label: 'Créate una cuenta',
@@ -257,6 +258,7 @@ export const NavbarMenu = () => {
         },
         svg: SvgSignOutAltSolid,
         divider: 'Mi cuenta',
+        className: 'bg-red-100'
       },
       isAuthenticated && {
         label: 'Cambiar contraseña',
