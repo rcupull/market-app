@@ -9,11 +9,11 @@ import { ShoppingCartRemoveAllButton } from 'pages/@common/shopping-cart-remove-
 import { useCart } from 'pages/@hooks/useCart';
 
 export interface ShoppingCartProps extends StepCommonProps {
-  approved: boolean;
-  setApproved: (approved: boolean) => void;
+  onApproved: boolean;
+  setOnApproved: (approved: boolean) => void;
 }
 
-export const ShoppingCart = ({ nextBtnProps, approved, setApproved }: ShoppingCartProps) => {
+export const ShoppingCart = ({ nextBtnProps, onApproved, setOnApproved }: ShoppingCartProps) => {
   const cart = useCart();
 
   if (!cart.constructionShopping) {
@@ -29,10 +29,10 @@ export const ShoppingCart = ({ nextBtnProps, approved, setApproved }: ShoppingCa
           <ShoppingCartRemoveAllButton />
         </div>
 
-        <ShoppingTermsAndConditions className="mt-4" approved={approved} onApprobed={setApproved} />
+        <ShoppingTermsAndConditions className="mt-4" approved={onApproved} onApprobed={setOnApproved} />
       </div>
 
-      <ButtonNavContainer rightButton={<Button {...nextBtnProps} disabled={!approved} />} />
+      <ButtonNavContainer rightButton={<Button {...nextBtnProps} disabled={!onApproved} />} />
     </>
   );
 };

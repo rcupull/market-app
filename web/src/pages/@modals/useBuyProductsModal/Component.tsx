@@ -7,7 +7,7 @@ import { PurchaseOrderSuccess } from './sub-components/purchase-order-success';
 import { ShoppingCart } from './sub-components/shooping-cart';
 
 export const Component = () => {
-  const [approved, setApproved] = useState(false);
+  const [onApproved, setOnApproved] = useState(false);
   
   return (
     <>
@@ -15,7 +15,7 @@ export const Component = () => {
         items={[
           {
             label: 'Productos',
-            render: (props) => <ShoppingCart {...props} approved={approved} setApproved={setApproved} />,
+            render: (props) => <ShoppingCart {...props} onApproved={onApproved} setOnApproved={setOnApproved} />,
           },
           {
             label: 'Verificar los datos',
