@@ -1,24 +1,24 @@
+import { Link } from 'react-router-dom';
+
 import { Badge } from 'components/badge';
 import { ButtonRemove } from 'components/button-remove';
 import { ButtonSave } from 'components/button-save';
+import { IconButton } from 'components/icon-button';
 import { IconButtonDuplicate } from 'components/icon-button-duplicate';
 import { IconButtonRemove } from 'components/icon-button-remove';
 import { IconButtonShowHide } from 'components/icon-button-show-hide';
 import { IconButtonUpdate } from 'components/icon-button-update';
-import { IconButtonView } from 'components/icon-button-view';
 
 import { useDuplicateOnePost } from 'features/api/posts/useDuplicateOnePost';
 import { useRemoveOnePost } from 'features/api/posts/useRemoveOnePost';
 import { useUpdateOnePost } from 'features/api/posts/useUpdateOnePost';
 import { useModal } from 'features/modal/useModal';
 
-import { useRouter } from 'hooks/useRouter';
-
+import SvgLinkSolid from 'icons/LinkSolid';
 import { RowActionsContainer } from 'pages/@common/row-actions-container';
-import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useBusinessNewUpdatePostModal } from 'pages/@modals/useBusinessNewUpdatePostModal';
 import { Post } from 'types/post';
-import { getOnePostRoute } from 'utils/business';
+import { getRedirectLinkFromPostLink } from 'utils/products';
 
 export interface RowActionsProps {
   rowData: Post;
@@ -28,8 +28,6 @@ export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
   const { pushModal } = useModal();
 
   const { businessNewUpdatePostModal } = useBusinessNewUpdatePostModal();
-  const { pushRoute } = useRouter();
-  const { business } = useBusiness();
 
   const handleDelete = () => {
     pushModal(
@@ -145,13 +143,9 @@ export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
       <IconButtonUpdate onClick={handleUpdate} />
       <IconButtonDuplicate onClick={handleDuplicate} isBusy={duplicateOnePost.status.isBusy} />
 
-      <IconButtonView
-        stopPropagation
-        onClick={() =>
-          business &&
-          pushRoute(getOnePostRoute({ routeName: business.routeName, postId: rowData._id }))
-        }
-      />
+      <Link to={getRedirectLinkFromPostLink(rowData.postLink)}>
+        <IconButton svg={SvgLinkSolid} />
+      </Link>
     </RowActionsContainer>
   );
 };
