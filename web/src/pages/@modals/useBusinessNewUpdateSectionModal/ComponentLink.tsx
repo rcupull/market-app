@@ -36,32 +36,27 @@ export const ComponentLink = ({
   const { updateBusinessSection } = useUpdateBusinessSection();
   const { addBusinessSection } = useAddBusinessSection();
 
-  const initialValue: State = {
-    name: '',
-    postCardLayout: {
-      images: 'rounded',
-      metaLayout: 'verticalCentered',
-      price: 'none',
-      shoppingMethod: 'none',
-      size: 'medium',
-    },
-    postCategoriesTags: [getRandomHash()],
-    searchLayout: undefined,
-    type: 'oneRowSlider',
-    showMobile: true,
-    showPC: true,
-    postType: 'link',
-    ...(section || {}),
-  };
-
-  const closeContext = useCloseContext<State>({
-    initialValue,
-  });
+  const { onChangeUnsavedChanges } = useCloseContext();
 
   return (
     <Formux<State>
-      value={initialValue}
-      onChange={closeContext.onChangeValue}
+      value={{
+        name: '',
+        postCardLayout: {
+          images: 'rounded',
+          metaLayout: 'verticalCentered',
+          price: 'none',
+          shoppingMethod: 'none',
+          size: 'medium',
+        },
+        postCategoriesTags: [getRandomHash()],
+        searchLayout: undefined,
+        type: 'oneRowSlider',
+        showMobile: true,
+        showPC: true,
+        postType: 'link',
+        ...(section || {}),
+      }}
       validate={[
         {
           field: 'name',
@@ -69,7 +64,9 @@ export const ComponentLink = ({
         },
       ]}
     >
-      {({ value }) => {
+      {({ value, hasChange }) => {
+        onChangeUnsavedChanges(hasChange);
+
         return (
           <form className={className}>
             <FormFieldWrapper label="Visibilidad">

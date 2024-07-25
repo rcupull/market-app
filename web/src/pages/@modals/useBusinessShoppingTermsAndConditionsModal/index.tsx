@@ -14,24 +14,26 @@ export const useBusinessShoppingTermsAndConditionsModal = () => {
   const { pushModal } = useModal();
 
   return {
-    open: () => {
-      pushModal(
-        'Emergent',
-        {
-          useProps: () => {
-            const portal = usePortal();
+    businessShoppingTermsAndConditionsModal: {
+      open: () => {
+        pushModal(
+          'Emergent',
+          {
+            useProps: () => {
+              const portal = usePortal();
 
-            return {
-              title: 'Términos y condiciones para la venta de productos',
-              badge: <Badge variant="cart" />,
-              content: <Component portal={portal} />,
-              secondaryBtn: <ButtonClose />,
-              primaryBtn: <div ref={portal.ref} />,
-            };
+              return {
+                title: 'Términos y condiciones para la venta de productos',
+                badge: <Badge variant="cart" />,
+                content: <Component portal={portal} />,
+                secondaryBtn: <ButtonClose />,
+                primaryBtn: <div ref={portal.ref} />,
+              };
+            },
           },
-        },
-        { emergent: true }
-      );
+          { emergent: true }
+        );
+      },
     },
   };
 };

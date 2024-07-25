@@ -18,7 +18,7 @@ export interface PersonalDataProps extends StyleProps {
 
 export const PersonalData = ({ className, onValid }: PersonalDataProps) => {
   const { authData, onRefreshAuthUser } = useAuth();
-  const userUpdateSettings = useUserUpdateSettingsModal();
+  const { userUpdateSettingsModal } = useUserUpdateSettingsModal();
 
   const user = authData?.user;
 
@@ -76,7 +76,7 @@ export const PersonalData = ({ className, onValid }: PersonalDataProps) => {
             label="Editar"
             variant="link"
             onClick={() =>
-              userUpdateSettings.open({
+              userUpdateSettingsModal.open({
                 user,
                 onAfterSuccess: () => {
                   onRefreshAuthUser();

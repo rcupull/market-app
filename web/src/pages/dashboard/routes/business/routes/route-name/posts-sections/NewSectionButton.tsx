@@ -16,7 +16,7 @@ import { PostType } from 'types/post';
 export const NewSectionButton = () => {
   const { business, onFetch } = useBusiness();
   const { pushModal } = useModal();
-  const businessNewUpdateSection = useBusinessNewUpdateSectionModal();
+  const { businessNewUpdateSectionModal } = useBusinessNewUpdateSectionModal();
 
   const handleClick = () => {
     pushModal(
@@ -91,7 +91,7 @@ export const NewSectionButton = () => {
                               const { postType } = value;
                               onClose();
                               setTimeout(() => {
-                                businessNewUpdateSection.open({
+                                businessNewUpdateSectionModal.open({
                                   postType,
                                   onAfterSuccess: () =>
                                     business && onFetch({ routeName: business.routeName }),

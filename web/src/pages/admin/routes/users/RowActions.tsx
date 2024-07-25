@@ -19,7 +19,7 @@ export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
   const { pushModal } = useModal();
   const { role } = rowData;
 
-  const adminUpdateUserAccessModal = useAdminUpdateUserAccessModal();
+  const { adminUpdateUserAccessModal } = useAdminUpdateUserAccessModal();
 
   const handleDelete = () => {
     pushModal(

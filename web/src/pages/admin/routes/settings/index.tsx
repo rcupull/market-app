@@ -11,10 +11,11 @@ import { useAdminConfigUpdatePrivacyPolicyModal } from 'pages/@modals/useAdminCo
 import { useAdminConfigUpdateTermsAndConditionsModal } from 'pages/@modals/useAdminConfigUpdateTermsAndConditionsModal';
 
 export const Settings = () => {
-  const adminConfigUpdateTermsAndConditions = useAdminConfigUpdateTermsAndConditionsModal();
-  const adminConfigUpdatePrivacyPolicy = useAdminConfigUpdatePrivacyPolicyModal();
-  const adminConfigUpdatePrice = useAdminConfigUpdatePriceModal();
-  const adminConfigUpdateFeatures = useAdminConfigUpdateFeaturesModal();
+  const { adminConfigUpdateTermsAndConditionsModal } =
+    useAdminConfigUpdateTermsAndConditionsModal();
+  const { adminConfigUpdatePrivacyPolicyModal } = useAdminConfigUpdatePrivacyPolicyModal();
+  const { adminConfigUpdatePriceModal } = useAdminConfigUpdatePriceModal();
+  const { adminConfigUpdateFeaturesModal } = useAdminConfigUpdateFeaturesModal();
 
   return (
     <LayoutPageSection title="Configuración">
@@ -22,25 +23,25 @@ export const Settings = () => {
         <SettingBox
           title="Términos y condiciones"
           svg={SvgFileInvoiceSolid}
-          onClick={() => adminConfigUpdateTermsAndConditions.open()}
+          onClick={() => adminConfigUpdateTermsAndConditionsModal.open()}
         />
 
         <SettingBox
           title="Política de Privacidad"
           svg={SvgUserSecretSolid}
-          onClick={() => adminConfigUpdatePrivacyPolicy.open()}
+          onClick={() => adminConfigUpdatePrivacyPolicyModal.open()}
         />
 
         <SettingBox
           title="Precios"
           svg={SvgHandHoldingUsdSolid}
-          onClick={() => adminConfigUpdatePrice.open()}
+          onClick={() => adminConfigUpdatePriceModal.open()}
         />
 
         <SettingBox
           title="Features"
           svg={SvgCodeBranchSolid}
-          onClick={() => adminConfigUpdateFeatures.open()}
+          onClick={() => adminConfigUpdateFeaturesModal.open()}
         />
       </div>
     </LayoutPageSection>

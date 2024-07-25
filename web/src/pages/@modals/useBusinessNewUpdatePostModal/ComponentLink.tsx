@@ -22,7 +22,7 @@ import { useBusinessNewUpdateSectionModal } from '../useBusinessNewUpdateSection
 
 import { imagesDimensions } from 'constants/posts';
 import { StyleProps } from 'types/general';
-import { LinkFormState, Post, ProductFormState } from 'types/post';
+import { LinkFormState, Post } from 'types/post';
 import { getRequiredLabel } from 'utils/form';
 import { addStringToUniqueArray } from 'utils/general';
 
@@ -36,7 +36,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
   const { business, onFetch, getSections } = useBusiness();
 
   const { updateBusinessSection } = useUpdateBusinessSection();
-  const businessNewUpdateSection = useBusinessNewUpdateSectionModal();
+  const { businessNewUpdateSectionModal } = useBusinessNewUpdateSectionModal();
   const { addOnePost } = useAddOnePost();
   const { updateOnePost } = useUpdateOnePost();
   const { addManyImages } = useAddManyImages();
@@ -85,18 +85,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
     tags: post?.postCategoriesTags || [],
   });
 
-  const initialValue: LinkFormState & { sectionIds: Array<string> } = {
-    name: '',
-    images: [],
-    postCategoriesTags: [linkTag],
-    postLink: undefined,
-    sectionIds: sections.map((section) => section._id),
-    ...(post || {}),
-  };
-
-  const closeContext = useCloseContext<ProductFormState>({
-    initialValue,
-  });
+  const { onChangeUnsavedChanges } = useCloseContext();
 
   if (!business) {
     return <></>;
@@ -106,16 +95,40 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
 
   return (
     <Formux<LinkFormState & { sectionIds: Array<string> }>
-      value={initialValue}
-      onChange={closeContext.onChangeValue}
-      validate={[
+      value={{
+        name: '',
+        images: [],
+        postCategoriesTags: [linkTag],
+        postLink: { type: 'business', value: '' },
+        sectionIds: sections.map((section) => section._id),
+        ...(post || {}),
+      }}
+      validate={({ state }) => [
         {
           field: 'name',
           type: 'required',
         },
+        {
+          field: 'sectionIds',
+          type: 'required',
+        },
+        {
+          field: 'postLink.type',
+          type: 'required',
+        },
+        {
+          field: 'postLink.value',
+          type: 'required',
+          message:
+            state.postLink?.type === 'business'
+              ? 'Debe escoger un negocio'
+              : 'Debe escribir un enlace',
+        },
       ]}
     >
-      {({ value }) => {
+      {({ value, hasChange }) => {
+        onChangeUnsavedChanges(hasChange);
+
         return (
           <form className={className}>
             <FieldInput name="name" label={getRequiredLabel('Nombre del enlace')} />
@@ -124,14 +137,14 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
             <FieldRadioGroup<{ label: string; value: string }>
               label={
                 <div className="flex items-center">
-                  Incluir en las secciones
+                  {getRequiredLabel('Incluir en las secciones')}
                   <IconButtonAdd
                     title="Agregar nueva sección de enlaces"
                     className="text-green-600 font-bold ml-2"
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      businessNewUpdateSection.open({
+                      businessNewUpdateSectionModal.open({
                         postType: 'link',
                         onAfterSuccess: () =>
                           business && onFetch({ routeName: business.routeName }),

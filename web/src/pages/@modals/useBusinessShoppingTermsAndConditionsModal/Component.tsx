@@ -25,11 +25,7 @@ export const Component = ({ portal }: ComponentProps) => {
 
   const { routeName = '', shoppingMeta = {} } = business != null ? business : {};
 
-  const initialValue = {
-    termsAndConditions: shoppingMeta.termsAndConditions || '',
-  };
-
-  const closeContext = useCloseContext<State>({ initialValue });
+  const { onChangeUnsavedChanges } = useCloseContext();
 
   if (!business) {
     return <></>;
@@ -37,8 +33,14 @@ export const Component = ({ portal }: ComponentProps) => {
 
   return (
     <>
-      <Formux<State> value={initialValue} onChange={closeContext.onChangeValue}>
-        {({ value }) => {
+      <Formux<State>
+        value={{
+          termsAndConditions: shoppingMeta.termsAndConditions || '',
+        }}
+      >
+        {({ value, hasChange }) => {
+          onChangeUnsavedChanges(hasChange);
+
           return (
             <form className="w-full">
               <FieldCheckEditor

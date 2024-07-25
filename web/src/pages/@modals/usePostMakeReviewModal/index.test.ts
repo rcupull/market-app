@@ -10,7 +10,9 @@ describe('usePostMakeReviewModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.open({ postId: 'postId', onAfterSuccess: jest.fn() }));
+    act(() =>
+      result.current.postMakeReviewModal.open({ postId: 'postId', onAfterSuccess: jest.fn() })
+    );
 
     await waitFor(() => expect(screen.getByTestId('Modal')));
 
@@ -24,7 +26,9 @@ describe('usePostMakeReviewModal', () => {
       wrapper: getWrapper({ useRouter: true, useModal: true }),
     });
 
-    act(() => result.current.open({ postId: 'postId', onAfterSuccess: jest.fn() }));
+    act(() =>
+      result.current.postMakeReviewModal.open({ postId: 'postId', onAfterSuccess: jest.fn() })
+    );
 
     await waitFor(() =>
       expect(screen.getByTestId('Modal')).toMatchInlineSnapshot(`

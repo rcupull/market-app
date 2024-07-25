@@ -11,21 +11,23 @@ export const usePrivacyPolicyModal = () => {
   const { pushModal } = useModal();
 
   return {
-    open: () => {
-      pushModal(
-        'Emergent',
-        {
-          useProps: () => {
-            return {
-              title: 'Políticas de privacidad',
-              content: <PrivacyPolicy />,
-              customBtn: <ButtonClose className="ml-auto" />,
-              className: '!w-[95vw] !sm:w-[80vw]',
-            };
+    privacyPolicyModal: {
+      open: () => {
+        pushModal(
+          'Emergent',
+          {
+            useProps: () => {
+              return {
+                title: 'Políticas de privacidad',
+                content: <PrivacyPolicy />,
+                customBtn: <ButtonClose className="ml-auto" />,
+                className: '!w-[95vw] !sm:w-[80vw]',
+              };
+            },
           },
-        },
-        { emergent: true }
-      );
+          { emergent: true }
+        );
+      },
     },
   };
 };

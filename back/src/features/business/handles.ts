@@ -30,6 +30,8 @@ import { isEqualIds, movRow } from '../../utils/general';
 import { imagesServicesDeleteOldImages } from '../images/services';
 import { postServicesGetOne, postServicesUpdateMany } from '../post/services';
 import { nlpServicesProcessMainManager } from '../nlp/services';
+import { deliveryServicesGetAllWithPagination } from '../delivery/services';
+import { defaultQuerySort } from '../../utils/api';
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {
@@ -594,6 +596,30 @@ const put_business_routeName_checks: () => RequestHandler = () => {
   };
 };
 
+const get_business_routeName_deliveries: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { query, user, paginateOptions } = req;
+
+      if (!user) {
+        return getUserNotFoundResponse({ res });
+      }
+
+      const { routeName, sort = defaultQuerySort } = query;
+
+      const deliveries = await deliveryServicesGetAllWithPagination({
+        paginateOptions,
+        sort,
+        query: {
+          routeName,
+        },
+      });
+
+      res.send(deliveries);
+    });
+  };
+};
+
 export const businessHandles = {
   get_business,
   get_business_routeName,
@@ -617,4 +643,6 @@ export const businessHandles = {
   del_business_routeName_favorite_users,
 
   put_business_routeName_checks,
+  //
+  get_business_routeName_deliveries,
 };

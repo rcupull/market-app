@@ -8,7 +8,7 @@ export interface RowActionsProps {
   rowData: Shopping;
 }
 export const RowActions = ({ rowData }: RowActionsProps) => {
-  const shoppingDetailsModal = useShoppingDetailsModal();
+  const { shoppingDetailsModal } = useShoppingDetailsModal();
 
   return (
     <RowActionsContainer>

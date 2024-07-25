@@ -31,7 +31,7 @@ export const ButtonPostToCart = ({
   const [count, setCount] = useState<number>(0);
   const { stockAmountAvailable } = post;
   const { isAuthenticated } = useAuth();
-  const authSignInModal = useAuthSignInModal();
+  const { authSignInModal } = useAuthSignInModal();
 
   const { updateAddOneShopping } = useUpdateAddOneShopping();
   const cart = useCart();

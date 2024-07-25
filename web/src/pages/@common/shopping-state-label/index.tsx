@@ -16,6 +16,7 @@ export const ShoppingStateLabel = ({ state, disableColor, className }: ShoppingS
         {
           'text-yellow-500': !disableColor && state === ShoppingState.REQUESTED,
           'text-indigo-500': !disableColor && state === ShoppingState.PROCESSING,
+          'text-gray-500': !disableColor && state === ShoppingState.READY_TO_DELIVERY,
           'text-green-500': !disableColor && state === ShoppingState.DELIVERED,
           'text-gray-300': !disableColor && state === ShoppingState.CONSTRUCTION,
           'text-blue-500': !disableColor && state === ShoppingState.APPROVED,

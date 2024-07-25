@@ -1,22 +1,18 @@
 import { useContext } from 'react';
 
+import { useDebouncer } from 'hooks/useDebouncer';
+
 import { CloseContext } from './CloseContext';
 
-import { isEqual } from 'utils/general';
-
-export const useCloseContext = <T extends any = any>({
-  initialValue,
-}: {
-  initialValue: T;
-}): {
-  onChangeValue: (currentValue: T) => void;
+export const useCloseContext = (): {
+  onChangeUnsavedChanges: (value: boolean) => void;
 } => {
   const { onChangeUnsavedChanges } = useContext(CloseContext);
+  const debouncer = useDebouncer();
 
   return {
-    onChangeValue: (currentValue) => {
-      const hasUnsavedChanges = !isEqual(initialValue, currentValue);
-      onChangeUnsavedChanges(hasUnsavedChanges);
+    onChangeUnsavedChanges: (hasChange) => {
+      debouncer(() => onChangeUnsavedChanges(hasChange), 500);
     },
   };
 };

@@ -25,12 +25,7 @@ export const Component = ({ portal }: ComponentProps) => {
 
   const { updateOneBusiness } = useUpdateOneBusiness();
 
-  const initialValue: State = {
-    title: business?.seo?.title || '',
-    description: business?.seo?.description || '',
-  };
-
-  const closeContext = useCloseContext<State>({ initialValue });
+  const { onChangeUnsavedChanges } = useCloseContext();
 
   if (!business) {
     return <></>;
@@ -40,8 +35,15 @@ export const Component = ({ portal }: ComponentProps) => {
 
   return (
     <>
-      <Formux<State> value={initialValue} onChange={closeContext.onChangeValue}>
-        {({ value }) => {
+      <Formux<State>
+        value={{
+          title: business?.seo?.title || '',
+          description: business?.seo?.description || '',
+        }}
+      >
+        {({ value, hasChange }) => {
+          onChangeUnsavedChanges(hasChange);
+
           return (
             <form className="w-full">
               <FieldInput label="Título de la página" name="title" className="mt-6" />

@@ -1,5 +1,6 @@
-import { cloneElement, useState } from 'react';
+import { useState } from 'react';
 
+import { Button } from 'components/button';
 import { Divider } from 'components/divider';
 
 import { useShoppingMakeOrder } from 'features/api/shopping/useShoppingMakeOrder';
@@ -19,7 +20,7 @@ import { isNullOrUndefined } from 'utils/general';
 
 export interface CheckingDataProps extends StepCommonProps {}
 
-export const CheckingData = ({ nextButton: nextButtonProp, backButton }: CheckingDataProps) => {
+export const CheckingData = ({ nextBtnProps, backBtnProps }: CheckingDataProps) => {
   const { shoppingMakeOrder } = useShoppingMakeOrder();
   const cart = useCart();
   const { business } = useBusiness();
@@ -30,50 +31,6 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
   if (!cart.constructionShopping) {
     return <></>;
   }
-
-  const nextButton = cloneElement(nextButtonProp, {
-    label: 'Crear orden',
-    isBusy: shoppingMakeOrder.status.isBusy,
-    disabled: !isValidPersonalData,
-    onClick: () => {
-      if (!cart.constructionShopping || !business) return;
-
-      const { _id: shoppingId } = cart.constructionShopping;
-
-      const getDelivery = (): ShoppingDelivery | undefined => {
-        const businessAddress = business.addresses?.[0];
-        const userAddress = authData?.user.addresses?.[0];
-        const deliveryType = business?.deliveryConfig?.type;
-
-        const { getDistance, getPrice } = getDeliveryUtils();
-
-        const distance = getDistance({ businessAddress, userAddress });
-
-        const price = getPrice({ distance, deliveryConfig: business.deliveryConfig });
-
-        if (!takeDelivery) return undefined;
-        if (isNullOrUndefined(distance)) return undefined;
-        if (isNullOrUndefined(price)) return undefined;
-        if (isNullOrUndefined(deliveryType)) return undefined;
-
-        return {
-          deliveryType,
-          price,
-          distance,
-        };
-      };
-
-      shoppingMakeOrder.fetch(
-        { shoppingId, delivery: getDelivery() },
-        {
-          onAfterSuccess: () => {
-            cart.onFetch();
-            nextButtonProp.props.onClick();
-          },
-        }
-      );
-    },
-  });
 
   return (
     <>
@@ -91,7 +48,55 @@ export const CheckingData = ({ nextButton: nextButtonProp, backButton }: Checkin
 
       <PersonalData className="mt-6" onValid={setIsValidPersonalData} />
 
-      <ButtonNavContainer leftButton={backButton} rightButton={nextButton} />
+      <ButtonNavContainer
+        leftButton={<Button {...backBtnProps} />}
+        rightButton={
+          <Button
+            {...nextBtnProps}
+            label="Crear orden"
+            isBusy={shoppingMakeOrder.status.isBusy}
+            disabled={!isValidPersonalData}
+            onClick={() => {
+              if (!cart.constructionShopping || !business) return;
+
+              const { _id: shoppingId } = cart.constructionShopping;
+
+              const getDelivery = (): ShoppingDelivery | undefined => {
+                const businessAddress = business.addresses?.[0];
+                const userAddress = authData?.user.addresses?.[0];
+                const deliveryType = business?.deliveryConfig?.type;
+
+                const { getDistance, getPrice } = getDeliveryUtils();
+
+                const distance = getDistance({ businessAddress, userAddress });
+
+                const price = getPrice({ distance, deliveryConfig: business.deliveryConfig });
+
+                if (!takeDelivery) return undefined;
+                if (isNullOrUndefined(distance)) return undefined;
+                if (isNullOrUndefined(price)) return undefined;
+                if (isNullOrUndefined(deliveryType)) return undefined;
+
+                return {
+                  deliveryType,
+                  price,
+                  distance,
+                };
+              };
+
+              shoppingMakeOrder.fetch(
+                { shoppingId, delivery: getDelivery() },
+                {
+                  onAfterSuccess: () => {
+                    cart.onFetch();
+                    nextBtnProps.onClick?.();
+                  },
+                }
+              );
+            }}
+          />
+        }
+      />
     </>
   );
 };
