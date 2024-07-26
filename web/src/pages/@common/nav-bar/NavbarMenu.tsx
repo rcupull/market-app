@@ -108,15 +108,7 @@ export const NavbarMenu = () => {
       const isCurrentBusiness = params.routeName === routeName;
 
       return {
-        label: (
-          <div
-            className={cn({
-              'text-indigo-600 font-semibold': isCurrentBusiness,
-            })}
-          >
-            {name}
-          </div>
-        ),
+        label: name,
         onClick: () => pushRoute(getDashboardBusinessRoute({ routeName })),
         svg: ({ className }) => (
           <IconShowHide
@@ -124,12 +116,14 @@ export const NavbarMenu = () => {
               className,
               cn({
                 'fill-gray-500 ': hidden,
-                'fill-indigo-600': isCurrentBusiness,
               })
             )}
             hidden={hidden}
           />
         ),
+        className: cn({
+          'bg-indigo-100': isCurrentBusiness,
+        }),
       };
     });
 
@@ -236,6 +230,7 @@ export const NavbarMenu = () => {
         label: 'Iniciar sesión',
         onClick: () => authSignInModal.open(),
         svg: SvgSignInAltSolid,
+        className: 'bg-green-100',
       },
       !isAuthenticated && {
         label: 'Créate una cuenta',
@@ -257,6 +252,7 @@ export const NavbarMenu = () => {
         },
         svg: SvgSignOutAltSolid,
         divider: 'Mi cuenta',
+        className: 'bg-red-100',
       },
       isAuthenticated && {
         label: 'Cambiar contraseña',

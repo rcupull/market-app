@@ -11,6 +11,7 @@ import { useGetAllPosts } from 'features/api/posts/useGetAllPosts';
 import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 
 import { BulkActionsLinks } from './BulkActionsLinks';
+import { LinkDetails } from './LinkDetails';
 import { RowActions } from './RowActions';
 
 import { TopActions } from 'pages/@common/top-actions';
@@ -21,7 +22,6 @@ import { GetAllPostsQuery } from 'types/api';
 import { getImageEndpoint } from 'utils/api';
 import { getDateString } from 'utils/date';
 import { cn } from 'utils/general';
-import { viewUtils } from 'utils/view';
 
 export const Links = () => {
   const { getAllPosts } = useGetAllPosts();
@@ -148,18 +148,7 @@ export const Links = () => {
                       'ninguna'
                     ),
                     getDateString({ date: createdAt, showTime: true }),
-                    viewUtils.keyValueList([
-                      {
-                        label: (
-                          <span
-                            className={cn({
-                              'text-red-500': hidden,
-                            })}
-                          >{`${hidden ? 'Oculta' : 'Visible'}`}</span>
-                        ),
-                        value: null,
-                      },
-                    ]),
+                    <LinkDetails key="LinkDetails" rowData={rowData} />,
                   ],
                 };
               }}

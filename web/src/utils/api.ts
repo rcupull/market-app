@@ -26,9 +26,11 @@ export const getTelegramUrl = () => {
 };
 
 export const getEndpointUrl = () => {
-  const { protocol, hostname } = window.location;
+  if (DEVELOPMENT) {
+    return 'http://localhost';
+  }
 
-  return `${protocol}//${hostname}`;
+  return 'https://aseremarket.net';
 };
 
 export const injectUrlParams = (url: string, urlParams: UrlParams = {}): string => {
