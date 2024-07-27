@@ -30,6 +30,7 @@ describe('usePostMakeReviewModal', () => {
     await waitFor(() =>
       expect(screen.getByTestId('Modal')).toMatchInlineSnapshot(`
         <div
+          aria-labelledby="headlessui-dialog-title-:rv:"
           aria-modal="true"
           class="relative z-30"
           data-headlessui-state="open"

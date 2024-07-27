@@ -8,7 +8,7 @@ import { firebaseVapidKey, getFirebaseMessaging } from './utils';
 
 import { getToken, isSupported, Messaging, onMessage } from 'firebase/messaging';
 
-export const NotificationsProviderWeb = () => {
+const NotificationsProviderWeb = () => {
   const { isAuthenticated } = useAuth();
   const { authUpdateFirebaseToken } = useAuthUpdateFirebaseToken();
 
@@ -65,3 +65,5 @@ export const NotificationsProviderWeb = () => {
 
   return null;
 };
+
+export default NotificationsProviderWeb;

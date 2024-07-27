@@ -5,7 +5,7 @@ import { useAuth } from 'features/api-slices/useAuth';
 
 import { PushNotifications } from '@capacitor/push-notifications';
 
-export const NotificationsProviderMobile = () => {
+const NotificationsProviderNative = () => {
   const { isAuthenticated } = useAuth();
   const { authUpdateFirebaseToken } = useAuthUpdateFirebaseToken();
 
@@ -71,3 +71,5 @@ export const NotificationsProviderMobile = () => {
 
   return null;
 };
+
+export default NotificationsProviderNative;
