@@ -122,7 +122,7 @@ describe('useBusinessUpdateAboutUsModal', () => {
             </div>
           </div>
         </div>
-      `)
+      `),
     );
   });
 });

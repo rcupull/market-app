@@ -72,7 +72,7 @@ export const Stepper = ({ items, disabledStepNavigation = true }: StepperProps) 
                 'border-2 border-gray-400 rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0',
                 {
                   'font-semibold !border-indigo-500 !bg-indigo-500 !text-white': selected,
-                }
+                },
               )}
             >
               {index + 1}

@@ -41,7 +41,7 @@ export type FormValidationsGetter<V extends AnyRecord, F extends Path<V> = Path<
 
 export type GetFormErrors<V extends AnyRecord, F extends Path<V> = Path<V>> = (
   value: V,
-  validations: FormValidations<V, F>
+  validations: FormValidations<V, F>,
 ) => Promise<Partial<Record<F, string>>>;
 
 export const useGetFormErrors = <V extends AnyRecord, F extends Path<V> = Path<V>>(): GetFormErrors<

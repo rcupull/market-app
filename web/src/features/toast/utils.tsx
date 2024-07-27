@@ -2,7 +2,6 @@ import { Badge } from 'components/badge';
 
 import { ToastMessage } from 'types/toast';
 
-
 export const renderToastMessage = (notification: ToastMessage) => {
   const { body, title } = notification;
 

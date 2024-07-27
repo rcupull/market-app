@@ -129,7 +129,7 @@ describe('useBuyProductsModal', () => {
             </div>
           </div>
         </div>
-      `)
+      `),
     );
   });
 });

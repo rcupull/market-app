@@ -27,7 +27,7 @@ export const useShoppingDetailsModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

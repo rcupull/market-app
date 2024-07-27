@@ -39,7 +39,7 @@ export const useUpdateOneUser = (): {
             }),
             data: update,
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

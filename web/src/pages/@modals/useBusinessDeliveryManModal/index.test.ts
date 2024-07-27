@@ -138,7 +138,7 @@ describe('useBusinessDeliveryManModal', () => {
             </div>
           </div>
         </div>
-      `)
+      `),
     );
   });
 });

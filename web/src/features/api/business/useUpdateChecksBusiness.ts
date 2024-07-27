@@ -29,7 +29,7 @@ export const useUpdateChecksBusiness = (): {
             }),
             data: update,
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

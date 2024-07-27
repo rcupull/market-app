@@ -120,7 +120,7 @@ describe('usePrivacyPolicyModal', () => {
             </div>
           </div>
         </div>
-      `)
+      `),
     );
   });
 });

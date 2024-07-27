@@ -24,7 +24,7 @@ export const useAddFavoriteUser = (): {
               userId,
             },
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

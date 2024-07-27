@@ -17,7 +17,7 @@ export interface FieldClothingSizeSelectProps extends FormFieldWrapperProps {
 }
 
 export const FieldClothingSizeSelect = <V extends Value = Value>(
-  props: FieldClothingSizeSelectProps
+  props: FieldClothingSizeSelectProps,
 ) => {
   const [state, setState] = useState<V>();
 
@@ -95,7 +95,7 @@ export const FieldClothingSizeSelect = <V extends Value = Value>(
                     'cursor-pointer bg-white text-gray-900 shadow-sm': inStock,
                     'ring-2 ring-indigo-500': active,
                     'ring-1 rounded-md ring-red-500 focus:ring-red-500': !!error,
-                  }
+                  },
                 )}
               >
                 <RadioGroup.Label as="span">{size}</RadioGroup.Label>
@@ -104,7 +104,7 @@ export const FieldClothingSizeSelect = <V extends Value = Value>(
                     className={cn(
                       active ? 'border' : 'border-2',
                       active ? 'border-indigo-500' : 'border-transparent',
-                      'pointer-events-none absolute -inset-px rounded-md'
+                      'pointer-events-none absolute -inset-px rounded-md',
                     )}
                     aria-hidden="true"
                   />

@@ -31,7 +31,7 @@ export const SkeletonSearch = ({ searchLayoutType, active }: SkeletonSearchProps
             () => setSelectedIndex([9]),
             () => setSelectedIndex([]),
           ],
-          1000
+          1000,
         );
       }
       case 'postCategoriesScrollable': {
@@ -47,7 +47,7 @@ export const SkeletonSearch = ({ searchLayoutType, active }: SkeletonSearchProps
             () => setSelectedIndex([9]),
             () => setSelectedIndex([]),
           ],
-          1000
+          1000,
         );
       }
       case 'postCategoriesExcluded': {
@@ -58,7 +58,7 @@ export const SkeletonSearch = ({ searchLayoutType, active }: SkeletonSearchProps
             () => setSelectedIndex([9]),
             () => setSelectedIndex([]),
           ],
-          1000
+          1000,
         );
       }
       case 'postCategoriesExcludedScrollable': {
@@ -72,7 +72,7 @@ export const SkeletonSearch = ({ searchLayoutType, active }: SkeletonSearchProps
             () => ref.current?.scrollTo({ left: 0, behavior: 'smooth' }),
             () => setSelectedIndex([]),
           ],
-          1000
+          1000,
         );
       }
     }

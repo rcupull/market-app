@@ -23,7 +23,7 @@ export const useNlpSearch = (): {
               query: { search },
             }),
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

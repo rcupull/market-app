@@ -30,7 +30,7 @@ export const useBusinessUpdateAboutUsModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

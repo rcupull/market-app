@@ -30,7 +30,7 @@ export const useAdminConfigUpdateTermsAndConditionsModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

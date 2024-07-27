@@ -19,9 +19,9 @@ export const useTableCellCategoriesTags = ({
           ...acc,
           [tag]: label,
         }),
-        {}
+        {},
       ),
-    [JSON.stringify(postCategories)]
+    [JSON.stringify(postCategories)],
   );
 
   return {

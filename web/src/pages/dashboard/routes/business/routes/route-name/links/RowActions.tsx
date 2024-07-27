@@ -58,7 +58,7 @@ export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
                         onClose();
                         onRefreshForce();
                       },
-                    }
+                    },
                   )
                 }
               />
@@ -66,7 +66,7 @@ export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
           };
         },
       },
-      { emergent: true }
+      { emergent: true },
     );
   };
 
@@ -100,7 +100,7 @@ export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
                         onClose();
                         onRefreshForce();
                       },
-                    }
+                    },
                   )
                 }
               />
@@ -108,7 +108,7 @@ export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
           };
         },
       },
-      { emergent: true }
+      { emergent: true },
     );
   };
 
@@ -123,7 +123,7 @@ export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
         onAfterSuccess: () => {
           onRefreshForce();
         },
-      }
+      },
     );
   };
 

@@ -43,7 +43,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
 
   const updateLinkInSections = async (
     sectionIds: Array<string>,
-    linkTag: string
+    linkTag: string,
   ): Promise<void> => {
     if (!business) return;
 
@@ -61,7 +61,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
               data: {
                 postCategoriesTags: addStringToUniqueArray(
                   section.postCategoriesTags || [],
-                  linkTag
+                  linkTag,
                 ),
               },
             },
@@ -69,7 +69,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
               onAfterSuccess: () => {
                 resolve();
               },
-            }
+            },
           );
         });
       });
@@ -213,10 +213,10 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
 
                                 onAfterSuccess();
                               },
-                            }
+                            },
                           );
                         },
-                      }
+                      },
                     );
                   };
                   const handelAddPost = () => {
@@ -233,7 +233,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
                         onAfterSuccess: (response) => {
                           handelUpdatePost(response);
                         },
-                      }
+                      },
                     );
                   };
 
@@ -241,7 +241,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
                 }}
                 variant="primary"
                 className="w-full"
-              />
+              />,
             )}
           </form>
         );

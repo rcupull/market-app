@@ -31,7 +31,7 @@ export const useBusinessDeliveryModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

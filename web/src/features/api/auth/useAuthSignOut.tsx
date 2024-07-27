@@ -24,7 +24,7 @@ export const useAuthSignOut = (): {
             url: getEndpoint({ path: '/auth/sign-out' }),
             data: { refreshToken },
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

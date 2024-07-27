@@ -1,4 +1,4 @@
-import {  useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { useAuthUpdateFirebaseToken } from 'features/api/auth/useAuthUpdateFirebaseToken';
 import { useAuth } from 'features/api-slices/useAuth';
@@ -11,7 +11,6 @@ import { getToken, isSupported, Messaging, onMessage } from 'firebase/messaging'
 export const NotificationsProviderWeb = () => {
   const { isAuthenticated } = useAuth();
   const { authUpdateFirebaseToken } = useAuthUpdateFirebaseToken();
-
 
   const { onUpdateNotification } = useNotificationsUtils();
 

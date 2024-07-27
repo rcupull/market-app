@@ -122,7 +122,7 @@ describe('useBusinessUpdateLogoModal', () => {
             </div>
           </div>
         </div>
-      `)
+      `),
     );
   });
 });

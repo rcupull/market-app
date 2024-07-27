@@ -24,7 +24,7 @@ export const useGetAllBills = (): {
               query: { limit: defaultLimit, routeName, states },
             }),
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

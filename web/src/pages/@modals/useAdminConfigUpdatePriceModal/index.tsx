@@ -30,7 +30,7 @@ export const useAdminConfigUpdatePriceModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

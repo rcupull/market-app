@@ -123,7 +123,7 @@ describe('useBusinessUpdateSocialNetworksModal', () => {
             </div>
           </div>
         </div>
-      `)
+      `),
     );
   });
 });

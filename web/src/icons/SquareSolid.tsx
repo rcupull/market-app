@@ -11,7 +11,7 @@ export function SvgSquareSolid(props: StyleProps) {
       height: '1em',
       ...props,
     },
-    createElement('path', { d: 'M6 6v20h20V6H6z' })
+    createElement('path', { d: 'M6 6v20h20V6H6z' }),
   );
 }
 export default SvgSquareSolid;

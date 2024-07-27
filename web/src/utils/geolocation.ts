@@ -12,7 +12,7 @@ export const getCurrentLocation = async (): Promise<MapOlPosition> => {
       (e) => {
         console.error('Some error fetching geoposition');
         reject(e);
-      }
+      },
     );
   });
 };
@@ -22,7 +22,7 @@ export const getCurrentLocation = async (): Promise<MapOlPosition> => {
  */
 export const getDistanceBetweenPositions = (
   position1: MapOlPosition,
-  position2: MapOlPosition
+  position2: MapOlPosition,
 ): number => {
   const lat1 = position1.lat;
   const lat2 = position2.lat;

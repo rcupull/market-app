@@ -122,7 +122,7 @@ describe('useBusinessNewUpdateSectionModal', () => {
             </div>
           </div>
         </div>
-      `)
+      `),
     );
   });
 });
