@@ -11,7 +11,7 @@ export function SvgGripLinesVerticalSolid(props: StyleProps) {
       height: '1em',
       ...props,
     },
-    createElement('path', { d: 'M11 3v26h2V3h-2zm8 0v26h2V3h-2z' })
+    createElement('path', { d: 'M11 3v26h2V3h-2zm8 0v26h2V3h-2z' }),
   );
 }
 export default SvgGripLinesVerticalSolid;

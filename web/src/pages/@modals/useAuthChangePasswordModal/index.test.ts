@@ -120,7 +120,7 @@ describe('useAuthChangePasswordModal', () => {
             </div>
           </div>
         </div>
-      `)
+      `),
     );
   });
 });

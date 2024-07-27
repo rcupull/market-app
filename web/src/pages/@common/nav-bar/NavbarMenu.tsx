@@ -86,7 +86,7 @@ export const NavbarMenu = () => {
 
   const addDividerToFirst = (
     items: Array<Nullable<MenuItem>>,
-    label: string
+    label: string,
   ): Array<Nullable<MenuItem>> => {
     const out = [...items];
 
@@ -116,7 +116,7 @@ export const NavbarMenu = () => {
               className,
               cn({
                 'fill-gray-500 ': hidden,
-              })
+              }),
             )}
             hidden={hidden}
           />
@@ -197,7 +197,7 @@ export const NavbarMenu = () => {
                 getEndpoint({
                   path: '/admin/agenda/web/:agendaToken',
                   urlParams: { agendaToken },
-                })
+                }),
               );
             },
           });

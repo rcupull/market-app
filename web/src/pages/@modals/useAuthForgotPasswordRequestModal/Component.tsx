@@ -94,14 +94,14 @@ export const Component = ({ portal }: ComponentProps) => {
                                   };
                                 },
                               },
-                              { emergent: true }
+                              { emergent: true },
                             );
                           },
-                        }
+                        },
                       );
                     }}
                     className="w-full"
-                  />
+                  />,
                 )}
               </form>
             );

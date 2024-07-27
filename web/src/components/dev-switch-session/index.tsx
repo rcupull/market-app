@@ -50,7 +50,7 @@ const sessions: Array<{ email: string | null; password: string | null }> = [
 ];
 
 export const DevSwitchSession = () => {
-  const { isAuthenticated, authSignIn, authData } = useAuth();
+  const { isAuthenticated, authSignIn, user } = useAuth();
   const { signOut } = useSignOut();
   const { pushRoute } = useRouter();
   const debouncer = useDebouncer();
@@ -68,9 +68,9 @@ export const DevSwitchSession = () => {
         if (email === null || password === null) {
           return {
             label: 'Ninguno',
-            active: !authData?.user,
+            active: !user,
             onClick: () => {
-              if (authData?.user?.email === email) return;
+              if (user?.email === email) return;
 
               if (isAuthenticated) {
                 pushRoute('/');
@@ -85,9 +85,9 @@ export const DevSwitchSession = () => {
 
         return {
           label: email,
-          active: authData?.user?.email === email,
+          active: user?.email === email,
           onClick: () => {
-            if (authData?.user?.email === email) return;
+            if (user?.email === email) return;
 
             if (isAuthenticated) {
               pushRoute('/');

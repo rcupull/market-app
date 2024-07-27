@@ -122,7 +122,7 @@ describe('useAdminConfigUpdateTermsAndConditionsModal', () => {
             </div>
           </div>
         </div>
-      `)
+      `),
     );
   });
 });

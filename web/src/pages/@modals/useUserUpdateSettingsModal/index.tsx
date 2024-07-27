@@ -41,7 +41,7 @@ export const useUserUpdateSettingsModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

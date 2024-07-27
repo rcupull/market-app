@@ -13,7 +13,7 @@ type OnCloseFn = () => void;
 type PushModal = <Id extends ModalId>(
   id: Id,
   props: ModalWindowProps<Id>,
-  options?: ModalWindowOptions
+  options?: ModalWindowOptions,
 ) => void;
 
 type OnIsOpen = <Id extends ModalId>(id: Id) => boolean;

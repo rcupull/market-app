@@ -58,7 +58,7 @@ export const RowActions = ({ rowData, allSections, rowIndex }: RowActionsProps) 
                         business && onFetch({ routeName: business.routeName });
                         onClose();
                       },
-                    }
+                    },
                   );
                 }}
               />
@@ -66,7 +66,7 @@ export const RowActions = ({ rowData, allSections, rowIndex }: RowActionsProps) 
           };
         },
       },
-      { emergent: true }
+      { emergent: true },
     );
   };
 
@@ -94,7 +94,7 @@ export const RowActions = ({ rowData, allSections, rowIndex }: RowActionsProps) 
         onAfterSuccess: () => {
           onFetch({ routeName: business?.routeName });
         },
-      }
+      },
     );
   };
 

@@ -38,7 +38,7 @@ export const makerStore = (preloadedState: Partial<AnyRecord> = {}) => {
       slices.useAuth.actions.setState({
         data: authData,
         status: dummyStatus,
-      })
+      }),
     );
   }
 

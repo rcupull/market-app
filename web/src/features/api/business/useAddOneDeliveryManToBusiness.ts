@@ -24,7 +24,7 @@ export const useAddOneDeliveryManToBusiness = (): {
               routeName,
             },
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

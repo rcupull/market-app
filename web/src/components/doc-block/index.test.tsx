@@ -12,7 +12,7 @@ describe('DocBlock', () => {
             items: [<div key="0">item0</div>, <div key="1">item1</div>],
           },
         ]}
-      />
+      />,
     );
 
     expect(result.container).toMatchInlineSnapshot(`

@@ -30,7 +30,7 @@ export const useBusinessUpdateSocialNetworksModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

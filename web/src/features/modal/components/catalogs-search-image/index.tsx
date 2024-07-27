@@ -39,7 +39,7 @@ export const CatalogsSearchImage = ({ onSelected, multi }: CatalogsSearchImagePr
   const { getCatalogsImages } = useGetCatalogsImages();
 
   const { data, setData } = useSimpleSlice<FetchData<UseGetCatalogImagesResponse>>(
-    'modal_catalogsSearchImage'
+    'modal_catalogsSearchImage',
   );
   const [allImages, setAllImages] = useState<Array<GalleryImage>>([]);
   const [search, setSearch] = useState<string>();
@@ -53,7 +53,7 @@ export const CatalogsSearchImage = ({ onSelected, multi }: CatalogsSearchImagePr
           width,
           src: url,
           alt: title,
-        }))
+        })),
       );
     }
   }, [data]);
@@ -118,7 +118,7 @@ export const CatalogsSearchImage = ({ onSelected, multi }: CatalogsSearchImagePr
                 { search: searchValue },
                 {
                   onAfterSuccess: setData,
-                }
+                },
               );
             }, 500);
           }

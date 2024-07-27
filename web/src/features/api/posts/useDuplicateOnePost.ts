@@ -11,9 +11,9 @@ export const useDuplicateOnePost = (): {
 } => {
   const fetch = useFetch<Post>();
 
-  const { authData } = useAuth();
+  const { user } = useAuth();
 
-  const userId = authData?.user._id || '<unknow user>';
+  const userId = user?._id || '<unknow user>';
 
   return {
     duplicateOnePost: {
@@ -28,7 +28,7 @@ export const useDuplicateOnePost = (): {
               urlParams: { userId, postId },
             }),
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

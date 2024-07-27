@@ -122,7 +122,7 @@ describe('useBusinessUpdateSeoModal', () => {
             </div>
           </div>
         </div>
-      `)
+      `),
     );
   });
 });

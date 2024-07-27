@@ -22,7 +22,7 @@ export const useRemoveManyShoppingFromBillAdmin = (): {
             }),
             data: { shoppingIds },
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

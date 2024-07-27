@@ -61,7 +61,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                 onAfterSuccess: () => {
                   onAfterSuccess?.();
                 },
-              }
+              },
             );
           };
 
@@ -103,7 +103,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                   className="w-full"
                   isBusy={updateOneBusiness.status.isBusy}
                   onClick={handleSubmit}
-                />
+                />,
               )}
             </form>
           );
@@ -146,7 +146,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                       business && onFetch({ routeName: business?.routeName });
                     },
                     onAfterFailed: formArgs.onAfterFailed,
-                  }
+                  },
                 );
               }
             }}

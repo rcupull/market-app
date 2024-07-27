@@ -18,7 +18,7 @@ describe('BusinessCardSimple', () => {
           salesAmount: 0,
         }}
       />,
-      { wrapper: getWrapper({ useRouter: true, useRedux: true }) }
+      { wrapper: getWrapper({ useRouter: true, useRedux: true }) },
     );
 
     expect(result.container).toMatchInlineSnapshot(`

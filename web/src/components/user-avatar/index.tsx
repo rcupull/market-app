@@ -10,10 +10,10 @@ export interface UserAvatarProps extends StyleProps {
 }
 
 export const UserAvatar = ({ className, size = 'small' }: UserAvatarProps) => {
-  const { authData } = useAuth();
+  const { user } = useAuth();
 
-  let profileImageSrc = authData?.user?.profileImage?.src;
-  const profileName = authData?.user?.name;
+  let profileImageSrc = user?.profileImage?.src;
+  const profileName = user?.name;
 
   if (profileImageSrc) {
     profileImageSrc = profileImageSrc && getImageEndpoint(profileImageSrc);
@@ -27,7 +27,7 @@ export const UserAvatar = ({ className, size = 'small' }: UserAvatarProps) => {
             'size-10': size === 'small',
             'size-16': size === 'medium',
           },
-          className
+          className,
         )}
         src={profileImageSrc}
         alt=""
@@ -48,7 +48,7 @@ export const UserAvatar = ({ className, size = 'small' }: UserAvatarProps) => {
           'size-10': size === 'small',
           'size-16': size === 'medium',
         },
-        className
+        className,
       )}
     >
       <span

@@ -30,9 +30,9 @@ export const useAddOnePost = (): {
 } => {
   const fetch = useFetch<Post>();
 
-  const { authData } = useAuth();
+  const { user } = useAuth();
 
-  const userId = authData?.user._id || '<unknow user>';
+  const userId = user?._id || '<unknow user>';
 
   return {
     addOnePost: {
@@ -48,7 +48,7 @@ export const useAddOnePost = (): {
             }),
             data,
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

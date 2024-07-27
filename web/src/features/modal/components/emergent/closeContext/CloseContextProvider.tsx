@@ -49,7 +49,7 @@ export const CloseContextProvider = ({ modalProps, children }: CloseContextProvi
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     });

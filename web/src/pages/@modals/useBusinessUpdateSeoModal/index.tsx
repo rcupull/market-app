@@ -30,7 +30,7 @@ export const useBusinessUpdateSeoModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

@@ -39,7 +39,7 @@ export const ToggleButton = ({
         {
           '!bg-blue-600': state,
         },
-        className
+        className,
       )}
     >
       <span
@@ -47,7 +47,7 @@ export const ToggleButton = ({
           'translate-x-1 inline-block h-4 w-4 transform rounded-full bg-white transition',
           {
             '!translate-x-6': state,
-          }
+          },
         )}
       />
     </Switch>

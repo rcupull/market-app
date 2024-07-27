@@ -93,11 +93,11 @@ export const Component = ({ portal }: ComponentProps) => {
                           onAfterSuccess: () => {
                             onClose();
                           },
-                        }
+                        },
                       );
                     }}
                     className="w-full"
-                  />
+                  />,
                 )}
               </form>
             );

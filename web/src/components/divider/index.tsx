@@ -14,7 +14,7 @@ export const Divider = ({ className, narrow }: DividerProps) => {
           'mt-8 mb-4': !narrow,
           'my-1': narrow,
         },
-        className
+        className,
       )}
     />
   );

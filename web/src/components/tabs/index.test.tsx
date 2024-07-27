@@ -16,7 +16,7 @@ describe('Tabs', () => {
             content: <div>Tab 2</div>,
           },
         ]}
-      />
+      />,
     );
 
     expect(result.container).toMatchInlineSnapshot(`

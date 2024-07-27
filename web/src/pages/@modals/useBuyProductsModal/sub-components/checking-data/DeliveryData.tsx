@@ -23,7 +23,7 @@ export const DeliveryData = ({
   takeDelivery,
 }: DeliveryDataProps) => {
   const { business } = useBusiness();
-  const { authData } = useAuth();
+  const { user } = useAuth();
   const { businessDeliveryModal } = useBusinessDeliveryModal();
 
   const isEnabledDelivery = getDeliveryUtils().getIsEnabled({
@@ -71,7 +71,7 @@ export const DeliveryData = ({
 
   const distance = getDistance({
     businessAddress: business?.addresses?.[0],
-    userAddress: authData?.user?.addresses?.[0],
+    userAddress: user?.addresses?.[0],
   });
 
   //////////////////////////////////////////////////////////////////////////////////////////
@@ -145,6 +145,6 @@ export const DeliveryData = ({
       })}
 
       {renderDeliveryPrice()}
-    </div>
+    </div>,
   );
 };

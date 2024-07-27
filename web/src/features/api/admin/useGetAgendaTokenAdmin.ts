@@ -21,7 +21,7 @@ export const useGetAgendaTokenAdmin = (): {
             }),
             data,
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

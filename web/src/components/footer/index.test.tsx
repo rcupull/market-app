@@ -16,7 +16,7 @@ describe('Footer', () => {
           youtube: 'youtube',
         }}
       />,
-      { wrapper: getWrapper({ useRouter: true }) }
+      { wrapper: getWrapper({ useRouter: true }) },
     );
 
     expect(result.container).toMatchInlineSnapshot(`

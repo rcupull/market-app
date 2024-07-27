@@ -25,7 +25,7 @@ export const useBuyProductsModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

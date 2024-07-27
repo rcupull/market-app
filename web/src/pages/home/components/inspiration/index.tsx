@@ -8,7 +8,7 @@ export const Inspiration = ({ className }: InspirationProps) => {
     <div
       className={cn(
         'w-full flex flex-col items-center bg-gray-100 px-2 md:px-8 py-6 rounded-2xl',
-        className
+        className,
       )}
     >
       <div className="text-indigo-700 font-bold text-center flex-shrink-0">

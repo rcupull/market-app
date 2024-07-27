@@ -141,7 +141,7 @@ describe('useBusinessUpdateNewModal', () => {
             </div>
           </div>
         </div>
-      `)
+      `),
     );
   });
 });

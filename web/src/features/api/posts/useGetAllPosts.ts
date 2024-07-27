@@ -24,7 +24,7 @@ export const useGetAllPosts = (): {
               query: { limit: defaultLimit, ...query },
             }),
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

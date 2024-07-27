@@ -137,12 +137,12 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
                       },
                       {
                         onAfterSuccess,
-                      }
+                      },
                     );
                   }}
                   variant="primary"
                   className="w-full"
-                />
+                />,
               )}
             </form>
           );

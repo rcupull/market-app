@@ -120,7 +120,7 @@ describe('useAuthSignUpModal', () => {
             </div>
           </div>
         </div>
-      `)
+      `),
     );
   });
 });

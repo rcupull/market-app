@@ -25,7 +25,7 @@ export const useAddOneBusiness = (): {
             }),
             data,
           },
-          options
+          options,
         );
       },
       reset: fetch[3],
