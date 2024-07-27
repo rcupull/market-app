@@ -9,7 +9,6 @@ import { AuthData, UserDto } from 'types/auth';
 import { wait } from 'utils/general';
 
 type UseAuthMeta = {
-  authData: AuthData | null;
   authSignIn: FetchResource<{ email: string; password: string }, AuthData>;
   user: UserDto | undefined;
   getIsSimpleUser: (user: UserDto | undefined) => boolean;
@@ -30,7 +29,7 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
 
   const { getOneUser } = useGetOneUser();
 
-  const authData = data;
+  const user = data?.user;
 
   const getIsAdmin: UseAuthMeta['getIsAdmin'] = (user) => {
     return user?.role === 'admin';
@@ -59,16 +58,16 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
     getIsSimpleUser,
     getIsBusinessUser,
     getHasSomeAccess: (...access) => {
-      const { specialAccess } = authData?.user || {};
+      const { specialAccess } = user || {};
 
       const hasAccess = access.map((val) => specialAccess?.includes(val)).some(Boolean);
 
       return hasAccess || !!specialAccess?.includes('full');
     },
     onRefreshAuthUser: () => {
-      if (!authData) return;
+      if (!data) return;
 
-      const userId = authData.user._id;
+      const userId = data?.user._id;
 
       getOneUser.fetch(
         {
@@ -78,19 +77,18 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
           onAfterSuccess: (user) => {
             setCookie('user', user);
             setDataRedux({
-              ...authData,
+              ...data,
               user,
             });
           },
         }
       );
     },
-    isAuthenticated: !!authData,
-    user: authData?.user,
+    isAuthenticated: !!user,
+    user,
     getIsAdmin,
-    authData,
     authSignIn: {
-      data: authData,
+      data,
       status,
       fetch: ({ email, password }, options = {}) => {
         fetch(

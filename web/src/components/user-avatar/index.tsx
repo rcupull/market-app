@@ -10,10 +10,10 @@ export interface UserAvatarProps extends StyleProps {
 }
 
 export const UserAvatar = ({ className, size = 'small' }: UserAvatarProps) => {
-  const { authData } = useAuth();
+  const { user } = useAuth();
 
-  let profileImageSrc = authData?.user?.profileImage?.src;
-  const profileName = authData?.user?.name;
+  let profileImageSrc = user?.profileImage?.src;
+  const profileName = user?.name;
 
   if (profileImageSrc) {
     profileImageSrc = profileImageSrc && getImageEndpoint(profileImageSrc);

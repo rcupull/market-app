@@ -57,8 +57,6 @@ const get_reviews: () => RequestHandler = () => {
         },
       });
 
-      console.log('reviewersData', reviewersData);
-
       const handleResolveDto = async (review: Review): Promise<ReviewDto> => {
         const { reviewerId } = review;
         const reviewer = reviewersData.find(({ _id }) => isEqualIds(_id, reviewerId));

@@ -10,10 +10,8 @@ import { StyleProps } from 'types/general';
 import { cn } from 'utils/general';
 
 export const BannerInfoTelegramUser = ({ className }: StyleProps) => {
-  const { authData, onRefreshAuthUser } = useAuth();
+  const { user, onRefreshAuthUser } = useAuth();
   const { updateTelegramBotUserModal } = useUpdateTelegramBotUserModal();
-
-  const user = authData?.user;
 
   if (!user) {
     return <></>;

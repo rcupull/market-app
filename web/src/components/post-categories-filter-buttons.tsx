@@ -34,11 +34,11 @@ export const PostCategoriesFilterButtons = ({
 }: PostCategoriesFilterButtonsProps) => {
   const debouncer = useDebouncer();
   const [state, setState] = useState<Array<string>>();
-  const { authData } = useAuth();
+  const { user } = useAuth();
 
   const { business } = useBusiness();
 
-  const isMyBussiness = business?.createdBy === authData?.user?._id;
+  const isMyBussiness = business?.createdBy === user?._id;
 
   useEffect(() => {
     setState(value);

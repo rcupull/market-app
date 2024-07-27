@@ -19,5 +19,5 @@ DeliveryShema.plugin(mongoosePaginate);
 export const DeliveryModel = model<Delivery, PaginateModel<Delivery>>(
   'Delivery',
   DeliveryShema,
-  'deliveries',
+  'deliveries'
 );

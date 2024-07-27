@@ -14,10 +14,6 @@ export let cookiesUtilsBackdoor: CookiesUtils = {
     console.log('calling default getCookie');
     /**NOP */
   },
-  getCookies: () => {
-    console.log('calling default getCookies');
-    /**NOP */
-  },
   removeCookie: () => {
     console.log('calling default removeCookie');
     /**NOP */
@@ -45,11 +41,6 @@ const CookiesProvider = ({ children }: ChildrenProp) => {
     return cookies[key];
   };
 
-  const getCookies: CookiesUtils['getCookies'] = () => {
-    const [cookies] = useCookiesPersistent.current;
-    return cookies;
-  };
-
   const removeCookie: CookiesUtils['removeCookie'] = (...args) => {
     const [, , removeCookie] = useCookiesPersistent.current;
     removeCookie(...args);
@@ -57,7 +48,6 @@ const CookiesProvider = ({ children }: ChildrenProp) => {
 
   cookiesUtilsBackdoor = {
     getCookie,
-    getCookies,
     removeCookie,
     setCookie,
   };

@@ -8,11 +8,9 @@ export interface ComponentProps {
 }
 
 export const Component = ({ onAfterSuccess }: ComponentProps) => {
-  const { authData } = useAuth();
+  const { user } = useAuth();
 
   const { updateTelegramChatBotUser } = useUpdateTelegramChatBotUser();
-
-  const user = authData?.user;
 
   return (
     <TelegramActivationSteps

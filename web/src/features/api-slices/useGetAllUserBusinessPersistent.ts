@@ -15,7 +15,7 @@ export const useAllUserBusiness = (): {
   const { getAllBusiness } = useGetAllBusiness();
 
   const { data, fetch, reset } = useApiPersistentPaginated('useAllUserBusiness', getAllBusiness);
-  const { authData } = useAuth();
+  const { user } = useAuth();
 
   return {
     allUserBusiness: {
@@ -25,7 +25,7 @@ export const useAllUserBusiness = (): {
         fetch({
           includeHidden: true,
           pagination: false,
-          userId: authData?.user._id,
+          userId: user?._id,
         });
       },
     },
