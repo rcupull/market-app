@@ -13,7 +13,7 @@ export function SvgGlassWhiskeySolid(props: StyleProps) {
     },
     createElement('path', {
       d: 'M4.818 7l3.334 20h15.696L27.18 7H4.818zm2.364 2H24.82l-1.666 10H10.67l.33 2h11.82l-.666 4H9.848L7.182 9z',
-    })
+    }),
   );
 }
 export default SvgGlassWhiskeySolid;

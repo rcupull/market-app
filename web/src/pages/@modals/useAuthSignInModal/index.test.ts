@@ -29,7 +29,6 @@ describe('useAuthSignInModal', () => {
     await waitFor(() =>
       expect(screen.getByTestId('Modal')).toMatchInlineSnapshot(`
         <div
-          aria-labelledby="headlessui-dialog-title-:rh:"
           aria-modal="true"
           class="relative z-30"
           data-headlessui-state="open"
@@ -121,7 +120,7 @@ describe('useAuthSignInModal', () => {
             </div>
           </div>
         </div>
-      `)
+      `),
     );
   });
 });

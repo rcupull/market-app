@@ -32,7 +32,7 @@ export const ShoppingButtonStateHistory = ({ shopping }: ShoppingButtonStateHist
           };
         },
       },
-      { emergent: true }
+      { emergent: true },
     );
   };
   return (

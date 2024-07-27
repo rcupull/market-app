@@ -29,7 +29,7 @@ export const DocBlockItemComponent = ({
               {item}
             </li>
           );
-        })
+        }),
       )}
     </HtmlTextContainer>
   );

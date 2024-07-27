@@ -21,7 +21,7 @@ export const useAdminBDScript = (): {
             }),
             data,
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

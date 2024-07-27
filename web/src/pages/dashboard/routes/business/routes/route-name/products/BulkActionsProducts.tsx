@@ -73,7 +73,7 @@ export const BulkActionsProducts = ({
                         routeName,
                         query: { postCategoriesMethod, postCategoriesTags, search },
                       },
-                      { onAfterSuccess }
+                      { onAfterSuccess },
                     );
                   }
 
@@ -84,7 +84,7 @@ export const BulkActionsProducts = ({
                         query: { postCategoriesMethod, postCategoriesTags, search },
                         ids: selected.map((p) => p._id),
                       },
-                      { onAfterSuccess }
+                      { onAfterSuccess },
                     );
                   }
                 }}
@@ -93,7 +93,7 @@ export const BulkActionsProducts = ({
           };
         },
       },
-      { emergent: true }
+      { emergent: true },
     );
   };
 
@@ -140,7 +140,7 @@ export const BulkActionsProducts = ({
                           search,
                         },
                       },
-                      { onAfterSuccess }
+                      { onAfterSuccess },
                     );
                   }
 
@@ -156,7 +156,7 @@ export const BulkActionsProducts = ({
                         },
                         ids: selected.map((p) => p._id),
                       },
-                      { onAfterSuccess }
+                      { onAfterSuccess },
                     );
                   }
                 }}
@@ -165,7 +165,7 @@ export const BulkActionsProducts = ({
           };
         },
       },
-      { emergent: true }
+      { emergent: true },
     );
   };
 

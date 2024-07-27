@@ -29,6 +29,7 @@ describe('useBusinessUpdateBannerModal', () => {
     await waitFor(() =>
       expect(screen.getByTestId('Modal')).toMatchInlineSnapshot(`
         <div
+          aria-labelledby="headlessui-dialog-title-:rl:"
           aria-modal="true"
           class="relative z-30"
           data-headlessui-state="open"
@@ -122,7 +123,7 @@ describe('useBusinessUpdateBannerModal', () => {
             </div>
           </div>
         </div>
-      `)
+      `),
     );
   });
 });

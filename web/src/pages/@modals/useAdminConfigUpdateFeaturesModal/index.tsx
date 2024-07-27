@@ -30,7 +30,7 @@ export const useAdminConfigUpdateFeaturesModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

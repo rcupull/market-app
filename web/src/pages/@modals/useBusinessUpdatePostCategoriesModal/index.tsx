@@ -38,7 +38,7 @@ export const useBusinessUpdatePostCategoriesModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

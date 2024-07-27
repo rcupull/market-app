@@ -23,7 +23,7 @@ export const useShoppingMakeOrder = (): {
             }),
             data: { delivery },
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

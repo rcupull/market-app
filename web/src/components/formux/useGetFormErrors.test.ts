@@ -107,6 +107,6 @@ describe('useGetFormErrors', () => {
 
       const errors = await result.current(value, [validation]);
       expect(errors).toEqual(expected);
-    }
+    },
   );
 });

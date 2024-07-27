@@ -28,7 +28,7 @@ export const useUpdateManyBusiness = (): {
               data,
             };
           }),
-          options
+          options,
         );
       },
       reset: fetch[3],

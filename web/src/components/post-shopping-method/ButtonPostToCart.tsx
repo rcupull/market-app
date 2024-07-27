@@ -72,7 +72,7 @@ export const ButtonPostToCart = ({
           onAfterSuccess: () => {
             cart.onFetch();
           },
-        }
+        },
       );
     }, 500);
   };

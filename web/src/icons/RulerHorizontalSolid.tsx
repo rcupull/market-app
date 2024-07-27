@@ -13,7 +13,7 @@ export function SvgRulerHorizontalSolid(props: StyleProps) {
     },
     createElement('path', {
       d: 'M0 8v16h32V8zm2 2h3v7h2v-7h2v4h2v-4h2v7h2v-7h2v4h2v-4h2v7h2v-7h2v4h2v-4h3v12H2z',
-    })
+    }),
   );
 }
 export default SvgRulerHorizontalSolid;

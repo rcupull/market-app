@@ -8,7 +8,7 @@ import { dynamic } from 'utils/makeLazy';
 
 //eslint-disable-next-line
 const TermsAndConditions = dynamic(() =>
-  import('pages/@common/terms-and-conditions').then((m) => m)
+  import('pages/@common/terms-and-conditions').then((m) => m),
 );
 
 export const useTermsAndConditionsModal = () => {
@@ -34,7 +34,7 @@ export const useTermsAndConditionsModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

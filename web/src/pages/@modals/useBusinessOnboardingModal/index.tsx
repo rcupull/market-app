@@ -26,7 +26,7 @@ export const useBusinessOnboardingModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

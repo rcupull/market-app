@@ -59,7 +59,7 @@ export const useInit = () => {
             },
           });
         },
-        20 * 60 * 1000 //20min
+        20 * 60 * 1000, //20min
       );
     } else {
       refreshInterval.cancel();

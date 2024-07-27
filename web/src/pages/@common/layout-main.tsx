@@ -18,7 +18,7 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
       <div className="flex flex-row-reverse mt-[64px]">
         <div
           className={cn(
-            'w-full overflow-auto max-h-[calc(100vh-64px)] min-h-[calc(100vh-64px)] flex flex-col'
+            'w-full overflow-auto max-h-[calc(100vh-64px)] min-h-[calc(100vh-64px)] flex flex-col',
           )}
         >
           {children}

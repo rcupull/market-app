@@ -122,7 +122,7 @@ describe('useAdminConfigUpdateFeaturesModal', () => {
             </div>
           </div>
         </div>
-      `)
+      `),
     );
   });
 });

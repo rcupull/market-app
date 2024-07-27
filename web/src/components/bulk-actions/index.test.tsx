@@ -17,7 +17,7 @@ describe('BulkActions', () => {
         }}
       >
         {() => <></>}
-      </BulkActions>
+      </BulkActions>,
     );
 
     expect(result.container).toMatchInlineSnapshot(`<div />`);

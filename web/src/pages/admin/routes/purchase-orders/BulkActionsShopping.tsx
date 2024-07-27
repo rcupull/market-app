@@ -38,7 +38,7 @@ export const BulkActionsShopping = ({
             onReset();
             onRefresh();
           },
-        }
+        },
       );
     }
 
@@ -52,7 +52,7 @@ export const BulkActionsShopping = ({
             onReset();
             onRefresh();
           },
-        }
+        },
       );
     }
   };

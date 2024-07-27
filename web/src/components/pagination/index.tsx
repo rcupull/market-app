@@ -13,7 +13,7 @@ const NavButton = ({ className, ...omittedProps }: ButtonProps) => {
     <Button
       className={cn(
         'w-10 rounded-none relative inline-flex items-center px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0',
-        className
+        className,
       )}
       variant="outlined"
       {...omittedProps}
@@ -40,7 +40,7 @@ export const Pagination = ({ paginator, onChange, className }: PaginationProps) 
 
     if (pagesBySections === undefined) {
       setPagesBySections(
-        isNumber(pageCount) && pageCount > defaultPageBySection ? defaultPageBySection : pageCount
+        isNumber(pageCount) && pageCount > defaultPageBySection ? defaultPageBySection : pageCount,
       );
     }
 
@@ -156,7 +156,7 @@ export const Pagination = ({ paginator, onChange, className }: PaginationProps) 
     <div
       className={cn(
         'flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6',
-        className
+        className,
       )}
     >
       {xsPaginator}

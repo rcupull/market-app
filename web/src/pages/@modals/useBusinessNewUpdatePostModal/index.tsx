@@ -78,7 +78,7 @@ export const useBusinessNewUpdatePostModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

@@ -26,7 +26,7 @@ export const useBusinessDeliveryManModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

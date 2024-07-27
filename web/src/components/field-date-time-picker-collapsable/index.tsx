@@ -14,7 +14,7 @@ export interface FieldDateTimePickerCollapsableProps
 }
 
 export const FieldDateTimePickerCollapsable = (
-  props: FieldDateTimePickerCollapsableProps
+  props: FieldDateTimePickerCollapsableProps,
 ): JSX.Element => {
   const { label, className, description, ...omittedProps } = props;
   const { field, error } = useFormField(props);

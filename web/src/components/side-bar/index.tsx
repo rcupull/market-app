@@ -31,7 +31,7 @@ export const SideBar = ({ className, items, collapse }: SideBarProps) => {
       data-id="SideBar"
       className={cn(
         'flex flex-col items-center w-full h-full overflow-hidden text-gray-700 bg-gray-100 pb-3  border-r-2 border-gray-300',
-        className
+        className,
       )}
     >
       {items?.map((item, index) => {
@@ -55,7 +55,7 @@ export const SideBar = ({ className, items, collapse }: SideBarProps) => {
                 className={cn(
                   'flex items-center w-full h-12 px-3 mt-2 hover:bg-gray-300 hover:text-gray-800 overflow-hidden',
                   { ['bg-gray-200 text-gray-900']: isActive },
-                  className
+                  className,
                 )}
                 to={href}
               >
@@ -69,7 +69,7 @@ export const SideBar = ({ className, items, collapse }: SideBarProps) => {
                 className={cn(
                   'flex items-center cursor-pointer w-full h-12 px-3 mt-2 rounded hover:bg-gray-300 hover:text-gray-800 overflow-hidden',
                   { ['bg-gray-200 text-gray-900']: isActive },
-                  className
+                  className,
                 )}
                 onClick={onClick}
               >

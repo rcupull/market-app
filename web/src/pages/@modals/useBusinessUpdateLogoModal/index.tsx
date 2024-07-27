@@ -28,7 +28,7 @@ export const useBusinessUpdateLogoModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

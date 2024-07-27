@@ -45,7 +45,7 @@ export const ShoppingCartRemoveAllButton = ({ className }: ShoppingCartRemoveAll
                             onClose();
                             cart.onFetch();
                           },
-                        }
+                        },
                       );
                     }}
                   />
@@ -53,7 +53,7 @@ export const ShoppingCartRemoveAllButton = ({ className }: ShoppingCartRemoveAll
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       }}
       className={className}

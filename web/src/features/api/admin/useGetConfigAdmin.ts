@@ -22,7 +22,7 @@ export const useGetConfigAdmin = (): {
             }),
             data,
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

@@ -75,7 +75,7 @@ export const Component = ({ portal }: ComponentProps) => {
                           onFetch({ routeName });
                           onClose();
                         },
-                      }
+                      },
                     );
                   };
 
@@ -89,7 +89,7 @@ export const Component = ({ portal }: ComponentProps) => {
                       },
                       {
                         onAfterSuccess: ([logo]) => submitLogo(logo),
-                      }
+                      },
                     );
                   } else {
                     submitLogo(null);
@@ -97,7 +97,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 }}
                 variant="primary"
                 className="w-full"
-              />
+              />,
             )}
           </form>
         );

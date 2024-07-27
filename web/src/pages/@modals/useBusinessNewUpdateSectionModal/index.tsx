@@ -68,7 +68,7 @@ export const useBusinessNewUpdateSectionModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

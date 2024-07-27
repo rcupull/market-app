@@ -30,7 +30,7 @@ export const useAdminConfigUpdatePrivacyPolicyModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

@@ -109,7 +109,7 @@ export const Links = () => {
                 <TopActions>
                   {buttonNew}
                   {buttonRefresh}
-                </TopActions>
+                </TopActions>,
               )}
             </div>
 

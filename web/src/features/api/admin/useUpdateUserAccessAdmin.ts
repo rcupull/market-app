@@ -28,7 +28,7 @@ export const useUpdateUserAccessAdmin = (): {
               specialAccess,
             },
           },
-          options
+          options,
         );
       },
       reset: fetch[3],

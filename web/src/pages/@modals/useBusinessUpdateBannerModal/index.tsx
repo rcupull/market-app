@@ -39,7 +39,7 @@ export const useBusinessUpdateBannerModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

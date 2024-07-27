@@ -145,6 +145,6 @@ export const DeliveryData = ({
       })}
 
       {renderDeliveryPrice()}
-    </div>
+    </div>,
   );
 };

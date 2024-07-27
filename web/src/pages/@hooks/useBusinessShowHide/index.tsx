@@ -55,7 +55,7 @@ export const useBusinessShowHide = (): {
                           onAfterSuccess?.(response);
                           onClose();
                         },
-                      }
+                      },
                     );
                   }}
                 />
@@ -63,7 +63,7 @@ export const useBusinessShowHide = (): {
             };
           },
         },
-        { emergent: true }
+        { emergent: true },
       );
     },
   };

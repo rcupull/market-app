@@ -7,7 +7,7 @@ import SvgAccessibleIcon from 'icons/AccessibleIcon';
 describe('SettingBox', () => {
   it('render', async () => {
     const result = render(
-      <SettingBox svg={SvgAccessibleIcon} title="title" description="description" />
+      <SettingBox svg={SvgAccessibleIcon} title="title" description="description" />,
     );
 
     expect(result.container).toMatchInlineSnapshot(`

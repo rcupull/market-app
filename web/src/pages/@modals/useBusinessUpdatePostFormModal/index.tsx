@@ -38,7 +38,7 @@ export const useBusinessUpdatePostFormModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

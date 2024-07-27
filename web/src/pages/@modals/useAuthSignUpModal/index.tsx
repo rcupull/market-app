@@ -29,7 +29,7 @@ export const useAuthSignUpModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

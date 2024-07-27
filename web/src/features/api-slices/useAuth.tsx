@@ -81,7 +81,7 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
               user,
             });
           },
-        }
+        },
       );
     },
     isAuthenticated: !!user,
@@ -109,7 +109,7 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
               await wait(100);
               options?.onAfterSuccess?.(response);
             },
-          }
+          },
         );
       },
       reset: () => {

@@ -174,7 +174,7 @@ export const MapOl = ({
             });
 
             return feature;
-          })
+          }),
         );
       }
     }

@@ -25,7 +25,7 @@ export const usePrivacyPolicyModal = () => {
               };
             },
           },
-          { emergent: true }
+          { emergent: true },
         );
       },
     },

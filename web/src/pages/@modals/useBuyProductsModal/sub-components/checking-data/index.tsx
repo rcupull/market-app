@@ -91,7 +91,7 @@ export const CheckingData = ({ nextBtnProps, backBtnProps }: CheckingDataProps) 
                     cart.onFetch();
                     nextBtnProps.onClick?.();
                   },
-                }
+                },
               );
             }}
           />

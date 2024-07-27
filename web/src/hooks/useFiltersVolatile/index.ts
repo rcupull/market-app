@@ -14,7 +14,7 @@ export interface UseFiltersReturn<S extends AnyRecord = AnyRecord> {
 }
 
 export const useFiltersVolatile = <S extends AnyRecord = AnyRecord>(
-  args: UseFiltersArgs<S>
+  args: UseFiltersArgs<S>,
 ): UseFiltersReturn<S> => {
   const { onChange } = args || {};
 

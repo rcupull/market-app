@@ -29,7 +29,7 @@ export const Component = ({ onAfterSuccess }: ComponentProps) => {
                 onAfterSuccess?.();
               },
               onAfterFailed: formArgs.onAfterFailed,
-            }
+            },
           );
         }
       }}

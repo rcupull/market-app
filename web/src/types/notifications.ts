@@ -12,8 +12,3 @@ export interface NotificationPayload {
   routeName?: string;
   //
 }
-
-export interface Notification {
-  body: React.ReactNode;
-  title: React.ReactNode;
-}

@@ -13,9 +13,14 @@
     "prettier": "prettier --write 'src/**/*.{ts,tsx}'",
     "lint": "eslint src --ext js,jsx,ts,tsx --cache",
     "lint:fix": "pnpm prettier; pnpm lint --fix",
-    "test": "jest"
+    "test": "jest",
+    "<<<<<<<<<<<<<<<<<<<<<<<<<<ANDROID>>>>>>>>>>>>>>>>>>>>>>>>>>": "",
+    "start:android": "pnpm build && npx cap run android"
   },
   "dependencies": {
+    "@capacitor/android": "^6.1.1",
+    "@capacitor/core": "^6.1.1",
+    "@capacitor/push-notifications": "^6.0.1",
     "@ckeditor/ckeditor5-react": "^6.2.0",
     "@dnd-kit/core": "^6.1.0",
     "@dnd-kit/sortable": "^8.0.0",
@@ -49,6 +54,7 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
+    "@capacitor/cli": "^6.1.1",
     "@storybook/addon-essentials": "^7.6.11",
     "@storybook/addon-interactions": "^7.6.11",
     "@storybook/addon-links": "^7.6.11",

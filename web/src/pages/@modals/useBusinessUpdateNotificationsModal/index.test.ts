@@ -122,7 +122,7 @@ describe('useBusinessUpdateNotificationsModal', () => {
             </div>
           </div>
         </div>
-      `)
+      `),
     );
   });
 });
