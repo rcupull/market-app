@@ -1,8 +1,8 @@
 import { BrowserRouter } from 'react-router-dom';
 
-import { CookiesService } from 'features/cookies';
 import { ModalContainer } from 'features/modal';
 import { NotificationsProvider } from 'features/notifications';
+import { PersistentProvider } from 'features/persistent';
 import { ReduxProvider } from 'features/redux';
 
 import { ReduxState } from 'types/redux';
@@ -47,7 +47,7 @@ export const getWrapper = ({
     }
 
     if (useCookies) {
-      out = <CookiesService>{out}</CookiesService>;
+      out = <PersistentProvider>{out}</PersistentProvider>;
     }
 
     return out;

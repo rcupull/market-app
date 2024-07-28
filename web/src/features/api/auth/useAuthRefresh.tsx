@@ -1,4 +1,4 @@
-import { useCookies } from 'features/cookies/useCookies';
+import { usePersistentContext } from 'features/persistent/usePersistentContext';
 
 import { useFetch } from 'hooks/useFetch';
 
@@ -9,14 +9,14 @@ export const useAuthRefresh = (): {
   authRefresh: FetchResource<void, { accessToken: string }>;
 } => {
   const fetch = useFetch<{ accessToken: string }>();
-  const { getCookie } = useCookies();
+  const { getPersistent } = usePersistentContext();
 
   return {
     authRefresh: {
       data: fetch[0],
       status: fetch[1],
-      fetch: (_, options = {}) => {
-        const refreshToken = getCookie('refreshToken');
+      fetch: async (_, options = {}) => {
+        const refreshToken = await getPersistent('refreshToken');
 
         fetch[2](
           {

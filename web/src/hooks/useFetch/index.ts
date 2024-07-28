@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { useCookies } from 'features/cookies/useCookies';
+import { usePersistentContext } from 'features/persistent/usePersistentContext';
 
 import { useDebouncedValue } from 'hooks/useDebouncedValue';
 
@@ -57,7 +57,7 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
   const [error, setError] = useState<ApiError | null>(null);
   const [status, setStatus] = useState<ApiStatus>('NOT_STARTED');
   const [wasCalled, setWasCalled] = useState<boolean>(false);
-  const { getCookie, setCookie } = useCookies();
+  const { getPersistent, setPersistent } = usePersistentContext();
   const debouncedStatus = useDebouncedValue<ApiStatus>(status, 100);
 
   useEffect(() => {
@@ -84,34 +84,34 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
       }
 
       fetchingTokenPromise = new Promise((resolve, reject) => {
-        const refreshToken = getCookie('refreshToken');
-
-        axios({
-          method: 'post',
-          url: getEndpoint({ path: '/auth/refresh' }),
-          data: { refreshToken },
-        })
-          .then(({ data }) => {
-            const newAccessToken = data.accessToken;
-
-            setCookie('accessToken', newAccessToken);
-            setCookie('accessTokenUpdatedAt', new Date().toISOString());
-
-            fetchingTokenPromise = null;
-
-            if (DEVELOPMENT) {
-              //simulate the api call delay
-              wait(500).then(() => {
-                resolve(newAccessToken);
-              });
-            } else {
-              resolve(newAccessToken);
-            }
+        getPersistent('refreshToken').then((refreshToken) => {
+          axios({
+            method: 'post',
+            url: getEndpoint({ path: '/auth/refresh' }),
+            data: { refreshToken },
           })
-          .catch((e) => {
-            fetchingTokenPromise = null;
-            reject(e);
-          });
+            .then(({ data }) => {
+              const newAccessToken = data.accessToken;
+
+              setPersistent('accessToken', newAccessToken);
+              setPersistent('accessTokenUpdatedAt', new Date().toISOString());
+
+              fetchingTokenPromise = null;
+
+              if (DEVELOPMENT) {
+                //simulate the api call delay
+                wait(500).then(() => {
+                  resolve(newAccessToken);
+                });
+              } else {
+                resolve(newAccessToken);
+              }
+            })
+            .catch((e) => {
+              fetchingTokenPromise = null;
+              reject(e);
+            });
+        });
       });
 
       return fetchingTokenPromise;
@@ -168,14 +168,15 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
       }
     };
 
-    const accessTokenUpdatedAt = getCookie('accessTokenUpdatedAt') as string | null;
+    const accessTokenUpdatedAt = await getPersistent('accessTokenUpdatedAt');
 
     if (accessTokenUpdatedAt && isOutOfDateToken(accessTokenUpdatedAt)) {
+      //the token is outdate
       const accessToken = await handleFetchAccessToken();
       await handleFetchCall(accessToken);
     } else {
-      const accessToken = getCookie('accessToken') as string | null;
-
+      //the token is OK
+      const accessToken = await getPersistent('accessToken');
       await handleFetchCall(accessToken);
     }
   };

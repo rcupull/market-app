@@ -1,15 +1,14 @@
-
 import { NotificationsProvider } from 'features/notifications';
+import { PersistentProvider } from 'features/persistent';
 import { ReduxProvider } from 'features/redux';
 
 import { RouterProvider } from 'hooks/useRouter/RouterProvider';
 
-import { CookiesService } from './features/cookies';
 import { ModalContainer } from './features/modal';
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
-    <CookiesService>
+    <PersistentProvider>
       <ReduxProvider>
         <RouterProvider>
           <NotificationsProvider>
@@ -18,6 +17,6 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
           </NotificationsProvider>
         </RouterProvider>
       </ReduxProvider>
-    </CookiesService>
+    </PersistentProvider>
   );
 };
