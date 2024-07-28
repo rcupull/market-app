@@ -15,7 +15,7 @@
     "lint:fix": "pnpm prettier; pnpm lint --fix",
     "test": "jest",
     "<<<<<<<<<<<<<<<<<<<<<<<<<<ANDROID>>>>>>>>>>>>>>>>>>>>>>>>>>": "",
-    "start:android": "pnpm build && npx cap run android"
+    "run:android": "pnpm build && npx cap run android"
   },
   "dependencies": {
     "@capacitor/android": "^6.1.1",

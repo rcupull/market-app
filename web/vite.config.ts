@@ -23,6 +23,7 @@ export default defineConfig({
     DEVELOPMENT: process.env.NODE_ENV === 'development',
     PRODUCTION: process.env.NODE_ENV === 'production',
     STAGING: process.env.NODE_ENV === 'staging',
+    TUNNEL: process.env.TUNNEL,
   },
   plugins: [react()],
   build: {

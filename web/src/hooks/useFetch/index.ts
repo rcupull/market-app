@@ -131,6 +131,8 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
             headers: {
               ...headers,
               Authorization: accessToken && `Bearer ${accessToken}`,
+              //https://ngrok.com/abuse
+              ...(TUNNEL ? { 'ngrok-skip-browser-warning': true } : {}),
             },
           });
         });

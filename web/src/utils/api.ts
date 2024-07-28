@@ -26,6 +26,10 @@ export const getTelegramUrl = () => {
 };
 
 export const getEndpointUrl = () => {
+  if (TUNNEL) {
+    return 'https://fleet-hamster-positive.ngrok-free.app';
+  }
+
   if (DEVELOPMENT) {
     return 'http://localhost';
   }
