@@ -8,6 +8,9 @@ dependencies:
   '@capacitor/android':
     specifier: ^6.1.1
     version: 6.1.1(@capacitor/core@6.1.1)
+  '@capacitor/app':
+    specifier: ^6.0.0
+    version: 6.0.0(@capacitor/core@6.1.1)
   '@capacitor/core':
     specifier: ^6.1.1
     version: 6.1.1
@@ -1560,6 +1563,14 @@ packages:
     resolution: {integrity: sha512-rhO/nH6NJizGV5KizoIoGxCmkos3HnyUzI9TNv8IVy/C8h6lPM5Gt9cxGclb6k0OBTtgv6iJVo654+m4kzv0Qg==}
     peerDependencies:
       '@capacitor/core': ^6.1.0
+    dependencies:
+      '@capacitor/core': 6.1.1
+    dev: false
+
+  /@capacitor/app@6.0.0(@capacitor/core@6.1.1):
+    resolution: {integrity: sha512-X5UGd90Jh5p9rmoPyMqFyFWqOypdJgVJhYcM5X1YyDVJJGzmJ5MuYv1+ajj5DW9Qyh+5a3th9WYptdGby8jidA==}
+    peerDependencies:
+      '@capacitor/core': ^6.0.0
     dependencies:
       '@capacitor/core': 6.1.1
     dev: false
