@@ -1,4 +1,4 @@
-import { cookiesUtilsBackdoor } from 'features/cookies';
+import { persistentBackdoor } from 'features/persistent';
 import { slices } from 'features/slices';
 
 import { setupReduxBackdoor } from './setupReduxBackdoor';
@@ -6,10 +6,10 @@ import { setupReduxBackdoor } from './setupReduxBackdoor';
 import { configureStore } from '@reduxjs/toolkit';
 import { dummyStatus } from 'constants/api';
 import { combineReducers } from 'redux';
-import { AuthData, User } from 'types/auth';
+import { AuthData } from 'types/auth';
 import { AnyRecord } from 'types/general';
 
-export const makerStore = (preloadedState: Partial<AnyRecord> = {}) => {
+export const makerStore = async (preloadedState: Partial<AnyRecord> = {}) => {
   const enhancedReducers = combineReducers({
     ...Object.values(slices).reduce((r, { name, reducer }) => ({ ...r, [name]: reducer }), {}),
   });
@@ -27,7 +27,7 @@ export const makerStore = (preloadedState: Partial<AnyRecord> = {}) => {
   });
 
   // setting authentication data
-  const user = cookiesUtilsBackdoor.getCookie('user') as User | null;
+  const user = await persistentBackdoor.getPersistent('user');
 
   if (user) {
     const authData: AuthData = {

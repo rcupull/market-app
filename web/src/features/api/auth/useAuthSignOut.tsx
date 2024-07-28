@@ -1,4 +1,4 @@
-import { useCookies } from 'features/cookies/useCookies';
+import { usePersistentContext } from 'features/persistent/usePersistentContext';
 
 import { useFetch } from 'hooks/useFetch';
 
@@ -8,15 +8,15 @@ import { getEndpoint } from 'utils/api';
 export const useAuthSignOut = (): {
   authSignOut: FetchResource<void, void>;
 } => {
-  const { getCookie } = useCookies();
+  const { getPersistent } = usePersistentContext();
   const fetch = useFetch();
 
   return {
     authSignOut: {
       data: fetch[0],
       status: fetch[1],
-      fetch: (_, options) => {
-        const refreshToken = getCookie('refreshToken');
+      fetch: async (_, options) => {
+        const refreshToken = await getPersistent('refreshToken');
 
         fetch[2](
           {

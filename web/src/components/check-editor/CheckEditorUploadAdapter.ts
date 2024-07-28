@@ -1,4 +1,4 @@
-import { cookiesUtilsBackdoor } from 'features/cookies';
+import { persistentBackdoor } from 'features/persistent';
 
 import axios from 'axios';
 
@@ -18,7 +18,7 @@ export class CheckEditorUploadAdapter {
     const data = new FormData();
     data.append('upload', file);
 
-    const accessToken = cookiesUtilsBackdoor.getCookie('accessToken') as string | null;
+    const accessToken = await persistentBackdoor.getPersistent('accessToken');
 
     return new Promise((resolve, reject) => {
       axios({
