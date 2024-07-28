@@ -14,6 +14,9 @@ dependencies:
   '@capacitor/core':
     specifier: ^6.1.1
     version: 6.1.1
+  '@capacitor/preferences':
+    specifier: ^6.0.1
+    version: 6.0.1(@capacitor/core@6.1.1)
   '@capacitor/push-notifications':
     specifier: ^6.0.1
     version: 6.0.1(@capacitor/core@6.1.1)
@@ -1606,6 +1609,14 @@ packages:
     resolution: {integrity: sha512-b1s4WDMy3Y1/owTG2/XNGCI6G5SDpF2NT1JMAgcShue13fiAuHA+Ans7Wfei6McvR0KdopAE6tMHmDAfL5PM8Q==}
     dependencies:
       tslib: 2.6.2
+    dev: false
+
+  /@capacitor/preferences@6.0.1(@capacitor/core@6.1.1):
+    resolution: {integrity: sha512-5UvSK3O/tgPcQ1QyX0zYjb0uujFw+PQgYUSt6i2evf609jAIo7QG1IUZzGb6swEPCpk621wEc6R7Yq/Ywa3GPA==}
+    peerDependencies:
+      '@capacitor/core': ^6.0.0
+    dependencies:
+      '@capacitor/core': 6.1.1
     dev: false
 
   /@capacitor/push-notifications@6.0.1(@capacitor/core@6.1.1):

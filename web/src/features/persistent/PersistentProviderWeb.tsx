@@ -43,7 +43,7 @@ const PersistentsUtilsContext = ({ children }: ChildrenProp) => {
   );
 };
 
-export const PersistentProviderWeb = ({ children }: ChildrenProp) => {
+const PersistentProviderWeb = ({ children }: ChildrenProp) => {
   return (
     <ReactPersistentsProvider
       defaultSetOptions={{
@@ -54,3 +54,5 @@ export const PersistentProviderWeb = ({ children }: ChildrenProp) => {
     </ReactPersistentsProvider>
   );
 };
+
+export default PersistentProviderWeb;

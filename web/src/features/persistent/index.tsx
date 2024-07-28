@@ -1,10 +1,13 @@
 import { usePlatform } from 'hooks/useCapacitor';
 
 import { initialPersistentState } from './Context';
-import { PersistentProviderWeb } from './PersistentProviderWeb';
 import { usePersistentContext } from './usePersistentContext';
 
 import { ChildrenProp } from 'types/general';
+import { dynamic } from 'utils/makeLazy';
+
+const PersistentProviderNative = dynamic(() => import('./PersistentProviderNative').then((m) => m));
+const PersistentProviderWeb = dynamic(() => import('./PersistentProviderWeb').then((m) => m));
 
 export let persistentBackdoor = initialPersistentState;
 
@@ -17,7 +20,7 @@ export const PersistentProvider = ({ children }: ChildrenProp) => {
   const { platformToggle } = usePlatform();
 
   const CookiesProviderPlatform = platformToggle({
-    native: PersistentProviderWeb, //TODO
+    native: PersistentProviderNative,
     web: PersistentProviderWeb,
   });
 

@@ -21,6 +21,7 @@
     "@capacitor/android": "^6.1.1",
     "@capacitor/app": "^6.0.0",
     "@capacitor/core": "^6.1.1",
+    "@capacitor/preferences": "^6.0.1",
     "@capacitor/push-notifications": "^6.0.1",
     "@ckeditor/ckeditor5-react": "^6.2.0",
     "@dnd-kit/core": "^6.1.0",
