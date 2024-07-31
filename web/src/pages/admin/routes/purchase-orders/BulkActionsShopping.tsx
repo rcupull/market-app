@@ -74,9 +74,7 @@ export const BulkActionsShopping = ({
       }}
       renderMenuNode={({ setAction }) => (
         <Menu
-          buttonElement={
-              <IconButtonOptionsBars />
-          }
+          buttonElement={<IconButtonOptionsBars />}
           items={[
             {
               label: 'Crear factura',

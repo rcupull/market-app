@@ -1,7 +1,6 @@
 import { Menu } from 'components/menu';
 
 import { useAdminConfig } from 'features/api-slices/useAdminConfig';
-import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
 
 import { useRouter } from 'hooks/useRouter';
 
@@ -11,26 +10,56 @@ import SvgCogSolid from 'icons/CogSolid';
 import { useBusinessShowHide } from 'pages/@hooks/useBusinessShowHide';
 import { Business } from 'types/business';
 import { getDashboardBusinessRoute, getOneBusinessRoute } from 'utils/business';
-import { getBusinessTabLabel } from 'utils/view';
+import { BusinessTab, getBusinessTabLabel } from 'utils/view';
 
 export interface FooterBusinessOptionsProps {
   business: Business;
   onRefresh: () => void;
+  active?: boolean;
 }
 
-export const FooterBusinessOptions = ({ business, onRefresh }: FooterBusinessOptionsProps) => {
+export const FooterBusinessOptions = ({
+  business,
+  onRefresh,
+  active,
+}: FooterBusinessOptionsProps) => {
   const { routeName, hidden, name } = business;
-  const { allUserBusiness } = useAllUserBusiness();
 
-  const { pushRoute, query } = useRouter();
+  const { pushRoute, query, isOneBusinessPage } = useRouter();
 
   const { getEnabledFeature } = useAdminConfig();
 
   const { onBusinessShowHide } = useBusinessShowHide();
 
+  const getSubLabel = () => {
+    if (!active) return null;
+
+    if (isOneBusinessPage) {
+      return `Página`;
+    }
+
+    if (query.businessTab) {
+      return getBusinessTabLabel(query.businessTab as BusinessTab);
+    }
+
+    return null;
+  };
+
+  const subLabel = getSubLabel();
   return (
     <Menu
-      buttonElement={<FooterButton label={name} svg={SvgCogSolid} />}
+      buttonElement={
+        <FooterButton
+          label={
+            <div className="flex flex-col items-center">
+              {name}
+              {subLabel && <span className="text-xs">({subLabel})</span>}
+            </div>
+          }
+          svg={SvgCogSolid}
+          active={active}
+        />
+      }
       items={[
         {
           label: 'Ver la página',
@@ -44,7 +73,6 @@ export const FooterBusinessOptions = ({ business, onRefresh }: FooterBusinessOpt
             onBusinessShowHide(business, {
               onAfterSuccess: () => {
                 onRefresh();
-                allUserBusiness.refresh();
               },
             });
           },

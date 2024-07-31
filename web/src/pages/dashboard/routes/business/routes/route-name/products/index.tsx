@@ -110,7 +110,7 @@ export const Products = () => {
         {({ getDisabledOverlay, tablePropsProcessor, bulkActionNode, selectAllNode }) => (
           <>
             <div className="flex items-center justify-end mb-1">
-              <TopActions className='!w-fit'>
+              <TopActions className="!w-fit">
                 {getDisabledOverlay(buttonNew)}
                 {getDisabledOverlay(buttonRefresh)}
 

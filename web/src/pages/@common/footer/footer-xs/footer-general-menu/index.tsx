@@ -1,9 +1,7 @@
 import { Button } from 'components/button';
-import { IconShowHide } from 'components/icon-show-hide';
 import { Menu, MenuItem } from 'components/menu';
 
 import { useAdminConfig } from 'features/api-slices/useAdminConfig';
-import { useAuth } from 'features/api-slices/useAuth';
 import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
 
 import { useRouter } from 'hooks/useRouter';
@@ -17,9 +15,7 @@ import { getBusinessRoute, getDashboardBusinessRoute } from 'utils/business';
 import { cn } from 'utils/general';
 
 export const FooterGeneralMenu = () => {
-
-  const { isAuthenticated, user, getIsBusinessUser } = useAuth();
-  const {  params, pushRoute, isOneBusinessPage } = useRouter();
+  const { pushRoute, isOneBusinessPage } = useRouter();
 
   const { businessUpdateNewModal } = useBusinessUpdateNewModal();
 
@@ -59,35 +55,6 @@ export const FooterGeneralMenu = () => {
       },
     ];
 
-    return out;
-  };
-
-  const getBusinessItems = (): Array<Nullable<MenuItem>> => {
-    if (!isAuthenticated || !getIsBusinessUser(user)) return [];
-
-    const out: Array<MenuItem> = (allUserBusiness.data || []).map(({ name, routeName, hidden }) => {
-      const isCurrentBusiness = params.routeName === routeName;
-
-      return {
-        label: name,
-        onClick: () => pushRoute(getDashboardBusinessRoute({ routeName })),
-        svg: ({ className }) => (
-          <IconShowHide
-            className={cn(
-              className,
-              cn({
-                'fill-gray-500 ': hidden,
-              }),
-            )}
-            hidden={hidden}
-          />
-        ),
-        className: cn({
-          'bg-indigo-100': isCurrentBusiness,
-        }),
-      };
-    });
-
     out.push({
       label: (
         <div className="flex justify-center w-full -my-2">
@@ -112,15 +79,13 @@ export const FooterGeneralMenu = () => {
       ),
     });
 
-
-    out[0].divider = 'Mis negocios'
     return out;
   };
 
   return (
     <Menu
       buttonElement={<FooterButton label="Asere Market" svg={SvgShoppingBagSolid} />}
-      items={[...getGeneralItems(), ...getBusinessItems() ]}
+      items={getGeneralItems()}
       className="flex-shrink-0"
     />
   );

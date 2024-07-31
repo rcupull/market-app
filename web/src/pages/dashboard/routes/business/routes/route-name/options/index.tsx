@@ -25,7 +25,7 @@ export const Options = ({ business, onRefresh, className }: OptionsProps) => {
   const { onBusinessShowHide } = useBusinessShowHide();
 
   return (
-    <div className={cn("w-full flex items-center justify-between", className)}>
+    <div className={cn('w-full flex items-center justify-between', className)}>
       <div className="flex items-center">
         <IconButtonShowHide
           hidden={hidden}

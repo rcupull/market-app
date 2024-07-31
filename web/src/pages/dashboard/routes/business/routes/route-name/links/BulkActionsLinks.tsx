@@ -195,9 +195,7 @@ export const BulkActionsLinks = ({
       }}
       renderMenuNode={({ setAction }) => (
         <Menu
-          buttonElement={
-              <IconButtonOptionsBars />
-          }
+          buttonElement={<IconButtonOptionsBars />}
           items={[
             {
               label: 'Eliminar enlaces',

@@ -13,7 +13,7 @@ describe('BreadCrumble', () => {
           { label: 'test2', route: '/test2' },
         ]}
       />,
-      { wrapper: getWrapper({useRouter: true}) },
+      { wrapper: getWrapper({ useRouter: true }) },
     );
 
     expect(result.container).toMatchInlineSnapshot(`

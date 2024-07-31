@@ -69,7 +69,6 @@ export const breakpointsSwitch = <T extends any = any>({
   return values.xs;
 };
 
-
 export type BusinessTab = 'products' | 'links' | 'sections' | 'shopping' | 'billing' | 'settings';
 
 export const getBusinessTabLabel = (tab: BusinessTab): string => {
