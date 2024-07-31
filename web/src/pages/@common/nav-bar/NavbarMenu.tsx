@@ -6,11 +6,11 @@ import { UserAvatar } from 'components/user-avatar';
 
 import { useAdminBDScript } from 'features/api/admin/useAdminBDScript';
 import { useGetAgendaTokenAdmin } from 'features/api/admin/useGetAgendaTokenAdmin';
-import { useAdminConfig } from 'features/api-slices/useAdminConfig';
 import { useAuth } from 'features/api-slices/useAuth';
 import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
 import { useSignOut } from 'features/api-slices/useSignOut';
 
+import { useBreakpoints } from 'hooks/useBreakpoints';
 import { useRouter } from 'hooks/useRouter';
 
 import { BannerInfoTelegramUser } from '../banner-info-telegram-user';
@@ -18,8 +18,7 @@ import { BannerInfoTelegramUser } from '../banner-info-telegram-user';
 import SvgBarsSolid from 'icons/BarsSolid';
 import SvgCalendar from 'icons/Calendar';
 import SvgCogSolid from 'icons/CogSolid';
-import SvgDollarSignSolid from 'icons/DollarSignSolid';
-import SvgHomeSolid from 'icons/HomeSolid';
+import SvgEllipsisVSolid from 'icons/EllipsisVSolid';
 import SvgKeySolid from 'icons/KeySolid';
 import SvgMoneyBillAltSolid from 'icons/MoneyBillAltSolid';
 import SvgProductHunt from 'icons/ProductHunt';
@@ -41,12 +40,7 @@ import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewMod
 import { useUserUpdateSettingsModal } from 'pages/@modals/useUserUpdateSettingsModal';
 import { Nullable } from 'types/general';
 import { getEndpoint } from 'utils/api';
-import {
-  getBusinessRoute,
-  getDashboardBusinessRoute,
-  getOneBusinessRoute,
-  getShoppingRoute,
-} from 'utils/business';
+import { getDashboardBusinessRoute, getOneBusinessRoute, getShoppingRoute } from 'utils/business';
 import { cn } from 'utils/general';
 
 export const NavbarMenu = () => {
@@ -63,7 +57,7 @@ export const NavbarMenu = () => {
   const { routeName } = params;
   const { authChangePasswordModal } = useAuthChangePasswordModal();
   const { userUpdateSettingsModal } = useUserUpdateSettingsModal();
-  const { getEnabledFeature } = useAdminConfig();
+  const breakpoints = useBreakpoints();
 
   const { businessUpdateNewModal } = useBusinessUpdateNewModal();
 
@@ -102,7 +96,7 @@ export const NavbarMenu = () => {
   };
 
   const getBusinessItems = (): Array<Nullable<MenuItem>> => {
-    if (!isAuthenticated || !getIsBusinessUser(user)) return [];
+    if (!isAuthenticated || !getIsBusinessUser(user) || breakpoints.xs) return [];
 
     const out: Array<MenuItem> = (allUserBusiness.data || []).map(({ name, routeName, hidden }) => {
       const isCurrentBusiness = params.routeName === routeName;
@@ -262,7 +256,7 @@ export const NavbarMenu = () => {
         svg: SvgKeySolid,
       },
       isAuthenticated && {
-        label: 'Preferencias de usuario',
+        label: 'Ajustes',
         onClick: () => {
           user && userUpdateSettingsModal.open({ user, onAfterSuccess: () => onRefreshAuthUser() });
         },
@@ -271,45 +265,6 @@ export const NavbarMenu = () => {
     ];
 
     return addDividerToFirst(out, 'Mi cuenta');
-  };
-
-  const getGeneralItems = (): Array<Nullable<MenuItem>> => {
-    const out: Array<Nullable<MenuItem>> = [
-      {
-        label: 'Inicio',
-        onClick: () => pushRoute('/'),
-        svg: SvgHomeSolid,
-        className: cn('lg:hidden', {
-          '!block': isOneBusinessPage,
-        }),
-      },
-      {
-        label: 'Todos los negocios',
-        onClick: () => pushRoute(getBusinessRoute()),
-        svg: SvgStoreSolid,
-        className: cn('lg:hidden', {
-          '!block': isOneBusinessPage,
-        }),
-      },
-      getEnabledFeature('BILLIING_THE_BUSINESS') && {
-        label: 'Precios',
-        onClick: () => pushRoute('/price'),
-        svg: SvgDollarSignSolid,
-        className: cn('lg:hidden', {
-          '!block': isOneBusinessPage,
-        }),
-      },
-      {
-        label: '¿Que es Asere Market?',
-        onClick: () => pushRoute('/about-us'),
-        svg: SvgUsersSolid,
-        className: cn('lg:hidden', {
-          '!block': isOneBusinessPage,
-        }),
-      },
-    ];
-
-    return addDividerToFirst(out, 'Generales');
   };
 
   const getThisBusinessItems = (): Array<Nullable<MenuItem>> => {
@@ -333,11 +288,21 @@ export const NavbarMenu = () => {
     return addDividerToFirst(out, 'En este negocio');
   };
 
+  const renderButtonElement = () => {
+    if (breakpoints.xs) {
+      return <IconButton svg={<SvgEllipsisVSolid className="!size-7" />} />;
+    }
+
+    if (isAuthenticated) {
+      return <UserAvatar />;
+    }
+
+    return <IconButton svg={<SvgBarsSolid className="!size-7" />} />;
+  };
+
   return (
     <Menu
-      buttonElement={
-        isAuthenticated ? <UserAvatar /> : <IconButton svg={<SvgBarsSolid className="!size-7" />} />
-      }
+      buttonElement={renderButtonElement()}
       topElement={
         <>
           {user ? (
@@ -358,8 +323,6 @@ export const NavbarMenu = () => {
       }
       items={[
         ...getThisBusinessItems(),
-        /////////////////////////////////////////////////////////////////////////////
-        ...getGeneralItems(),
         // {
         //   label: getCopyLinkLabel(),
         //   onClick: () => {
