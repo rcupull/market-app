@@ -196,10 +196,7 @@ export const BulkActionsLinks = ({
       renderMenuNode={({ setAction }) => (
         <Menu
           buttonElement={
-            <div className="flex items-center">
               <IconButtonOptionsBars />
-              <span className="ml-2">Acciones múltiples</span>
-            </div>
           }
           items={[
             {

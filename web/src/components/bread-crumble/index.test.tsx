@@ -1,7 +1,8 @@
 import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
 
 import { BreadCrumble } from '.';
+
+import { getWrapper } from 'utils/test-utils';
 
 describe('BreadCrumble', () => {
   it('render', async () => {
@@ -12,7 +13,7 @@ describe('BreadCrumble', () => {
           { label: 'test2', route: '/test2' },
         ]}
       />,
-      { wrapper: BrowserRouter },
+      { wrapper: getWrapper({useRouter: true}) },
     );
 
     expect(result.container).toMatchInlineSnapshot(`

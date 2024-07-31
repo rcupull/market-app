@@ -103,14 +103,13 @@ export const Links = () => {
       >
         {({ selectAllNode, tablePropsProcessor, bulkActionNode, getDisabledOverlay }) => (
           <>
-            <div className="flex items-center justify-between mb-1">
-              {bulkActionNode}
-              {getDisabledOverlay(
-                <TopActions>
-                  {buttonNew}
-                  {buttonRefresh}
-                </TopActions>,
-              )}
+            <div className="flex items-center justify-end mb-1">
+              <TopActions className="!w-fit">
+                {getDisabledOverlay(buttonNew)}
+                {getDisabledOverlay(buttonRefresh)}
+
+                {bulkActionNode}
+              </TopActions>
             </div>
 
             <div className="my-2 flex justify-center">{selectAllNode}</div>

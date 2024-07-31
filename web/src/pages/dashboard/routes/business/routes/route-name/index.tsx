@@ -143,6 +143,7 @@ export const RouteName = () => {
             <Options
               business={business}
               onRefresh={() => businessOwnerData.onFetch({ routeName })}
+              className="hidden sm:flex"
             />
           </div>
         }

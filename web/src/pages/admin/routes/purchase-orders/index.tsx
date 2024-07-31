@@ -62,14 +62,17 @@ export const PurchaseOrders = () => {
         {({ getDisabledOverlay, bulkActionNode, selectAllNode, tablePropsProcessor }) => {
           return (
             <>
-              <div className="flex items-center justify-between mb-1">
-                {bulkActionNode}
-                {getDisabledOverlay(
-                  <ButtonRefresh
-                    onClick={() => onRefreshForce()}
-                    isBusy={getAllShoppingAdmin.status.isBusy}
-                  />,
-                )}
+              <div className="flex justify-end">
+                <TopActions className="!w-fit">
+                  {getDisabledOverlay(
+                    <ButtonRefresh
+                      onClick={() => onRefreshForce()}
+                      isBusy={getAllShoppingAdmin.status.isBusy}
+                    />,
+                  )}
+
+                  {bulkActionNode}
+                </TopActions>
               </div>
 
               {getDisabledOverlay(
