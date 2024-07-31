@@ -68,7 +68,7 @@ export const notificationsServicesSendNewOrderPushMessage: QueryHandle<{
   shopping: Shopping;
 }> = async ({ business, shopping }) => {
   try {
-    const { createdBy, routeName } = business;
+    const { createdBy, routeName, name } = business;
     const user = await userServicesGetOne({
       query: {
         _id: createdBy,
@@ -85,11 +85,16 @@ export const notificationsServicesSendNewOrderPushMessage: QueryHandle<{
         type: 'NEW_ORDER_WAS_CREATED',
         shoopingId: shopping._id.toString(),
         routeName,
+        businessName: name,
       };
 
       await firebaseInstance.messaging().sendEachForMulticast({
         data: { payload: JSON.stringify(payload) },
         tokens: [user.firebaseToken],
+        notification: {
+          title: 'Nueva orden de compra',
+          body: 'Excelente trabajo!!',
+        },
       });
     }
   } catch (e) {

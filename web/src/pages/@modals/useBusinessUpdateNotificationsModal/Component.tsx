@@ -91,7 +91,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                     value: BusinessNotificationFlags.TELEGRAM_NEW_SHOPPING,
                     label: 'Al crear orden de compra',
                     description:
-                      'Le llegarán los detalles (precio, productos y enlace) de las ordenes de compra al ser solicitadas por los clientes.',
+                      'Le llegarán los detalles (precio, productos y enlace) de las órdenes de compra al ser solicitadas por los clientes.',
                   },
                 ]}
                 containerClassName="flex items-center flex-wrap gap-4"

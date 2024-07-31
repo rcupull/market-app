@@ -48,16 +48,18 @@ const NotificationsProviderNative = () => {
 
     });
 
-    await PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
+    await PushNotifications.addListener('pushNotificationActionPerformed', ({ notification}) => {
       if(DEVELOPMENT)(
         console.log(
           'Push notification action performed',
-          notification.actionId,
-          notification.inputValue,
+          notification
         )
       )
 
-
+      if (notification) {
+        //@ts-expect-error ignore
+        onUpdateNotification(notification);
+      }
     });
   };
 

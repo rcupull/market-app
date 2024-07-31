@@ -73,6 +73,10 @@ export const getDashboardBusinessRoute = (args: { routeName: string }) => {
   return `/dashboard/business/${args.routeName}`;
 };
 
+export const getDashboardBusinessShoppingTabRequested = ({ routeName }: { routeName: string }) => {
+  return `${getDashboardBusinessRoute({ routeName })}?bussinessTab=shopping&state=REQUESTED`;
+};
+
 export const getDashboardRoute = () => {
   return `/dashboard`;
 };

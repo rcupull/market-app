@@ -1,4 +1,9 @@
+import { Link } from 'react-router-dom';
+
+import { HtmlTextContainer } from 'components/html-text-container';
+
 import { useAuth } from 'features/api-slices/useAuth';
+import { useToast } from 'features/toast/useToast';
 
 import { useCallFromAfar } from 'hooks/useCallFromAfar';
 import { useRouter } from 'hooks/useRouter';
@@ -7,6 +12,7 @@ import { MessagePayload } from 'firebase/messaging';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useCart } from 'pages/@hooks/useCart';
 import { NotificationPayload } from 'types/notifications';
+import { getDashboardBusinessShoppingTabRequested } from 'utils/business';
 
 export const useNotificationsUtils = () => {
   const { onCallAfar } = useCallFromAfar();
@@ -14,6 +20,7 @@ export const useNotificationsUtils = () => {
   const { onFetch, business } = useBusiness();
   const { isAuthenticated } = useAuth();
   const { isDashboardPage } = useRouter();
+  const { showMessage } = useToast();
 
   const onUpdateNotification = (payload: MessagePayload) => {
     const { data } = payload;
@@ -35,11 +42,24 @@ export const useNotificationsUtils = () => {
           return;
         }
         case 'NEW_ORDER_WAS_CREATED': {
-          const { routeName } = notificationPayload;
+          const { routeName, businessName } = notificationPayload;
+
+          if (!routeName) return;
 
           if (isAuthenticated && isDashboardPage && business && business.routeName === routeName) {
             onFetch({ routeName });
           }
+
+          showMessage({
+            title: 'Nueva orden de compra',
+            body: (
+              <HtmlTextContainer>
+                Una nueva orden de compra ha sido generada en su negocio{' '}
+                <span className="font-bold">{businessName}</span>. Puede ver los detalles{' '}
+                <Link to={getDashboardBusinessShoppingTabRequested({ routeName })}>aqui</Link>
+              </HtmlTextContainer>
+            ),
+          });
           return;
         }
         default: {

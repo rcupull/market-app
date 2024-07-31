@@ -336,7 +336,6 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
        * send Telegram message
        */
 
-      telegramServicesSendNewOrderMessage({ business, shopping });
       notificationsServicesSendNewOrderPushMessage({ business, shopping });
 
       res.send({});

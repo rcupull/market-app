@@ -5,6 +5,8 @@ import { ReduxProvider } from 'features/redux';
 import { RouterProvider } from 'hooks/useRouter/RouterProvider';
 const NativeBehavior = dynamic(() => import('./features/native/NativeBehavior').then((m) => m));
 
+import { ToastProvider } from 'features/toast';
+
 import { usePlatform } from 'hooks/useCapacitor';
 
 import { ModalContainer } from './features/modal';
@@ -19,9 +21,11 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
       <ReduxProvider>
         <RouterProvider>
           <NotificationsProvider>
-            {isNative && <NativeBehavior />}
-            <ModalContainer />
-            {children}
+            <ToastProvider>
+              {isNative && <NativeBehavior />}
+              <ModalContainer />
+              {children}
+            </ToastProvider>
           </NotificationsProvider>
         </RouterProvider>
       </ReduxProvider>

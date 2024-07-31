@@ -10,5 +10,6 @@ export interface NotificationPayload {
   shoppingId?: string;
   stockAmountAvailable?: number;
   routeName?: string;
+  businessName?: string;
   //
 }
