@@ -13,7 +13,7 @@ router
     middlewareIsLogged,
     middlewareIsAdmin,
     middlewareHasAccess('full'),
-    nlpHandles.post_nlp_train()
+    nlpHandles.post_nlp_train(),
   );
 
 router
@@ -22,5 +22,5 @@ router
     middlewareIsLogged,
     middlewareIsAdmin,
     middlewareHasAccess('full'),
-    nlpHandles.get_nlp_search()
+    nlpHandles.get_nlp_search(),
   );

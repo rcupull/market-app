@@ -27,7 +27,7 @@ router.use(
   billingRouter,
   geolocationRouter,
   nlpRouter,
-  reviewRouter
+  reviewRouter,
 );
 
 export default router;

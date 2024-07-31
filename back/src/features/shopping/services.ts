@@ -288,7 +288,7 @@ export const shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts: Que
 }> = async ({ shopping }) => {
   if (
     ![ShoppingState.REJECTED, ShoppingState.CANCELED, ShoppingState.CONSTRUCTION].includes(
-      shopping.state
+      shopping.state,
     )
   ) {
     logger.info('No need to send update stock amount messages from shopping posts.');

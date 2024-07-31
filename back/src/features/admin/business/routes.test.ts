@@ -20,7 +20,7 @@ describe('admin', () => {
           getTestingRoute({
             path: '/admin/business/:routeName',
             urlParams: { routeName: business1User1.routeName },
-          })
+          }),
         )
         .expect(401);
     });
@@ -36,7 +36,7 @@ describe('admin', () => {
           getTestingRoute({
             path: '/admin/business/:routeName',
             urlParams: { routeName: business1User1.routeName },
-          })
+          }),
         )
         .auth(generateToken(admin._id), { type: 'bearer' })
         .expect(401);
@@ -54,7 +54,7 @@ describe('admin', () => {
           getTestingRoute({
             path: '/business/:routeName',
             urlParams: { routeName: business1User1.routeName },
-          })
+          }),
         )
         .expect(200)
         .then((response) => {
@@ -67,7 +67,7 @@ describe('admin', () => {
           getTestingRoute({
             path: '/posts',
             query: { routeNames: [business1User1.routeName] },
-          })
+          }),
         )
         .expect(200)
         .then((response) => {
@@ -80,7 +80,7 @@ describe('admin', () => {
           getTestingRoute({
             path: '/admin/business/:routeName',
             urlParams: { routeName: business1User1.routeName },
-          })
+          }),
         )
         .auth(generateToken(admin._id), { type: 'bearer' })
         .expect(200);
@@ -99,7 +99,7 @@ describe('admin', () => {
           getTestingRoute({
             path: '/posts',
             query: { routeNames: [business1User1.routeName] },
-          })
+          }),
         )
         .expect(200)
         .then((response) => {
@@ -111,7 +111,7 @@ describe('admin', () => {
           getTestingRoute({
             path: '/business/:routeName',
             urlParams: { routeName: business1User1.routeName },
-          })
+          }),
         )
         .expect(404)
         .then((response) => {

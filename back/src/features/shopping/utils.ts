@@ -167,7 +167,7 @@ export const getAllShoppingFilterQuery = (args: GetAllShoppingArgs): FilterQuery
 };
 
 export const getShoppingInfo = (
-  shopping: Shopping
+  shopping: Shopping,
 ): {
   totalProducts: number;
   totalPrice: number;
@@ -217,7 +217,7 @@ export const wasApprovedShopping = (shopping: Shopping): boolean => {
 };
 
 export const sortPurshaseNotes = (
-  purshaseNotes: PostPurshaseNotes | undefined
+  purshaseNotes: PostPurshaseNotes | undefined,
 ): PostPurshaseNotes | undefined => {
   if (!purshaseNotes) {
     return purshaseNotes;
@@ -227,12 +227,12 @@ export const sortPurshaseNotes = (
     interestedByColors: compact(
       allSortedColor.map((color) => {
         return purshaseNotes?.interestedByColors?.includes?.(color) ? color : null;
-      })
+      }),
     ),
     interestedByClothingSizes: compact(
       allSortedClothingSize.map((size) => {
         return purshaseNotes?.interestedByClothingSizes?.includes?.(size) ? size : null;
-      })
+      }),
     ),
   };
 };

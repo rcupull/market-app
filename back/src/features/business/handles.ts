@@ -400,7 +400,7 @@ const put_business_routeName_sections_sectionId: () => RequestHandler = () => {
       }
 
       const currentSection = business.layouts?.posts?.sections?.find((section) =>
-        isEqualIds(sectionId, section._id)
+        isEqualIds(sectionId, section._id),
       );
 
       await businessServicesUpdateOne({

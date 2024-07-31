@@ -38,7 +38,7 @@ describe('users', () => {
               "specialAccess": [],
               "validated": true,
             }
-          `
+          `,
           );
         });
     });
@@ -108,7 +108,7 @@ describe('users', () => {
               "specialAccess": [],
               "validated": true,
             }
-          `
+          `,
           );
         });
     });

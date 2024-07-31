@@ -46,7 +46,7 @@ export const telegramServicesInit = () => {
 
     bot.sendMessage(
       meta.chatId,
-      `Tiene 5 minutos para usar el siguiente código de activación: ${code}.`
+      `Tiene 5 minutos para usar el siguiente código de activación: ${code}.`,
     );
   });
 
@@ -68,14 +68,14 @@ export const telegramServicesInit = () => {
       `<a href='https://aseremarket.net/b/maria-s-garage/shopping/668883f4cb37e3248c4d46da'>Camisetas de niños</a>`,
       {
         parse_mode: 'HTML',
-      }
+      },
     );
     bot.sendMessage(
       meta.chatId,
       `<a href='${getBusinessOrdersTagUrl({ routeName: 'maria-s-garage' })}'>aquí</a>.`,
       {
         parse_mode: 'HTML',
-      }
+      },
     );
   });
 
@@ -122,7 +122,7 @@ export const telegramServicesSendNewOrderMessage: QueryHandle<{
   telegramServicesSendMessage({
     chatId,
     message: `Una nueva orden de compra ha sido generada en su negocio "${name}" de nuestra plataforma Asere Market. Puede ver los detalles <a href='${getBusinessOrdersTagUrl(
-      { routeName: business.routeName }
+      { routeName: business.routeName },
     )}'>aquí</a>.`,
     options: {
       parse_mode: 'HTML',

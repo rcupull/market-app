@@ -29,7 +29,7 @@ export const nlpRecords: NlpTrainRecord = {
 const mergeInTrainRecord = (
   record: NlpTrainRecord,
   key: string,
-  values: Array<string>
+  values: Array<string>,
 ): NlpTrainRecord => ({
   ...record,
   [key]: [...(record[key] || []), ...values],
@@ -162,7 +162,7 @@ export const addBusinessCategoryRecords = (
   }: {
     categoryLabel: string;
     businessName: string;
-  }
+  },
 ): NlpTrainRecord => {
   let out = record;
 

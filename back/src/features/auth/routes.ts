@@ -15,7 +15,7 @@ router
     middlewareExpressValidator.body('password').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareAutentication,
-    authHandles.post_signIn()
+    authHandles.post_signIn(),
   );
 
 router
@@ -23,7 +23,7 @@ router
   .post(
     middlewareExpressValidator.body('refreshToken').notEmpty(),
     middlewareExpressValidator.handle,
-    authHandles.post_refresh()
+    authHandles.post_refresh(),
   );
 /////////////////////////////////////////////////////////////////
 
@@ -32,7 +32,7 @@ router
   .post(
     middlewareExpressValidator.body('refreshToken').notEmpty(),
     middlewareExpressValidator.handle,
-    authHandles.post_signOut()
+    authHandles.post_signOut(),
   );
 /////////////////////////////////////////////////////////////////
 
@@ -43,7 +43,7 @@ router
     middlewareExpressValidator.body('password').notEmpty(),
     middlewareExpressValidator.body('name').notEmpty(),
     middlewareExpressValidator.handle,
-    authHandles.post_signUp()
+    authHandles.post_signUp(),
   );
 /////////////////////////////////////////////////////////////////
 
@@ -52,7 +52,7 @@ router
   .post(
     middlewareExpressValidator.body('code').notEmpty(),
     middlewareExpressValidator.handle,
-    authHandles.post_validate()
+    authHandles.post_validate(),
   );
 
 router
@@ -60,7 +60,7 @@ router
   .post(
     middlewareExpressValidator.body('email').notEmpty(),
     middlewareExpressValidator.handle,
-    authHandles.post_forgot_password_request()
+    authHandles.post_forgot_password_request(),
   );
 
 router
@@ -69,7 +69,7 @@ router
     middlewareExpressValidator.body('newPassword').notEmpty(),
     middlewareExpressValidator.body('code').notEmpty(),
     middlewareExpressValidator.handle,
-    authHandles.post_forgot_password_validate()
+    authHandles.post_forgot_password_validate(),
   );
 
 router
@@ -78,7 +78,7 @@ router
     middlewareExpressValidator.body('newPassword').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
-    authHandles.post_change_password()
+    authHandles.post_change_password(),
   );
 
 router
@@ -87,5 +87,5 @@ router
     middlewareExpressValidator.body('firebaseToken').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
-    authHandles.put_firebase_token()
+    authHandles.put_firebase_token(),
   );

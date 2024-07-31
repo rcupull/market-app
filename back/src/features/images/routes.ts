@@ -14,7 +14,7 @@ router
     middlewareExpressValidator.body('srcs'),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
-    imageHandles.delete_images()
+    imageHandles.delete_images(),
   );
 
 router.route('/images-checkeditor').post(middlewareIsLogged, imageHandles.post_image_checkeditor());

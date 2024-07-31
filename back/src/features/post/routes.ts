@@ -20,7 +20,7 @@ router
     middlewareIsLogged,
     middlewareUserCanCreateBusiness,
     middlewareBusinessManIsOwnerOfThis,
-    postHandles.post_posts()
+    postHandles.post_posts(),
   );
 
 router
@@ -31,7 +31,7 @@ router
     middlewareIsLogged,
     middlewareUserCanCreateBusiness,
     middlewareIsUserThisPostOwner,
-    postHandles.post_posts_postId_duplicate()
+    postHandles.post_posts_postId_duplicate(),
   );
 ///////////////////////////////////////////////////////////////////////////
 
@@ -40,21 +40,21 @@ router
   .get(
     middlewareExpressValidator.param('postId').notEmpty(),
     middlewareExpressValidator.handle,
-    postHandles.get_posts_postId()
+    postHandles.get_posts_postId(),
   )
   .put(
     middlewareExpressValidator.param('postId').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareIsUserThisPostOwner,
-    postHandles.put_posts_postId()
+    postHandles.put_posts_postId(),
   )
   .delete(
     middlewareExpressValidator.param('postId').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareIsUserThisPostOwner,
-    postHandles.delete_posts_postId()
+    postHandles.delete_posts_postId(),
   );
 
 /////////////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@ router
     middlewareExpressValidator.param('postId').notEmpty(),
     middlewareExpressValidator.handle,
     middlewarePagination,
-    postHandles.get_related_posts()
+    postHandles.get_related_posts(),
   );
 /////////////////////////////////////////////////////////////////
 
@@ -75,7 +75,7 @@ router
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareBusinessManIsOwnerOfThis,
-    postHandles.bulk_action_delete()
+    postHandles.bulk_action_delete(),
   );
 
 router
@@ -86,5 +86,5 @@ router
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareBusinessManIsOwnerOfThis,
-    postHandles.bulk_action_update()
+    postHandles.bulk_action_update(),
   );

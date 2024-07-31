@@ -173,7 +173,7 @@ export const postServicesUpdateStockAmount: QueryHandle<
         },
         {
           stockAmount: newStockAmount,
-        }
+        },
       );
 
       return {
@@ -188,7 +188,7 @@ export const postServicesUpdateStockAmount: QueryHandle<
       },
       {
         stockAmount: newStockAmount,
-      }
+      },
     );
 
     return {

@@ -15,5 +15,5 @@ router
     middlewareIsLogged,
     middlewareIsAdmin,
     middlewareHasAccess('agenda__full'),
-    adminAgendaHandles.get_admin_agenda_token()
+    adminAgendaHandles.get_admin_agenda_token(),
   );

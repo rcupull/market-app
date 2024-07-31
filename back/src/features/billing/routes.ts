@@ -18,5 +18,5 @@ router
     middlewareUserCanCreateBusiness,
     middlewareBusinessManIsOwnerOfThis,
     middlewarePagination,
-    billingHandles.get_bills()
+    billingHandles.get_bills(),
   );

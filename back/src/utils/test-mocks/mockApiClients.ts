@@ -20,11 +20,11 @@ type ImplementationFeatures<T extends AxiosT> =
       ImplementationFeature<T>,
       ImplementationFeature<T>,
       ImplementationFeature<T>,
-      ImplementationFeature<T>
+      ImplementationFeature<T>,
     ];
 
 export const mockAxios = (
-  features?: ImplementationFeatures<AxiosT>
+  features?: ImplementationFeatures<AxiosT>,
 ): {
   axios: jest.SpyInstance;
 } => {
@@ -32,7 +32,7 @@ export const mockAxios = (
 
   const handleMakeImplementation = (
     feature: ImplementationFeature<AxiosT> | undefined,
-    last: boolean
+    last: boolean,
   ): void => {
     const implementation: ImplementationFeature<AxiosT> =
       feature instanceof Function ? feature : () => new Promise((resolve) => resolve(feature));

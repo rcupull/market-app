@@ -3,13 +3,15 @@ import { useEffect } from 'react';
 import { useAuthUpdateFirebaseToken } from 'features/api/auth/useAuthUpdateFirebaseToken';
 import { useAuth } from 'features/api-slices/useAuth';
 
+import { useNotificationsUtils } from './useNotificationsUtils';
+
 import { PushNotifications } from '@capacitor/push-notifications';
 
 const NotificationsProviderNative = () => {
   const { isAuthenticated } = useAuth();
   const { authUpdateFirebaseToken } = useAuthUpdateFirebaseToken();
 
-  // const { onUpdateNotification } = useNotificationsUtils();
+  const { onUpdateNotification } = useNotificationsUtils();
 
   const init = async () => {
     await addListeners();
@@ -18,29 +20,44 @@ const NotificationsProviderNative = () => {
 
   const addListeners = async () => {
     await PushNotifications.addListener('registration', (token) => {
-      console.info('Registration token: ', token.value);
+      if(DEVELOPMENT){
+        console.info('Registration token: ', token.value);
+      }
 
       const newToken = token.value;
-
       if (newToken) {
         authUpdateFirebaseToken.fetch({ firebaseToken: newToken });
       }
     });
 
     await PushNotifications.addListener('registrationError', (err) => {
-      console.error('Registration error: ', err.error);
+      if(DEVELOPMENT){
+        console.error('Registration error: ', err.error);
+      }
     });
 
     await PushNotifications.addListener('pushNotificationReceived', (notification) => {
-      console.log('Push notification received: ', notification);
+      if(DEVELOPMENT){
+        console.log('Push notification received: ', notification);
+      }
+
+      if (notification) {
+        //@ts-expect-error ignore
+        onUpdateNotification(notification);
+      }
+
     });
 
     await PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
-      console.log(
-        'Push notification action performed',
-        notification.actionId,
-        notification.inputValue,
-      );
+      if(DEVELOPMENT)(
+        console.log(
+          'Push notification action performed',
+          notification.actionId,
+          notification.inputValue,
+        )
+      )
+
+
     });
   };
 
@@ -67,6 +84,10 @@ const NotificationsProviderNative = () => {
     if (isAuthenticated) {
       init();
     }
+
+    return () => {
+      PushNotifications.removeAllListeners();
+    };
   }, [isAuthenticated]);
 
   return null;

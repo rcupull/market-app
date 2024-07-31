@@ -16,7 +16,7 @@ router
     middlewareIsAdmin,
     middlewareHasAccess('business__read'),
     middlewarePagination,
-    adminBusinessHandles.get_admin_business()
+    adminBusinessHandles.get_admin_business(),
   );
 
 router
@@ -27,7 +27,7 @@ router
     middlewareExpressValidator.param('routeName').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareHasAccess('business__write'),
-    adminBusinessHandles.put_admin_business_routeName()
+    adminBusinessHandles.put_admin_business_routeName(),
   )
   .delete(
     middlewareIsLogged,
@@ -35,5 +35,5 @@ router
     middlewareExpressValidator.param('routeName').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareHasAccess('business__remove'),
-    adminBusinessHandles.delete_admin_business_routeName()
+    adminBusinessHandles.delete_admin_business_routeName(),
   );

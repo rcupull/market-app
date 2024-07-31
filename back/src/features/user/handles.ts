@@ -85,7 +85,7 @@ const get_users_userId: () => RequestHandler = () => {
           [] as Array<{
             name: string;
             routeName: string;
-          }>
+          }>,
         );
       };
 
@@ -331,7 +331,7 @@ const del_users_userId_delivery_business: () => RequestHandler = () => {
         },
         update: {
           deliveryBusiness: deliveryMan.deliveryBusiness.filter(
-            (business) => business.routeName !== routeName
+            (business) => business.routeName !== routeName,
           ),
         },
       });

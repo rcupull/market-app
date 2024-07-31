@@ -12,14 +12,14 @@ export const idToString = (id: string | Schema.Types.ObjectId): string => {
 
 export const isEqualIds = (
   id1: string | Schema.Types.ObjectId,
-  id2: string | Schema.Types.ObjectId
+  id2: string | Schema.Types.ObjectId,
 ): boolean => {
   return idToString(id1) === idToString(id2);
 };
 
 export const includesId = (
   array: Array<string | Schema.Types.ObjectId>,
-  id: string | Schema.Types.ObjectId
+  id: string | Schema.Types.ObjectId,
 ): boolean => {
   return array.map(idToString).includes(idToString(id));
 };
@@ -83,7 +83,7 @@ export const combineMiddleware = (...mids: Array<RequestHandler>) => {
 };
 
 export const isEmpty = <T = object>(
-  value: T | null | undefined
+  value: T | null | undefined,
 ): value is EmptyObjectOf<T> | null | undefined => {
   if (!value) return true;
 
@@ -130,7 +130,7 @@ export const compact = <T = any>(value: Array<Nullable<T>>): Array<T> => {
 export const addRow = <T = any>(
   data: Array<T>,
   rowData: T,
-  position: 'start' | 'end' = 'end'
+  position: 'start' | 'end' = 'end',
 ): Array<T> => {
   const newData = [...data];
 
@@ -145,7 +145,7 @@ export const movRow = <T = any>(data: Array<T>, fromIndex: number, toIndex: numb
 
 export const addStringToUniqueArray = <T extends string = string>(
   array: Array<T>,
-  value: T
+  value: T,
 ): Array<T> => {
   return array.includes(value) ? array : addRow(array, value);
 };
@@ -162,7 +162,7 @@ export const getFlattenJson = <T extends AnyRecord = AnyRecord>(value: T): T => 
    */
   return Object.entries(value).reduce(
     (acc, [k, v]) => (isNullOrUndefinedOrEmptyString(v) ? acc : { ...acc, [k]: v }),
-    {} as T
+    {} as T,
   );
 };
 
@@ -172,7 +172,7 @@ export const getFlattenUndefinedJson = <T extends AnyRecord = AnyRecord>(value: 
    */
   return Object.entries(value).reduce(
     (acc, [k, v]) => (v === undefined ? acc : { ...acc, [k]: v }),
-    {} as T
+    {} as T,
   );
 };
 
@@ -206,4 +206,15 @@ export const numberExtract = (value: string): Array<number> | null => {
   }
 
   return response.map(Number);
+};
+
+export const excludeRepetedValues = <T = any>(values: Array<T>): Array<T> => {
+  const out: Array<any> = [];
+
+  values.forEach((value) => {
+    if (out.some((v) => isEqual(v, value))) return;
+    out.push(value);
+  });
+
+  return out;
 };

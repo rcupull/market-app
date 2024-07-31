@@ -19,7 +19,7 @@ router
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewarePagination,
-    shoppingHandles.get_shopping()
+    shoppingHandles.get_shopping(),
   )
   .post(
     middlewareExpressValidator.body('postId').notEmpty(),
@@ -27,14 +27,14 @@ router
     middlewareIsLogged,
     middlewareAddPostToReq,
     middlewareSortPurshaseNotes,
-    shoppingHandles.post_shopping()
+    shoppingHandles.post_shopping(),
   )
   .delete(
     middlewareExpressValidator.body('routeName').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareSortPurshaseNotes,
-    shoppingHandles.delete_shopping()
+    shoppingHandles.delete_shopping(),
   );
 
 router
@@ -45,7 +45,7 @@ router
     middlewareIsLogged,
     middlewarePagination,
     middlewareBusinessManIsOwnerOfThis,
-    shoppingHandles.get_shopping_owner()
+    shoppingHandles.get_shopping_owner(),
   );
 
 router
@@ -54,7 +54,7 @@ router
     middlewareExpressValidator.param('shoppingId').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
-    shoppingHandles.get_shopping_shoppingId()
+    shoppingHandles.get_shopping_shoppingId(),
   );
 
 router
@@ -63,7 +63,7 @@ router
     middlewareExpressValidator.param('shoppingId').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
-    shoppingHandles.post_shopping_shoppingId_make_order()
+    shoppingHandles.post_shopping_shoppingId_make_order(),
   );
 
 router
@@ -73,5 +73,5 @@ router
     middlewareExpressValidator.body('state').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
-    shoppingHandles.post_shopping_shoppingId_change_state()
+    shoppingHandles.post_shopping_shoppingId_change_state(),
   );

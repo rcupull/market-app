@@ -2,7 +2,7 @@ import { NotificationPayload } from '../../types/notifications';
 import firebase from 'firebase-admin';
 import { QueryHandle } from '../../types/general';
 
-import { compact } from '../../utils/general';
+import { compact, excludeRepetedValues } from '../../utils/general';
 import { serviceAccount } from '../../config';
 import { Business } from '../../types/business';
 import { Shopping } from '../../types/shopping';
@@ -29,7 +29,8 @@ export const notificationsServicesSendNotificationToUpdate: QueryHandle<{
   });
 
   //TODO no deberias mandar a todos los usuario si no a los que tiene abierta la pagina de ese negocio
-  const tokens = compact(users.map((user) => user.firebaseToken));
+  let tokens = compact(users.map((user) => user.firebaseToken)); //
+  tokens = excludeRepetedValues(tokens);
 
   await firebase.messaging().sendEachForMulticast({
     data: { payload: JSON.stringify(payload) },
@@ -50,7 +51,8 @@ export const notificationsServicesSendTestNativeNotification: QueryHandle<{
     },
   });
 
-  const tokens = compact(users.map((user) => user.firebaseToken));
+  let tokens = compact(users.map((user) => user.firebaseToken));
+  tokens = excludeRepetedValues(tokens);
 
   await firebase.messaging().sendEachForMulticast({
     notification: {
@@ -108,7 +110,8 @@ export const notificationsServicesSendUpdateStockAmountMessage: QueryHandle<{
     });
 
     //TODO no deberias mandar a todos los usuario si no a los que tiene abierta la pagina de ese negocio
-    const tokens = compact(users.map((user) => user.firebaseToken));
+    let tokens = compact(users.map((user) => user.firebaseToken));
+    tokens = excludeRepetedValues(tokens);
 
     const payload: NotificationPayload = {
       type: 'POST_AMOUNT_STOCK_CHANGE',
@@ -138,7 +141,8 @@ export const notificationsServicesSendOrderInConstructionWasRemoved: QueryHandle
       },
     });
 
-    const tokens = compact(users.map((user) => user.firebaseToken));
+    let tokens = compact(users.map((user) => user.firebaseToken));
+    tokens = excludeRepetedValues(tokens);
 
     const payload: NotificationPayload = {
       type: 'ORDER_IN_CONSTRUCTION_WAS_REMOVED',
