@@ -116,7 +116,6 @@ export const Links = () => {
 
             <Table
               propsPreprocessors={[tablePropsProcessor]}
-              className="!max-h-[calc(100vh-25rem)]"
               remapRowsIndex={{
                 xs: [[0, 1, 2, 3, 4]],
                 md: 'none',

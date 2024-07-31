@@ -157,7 +157,7 @@ export const NavbarMenu = () => {
   const { adminBDScript } = useAdminBDScript();
 
   const getAdminItems = (): Array<Nullable<MenuItem>> => {
-    if (!isAuthenticated || !getIsAdmin(user)) return [];
+    if (!isAuthenticated || !getIsAdmin(user) || breakpoints.xs) return [];
 
     const out: Array<Nullable<MenuItem>> = [
       getHasSomeAccess('user__read') && {

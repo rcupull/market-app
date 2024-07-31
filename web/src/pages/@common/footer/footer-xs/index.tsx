@@ -1,6 +1,7 @@
 import { useAuth } from 'features/api-slices/useAuth';
 import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
 
+import { FooterAdminOptions } from './footer-admin-options';
 import { FooterBusinessOptions } from './footer-business-options';
 import { FooterGeneralMenu } from './footer-general-menu';
 
@@ -11,7 +12,7 @@ import { cn } from 'utils/general';
 export interface FooterXsProps extends StyleProps {}
 
 export const FooterXs = ({ className }: FooterXsProps) => {
-  const { user, getIsBusinessUser } = useAuth();
+  const { user, getIsBusinessUser, getIsAdmin } = useAuth();
   const { business, onFetch } = useBusiness();
   const { allUserBusiness } = useAllUserBusiness();
 
@@ -21,6 +22,8 @@ export const FooterXs = ({ className }: FooterXsProps) => {
     >
       <div className="flex items-start -scale-y-100 justify-start gap-3 overflow-x-auto">
         <FooterGeneralMenu />
+
+        {getIsAdmin(user) && <FooterAdminOptions />}
 
         {getIsBusinessUser(user) &&
           allUserBusiness.data?.map((userBusiness, index) => {

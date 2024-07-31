@@ -87,7 +87,6 @@ export const PurchaseOrders = () => {
               <div className="mb-2 flex justify-center">{selectAllNode}</div>
 
               <Table<Shopping>
-                className="!max-h-[calc(100vh-25rem)]"
                 propsPreprocessors={[tablePropsProcessor]}
                 remapRowsIndex={{
                   xs: [[0, 1, 2, 3, 4, 5, 6, 7]],
