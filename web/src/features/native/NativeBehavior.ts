@@ -2,15 +2,19 @@ import { useEffect } from 'react';
 
 import { usePersistentValue } from 'hooks/usePersistentValue';
 
-import { useRouter } from '.';
+import { useRouter } from '../../hooks/useRouter';
 
 import { App } from '@capacitor/app';
 
-const NativeBrowserContainer = () => {
+const NativeBehavior = () => {
   const router = useRouter();
 
   const refRouter = usePersistentValue(router, [router.pathname]);
 
+  ////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////
   useEffect(() => {
     App.addListener('backButton', () => {
       const { pathname, onBack } = refRouter.current;
@@ -30,4 +34,4 @@ const NativeBrowserContainer = () => {
   return null;
 };
 
-export default NativeBrowserContainer;
+export default NativeBehavior;
