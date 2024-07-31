@@ -15,7 +15,6 @@ import { PostsSections } from './posts-sections';
 import { Products } from './products';
 import { Settings } from './settings';
 import { ShoppingPage } from './shopping';
-import { BusinessTab, getBusinessTabLabel } from './utils';
 
 import SvgCogSolid from 'icons/CogSolid';
 import SvgLayerGroupSolid from 'icons/LayerGroupSolid';
@@ -30,6 +29,7 @@ import { LayoutPage } from 'pages/@common/layout-page';
 import { LayoutSection } from 'pages/@common/layout-section';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { compact, isString } from 'utils/general';
+import { BusinessTab, getBusinessTabLabel } from 'utils/view';
 
 export const RouteName = () => {
   const { params, query, onChangeQuery } = useRouter();
