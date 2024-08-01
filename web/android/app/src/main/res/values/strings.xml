@@ -4,5 +4,5 @@
     <string name="title_activity_main">AsereMarket</string>
     <string name="package_name">com.aseremarket.app</string>
     <string name="custom_url_scheme">https</string>
-    <string name="custom_url_host">fleet-hamster-positive.ngrok-free.app</string>
+    <string name="custom_url_host">aseremarket.net</string>
 </resources>
