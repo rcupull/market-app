@@ -7,6 +7,7 @@ import { Formux } from 'components/formux';
 import { useAuth } from 'features/api-slices/useAuth';
 import { useModal } from 'features/modal/useModal';
 
+import { useBreakpoints } from 'hooks/useBreakpoints';
 import { useKeyBoard } from 'hooks/useKeyBoard';
 import { Portal } from 'hooks/usePortal';
 import { useRouter } from 'hooks/useRouter';
@@ -29,7 +30,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
   const { pushRoute } = useRouter();
   const { onClose } = useModal();
   const { authSignUpModal } = useAuthSignUpModal();
-
+  const breakpoints = useBreakpoints();
   const refPassword = useRef<HTMLInputElement>(null);
 
   const emailKeyboard = useKeyBoard({
@@ -52,14 +53,14 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
     <div className="flex min-h-full flex-col justify-center">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <div className="flex justify-center">
-          <BusinessMarketBrand />
+          {breakpoints.xs ? <BusinessMarketBrand className="!size-32" /> : <BusinessMarketBrand />}
         </div>
-        <h2 className="mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+        <h2 className="mt-0 sm:mt-2 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Inicia sesión en tu cuenta
         </h2>
       </div>
 
-      <div className="mt-10">
+      <div className="mt-4 sm:mt-10">
         <Formux
           value={{ email, password: '' }}
           validate={[
@@ -136,7 +137,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                   autoComplete="current-password"
                   autoFocus={!!email}
                   label={getRequiredLabel('Contraseña')}
-                  className="mt-6"
+                  className="mt-4 sm:mt-6"
                   {...passwordKeyboard({ handleSubmit })}
                 />
 
@@ -161,27 +162,32 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                       setTimeout(() => authSignUpModal.open(), 50);
                     }}
                   />{' '}
-                  para obtener los beneficios de nuestro sistema. También puedes{' '}
-                  <Button
-                    variant="link"
-                    className="!inline-block !whitespace-pre-line"
-                    label="saber más de nosotros"
-                    onClick={() => {
-                      onClose();
-                      pushRoute('/about-us');
-                    }}
-                  />{' '}
-                  o darle un vistazo a los{' '}
-                  <Button
-                    variant="link"
-                    className="!inline-block !whitespace-pre-line"
-                    label="precios"
-                    onClick={() => {
-                      onClose();
-                      pushRoute('/price');
-                    }}
-                  />{' '}
-                  de nuestros servicios.
+                  para obtener los beneficios de nuestro sistema.{' '}
+                  {!breakpoints.xs && (
+                    <>
+                      También puedes{' '}
+                      <Button
+                        variant="link"
+                        className="!inline-block !whitespace-pre-line"
+                        label="saber más de nosotros"
+                        onClick={() => {
+                          onClose();
+                          pushRoute('/about-us');
+                        }}
+                      />{' '}
+                      o darle un vistazo a los{' '}
+                      <Button
+                        variant="link"
+                        className="!inline-block !whitespace-pre-line"
+                        label="precios"
+                        onClick={() => {
+                          onClose();
+                          pushRoute('/price');
+                        }}
+                      />{' '}
+                      de nuestros servicios.
+                    </>
+                  )}
                 </div>
               </form>
             );

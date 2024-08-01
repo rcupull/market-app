@@ -12,7 +12,7 @@ import { cn } from 'utils/general';
 export interface FooterXsProps extends StyleProps {}
 
 export const FooterXs = ({ className }: FooterXsProps) => {
-  const { user, getIsBusinessUser, getIsAdmin } = useAuth();
+  const { user, getIsBusinessUser, getIsAdmin, isAuthenticated } = useAuth();
   const { business, onFetch } = useBusiness();
   const { allUserBusiness } = useAllUserBusiness();
 
@@ -20,8 +20,11 @@ export const FooterXs = ({ className }: FooterXsProps) => {
     <footer
       className={cn('shadow-lg -scale-y-100 fixed bottom-0 left-0 right-0 bg-white px-2 py-1', className)}
     >
-      <div className="flex items-start -scale-y-100 justify-start gap-3 overflow-x-auto">
-        <FooterGeneralMenu />
+      <div className={cn("flex -scale-y-100  gap-3 overflow-x-auto h-[4.3rem]",{
+        'items-start justify-start': isAuthenticated,
+        'items-center justify-between': !isAuthenticated
+      })}>
+        <FooterGeneralMenu spread={!isAuthenticated} />
 
         {getIsAdmin(user) && <FooterAdminOptions />}
 
