@@ -4,7 +4,7 @@ import { usePersistentValue } from 'hooks/usePersistentValue';
 
 import { useRouter } from '../../hooks/useRouter';
 
-import { App } from '@capacitor/app';
+import { App, URLOpenListenerEvent } from '@capacitor/app';
 
 const NativeBehavior = () => {
   const router = useRouter();
@@ -23,6 +23,18 @@ const NativeBehavior = () => {
         App.exitApp();
       } else {
         onBack();
+      }
+    });
+
+    /**
+     * https://capacitorjs.com/docs/guides/deep-links#react
+     */
+    App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+      const { pushRoute } = refRouter.current;
+      const slug = event.url.split('.app').pop();
+
+      if (slug) {
+        pushRoute(slug);
       }
     });
 

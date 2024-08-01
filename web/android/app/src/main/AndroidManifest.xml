@@ -20,6 +20,14 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                
+                <!-- https://capacitorjs.com/docs/apis/app#android -->
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/custom_url_scheme"/>
+                <data android:host="@string/custom_url_host" />
             </intent-filter>
 
         </activity>
