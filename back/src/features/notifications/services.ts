@@ -63,6 +63,33 @@ export const notificationsServicesSendTestNativeNotification: QueryHandle<{
   });
 };
 
+export const notificationsServicesSendNewOrderApprovedMessage: QueryHandle<{
+  firebaseToken: string;
+  businessName: string;
+  routeName: string;
+  shopping: Shopping;
+}> = async ({ shopping, businessName, firebaseToken, routeName }) => {
+  /**
+   * este mensaje es enviado para el cliente cuando se apruebe una nueva orden
+   */
+
+  const payload: NotificationPayload = {
+    type: 'ORDER_WAS_APPROVED',
+    shoppingId: shopping._id.toString(),
+    routeName,
+    businessName,
+  };
+
+  await firebaseInstance.messaging().send({
+    data: { payload: JSON.stringify(payload) },
+    token: firebaseToken,
+    notification: {
+      title: 'Orden de compra aceptada',
+      body: 'Ya casi tienes tu producto',
+    },
+  });
+};
+
 export const notificationsServicesSendNewOrderPushMessage: QueryHandle<{
   business: Business;
   shopping: Shopping;
@@ -83,7 +110,7 @@ export const notificationsServicesSendNewOrderPushMessage: QueryHandle<{
     if (user.firebaseToken) {
       const payload: NotificationPayload = {
         type: 'NEW_ORDER_WAS_CREATED',
-        shoopingId: shopping._id.toString(),
+        shoppingId: shopping._id.toString(),
         routeName,
         businessName: name,
       };

@@ -5,7 +5,6 @@ import { getRandomHash } from '../../utils/general';
 import { logger } from '../logger';
 import { QueryHandle, TelegramBotChat } from '../../types/general';
 import { agendaServices } from '../agenda/services';
-import { Business, BusinessNotificationFlags } from '../../types/business';
 import { Shopping } from '../../types/shopping';
 import { getBusinessOrdersTagUrl, getShoppingUrl } from '../../utils/web';
 
@@ -96,38 +95,6 @@ export const telegramServicesSendMessage: QueryHandle<{
     logger.error('Error sending telegram message');
     logger.error(e);
   }
-};
-
-export const telegramServicesSendNewOrderMessage: QueryHandle<{
-  business: Business;
-  shopping: Shopping;
-}> = async ({ business }) => {
-  /**
-   * este mensaje es enviaro para el propietario del negocio cuandia se genere una nueva orden
-   */
-
-  if (!business.notificationFlags?.includes(BusinessNotificationFlags.TELEGRAM_NEW_SHOPPING)) {
-    return;
-  }
-
-  const { telegramBotChat, name } = business;
-
-  if (!telegramBotChat) {
-    logger.warn(`the business ${business.name} has not a activated telegram account`);
-    return;
-  }
-
-  const { chatId } = telegramBotChat;
-
-  telegramServicesSendMessage({
-    chatId,
-    message: `Una nueva orden de compra ha sido generada en su negocio "${name}" de nuestra plataforma Asere Market. Puede ver los detalles <a href='${getBusinessOrdersTagUrl(
-      { routeName: business.routeName },
-    )}'>aquí</a>.`,
-    options: {
-      parse_mode: 'HTML',
-    },
-  });
 };
 
 export const telegramServicesSendNewOrderApprovedMessage: QueryHandle<{

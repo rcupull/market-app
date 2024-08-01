@@ -12,7 +12,10 @@ import { MessagePayload } from 'firebase/messaging';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useCart } from 'pages/@hooks/useCart';
 import { NotificationPayload } from 'types/notifications';
-import { getDashboardBusinessShoppingTabRequested } from 'utils/business';
+import {
+  getDashboardBusinessShoppingTabRequested,
+  getOneShoppingRoute,
+} from 'utils/business';
 
 export const useNotificationsUtils = () => {
   const { onCallAfar } = useCallFromAfar();
@@ -30,6 +33,10 @@ export const useNotificationsUtils = () => {
     if (notificationPayload) {
       const { type } = notificationPayload;
 
+      if(DEVELOPMENT){
+        console.log('notificationPayload', notificationPayload)
+      }
+
       switch (type) {
         case 'POST_AMOUNT_STOCK_CHANGE': {
           const { postId, stockAmountAvailable } = notificationPayload;
@@ -41,10 +48,33 @@ export const useNotificationsUtils = () => {
           cart.onFetch();
           return;
         }
+        case 'ORDER_WAS_APPROVED': {
+          const { routeName, businessName, shoppingId } = notificationPayload;
+
+          if (!routeName) return;
+          if (!shoppingId) return;
+          if (!businessName) return;
+
+          showMessage({
+            title: 'Nueva orden de compra',
+            body: (
+              <HtmlTextContainer>
+                Una orden de compra generada por usted en el negocio <span>{businessName}</span>
+                ha sido aprovada. Usted será contactado luego por el vendedor para los detalles de
+                la entrega.`{' '}
+                <Link to={getOneShoppingRoute({ routeName, shoppingId })}>
+                  Ver detalles de la orden de compra
+                </Link>
+              </HtmlTextContainer>
+            ),
+          });
+          return;
+        }
         case 'NEW_ORDER_WAS_CREATED': {
           const { routeName, businessName } = notificationPayload;
 
           if (!routeName) return;
+          if (!businessName) return;
 
           if (isAuthenticated && isDashboardPage && business && business.routeName === routeName) {
             onFetch({ routeName });

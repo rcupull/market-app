@@ -28,15 +28,12 @@ import { logger } from '../logger';
 import { PostPurshaseNotes } from '../../types/post';
 import { ShoppingModel } from '../../schemas/shopping';
 import { Shopping, ShoppingDto, ShoppingState } from '../../types/shopping';
-import {
-  telegramServicesSendNewOrderApprovedMessage,
-  telegramServicesSendNewOrderMessage,
-} from '../telegram/services';
 import { userServicesGetOne, userServicesGetUserDataFromShopping } from '../user/services';
 import { User } from '../../types/user';
 import { Business } from '../../types/business';
 import { defaultQuerySort } from '../../utils/api';
 import {
+  notificationsServicesSendNewOrderApprovedMessage,
   notificationsServicesSendNewOrderPushMessage,
   notificationsServicesSendUpdateStockAmountMessage,
 } from '../notifications/services';
@@ -333,9 +330,8 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
       }
 
       /**
-       * send Telegram message
+       * send push message
        */
-
       notificationsServicesSendNewOrderPushMessage({ business, shopping });
 
       res.send({});
@@ -396,12 +392,12 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
         /**
          * send telegram notificaion when the shopping to be aproved
          */
-        const purchaserData: Pick<User, 'telegramBotChat'> | null = await userServicesGetOne({
+        const purchaserData: Pick<User, 'firebaseToken'> | null = await userServicesGetOne({
           query: {
             _id: shopping.purchaserId,
           },
           projection: {
-            telegramBotChat: 1,
+            firebaseToken: 1,
           },
         });
 
@@ -426,11 +422,12 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
           });
         }
 
-        if (purchaserData.telegramBotChat) {
-          telegramServicesSendNewOrderApprovedMessage({
-            chatId: purchaserData.telegramBotChat.chatId,
-            businessName: businessData.name,
+        if (purchaserData.firebaseToken) {
+          notificationsServicesSendNewOrderApprovedMessage({
             shopping,
+            businessName: businessData.name,
+            routeName: shopping.routeName,
+            firebaseToken: purchaserData.firebaseToken,
           });
         }
       }
