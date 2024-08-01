@@ -5,6 +5,7 @@ import { UserModel } from '../schemas/user';
 import passportJWT from 'passport-jwt';
 import { secretAccessToken } from '../config';
 import { logger } from '../features/logger';
+import { AuthSessionModel } from '../schemas/auth';
 
 const { Strategy: JWTStrategy, ExtractJwt } = passportJWT;
 /////////////////////////////////////////////////////////////////
@@ -18,6 +19,12 @@ passport.use(
         return done(null, false, {
           message: 'Incorrect username or password.',
         });
+      }
+
+      const session = await AuthSessionModel.findOne({ userId: user?.id });
+
+      if (session) {
+        return done(null, false);
       }
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -43,16 +50,24 @@ passport.use(
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: secretAccessToken,
     },
-    (jwt_payload, done) => {
-      UserModel.findById(jwt_payload.id)
-        .then((user) => {
-          return done(null, user);
-        })
-        .catch((err) => {
-          return done(err, false, {
-            message: 'Token not matched.',
-          });
+    async (jwt_payload, done) => {
+      const session = await AuthSessionModel.findOne({ userId: jwt_payload.id });
+
+      if (!session) {
+        return done(null, false, {
+          message: 'Has not access.',
         });
+      }
+
+      const user = await UserModel.findById(jwt_payload.id).select('+firebaseToken');
+
+      if (!user) {
+        return done(null, false, {
+          message: 'Has not access.',
+        });
+      }
+
+      return done(null, user);
     },
   ),
 );

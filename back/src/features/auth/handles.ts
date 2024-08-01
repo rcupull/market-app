@@ -26,16 +26,18 @@ import { logger } from '../logger';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { User } from '../../types/user';
 import { agendaServices } from '../agenda/services';
+import { authServicesRemoveSession } from './services';
 
 const post_signIn: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const { user } = req;
+      const { user, body, headers } = req;
 
       if (!user) {
         return getUserNotFoundResponse({ res });
       }
       const { validated } = user;
+      const { typeDevice } = body;
 
       if (!validated) {
         return get401Response({
@@ -50,6 +52,8 @@ const post_signIn: () => RequestHandler = () => {
       const authSession = new AuthSessionModel({
         refreshToken,
         userId: user._id,
+        typeDevice,
+        descriptionDevice: headers['user-agent'],
       });
 
       await authSession.save();
@@ -119,9 +123,11 @@ const post_refresh: () => RequestHandler = () => {
 const post_signOut: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const { refreshToken } = req.body;
+      const { body } = req;
 
-      await AuthSessionModel.deleteOne({ refreshToken });
+      const { refreshToken } = body;
+
+      await authServicesRemoveSession({ refreshToken });
 
       return get200Response({
         res,

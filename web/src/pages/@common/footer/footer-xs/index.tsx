@@ -18,7 +18,7 @@ export const FooterXs = ({ className }: FooterXsProps) => {
 
   return (
     <footer
-      className={cn('shadow-lg -scale-y-100 fixed bottom-0 left-0 right-0 bg-white p-1', className)}
+      className={cn('shadow-lg -scale-y-100 fixed bottom-0 left-0 right-0 bg-white px-2 py-1', className)}
     >
       <div className="flex items-start -scale-y-100 justify-start gap-3 overflow-x-auto">
         <FooterGeneralMenu />

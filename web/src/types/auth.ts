@@ -45,3 +45,8 @@ export interface AuthDataDto extends AuthData {
   accessToken: string;
   refreshToken: string;
 }
+
+export enum TYPE_DEVICE {
+  NATIVE = 'NATIVE',
+  WEB = 'WEB',
+}
