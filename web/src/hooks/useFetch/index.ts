@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { usePersistentContext } from 'features/persistent/usePersistentContext';
+import { useToast } from 'features/toast';
 
 import { useDebouncedValue } from 'hooks/useDebouncedValue';
 
@@ -57,6 +58,7 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
   const [error, setError] = useState<ApiError | null>(null);
   const [status, setStatus] = useState<ApiStatus>('NOT_STARTED');
   const [wasCalled, setWasCalled] = useState<boolean>(false);
+  const { showMessage } = useToast();
   const { getPersistent, setPersistent } = usePersistentContext();
   const debouncedStatus = useDebouncedValue<ApiStatus>(status, 100);
 
@@ -83,7 +85,7 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
         return fetchingTokenPromise;
       }
 
-      fetchingTokenPromise = new Promise((resolve, reject) => {
+      fetchingTokenPromise = new Promise((resolve) => {
         getPersistent('refreshToken').then((refreshToken) => {
           axios({
             method: 'post',
@@ -91,12 +93,12 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
             data: { refreshToken },
           })
             .then(({ data }) => {
+              fetchingTokenPromise = null;
+
               const newAccessToken = data.accessToken;
 
               setPersistent('accessToken', newAccessToken);
               setPersistent('accessTokenUpdatedAt', new Date().toISOString());
-
-              fetchingTokenPromise = null;
 
               if (DEVELOPMENT) {
                 //simulate the api call delay
@@ -107,9 +109,17 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
                 resolve(newAccessToken);
               }
             })
-            .catch((e) => {
+            .catch(() => {
               fetchingTokenPromise = null;
-              reject(e);
+
+              if (DEVELOPMENT) {
+                //simulate the api call delay
+                wait(500).then(() => {
+                  resolve(null);
+                });
+              } else {
+                resolve(null);
+              }
             });
         });
       });
@@ -155,6 +165,15 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
       } catch (e) {
         const { response } = e as AxiosError<{ message?: string; reazon?: ApiErrorReazon }>;
 
+        if (response?.data?.message) {
+          showMessage(
+            { title: 'Error', body: response?.data?.message },
+            {
+              type: 'error',
+            },
+          );
+        }
+
         const apiError: ApiError = {
           message: response?.data?.message || 'Something went wrong',
           reazon: response?.data?.reazon,
@@ -169,14 +188,14 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
     };
 
     const accessTokenUpdatedAt = await getPersistent('accessTokenUpdatedAt');
+    const accessToken = await getPersistent('accessToken');
 
     if (accessTokenUpdatedAt && isOutOfDateToken(accessTokenUpdatedAt)) {
       //the token is outdate
-      const accessToken = await handleFetchAccessToken();
-      await handleFetchCall(accessToken);
+      const newAccessToken = (await handleFetchAccessToken()) ?? accessToken;
+      await handleFetchCall(newAccessToken);
     } else {
       //the token is OK
-      const accessToken = await getPersistent('accessToken');
       await handleFetchCall(accessToken);
     }
   };
