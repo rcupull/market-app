@@ -21,7 +21,7 @@ export interface FooterGeneralMenuProps {
 
 export const FooterGeneralMenu = ({ spread }: FooterGeneralMenuProps) => {
   const { pushRoute, isOneBusinessPage } = useRouter();
-  const { user, getIsBusinessUser , isAuthenticated} = useAuth();
+  const { user, getIsBusinessUser, isAuthenticated } = useAuth();
 
   const { businessUpdateNewModal } = useBusinessUpdateNewModal();
 

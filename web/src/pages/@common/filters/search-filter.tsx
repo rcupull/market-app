@@ -95,7 +95,7 @@ export const SearchFilter = ({
                     className="hidden sm:block"
                   />
                   <SvgSearchSolid className="sm:hidden h-8 w-8 rounded-full p-1 fill-indigo-500 cursor-pointer hover:bg-gray-100" />
-                </div>,
+                </div>
               )}
 
               {clearBtnPortal.getPortal(
@@ -108,7 +108,7 @@ export const SearchFilter = ({
                 >
                   <Button label="Limpiar" variant="outlined" className="hidden sm:block" />
                   <SvgTimesCircle className="sm:hidden h-8 w-8 rounded-full p-1 fill-red-500 cursor-pointer hover:bg-gray-100" />
-                </div>,
+                </div>
               )}
             </form>
           );

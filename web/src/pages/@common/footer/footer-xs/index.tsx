@@ -18,12 +18,17 @@ export const FooterXs = ({ className }: FooterXsProps) => {
 
   return (
     <footer
-      className={cn('shadow-lg -scale-y-100 fixed bottom-0 left-0 right-0 bg-white px-2 py-1', className)}
+      className={cn(
+        'shadow-lg -scale-y-100 fixed bottom-0 left-0 right-0 bg-white px-2 py-1',
+        className
+      )}
     >
-      <div className={cn("flex -scale-y-100  gap-3 overflow-x-auto h-[4.3rem]",{
-        'items-start justify-start': isAuthenticated,
-        'items-center justify-between': !isAuthenticated
-      })}>
+      <div
+        className={cn('flex -scale-y-100  gap-3 overflow-x-auto h-[4.3rem]', {
+          'items-start justify-start': isAuthenticated,
+          'items-center justify-between': !isAuthenticated,
+        })}
+      >
         <FooterGeneralMenu spread={!isAuthenticated} />
 
         {getIsAdmin(user) && <FooterAdminOptions />}

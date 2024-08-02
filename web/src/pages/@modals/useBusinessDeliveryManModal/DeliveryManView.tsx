@@ -43,7 +43,7 @@ export const DeliveryManView = ({ user, business, onAfterSuccess }: DeliveryManV
               { userId: _id, routeName: business.routeName },
               {
                 onAfterSuccess,
-              },
+              }
             );
           }}
         />
@@ -57,7 +57,7 @@ export const DeliveryManView = ({ user, business, onAfterSuccess }: DeliveryManV
               { userId: _id, routeName: business.routeName },
               {
                 onAfterSuccess,
-              },
+              }
             );
           }}
         />

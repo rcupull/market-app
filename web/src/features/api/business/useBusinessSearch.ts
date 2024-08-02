@@ -23,7 +23,7 @@ export const useBusinessSearch = (): {
               query: { search },
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

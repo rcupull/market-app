@@ -69,7 +69,7 @@ export const Banner = ({ className }: BannerProps) => {
           <img src={src && getImageEndpoint(src)} className="object-contain w-full h-full" />
         ),
         href,
-      }),
+      })
     );
   }
 
@@ -94,7 +94,7 @@ export const Banner = ({ className }: BannerProps) => {
             };
           })}
         />
-      ),
+      )
     );
   }
 

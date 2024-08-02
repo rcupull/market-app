@@ -15,32 +15,28 @@ export const useBusinessUpdateNotificationsModal = () => {
   return {
     businessUpdateNotificationsModal: {
       open: (args?: { onAfterSuccess?: () => void }) => {
-        pushModal(
-          'Emergent',
-          {
-            useProps: () => {
-              const { onAfterSuccess } = args || {};
-              const { onClose } = useModal();
-              const portal = usePortal();
+        pushModal('Emergent', {
+          useProps: () => {
+            const { onAfterSuccess } = args || {};
+            const { onClose } = useModal();
+            const portal = usePortal();
 
-              return {
-                title: 'Notificaciones',
-                content: (
-                  <Component
-                    portal={portal}
-                    onAfterSuccess={() => {
-                      onClose();
-                      onAfterSuccess?.();
-                    }}
-                  />
-                ),
-                secondaryBtn: <ButtonClose />,
-                primaryBtn: <div ref={portal.ref} />,
-              };
-            },
+            return {
+              title: 'Notificaciones',
+              content: (
+                <Component
+                  portal={portal}
+                  onAfterSuccess={() => {
+                    onClose();
+                    onAfterSuccess?.();
+                  }}
+                />
+              ),
+              secondaryBtn: <ButtonClose />,
+              primaryBtn: <div ref={portal.ref} />,
+            };
           },
-          { emergent: true },
-        );
+        });
       },
     },
   };

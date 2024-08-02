@@ -124,7 +124,7 @@ describe('usePostMakeReviewModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

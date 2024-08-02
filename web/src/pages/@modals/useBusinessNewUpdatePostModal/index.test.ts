@@ -14,7 +14,7 @@ describe('useBusinessNewUpdatePostModal', () => {
       result.current.businessNewUpdatePostModal.open({
         postId: 'postId',
         onAfterSuccess: jest.fn(),
-      }),
+      })
     );
 
     await waitFor(() => expect(screen.getByTestId('Modal')));
@@ -33,7 +33,7 @@ describe('useBusinessNewUpdatePostModal', () => {
       result.current.businessNewUpdatePostModal.open({
         postId: 'postId',
         onAfterSuccess: jest.fn(),
-      }),
+      })
     );
 
     await waitFor(() =>
@@ -132,7 +132,7 @@ describe('useBusinessNewUpdatePostModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

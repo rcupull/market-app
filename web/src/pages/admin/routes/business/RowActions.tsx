@@ -21,42 +21,38 @@ export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
   const { getHasSomeAccess } = useAuth();
 
   const handleDelete = () => {
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { removeOneBusinessAdmin } = useRemoveOneBusinessAdmin();
+    pushModal('Confirmation', {
+      useProps: () => {
+        const { removeOneBusinessAdmin } = useRemoveOneBusinessAdmin();
 
-          const { onClose } = useModal();
-          return {
-            content: (
-              <div>
-                <span>Seguro que desea eliminar este negocio?</span>
-              </div>
-            ),
-            badge: <Badge variant="error" />,
-            primaryBtn: (
-              <ButtonRemove
-                isBusy={removeOneBusinessAdmin.status.isBusy}
-                onClick={() =>
-                  removeOneBusinessAdmin.fetch(
-                    { routeName },
-                    {
-                      onAfterSuccess: () => {
-                        onClose();
+        const { onClose } = useModal();
+        return {
+          content: (
+            <div>
+              <span>Seguro que desea eliminar este negocio?</span>
+            </div>
+          ),
+          badge: <Badge variant="error" />,
+          primaryBtn: (
+            <ButtonRemove
+              isBusy={removeOneBusinessAdmin.status.isBusy}
+              onClick={() =>
+                removeOneBusinessAdmin.fetch(
+                  { routeName },
+                  {
+                    onAfterSuccess: () => {
+                      onClose();
 
-                        onRefresh();
-                      },
+                      onRefresh();
                     },
-                  )
-                }
-              />
-            ),
-          };
-        },
+                  }
+                )
+              }
+            />
+          ),
+        };
       },
-      { emergent: true },
-    );
+    });
   };
 
   const { onBusinessShowHide } = useBusinessShowHide();

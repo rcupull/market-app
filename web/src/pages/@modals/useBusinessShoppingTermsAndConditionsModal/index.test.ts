@@ -142,7 +142,7 @@ describe('useBusinessShoppingTermsAndConditionsModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

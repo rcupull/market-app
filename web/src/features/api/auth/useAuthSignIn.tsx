@@ -9,7 +9,7 @@ export const useAuthSignIn = (): {
   authSignIn: FetchResource<{ email: string; password: string }, AuthDataDto>;
 } => {
   const fetch = useFetch<AuthDataDto>();
-  
+
   const { isNative } = usePlatform();
   const typeDevice = isNative ? TYPE_DEVICE.NATIVE : TYPE_DEVICE.WEB;
 
@@ -24,7 +24,7 @@ export const useAuthSignIn = (): {
             url: getEndpoint({ path: '/auth/sign-in' }),
             data: { username, password, typeDevice },
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

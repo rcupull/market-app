@@ -141,7 +141,7 @@ describe('useBusinessDeliveryModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

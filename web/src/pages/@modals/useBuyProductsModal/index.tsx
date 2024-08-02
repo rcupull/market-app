@@ -13,20 +13,16 @@ export const useBuyProductsModal = () => {
   return {
     buyProductsModal: {
       open: () => {
-        pushModal(
-          'Emergent',
-          {
-            useProps: () => {
-              return {
-                title: 'Crear orden de compra',
-                badge: <Badge variant="cart" />,
-                content: <Component />,
-                className: '!w-[95vw] sm:!max-w-[50rem]',
-              };
-            },
+        pushModal('Emergent', {
+          useProps: () => {
+            return {
+              title: 'Crear orden de compra',
+              badge: <Badge variant="cart" />,
+              content: <Component />,
+              className: '!w-[95vw] sm:!max-w-[50rem]',
+            };
           },
-          { emergent: true },
-        );
+        });
       },
     },
   };

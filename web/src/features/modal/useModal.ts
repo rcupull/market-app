@@ -1,7 +1,5 @@
 import { useSimpleSlice } from 'features/slices/useSimpleSlice';
 
-import { useRouter } from 'hooks/useRouter';
-
 import { onCloseBackdrop } from './closeContext/CloseContextProvider';
 import { ModalId, ModalWindowOptions, ModalWindowProps } from './types';
 
@@ -14,7 +12,7 @@ type OnCloseFn = () => void;
 type PushModal = <Id extends ModalId>(
   id: Id,
   props: ModalWindowProps<Id>,
-  options?: ModalWindowOptions,
+  options?: ModalWindowOptions
 ) => void;
 
 type OnIsOpen = <Id extends ModalId>(id: Id) => boolean;
@@ -27,42 +25,21 @@ export const useModal = (): {
   onIsOpen: OnIsOpen;
   allModalData: Array<ModalData>;
 } => {
-  const { onChangeQuery, query, onBack } = useRouter();
-
-  const { modalId, modalProps } = query as { modalId?: ModalId; modalProps?: string };
-
-  const {
-    data: emergentState,
-    setData,
-    reset,
-  } = useSimpleSlice<Array<ModalData>>('emergentModals');
+  const { data, setData, reset } = useSimpleSlice<Array<ModalData>>('emergentModals');
 
   ///////////////////////////////////////////////////////////////////////////////////////////
-  const handleCloseAllEmergent = () => reset();
-  const handleCloseLastEmergent = () => setData((currentState) => currentState.slice(0, -1));
-  const handleCloseRouterModal = () => onBack();
-
-  const hasSomeEmergent = !!emergentState.length;
-
-  const _onClose = hasSomeEmergent ? handleCloseLastEmergent : handleCloseRouterModal;
+  const _onClose = () => setData((currentState) => currentState.slice(0, -1));
 
   const onCloseAll = () => {
-    handleCloseAllEmergent();
-    handleCloseRouterModal();
+    reset();
   };
 
   const pushModal: PushModal = (modalId, props, options) => {
-    const { timeout, emergent } = options || {};
+    const { timeout } = options || {};
 
-    const handleAddEmergent = () => {
+    const handlePush = () => {
       setData((state) => [...state, { id: modalId, props }]);
     };
-
-    const handlePushModal = () => {
-      onChangeQuery({ modalId, modalProps: JSON.stringify(props) });
-    };
-
-    const handlePush = emergent ? handleAddEmergent : handlePushModal;
 
     if (timeout) {
       setTimeout(handlePush, timeout);
@@ -72,12 +49,8 @@ export const useModal = (): {
   };
 
   const onIsOpen: OnIsOpen = (currentId) => {
-    return emergentState.some(({ id }) => currentId === id) || modalId === currentId;
+    return data.some(({ id }) => currentId === id);
   };
-
-  const routerModalata: ModalData | undefined = modalId
-    ? { id: modalId, props: modalProps ? JSON.parse(modalProps) : {} }
-    : undefined;
 
   return {
     pushModal,
@@ -85,6 +58,6 @@ export const useModal = (): {
     onClose: onCloseBackdrop,
     onCloseAll,
     onIsOpen,
-    allModalData: [...(routerModalata ? [routerModalata] : []), ...emergentState],
+    allModalData: data,
   };
 };

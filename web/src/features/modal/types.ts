@@ -6,10 +6,9 @@ export type ModalId = 'Confirmation' | 'Emergent';
 export type ModalWindowProps<Id extends ModalId> = Id extends 'Confirmation'
   ? ConfirmationProps
   : Id extends 'Emergent'
-    ? EmergentProps
-    : undefined;
+  ? EmergentProps
+  : undefined;
 
 export interface ModalWindowOptions {
   timeout?: number;
-  emergent?: boolean;
 }

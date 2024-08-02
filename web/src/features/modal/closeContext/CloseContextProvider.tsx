@@ -28,32 +28,28 @@ export const CloseContextProvider = ({ children, last }: CloseContextProviderPro
         return modal._onClose();
       }
 
-      modal.pushModal(
-        'Confirmation',
-        {
-          useProps: () => {
-            const { _onClose } = useModal();
+      modal.pushModal('Confirmation', {
+        useProps: () => {
+          const { _onClose } = useModal();
 
-            return {
-              title: 'Descartar cambios',
-              content: '¿Estás seguro que deseas cerrar sin guardar los cambios?',
-              primaryBtn: (
-                <Button
-                  label="Descartar"
-                  variant="error"
-                  onClick={() => {
-                    _onClose();
-                    modal._onClose();
-                  }}
-                />
-              ),
-              secondaryBtn: <ButtonClose label="Cancelar" />,
-              className: '!w-96',
-            };
-          },
+          return {
+            title: 'Descartar cambios',
+            content: '¿Estás seguro que deseas cerrar sin guardar los cambios?',
+            primaryBtn: (
+              <Button
+                label="Descartar"
+                variant="error"
+                onClick={() => {
+                  _onClose();
+                  modal._onClose();
+                }}
+              />
+            ),
+            secondaryBtn: <ButtonClose label="Cancelar" />,
+            className: '!w-96',
+          };
         },
-        { emergent: true },
-      );
+      });
     };
   }
 

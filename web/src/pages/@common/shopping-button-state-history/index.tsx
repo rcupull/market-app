@@ -20,20 +20,16 @@ export const ShoppingButtonStateHistory = ({ shopping }: ShoppingButtonStateHist
 
   const handleOpen = () => {
     const { state, history } = shopping;
-    pushModal(
-      'Emergent',
-      {
-        useProps: () => {
-          return {
-            title: 'Historial de la orden de compra',
-            content: <ShoppingStateHistoryView state={state} history={history} />,
-            customBtn: <ButtonClose className="ml-auto" />,
-            className: '!w-[30rem]',
-          };
-        },
+    pushModal('Emergent', {
+      useProps: () => {
+        return {
+          title: 'Historial de la orden de compra',
+          content: <ShoppingStateHistoryView state={state} history={history} />,
+          customBtn: <ButtonClose className="ml-auto" />,
+          className: '!w-[30rem]',
+        };
       },
-      { emergent: true },
-    );
+    });
   };
   return (
     <IconButton

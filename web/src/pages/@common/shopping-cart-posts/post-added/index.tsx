@@ -70,7 +70,7 @@ export const PostAdded = ({ shoppingPostMeta, routeName }: PostAddedProps) => {
                 onAfterSuccess: () => {
                   cart.onFetch();
                 },
-              },
+              }
             );
           }}
         />
@@ -79,38 +79,34 @@ export const PostAdded = ({ shoppingPostMeta, routeName }: PostAddedProps) => {
           stopPropagation
           title="Eliminar articulo"
           onClick={() => {
-            pushModal(
-              'Confirmation',
-              {
-                useProps: () => {
-                  const { onClose } = useModal();
-                  const { removeShopping } = useRemoveShopping();
+            pushModal('Confirmation', {
+              useProps: () => {
+                const { onClose } = useModal();
+                const { removeShopping } = useRemoveShopping();
 
-                  return {
-                    content: '¿Seguro que desea quitar este producto del carro de compras?',
-                    badge: <Badge variant="error" />,
-                    primaryBtn: (
-                      <Button
-                        label="Eliminar artículo"
-                        isBusy={removeShopping.status.isBusy}
-                        onClick={() => {
-                          removeShopping.fetch(
-                            { postId, routeName, purshaseNotes },
-                            {
-                              onAfterSuccess: () => {
-                                onClose();
-                                cart.onFetch();
-                              },
+                return {
+                  content: '¿Seguro que desea quitar este producto del carro de compras?',
+                  badge: <Badge variant="error" />,
+                  primaryBtn: (
+                    <Button
+                      label="Eliminar artículo"
+                      isBusy={removeShopping.status.isBusy}
+                      onClick={() => {
+                        removeShopping.fetch(
+                          { postId, routeName, purshaseNotes },
+                          {
+                            onAfterSuccess: () => {
+                              onClose();
+                              cart.onFetch();
                             },
-                          );
-                        }}
-                      />
-                    ),
-                  };
-                },
+                          }
+                        );
+                      }}
+                    />
+                  ),
+                };
               },
-              { emergent: true },
-            );
+            });
           }}
         />
 

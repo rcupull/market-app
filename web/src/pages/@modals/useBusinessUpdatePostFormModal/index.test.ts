@@ -122,7 +122,7 @@ describe('useBusinessUpdatePostFormModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

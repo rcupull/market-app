@@ -68,11 +68,11 @@ export const Component = ({ portal, options }: ComponentProps) => {
           <form className="w-full">
             {renderFieldLink(
               <FieldInput label="Facebook" name="face" className="w-full mt-4" />,
-              value.face,
+              value.face
             )}
             {renderFieldLink(
               <FieldInput label="Instagram" name="instagram" className="w-full mt-4" />,
-              value.instagram,
+              value.instagram
             )}
             {/* {renderFieldLink(
               <FieldInput label="Twitter" name="twitter" className="w-full mt-4" />,
@@ -109,12 +109,12 @@ export const Component = ({ portal, options }: ComponentProps) => {
                         options?.onAfterSuccess?.({});
                         onClose();
                       },
-                    },
+                    }
                   );
                 }}
                 variant="primary"
                 className="w-full"
-              />,
+              />
             )}
           </form>
         );

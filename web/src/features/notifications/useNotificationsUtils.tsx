@@ -12,10 +12,7 @@ import { MessagePayload } from 'firebase/messaging';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { useCart } from 'pages/@hooks/useCart';
 import { NotificationPayload } from 'types/notifications';
-import {
-  getDashboardBusinessShoppingTabRequested,
-  getOneShoppingRoute,
-} from 'utils/business';
+import { getDashboardBusinessShoppingTabRequested, getOneShoppingRoute } from 'utils/business';
 
 export const useNotificationsUtils = () => {
   const { onCallAfar } = useCallFromAfar();
@@ -33,8 +30,8 @@ export const useNotificationsUtils = () => {
     if (notificationPayload) {
       const { type } = notificationPayload;
 
-      if(DEVELOPMENT){
-        console.log('notificationPayload', notificationPayload)
+      if (DEVELOPMENT) {
+        console.log('notificationPayload', notificationPayload);
       }
 
       switch (type) {

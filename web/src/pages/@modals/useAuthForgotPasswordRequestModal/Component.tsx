@@ -69,39 +69,35 @@ export const Component = ({ portal }: ComponentProps) => {
                           onAfterSuccess: () => {
                             onClose();
 
-                            pushModal(
-                              'Confirmation',
-                              {
-                                useProps: () => {
-                                  const { onClose } = useModal();
+                            pushModal('Confirmation', {
+                              useProps: () => {
+                                const { onClose } = useModal();
 
-                                  return {
-                                    className: 'max-w-lg',
-                                    content:
-                                      'Se ha enviado un enlace de verificación a su correo. Por favor revise su bandeja de entrada.',
-                                    badge: <Badge variant="success" />,
-                                    customBtn: (
-                                      <Button
-                                        label="Entendido"
-                                        className="ml-auto"
-                                        onClick={() => {
-                                          onClose();
-                                        }}
-                                      />
-                                    ),
-                                    primaryBtn: <></>,
-                                    secondaryBtn: <></>,
-                                  };
-                                },
+                                return {
+                                  className: 'max-w-lg',
+                                  content:
+                                    'Se ha enviado un enlace de verificación a su correo. Por favor revise su bandeja de entrada.',
+                                  badge: <Badge variant="success" />,
+                                  customBtn: (
+                                    <Button
+                                      label="Entendido"
+                                      className="ml-auto"
+                                      onClick={() => {
+                                        onClose();
+                                      }}
+                                    />
+                                  ),
+                                  primaryBtn: <></>,
+                                  secondaryBtn: <></>,
+                                };
                               },
-                              { emergent: true },
-                            );
+                            });
                           },
-                        },
+                        }
                       );
                     }}
                     className="w-full"
-                  />,
+                  />
                 )}
               </form>
             );

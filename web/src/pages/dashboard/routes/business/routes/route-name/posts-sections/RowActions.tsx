@@ -27,47 +27,43 @@ export const RowActions = ({ rowData, allSections, rowIndex }: RowActionsProps) 
   const { businessSectionsReorder } = useBusinessSectionsReorder();
 
   const handleDelete = () => {
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { removeBusinessSection } = useRemoveBusinessSection();
-          const { onClose } = useModal();
-          return {
-            content: (
-              <div>
-                <span>
-                  Al eliminar este grupo solo serán borrados los datos asociados al mismo de forma{' '}
-                  <span className="font-bold">permanente</span>. Las publicaciones{' '}
-                  <span className="font-bold">no</span> serán eliminadas. Seguro que desea eliminar
-                  este grupo?
-                </span>
-              </div>
-            ),
-            badge: <Badge variant="error" />,
-            primaryBtn: (
-              <ButtonRemove
-                isBusy={removeBusinessSection.status.isBusy}
-                onClick={() => {
-                  if (!business) return;
+    pushModal('Confirmation', {
+      useProps: () => {
+        const { removeBusinessSection } = useRemoveBusinessSection();
+        const { onClose } = useModal();
+        return {
+          content: (
+            <div>
+              <span>
+                Al eliminar este grupo solo serán borrados los datos asociados al mismo de forma{' '}
+                <span className="font-bold">permanente</span>. Las publicaciones{' '}
+                <span className="font-bold">no</span> serán eliminadas. Seguro que desea eliminar
+                este grupo?
+              </span>
+            </div>
+          ),
+          badge: <Badge variant="error" />,
+          primaryBtn: (
+            <ButtonRemove
+              isBusy={removeBusinessSection.status.isBusy}
+              onClick={() => {
+                if (!business) return;
 
-                  removeBusinessSection.fetch(
-                    { sectionId: rowData._id, routeName: business.routeName },
-                    {
-                      onAfterSuccess: () => {
-                        business && onFetch({ routeName: business.routeName });
-                        onClose();
-                      },
+                removeBusinessSection.fetch(
+                  { sectionId: rowData._id, routeName: business.routeName },
+                  {
+                    onAfterSuccess: () => {
+                      business && onFetch({ routeName: business.routeName });
+                      onClose();
                     },
-                  );
-                }}
-              />
-            ),
-          };
-        },
+                  }
+                );
+              }}
+            />
+          ),
+        };
       },
-      { emergent: true },
-    );
+    });
   };
 
   const { businessNewUpdateSectionModal } = useBusinessNewUpdateSectionModal();
@@ -94,7 +90,7 @@ export const RowActions = ({ rowData, allSections, rowIndex }: RowActionsProps) 
         onAfterSuccess: () => {
           onFetch({ routeName: business?.routeName });
         },
-      },
+      }
     );
   };
 

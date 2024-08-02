@@ -120,7 +120,7 @@ describe('useShoppingDetailsModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

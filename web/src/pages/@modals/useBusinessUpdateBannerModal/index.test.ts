@@ -123,7 +123,7 @@ describe('useBusinessUpdateBannerModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

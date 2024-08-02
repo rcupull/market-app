@@ -21,7 +21,7 @@ export const useGetAllBusiness = (): {
             method: 'get',
             url: getEndpoint({ path: '/business', query: { limit: defaultLimit, ...query } }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

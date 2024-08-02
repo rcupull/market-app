@@ -35,7 +35,7 @@ export const BusinessFavoriteButton = ({
             onAfterSuccess: () => {
               onRefreshAuthUser();
             },
-          },
+          }
         );
       }}
       {...omittedProps}

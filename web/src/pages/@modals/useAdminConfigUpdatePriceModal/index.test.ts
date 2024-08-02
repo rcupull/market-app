@@ -122,7 +122,7 @@ describe('useAdminConfigUpdatePriceModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

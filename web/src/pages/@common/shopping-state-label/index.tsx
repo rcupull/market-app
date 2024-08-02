@@ -24,7 +24,7 @@ export const ShoppingStateLabel = ({ state, disableColor, className }: ShoppingS
             (!disableColor && state === ShoppingState.REJECTED) ||
             (!disableColor && state === ShoppingState.CANCELED),
         },
-        className,
+        className
       )}
     >
       {getShoppingStateLabel(state)}

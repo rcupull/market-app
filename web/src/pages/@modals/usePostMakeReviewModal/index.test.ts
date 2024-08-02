@@ -11,7 +11,7 @@ describe('usePostMakeReviewModal', () => {
     });
 
     act(() =>
-      result.current.postMakeReviewModal.open({ postId: 'postId', onAfterSuccess: jest.fn() }),
+      result.current.postMakeReviewModal.open({ postId: 'postId', onAfterSuccess: jest.fn() })
     );
 
     await waitFor(() => expect(screen.getByTestId('Modal')));
@@ -27,7 +27,7 @@ describe('usePostMakeReviewModal', () => {
     });
 
     act(() =>
-      result.current.postMakeReviewModal.open({ postId: 'postId', onAfterSuccess: jest.fn() }),
+      result.current.postMakeReviewModal.open({ postId: 'postId', onAfterSuccess: jest.fn() })
     );
 
     await waitFor(() =>
@@ -126,7 +126,7 @@ describe('usePostMakeReviewModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

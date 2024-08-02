@@ -120,7 +120,7 @@ describe('useAuthForgotPasswordRequestModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

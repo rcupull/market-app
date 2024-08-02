@@ -17,7 +17,7 @@ describe('ButtonClose', () => {
         >
           Cerrar
         </button>
-      `),
+      `)
     );
   });
 });

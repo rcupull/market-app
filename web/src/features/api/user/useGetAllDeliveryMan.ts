@@ -24,7 +24,7 @@ export const useGetAllDeliveryMan = (): {
               query: { limit: defaultLimit },
             }),
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

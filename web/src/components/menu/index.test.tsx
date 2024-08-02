@@ -19,7 +19,7 @@ describe('Menu', () => {
             onClick: () => {},
           },
         ]}
-      />,
+      />
     );
 
     expect(result.container).toMatchInlineSnapshot(`

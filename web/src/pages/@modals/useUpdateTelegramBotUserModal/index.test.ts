@@ -120,7 +120,7 @@ describe('useUpdateTelegramBotUserModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

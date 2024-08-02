@@ -16,33 +16,29 @@ export const useUserUpdateSettingsModal = () => {
   return {
     userUpdateSettingsModal: {
       open: (args: { user: User; onAfterSuccess?: () => void }) => {
-        pushModal(
-          'Emergent',
-          {
-            useProps: () => {
-              const { user, onAfterSuccess } = args;
-              const { onClose } = useModal();
-              const portal = usePortal();
+        pushModal('Emergent', {
+          useProps: () => {
+            const { user, onAfterSuccess } = args;
+            const { onClose } = useModal();
+            const portal = usePortal();
 
-              return {
-                title: 'Ajustes',
-                content: (
-                  <Component
-                    portal={portal}
-                    user={user}
-                    onAfterSuccess={() => {
-                      onClose();
-                      onAfterSuccess?.();
-                    }}
-                  />
-                ),
-                secondaryBtn: <ButtonClose />,
-                primaryBtn: <div ref={portal.ref} />,
-              };
-            },
+            return {
+              title: 'Ajustes',
+              content: (
+                <Component
+                  portal={portal}
+                  user={user}
+                  onAfterSuccess={() => {
+                    onClose();
+                    onAfterSuccess?.();
+                  }}
+                />
+              ),
+              secondaryBtn: <ButtonClose />,
+              primaryBtn: <div ref={portal.ref} />,
+            };
           },
-          { emergent: true },
-        );
+        });
       },
     },
   };

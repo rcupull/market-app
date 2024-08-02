@@ -18,42 +18,38 @@ export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
   const { getHasSomeAccess } = useAuth();
 
   const handleDelete = () => {
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { removeOneBillAdmin } = useRemoveOneBillAdmin();
+    pushModal('Confirmation', {
+      useProps: () => {
+        const { removeOneBillAdmin } = useRemoveOneBillAdmin();
 
-          const { onClose } = useModal();
-          return {
-            content: (
-              <div>
-                <span>Seguro que desea eliminar esta factura?</span>
-              </div>
-            ),
-            badge: <Badge variant="error" />,
-            primaryBtn: (
-              <ButtonRemove
-                isBusy={removeOneBillAdmin.status.isBusy}
-                onClick={() =>
-                  removeOneBillAdmin.fetch(
-                    { billId: rowData._id },
-                    {
-                      onAfterSuccess: () => {
-                        onClose();
+        const { onClose } = useModal();
+        return {
+          content: (
+            <div>
+              <span>Seguro que desea eliminar esta factura?</span>
+            </div>
+          ),
+          badge: <Badge variant="error" />,
+          primaryBtn: (
+            <ButtonRemove
+              isBusy={removeOneBillAdmin.status.isBusy}
+              onClick={() =>
+                removeOneBillAdmin.fetch(
+                  { billId: rowData._id },
+                  {
+                    onAfterSuccess: () => {
+                      onClose();
 
-                        onRefresh();
-                      },
+                      onRefresh();
                     },
-                  )
-                }
-              />
-            ),
-          };
-        },
+                  }
+                )
+              }
+            />
+          ),
+        };
       },
-      { emergent: true },
-    );
+    });
   };
 
   return (

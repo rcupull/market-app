@@ -72,7 +72,7 @@ export const PostCategoriesFilterButtons = ({
           'flex-wrap': type === 'wrapped',
           'overflow-x-auto max-w-full': type === 'scrollable',
         },
-        className,
+        className
       )}
     >
       {postCategories.map(({ label, tag }, index) => {

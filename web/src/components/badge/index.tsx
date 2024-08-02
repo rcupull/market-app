@@ -35,7 +35,7 @@ export const Badge = ({ variant, className }: BadgeProps) => {
           ['bg-yellow-200']: variant == 'warning',
           ['bg-gray-200']: variant == 'cart' || variant == 'truck',
         },
-        className,
+        className
       )}
     >
       <IconComponent

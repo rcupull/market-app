@@ -281,10 +281,10 @@ export const ComponentProduct = ({
                             },
                             {
                               onAfterSuccess,
-                            },
+                            }
                           );
                         },
-                      },
+                      }
                     );
                   };
                   const handelAddPost = () => {
@@ -306,7 +306,7 @@ export const ComponentProduct = ({
                         onAfterSuccess: (response) => {
                           handelUpdatePost(response);
                         },
-                      },
+                      }
                     );
                   };
 
@@ -314,7 +314,7 @@ export const ComponentProduct = ({
                 }}
                 variant="primary"
                 className="w-full"
-              />,
+              />
             )}
           </form>
         );

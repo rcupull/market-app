@@ -33,7 +33,7 @@ export const Component = ({ portal, multi, onSelected }: ComponentProps) => {
   const { getCatalogsImages } = useGetCatalogsImages();
 
   const { data, setData } = useSimpleSlice<FetchData<UseGetCatalogImagesResponse>>(
-    'modal_catalogsSearchImage',
+    'modal_catalogsSearchImage'
   );
   const [allImages, setAllImages] = useState<Array<GalleryImage>>([]);
   const [search, setSearch] = useState<string>();
@@ -47,7 +47,7 @@ export const Component = ({ portal, multi, onSelected }: ComponentProps) => {
           width,
           src: url,
           alt: title,
-        })),
+        }))
       );
     }
   }, [data]);
@@ -112,7 +112,7 @@ export const Component = ({ portal, multi, onSelected }: ComponentProps) => {
                 { search: searchValue },
                 {
                   onAfterSuccess: setData,
-                },
+                }
               );
             }, 500);
           }

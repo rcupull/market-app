@@ -114,7 +114,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                       password: 'Email o contraseña incorrecta',
                     });
                   },
-                },
+                }
               );
             };
             return (
@@ -148,7 +148,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                     isBusy={authSignIn.status.isBusy}
                     onClick={handleSubmit}
                     className="w-full"
-                  />,
+                  />
                 )}
 
                 <div className="w-100 text-sm pt-4">

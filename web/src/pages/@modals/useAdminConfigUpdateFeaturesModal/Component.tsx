@@ -70,7 +70,7 @@ export const Component = ({ portal }: ComponentProps) => {
                     type: 'custom',
                     customCb: (value) => {
                       return !state.some((feature, i) =>
-                        i === index ? false : feature.key === value,
+                        i === index ? false : feature.key === value
                       );
                     },
                     message: 'La key ya existe',
@@ -112,12 +112,12 @@ export const Component = ({ portal }: ComponentProps) => {
                   init();
                   onClose();
                 },
-              },
+              }
             );
           }}
           variant="primary"
           className="w-full"
-        />,
+        />
       )}
     </>
   );

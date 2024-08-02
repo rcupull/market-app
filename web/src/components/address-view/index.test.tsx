@@ -22,7 +22,7 @@ describe('AddressView', () => {
           placeId: 'asdasd',
           postCode: 'asdasda',
         }}
-      />,
+      />
     );
 
     expect(result.container).toMatchInlineSnapshot(`

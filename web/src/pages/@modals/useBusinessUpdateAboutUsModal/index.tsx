@@ -15,23 +15,19 @@ export const useBusinessUpdateAboutUsModal = () => {
   return {
     businessUpdateAboutUsModal: {
       open: () => {
-        pushModal(
-          'Emergent',
-          {
-            useProps: () => {
-              const portal = usePortal();
+        pushModal('Emergent', {
+          useProps: () => {
+            const portal = usePortal();
 
-              return {
-                title: 'Presentación del negocio',
-                content: <Component portal={portal} />,
-                secondaryBtn: <ButtonClose />,
-                primaryBtn: <div ref={portal.ref} />,
-                className: '!w-[95vw]',
-              };
-            },
+            return {
+              title: 'Presentación del negocio',
+              content: <Component portal={portal} />,
+              secondaryBtn: <ButtonClose />,
+              primaryBtn: <div ref={portal.ref} />,
+              className: '!w-[95vw]',
+            };
           },
-          { emergent: true },
-        );
+        });
       },
     },
   };

@@ -24,7 +24,7 @@ export const useAuthRefresh = (): {
             url: getEndpoint({ path: '/auth/refresh' }),
             data: { refreshToken },
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

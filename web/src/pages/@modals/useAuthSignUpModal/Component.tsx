@@ -161,33 +161,29 @@ export const Component = ({ portal }: ComponentProps) => {
                           onAfterSuccess: () => {
                             onClose();
 
-                            pushModal(
-                              'Confirmation',
-                              {
-                                useProps: () => {
-                                  const { onClose } = useModal();
+                            pushModal('Confirmation', {
+                              useProps: () => {
+                                const { onClose } = useModal();
 
-                                  return {
-                                    className: 'max-w-lg',
-                                    content:
-                                      'Se ha registrado exitosamente pero debe confirmar su correo para poder iniciar sesión. Revise el enlace enviado a su correo para confirmar el registro.',
-                                    badge: <Badge variant="success" />,
-                                    customBtn: (
-                                      <Button
-                                        label="Entendido"
-                                        className="ml-auto"
-                                        onClick={() => {
-                                          onClose();
-                                        }}
-                                      />
-                                    ),
-                                    primaryBtn: <></>,
-                                    secondaryBtn: <></>,
-                                  };
-                                },
+                                return {
+                                  className: 'max-w-lg',
+                                  content:
+                                    'Se ha registrado exitosamente pero debe confirmar su correo para poder iniciar sesión. Revise el enlace enviado a su correo para confirmar el registro.',
+                                  badge: <Badge variant="success" />,
+                                  customBtn: (
+                                    <Button
+                                      label="Entendido"
+                                      className="ml-auto"
+                                      onClick={() => {
+                                        onClose();
+                                      }}
+                                    />
+                                  ),
+                                  primaryBtn: <></>,
+                                  secondaryBtn: <></>,
+                                };
                               },
-                              { emergent: true },
-                            );
+                            });
                           },
                           onAfterFailed: (e) => {
                             if (e.reazon === 'EMAIL_ALREADY_REGISTERED') {
@@ -197,11 +193,11 @@ export const Component = ({ portal }: ComponentProps) => {
                               });
                             }
                           },
-                        },
+                        }
                       );
                     }}
                     className="w-full"
-                  />,
+                  />
                 )}
               </form>
             );

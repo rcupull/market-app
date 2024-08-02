@@ -110,7 +110,7 @@ describe('useBusinessOnboardingModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

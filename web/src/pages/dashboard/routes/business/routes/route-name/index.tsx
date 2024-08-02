@@ -151,7 +151,7 @@ export const RouteName = () => {
               { businessTab: tabIndexToQuery(tabIndex) },
               {
                 replaceAll: true,
-              },
+              }
             )
           }
           selected={isString(query.businessTab) ? tabQueryToIndex(query.businessTab) : undefined}

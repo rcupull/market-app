@@ -44,7 +44,7 @@ export const Validate = () => {
               authSignInModal.open();
             }
           },
-        },
+        }
       );
     }
   }, [code]);

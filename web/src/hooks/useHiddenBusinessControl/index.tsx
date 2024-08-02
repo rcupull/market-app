@@ -42,31 +42,27 @@ export const useHiddenBusinessControl = ({
       return onRefresh();
     }
 
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { onClose } = useModal();
+    pushModal('Confirmation', {
+      useProps: () => {
+        const { onClose } = useModal();
 
-          return {
-            className: 'max-w-lg',
-            content:
-              'Seguro que desea actualizar la tabla?. Serán perdidos todos los cambios hechos hasta el momento',
-            badge: <Badge variant="error" />,
-            primaryBtn: (
-              <ButtonRemove
-                label="Actualizar"
-                onClick={() => {
-                  onRefresh();
-                  onClose();
-                }}
-              />
-            ),
-          };
-        },
+        return {
+          className: 'max-w-lg',
+          content:
+            'Seguro que desea actualizar la tabla?. Serán perdidos todos los cambios hechos hasta el momento',
+          badge: <Badge variant="error" />,
+          primaryBtn: (
+            <ButtonRemove
+              label="Actualizar"
+              onClick={() => {
+                onRefresh();
+                onClose();
+              }}
+            />
+          ),
+        };
       },
-      { emergent: true },
-    );
+    });
   };
 
   const handleSubmitCall = () => {
@@ -79,7 +75,7 @@ export const useHiddenBusinessControl = ({
         onAfterSuccess: () => {
           onRefresh();
         },
-      },
+      }
     );
   };
 
@@ -94,31 +90,27 @@ export const useHiddenBusinessControl = ({
     }
 
     // if some are to hide, then we need to show with confirmation
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { onClose } = useModal();
+    pushModal('Confirmation', {
+      useProps: () => {
+        const { onClose } = useModal();
 
-          return {
-            className: 'max-w-lg',
-            content:
-              'Ocultar los negocios ocultará tambien las publicaciones de dichos negocios. ¿Seguro que desea ocultar?',
-            badge: <Badge variant="error" />,
-            primaryBtn: (
-              <ButtonRemove
-                label="Ocultar"
-                onClick={() => {
-                  handleSubmitCall();
-                  onClose();
-                }}
-              />
-            ),
-          };
-        },
+        return {
+          className: 'max-w-lg',
+          content:
+            'Ocultar los negocios ocultará tambien las publicaciones de dichos negocios. ¿Seguro que desea ocultar?',
+          badge: <Badge variant="error" />,
+          primaryBtn: (
+            <ButtonRemove
+              label="Ocultar"
+              onClick={() => {
+                handleSubmitCall();
+                onClose();
+              }}
+            />
+          ),
+        };
       },
-      { emergent: true },
-    );
+    });
   };
 
   const isHidden = ({ hidden, routeName }: Business): boolean => {

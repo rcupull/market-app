@@ -15,7 +15,7 @@ describe('useAdminUpdateUserAccessModal', () => {
       result.current.adminUpdateUserAccessModal.open({
         user: userDummy,
         onAfterSuccess: jest.fn(),
-      }),
+      })
     );
 
     await waitFor(() => expect(screen.getByTestId('Modal')));
@@ -34,7 +34,7 @@ describe('useAdminUpdateUserAccessModal', () => {
       result.current.adminUpdateUserAccessModal.open({
         user: userDummy,
         onAfterSuccess: jest.fn(),
-      }),
+      })
     );
 
     await waitFor(() =>
@@ -117,7 +117,7 @@ describe('useAdminUpdateUserAccessModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

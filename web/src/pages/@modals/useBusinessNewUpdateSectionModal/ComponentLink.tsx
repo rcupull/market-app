@@ -40,8 +40,8 @@ export const ComponentLink = ({
 
   const { onChangeUnsavedChanges } = useCloseContext();
 
-  const postCategoriesTag =  useMemo(getRandomHash,[])
-  
+  const postCategoriesTag = useMemo(getRandomHash, []);
+
   return (
     <Formux<State>
       value={{
@@ -118,16 +118,16 @@ export const ComponentLink = ({
                           sectionId: section._id,
                           data: value,
                         },
-                        { onAfterSuccess },
+                        { onAfterSuccess }
                       )
                     : addBusinessSection.fetch(
                         { routeName: business.routeName, data: value },
-                        { onAfterSuccess },
+                        { onAfterSuccess }
                       );
                 }}
                 variant="primary"
                 className="w-full"
-              />,
+              />
             )}
           </form>
         );

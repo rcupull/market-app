@@ -115,11 +115,11 @@ export const ForgotPassword = () => {
                           onAfterSuccess: ({ email }) => {
                             setEmail(email);
                           },
-                        },
+                        }
                       );
                     }}
                     className="w-full mt-6"
-                  />,
+                  />
                 )}
               </form>
             );

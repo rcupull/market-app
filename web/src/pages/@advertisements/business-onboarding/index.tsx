@@ -37,7 +37,7 @@ export const AdvertisementsBusinessOnboarding = () => {
                   onAfterSuccess: () => {
                     onFetch({ routeName: business?.routeName });
                   },
-                },
+                }
               );
             },
           }}

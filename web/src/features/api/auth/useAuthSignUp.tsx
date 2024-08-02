@@ -23,7 +23,7 @@ export const useAuthSignUp = (): {
             url: getEndpoint({ path: '/auth/sign-up' }),
             data,
           },
-          options,
+          options
         );
       },
       reset: fetch[3],

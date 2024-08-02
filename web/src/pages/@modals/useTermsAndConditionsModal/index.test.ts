@@ -122,7 +122,7 @@ describe('useTermsAndConditionsModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

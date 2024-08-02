@@ -11,7 +11,7 @@ export function SvgTvSolid(props: StyleProps) {
       height: '1em',
       ...props,
     },
-    createElement('path', { d: 'M2 7v16h28V7zm2 2h24v12H4zm6 15v2h12v-2z' }),
+    createElement('path', { d: 'M2 7v16h28V7zm2 2h24v12H4zm6 15v2h12v-2z' })
   );
 }
 export default SvgTvSolid;

@@ -66,7 +66,7 @@ export const FooterAdminOptions = ({ active }: FooterAdminOptionsProps) => {
                 getEndpoint({
                   path: '/admin/agenda/web/:agendaToken',
                   urlParams: { agendaToken },
-                }),
+                })
               );
             },
           });

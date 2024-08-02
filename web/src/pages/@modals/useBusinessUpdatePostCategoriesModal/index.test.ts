@@ -122,7 +122,7 @@ describe('useBusinessUpdatePostCategoriesModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

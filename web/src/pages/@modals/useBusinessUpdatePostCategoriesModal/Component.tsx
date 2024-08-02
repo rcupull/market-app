@@ -76,7 +76,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                 addRow(state, {
                   label,
                   tag: getPostCategoryTag(label),
-                }),
+                })
               );
               resetForm();
             };
@@ -104,7 +104,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                     onClick={() => handleAdd()}
                     variant="primary"
                     className="ml-4"
-                  />,
+                  />
                 )}
               </form>
             );
@@ -127,80 +127,71 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               <IconButtonRemove
                 className="text-gray-600 hover:text-gray-800 cursor-pointer"
                 onClick={() => {
-                  pushModal(
-                    'Confirmation',
-                    {
-                      useProps: () => {
-                        const { onClose } = useModal();
+                  pushModal('Confirmation', {
+                    useProps: () => {
+                      const { onClose } = useModal();
 
-                        return {
-                          content: (
-                            <div>
-                              Al eliminar una categoría estará removiendo esta clasificación de
-                              todas las publicaciones de su negocio y es un cambio irreversible.
-                              Seguro que desea eliminar la categoría{' '}
-                              <span className="font-bold">{label}</span>?
-                            </div>
-                          ),
-                          badge: <Badge variant="error" />,
-                          primaryBtn: (
-                            <ButtonRemove
-                              label="Eliminar"
-                              onClick={() => {
-                                setState(removeRow(state, index));
-                                onClose();
-                              }}
-                            />
-                          ),
-                        };
-                      },
+                      return {
+                        content: (
+                          <div>
+                            Al eliminar una categoría estará removiendo esta clasificación de todas
+                            las publicaciones de su negocio y es un cambio irreversible. Seguro que
+                            desea eliminar la categoría <span className="font-bold">{label}</span>?
+                          </div>
+                        ),
+                        badge: <Badge variant="error" />,
+                        primaryBtn: (
+                          <ButtonRemove
+                            label="Eliminar"
+                            onClick={() => {
+                              setState(removeRow(state, index));
+                              onClose();
+                            }}
+                          />
+                        ),
+                      };
                     },
-                    { emergent: true },
-                  );
+                  });
                 }}
               />
 
               <IconButtonShowHide
                 hidden={hidden}
                 onClick={() => {
-                  pushModal(
-                    'Confirmation',
-                    {
-                      useProps: () => {
-                        const { onClose } = useModal();
+                  pushModal('Confirmation', {
+                    useProps: () => {
+                      const { onClose } = useModal();
 
-                        return {
-                          title: `${hidden ? 'Mostrar' : 'Ocultar'} categoría`,
-                          content: (
-                            <>
-                              {hidden ? (
-                                <div>
-                                  Usted está mostrando esta categoría y podrá ser usada para filtrar
-                                  sus publicaciones en la página de su negocio. Desea continuar?
-                                </div>
-                              ) : (
-                                <div>
-                                  Usted está ocultando esta categoría y no será visible en el filtro
-                                  por categorias en la página de su negocio. Desea continuar?
-                                </div>
-                              )}
-                            </>
-                          ),
-                          badge: <Badge variant="info" />,
-                          primaryBtn: (
-                            <Button
-                              label="Continuar"
-                              onClick={() => {
-                                setState(updateRow(state, { ...cat, hidden: !hidden }, index));
-                                onClose();
-                              }}
-                            />
-                          ),
-                        };
-                      },
+                      return {
+                        title: `${hidden ? 'Mostrar' : 'Ocultar'} categoría`,
+                        content: (
+                          <>
+                            {hidden ? (
+                              <div>
+                                Usted está mostrando esta categoría y podrá ser usada para filtrar
+                                sus publicaciones en la página de su negocio. Desea continuar?
+                              </div>
+                            ) : (
+                              <div>
+                                Usted está ocultando esta categoría y no será visible en el filtro
+                                por categorias en la página de su negocio. Desea continuar?
+                              </div>
+                            )}
+                          </>
+                        ),
+                        badge: <Badge variant="info" />,
+                        primaryBtn: (
+                          <Button
+                            label="Continuar"
+                            onClick={() => {
+                              setState(updateRow(state, { ...cat, hidden: !hidden }, index));
+                              onClose();
+                            }}
+                          />
+                        ),
+                      };
                     },
-                    { emergent: true },
-                  );
+                  });
                 }}
               />
             </div>
@@ -217,10 +208,10 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               { postCategories: state, routeName },
               {
                 onAfterSuccess,
-              },
+              }
             );
           }}
-        />,
+        />
       )}
     </>
   );

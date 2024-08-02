@@ -13,29 +13,25 @@ export const useUpdateTelegramBotUserModal = () => {
   return {
     updateTelegramBotUserModal: {
       open: (args?: { onAfterSuccess?: () => void }) => {
-        pushModal(
-          'Emergent',
-          {
-            useProps: () => {
-              const { onAfterSuccess } = args || {};
-              const { onClose } = useModal();
+        pushModal('Emergent', {
+          useProps: () => {
+            const { onAfterSuccess } = args || {};
+            const { onClose } = useModal();
 
-              return {
-                title: 'Bot de Telegram',
-                content: (
-                  <Component
-                    onAfterSuccess={() => {
-                      onClose();
-                      onAfterSuccess?.();
-                    }}
-                  />
-                ),
-                secondaryBtn: <ButtonClose />,
-              };
-            },
+            return {
+              title: 'Bot de Telegram',
+              content: (
+                <Component
+                  onAfterSuccess={() => {
+                    onClose();
+                    onAfterSuccess?.();
+                  }}
+                />
+              ),
+              secondaryBtn: <ButtonClose />,
+            };
           },
-          { emergent: true },
-        );
+        });
       },
     },
   };

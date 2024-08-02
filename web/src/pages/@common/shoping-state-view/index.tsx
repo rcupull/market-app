@@ -88,57 +88,52 @@ export const ShoppingStateView = ({
         setFormState(newFormState);
 
         if (!isEqual(newFormState, formState)) {
-          pushModal(
-            'Confirmation',
-            {
-              useProps: () => {
-                const { onClose } = useModal();
+          pushModal('Confirmation', {
+            useProps: () => {
+              const { onClose } = useModal();
 
-                const { shoppingChangeState } = useShoppingChangeState();
+              const { shoppingChangeState } = useShoppingChangeState();
 
-                return {
-                  content: (
-                    <span>
-                      Seguro que desea actualizar el estado de esta orden de compra hacia{' '}
-                      <span className="font-bold">{getShoppingStateLabel(newFormState.state)}</span>
-                      ?
-                    </span>
-                  ),
-                  badge: <Badge variant="warning" />,
-                  className: '!w-[30rem]',
-                  primaryBtn: (
-                    <ButtonSave
-                      label="Actualizar"
-                      isBusy={shoppingChangeState.status.isBusy}
-                      onClick={() => {
-                        const { state } = newFormState;
+              return {
+                content: (
+                  <span>
+                    Seguro que desea actualizar el estado de esta orden de compra hacia{' '}
+                    <span className="font-bold">{getShoppingStateLabel(newFormState.state)}</span>?
+                  </span>
+                ),
+                badge: <Badge variant="warning" />,
+                className: '!w-[30rem]',
+                primaryBtn: (
+                  <ButtonSave
+                    label="Actualizar"
+                    isBusy={shoppingChangeState.status.isBusy}
+                    onClick={() => {
+                      const { state } = newFormState;
 
-                        shoppingChangeState.fetch(
-                          { state, shoppingId: _id },
-                          {
-                            onAfterSuccess: () => {
-                              onClose();
-                              onAfterSuccess?.();
-                            },
+                      shoppingChangeState.fetch(
+                        { state, shoppingId: _id },
+                        {
+                          onAfterSuccess: () => {
+                            onClose();
+                            onAfterSuccess?.();
                           },
-                        );
-                      }}
-                    />
-                  ),
-                  secondaryBtn: (
-                    <ButtonClose
-                      onClick={() => {
-                        const { state } = shopping;
-                        setFormState({ state });
-                        onClose();
-                      }}
-                    />
-                  ),
-                };
-              },
+                        }
+                      );
+                    }}
+                  />
+                ),
+                secondaryBtn: (
+                  <ButtonClose
+                    onClick={() => {
+                      const { state } = shopping;
+                      setFormState({ state });
+                      onClose();
+                    }}
+                  />
+                ),
+              };
             },
-            { emergent: true },
-          );
+          });
         }
       }}
     >

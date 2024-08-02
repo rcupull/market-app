@@ -122,7 +122,7 @@ describe('useAdminConfigUpdatePrivacyPolicyModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

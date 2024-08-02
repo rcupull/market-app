@@ -36,7 +36,7 @@ export const AdvertisementsMyFirstBusiness = () => {
                     pushRoute(
                       getDashboardBusinessRoute({
                         routeName: business.routeName,
-                      }),
+                      })
                     );
                 },
               });

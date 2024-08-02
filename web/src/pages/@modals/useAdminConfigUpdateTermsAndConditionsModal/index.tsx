@@ -15,23 +15,19 @@ export const useAdminConfigUpdateTermsAndConditionsModal = () => {
   return {
     adminConfigUpdateTermsAndConditionsModal: {
       open: () => {
-        pushModal(
-          'Emergent',
-          {
-            useProps: () => {
-              const portal = usePortal();
+        pushModal('Emergent', {
+          useProps: () => {
+            const portal = usePortal();
 
-              return {
-                title: 'Términos y condiciones',
-                content: <Component portal={portal} />,
-                secondaryBtn: <ButtonClose />,
-                primaryBtn: <div ref={portal.ref} />,
-                className: '!w-[95vw]',
-              };
-            },
+            return {
+              title: 'Términos y condiciones',
+              content: <Component portal={portal} />,
+              secondaryBtn: <ButtonClose />,
+              primaryBtn: <div ref={portal.ref} />,
+              className: '!w-[95vw]',
+            };
           },
-          { emergent: true },
-        );
+        });
       },
     },
   };

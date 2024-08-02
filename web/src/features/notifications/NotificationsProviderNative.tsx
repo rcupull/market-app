@@ -20,7 +20,7 @@ const NotificationsProviderNative = () => {
 
   const addListeners = async () => {
     await PushNotifications.addListener('registration', (token) => {
-      if(DEVELOPMENT){
+      if (DEVELOPMENT) {
         console.info('Registration token: ', token.value);
       }
 
@@ -31,13 +31,13 @@ const NotificationsProviderNative = () => {
     });
 
     await PushNotifications.addListener('registrationError', (err) => {
-      if(DEVELOPMENT){
+      if (DEVELOPMENT) {
         console.error('Registration error: ', err.error);
       }
     });
 
     await PushNotifications.addListener('pushNotificationReceived', (notification) => {
-      if(DEVELOPMENT){
+      if (DEVELOPMENT) {
         console.log('Push notification received: ', notification);
       }
 
@@ -45,16 +45,10 @@ const NotificationsProviderNative = () => {
         //@ts-expect-error ignore
         onUpdateNotification(notification);
       }
-
     });
 
-    await PushNotifications.addListener('pushNotificationActionPerformed', ({ notification}) => {
-      if(DEVELOPMENT)(
-        console.log(
-          'Push notification action performed',
-          notification
-        )
-      )
+    await PushNotifications.addListener('pushNotificationActionPerformed', ({ notification }) => {
+      if (DEVELOPMENT) console.log('Push notification action performed', notification);
 
       if (notification) {
         //@ts-expect-error ignore

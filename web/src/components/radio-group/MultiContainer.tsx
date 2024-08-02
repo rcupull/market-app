@@ -37,7 +37,7 @@ export const MultiContainer = <O extends any = any>({
             ...acc,
             [index]: exist,
           };
-        }, {}),
+        }, {})
       );
     }
   }, [JSON.stringify(value)]);
