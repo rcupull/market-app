@@ -32,7 +32,7 @@ export const Users = () => {
           xs: [[0, 1, 2, 3, 4]],
           xl: 'none',
         }}
-        heads={['Acciones', 'Nombre', 'Email', 'Validado', 'Fecha de Creación']}
+        heads={['Acciones', 'Nombre', 'Email', 'Validado', 'Creación']}
         getRowProps={(rowData) => {
           const { name, createdAt, email, validated } = rowData;
 

@@ -141,7 +141,7 @@ export const Products = () => {
                 'Nombre',
                 'Categorías',
                 'Imágen',
-                'Fecha de Creación',
+                'Creación',
                 'Detalles',
               ]}
               getRowProps={(rowData) => {

@@ -120,7 +120,7 @@ export const Links = () => {
                 xs: [[0, 1, 2, 3, 4]],
                 md: 'none',
               }}
-              heads={['Acciones', 'Nombre', 'Imágen', 'Fecha de Creación', 'Detalles']}
+              heads={['Acciones', 'Nombre', 'Imágen', 'Creación', 'Detalles']}
               getRowProps={(rowData) => {
                 const { name, createdAt, hidden, images } = rowData;
 

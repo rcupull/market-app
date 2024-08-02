@@ -23,7 +23,7 @@ export const FiltersContainer = ({ onReset, children, className }: FiltersContai
         header={
           <div className="flex items-center justify-between w-full px-2">
             Filtros
-            <IconButton svg={SvgBroomSolid} variant="error" onClick={onReset} className="!-my-2" />
+            <IconButton as='div' svg={SvgBroomSolid} variant="error" onClick={onReset} className="!-my-2" />
           </div>
         }
       >

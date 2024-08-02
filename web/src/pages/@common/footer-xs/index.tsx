@@ -19,7 +19,7 @@ export const FooterXs = ({ className }: FooterXsProps) => {
   return (
     <footer
       className={cn(
-        'shadow-lg -scale-y-100 fixed bottom-0 left-0 right-0 bg-white px-2 py-1',
+        'shadow-lg -scale-y-100 bg-white px-2 py-1',
         className
       )}
     >

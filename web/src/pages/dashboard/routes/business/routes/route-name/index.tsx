@@ -145,7 +145,7 @@ export const RouteName = () => {
 
         <Tabs
           tabListClassName="mt-4 shadow-lg hidden sm:flex"
-          tabPanelClassName="w-full overflow-y-auto h-[calc(100vh-12rem)]"
+          tabPanelClassName="w-full h-[calc(100vh-9rem)]"
           onSelect={(tabIndex) =>
             onChangeQuery(
               { businessTab: tabIndexToQuery(tabIndex) },
