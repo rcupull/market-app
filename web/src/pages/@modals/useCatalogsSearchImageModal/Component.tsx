@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
-//eslint-disable-next-line
 import { Gallery, Image as GalleryImage } from 'react-grid-gallery';
 
 import { Button } from 'components/button';
-import { ButtonClose } from 'components/button-close';
 import { FieldInput } from 'components/field-input';
 import { Formux } from 'components/formux';
-import { Modal } from 'components/modal';
 import { SpinnerEllipsis } from 'components/spinner-ellipsis';
 
 import {
@@ -17,6 +14,7 @@ import { useModal } from 'features/modal/useModal';
 import { useSimpleSlice } from 'features/slices/useSimpleSlice';
 
 import { useDebouncer } from 'hooks/useDebouncer';
+import { Portal } from 'hooks/usePortal';
 
 import { ThumbnailImageComponent } from './ThumbnailImageComponent';
 
@@ -24,17 +22,13 @@ import { FetchData } from 'types/api';
 import { Image } from 'types/general';
 import { updateRow } from 'utils/general';
 
-/**
- * https://www.npmjs.com/package/react-grid-gallery
- * https://benhowell.github.io/react-grid-gallery/examples/custom-image-component
- */
-
-export interface CatalogsSearchImageProps {
-  onSelected?: (images: Array<Image>) => void;
+export interface ComponentProps {
+  portal: Portal;
+  onSelected: (images: Array<Image>) => void;
   multi?: boolean;
 }
 
-export const CatalogsSearchImage = ({ onSelected, multi }: CatalogsSearchImageProps) => {
+export const Component = ({ portal, multi, onSelected }: ComponentProps) => {
   const { onClose } = useModal();
   const { getCatalogsImages } = useGetCatalogsImages();
 
@@ -105,7 +99,7 @@ export const CatalogsSearchImage = ({ onSelected, multi }: CatalogsSearchImagePr
     );
   };
 
-  const content = (
+  return (
     <div>
       <Formux
         value={{
@@ -144,18 +138,10 @@ export const CatalogsSearchImage = ({ onSelected, multi }: CatalogsSearchImagePr
         {`(${multi ? 'Seleccione una o varias imágenes' : 'Seleccione una imagen'})`}
       </p>
       <div className="h-[calc(100vh-19rem)] overflow-y-auto">{renderImageGallery()}</div>
-    </div>
-  );
 
-  return (
-    <Modal
-      title="Catálogos de imágenes"
-      content={content}
-      primaryBtn={<Button label="Seleccionar" onClick={handleSubmit} />}
-      secondaryBtn={<ButtonClose />}
-      className="max-h-[calc(100vh-2rem)]"
-    />
+      {portal.getPortal(<Button label="Seleccionar" onClick={handleSubmit} />)}
+    </div>
   );
 };
 
-export default CatalogsSearchImage;
+export default Component;

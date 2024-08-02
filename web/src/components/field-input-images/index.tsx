@@ -8,10 +8,9 @@ import { IconButton } from 'components/icon-button';
 import { IconButtonRemove } from 'components/icon-button-remove';
 import { Input } from 'components/input';
 
-import { useModal } from 'features/modal/useModal';
-
 import SvgExternalLinkAltSolid from 'icons/ExternalLinkAltSolid';
 import SvgPlusSolid from 'icons/PlusSolid';
+import { useCatalogsSearchImageModal } from 'pages/@modals/useCatalogsSearchImageModal';
 import { Image, ImageFile } from 'types/general';
 import { getImageEndpoint } from 'utils/api';
 import { getFileImageSize } from 'utils/file';
@@ -33,7 +32,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
   (props, ref) => {
     const { className, label, multi, max, enabledImageHref, ...omittedProps } = props;
 
-    const { pushModal } = useModal();
+    const { catalogsSearchImageModal } = useCatalogsSearchImageModal();
     const { field, error } = useFormField(props);
 
     const { value } = field;
@@ -243,14 +242,10 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
     };
 
     const handleOpenCatalogsSearchImage = () => {
-      pushModal(
-        'CatalogsSearchImage',
-        {
-          onSelected: (images) => handleAddManyImages(images),
-          multi: true,
-        },
-        { emergent: true },
-      );
+      catalogsSearchImageModal.open({
+        onSelected: (images) => handleAddManyImages(images),
+        multi: true,
+      });
     };
     return (
       <FormFieldWrapper label={label} error={error} className={className}>
