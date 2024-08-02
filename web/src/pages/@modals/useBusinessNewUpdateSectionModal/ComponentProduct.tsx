@@ -12,7 +12,7 @@ import { Formux } from 'components/formux';
 
 import { useAddBusinessSection } from 'features/api/business/useAddBusinessSection';
 import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusinessSection';
-import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
+import { useCloseContext } from 'features/modal/closeContext/useCloseContext';
 
 import { Portal } from 'hooks/usePortal';
 

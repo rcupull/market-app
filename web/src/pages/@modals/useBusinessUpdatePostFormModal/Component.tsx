@@ -5,7 +5,7 @@ import { Formux } from 'components/formux';
 import { HighlightedBox } from 'components/highlighted-box';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
-import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
+import { useCloseContext } from 'features/modal/closeContext/useCloseContext';
 
 import { Portal } from 'hooks/usePortal';
 

@@ -8,7 +8,7 @@ import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useDeleteImages } from 'features/api/images/useDeleteImages';
-import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
+import { useCloseContext } from 'features/modal/closeContext/useCloseContext';
 import { useModal } from 'features/modal/useModal';
 
 import { Portal } from 'hooks/usePortal';

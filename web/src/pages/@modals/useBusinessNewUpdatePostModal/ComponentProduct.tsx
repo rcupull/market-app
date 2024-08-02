@@ -12,7 +12,7 @@ import { Formux } from 'components/formux';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
 import { useAddOnePost } from 'features/api/posts/useAddOnePost';
 import { useUpdateOnePost } from 'features/api/posts/useUpdateOnePost';
-import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
+import { useCloseContext } from 'features/modal/closeContext/useCloseContext';
 
 import { Portal } from 'hooks/usePortal';
 

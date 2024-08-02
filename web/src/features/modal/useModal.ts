@@ -2,6 +2,7 @@ import { useSimpleSlice } from 'features/slices/useSimpleSlice';
 
 import { useRouter } from 'hooks/useRouter';
 
+import { onCloseBackdrop } from './closeContext/CloseContextProvider';
 import { ModalId, ModalWindowOptions, ModalWindowProps } from './types';
 
 interface ModalData<Id extends ModalId = ModalId> {
@@ -21,6 +22,7 @@ type OnIsOpen = <Id extends ModalId>(id: Id) => boolean;
 export const useModal = (): {
   pushModal: PushModal;
   onClose: OnCloseFn;
+  _onClose: OnCloseFn;
   onCloseAll: OnCloseFn;
   onIsOpen: OnIsOpen;
   allModalData: Array<ModalData>;
@@ -42,7 +44,7 @@ export const useModal = (): {
 
   const hasSomeEmergent = !!emergentState.length;
 
-  const onClose = hasSomeEmergent ? handleCloseLastEmergent : handleCloseRouterModal;
+  const _onClose = hasSomeEmergent ? handleCloseLastEmergent : handleCloseRouterModal;
 
   const onCloseAll = () => {
     handleCloseAllEmergent();
@@ -79,7 +81,8 @@ export const useModal = (): {
 
   return {
     pushModal,
-    onClose,
+    _onClose,
+    onClose: onCloseBackdrop,
     onCloseAll,
     onIsOpen,
     allModalData: [...(routerModalata ? [routerModalata] : []), ...emergentState],

@@ -9,7 +9,7 @@ import { Formux } from 'components/formux';
 import { useAddOneBusiness } from 'features/api/business/useAddOneBusiness';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
 import { useUpdateOneUser } from 'features/api/user/useUpdateOneUser';
-import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
+import { useCloseContext } from 'features/modal/closeContext/useCloseContext';
 
 import { Portal } from 'hooks/usePortal';
 
