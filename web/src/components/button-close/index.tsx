@@ -1,11 +1,16 @@
 import { Button, ButtonProps } from 'components/button';
 
-import { useModal } from 'features/modal/useModal';
+import { onCloseCheckingChangeBackDrop } from 'features/modal/closeContext/CloseContextProvider';
 
 export interface ButtonCloseProps extends ButtonProps {}
 
 export const ButtonClose = (props: ButtonCloseProps) => {
-  const { onClose } = useModal();
-
-  return <Button label="Cerrar" onClick={() => onClose()} {...props} variant="outlined" />;
+  return (
+    <Button
+      label="Cerrar"
+      onClick={onCloseCheckingChangeBackDrop}
+      {...props}
+      variant="outlined"
+    />
+  );
 };

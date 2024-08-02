@@ -4,7 +4,7 @@ import React, { cloneElement, Fragment } from 'react';
 import { IconButton } from 'components/icon-button';
 import { SpinnerBox } from 'components/spinner-box';
 
-import { useModal } from 'features/modal/useModal';
+import { onCloseCheckingChangeBackDrop } from 'features/modal/closeContext/CloseContextProvider';
 
 import SvgTimesSolid from 'icons/TimesSolid';
 import { StyleProps } from 'types/general';
@@ -30,8 +30,6 @@ export const Modal = ({
   className,
   isBusy,
 }: ModalProps) => {
-  const { onClose } = useModal();
-
   return (
     <Transition show={true} as={Fragment}>
       <Dialog
@@ -73,7 +71,7 @@ export const Modal = ({
                 <IconButton
                   className="!absolute top-0 right-0"
                   svg={SvgTimesSolid}
-                  onClick={onClose}
+                  onClick={onCloseCheckingChangeBackDrop}
                 />
 
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">

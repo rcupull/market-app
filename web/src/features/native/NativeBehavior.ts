@@ -1,5 +1,8 @@
 import { useEffect } from 'react';
 
+import { onCloseCheckingChangeBackDrop } from 'features/modal/closeContext/CloseContextProvider';
+import { useModal } from 'features/modal/useModal';
+
 import { usePersistentValue } from 'hooks/usePersistentValue';
 
 import { useRouter } from '../../hooks/useRouter';
@@ -8,8 +11,10 @@ import { App, URLOpenListenerEvent } from '@capacitor/app';
 
 const NativeBehavior = () => {
   const router = useRouter();
+  const modal = useModal();
 
   const refRouter = usePersistentValue(router, [router.pathname]);
+  const refModal = usePersistentValue(modal);
 
   ////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////
@@ -18,12 +23,17 @@ const NativeBehavior = () => {
   useEffect(() => {
     App.addListener('backButton', () => {
       const { pathname, onBack } = refRouter.current;
+      const { onIsOpen } = refModal.current;
 
-      if (pathname === '/') {
-        App.exitApp();
-      } else {
-        onBack();
+      if (onIsOpen()) {
+        return onCloseCheckingChangeBackDrop();
       }
+
+      if (pathname !== '/') {
+        return onBack();
+      }
+
+      App.exitApp();
     });
 
     /**

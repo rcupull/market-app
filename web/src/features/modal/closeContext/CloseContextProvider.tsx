@@ -1,15 +1,13 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 
 import { Button } from 'components/button';
 import { ButtonClose } from 'components/button-close';
 
 import { useModal } from 'features/modal/useModal';
 
-import { usePersistentValue } from 'hooks/usePersistentValue';
-
 import { CloseContext } from './CloseContext';
 
-export let onCloseBackdrop = () => {};
+export let onCloseCheckingChangeBackDrop = () => {};
 
 export interface CloseContextProviderProps {
   children: React.ReactNode;
@@ -19,18 +17,17 @@ export interface CloseContextProviderProps {
 export const CloseContextProvider = ({ children, last }: CloseContextProviderProps) => {
   const modal = useModal();
 
-  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-  const refHasUnsavedChanges = usePersistentValue(hasUnsavedChanges);
+  const refHasUnsavedChanges = useRef(false);
 
   if (last) {
-    onCloseBackdrop = () => {
+    onCloseCheckingChangeBackDrop = () => {
       if (!refHasUnsavedChanges.current) {
-        return modal._onClose();
+        return modal.onClose();
       }
 
       modal.pushModal('Confirmation', {
         useProps: () => {
-          const { _onClose } = useModal();
+          const { onClose } = useModal();
 
           return {
             title: 'Descartar cambios',
@@ -40,8 +37,8 @@ export const CloseContextProvider = ({ children, last }: CloseContextProviderPro
                 label="Descartar"
                 variant="error"
                 onClick={() => {
-                  _onClose();
-                  modal._onClose();
+                  onClose();
+                  modal.onClose();
                 }}
               />
             ),
@@ -54,7 +51,13 @@ export const CloseContextProvider = ({ children, last }: CloseContextProviderPro
   }
 
   return (
-    <CloseContext.Provider value={{ onChangeUnsavedChanges: setHasUnsavedChanges }}>
+    <CloseContext.Provider
+      value={{
+        onChangeUnsavedChanges: (hasChange) => {
+          refHasUnsavedChanges.current = hasChange;
+        },
+      }}
+    >
       {children}
     </CloseContext.Provider>
   );

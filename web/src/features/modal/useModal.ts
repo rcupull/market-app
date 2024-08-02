@@ -1,6 +1,5 @@
 import { useSimpleSlice } from 'features/slices/useSimpleSlice';
 
-import { onCloseBackdrop } from './closeContext/CloseContextProvider';
 import { ModalId, ModalWindowOptions, ModalWindowProps } from './types';
 
 interface ModalData<Id extends ModalId = ModalId> {
@@ -15,12 +14,11 @@ type PushModal = <Id extends ModalId>(
   options?: ModalWindowOptions
 ) => void;
 
-type OnIsOpen = <Id extends ModalId>(id: Id) => boolean;
+type OnIsOpen = () => boolean;
 
 export const useModal = (): {
   pushModal: PushModal;
   onClose: OnCloseFn;
-  _onClose: OnCloseFn;
   onCloseAll: OnCloseFn;
   onIsOpen: OnIsOpen;
   allModalData: Array<ModalData>;
@@ -28,12 +26,9 @@ export const useModal = (): {
   const { data, setData, reset } = useSimpleSlice<Array<ModalData>>('emergentModals');
 
   ///////////////////////////////////////////////////////////////////////////////////////////
-  const _onClose = () => setData((currentState) => currentState.slice(0, -1));
+  const onClose = () => setData((currentState) => currentState.slice(0, -1));
 
-  const onCloseAll = () => {
-    reset();
-  };
-
+  const onCloseAll = () => reset();
   const pushModal: PushModal = (modalId, props, options) => {
     const { timeout } = options || {};
 
@@ -48,14 +43,13 @@ export const useModal = (): {
     handlePush();
   };
 
-  const onIsOpen: OnIsOpen = (currentId) => {
-    return data.some(({ id }) => currentId === id);
+  const onIsOpen: OnIsOpen = () => {
+    return !!data.length;
   };
 
   return {
     pushModal,
-    _onClose,
-    onClose: onCloseBackdrop,
+    onClose,
     onCloseAll,
     onIsOpen,
     allModalData: data,
