@@ -67,7 +67,7 @@ export const Settings = () => {
 
       <SettingBox
         title="Notificaciones"
-        description="Reciba las notificaciones de su negocio por Telegram en tiempo real."
+        description="Reciba las notificaciones de su negocio en tiempo real."
         svg={SvgBell}
         onClick={() =>
           businessUpdateNotificationsModal.open({

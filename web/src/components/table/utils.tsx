@@ -1,3 +1,5 @@
+import { Fragment } from 'react';
+
 import { RemapRowsIndexRecord, RemapRowsIndexValue, TableGetRowProps, TableHeads } from './types';
 
 import { AnyRecord } from 'types/general';
@@ -33,12 +35,12 @@ export const getRemapedProps = <RowData extends AnyRecord = AnyRecord>(args: {
               });
 
               return (
-                <>
+                <Fragment key={i}>
                   <div className={cn('font-semibold flex items-center', commonStyle)}>
                     {heads[index]}
                   </div>
                   <div className={cn(commonStyle)}>{nodes[index]}</div>
-                </>
+                </Fragment>
               );
             })}
           </div>,
