@@ -7,15 +7,17 @@ import { PurchaseOrderSuccess } from './sub-components/purchase-order-success';
 import { ShoppingCart } from './sub-components/shooping-cart';
 
 export const Component = () => {
-  const [onApproved, setOnApproved] = useState(false);
-  
+  const [approved, setApproved] = useState(false);
+
   return (
     <>
       <Stepper
         items={[
           {
             label: 'Productos',
-            render: (props) => <ShoppingCart {...props} onApproved={onApproved} setOnApproved={setOnApproved} />,
+            render: (props) => (
+              <ShoppingCart {...props} {...{ approved }} onChangeApproved={setApproved} />
+            ),
           },
           {
             label: 'Verificar los datos',
