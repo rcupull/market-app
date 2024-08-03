@@ -110,8 +110,8 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                   },
                   onAfterFailed: () => {
                     setErrors({
-                      email: 'Email o contraseña incorrecta',
-                      password: 'Email o contraseña incorrecta',
+                      email: ' ',
+                      password: ' ',
                     });
                   },
                 }
