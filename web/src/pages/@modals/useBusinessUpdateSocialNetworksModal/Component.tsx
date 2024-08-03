@@ -6,6 +6,7 @@ import { Formux } from 'components/formux';
 import { IconButton } from 'components/icon-button';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
+import { useCloseContext } from 'features/modal/closeContext/useCloseContext';
 import { useModal } from 'features/modal/useModal';
 
 import { FetchOptions } from 'hooks/useFetch';
@@ -33,6 +34,8 @@ export const Component = ({ portal, options }: ComponentProps) => {
   const { onClose } = useModal();
 
   const { updateOneBusiness } = useUpdateOneBusiness();
+
+  const { onChangeUnsavedChanges } = useCloseContext();
 
   if (!business) {
     return <></>;
@@ -63,16 +66,18 @@ export const Component = ({ portal, options }: ComponentProps) => {
         youtube: business?.socialLinks?.youtube || '',
       }}
     >
-      {({ value }) => {
+      {({ value, hasChange }) => {
+        onChangeUnsavedChanges(hasChange);
+
         return (
           <form className="w-full">
             {renderFieldLink(
               <FieldInput label="Facebook" name="face" className="w-full mt-4" />,
-              value.face
+              value.face,
             )}
             {renderFieldLink(
               <FieldInput label="Instagram" name="instagram" className="w-full mt-4" />,
-              value.instagram
+              value.instagram,
             )}
             {/* {renderFieldLink(
               <FieldInput label="Twitter" name="twitter" className="w-full mt-4" />,
@@ -109,12 +114,12 @@ export const Component = ({ portal, options }: ComponentProps) => {
                         options?.onAfterSuccess?.({});
                         onClose();
                       },
-                    }
+                    },
                   );
                 }}
                 variant="primary"
                 className="w-full"
-              />
+              />,
             )}
           </form>
         );
