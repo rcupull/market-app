@@ -23,7 +23,6 @@ import SvgMoneyBillAltSolid from 'icons/MoneyBillAltSolid';
 import SvgProductHunt from 'icons/ProductHunt';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { AdvertisementsBusinessOnboarding } from 'pages/@advertisements/business-onboarding';
-import { BannerInfoTelegramBusiness } from 'pages/@common/banner-info-telegram-business';
 import { BannerInfoTotalDebitBusiness } from 'pages/@common/banner-info-total-debit-business';
 import { LayoutPage } from 'pages/@common/layout-page';
 import { LayoutSection } from 'pages/@common/layout-section';
@@ -129,8 +128,6 @@ export const RouteName = () => {
       <LayoutSection
         topRightHeader={
           <div className="flex items-center gap-6">
-            <BannerInfoTelegramBusiness className="hidden sm:flex" />
-
             <BannerInfoTotalDebitBusiness className="hidden sm:flex" />
 
             <Options

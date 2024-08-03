@@ -13,8 +13,6 @@ import { useSignOut } from 'features/api-slices/useSignOut';
 import { useBreakpoints } from 'hooks/useBreakpoints';
 import { useRouter } from 'hooks/useRouter';
 
-import { BannerInfoTelegramUser } from '../banner-info-telegram-user';
-
 import SvgBarsSolid from 'icons/BarsSolid';
 import SvgCalendar from 'icons/Calendar';
 import SvgCogSolid from 'icons/CogSolid';
@@ -309,7 +307,6 @@ export const NavbarMenu = () => {
             <div className="px-2 py-3 flex flex-col gap-3 items-center">
               <span className="text-sm border px-2 py-1 rounded-2xl">{user.name}</span>
               <span className="text-xs">{user.email}</span>
-              <BannerInfoTelegramUser />
             </div>
           ) : (
             <div className="w-64 m-2 rounded-md px-4 py-3 border flex items-center justify-center">

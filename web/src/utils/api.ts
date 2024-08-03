@@ -17,14 +17,6 @@ export const getCloudflareEndpoint = () => {
   return 'https://imagedelivery.net/PbRzz2Q180x22vsY1oXAdA';
 };
 
-export const getTelegramUrl = () => {
-  if (DEVELOPMENT) {
-    return 'https://t.me/AsereMarketDevBot';
-  }
-
-  return 'https://t.me/AsereMarketBot';
-};
-
 export const getEndpointUrl = () => {
   if (TUNNEL) {
     return 'https://fleet-hamster-positive.ngrok-free.app';
