@@ -10,7 +10,7 @@ export const apiErrorsMesages = {
   networkError: 'Network Error',
   incorrectUsernameOrPassword: 'Incorrect username or password.',
   userNotAutorized:
-    'PreAuthentication failed with error Usted no tiene acceso a los recursos de esta aplicación.',
+    'PreAuthentication failed with error Usted no tiene acceso a los recursos de esta aplicación.'
 };
 
 export const getCloudflareEndpoint = () => {
@@ -45,7 +45,7 @@ export const injectUrlParams = (url: string, urlParams: UrlParams = {}): string 
 export const fillPath = ({
   path,
   query,
-  urlParams,
+  urlParams
 }: {
   path: string;
   query?: Query;
@@ -72,7 +72,7 @@ export const getEndpoint: GetEndpoint = ({ path, query, urlParams }) => {
   const flattenPath = fillPath({
     path,
     query,
-    urlParams,
+    urlParams
   });
 
   return `${getEndpointUrl()}/api-services${flattenPath}`;

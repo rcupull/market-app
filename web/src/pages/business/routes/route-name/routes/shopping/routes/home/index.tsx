@@ -29,9 +29,9 @@ export const Home = ({ routeName }: HomeProps) => {
         ShoppingState.REJECTED,
         ShoppingState.DELIVERED,
         ShoppingState.REQUESTED,
-        ShoppingState.PROCESSING,
+        ShoppingState.PROCESSING
         // CONSTRUCTION IS NOT INCLUDED
-      ],
+      ]
     });
 
   useEffect(() => {

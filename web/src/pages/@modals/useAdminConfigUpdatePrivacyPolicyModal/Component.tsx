@@ -25,7 +25,7 @@ export const Component = ({ portal }: ComponentProps) => {
     <>
       <Formux<State>
         value={{
-          privacyPolicy: data?.privacyPolicy || '',
+          privacyPolicy: data?.privacyPolicy || ''
         }}
       >
         {({ value }) => {
@@ -35,7 +35,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 name="privacyPolicy"
                 className="mt-6"
                 checkEditorProps={{
-                  className: 'check-editor-max-h-65vh',
+                  className: 'check-editor-max-h-65vh'
                 }}
               />
 
@@ -48,13 +48,13 @@ export const Component = ({ portal }: ComponentProps) => {
                     const { privacyPolicy } = value;
                     updateConfigAdmin.fetch(
                       {
-                        privacyPolicy,
+                        privacyPolicy
                       },
                       {
                         onAfterSuccess: () => {
                           init();
                           onClose();
-                        },
+                        }
                       }
                     );
                   }}

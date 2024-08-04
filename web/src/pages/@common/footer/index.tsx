@@ -17,7 +17,7 @@ export const Footer = ({ ...props }: FooterProps) => {
   return (
     <FooterBase
       socialLinks={{
-        instagram: 'https://www.instagram.com/aseremarket?igsh=MTJ6aDFtYXNrbzJoaQ==',
+        instagram: 'https://www.instagram.com/aseremarket?igsh=MTJ6aDFtYXNrbzJoaQ=='
       }}
       {...props}
     />

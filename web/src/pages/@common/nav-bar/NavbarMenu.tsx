@@ -48,7 +48,7 @@ export const NavbarMenu = () => {
     user,
     getIsBusinessUser,
     getHasSomeAccess,
-    onRefreshAuthUser,
+    onRefreshAuthUser
   } = useAuth();
   const { signOut } = useSignOut();
   const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute } = useRouter();
@@ -107,15 +107,15 @@ export const NavbarMenu = () => {
             className={cn(
               className,
               cn({
-                'fill-gray-500 ': hidden,
+                'fill-gray-500 ': hidden
               })
             )}
             hidden={hidden}
           />
         ),
         className: cn({
-          'bg-indigo-100': isCurrentBusiness,
-        }),
+          'bg-indigo-100': isCurrentBusiness
+        })
       };
     });
 
@@ -134,13 +134,13 @@ export const NavbarMenu = () => {
                     pushRoute(getDashboardBusinessRoute({ routeName }), {}, { timeout: 100 });
                     allUserBusiness.refresh();
                   }
-                },
+                }
               });
             }}
             className="!rounded-2xl !py-0 my-1"
           />
         </div>
-      ),
+      )
     });
 
     return addDividerToFirst(out, 'Mis negocios');
@@ -161,22 +161,22 @@ export const NavbarMenu = () => {
       getHasSomeAccess('user__read') && {
         label: 'Usuarios',
         onClick: () => pushRoute('/admin/users'),
-        svg: SvgUsersSolid,
+        svg: SvgUsersSolid
       },
       {
         label: 'Órdenes de compra',
         onClick: () => pushRoute('/admin/shopping'),
-        svg: SvgShoppingCartSolid,
+        svg: SvgShoppingCartSolid
       },
       {
         label: 'Negocios',
         onClick: () => pushRoute('/admin/business'),
-        svg: SvgStoreSolid,
+        svg: SvgStoreSolid
       },
       getHasSomeAccess('bills__read') && {
         label: 'Facturas',
         onClick: () => pushRoute('/admin/bills'),
-        svg: SvgMoneyBillAltSolid,
+        svg: SvgMoneyBillAltSolid
       },
       getHasSomeAccess('agenda__full') && {
         label: 'Agenda',
@@ -188,29 +188,29 @@ export const NavbarMenu = () => {
               window.open(
                 getEndpoint({
                   path: '/admin/agenda/web/:agendaToken',
-                  urlParams: { agendaToken },
+                  urlParams: { agendaToken }
                 })
               );
-            },
+            }
           });
         },
-        svg: SvgCalendar,
+        svg: SvgCalendar
       },
       {
         label: 'Configuración',
         onClick: () => pushRoute('/admin/settings'),
-        svg: SvgCogSolid,
+        svg: SvgCogSolid
       },
       {
         label: 'Nlp',
         onClick: () => pushRoute('/admin/nlp'),
-        svg: SvgTrainSolid,
+        svg: SvgTrainSolid
       },
       getHasSomeAccess('full') && {
         label: 'Run BD script',
         onClick: () => adminBDScript.fetch(),
-        svg: SvgRunningSolid,
-      },
+        svg: SvgRunningSolid
+      }
     ];
 
     return addDividerToFirst(out, 'Administración');
@@ -222,17 +222,17 @@ export const NavbarMenu = () => {
         label: 'Iniciar sesión',
         onClick: () => authSignInModal.open(),
         svg: SvgSignInAltSolid,
-        className: 'bg-green-100',
+        className: 'bg-green-100'
       },
       !isAuthenticated && {
         label: 'Créate una cuenta',
         onClick: () => authSignUpModal.open(),
-        svg: SvgUserPlusSolid,
+        svg: SvgUserPlusSolid
       },
       !isAuthenticated && {
         label: 'Recupera tu cuenta olvidada',
         onClick: () => authForgotPasswordRequestModal.open(),
-        svg: SvgUserCircleSolid,
+        svg: SvgUserCircleSolid
       },
       isAuthenticated && {
         label: 'Cerrar sesión',
@@ -244,22 +244,22 @@ export const NavbarMenu = () => {
         },
         svg: SvgSignOutAltSolid,
         divider: 'Mi cuenta',
-        className: 'bg-red-100',
+        className: 'bg-red-100'
       },
       isAuthenticated && {
         label: 'Cambiar contraseña',
         onClick: () => {
           authChangePasswordModal.open();
         },
-        svg: SvgKeySolid,
+        svg: SvgKeySolid
       },
       isAuthenticated && {
         label: 'Ajustes',
         onClick: () => {
           user && userUpdateSettingsModal.open({ user, onAfterSuccess: () => onRefreshAuthUser() });
         },
-        svg: SvgCogSolid,
-      },
+        svg: SvgCogSolid
+      }
     ];
 
     return addDividerToFirst(out, 'Mi cuenta');
@@ -273,14 +273,14 @@ export const NavbarMenu = () => {
         label: 'Productos',
         onClick: () => routeName && pushRoute(getOneBusinessRoute({ routeName })),
         svg: SvgProductHunt,
-        className: cn('lg:hidden'),
+        className: cn('lg:hidden')
       },
       {
         label: 'Mis compras',
         onClick: () => routeName && pushRoute(getShoppingRoute({ routeName })),
         svg: SvgShoppingBagSolid,
-        className: cn('lg:hidden'),
-      },
+        className: cn('lg:hidden')
+      }
     ];
 
     return addDividerToFirst(out, 'En este negocio');
@@ -329,7 +329,7 @@ export const NavbarMenu = () => {
         // },
         ...getAccountItems(),
         ...getBusinessItems(),
-        ...getAdminItems(),
+        ...getAdminItems()
       ]}
       className="flex-shrink-0"
     />

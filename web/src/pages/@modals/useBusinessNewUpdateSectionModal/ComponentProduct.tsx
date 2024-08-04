@@ -33,7 +33,7 @@ export const ComponentProduct = ({
   portal,
   section,
   onAfterSuccess,
-  className,
+  className
 }: ComponentProductProps) => {
   const { business } = useBusiness();
   const { updateBusinessSection } = useUpdateBusinessSection();
@@ -52,7 +52,7 @@ export const ComponentProduct = ({
           discount: 'none',
           name: 'basic',
           price: 'smallerCurrency',
-          shoppingMethod: 'shoppingCart',
+          shoppingMethod: 'shoppingCart'
         },
         postCategoriesTags: [],
         searchLayout: 'none',
@@ -60,19 +60,19 @@ export const ComponentProduct = ({
         showMobile: true,
         showPC: true,
         postType: 'product',
-        ...(section || {}),
+        ...(section || {})
       }}
       validate={[
         {
           field: 'name',
-          type: 'required',
+          type: 'required'
         },
         {
           field: 'postCategoriesTags',
           type: 'custom',
           customCb: (value) => value?.length,
-          message: 'Debe seleccionar al menos una categoría',
-        },
+          message: 'Debe seleccionar al menos una categoría'
+        }
       ]}
     >
       {({ value, hasChange }) => {
@@ -162,10 +162,10 @@ export const ComponentProduct = ({
                         {
                           routeName: business.routeName,
                           sectionId: section._id,
-                          data: value,
+                          data: value
                         },
                         {
-                          onAfterSuccess,
+                          onAfterSuccess
                         }
                       )
                     : addBusinessSection.fetch(

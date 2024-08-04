@@ -32,12 +32,12 @@ export const PurchaseOrders = () => {
   const filters = useFiltersVolatile<GetAllShoppingAdminQuery>({
     onChange: (filters) => {
       getAllShoppingAdmin.fetch(filters);
-    },
+    }
   });
 
   const infiniteScrolling = useInfiniteScrolling({
     fetchPaginatedResources: getAllShoppingAdmin,
-    onFetch: ({ page }) => filters.onMergeFilters({ page }),
+    onFetch: ({ page }) => filters.onMergeFilters({ page })
   });
 
   const onRefreshForce = () => {
@@ -92,9 +92,9 @@ export const PurchaseOrders = () => {
                   xs: [[0, 1, 2, 3, 4, 5, 6, 7]],
                   lg: [
                     [0, 1, 2, 3],
-                    [4, 5, 6, 7],
+                    [4, 5, 6, 7]
                   ],
-                  xl: 'none',
+                  xl: 'none'
                 }}
                 heads={[
                   'Acciones',
@@ -106,7 +106,7 @@ export const PurchaseOrders = () => {
                   'Unidades',
                   'Precio total',
                   'Facturación',
-                  'Fecha de creación',
+                  'Fecha de creación'
                 ]}
                 getRowProps={(rowData) => {
                   const { createdAt, purchaserName, state, routeName } = rowData;
@@ -136,8 +136,8 @@ export const PurchaseOrders = () => {
                         rowData={rowData}
                         onRefresh={onRefreshForce}
                       />,
-                      getDateString({ date: createdAt, showTime: true }),
-                    ],
+                      getDateString({ date: createdAt, showTime: true })
+                    ]
                   };
                 }}
                 data={infiniteScrolling.data}

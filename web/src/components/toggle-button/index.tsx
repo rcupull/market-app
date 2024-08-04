@@ -14,7 +14,7 @@ export const ToggleButton = ({
   className,
   value,
   onChange,
-  interaction = 'both',
+  interaction = 'both'
 }: ToggleButtonProps) => {
   const [state, setState] = useState<boolean>(false);
 
@@ -37,7 +37,7 @@ export const ToggleButton = ({
       className={cn(
         'bg-gray-200 relative inline-flex h-6 w-11 items-center rounded-full',
         {
-          '!bg-blue-600': state,
+          '!bg-blue-600': state
         },
         className
       )}
@@ -46,7 +46,7 @@ export const ToggleButton = ({
         className={cn(
           'translate-x-1 inline-block h-4 w-4 transform rounded-full bg-white transition',
           {
-            '!translate-x-6': state,
+            '!translate-x-6': state
           }
         )}
       />

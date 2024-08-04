@@ -80,7 +80,7 @@ export const CheckingData = ({ nextBtnProps, backBtnProps }: CheckingDataProps) 
                 return {
                   deliveryType,
                   price,
-                  distance,
+                  distance
                 };
               };
 
@@ -90,7 +90,7 @@ export const CheckingData = ({ nextBtnProps, backBtnProps }: CheckingDataProps) 
                   onAfterSuccess: () => {
                     cart.onFetch();
                     nextBtnProps.onClick?.();
-                  },
+                  }
                 }
               );
             }}

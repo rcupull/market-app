@@ -13,7 +13,7 @@ export const NotificationsProvider = ({ children }: ChildrenProp) => {
 
   const Provider = platformToggle({
     native: NotificationsProviderNative,
-    web: NotificationsProviderWeb,
+    web: NotificationsProviderWeb
   });
 
   return (

@@ -26,11 +26,11 @@ export const useCatalogsSearchImageModal = () => {
               content: <Component portal={portal} multi={multi} onSelected={onSelected} />,
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,
-              className: 'max-h-[calc(100vh-2rem)]',
+              className: 'max-h-[calc(100vh-2rem)]'
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

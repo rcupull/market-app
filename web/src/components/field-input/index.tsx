@@ -28,7 +28,7 @@ export const FieldInput = forwardRef<HTMLInputElement, FieldInputProps>((props, 
       <Input
         ref={ref}
         className={cn({
-          'ring-1 rounded-md ring-red-500 focus:ring-red-500': !!error,
+          'ring-1 rounded-md ring-red-500 focus:ring-red-500': !!error
         })}
         {...omittedProps}
         value={isNullOrUndefined(value) ? '' : value}

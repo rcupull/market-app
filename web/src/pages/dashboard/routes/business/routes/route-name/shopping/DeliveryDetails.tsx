@@ -34,7 +34,7 @@ export const DeliveryDetails = ({ rowData, className }: DeliveryDetailsProps) =>
       <SvgTruckSolid
         className={cn('size-7', {
           'fill-green-500': delivery,
-          'fill-red-500': !delivery,
+          'fill-red-500': !delivery
         })}
       />
 

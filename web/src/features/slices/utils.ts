@@ -11,7 +11,7 @@ export const createSimpleSlice = <T extends any | null = null>(name: string, ini
       },
       reset: () => {
         return null;
-      },
-    },
+      }
+    }
   });
 };

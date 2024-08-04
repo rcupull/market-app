@@ -36,6 +36,6 @@ export const useCallFromAfar = (
       }
 
       return setData([...data, { id: callAfarResources, response }]);
-    },
+    }
   };
 };

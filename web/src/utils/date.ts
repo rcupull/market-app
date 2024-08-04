@@ -1,18 +1,18 @@
 const defaultDateOptions: Intl.DateTimeFormatOptions = {
   year: 'numeric',
   month: 'numeric',
-  day: 'numeric',
+  day: 'numeric'
 };
 
 const defaultTimeOptions: Intl.DateTimeFormatOptions = {
   hour: 'numeric',
   hour12: true,
-  minute: 'numeric',
+  minute: 'numeric'
 };
 
 export const getDateString = ({
   date,
-  showTime,
+  showTime
 }: {
   date: Date | string;
   showTime?: boolean;
@@ -25,7 +25,7 @@ export const getDateString = ({
 
   return dateToshow?.toLocaleDateString('en-AU', {
     ...defaultDateOptions,
-    ...(showTime ? defaultTimeOptions : {}),
+    ...(showTime ? defaultTimeOptions : {})
   });
 };
 

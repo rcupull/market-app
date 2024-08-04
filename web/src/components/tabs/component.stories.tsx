@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Tabs } from '.';
 
 export default {
-  component: Tabs,
+  component: Tabs
 };
 
 const getContentDumy = (index: number) => (
@@ -20,20 +20,20 @@ export const Default = (): JSX.Element => {
         items={[
           {
             label: 'Name',
-            content: getContentDumy(0),
+            content: getContentDumy(0)
           },
           {
             label: 'Title',
-            content: getContentDumy(1),
+            content: getContentDumy(1)
           },
           {
             label: 'Status',
-            content: getContentDumy(2),
+            content: getContentDumy(2)
           },
           {
             label: 'Role',
-            content: getContentDumy(3),
-          },
+            content: getContentDumy(3)
+          }
         ]}
       />
 
@@ -43,20 +43,20 @@ export const Default = (): JSX.Element => {
         items={[
           {
             label: 'Name',
-            content: getContentDumy(0),
+            content: getContentDumy(0)
           },
           {
             label: 'Title',
-            content: getContentDumy(1),
+            content: getContentDumy(1)
           },
           {
             label: 'Status',
-            content: getContentDumy(2),
+            content: getContentDumy(2)
           },
           {
             label: 'Role',
-            content: getContentDumy(3),
-          },
+            content: getContentDumy(3)
+          }
         ]}
       />
     </>

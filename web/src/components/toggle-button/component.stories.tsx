@@ -1,7 +1,7 @@
 import { ToggleButton } from '.';
 
 export default {
-  component: ToggleButton,
+  component: ToggleButton
 };
 
 export const Default = (): JSX.Element => {

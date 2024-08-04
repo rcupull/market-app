@@ -13,40 +13,40 @@ import { cn } from 'utils/general';
 const sessions: Array<{ email: string | null; password: string | null }> = [
   {
     email: null,
-    password: null,
+    password: null
   },
   {
     email: 'rcupull@gmail.com',
-    password: 'Qwerty@123',
+    password: 'Qwerty@123'
   },
   {
     email: 'rcupull+admin2@gmail.com',
-    password: 'Qwerty@123',
+    password: 'Qwerty@123'
   },
   {
     email: 'rcupull+comerciante1@gmail.com',
-    password: 'Qwerty@123',
+    password: 'Qwerty@123'
   },
   {
     email: 'rcupull+comerciante2@gmail.com',
-    password: 'Qwerty@123',
+    password: 'Qwerty@123'
   },
   {
     email: 'rcupull+user1@gmail.com',
-    password: 'Qwerty@123',
+    password: 'Qwerty@123'
   },
   {
     email: 'rcupull+user2@gmail.com',
-    password: 'Qwerty@123',
+    password: 'Qwerty@123'
   },
   {
     email: 'rcupull+mensajero1@gmail.com',
-    password: 'Qwerty@123',
+    password: 'Qwerty@123'
   },
   {
     email: 'rcupull+mensajero2@gmail.com',
-    password: 'Qwerty@123',
-  },
+    password: 'Qwerty@123'
+  }
 ];
 
 export const DevSwitchSession = () => {
@@ -79,7 +79,7 @@ export const DevSwitchSession = () => {
                   signOut.fetch(undefined);
                 }, 200);
               }
-            },
+            }
           };
         }
 
@@ -96,13 +96,13 @@ export const DevSwitchSession = () => {
                 signOut.fetch(undefined, {
                   onAfterSuccess: () => {
                     authSignIn.fetch({ email, password });
-                  },
+                  }
                 });
               }, 200);
             } else {
               authSignIn.fetch({ email, password });
             }
-          },
+          }
         };
       })}
     />

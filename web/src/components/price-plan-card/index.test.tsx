@@ -12,8 +12,8 @@ describe('PricePlanCard', () => {
         items={[
           {
             description: '5 products',
-            included: true,
-          },
+            included: true
+          }
         ]}
       />
     );

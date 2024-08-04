@@ -16,7 +16,7 @@ import {
   PostCardLayoutMetaLayout,
   PostCardLayoutName,
   PostCardLayoutPrice,
-  PostCardSize,
+  PostCardSize
 } from 'types/business';
 import { cn } from 'utils/general';
 
@@ -60,24 +60,24 @@ export const FieldPostCardLayout = ({ className, label, ...props }: FieldPostCar
               items={[
                 {
                   value: 'static',
-                  label: 'Estatico',
+                  label: 'Estatico'
                 },
                 {
                   value: 'hoverZoom',
-                  label: 'Zoom con el mouse',
+                  label: 'Zoom con el mouse'
                 },
                 {
                   value: 'slider',
-                  label: 'Deslizante',
+                  label: 'Deslizante'
                 },
                 {
                   value: 'switch',
-                  label: 'Alternado',
+                  label: 'Alternado'
                 },
                 {
                   value: 'rounded',
-                  label: 'Redondo',
-                },
+                  label: 'Redondo'
+                }
               ]}
               containerClassName="flex items-center flex-wrap gap-4"
             />
@@ -94,16 +94,16 @@ export const FieldPostCardLayout = ({ className, label, ...props }: FieldPostCar
               items={[
                 {
                   value: 'small',
-                  label: 'Pequeño',
+                  label: 'Pequeño'
                 },
                 {
                   value: 'medium',
-                  label: 'Mediano',
+                  label: 'Mediano'
                 },
                 {
                   value: 'long',
-                  label: 'Largo',
-                },
+                  label: 'Largo'
+                }
               ]}
               containerClassName="flex items-center flex-wrap gap-4"
             />
@@ -127,12 +127,12 @@ export const FieldPostCardLayout = ({ className, label, ...props }: FieldPostCar
               items={[
                 {
                   value: 'basic',
-                  label: 'Básico',
+                  label: 'Básico'
                 },
                 {
                   value: 'verticalCentered',
-                  label: 'Centrado verticalmente',
-                },
+                  label: 'Centrado verticalmente'
+                }
               ]}
               containerClassName="flex items-center flex-wrap gap-4"
             />
@@ -149,12 +149,12 @@ export const FieldPostCardLayout = ({ className, label, ...props }: FieldPostCar
               items={[
                 {
                   value: 'none',
-                  label: 'Ninguno',
+                  label: 'Ninguno'
                 },
                 {
                   value: 'basic',
-                  label: 'Básico',
-                },
+                  label: 'Básico'
+                }
               ]}
               containerClassName="flex items-center flex-wrap gap-4"
             />
@@ -171,20 +171,20 @@ export const FieldPostCardLayout = ({ className, label, ...props }: FieldPostCar
               items={[
                 {
                   value: 'none',
-                  label: 'Ninguno',
+                  label: 'Ninguno'
                 },
                 {
                   value: 'basic',
-                  label: 'Básico',
+                  label: 'Básico'
                 },
                 {
                   value: 'smallerCurrency',
-                  label: 'Moneda reducida',
+                  label: 'Moneda reducida'
                 },
                 {
                   value: 'usdCurrencySymbol',
-                  label: 'Símbolo de USD',
-                },
+                  label: 'Símbolo de USD'
+                }
               ]}
               containerClassName="flex items-center flex-wrap gap-4"
             />
@@ -201,16 +201,16 @@ export const FieldPostCardLayout = ({ className, label, ...props }: FieldPostCar
               items={[
                 {
                   value: 'none',
-                  label: 'Ninguno',
+                  label: 'Ninguno'
                 },
                 {
                   value: 'savedMoney',
-                  label: 'En dinero',
+                  label: 'En dinero'
                 },
                 {
                   value: 'savedPercent',
-                  label: 'En porciento',
-                },
+                  label: 'En porciento'
+                }
               ]}
               containerClassName="flex items-center flex-wrap gap-4"
             />

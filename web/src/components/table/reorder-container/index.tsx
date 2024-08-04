@@ -24,7 +24,7 @@ export const ReorderContainer = ({ children, onReorder, data }: ReorderContainer
 
         onReorder?.({
           fromIndex,
-          toIndex,
+          toIndex
         });
       }}
     >

@@ -49,7 +49,7 @@ export const Component = ({ portal, options }: ComponentProps) => {
           preventDefault
           onClick={() => window.open(href, '_blank')}
         />
-      ),
+      )
     });
   };
 
@@ -60,7 +60,7 @@ export const Component = ({ portal, options }: ComponentProps) => {
         instagram: business?.socialLinks?.instagram || '',
         twitter: business?.socialLinks?.twitter || '',
         linkedin: business?.socialLinks?.linkedin || '',
-        youtube: business?.socialLinks?.youtube || '',
+        youtube: business?.socialLinks?.youtube || ''
       }}
     >
       {({ value }) => {
@@ -99,16 +99,16 @@ export const Component = ({ portal, options }: ComponentProps) => {
                           instagram,
                           twitter,
                           linkedin,
-                          youtube,
-                        },
+                          youtube
+                        }
                       },
-                      routeName,
+                      routeName
                     },
                     {
                       onAfterSuccess: () => {
                         options?.onAfterSuccess?.({});
                         onClose();
-                      },
+                      }
                     }
                   );
                 }}

@@ -13,8 +13,8 @@ describe('SideBar', () => {
             endElement: <div />,
             label: 'Label',
             content: <div />,
-            divider: true,
-          },
+            divider: true
+          }
         ]}
       />,
       { wrapper: getWrapper({ useRouter: true }) }

@@ -24,11 +24,11 @@ export const useAdminConfigUpdateTermsAndConditionsModal = () => {
               content: <Component portal={portal} />,
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,
-              className: '!w-[95vw]',
+              className: '!w-[95vw]'
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

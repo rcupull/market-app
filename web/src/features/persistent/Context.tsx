@@ -14,7 +14,7 @@ export const initialPersistentState: PersistentUtils = {
   removePersistent: async () => {
     console.log('calling default removePersistent');
     /**NOP */
-  },
+  }
 };
 
 export const PersistentContext = createContext<PersistentUtils>(initialPersistentState);

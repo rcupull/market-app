@@ -21,7 +21,7 @@ export const PersistentProvider = ({ children }: ChildrenProp) => {
 
   const CookiesProviderPlatform = platformToggle({
     native: PersistentProviderNative,
-    web: PersistentProviderWeb,
+    web: PersistentProviderWeb
   });
 
   return (

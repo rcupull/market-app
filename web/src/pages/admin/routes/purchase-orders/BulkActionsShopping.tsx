@@ -37,7 +37,7 @@ export const BulkActionsShopping = ({
           onAfterSuccess: () => {
             onReset();
             onRefresh();
-          },
+          }
         }
       );
     }
@@ -51,7 +51,7 @@ export const BulkActionsShopping = ({
           onAfterSuccess: () => {
             onReset();
             onRefresh();
-          },
+          }
         }
       );
     }
@@ -66,7 +66,7 @@ export const BulkActionsShopping = ({
             return {
               label: 'Crear Factura',
               onClick: () => handleNewBill(),
-              isBusy: addOneBillAdmin.status.isBusy,
+              isBusy: addOneBillAdmin.status.isBusy
             };
           default:
             return {};
@@ -79,8 +79,8 @@ export const BulkActionsShopping = ({
             {
               label: 'Crear factura',
               onClick: () => setAction('newBill'),
-              disabled: filters.routeNames?.length !== 1,
-            },
+              disabled: filters.routeNames?.length !== 1
+            }
           ]}
         />
       )}

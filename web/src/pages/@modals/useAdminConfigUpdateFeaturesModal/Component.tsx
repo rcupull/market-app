@@ -43,8 +43,8 @@ export const Component = ({ portal }: ComponentProps) => {
                 {
                   key: '',
                   enabled: false,
-                  description: '',
-                },
+                  description: ''
+                }
               ]);
             }}
           />
@@ -63,7 +63,7 @@ export const Component = ({ portal }: ComponentProps) => {
                   {
                     field: 'key',
                     type: 'required',
-                    message: 'El campo Key es requerido',
+                    message: 'El campo Key es requerido'
                   },
                   {
                     field: 'key',
@@ -73,8 +73,8 @@ export const Component = ({ portal }: ComponentProps) => {
                         i === index ? false : feature.key === value
                       );
                     },
-                    message: 'La key ya existe',
-                  },
+                    message: 'La key ya existe'
+                  }
                 ]}
               >
                 {() => {
@@ -105,13 +105,13 @@ export const Component = ({ portal }: ComponentProps) => {
           onClick={() => {
             updateConfigAdmin.fetch(
               {
-                features: state.filter((feature) => !isNullOrUndefinedOrEmptyString(feature.key)),
+                features: state.filter((feature) => !isNullOrUndefinedOrEmptyString(feature.key))
               },
               {
                 onAfterSuccess: () => {
                   init();
                   onClose();
-                },
+                }
               }
             );
           }}

@@ -17,16 +17,16 @@ export const Component = () => {
             label: 'Productos',
             render: (props) => (
               <ShoppingCart {...props} approved={approved} onApprobed={setApproved} />
-            ),
+            )
           },
           {
             label: 'Verificar los datos',
-            render: (props) => <CheckingData {...props} />,
+            render: (props) => <CheckingData {...props} />
           },
           {
             label: 'Orden de compra creada',
-            render: (props) => <PurchaseOrderSuccess {...props} />,
-          },
+            render: (props) => <PurchaseOrderSuccess {...props} />
+          }
         ]}
       />
     </>

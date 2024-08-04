@@ -1,6 +1,6 @@
 import {
   DateTimePickerCollapsable,
-  DateTimePickerCollapsableProps,
+  DateTimePickerCollapsableProps
 } from 'components/date-time-picker-collapsable';
 import { FormFieldWrapper, FormFieldWrapperProps } from 'components/form-field-wrapper';
 import { useFormField } from 'components/formux/useFormField';
@@ -27,8 +27,8 @@ export const FieldDateTimePickerCollapsable = (
           field.onChange({
             target: {
               name: field.name,
-              value: date.toISOString(),
-            },
+              value: date.toISOString()
+            }
           });
         }}
         value={isValidStrDate(field.value) ? new Date(field.value) : undefined}

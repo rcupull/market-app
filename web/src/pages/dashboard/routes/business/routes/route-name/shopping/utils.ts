@@ -1,7 +1,7 @@
 import { ShoppingState } from 'types/shopping';
 
 export const getAllStatesQuery = ({
-  businessHasDelivery,
+  businessHasDelivery
 }: {
   businessHasDelivery: boolean;
 }): Array<ShoppingState> => {
@@ -12,7 +12,7 @@ export const getAllStatesQuery = ({
       ShoppingState.APPROVED,
       ShoppingState.REJECTED,
       ShoppingState.DELIVERED,
-      ShoppingState.READY_TO_DELIVERY,
+      ShoppingState.READY_TO_DELIVERY
     ];
   }
 
@@ -21,6 +21,6 @@ export const getAllStatesQuery = ({
     ShoppingState.PROCESSING,
     ShoppingState.APPROVED,
     ShoppingState.REJECTED,
-    ShoppingState.DELIVERED,
+    ShoppingState.DELIVERED
   ];
 };

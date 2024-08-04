@@ -16,12 +16,12 @@ export const FieldPostsSectionLayout = (props: FieldPostsSectionLayoutProps) => 
       items={[
         {
           value: 'grid',
-          label: 'Rejilla',
+          label: 'Rejilla'
         },
         {
           value: 'oneRowSlider',
-          label: 'Fila deslizante',
-        },
+          label: 'Fila deslizante'
+        }
       ]}
       containerClassName="flex items-center gap-4"
       {...props}

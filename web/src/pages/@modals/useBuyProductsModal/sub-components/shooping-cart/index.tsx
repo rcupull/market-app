@@ -13,11 +13,7 @@ export interface ShoppingCartProps extends StepCommonProps {
   onApprobed: (approved: boolean) => void;
 }
 
-export const ShoppingCart = ({
-  nextBtnProps,
-  approved,
-  onApprobed,
-}: ShoppingCartProps) => {
+export const ShoppingCart = ({ nextBtnProps, approved, onApprobed }: ShoppingCartProps) => {
   const cart = useCart();
 
   if (!cart.constructionShopping) {

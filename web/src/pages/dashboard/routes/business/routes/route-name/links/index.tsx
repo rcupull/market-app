@@ -30,7 +30,7 @@ export const Links = () => {
 
   const infiniteScrolling = useInfiniteScrolling({
     fetchPaginatedResources: getAllPosts,
-    onFetch: ({ page }) => filters.onMergeFilters({ page }),
+    onFetch: ({ page }) => filters.onMergeFilters({ page })
   });
 
   const filters = useFiltersVolatile<GetAllPostsQuery>({
@@ -40,9 +40,9 @@ export const Links = () => {
           postType: 'link',
           includeHidden: true,
           routeNames: [business.routeName],
-          ...filters,
+          ...filters
         });
-    },
+    }
   });
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export const Links = () => {
         onClick={() => {
           businessNewUpdatePostModal.open({
             postType: 'link',
-            onAfterSuccess: () => onRefreshForce(),
+            onAfterSuccess: () => onRefreshForce()
           });
         }}
         className="ml-auto hidden sm:block"
@@ -70,7 +70,7 @@ export const Links = () => {
         onClick={() => {
           businessNewUpdatePostModal.open({
             postType: 'link',
-            onAfterSuccess: () => onRefreshForce(),
+            onAfterSuccess: () => onRefreshForce()
           });
         }}
         variant="primary"
@@ -118,7 +118,7 @@ export const Links = () => {
               propsPreprocessors={[tablePropsProcessor]}
               remapRowsIndex={{
                 xs: [[0, 1, 2, 3, 4]],
-                md: 'none',
+                md: 'none'
               }}
               heads={['Acciones', 'Nombre', 'Imágen', 'Creación', 'Detalles']}
               getRowProps={(rowData) => {
@@ -128,7 +128,7 @@ export const Links = () => {
 
                 return {
                   className: cn({
-                    'bg-gray-100': hidden,
+                    'bg-gray-100': hidden
                   }),
                   nodes: [
                     <RowActions
@@ -146,8 +146,8 @@ export const Links = () => {
                       'ninguna'
                     ),
                     getDateString({ date: createdAt, showTime: true }),
-                    <LinkDetails key="LinkDetails" rowData={rowData} />,
-                  ],
+                    <LinkDetails key="LinkDetails" rowData={rowData} />
+                  ]
                 };
               }}
               data={infiniteScrolling.data}

@@ -20,7 +20,7 @@ export const BusinessMainBar = () => {
   const { isOneBusinessPage } = useRouter();
 
   const isEnabledDelivery = getDeliveryUtils().getIsEnabled({
-    deliveryConfig: business?.deliveryConfig,
+    deliveryConfig: business?.deliveryConfig
   });
 
   const { pushRoute } = useRouter();
@@ -47,7 +47,7 @@ export const BusinessMainBar = () => {
               to={getOneBusinessRoute({ routeName })}
               key={index}
               className={cn('p-2 hover:bg-gray-200 text-nowrap', {
-                'bg-gray-100 border-b-2 border-indigo-500': routeName === business?.routeName,
+                'bg-gray-100 border-b-2 border-indigo-500': routeName === business?.routeName
               })}
             >
               {name}
@@ -66,7 +66,7 @@ export const BusinessMainBar = () => {
 
             onClick: () => {
               pushRoute(getOneBusinessRoute({ routeName }));
-            },
+            }
           };
         })}
       />

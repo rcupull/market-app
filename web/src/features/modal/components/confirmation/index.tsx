@@ -26,7 +26,7 @@ export const Confirmation = ({ useProps }: ConfirmationProps) => {
       ),
       secondaryBtn: <ButtonClose />,
       ...props,
-      className: cn('border-2 border-gray-300', props.className),
+      className: cn('border-2 border-gray-300', props.className)
     };
   };
 

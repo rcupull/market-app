@@ -9,7 +9,7 @@ import { havanaPosition } from './utils';
 import { isEqual } from 'utils/general';
 
 export default {
-  component: MapOl,
+  component: MapOl
 };
 
 export const Default = (): JSX.Element => {

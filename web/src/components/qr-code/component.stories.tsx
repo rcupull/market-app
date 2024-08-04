@@ -1,7 +1,7 @@
 import { QrCode } from '.';
 
 export default {
-  component: QrCode,
+  component: QrCode
 };
 
 export const Default = () => {

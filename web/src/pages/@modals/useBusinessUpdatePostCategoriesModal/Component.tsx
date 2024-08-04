@@ -51,12 +51,12 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
       <div className="flex">
         <Formux
           value={{
-            label: '',
+            label: ''
           }}
           validate={[
             {
               field: 'label',
-              type: 'required',
+              type: 'required'
             },
             {
               field: 'label',
@@ -64,8 +64,8 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               message: 'Esa categoría ya existe.',
               customCb: (label) => {
                 return !state.map(({ label }) => label).includes(label);
-              },
-            },
+              }
+            }
           ]}
         >
           {({ value, resetForm }) => {
@@ -75,7 +75,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               setState(
                 addRow(state, {
                   label,
-                  tag: getPostCategoryTag(label),
+                  tag: getPostCategoryTag(label)
                 })
               );
               resetForm();
@@ -120,7 +120,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
             <div
               key={index}
               className={cn('flex items-center gap-2 border border-gray-400 rounded-md p-2', {
-                'bg-gray-200': hidden,
+                'bg-gray-200': hidden
               })}
             >
               {label}
@@ -148,9 +148,9 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                               onClose();
                             }}
                           />
-                        ),
+                        )
                       };
-                    },
+                    }
                   });
                 }}
               />
@@ -188,9 +188,9 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                               onClose();
                             }}
                           />
-                        ),
+                        )
                       };
-                    },
+                    }
                   });
                 }}
               />
@@ -207,7 +207,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
             updateBusinessPostCategories.fetch(
               { postCategories: state, routeName },
               {
-                onAfterSuccess,
+                onAfterSuccess
               }
             );
           }}

@@ -13,7 +13,7 @@ export const getWrapper = ({
   useRouter,
   useModal,
   useCookies,
-  initialReduxState,
+  initialReduxState
 }: {
   useRedux?: boolean;
   useModal?: boolean;

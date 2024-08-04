@@ -71,16 +71,16 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
 
       getOneUser.fetch(
         {
-          userId,
+          userId
         },
         {
           onAfterSuccess: (user) => {
             setPersistent('user', user);
             setDataRedux({
               ...data,
-              user,
+              user
             });
-          },
+          }
         }
       );
     },
@@ -94,7 +94,7 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
         fetch(
           {
             email,
-            password,
+            password
           },
           {
             ...options,
@@ -108,7 +108,7 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
 
               await wait(100);
               options?.onAfterSuccess?.(response);
-            },
+            }
           }
         );
       },
@@ -118,7 +118,7 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
         removePersistent('refreshToken');
         removePersistent('user');
         reset();
-      },
-    },
+      }
+    }
   };
 };

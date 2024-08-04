@@ -25,7 +25,7 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
     <Formux<{ state: BillStateFilter; routeNames: Array<string> }>
       value={{
         state: value?.states?.length === 1 ? value.states[0] : 'ALL',
-        routeNames: value?.routeNames || [],
+        routeNames: value?.routeNames || []
       }}
       onChange={(filters) => {
         const { state } = filters;
@@ -48,17 +48,17 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
               optionToValue={({ value }) => value}
               items={[
                 {
-                  value: 'ALL',
+                  value: 'ALL'
                 },
                 {
-                  value: 'PENDING_TO_PAY',
+                  value: 'PENDING_TO_PAY'
                 },
                 {
-                  value: 'CANCELED',
+                  value: 'CANCELED'
                 },
                 {
-                  value: 'PAID',
-                },
+                  value: 'PAID'
+                }
               ]}
               containerClassName="w-full flex item-center flex-wrap gap-4"
             />

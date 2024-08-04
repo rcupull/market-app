@@ -35,11 +35,11 @@ export const usePostMakeReviewModal = () => {
               ),
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,
-              className: '!w-[30rem]',
+              className: '!w-[30rem]'
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

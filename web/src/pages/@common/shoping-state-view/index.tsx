@@ -29,7 +29,7 @@ export const ShoppingStateView = ({
   shopping,
   onAfterSuccess,
   fetchStatus,
-  businessHasDelivery,
+  businessHasDelivery
 }: ShoppingStateViewProps) => {
   const { state, _id } = shopping;
   const [formState, setFormState] = useState<State>({ state });
@@ -60,7 +60,7 @@ export const ShoppingStateView = ({
           return [
             ShoppingState.PROCESSING,
             ShoppingState.READY_TO_DELIVERY,
-            ShoppingState.REJECTED,
+            ShoppingState.REJECTED
           ];
         case ShoppingState.READY_TO_DELIVERY:
           return [ShoppingState.READY_TO_DELIVERY, ShoppingState.DELIVERED, ShoppingState.REJECTED];
@@ -116,7 +116,7 @@ export const ShoppingStateView = ({
                           onAfterSuccess: () => {
                             onClose();
                             onAfterSuccess?.();
-                          },
+                          }
                         }
                       );
                     }}
@@ -130,9 +130,9 @@ export const ShoppingStateView = ({
                       onClose();
                     }}
                   />
-                ),
+                )
               };
-            },
+            }
           });
         }
       }}
@@ -146,7 +146,7 @@ export const ShoppingStateView = ({
               renderValue={({ value }) => <ShoppingStateLabel state={value} />}
               renderOption={({ value }) => <ShoppingStateLabel state={value} />}
               items={nextStates().map((value) => ({
-                value,
+                value
               }))}
             />
           </form>

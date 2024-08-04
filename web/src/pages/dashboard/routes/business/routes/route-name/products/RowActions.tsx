@@ -57,14 +57,14 @@ export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
                     onAfterSuccess: () => {
                       onClose();
                       onRefreshForce();
-                    },
+                    }
                   }
                 )
               }
             />
-          ),
+          )
         };
-      },
+      }
     });
   };
 
@@ -95,14 +95,14 @@ export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
                     onAfterSuccess: () => {
                       onClose();
                       onRefreshForce();
-                    },
+                    }
                   }
                 )
               }
             />
-          ),
+          )
         };
-      },
+      }
     });
   };
 
@@ -111,12 +111,12 @@ export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
   const handleDuplicate = () => {
     duplicateOnePost.fetch(
       {
-        postId: rowData._id,
+        postId: rowData._id
       },
       {
         onAfterSuccess: () => {
           onRefreshForce();
-        },
+        }
       }
     );
   };
@@ -126,7 +126,7 @@ export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
       postId: rowData._id,
       onAfterSuccess: () => {
         onRefreshForce();
-      },
+      }
     });
   };
 

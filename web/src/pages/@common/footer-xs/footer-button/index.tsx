@@ -14,13 +14,13 @@ export const FooterButton = ({ label, svg: Svg, active }: FooterButtonProps) => 
     <div className="flex flex-col items-center">
       <IconButton
         className={cn('!-m-1', {
-          'fill-indigo-700': active,
+          'fill-indigo-700': active
         })}
         svg={<Svg className="!size-7" />}
       />
       <div
         className={cn('text-xs font-semibold text-nowrap', {
-          'text-indigo-700': active,
+          'text-indigo-700': active
         })}
       >
         {label}

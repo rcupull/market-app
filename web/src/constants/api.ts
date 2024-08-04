@@ -7,7 +7,7 @@ export const dummyStatus: FetchStatus = {
   isFailed: false,
   isNotStarted: true,
   isSuccess: false,
-  wasCalled: false,
+  wasCalled: false
 };
 
 export const dummyAdminAconfig: AdminConfig = {
@@ -16,14 +16,14 @@ export const dummyAdminAconfig: AdminConfig = {
   features: [],
   price: '<div>price</div>',
   privacyPolicy: '<div>privacyPolicy</div>',
-  termsAndConditions: '<div>termsAndConditions</div>',
+  termsAndConditions: '<div>termsAndConditions</div>'
 };
 
 export const dummyFetchResource: FetchResource<any> = {
   data: null,
   fetch: () => {},
   status: dummyStatus,
-  reset: () => {},
+  reset: () => {}
 };
 
 export const defaultLimit = 10;

@@ -34,7 +34,7 @@ export const useApiPersistent = <Args = any, D = any>(
           await options?.onAfterSuccess?.(response);
 
           setDataRedux(response);
-        },
+        }
       });
     },
     reset: () => {
@@ -42,6 +42,6 @@ export const useApiPersistent = <Args = any, D = any>(
       resources.reset();
     },
     setDataRedux,
-    resetDataRedux: reset,
+    resetDataRedux: reset
   };
 };

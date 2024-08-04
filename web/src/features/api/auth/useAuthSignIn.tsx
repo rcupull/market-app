@@ -22,12 +22,12 @@ export const useAuthSignIn = (): {
           {
             method: 'post',
             url: getEndpoint({ path: '/auth/sign-in' }),
-            data: { username, password, typeDevice },
+            data: { username, password, typeDevice }
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

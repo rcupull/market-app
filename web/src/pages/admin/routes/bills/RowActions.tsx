@@ -41,14 +41,14 @@ export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
                       onClose();
 
                       onRefresh();
-                    },
+                    }
                   }
                 )
               }
             />
-          ),
+          )
         };
-      },
+      }
     });
   };
 

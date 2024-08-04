@@ -13,7 +13,7 @@ export const useHotUpdateTableData = <
   updateKey,
   data,
   findCB,
-  changeCB,
+  changeCB
 }: {
   updateKey: string;
   data: FetchData<Array<T>>;
@@ -40,6 +40,6 @@ export const useHotUpdateTableData = <
   }, [JSON.stringify(data)]);
 
   return {
-    data: state,
+    data: state
   };
 };

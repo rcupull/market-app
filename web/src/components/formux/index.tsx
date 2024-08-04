@@ -11,7 +11,7 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
   validate: validateProp,
   children,
   onChange,
-  value,
+  value
 }: FormuxProps<Value>) => {
   const getFormErrors = useGetFormErrors<Value>();
 
@@ -93,7 +93,7 @@ export const Formux = <Value extends AnyRecord = AnyRecord>({
       setErrors({});
       setTouched({});
       setIsValid(true);
-    },
+    }
   };
 
   // @ts-expect-error some issue with the state type

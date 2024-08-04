@@ -7,7 +7,7 @@ import { getWrapper } from 'utils/test-utils';
 describe('useBuyProductsModal', () => {
   it.skip('should close when click on the close button', async () => {
     const { result } = renderHook(() => useBuyProductsModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.buyProductsModal.open());
@@ -21,7 +21,7 @@ describe('useBuyProductsModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => useBuyProductsModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.buyProductsModal.open());

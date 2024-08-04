@@ -69,7 +69,7 @@ export const PostAdded = ({ shoppingPostMeta, routeName }: PostAddedProps) => {
               {
                 onAfterSuccess: () => {
                   cart.onFetch();
-                },
+                }
               }
             );
           }}
@@ -98,14 +98,14 @@ export const PostAdded = ({ shoppingPostMeta, routeName }: PostAddedProps) => {
                             onAfterSuccess: () => {
                               onClose();
                               cart.onFetch();
-                            },
+                            }
                           }
                         );
                       }}
                     />
-                  ),
+                  )
                 };
-              },
+              }
             });
           }}
         />

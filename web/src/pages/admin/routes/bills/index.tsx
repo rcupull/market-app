@@ -22,7 +22,7 @@ export const Bills = () => {
   const filters = useFiltersVolatile<GetAllBillAdminQuery>({
     onChange: (filters) => {
       getAllBillsAdmin.fetch(filters);
-    },
+    }
   });
 
   const onRefreshForce = () => {
@@ -52,7 +52,7 @@ export const Bills = () => {
         remapRowsIndex={{
           xs: [[0, 1, 2, 3, 4]],
           lg: [[0], [1, 2], [3, 4]],
-          xl: 'none',
+          xl: 'none'
         }}
         heads={['Acciones', 'RouteName', 'Estado', 'Débito total', 'Fecha de creación']}
         getRowProps={(rowData) => {
@@ -64,8 +64,8 @@ export const Bills = () => {
               routeName,
               state,
               <span key="price" className="text-nowrap">{`${totalDebit} CUP`}</span>,
-              getDateString({ date: createdAt, showTime: true }),
-            ],
+              getDateString({ date: createdAt, showTime: true })
+            ]
           };
         }}
         data={getAllBillsAdmin.data}

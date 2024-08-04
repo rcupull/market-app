@@ -25,14 +25,14 @@ export const useUpdateChecksBusiness = (): {
             method: 'put',
             url: getEndpoint({
               path: '/business/:routeName/checks',
-              urlParams: { routeName },
+              urlParams: { routeName }
             }),
-            data: update,
+            data: update
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

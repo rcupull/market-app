@@ -35,30 +35,30 @@ export const FooterGeneralMenu = ({ spread }: FooterGeneralMenuProps) => {
         label: 'Inicio',
         onClick: () => pushRoute('/'),
         className: cn('lg:hidden', {
-          '!block': isOneBusinessPage,
-        }),
+          '!block': isOneBusinessPage
+        })
       },
       {
         label: 'Todos los negocios',
         onClick: () => pushRoute(getBusinessRoute()),
         className: cn('lg:hidden', {
-          '!block': isOneBusinessPage,
-        }),
+          '!block': isOneBusinessPage
+        })
       },
       getEnabledFeature('BILLIING_THE_BUSINESS') && {
         label: 'Precios',
         onClick: () => pushRoute('/price'),
         className: cn('lg:hidden', {
-          '!block': isOneBusinessPage,
-        }),
+          '!block': isOneBusinessPage
+        })
       },
       {
         label: '¿Que es Asere Market?',
         onClick: () => pushRoute('/about-us'),
         className: cn('lg:hidden', {
-          '!block': isOneBusinessPage,
-        }),
-      },
+          '!block': isOneBusinessPage
+        })
+      }
     ];
 
     if (getIsBusinessUser(user)) {
@@ -77,13 +77,13 @@ export const FooterGeneralMenu = ({ spread }: FooterGeneralMenuProps) => {
                       pushRoute(getDashboardBusinessRoute({ routeName }), {}, { timeout: 100 });
                       allUserBusiness.refresh();
                     }
-                  },
+                  }
                 });
               }}
               className="!rounded-2xl !py-0 my-1"
             />
           </div>
-        ),
+        )
       });
     }
 

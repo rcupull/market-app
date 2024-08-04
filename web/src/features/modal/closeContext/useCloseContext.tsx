@@ -13,6 +13,6 @@ export const useCloseContext = (): {
   return {
     onChangeUnsavedChanges: (hasChange) => {
       debouncer(() => onChangeUnsavedChanges(hasChange), 500);
-    },
+    }
   };
 };

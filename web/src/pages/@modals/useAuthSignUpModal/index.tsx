@@ -23,11 +23,11 @@ export const useAuthSignUpModal = () => {
               content: <Component portal={portal} />,
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,
-              className: '!w-[30rem]',
+              className: '!w-[30rem]'
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

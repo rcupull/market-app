@@ -34,7 +34,7 @@ export const RadioGroup = <O extends any = any>({
   multi,
   disabledOption,
   onOptionClicked,
-  getOptionCutomStyles,
+  getOptionCutomStyles
 }: RadioGroupProps<O>) => {
   const items = compact(itemsProp);
 

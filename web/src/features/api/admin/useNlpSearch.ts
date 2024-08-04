@@ -20,13 +20,13 @@ export const useNlpSearch = (): {
             method: 'get',
             url: getEndpoint({
               path: '/nlp/search',
-              query: { search },
-            }),
+              query: { search }
+            })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

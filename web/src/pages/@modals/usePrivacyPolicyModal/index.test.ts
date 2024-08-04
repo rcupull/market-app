@@ -7,7 +7,7 @@ import { getWrapper } from 'utils/test-utils';
 describe('usePrivacyPolicyModal', () => {
   it('should close when click on the close button', async () => {
     const { result } = renderHook(() => usePrivacyPolicyModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.privacyPolicyModal.open());
@@ -21,7 +21,7 @@ describe('usePrivacyPolicyModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => usePrivacyPolicyModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.privacyPolicyModal.open());

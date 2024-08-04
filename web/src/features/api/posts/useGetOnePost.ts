@@ -20,14 +20,14 @@ export const useGetOnePost = (): {
             url: getEndpoint({
               path: '/posts/:id',
               urlParams: {
-                id,
-              },
-            }),
+                id
+              }
+            })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

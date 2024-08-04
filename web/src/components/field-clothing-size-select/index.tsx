@@ -49,16 +49,16 @@ export const FieldClothingSizeSelect = <V extends Value = Value>(
       field.onChange({
         target: {
           name: field.name,
-          value: newState,
-        },
+          value: newState
+        }
       });
     } else {
       setState(size as V);
       field.onChange({
         target: {
           name: field.name,
-          value: size,
-        },
+          value: size
+        }
       });
     }
   };
@@ -69,8 +69,8 @@ export const FieldClothingSizeSelect = <V extends Value = Value>(
         onBlur={() => {
           field.onBlur({
             target: {
-              name: field.name,
-            },
+              name: field.name
+            }
           });
         }}
       >
@@ -94,7 +94,7 @@ export const FieldClothingSizeSelect = <V extends Value = Value>(
                   {
                     'cursor-pointer bg-white text-gray-900 shadow-sm': inStock,
                     'ring-2 ring-indigo-500': active,
-                    'ring-1 rounded-md ring-red-500 focus:ring-red-500': !!error,
+                    'ring-1 rounded-md ring-red-500 focus:ring-red-500': !!error
                   }
                 )}
               >

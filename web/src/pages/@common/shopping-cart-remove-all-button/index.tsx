@@ -42,14 +42,14 @@ export const ShoppingCartRemoveAllButton = ({ className }: ShoppingCartRemoveAll
                         onAfterSuccess: () => {
                           onClose();
                           cart.onFetch();
-                        },
+                        }
                       }
                     );
                   }}
                 />
-              ),
+              )
             };
-          },
+          }
         });
       }}
       className={className}

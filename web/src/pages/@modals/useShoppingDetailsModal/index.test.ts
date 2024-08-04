@@ -8,7 +8,7 @@ import { getWrapper } from 'utils/test-utils';
 describe('useShoppingDetailsModal', () => {
   it('should close when click on the close button', async () => {
     const { result } = renderHook(() => useShoppingDetailsModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.shoppingDetailsModal.open({ shopping: shoppingDummy }));
@@ -22,7 +22,7 @@ describe('useShoppingDetailsModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => useShoppingDetailsModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.shoppingDetailsModal.open({ shopping: shoppingDummy }));

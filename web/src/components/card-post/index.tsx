@@ -30,7 +30,7 @@ export const CardPost = ({
   layout,
   href,
   onRefresh,
-  currency,
+  currency
 }: CardPostProps) => {
   const { businessNewUpdatePostModal } = useBusinessNewUpdatePostModal();
   const { metaLayout, size } = layout || {};
@@ -71,14 +71,14 @@ export const CardPost = ({
         <div
           className={cn({
             'ml-auto mt-auto': size === 'small',
-            '!absolute right-0 bottom-0': size === 'medium' || size === 'long',
+            '!absolute right-0 bottom-0': size === 'medium' || size === 'long'
           })}
         >
           <PostShoppingMethod
             layout={layout?.shoppingMethod}
             post={post}
             className={cn({
-              '-m-3 size-10': size === 'small',
+              '-m-3 size-10': size === 'small'
             })}
           />
         </div>
@@ -108,7 +108,7 @@ export const CardPost = ({
           postId: post._id,
           onAfterSuccess: () => {
             onRefresh();
-          },
+          }
         })
       }
     >

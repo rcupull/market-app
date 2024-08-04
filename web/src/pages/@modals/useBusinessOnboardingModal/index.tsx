@@ -20,11 +20,11 @@ export const useBusinessOnboardingModal = () => {
               title: 'Configuración básica del negocio',
               content: <Component />,
               className: 'w-[98vw] !sm:w-[80vw]',
-              isBusy: status.isBusy,
+              isBusy: status.isBusy
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };
