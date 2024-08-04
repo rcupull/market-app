@@ -146,8 +146,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
                       e.stopPropagation();
                       businessNewUpdateSectionModal.open({
                         postType: 'link',
-                        onAfterSuccess: () =>
-                          business && onFetch({ routeName: business.routeName })
+                        onAfterSuccess: () => business && onFetch({ routeName: business.routeName })
                       });
                     }}
                   />
