@@ -30,6 +30,7 @@ export interface ClothingProductGrid1Props {
     highLights?: (props: ProductHighLightsProps) => React.ReactNode;
     details?: (props: ProductDetailsProps) => React.ReactNode;
     stockAvailable?: (props: ProductStockLabelProps) => React.ReactNode;
+    productReviews?: () => React.ReactNode;
   };
 }
 
@@ -127,6 +128,7 @@ export const ClothingProductGrid1 = ({ post, render, currency }: ClothingProduct
             })}
 
           {details && render.details?.({ value: details, className: 'mt-10', title: 'Detalles' })}
+          {render.productReviews?.()}
         </div>
       </div>
     </div>

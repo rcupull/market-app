@@ -136,19 +136,19 @@ export const PostId = () => {
                   size: 'long'
                 }}
               />
+            ),
+            productReviews: () => (
+              <PostsReviews
+                data={infiniteScrollingAllReviews.data}
+                onScrollBottom={infiniteScrollingAllReviews.onScrollBottom}
+                status={infiniteScrollingAllReviews.status}
+                className="w-full max-w-[50rem]"
+                onAddReview={handleAddReview}
+              />
             )
           }}
         />
       </UpdateSomethingContainer>
-
-      <PostsReviews
-        data={infiniteScrollingAllReviews.data}
-        onScrollBottom={infiniteScrollingAllReviews.onScrollBottom}
-        status={infiniteScrollingAllReviews.status}
-        className="w-full max-w-[50rem]"
-        onAddReview={handleAddReview}
-      />
-
       <PostsRelatedView post={post} business={business} />
     </LayoutPage>
   );
