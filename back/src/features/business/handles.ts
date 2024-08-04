@@ -10,7 +10,6 @@ import {
 import {
   get200Response,
   get400Response,
-  get404Response,
   getBusinessNotFoundResponse,
   getUserNotFoundResponse
 } from '../../utils/server-response';
@@ -25,7 +24,6 @@ import {
 import { Image, ModelDocument, RequestHandler } from '../../types/general';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { PaginateResult } from '../../middlewares/middlewarePagination';
-import { ValidationCodeModel } from '../../schemas/auth';
 import { isEqualIds, movRow } from '../../utils/general';
 import { imagesServicesDeleteOldImages } from '../images/services';
 import { postServicesGetOne, postServicesUpdateMany } from '../post/services';
@@ -459,55 +457,6 @@ const del_business_routeName_sections_sectionId: () => RequestHandler = () => {
   };
 };
 
-const post_business_routeName_chatbot_validate: () => RequestHandler = () => {
-  return async (req, res) => {
-    withTryCatch(req, res, async () => {
-      const { body, business } = req;
-      const { code } = body;
-
-      if (!business) {
-        return getBusinessNotFoundResponse({ res });
-      }
-
-      const validationCode = await ValidationCodeModel.findOneAndDelete({
-        code
-      });
-
-      if (!validationCode) {
-        return get404Response({
-          res,
-          json: {
-            message:
-              'Este codigo de validación no existe o ya el bot fue verificado con este código'
-          }
-        });
-      }
-
-      const { meta } = validationCode.toJSON();
-
-      if (!meta) {
-        return get404Response({
-          res,
-          json: {
-            message: 'No hay metadatos disponibles en este codigo de validación del bot'
-          }
-        });
-      }
-
-      await businessServicesUpdateOne({
-        query: {
-          _id: business._id
-        },
-        update: {
-          telegramBotChat: meta
-        }
-      });
-
-      res.send({});
-    });
-  };
-};
-
 const post_business_routeName_favorite_users: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
@@ -637,7 +586,6 @@ export const businessHandles = {
   get_business_summary,
   get_business_search,
 
-  post_business_routeName_chatbot_validate,
   //
   post_business_routeName_favorite_users,
   del_business_routeName_favorite_users,

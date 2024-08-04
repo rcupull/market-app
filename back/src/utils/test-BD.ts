@@ -1,12 +1,15 @@
 import { postToShoppingPostDataReshaper } from '../features/shopping/utils';
+import { AuthSessionModel } from '../schemas/auth';
 import { BusinessModel } from '../schemas/business';
 import { PostModel } from '../schemas/post';
 import { ShoppingModel } from '../schemas/shopping';
 import { UserModel } from '../schemas/user';
+import { TYPE_DEVICE } from '../types/auth';
 import { Business } from '../types/business';
 import { Post } from '../types/post';
 import { Shopping, ShoppingState } from '../types/shopping';
 import { User } from '../types/user';
+import { generateRefreshJWT } from './auth';
 
 export interface TestBDContent {
   user1: User;
@@ -277,6 +280,19 @@ export const fillBD = async (args?: {
   await user3.save();
 
   //////////////////////////////////////////////////////////////////////////////////
+
+  const createSession = async (user: User) => {
+    await AuthSessionModel.create({
+      userId: user._id,
+      descriptionDevice: 'descriptionDevice',
+      typeDevice: TYPE_DEVICE.WEB,
+      refreshToken: generateRefreshJWT({ id: user._id.toString() })
+    });
+  };
+
+  await createSession(user1);
+  await createSession(user2);
+  await createSession(user3);
 
   return {
     user1,

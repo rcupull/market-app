@@ -3,12 +3,7 @@ import { Business, BusinessNotificationFlags } from '../types/business';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { createdAtSchemaDefinition } from '../utils/schemas';
 import { PostModel } from './post';
-import {
-  AddressDefinition,
-  DeliveryConfigDefinition,
-  PostLayoutSchema,
-  TelegramBotChatDefinition
-} from './common';
+import { AddressDefinition, DeliveryConfigDefinition, PostLayoutSchema } from './common';
 
 const BusinessSchema = new Schema<Business>({
   ...createdAtSchemaDefinition,
@@ -94,7 +89,6 @@ const BusinessSchema = new Schema<Business>({
     description: { type: String }
   },
   whatsAppPhoneNumber: { type: String },
-  telegramBotChat: TelegramBotChatDefinition,
   notificationFlags: {
     type: [
       {
@@ -102,7 +96,7 @@ const BusinessSchema = new Schema<Business>({
         enum: Object.values(BusinessNotificationFlags)
       }
     ],
-    default: [BusinessNotificationFlags.TELEGRAM_NEW_SHOPPING]
+    default: [BusinessNotificationFlags.NEW_SHOPPING]
   },
   shoppingMeta: {
     termsAndConditions: { type: String }

@@ -72,12 +72,6 @@ export interface HtmlMeta {
 
 export type ModelDocument<T extends AnyRecord = AnyRecord> = Document<unknown, AnyRecord, T> & T;
 
-export interface TelegramBotChat {
-  chatId: number;
-  firstName?: string;
-  userName?: string;
-}
-
 export interface Address {
   _id: string;
   city: string;

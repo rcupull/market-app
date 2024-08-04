@@ -24,7 +24,6 @@ export type UpdateQueryBusiness =
           | 'postCategories'
           | 'aboutUsPage'
           | 'aboutUsPage'
-          | 'telegramBotChat'
         >
       >
     >

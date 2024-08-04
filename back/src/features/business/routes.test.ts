@@ -57,7 +57,7 @@ describe('business', () => {
               "logo": null,
               "name": "business1User1",
               "notificationFlags": [
-                "TELEGRAM_NEW_SHOPPING",
+                "NEW_SHOPPING",
               ],
               "postCategories": [],
               "postFormFields": [
@@ -284,7 +284,7 @@ describe('business', () => {
               "logo": null,
               "name": "business1User1",
               "notificationFlags": [
-                "TELEGRAM_NEW_SHOPPING",
+                "NEW_SHOPPING",
               ],
               "postCategories": [],
               "postFormFields": [

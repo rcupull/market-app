@@ -121,7 +121,7 @@ export interface BusinessPaymentRequestHistory {
 }
 
 export enum BusinessNotificationFlags {
-  TELEGRAM_NEW_SHOPPING = 'TELEGRAM_NEW_SHOPPING'
+  NEW_SHOPPING = 'NEW_SHOPPING'
 }
 
 export interface BusinessSEO {

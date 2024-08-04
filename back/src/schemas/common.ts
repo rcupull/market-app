@@ -7,17 +7,11 @@ import {
   PostsLayout,
   PostsLayoutSection
 } from '../types/business';
-import { Address, TelegramBotChat } from '../types/general';
+import { Address } from '../types/general';
 
 const PostLayoutShoppingMethodDefinition: SchemaDefinitionProperty<PostLayoutShoppingMethod> = {
   type: String,
   enum: ['none', 'shoppingCart']
-};
-
-export const TelegramBotChatDefinition: SchemaDefinitionProperty<TelegramBotChat> = {
-  chatId: { type: String },
-  firstName: { type: String },
-  userName: { type: String }
 };
 
 export const DeliveryConfigDefinition: SchemaDefinitionProperty<DeliveryConfig> = {

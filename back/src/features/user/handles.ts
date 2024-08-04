@@ -7,12 +7,7 @@ import {
   userServicesUpdateOne
 } from './services';
 import { User, UserChecks, UserDto } from '../../types/user';
-import {
-  get400Response,
-  get404Response,
-  getUserNotFoundResponse
-} from '../../utils/server-response';
-import { ValidationCodeModel } from '../../schemas/auth';
+import { get400Response, getUserNotFoundResponse } from '../../utils/server-response';
 import { imagesServicesDeleteOldImages } from '../images/services';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { deepJsonCopy, includesId } from '../../utils/general';
@@ -170,55 +165,6 @@ const put_users_userId: () => RequestHandler = () => {
   };
 };
 
-const post_users_userId_chatbot_validate: () => RequestHandler = () => {
-  return async (req, res) => {
-    withTryCatch(req, res, async () => {
-      const { body, user } = req;
-      const { code } = body;
-
-      if (!user) {
-        return getUserNotFoundResponse({ res });
-      }
-
-      const validationCode = await ValidationCodeModel.findOneAndDelete({
-        code
-      });
-
-      if (!validationCode) {
-        return get404Response({
-          res,
-          json: {
-            message:
-              'Este codigo de validación no existe o ya el bot fue verificado con este código'
-          }
-        });
-      }
-
-      const { meta } = validationCode.toJSON();
-
-      if (!meta) {
-        return get404Response({
-          res,
-          json: {
-            message: 'No hay metadatos disponibles en este codigo de validación del bot'
-          }
-        });
-      }
-
-      await userServicesUpdateOne({
-        query: {
-          _id: user._id
-        },
-        update: {
-          telegramBotChat: meta
-        }
-      });
-
-      res.send({});
-    });
-  };
-};
-
 const put_users_userId_checks: () => RequestHandler = () => {
   return async (req, res) => {
     withTryCatch(req, res, async () => {
@@ -344,7 +290,6 @@ const del_users_userId_delivery_business: () => RequestHandler = () => {
 export const userHandles = {
   get_users_userId,
   put_users_userId,
-  post_users_userId_chatbot_validate,
   put_users_userId_checks,
   //
   post_users_userId_delivery_business,

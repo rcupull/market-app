@@ -400,7 +400,7 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
 
       if (state === ShoppingState.APPROVED) {
         /**
-         * send telegram notificaion when the shopping to be aproved
+         * send push notificaion when the shopping to be aproved
          */
 
         const [userData] = await userServicesGetUsersDataForPushNotifications({

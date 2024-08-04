@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { User } from '../types/user';
 import { createdAtSchemaDefinition } from '../utils/schemas';
 import mongoosePaginate from 'mongoose-paginate-v2';
-import { AddressDefinition, TelegramBotChatDefinition } from './common';
+import { AddressDefinition } from './common';
 
 const UserSchema = new Schema<User>({
   ...createdAtSchemaDefinition,
@@ -33,7 +33,6 @@ const UserSchema = new Schema<User>({
     default: null
   },
   specialAccess: { type: [String], default: [] },
-  telegramBotChat: TelegramBotChatDefinition,
   phone: { type: String },
   addresses: [AddressDefinition],
   checks: { type: Schema.Types.Mixed }
