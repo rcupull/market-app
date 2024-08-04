@@ -21,13 +21,13 @@ export const useGetAllBills = (): {
             method: 'get',
             url: getEndpoint({
               path: '/bills',
-              query: { limit: defaultLimit, routeName, states },
-            }),
+              query: { limit: defaultLimit, routeName, states }
+            })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

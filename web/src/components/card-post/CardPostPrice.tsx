@@ -74,7 +74,7 @@ export const CardPostPrice = ({ post, layout, currency }: CardPostPriceProps) =>
         <div
           className={cn(
             {
-              'text-red-500 font-bold': hasDiscount,
+              'text-red-500 font-bold': hasDiscount
             },
             getCardPostMetaSizes({ size: layout?.size })
           )}

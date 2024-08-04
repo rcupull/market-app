@@ -21,14 +21,14 @@ export const useAddOneBusiness = (): {
           {
             method: 'post',
             url: getEndpoint({
-              path: '/business',
+              path: '/business'
             }),
-            data,
+            data
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

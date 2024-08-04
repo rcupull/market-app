@@ -18,16 +18,16 @@ export const useRemoveFavoriteUser = (): {
             method: 'delete',
             url: getEndpoint({
               path: '/business/:routeName/favoriteUsers',
-              urlParams: { routeName },
+              urlParams: { routeName }
             }),
             data: {
-              userId,
-            },
+              userId
+            }
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

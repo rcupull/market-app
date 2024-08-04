@@ -7,7 +7,7 @@ import { getWrapper } from 'utils/test-utils';
 describe('useBusinessUpdateNewModal', () => {
   it('should close when click on the close button', async () => {
     const { result } = renderHook(() => useBusinessUpdateNewModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.businessUpdateNewModal.open());
@@ -21,7 +21,7 @@ describe('useBusinessUpdateNewModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => useBusinessUpdateNewModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.businessUpdateNewModal.open());

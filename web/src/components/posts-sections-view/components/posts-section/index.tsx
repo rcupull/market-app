@@ -51,7 +51,7 @@ export const PostsSection = ({ routeName, layout, className }: PostsSectionProps
     data: getAllPosts.data,
     updateKey: `updatePostAmount`,
     findCB: (rowData, { postId }) => rowData._id === postId,
-    changeCB: (rowData, { stockAmountAvailable }) => ({ ...rowData, stockAmountAvailable }),
+    changeCB: (rowData, { stockAmountAvailable }) => ({ ...rowData, stockAmountAvailable })
   });
 
   const handleFilter = (filters: GetAllPostsQuery) => {
@@ -63,12 +63,12 @@ export const PostsSection = ({ routeName, layout, className }: PostsSectionProps
       postType,
       includeHidden: owner,
       ...filters,
-      postCategoriesMethod: hasCategoriesTags ? 'every' : 'some',
+      postCategoriesMethod: hasCategoriesTags ? 'every' : 'some'
     });
   };
 
   const filters = useFiltersVolatile<GetAllPostsQuery>({
-    onChange: (filters) => handleFilter(filters),
+    onChange: (filters) => handleFilter(filters)
   });
 
   useEffect(() => {
@@ -93,7 +93,7 @@ export const PostsSection = ({ routeName, layout, className }: PostsSectionProps
           sectionId: _id,
           onAfterSuccess: () => {
             business && onFetch({ routeName: business.routeName });
-          },
+          }
         });
       }}
     >
@@ -101,7 +101,7 @@ export const PostsSection = ({ routeName, layout, className }: PostsSectionProps
         className={cn(
           'mt-10 p-0 lg:p-4',
           {
-            'bg-gray-200 rounded-md': renderHiddenSection,
+            'bg-gray-200 rounded-md': renderHiddenSection
           },
           className
         )}

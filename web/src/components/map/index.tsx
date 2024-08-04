@@ -5,7 +5,7 @@ import {
   coordinateToPosition,
   getClosedMarker,
   havanaPosition,
-  positionToCoordinate,
+  positionToCoordinate
 } from './utils';
 
 import { Feature, Map, MapBrowserEvent, View } from 'ol';
@@ -38,7 +38,7 @@ export const MapOl = ({
   markers,
   className,
   zoom,
-  onChangeZoom,
+  onChangeZoom
 }: MapOlProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<Map>();
@@ -60,13 +60,13 @@ export const MapOl = ({
     zoomState,
     onMarkerClick: () => {},
     onClick: () => {},
-    markers: [],
+    markers: []
   });
   refMeta.current = {
     onClick,
     onMarkerClick,
     markers,
-    zoomState,
+    zoomState
   };
 
   const handleClick = (e: MapBrowserEvent<any>) => {
@@ -77,7 +77,7 @@ export const MapOl = ({
     const closedMarker = getClosedMarker({
       position: clickedPosition,
       markers,
-      zoom: zoomState,
+      zoom: zoomState
     });
 
     if (closedMarker) {
@@ -85,7 +85,7 @@ export const MapOl = ({
     }
 
     onClick?.({
-      position: clickedPosition,
+      position: clickedPosition
     });
   };
 
@@ -97,9 +97,9 @@ export const MapOl = ({
         source: new VectorSource({ wrapX: false }),
         style: new style.Style({
           image: new style.Icon({
-            src: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-          }),
-        }),
+            src: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+          })
+        })
       });
 
       refVector.current = vectorLayer;
@@ -108,13 +108,13 @@ export const MapOl = ({
         target: ref.current,
         layers: [
           new Tile({
-            source: new OSM(),
+            source: new OSM()
           }),
-          vectorLayer,
+          vectorLayer
         ],
         view: new View({
-          center: positionToCoordinate(center),
-        }),
+          center: positionToCoordinate(center)
+        })
       });
 
       setMap(map);
@@ -170,7 +170,7 @@ export const MapOl = ({
           markers.map(({ lat, lon }) => {
             const feature = new Feature({
               type: 'marker',
-              geometry: new geom.Point(fromLonLat([lon, lat])),
+              geometry: new geom.Point(fromLonLat([lon, lat]))
             });
 
             return feature;

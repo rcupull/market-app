@@ -7,7 +7,7 @@ import { getWrapper } from 'utils/test-utils';
 describe('useAdminConfigUpdatePrivacyPolicyModal', () => {
   it.skip('should close when click on the close button', async () => {
     const { result } = renderHook(() => useAdminConfigUpdatePrivacyPolicyModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.adminConfigUpdatePrivacyPolicyModal.open());
@@ -21,7 +21,7 @@ describe('useAdminConfigUpdatePrivacyPolicyModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => useAdminConfigUpdatePrivacyPolicyModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.adminConfigUpdatePrivacyPolicyModal.open());

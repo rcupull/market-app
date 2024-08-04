@@ -8,7 +8,7 @@ import { SpinnerEllipsis } from 'components/spinner-ellipsis';
 
 import {
   UseGetCatalogImagesResponse,
-  useGetCatalogsImages,
+  useGetCatalogsImages
 } from 'features/api/images/useGetCatalogsImages';
 import { useModal } from 'features/modal/useModal';
 import { useSimpleSlice } from 'features/slices/useSimpleSlice';
@@ -46,7 +46,7 @@ export const Component = ({ portal, multi, onSelected }: ComponentProps) => {
           height,
           width,
           src: url,
-          alt: title,
+          alt: title
         }))
       );
     }
@@ -103,7 +103,7 @@ export const Component = ({ portal, multi, onSelected }: ComponentProps) => {
     <div>
       <Formux
         value={{
-          searchValue: search || '',
+          searchValue: search || ''
         }}
         onChange={({ searchValue }) => {
           if (searchValue && searchValue !== search) {
@@ -111,7 +111,7 @@ export const Component = ({ portal, multi, onSelected }: ComponentProps) => {
               getCatalogsImages.fetch(
                 { search: searchValue },
                 {
-                  onAfterSuccess: setData,
+                  onAfterSuccess: setData
                 }
               );
             }, 500);

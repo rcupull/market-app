@@ -17,16 +17,11 @@ export const FooterXs = ({ className }: FooterXsProps) => {
   const { allUserBusiness } = useAllUserBusiness();
 
   return (
-    <footer
-      className={cn(
-        'shadow-lg -scale-y-100 bg-white px-2 py-1',
-        className
-      )}
-    >
+    <footer className={cn('shadow-lg -scale-y-100 bg-white px-2 py-1', className)}>
       <div
         className={cn('flex -scale-y-100  gap-3 overflow-x-auto h-[4.3rem]', {
           'items-start justify-start': isAuthenticated,
-          'items-center justify-between': !isAuthenticated,
+          'items-center justify-between': !isAuthenticated
         })}
       >
         <FooterGeneralMenu spread={!isAuthenticated} />

@@ -38,7 +38,7 @@ export const CardPostImage = ({ post, layout, className }: CardPostImageProps) =
 
       interval(
         images.map((image) => () => setSwitchImage(image)),
-        getRandomNumber(900, 1100),
+        getRandomNumber(900, 1100)
       );
 
       return interval.cancel;
@@ -48,7 +48,7 @@ export const CardPostImage = ({ post, layout, className }: CardPostImageProps) =
   useEffect(() => {
     if (imageLayout === 'rounded') {
       setStyle({
-        width: ref.current?.getBoundingClientRect()?.height,
+        width: ref.current?.getBoundingClientRect()?.height
       });
     } else {
       setStyle({});
@@ -86,13 +86,13 @@ export const CardPostImage = ({ post, layout, className }: CardPostImageProps) =
         <Swiper
           autoplay={{
             delay: autoplayDelay,
-            reverseDirection,
+            reverseDirection
           }}
           navigation={false}
           onReachEnd={() => setReverseDirection(true)}
           onReachBeginning={() => setReverseDirection(false)}
           items={images.map((image) => ({
-            content: renderImage(image),
+            content: renderImage(image)
           }))}
         />
       );
@@ -115,10 +115,10 @@ export const CardPostImage = ({ post, layout, className }: CardPostImageProps) =
       className={cn(
         'border border-gray-300 overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center mx-auto w-full',
         {
-          '!rounded-full': imageLayout === 'rounded',
+          '!rounded-full': imageLayout === 'rounded'
         },
         useCardPostImageSizes({ size: layout?.size, rounded: imageLayout === 'rounded' }),
-        className,
+        className
       )}
     >
       {renderContent()}

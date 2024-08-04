@@ -23,15 +23,15 @@ export const useUpdateManyBusiness = (): {
               method: 'put',
               url: getEndpoint({
                 path: '/business/:routeName',
-                urlParams: { routeName },
+                urlParams: { routeName }
               }),
-              data,
+              data
             };
           }),
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

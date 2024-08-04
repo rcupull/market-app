@@ -25,14 +25,14 @@ export const useUpdateChecksUser = (): {
             method: 'put',
             url: getEndpoint({
               path: '/users/:userId/checks',
-              urlParams: { userId },
+              urlParams: { userId }
             }),
-            data: update,
+            data: update
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

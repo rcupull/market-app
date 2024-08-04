@@ -10,7 +10,7 @@ const firebaseConfig = {
   storageBucket: 'multi-store-2b052.appspot.com',
   messagingSenderId: '470555603384',
   appId: '1:470555603384:web:b248e54d613911fac91f4d',
-  measurementId: 'G-YDBQCJFYDN',
+  measurementId: 'G-YDBQCJFYDN'
 };
 
 export const firebaseVapidKey =

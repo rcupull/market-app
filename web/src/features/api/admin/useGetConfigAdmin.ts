@@ -18,14 +18,14 @@ export const useGetConfigAdmin = (): {
           {
             method: 'get',
             url: getEndpoint({
-              path: '/admin/admin-config',
+              path: '/admin/admin-config'
             }),
-            data,
+            data
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

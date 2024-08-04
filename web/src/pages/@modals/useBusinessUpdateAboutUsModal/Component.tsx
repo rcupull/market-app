@@ -53,7 +53,7 @@ export const Component = ({ portal }: ComponentProps) => {
         value={{
           visible: business?.aboutUsPage?.visible || false,
           title: business?.aboutUsPage?.title || '',
-          description: business?.aboutUsPage?.description || '',
+          description: business?.aboutUsPage?.description || ''
         }}
       >
         {({ value, hasChange }) => {
@@ -84,9 +84,9 @@ export const Component = ({ portal }: ComponentProps) => {
                   getUploadAdapter: (args) => {
                     return new CheckEditorUploadAdapter({
                       ...args,
-                      uploadUrl: getCheckEditorUploadUrl({ routeName }),
+                      uploadUrl: getCheckEditorUploadUrl({ routeName })
                     });
-                  },
+                  }
                 }}
                 description={<div>Describe la funcionalidad del negocio.</div>}
                 onChange={(newValue) => {
@@ -96,7 +96,7 @@ export const Component = ({ portal }: ComponentProps) => {
                   const imagesToRemove = getImagesToRemove({
                     newData: newValue,
                     currentData: value.description,
-                    exclude: business?.aboutUsPage?.description,
+                    exclude: business?.aboutUsPage?.description
                   });
                   handleRemoveImageSrc(imagesToRemove);
                 }}
@@ -113,7 +113,7 @@ export const Component = ({ portal }: ComponentProps) => {
                      */
                     const imagesToRemove = getImagesToRemove({
                       newData: value.description || '',
-                      currentData: business?.aboutUsPage?.description,
+                      currentData: business?.aboutUsPage?.description
                     });
 
                     handleRemoveImageSrc(imagesToRemove);
@@ -121,15 +121,15 @@ export const Component = ({ portal }: ComponentProps) => {
                     updateOneBusiness.fetch(
                       {
                         update: {
-                          aboutUsPage: value,
+                          aboutUsPage: value
                         },
-                        routeName,
+                        routeName
                       },
                       {
                         onAfterSuccess: () => {
                           onFetch({ routeName });
                           onClose();
-                        },
+                        }
                       }
                     );
                   }}

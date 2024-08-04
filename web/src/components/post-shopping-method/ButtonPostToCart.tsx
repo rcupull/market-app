@@ -26,7 +26,7 @@ export const ButtonPostToCart = ({
   post,
   className,
   variant = 'icon',
-  purshaseNotes,
+  purshaseNotes
 }: ButtonPostToCartProps) => {
   const [count, setCount] = useState<number>(0);
   const { stockAmountAvailable } = post;
@@ -71,7 +71,7 @@ export const ButtonPostToCart = ({
         {
           onAfterSuccess: () => {
             cart.onFetch();
-          },
+          }
         }
       );
     }, 500);

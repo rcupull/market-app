@@ -120,7 +120,7 @@ export const getWhatsAppPostLink = (phoneNumber: string, post: Post) => {
   const postUrl = `${window.location.origin}${postRoute}`;
 
   const search = queryToSearch({
-    text: `Le escribo referente al producto *${name}* con link de referencia ${postUrl}`,
+    text: `Le escribo referente al producto *${name}* con link de referencia ${postUrl}`
   });
 
   return `https://wa.me/${phoneNumber}?${search}`;
@@ -134,7 +134,7 @@ export const getWhatsAppShoppingLink = (phoneNumber: string, shopping: Shopping)
   const shoppingUrl = `${window.location.origin}${shoppingRoute}`;
 
   const search = queryToSearch({
-    text: `Le escribo referente a la orden de compra *${_id}* que posee algunos artículos de mi interes. Puede ver los detalles en el link ${shoppingUrl}`,
+    text: `Le escribo referente a la orden de compra *${_id}* que posee algunos artículos de mi interes. Puede ver los detalles en el link ${shoppingUrl}`
   });
 
   return `https://wa.me/${phoneNumber}?${search}`;
@@ -158,7 +158,7 @@ export const getDeliveryUtils = (): GetDeliveryUtilsReturn => {
 
   const getDistance: GetDeliveryUtilsReturn['getDistance'] = ({
     businessAddress,
-    userAddress,
+    userAddress
   }): number | null => {
     if (!businessAddress?.lat || !businessAddress.lon || !userAddress?.lat || !userAddress.lon) {
       return null;
@@ -166,12 +166,12 @@ export const getDeliveryUtils = (): GetDeliveryUtilsReturn => {
 
     const businessPosition: MapOlPosition = {
       lat: businessAddress.lat,
-      lon: businessAddress.lon,
+      lon: businessAddress.lon
     };
 
     const userPosition: MapOlPosition = {
       lat: userAddress.lat,
-      lon: userAddress.lon,
+      lon: userAddress.lon
     };
 
     return getDistanceBetweenPositions(businessPosition, userPosition);
@@ -187,7 +187,7 @@ export const getDeliveryUtils = (): GetDeliveryUtilsReturn => {
       case DeliveryConfigType.REQUIRED: {
         const { price } = getDeliveryConfigPrice({
           deliveryConfig,
-          distance,
+          distance
         });
 
         return price;
@@ -201,6 +201,6 @@ export const getDeliveryUtils = (): GetDeliveryUtilsReturn => {
   return {
     getIsEnabled,
     getDistance,
-    getPrice,
+    getPrice
   };
 };

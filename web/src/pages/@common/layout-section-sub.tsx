@@ -8,7 +8,7 @@ export interface LayoutSectionSubProps extends ChildrenProp, StyleProps {
 export const LayoutSectionSub = ({
   title,
   children,
-  className,
+  className
 }: LayoutSectionSubProps): JSX.Element => {
   return (
     <div className={cn('border-t-2 mt-4', className)}>

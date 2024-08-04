@@ -21,13 +21,13 @@ export const useGetAllReviews = (): {
             method: 'get',
             url: getEndpoint({
               path: '/reviews',
-              query: { limit: defaultLimit, ...query },
-            }),
+              query: { limit: defaultLimit, ...query }
+            })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

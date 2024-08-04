@@ -23,7 +23,7 @@ export const ShoppingDetails = ({ shopping, onClick, getActions }: ShoppingDetai
     <div
       onClick={onClick}
       className={cn('w-full p-3', {
-        'cursor-pointer': onClick,
+        'cursor-pointer': onClick
       })}
     >
       <div className="flex items-center gap-1">{getActions?.({ shopping })}</div>

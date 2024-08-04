@@ -61,20 +61,20 @@ export const IconButtonShowHideSection = ({ rowData }: IconButtonShowHideSection
                   {
                     routeName: business.routeName,
                     sectionId: rowData._id,
-                    data: { [field]: value },
+                    data: { [field]: value }
                   },
                   {
                     onAfterSuccess: () => {
                       onFetch({ routeName: business.routeName });
                       onClose();
-                    },
+                    }
                   }
                 );
               }}
             />
-          ),
+          )
         };
-      },
+      }
     });
   };
 

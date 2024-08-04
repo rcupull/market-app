@@ -22,12 +22,12 @@ export const Home = () => {
   const { getAllBusinessSummary } = useGetAllBusinessSummary();
 
   const filters = useFiltersVolatile<GetAllBusinessQuery>({
-    onChange: (query) => getAllBusinessSummary.fetch(query),
+    onChange: (query) => getAllBusinessSummary.fetch(query)
   });
 
   const infiniteScrolling = useInfiniteScrolling({
     fetchPaginatedResources: getAllBusinessSummary,
-    onFetch: ({ page }) => filters.onMergeFilters({ page }),
+    onFetch: ({ page }) => filters.onMergeFilters({ page })
   });
 
   const refCardContainer = useRef<HTMLDivElement>(null);

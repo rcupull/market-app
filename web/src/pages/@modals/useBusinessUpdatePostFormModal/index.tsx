@@ -32,11 +32,11 @@ export const useBusinessUpdatePostFormModal = () => {
                 />
               ),
               secondaryBtn: <ButtonClose />,
-              primaryBtn: <div ref={portal.ref} />,
+              primaryBtn: <div ref={portal.ref} />
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

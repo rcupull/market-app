@@ -9,6 +9,6 @@ export const getPaginationResources = <D extends AnyRecord = AnyRecord>(
 } => {
   return {
     data: paginatedData?.data || null,
-    paginator: paginatedData?.paginator || null,
+    paginator: paginatedData?.paginator || null
   };
 };

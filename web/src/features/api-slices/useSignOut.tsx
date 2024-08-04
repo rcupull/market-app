@@ -21,10 +21,10 @@ export const useSignOut = (): {
           onAfterSuccess: (response) => {
             authSignIn.reset();
             options?.onAfterSuccess?.(response);
-          },
+          }
         });
       },
-      reset,
-    },
+      reset
+    }
   };
 };

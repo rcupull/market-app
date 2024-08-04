@@ -50,6 +50,6 @@ export const useBusiness = (): {
       }
 
       return out;
-    },
+    }
   };
 };

@@ -66,7 +66,7 @@ export const Modal = ({
   badge,
   className,
   isBusy,
-  windowType = 'normal',
+  windowType = 'normal'
 }: ModalProps) => {
   const [open, setOpen] = useState(false);
 
@@ -98,8 +98,8 @@ export const Modal = ({
               'flex min-h-full items-center justify-center text-center sm:items-center sm:p-0',
               {
                 'p-0': breakpoints.xs,
-                'p-4': windowType === 'confirmation' || !breakpoints.xs,
-              },
+                'p-4': windowType === 'confirmation' || !breakpoints.xs
+              }
             )}
           >
             {renderTransition(
@@ -108,8 +108,8 @@ export const Modal = ({
                   'relative flex flex-col overflow-hidden rounded-lg bg-white text-left shadow-xl sm:my-8 min-h-full sm:h-fit md:w-8/12 lg:w-8/12',
                   className,
                   {
-                    '!w-screen !min-h-screen': breakpoints.xs && windowType === 'normal',
-                  },
+                    '!w-screen !min-h-screen': breakpoints.xs && windowType === 'normal'
+                  }
                 )}
               >
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
@@ -152,27 +152,27 @@ export const Modal = ({
                 {(customBtn || primaryBtn || secondaryBtn) && (
                   <div
                     className={cn('bg-gray-50 px-4 py-3 sm:flex sm:flex-row sm:px-6', {
-                      'mt-auto': breakpoints.xs && windowType === 'normal',
+                      'mt-auto': breakpoints.xs && windowType === 'normal'
                     })}
                   >
                     {customBtn}
 
                     {primaryBtn &&
                       cloneElement(primaryBtn, {
-                        className: 'w-full sm:w-auto ml-auto',
+                        className: 'w-full sm:w-auto ml-auto'
                       })}
 
                     {secondaryBtn &&
                       cloneElement(secondaryBtn, {
                         className: cn('w-full sm:w-auto mt-3 sm:mt-0', {
                           'ml-0 sm:ml-3': primaryBtn || customBtn,
-                          'ml-0 sm:ml-auto': !primaryBtn && !customBtn,
-                        }),
+                          'ml-0 sm:ml-auto': !primaryBtn && !customBtn
+                        })
                       })}
                   </div>
                 )}
                 {isBusy && <SpinnerBox />}
-              </DialogPanel>,
+              </DialogPanel>
             )}
           </div>
         </div>

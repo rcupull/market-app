@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { ReviewAverage } from '.';
 
 export default {
-  component: ReviewAverage,
+  component: ReviewAverage
 };
 
 export const Default = (): JSX.Element => {

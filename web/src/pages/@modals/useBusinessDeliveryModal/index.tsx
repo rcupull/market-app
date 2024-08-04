@@ -25,11 +25,11 @@ export const useBusinessDeliveryModal = () => {
               badge: <Badge variant="truck" />,
               content: <Component portal={portal} />,
               secondaryBtn: <ButtonClose />,
-              primaryBtn: <div ref={portal.ref} />,
+              primaryBtn: <div ref={portal.ref} />
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

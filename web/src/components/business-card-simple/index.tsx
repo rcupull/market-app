@@ -16,7 +16,7 @@ export const BusinessCardSimple = ({
   businessSummary,
   getImageSrc,
   className,
-  href,
+  href
 }: BusinessCardSimpleProps) => {
   const { name, images, routeName } = businessSummary;
 

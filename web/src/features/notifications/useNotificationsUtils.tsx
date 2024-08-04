@@ -63,7 +63,7 @@ export const useNotificationsUtils = () => {
                   Ver detalles de la orden de compra
                 </Link>
               </HtmlTextContainer>
-            ),
+            )
           });
           return;
         }
@@ -85,7 +85,7 @@ export const useNotificationsUtils = () => {
                 <span className="font-bold">{businessName}</span>. Puede ver los detalles{' '}
                 <Link to={getDashboardBusinessShoppingTabRequested({ routeName })}>aqui</Link>
               </HtmlTextContainer>
-            ),
+            )
           });
           return;
         }
@@ -97,6 +97,6 @@ export const useNotificationsUtils = () => {
   };
 
   return {
-    onUpdateNotification,
+    onUpdateNotification
   };
 };

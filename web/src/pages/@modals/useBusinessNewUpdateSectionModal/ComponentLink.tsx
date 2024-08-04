@@ -32,7 +32,7 @@ export const ComponentLink = ({
   portal,
   section,
   onAfterSuccess,
-  className,
+  className
 }: ComponentLinkProps) => {
   const { business } = useBusiness();
   const { updateBusinessSection } = useUpdateBusinessSection();
@@ -51,7 +51,7 @@ export const ComponentLink = ({
           metaLayout: 'verticalCentered',
           price: 'none',
           shoppingMethod: 'none',
-          size: 'medium',
+          size: 'medium'
         },
         postCategoriesTags: [postCategoriesTag],
         searchLayout: undefined,
@@ -59,13 +59,13 @@ export const ComponentLink = ({
         showMobile: true,
         showPC: true,
         postType: 'link',
-        ...(section || {}),
+        ...(section || {})
       }}
       validate={[
         {
           field: 'name',
-          type: 'required',
-        },
+          type: 'required'
+        }
       ]}
     >
       {({ value, hasChange }) => {
@@ -116,7 +116,7 @@ export const ComponentLink = ({
                         {
                           routeName: business.routeName,
                           sectionId: section._id,
-                          data: value,
+                          data: value
                         },
                         { onAfterSuccess }
                       )

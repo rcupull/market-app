@@ -7,7 +7,7 @@ export const getFileImageSize = (file: File): Promise<{ width: number; height: n
     img.onload = () => {
       resolve({
         height: img.height,
-        width: img.width,
+        width: img.width
       });
     };
   });

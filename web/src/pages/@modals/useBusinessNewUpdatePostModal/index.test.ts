@@ -7,13 +7,13 @@ import { getWrapper } from 'utils/test-utils';
 describe('useBusinessNewUpdatePostModal', () => {
   it('should close when click on the close button', async () => {
     const { result } = renderHook(() => useBusinessNewUpdatePostModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() =>
       result.current.businessNewUpdatePostModal.open({
         postId: 'postId',
-        onAfterSuccess: jest.fn(),
+        onAfterSuccess: jest.fn()
       })
     );
 
@@ -26,13 +26,13 @@ describe('useBusinessNewUpdatePostModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => useBusinessNewUpdatePostModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() =>
       result.current.businessNewUpdatePostModal.open({
         postId: 'postId',
-        onAfterSuccess: jest.fn(),
+        onAfterSuccess: jest.fn()
       })
     );
 

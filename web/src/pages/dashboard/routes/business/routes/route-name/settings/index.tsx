@@ -46,7 +46,7 @@ export const Settings = () => {
   const { getIsEnabled } = getDeliveryUtils();
 
   const enabledDelivery = getIsEnabled({
-    deliveryConfig: business?.deliveryConfig,
+    deliveryConfig: business?.deliveryConfig
   });
 
   return (
@@ -73,7 +73,7 @@ export const Settings = () => {
           businessUpdateNotificationsModal.open({
             onAfterSuccess: () => {
               business && onFetch({ routeName: business?.routeName });
-            },
+            }
           })
         }
       />
@@ -86,7 +86,7 @@ export const Settings = () => {
           businessUpdateSocialNetworksModal.open({
             onAfterSuccess: () => {
               business && onFetch({ routeName: business?.routeName });
-            },
+            }
           })
         }
       />
@@ -99,7 +99,7 @@ export const Settings = () => {
           businessUpdatePostFormModal.open({
             onAfterSuccess: () => {
               business && onFetch({ routeName: business?.routeName });
-            },
+            }
           })
         }
       />
@@ -112,7 +112,7 @@ export const Settings = () => {
           businessUpdateBannerModal.open({
             onAfterSuccess: () => {
               business && onFetch({ routeName: business?.routeName });
-            },
+            }
           })
         }
       />
@@ -130,7 +130,7 @@ export const Settings = () => {
         description="Categoriza tus productos y mejorarás tus ventas."
         onClick={() =>
           businessUpdatePostCategoriesModal.open({
-            onAfterSuccess: () => business && onFetch({ routeName: business?.routeName }),
+            onAfterSuccess: () => business && onFetch({ routeName: business?.routeName })
           })
         }
       />

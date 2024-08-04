@@ -3,7 +3,7 @@ import { FieldTextArea } from '.';
 import { FormikWrapper } from 'utils/storybook';
 
 export default {
-  component: FieldTextArea,
+  component: FieldTextArea
 };
 
 export const Default = (): JSX.Element => (

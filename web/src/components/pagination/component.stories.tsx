@@ -5,7 +5,7 @@ import { Pagination } from '.';
 import { Paginator } from 'types/api';
 
 export default {
-  component: Pagination,
+  component: Pagination
 };
 
 export const Default = () => {
@@ -19,7 +19,7 @@ export const Default = () => {
     page: 3,
     pagingCounter: 0,
     prevPage: undefined,
-    pageCount: 8,
+    pageCount: 8
   });
 
   const handleChange = (newPaginator: Paginator) => {

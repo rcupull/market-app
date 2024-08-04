@@ -12,7 +12,7 @@ export const BusinessSearch = ({ className }: BusinessSearchProps) => {
   const { businessSearch } = useBusinessSearch();
 
   const filters = useFiltersVolatile<FilterQuery>({
-    onChange: (query) => businessSearch.fetch(query),
+    onChange: (query) => businessSearch.fetch(query)
   });
 
   return (

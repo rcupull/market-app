@@ -44,14 +44,14 @@ export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
                       onClose();
 
                       onRefresh();
-                    },
+                    }
                   }
                 )
               }
             />
-          ),
+          )
         };
-      },
+      }
     });
   };
 
@@ -67,7 +67,7 @@ export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
             onBusinessShowHide(rowData, {
               onAfterSuccess: () => {
                 onRefresh();
-              },
+              }
             });
           }}
         />

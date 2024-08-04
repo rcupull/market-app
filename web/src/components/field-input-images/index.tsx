@@ -96,7 +96,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
               newStateToPreview,
               {
                 src: image,
-                ...(await getFileImageSize(image)),
+                ...(await getFileImageSize(image))
               },
               previewIndex
             );
@@ -126,7 +126,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
               {
                 ...newStateToPreview[previewIndex],
                 src: image,
-                ...(await getFileImageSize(image)),
+                ...(await getFileImageSize(image))
               },
               previewIndex
             );
@@ -135,7 +135,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
               newStateToPreview,
               {
                 ...newStateToPreview[previewIndex],
-                ...image,
+                ...image
               },
               previewIndex
             );
@@ -155,15 +155,15 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
 
       field.onBlur({
         target: {
-          name: field.name,
-        },
+          name: field.name
+        }
       });
 
       field.onChange({
         target: {
           name: field.name,
-          value: newState,
-        },
+          value: newState
+        }
       });
     };
 
@@ -183,7 +183,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
         if (image instanceof File) {
           images.push({
             src: image,
-            ...(await getFileImageSize(image)),
+            ...(await getFileImageSize(image))
           });
         } else {
           images.push(image);
@@ -208,8 +208,8 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
       field.onChange({
         target: {
           name: field.name,
-          value: newState,
-        },
+          value: newState
+        }
       });
     };
 
@@ -223,7 +223,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
           newStateToPreview,
           {
             ...current,
-            href,
+            href
           },
           previewIndex
         );
@@ -235,8 +235,8 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
         field.onChange({
           target: {
             name: field.name,
-            value: newState,
-          },
+            value: newState
+          }
         });
       }
     };
@@ -244,7 +244,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
     const handleOpenCatalogsSearchImage = () => {
       catalogsSearchImageModal.open({
         onSelected: (images) => handleAddManyImages(images),
-        multi: true,
+        multi: true
       });
     };
     return (
@@ -258,7 +258,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                 <div
                   key={index}
                   className={cn('h-8 w-10 cursor-pointer', {
-                    'border-gray-700 border-2 rounded-md p-0.5': selected,
+                    'border-gray-700 border-2 rounded-md p-0.5': selected
                   })}
                   onClick={() => setPreviewIndex(index)}
                 >
@@ -277,7 +277,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
         )}
         <div
           className={cn('relative h-48', {
-            'ring-1 rounded-md ring-red-500 focus:ring-red-500': !!error,
+            'ring-1 rounded-md ring-red-500 focus:ring-red-500': !!error
           })}
           onDragOver={(event) => {
             event.preventDefault();

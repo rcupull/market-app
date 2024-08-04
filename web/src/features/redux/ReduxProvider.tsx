@@ -8,7 +8,7 @@ import { ReduxState } from 'types/redux';
 
 export const ReduxProvider = ({
   children,
-  initialState,
+  initialState
 }: {
   children: React.ReactNode;
   initialState?: Partial<ReduxState>;

@@ -21,14 +21,14 @@ export const useGetAllShoppingAdmin = (): {
             method: 'get',
             url: getEndpoint({
               path: '/admin/shopping',
-              query: { limit: defaultLimit, ...query },
-            }),
+              query: { limit: defaultLimit, ...query }
+            })
           },
 
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

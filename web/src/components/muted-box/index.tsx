@@ -13,7 +13,7 @@ export const MutedBox = ({ className, active, onClick, children }: MutedBoxProps
       className={cn(
         'w-full h-24 border-2 bg-gray-200 rounded-md',
         {
-          'border-gray-500': active,
+          'border-gray-500': active
         },
         className
       )}

@@ -18,13 +18,13 @@ export const useRemoveOneBusinessAdmin = (): {
             method: 'delete',
             url: getEndpoint({
               path: '/admin/business/:routeName',
-              urlParams: { routeName },
-            }),
+              urlParams: { routeName }
+            })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

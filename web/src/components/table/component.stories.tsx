@@ -1,7 +1,7 @@
 import { Table } from '.';
 
 export default {
-  component: Table,
+  component: Table
 };
 
 const node1 = (
@@ -48,8 +48,8 @@ export const Default = (): JSX.Element => {
             'Owner',
             <a key={0} href="#" className="text-indigo-600 hover:text-indigo-900">
               Edit
-            </a>,
-          ],
+            </a>
+          ]
         })}
       />
     </>

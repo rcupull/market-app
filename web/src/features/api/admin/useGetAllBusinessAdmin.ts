@@ -26,12 +26,12 @@ export const useGetAllBusinessAdmin = (): {
         fetch[2](
           {
             method: 'get',
-            url: getEndpoint({ path: '/admin/business', query: { limit: defaultLimit, ...query } }),
+            url: getEndpoint({ path: '/admin/business', query: { limit: defaultLimit, ...query } })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

@@ -18,12 +18,12 @@ export const useApiPersistentPaginated = <Args = any, D extends AnyRecord = AnyR
         onAfterSuccess: (response) => {
           setData(response.data);
           options?.onAfterSuccess?.(response);
-        },
+        }
       });
     },
     reset: () => {
       reset();
       resources.reset();
-    },
+    }
   };
 };

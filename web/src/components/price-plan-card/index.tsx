@@ -25,14 +25,14 @@ export const PricePlanCard = ({
   name,
   popular,
   free,
-  onClick,
+  onClick
 }: PricePlanCardProps) => {
   return (
     <div
       className={cn(
         'w-11/12 sm:w-10/12 md:w-9/12 lg:w-96 rounded-2xl bg-gray-50 py-8 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center',
         {
-          'ring-indigo-500 ring-2': popular,
+          'ring-indigo-500 ring-2': popular
         }
       )}
     >
@@ -59,7 +59,7 @@ export const PricePlanCard = ({
         <Button
           label={free ? 'Comenzar' : 'Contratar'}
           className={cn('mt-6 w-full', {
-            'text-indigo-600 ring-indigo-600': !popular,
+            'text-indigo-600 ring-indigo-600': !popular
           })}
           variant={popular ? 'primary' : 'outlined'}
           onClick={onClick}

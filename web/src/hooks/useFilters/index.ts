@@ -34,7 +34,7 @@ export const useFilters = <S extends AnyRecord = AnyRecord>(
       : JSON.stringify(filtersValue);
 
     onChangeQuery({
-      [filterField]: filters,
+      [filterField]: filters
     });
   };
 
@@ -55,6 +55,6 @@ export const useFilters = <S extends AnyRecord = AnyRecord>(
   return {
     onMergeFilters,
     onRefresh: () => onChange?.(filterValue),
-    value: filterValue,
+    value: filterValue
   };
 };

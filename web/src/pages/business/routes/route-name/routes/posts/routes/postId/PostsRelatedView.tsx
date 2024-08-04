@@ -26,7 +26,7 @@ export const PostsRelatedView = ({ post, business }: RelatedSectionsViewProps) =
     data: getRelatedPosts.data,
     updateKey: `updatePostAmount`,
     findCB: (rowData, { postId }) => rowData._id === postId,
-    changeCB: (rowData, { stockAmountAvailable }) => ({ ...rowData, stockAmountAvailable }),
+    changeCB: (rowData, { stockAmountAvailable }) => ({ ...rowData, stockAmountAvailable })
   });
 
   useEffect(() => {
@@ -45,11 +45,11 @@ export const PostsRelatedView = ({ post, business }: RelatedSectionsViewProps) =
             price: 'basic',
             name: 'basic',
             discount: 'savedMoney',
-            shoppingMethod: 'shoppingCart',
+            shoppingMethod: 'shoppingCart'
           },
           name: 'Productos similares',
           postType: 'product',
-          _id: 'dummyId',
+          _id: 'dummyId'
         }}
         posts={hotUpdateTableData.data}
         business={business}

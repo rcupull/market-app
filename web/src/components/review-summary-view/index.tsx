@@ -16,7 +16,7 @@ export interface ReviewSummaryViewProps extends StyleProps {
 export const ReviewSummaryView = ({
   reviewSummary,
   className,
-  onAddReview,
+  onAddReview
 }: ReviewSummaryViewProps) => {
   const { starSummary, reviewerIds } = reviewSummary || {};
 
@@ -33,7 +33,7 @@ export const ReviewSummaryView = ({
 
     return {
       totalCount,
-      average: totalSum / totalCount,
+      average: totalSum / totalCount
     };
   }, [JSON.stringify(starSummary)]);
 

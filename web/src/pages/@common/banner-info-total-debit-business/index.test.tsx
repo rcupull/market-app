@@ -12,8 +12,8 @@ describe('BannerInfoTotalDebitBusiness', () => {
       wrapper: getWrapper({
         useRedux: true,
         useRouter: true,
-        initialReduxState: { useBusiness: { data: businessDummy, status: dummyStatus } },
-      }),
+        initialReduxState: { useBusiness: { data: businessDummy, status: dummyStatus } }
+      })
     });
 
     expect(result.container).toMatchInlineSnapshot(`<div />`);

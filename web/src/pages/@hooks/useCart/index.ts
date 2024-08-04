@@ -40,13 +40,13 @@ export const useCart = (): UseShoppingReturn => {
     if (!firstShopping || firstShopping.state !== ShoppingState.CONSTRUCTION) {
       return {
         constructionShopping: undefined,
-        constructionShoppingProductsCount: 0,
+        constructionShoppingProductsCount: 0
       };
     }
 
     return {
       constructionShopping: firstShopping,
-      constructionShoppingProductsCount: getProductsCount(firstShopping),
+      constructionShoppingProductsCount: getProductsCount(firstShopping)
     };
   };
 
@@ -66,6 +66,6 @@ export const useCart = (): UseShoppingReturn => {
     ...getShoppingContructionData(),
     status,
     onFetch,
-    onReset: reset,
+    onReset: reset
   };
 };

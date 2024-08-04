@@ -6,7 +6,7 @@ export const closedPositionTh = 1000;
 
 export const havanaPosition: MapOlPosition = {
   lon: -82.417885,
-  lat: 23.097712,
+  lat: 23.097712
 };
 
 export const positionToCoordinate = (position: MapOlPosition) => {
@@ -18,14 +18,14 @@ export const coordinateToPosition = (coordinate: Array<number>): MapOlPosition =
 
   return {
     lat,
-    lon,
+    lon
   };
 };
 
 export const getClosedMarker = ({
   position,
   markers,
-  zoom,
+  zoom
 }: {
   position: MapOlPosition;
   markers: Array<MapOlMarker> | undefined;

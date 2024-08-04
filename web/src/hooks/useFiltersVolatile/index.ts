@@ -26,7 +26,7 @@ export const useFiltersVolatile = <S extends AnyRecord = AnyRecord>(
 
       const newFilterValue: S = getFlattenUndefinedJson({
         ...filterValue,
-        ...partialValue,
+        ...partialValue
       });
 
       const hasChanges = !isEqualObj(newFilterValue, filterValue);
@@ -38,6 +38,6 @@ export const useFiltersVolatile = <S extends AnyRecord = AnyRecord>(
       }
     },
     onRefresh: () => onChange?.(filterValue),
-    value: filterValue,
+    value: filterValue
   };
 };

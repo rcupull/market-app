@@ -17,7 +17,7 @@ const validationsCallback = {
   },
   equal: (value1: any, value2: any): boolean => {
     return value1 === value2;
-  },
+  }
 };
 
 interface Validation<V extends AnyRecord, F extends keyof V = keyof V> {

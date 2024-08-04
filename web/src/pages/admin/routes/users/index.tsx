@@ -30,7 +30,7 @@ export const Users = () => {
       <Table<User>
         remapRowsIndex={{
           xs: [[0, 1, 2, 3, 4]],
-          xl: 'none',
+          xl: 'none'
         }}
         heads={['Acciones', 'Nombre', 'Email', 'Validado', 'Creación']}
         getRowProps={(rowData) => {
@@ -42,8 +42,8 @@ export const Users = () => {
               name,
               email,
               `${validated}`,
-              getDateString({ date: createdAt, showTime: true }),
-            ],
+              getDateString({ date: createdAt, showTime: true })
+            ]
           };
         }}
         data={getAllUsersAdmin.data}

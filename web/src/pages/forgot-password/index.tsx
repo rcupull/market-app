@@ -59,24 +59,24 @@ export const ForgotPassword = () => {
           validate={[
             {
               field: 'newPassword',
-              type: 'required',
+              type: 'required'
             },
             {
               field: 'newPassword',
               type: 'custom',
               customCb: (value) => getStrongPasswordTracking(value).valid,
-              message: 'Contraseña inválida',
+              message: 'Contraseña inválida'
             },
             {
               field: 'newPasswordAgain',
-              type: 'required',
+              type: 'required'
             },
             {
               field: 'newPasswordAgain',
               type: 'equal',
               equalField: 'newPassword',
-              message: 'Las dos contraseña deben ser iguales',
-            },
+              message: 'Las dos contraseña deben ser iguales'
+            }
           ]}
         >
           {({ value }) => {
@@ -114,7 +114,7 @@ export const ForgotPassword = () => {
                         {
                           onAfterSuccess: ({ email }) => {
                             setEmail(email);
-                          },
+                          }
                         }
                       );
                     }}

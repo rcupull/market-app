@@ -9,8 +9,8 @@ describe('DocBlock', () => {
         items={[
           {
             title: 'title',
-            items: [<div key="0">item0</div>, <div key="1">item1</div>],
-          },
+            items: [<div key="0">item0</div>, <div key="1">item1</div>]
+          }
         ]}
       />
     );

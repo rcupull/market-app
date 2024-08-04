@@ -6,11 +6,6 @@ export interface ButtonCloseProps extends ButtonProps {}
 
 export const ButtonClose = (props: ButtonCloseProps) => {
   return (
-    <Button
-      label="Cerrar"
-      onClick={onCloseCheckingChangeBackDrop}
-      {...props}
-      variant="outlined"
-    />
+    <Button label="Cerrar" onClick={onCloseCheckingChangeBackDrop} {...props} variant="outlined" />
   );
 };

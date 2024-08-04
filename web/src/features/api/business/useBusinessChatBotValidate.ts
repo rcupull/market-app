@@ -24,16 +24,16 @@ export const useBusinessChatBotValidate = (): {
             method: 'post',
             url: getEndpoint({
               path: '/business/:routeName/chatbotValidate',
-              urlParams: { routeName },
+              urlParams: { routeName }
             }),
             data: {
-              code,
-            },
+              code
+            }
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

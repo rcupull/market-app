@@ -45,7 +45,7 @@ export const FieldPostCategoriesButtons = (props: FieldPostCategoriesButtonsProp
         e.preventDefault();
         e.stopPropagation();
         businessUpdatePostCategoriesModal.open({
-          onAfterSuccess: () => business && onFetch({ routeName: business.routeName }),
+          onAfterSuccess: () => business && onFetch({ routeName: business.routeName })
         });
       }}
     />
@@ -73,8 +73,8 @@ export const FieldPostCategoriesButtons = (props: FieldPostCategoriesButtonsProp
           onChange({
             target: {
               name,
-              value: newState,
-            },
+              value: newState
+            }
           });
         }}
         value={state}

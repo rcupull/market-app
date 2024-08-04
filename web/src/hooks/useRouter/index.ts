@@ -9,7 +9,7 @@ import {
   getBusinessRoute,
   getOnePostRoute,
   getPostsRoute,
-  getShoppingRoute,
+  getShoppingRoute
 } from 'utils/business';
 import { getFlattenJson } from 'utils/general';
 
@@ -65,7 +65,7 @@ export const useRouter = <Q extends Query = Query>(): UseRouterReturn<Q> => {
 
       navigate({
         pathname: pathname,
-        search: queryToSearch(updatedQuery),
+        search: queryToSearch(updatedQuery)
       });
     };
 
@@ -114,6 +114,6 @@ export const useRouter = <Q extends Query = Query>(): UseRouterReturn<Q> => {
         return;
       }
       handle();
-    },
+    }
   };
 };

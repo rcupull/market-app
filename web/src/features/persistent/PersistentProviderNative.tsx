@@ -8,7 +8,7 @@ const PersistentProviderNative = ({ children }: ChildrenProp) => {
   const setPersistent: PersistentUtils['setPersistent'] = async (key, value) => {
     await Preferences.set({
       key,
-      value: JSON.stringify(value),
+      value: JSON.stringify(value)
     });
   };
 
@@ -26,7 +26,7 @@ const PersistentProviderNative = ({ children }: ChildrenProp) => {
       value={{
         getPersistent,
         removePersistent,
-        setPersistent,
+        setPersistent
       }}
     >
       {children}

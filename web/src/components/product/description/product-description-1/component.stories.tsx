@@ -1,7 +1,7 @@
 import { ProductDescription1 } from '.';
 
 export default {
-  component: ProductDescription1,
+  component: ProductDescription1
 };
 
 export const Default = (): JSX.Element => (
