@@ -5,29 +5,29 @@ import {
   PostCardLayout,
   PostLayoutShoppingMethod,
   PostsLayout,
-  PostsLayoutSection,
+  PostsLayoutSection
 } from '../types/business';
 import { Address, TelegramBotChat } from '../types/general';
 
 const PostLayoutShoppingMethodDefinition: SchemaDefinitionProperty<PostLayoutShoppingMethod> = {
   type: String,
-  enum: ['none', 'shoppingCart'],
+  enum: ['none', 'shoppingCart']
 };
 
 export const TelegramBotChatDefinition: SchemaDefinitionProperty<TelegramBotChat> = {
   chatId: { type: String },
   firstName: { type: String },
-  userName: { type: String },
+  userName: { type: String }
 };
 
 export const DeliveryConfigDefinition: SchemaDefinitionProperty<DeliveryConfig> = {
   type: {
     type: String,
     enum: Object.values(DeliveryConfigType),
-    default: DeliveryConfigType.NONE,
+    default: DeliveryConfigType.NONE
   },
   minPrice: { type: Number, default: 0 },
-  priceByKm: { type: Number, default: 0 },
+  priceByKm: { type: Number, default: 0 }
 };
 
 export const AddressDefinition: SchemaDefinitionProperty<Address> = {
@@ -44,42 +44,42 @@ export const AddressDefinition: SchemaDefinitionProperty<Address> = {
   lat: { type: Number },
   lon: { type: Number },
   postCode: { type: String },
-  placeId: { type: String },
+  placeId: { type: String }
 };
 
 export const PostCardLayoutSchema = new Schema<PostCardLayout>({
   images: {
     type: String,
     enum: ['static', 'hoverZoom', 'slider', 'switch', 'rounded'],
-    default: 'static',
+    default: 'static'
   },
   size: {
     type: String,
     enum: ['small', 'medium', 'long'],
-    default: 'medium',
+    default: 'medium'
   },
   metaLayout: {
     type: String,
     enum: ['basic', 'verticalCentered'],
-    default: 'basic',
+    default: 'basic'
   },
   name: {
     type: String,
     enum: ['none', 'basic'],
     required: true,
-    default: 'basic',
+    default: 'basic'
   },
   price: {
     type: String,
     enum: ['none', 'basic', 'smallerCurrency', 'usdCurrencySymbol'],
-    default: 'basic',
+    default: 'basic'
   },
   discount: {
     type: String,
     enum: ['none', 'savedPercent', 'savedMoney'],
-    default: 'none',
+    default: 'none'
   },
-  shoppingMethod: PostLayoutShoppingMethodDefinition,
+  shoppingMethod: PostLayoutShoppingMethodDefinition
 });
 
 export const PostsLayoutSectionSchema = new Schema<PostsLayoutSection>({
@@ -97,30 +97,30 @@ export const PostsLayoutSectionSchema = new Schema<PostsLayoutSection>({
       'postCategories',
       'postCategoriesScrollable',
       'postCategoriesExcluded',
-      'postCategoriesExcludedScrollable',
+      'postCategoriesExcludedScrollable'
     ],
-    default: 'none',
+    default: 'none'
   },
   postCategoriesTags: { type: [String] },
   type: {
     type: String,
     enum: ['grid', 'oneRowSlider'],
-    default: 'grid',
+    default: 'grid'
   },
   postCardLayout: {
-    type: PostCardLayoutSchema,
+    type: PostCardLayoutSchema
   },
   postType: {
     type: String,
     enum: ['product', 'link'],
     required: true,
-    default: 'product',
-  },
+    default: 'product'
+  }
 });
 
 export const PostLayoutSchema = new Schema<PostsLayout>({
   sections: {
     type: [PostsLayoutSectionSchema],
-    default: [],
-  },
+    default: []
+  }
 });

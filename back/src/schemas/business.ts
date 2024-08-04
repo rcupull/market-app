@@ -7,7 +7,7 @@ import {
   AddressDefinition,
   DeliveryConfigDefinition,
   PostLayoutSchema,
-  TelegramBotChatDefinition,
+  TelegramBotChatDefinition
 } from './common';
 
 const BusinessSchema = new Schema<Business>({
@@ -22,10 +22,10 @@ const BusinessSchema = new Schema<Business>({
       {
         label: { type: String, required: true },
         tag: { type: String, required: true },
-        hidden: { type: Boolean, default: false },
-      },
+        hidden: { type: Boolean, default: false }
+      }
     ],
-    required: true,
+    required: true
   },
   bannerImages: {
     type: [
@@ -33,43 +33,43 @@ const BusinessSchema = new Schema<Business>({
         src: { type: String, required: true },
         width: { type: Number, required: true },
         height: { type: Number, required: true },
-        href: { type: String },
-      },
+        href: { type: String }
+      }
     ],
-    default: [],
+    default: []
   },
   logo: {
     type: {
       src: { type: String, required: true },
       width: { type: Number, required: true },
-      height: { type: Number, required: true },
+      height: { type: Number, required: true }
     },
-    default: null,
+    default: null
   },
   socialLinks: {
     face: { type: String },
     instagram: { type: String },
     twitter: { type: String },
     linkedin: { type: String },
-    youtube: { type: String },
+    youtube: { type: String }
   },
   layouts: {
     banner: {
       type: {
         type: String,
         enum: ['none', 'static', 'swipableClassic'],
-        default: 'none',
-      },
+        default: 'none'
+      }
     },
     posts: {
-      type: PostLayoutSchema,
+      type: PostLayoutSchema
     },
     footer: {
       type: {
         type: String,
         enum: ['none', 'basic'],
-        default: 'basic',
-      },
+        default: 'basic'
+      }
     },
     search: {
       type: {
@@ -82,16 +82,16 @@ const BusinessSchema = new Schema<Business>({
           'postCategories',
           'postCategoriesExcluded',
           'postCategoriesScrollable',
-          'postCategoriesExcludedScrollable',
+          'postCategoriesExcludedScrollable'
         ],
-        default: 'right',
-      },
-    },
+        default: 'right'
+      }
+    }
   },
   aboutUsPage: {
     visible: { type: Boolean, default: false },
     title: { type: String },
-    description: { type: String },
+    description: { type: String }
   },
   whatsAppPhoneNumber: { type: String },
   telegramBotChat: TelegramBotChatDefinition,
@@ -99,13 +99,13 @@ const BusinessSchema = new Schema<Business>({
     type: [
       {
         type: String,
-        enum: Object.values(BusinessNotificationFlags),
-      },
+        enum: Object.values(BusinessNotificationFlags)
+      }
     ],
-    default: [BusinessNotificationFlags.TELEGRAM_NEW_SHOPPING],
+    default: [BusinessNotificationFlags.TELEGRAM_NEW_SHOPPING]
   },
   shoppingMeta: {
-    termsAndConditions: { type: String },
+    termsAndConditions: { type: String }
   },
   postFormFields: {
     type: [
@@ -121,9 +121,9 @@ const BusinessSchema = new Schema<Business>({
           'postCategoriesTags',
           'discount',
           'stockAmount',
-          'images',
-        ],
-      },
+          'images'
+        ]
+      }
     ],
     default: [
       'name',
@@ -135,17 +135,17 @@ const BusinessSchema = new Schema<Business>({
       'postCategoriesTags',
       'discount',
       'stockAmount',
-      'images',
-    ],
+      'images'
+    ]
   },
   seo: {
     title: { type: String },
-    description: { type: String },
+    description: { type: String }
   },
   addresses: [AddressDefinition],
   deliveryConfig: DeliveryConfigDefinition,
   favoritesUserIds: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-  checks: { type: Schema.Types.Mixed },
+  checks: { type: Schema.Types.Mixed }
 });
 
 BusinessSchema.plugin(mongoosePaginate);
@@ -158,11 +158,11 @@ BusinessSchema.pre('updateOne', async function (next) {
   if (hidden !== undefined) {
     await PostModel.updateMany(
       {
-        routeName,
+        routeName
       },
       {
-        hiddenBusiness: hidden,
-      },
+        hiddenBusiness: hidden
+      }
     );
   }
 
@@ -172,5 +172,5 @@ BusinessSchema.pre('updateOne', async function (next) {
 export const BusinessModel = model<Business, PaginateModel<Business>>(
   'Business',
   BusinessSchema,
-  'business',
+  'business'
 );

@@ -27,13 +27,13 @@ export const telegramServicesInit = () => {
     const meta: TelegramBotChat = {
       chatId: id,
       firstName: first_name,
-      userName: username,
+      userName: username
     };
 
     logger.info(`Telegram: new chat: ${JSON.stringify(meta)}`);
     const validationCode = new ValidationCodeModel({
       code,
-      meta,
+      meta
     });
 
     await validationCode.save();
@@ -45,7 +45,7 @@ export const telegramServicesInit = () => {
 
     bot.sendMessage(
       meta.chatId,
-      `Tiene 5 minutos para usar el siguiente código de activación: ${code}.`,
+      `Tiene 5 minutos para usar el siguiente código de activación: ${code}.`
     );
   });
 
@@ -55,26 +55,26 @@ export const telegramServicesInit = () => {
     const meta: TelegramBotChat = {
       chatId: id,
       firstName: first_name,
-      userName: username,
+      userName: username
     };
 
     bot.sendMessage(meta.chatId, `<a href='https://www.aseremarket.net'>Asere Market</a>`, {
-      parse_mode: 'HTML',
+      parse_mode: 'HTML'
     });
 
     bot.sendMessage(
       meta.chatId,
       `<a href='https://aseremarket.net/b/maria-s-garage/shopping/668883f4cb37e3248c4d46da'>Camisetas de niños</a>`,
       {
-        parse_mode: 'HTML',
-      },
+        parse_mode: 'HTML'
+      }
     );
     bot.sendMessage(
       meta.chatId,
       `<a href='${getBusinessOrdersTagUrl({ routeName: 'maria-s-garage' })}'>aquí</a>.`,
       {
-        parse_mode: 'HTML',
-      },
+        parse_mode: 'HTML'
+      }
     );
   });
 
@@ -109,20 +109,20 @@ export const telegramServicesSendNewOrderApprovedMessage: QueryHandle<{
     chatId,
     message: `Una orden de compra generada por usted en el negocio <b>${businessName}</b> ha sido aprovada. Usted será contactado luego por el vendedor para los detalles de la entrega.`,
     options: {
-      parse_mode: 'HTML',
-    },
+      parse_mode: 'HTML'
+    }
   });
 
   const shoppingLink = getShoppingUrl({
     routeName: shopping.routeName,
-    shoppingId: shopping._id.toString(),
+    shoppingId: shopping._id.toString()
   });
 
   telegramServicesSendMessage({
     chatId,
     message: `<a href='${shoppingLink}'>Ver detalles de la orden de compra</a>`,
     options: {
-      parse_mode: 'HTML',
-    },
+      parse_mode: 'HTML'
+    }
   });
 };

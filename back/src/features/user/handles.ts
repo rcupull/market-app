@@ -4,13 +4,13 @@ import { withTryCatch } from '../../utils/error';
 import {
   userServicesGetAllWithPagination,
   userServicesGetOne,
-  userServicesUpdateOne,
+  userServicesUpdateOne
 } from './services';
 import { User, UserChecks, UserDto } from '../../types/user';
 import {
   get400Response,
   get404Response,
-  getUserNotFoundResponse,
+  getUserNotFoundResponse
 } from '../../utils/server-response';
 import { ValidationCodeModel } from '../../schemas/auth';
 import { imagesServicesDeleteOldImages } from '../images/services';
@@ -27,8 +27,8 @@ const get_users_delivery_man: () => RequestHandler = () => {
       const out = await userServicesGetAllWithPagination({
         paginateOptions,
         query: {
-          canMakeDeliveries: true,
-        },
+          canMakeDeliveries: true
+        }
       });
 
       res.send(out);
@@ -45,8 +45,8 @@ const get_users_userId: () => RequestHandler = () => {
 
       const response = await userServicesGetOne({
         query: {
-          _id: userId,
-        },
+          _id: userId
+        }
       });
 
       if (!response) {
@@ -56,13 +56,13 @@ const get_users_userId: () => RequestHandler = () => {
       const businessData: Array<Pick<Business, 'routeName' | 'name' | 'favoritesUserIds'>> =
         await businessServicesGetAll({
           query: {
-            favoritesUserIds: { $in: userId },
+            favoritesUserIds: { $in: userId }
           },
           projection: {
             name: 1,
             routeName: 1,
-            favoritesUserIds: 1,
-          },
+            favoritesUserIds: 1
+          }
         });
 
       const getFavoritesBusiness = () => {
@@ -75,8 +75,8 @@ const get_users_userId: () => RequestHandler = () => {
                 ...acc,
                 {
                   name,
-                  routeName,
-                },
+                  routeName
+                }
               ];
             }
 
@@ -85,14 +85,14 @@ const get_users_userId: () => RequestHandler = () => {
           [] as Array<{
             name: string;
             routeName: string;
-          }>,
+          }>
         );
       };
 
       const getUserDto = async (user: User): Promise<UserDto> => {
         return {
           ...user,
-          favoritesBusiness: getFavoritesBusiness(),
+          favoritesBusiness: getFavoritesBusiness()
         };
       };
 
@@ -117,8 +117,8 @@ const put_users_userId: () => RequestHandler = () => {
       if (profileImage) {
         const currentUser = await userServicesGetOne({
           query: {
-            _id: userId,
-          },
+            _id: userId
+          }
         });
 
         if (!currentUser) {
@@ -128,7 +128,7 @@ const put_users_userId: () => RequestHandler = () => {
         if (currentUser.profileImage) {
           await imagesServicesDeleteOldImages({
             newImagesSrcs: [profileImage],
-            oldImagesSrcs: [currentUser.profileImage],
+            oldImagesSrcs: [currentUser.profileImage]
           });
         }
       }
@@ -153,7 +153,7 @@ const put_users_userId: () => RequestHandler = () => {
 
       const out = await userServicesUpdateOne({
         query: {
-          _id: userId,
+          _id: userId
         },
         update: makeReshaper<User, User>({
           name: 'name',
@@ -161,8 +161,8 @@ const put_users_userId: () => RequestHandler = () => {
           phone: 'phone',
           addresses: 'addresses',
           canCreateBusiness: 'canCreateBusiness',
-          canMakeDeliveries: 'canMakeDeliveries',
-        })(body),
+          canMakeDeliveries: 'canMakeDeliveries'
+        })(body)
       });
 
       res.send(out);
@@ -181,7 +181,7 @@ const post_users_userId_chatbot_validate: () => RequestHandler = () => {
       }
 
       const validationCode = await ValidationCodeModel.findOneAndDelete({
-        code,
+        code
       });
 
       if (!validationCode) {
@@ -189,8 +189,8 @@ const post_users_userId_chatbot_validate: () => RequestHandler = () => {
           res,
           json: {
             message:
-              'Este codigo de validación no existe o ya el bot fue verificado con este código',
-          },
+              'Este codigo de validación no existe o ya el bot fue verificado con este código'
+          }
         });
       }
 
@@ -200,18 +200,18 @@ const post_users_userId_chatbot_validate: () => RequestHandler = () => {
         return get404Response({
           res,
           json: {
-            message: 'No hay metadatos disponibles en este codigo de validación del bot',
-          },
+            message: 'No hay metadatos disponibles en este codigo de validación del bot'
+          }
         });
       }
 
       await userServicesUpdateOne({
         query: {
-          _id: user._id,
+          _id: user._id
         },
         update: {
-          telegramBotChat: meta,
-        },
+          telegramBotChat: meta
+        }
       });
 
       res.send({});
@@ -229,19 +229,19 @@ const put_users_userId_checks: () => RequestHandler = () => {
       }
 
       const newChecks = makeReshaper<UserChecks, UserChecks>({
-        requestUserTypeWhenStart: 'requestUserTypeWhenStart',
+        requestUserTypeWhenStart: 'requestUserTypeWhenStart'
       })(body);
 
       await userServicesUpdateOne({
         query: {
-          _id: user._id,
+          _id: user._id
         },
         update: {
           checks: {
             ...(user.checks || {}),
-            ...Object.keys(newChecks).reduce((acc, key) => ({ ...acc, [key]: true }), {}),
-          },
-        },
+            ...Object.keys(newChecks).reduce((acc, key) => ({ ...acc, [key]: true }), {})
+          }
+        }
       });
 
       res.send({});
@@ -259,8 +259,8 @@ const post_users_userId_delivery_business: () => RequestHandler = () => {
       const deliveryMan = await userServicesGetOne({
         query: {
           _id: userId,
-          canMakeDeliveries: true,
-        },
+          canMakeDeliveries: true
+        }
       });
 
       if (!deliveryMan) {
@@ -275,23 +275,23 @@ const post_users_userId_delivery_business: () => RequestHandler = () => {
         return get400Response({
           res,
           json: {
-            message: 'This user has this bussiness',
-          },
+            message: 'This user has this bussiness'
+          }
         });
       }
 
       await userServicesUpdateOne({
         query: {
-          _id: userId,
+          _id: userId
         },
         update: {
           deliveryBusiness: [
             ...(deliveryMan.deliveryBusiness || []),
             {
-              routeName,
-            },
-          ],
-        },
+              routeName
+            }
+          ]
+        }
       });
 
       res.send({});
@@ -309,8 +309,8 @@ const del_users_userId_delivery_business: () => RequestHandler = () => {
       const deliveryMan = await userServicesGetOne({
         query: {
           _id: userId,
-          canMakeDeliveries: true,
-        },
+          canMakeDeliveries: true
+        }
       });
 
       if (!deliveryMan) {
@@ -327,13 +327,13 @@ const del_users_userId_delivery_business: () => RequestHandler = () => {
 
       await userServicesUpdateOne({
         query: {
-          _id: userId,
+          _id: userId
         },
         update: {
           deliveryBusiness: deliveryMan.deliveryBusiness.filter(
-            (business) => business.routeName !== routeName,
-          ),
-        },
+            (business) => business.routeName !== routeName
+          )
+        }
       });
 
       res.send({});
@@ -350,5 +350,5 @@ export const userHandles = {
   post_users_userId_delivery_business,
   del_users_userId_delivery_business,
   //
-  get_users_delivery_man,
+  get_users_delivery_man
 };

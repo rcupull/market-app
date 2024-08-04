@@ -32,14 +32,14 @@ export const closeTestDbConnectionAsync = async () => {
 export const generateToken = (id: string | Schema.Types.ObjectId) => {
   return jwt.sign(
     {
-      id,
+      id
     },
-    secretAccessToken,
+    secretAccessToken
   );
 };
 
 export const paginateOptionsForTesting: PaginateOptions = {
   limit: 10,
   page: 1,
-  customLabels: paginationCustomLabels,
+  customLabels: paginationCustomLabels
 };

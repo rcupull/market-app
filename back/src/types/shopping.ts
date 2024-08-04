@@ -12,7 +12,7 @@ export enum ShoppingState {
   READY_TO_DELIVERY = 'READY_TO_DELIVERY',
   DELIVERED = 'DELIVERED',
   CANCELED = 'CANCELED',
-  REJECTED = 'REJECTED',
+  REJECTED = 'REJECTED'
 }
 
 export type ShoppingPostData = Pick<Post, '_id' | 'price' | 'images' | 'name'>;

@@ -39,7 +39,7 @@ const createProductPost = async ({
   name,
   business,
   user,
-  override,
+  override
 }: {
   name: string;
   business: Business;
@@ -53,7 +53,7 @@ const createProductPost = async ({
     price: 10,
     currency: 'CUP',
     postCategoriesTags: ['cat1', 'cat2', 'cat3'],
-    ...(override || {}),
+    ...(override || {})
   });
   await product.save();
 
@@ -63,7 +63,7 @@ const createProductPost = async ({
 const createBusiness = async ({
   name,
   user,
-  override,
+  override
 }: {
   name: string;
   user: User;
@@ -74,7 +74,7 @@ const createBusiness = async ({
     routeName: name,
     createdBy: user._id,
     currency: 'CUP',
-    ...(override || {}),
+    ...(override || {})
   });
   await business.save();
 
@@ -112,7 +112,7 @@ export const fillBD = async (args?: {
     password: 'password_123_admin',
     passwordVerbose: 'password_123_admin',
     role: 'admin',
-    ...(args?.admin || {}),
+    ...(args?.admin || {})
   });
   await admin.save();
 
@@ -124,61 +124,61 @@ export const fillBD = async (args?: {
     passwordVerbose: 'password_123_user1',
     validated: true,
     canCreateBusiness: true,
-    ...(args?.user1 || {}),
+    ...(args?.user1 || {})
   });
   await user1.save();
 
   const business1User1 = await createBusiness({
     name: 'business1User1',
     user: user1,
-    override: args?.business1User1,
+    override: args?.business1User1
   });
 
   const business2User1 = await createBusiness({
     name: 'business2User1',
     user: user1,
-    override: args?.business2User1,
+    override: args?.business2User1
   });
 
   const business3User1 = await createBusiness({
     name: 'business3User1',
     user: user1,
-    override: args?.business3User1,
+    override: args?.business3User1
   });
 
   const productPost1Business1User1 = await createProductPost({
     name: 'productPost1Business1User1',
     business: business1User1,
     user: user1,
-    override: args?.productPost1Business1User1,
+    override: args?.productPost1Business1User1
   });
 
   const productPost2Business1User1 = await createProductPost({
     name: 'productPost2Business1User1',
     business: business1User1,
     user: user1,
-    override: args?.productPost2Business1User1,
+    override: args?.productPost2Business1User1
   });
 
   const productPost3Business1User1 = await createProductPost({
     name: 'productPost3Business1User1',
     business: business1User1,
     user: user1,
-    override: args?.productPost3Business1User1,
+    override: args?.productPost3Business1User1
   });
 
   const productPost4Business1User1 = await createProductPost({
     name: 'productPost4Business1User1',
     business: business1User1,
     user: user1,
-    override: args?.productPost4Business1User1,
+    override: args?.productPost4Business1User1
   });
 
   const productPost5Business1User1 = await createProductPost({
     name: 'productPost5Business1User1',
     business: business1User1,
     user: user1,
-    override: args?.productPost5Business1User1,
+    override: args?.productPost5Business1User1
   });
 
   const shopping1Business1User1 = new ShoppingModel({
@@ -191,10 +191,10 @@ export const fillBD = async (args?: {
         postData: postToShoppingPostDataReshaper(productPost1Business1User1),
         purshaseNotes: {},
         count: 5,
-        lastUpdatedDate: new Date(),
-      },
+        lastUpdatedDate: new Date()
+      }
     ],
-    ...(args?.shopping1Business1User1 || {}),
+    ...(args?.shopping1Business1User1 || {})
   });
 
   await shopping1Business1User1.save();
@@ -206,7 +206,7 @@ export const fillBD = async (args?: {
     email: 'user2@gmail.com',
     password: 'password_123_user2',
     passwordVerbose: 'password_123_user2',
-    ...(args?.user2 || {}),
+    ...(args?.user2 || {})
   });
   await user2.save();
 
@@ -214,54 +214,54 @@ export const fillBD = async (args?: {
   const business1User2 = await createBusiness({
     name: 'business1User2',
     user: user2,
-    override: args?.business1User2,
+    override: args?.business1User2
   });
 
   const business2User2 = await createBusiness({
     name: 'business2User2',
     user: user2,
-    override: args?.business2User2,
+    override: args?.business2User2
   });
 
   const business3User2 = await createBusiness({
     name: 'business3User2',
     user: user2,
-    override: args?.business3User2,
+    override: args?.business3User2
   });
 
   const productPost1Business1User2 = await createProductPost({
     name: 'productPost1Business1User2',
     business: business1User2,
     user: user2,
-    override: args?.productPost1Business1User2,
+    override: args?.productPost1Business1User2
   });
 
   const productPost2Business1User2 = await createProductPost({
     name: 'productPost2Business1User2',
     business: business1User2,
     user: user2,
-    override: args?.productPost2Business1User2,
+    override: args?.productPost2Business1User2
   });
 
   const productPost3Business1User2 = await createProductPost({
     name: 'productPost3Business1User2',
     business: business1User2,
     user: user2,
-    override: args?.productPost3Business1User2,
+    override: args?.productPost3Business1User2
   });
 
   const productPost4Business1User2 = await createProductPost({
     name: 'productPost4Business1User2',
     business: business1User2,
     user: user2,
-    override: args?.productPost4Business1User2,
+    override: args?.productPost4Business1User2
   });
 
   const productPost5Business1User2 = await createProductPost({
     name: 'productPost5Business1User2',
     business: business1User2,
     user: user2,
-    override: args?.productPost5Business1User2,
+    override: args?.productPost5Business1User2
   });
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -271,7 +271,7 @@ export const fillBD = async (args?: {
     password: 'password_123_user3',
     passwordVerbose: 'password_123_user3',
     validated: true,
-    ...(args?.user3 || {}),
+    ...(args?.user3 || {})
   });
 
   await user3.save();
@@ -302,7 +302,7 @@ export const fillBD = async (args?: {
     //
     user3,
     //
-    admin,
+    admin
   };
 };
 

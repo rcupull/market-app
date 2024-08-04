@@ -4,7 +4,7 @@ import { AnyRecord } from '../types/general';
 export const getResponse = ({
   json,
   res,
-  status,
+  status
 }: {
   res: Response;
   status: 401 | 400 | 200 | 201 | 404 | 422 | 500;

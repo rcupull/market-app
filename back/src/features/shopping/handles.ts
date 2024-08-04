@@ -6,7 +6,7 @@ import {
   getBusinessNotFoundResponse,
   getPostNotFoundResponse,
   getShoppingNotFoundResponse,
-  getUserNotFoundResponse,
+  getUserNotFoundResponse
 } from '../../utils/server-response';
 import {
   shoppingServicesDecrementStockAmountFromShoppingPosts,
@@ -15,27 +15,28 @@ import {
   shoppingServicesGetDataFromPosts,
   shoppingServicesGetOne,
   shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts,
-  shoppingServicesUpdateOrAddOne,
+  shoppingServicesUpdateOrAddOne
 } from './services';
 import { deepJsonCopy, isNumber } from '../../utils/general';
-import { businessServicesFindOne } from '../business/services';
+import { businessServicesGetBusinessDataForPushNotifications } from '../business/services';
 import {
   deleteOnePostFromShoppingInContruction,
   deleteShoppingInConstruction,
-  wasApprovedShopping,
+  wasApprovedShopping
 } from './utils';
 import { logger } from '../logger';
 import { PostPurshaseNotes } from '../../types/post';
 import { ShoppingModel } from '../../schemas/shopping';
 import { Shopping, ShoppingDto, ShoppingState } from '../../types/shopping';
-import { userServicesGetOne, userServicesGetUserDataFromShopping } from '../user/services';
-import { User } from '../../types/user';
-import { Business } from '../../types/business';
+import {
+  userServicesGetUsersDataForPushNotifications,
+  userServicesGetUserDataFromShopping
+} from '../user/services';
 import { defaultQuerySort } from '../../utils/api';
 import {
   notificationsServicesSendNewOrderApprovedMessage,
   notificationsServicesSendNewOrderPushMessage,
-  notificationsServicesSendUpdateStockAmountMessage,
+  notificationsServicesSendUpdateStockAmountMessage
 } from '../notifications/services';
 import { billingServicesGetBillDataFromShopping } from '../billing/services';
 
@@ -56,18 +57,18 @@ const get_shopping: () => RequestHandler = () => {
         query: {
           routeName,
           states,
-          purchaserId: user._id,
-        },
+          purchaserId: user._id
+        }
       });
 
       const out = deepJsonCopy(shoppings);
 
       const { getOneShoppingBillData } = await billingServicesGetBillDataFromShopping({
-        query: { shoppingIds: { $in: out.data.map(({ _id }) => _id) } },
+        query: { shoppingIds: { $in: out.data.map(({ _id }) => _id) } }
       });
 
       const { getOneShoppingUserData } = await userServicesGetUserDataFromShopping({
-        query: { _id: { $in: out.data.map(({ purchaserId }) => purchaserId) } },
+        query: { _id: { $in: out.data.map(({ purchaserId }) => purchaserId) } }
       });
 
       const getShoppingDto = async (shopping: Shopping): Promise<ShoppingDto> => {
@@ -79,7 +80,7 @@ const get_shopping: () => RequestHandler = () => {
           billState: billData?.billState,
           purchaserName: undefined,
           purchaserAddress: undefined,
-          purchaserPhone: undefined,
+          purchaserPhone: undefined
         };
 
         /**
@@ -93,7 +94,7 @@ const get_shopping: () => RequestHandler = () => {
           ...out,
           purchaserName: purchaserData?.purchaserName,
           purchaserAddress: purchaserData?.purchaserAddress,
-          purchaserPhone: purchaserData?.purchaserPhone,
+          purchaserPhone: purchaserData?.purchaserPhone
         };
       };
 
@@ -122,16 +123,16 @@ const get_shopping_owner: () => RequestHandler = () => {
         sort,
         query: {
           routeName,
-          states,
-        },
+          states
+        }
       });
 
       const { getOneShoppingUserData } = await userServicesGetUserDataFromShopping({
-        query: { _id: { $in: shoppings.data.map(({ purchaserId }) => purchaserId) } },
+        query: { _id: { $in: shoppings.data.map(({ purchaserId }) => purchaserId) } }
       });
 
       const { getOneShoppingBillData } = await billingServicesGetBillDataFromShopping({
-        query: { _id: { $in: shoppings.data.map((s) => s.purchaserId) } },
+        query: { _id: { $in: shoppings.data.map((s) => s.purchaserId) } }
       });
 
       const getShoppingDto = async (shopping: Shopping): Promise<ShoppingDto> => {
@@ -143,7 +144,7 @@ const get_shopping_owner: () => RequestHandler = () => {
           billState: billData?.billState,
           purchaserName: undefined,
           purchaserAddress: undefined,
-          purchaserPhone: undefined,
+          purchaserPhone: undefined
         };
 
         /**
@@ -157,7 +158,7 @@ const get_shopping_owner: () => RequestHandler = () => {
           ...out,
           purchaserName: purchaserData?.purchaserName,
           purchaserAddress: purchaserData?.purchaserAddress,
-          purchaserPhone: purchaserData?.purchaserPhone,
+          purchaserPhone: purchaserData?.purchaserPhone
         };
       };
 
@@ -184,8 +185,8 @@ const get_shopping_shoppingId: () => RequestHandler = () => {
       const out = await shoppingServicesGetOne({
         query: {
           _id: shoppingId,
-          purchaserId: user._id,
-        },
+          purchaserId: user._id
+        }
       });
 
       res.send(out);
@@ -219,7 +220,7 @@ const post_shopping: () => RequestHandler<
       const { amountToAdd = 1, purshaseNotes } = body;
 
       const { getPostData } = await shoppingServicesGetDataFromPosts({
-        posts: [post],
+        posts: [post]
       });
 
       const { stockAmountAvailable } = getPostData(post);
@@ -238,7 +239,7 @@ const post_shopping: () => RequestHandler<
             amountToAdd: stockAmountAvailable,
             post,
             user,
-            purshaseNotes,
+            purshaseNotes
           });
 
           /**
@@ -246,12 +247,12 @@ const post_shopping: () => RequestHandler<
            */
           notificationsServicesSendUpdateStockAmountMessage({
             postId: post._id.toString(),
-            stockAmountAvailable: 0,
+            stockAmountAvailable: 0
           });
 
           return res.send({
             message:
-              'Por falta de disponibilidad en el stock no se han podido agregar la cantidad solicitada. Se han agregado solamente las cantidades disponibles.',
+              'Por falta de disponibilidad en el stock no se han podido agregar la cantidad solicitada. Se han agregado solamente las cantidades disponibles.'
           });
         }
 
@@ -262,7 +263,7 @@ const post_shopping: () => RequestHandler<
           amountToAdd: amountToAdd,
           post,
           user,
-          purshaseNotes,
+          purshaseNotes
         });
 
         /**
@@ -270,7 +271,7 @@ const post_shopping: () => RequestHandler<
          */
         notificationsServicesSendUpdateStockAmountMessage({
           postId: post._id.toString(),
-          stockAmountAvailable: stockAmountAvailable - amountToAdd,
+          stockAmountAvailable: stockAmountAvailable - amountToAdd
         });
 
         return res.send({});
@@ -283,7 +284,7 @@ const post_shopping: () => RequestHandler<
         amountToAdd,
         purshaseNotes,
         post,
-        user,
+        user
       });
 
       res.send({});
@@ -306,12 +307,12 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
       const shopping = await shoppingServicesFindAndUpdateOne({
         query: {
           _id: shoppingId,
-          purchaserId: user._id,
+          purchaserId: user._id
         },
         update: {
           state: ShoppingState.REQUESTED,
-          delivery,
-        },
+          delivery
+        }
       });
 
       if (!shopping) {
@@ -319,20 +320,29 @@ const post_shopping_shoppingId_make_order: () => RequestHandler = () => {
         return res.send({});
       }
 
-      const business = await businessServicesFindOne({
-        query: {
-          routeName: shopping.routeName,
-        },
+      const businessData = await businessServicesGetBusinessDataForPushNotifications({
+        routeName: shopping.routeName
       });
-
-      if (!business) {
-        return getBusinessNotFoundResponse({ res });
-      }
 
       /**
        * send push message
        */
-      notificationsServicesSendNewOrderPushMessage({ business, shopping });
+
+      if (businessData) {
+        const [userData] = await userServicesGetUsersDataForPushNotifications({
+          query: {
+            _id: businessData.createdBy
+          }
+        });
+
+        if (userData) {
+          notificationsServicesSendNewOrderPushMessage({
+            shopping,
+            businessData,
+            userData
+          });
+        }
+      }
 
       res.send({});
     });
@@ -351,12 +361,12 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
       if (state === ShoppingState.CONSTRUCTION) {
         return get400Response({
           res,
-          json: { message: 'Can not change the state to CONSTRUCTION' },
+          json: { message: 'Can not change the state to CONSTRUCTION' }
         });
       }
 
       const shopping = await ShoppingModel.findOne({
-        _id: shoppingId,
+        _id: shoppingId
       });
 
       if (!shopping) {
@@ -366,21 +376,21 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
       if (shopping.state === ShoppingState.CONSTRUCTION) {
         return get400Response({
           res,
-          json: { message: 'Can not change the state from CONSTRUCTION' },
+          json: { message: 'Can not change the state from CONSTRUCTION' }
         });
       }
 
       if (shopping?.history) {
         shopping.history.push({
           state: shopping.state,
-          lastUpdatedDate: new Date(),
+          lastUpdatedDate: new Date()
         });
       } else {
         shopping.history = [
           {
             state: shopping.state,
-            lastUpdatedDate: new Date(),
-          },
+            lastUpdatedDate: new Date()
+          }
         ];
       }
 
@@ -392,42 +402,22 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
         /**
          * send telegram notificaion when the shopping to be aproved
          */
-        const purchaserData: Pick<User, 'firebaseToken'> | null = await userServicesGetOne({
+
+        const [userData] = await userServicesGetUsersDataForPushNotifications({
           query: {
-            _id: shopping.purchaserId,
-          },
-          projection: {
-            firebaseToken: 1,
-          },
+            _id: shopping.purchaserId
+          }
         });
 
-        if (!purchaserData) {
-          return getUserNotFoundResponse({
-            res,
-          });
-        }
-
-        const businessData: Pick<Business, 'name'> | null = await businessServicesFindOne({
-          query: {
-            routeName: shopping.routeName,
-          },
-          projection: {
-            name: 1,
-          },
+        const businessData = await businessServicesGetBusinessDataForPushNotifications({
+          routeName: shopping.routeName
         });
 
-        if (!businessData) {
-          return getBusinessNotFoundResponse({
-            res,
-          });
-        }
-
-        if (purchaserData.firebaseToken) {
+        if (userData && businessData) {
           notificationsServicesSendNewOrderApprovedMessage({
-            shopping,
-            businessName: businessData.name,
-            routeName: shopping.routeName,
-            firebaseToken: purchaserData.firebaseToken,
+            shoppingId: shopping._id.toString(),
+            businessData,
+            userData
           });
         }
       }
@@ -437,7 +427,7 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
          * Send update stock amount messages
          */
         await shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts({
-          shopping,
+          shopping
         });
       }
 
@@ -446,7 +436,7 @@ const post_shopping_shoppingId_change_state: () => RequestHandler = () => {
          * Decrement stock amount
          */
         await shoppingServicesDecrementStockAmountFromShoppingPosts({
-          shopping,
+          shopping
         });
       }
 
@@ -487,5 +477,5 @@ export const shoppingHandles = {
   post_shopping_shoppingId_make_order,
   post_shopping_shoppingId_change_state,
   //
-  get_shopping_owner,
+  get_shopping_owner
 };

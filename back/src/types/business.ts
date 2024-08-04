@@ -110,14 +110,14 @@ export interface BusinessPaymentRequestHistory {
 }
 
 export enum BusinessNotificationFlags {
-  TELEGRAM_NEW_SHOPPING = 'TELEGRAM_NEW_SHOPPING',
+  TELEGRAM_NEW_SHOPPING = 'TELEGRAM_NEW_SHOPPING'
 }
 
 export enum DeliveryConfigType {
   NONE = 'NONE',
   FREE = 'FREE',
   REQUIRED = 'REQUIRED',
-  OPTIONAL = 'OPTIONAL',
+  OPTIONAL = 'OPTIONAL'
 }
 
 export interface DeliveryConfig {

@@ -17,8 +17,8 @@ describe('posts', () => {
       await supertest(app)
         .get(
           getTestingRoute({
-            path: '/posts',
-          }),
+            path: '/posts'
+          })
         )
         .expect(200)
         .then((response) => {
@@ -48,7 +48,7 @@ describe('posts', () => {
               "stockAmount": null,
               "stockAmountAvailable": null,
             }
-          `,
+          `
           );
         });
     });
@@ -59,8 +59,8 @@ describe('posts', () => {
       await supertest(app)
         .get(
           getTestingRoute({
-            path: '/posts',
-          }),
+            path: '/posts'
+          })
         )
         .expect(200)
         .then((response) => {
@@ -75,8 +75,8 @@ describe('posts', () => {
         .get(
           getTestingRoute({
             path: '/posts',
-            query: { routeNames: [business1User1.routeName] },
-          }),
+            query: { routeNames: [business1User1.routeName] }
+          })
         )
         .expect(200)
         .then((response) => {
@@ -87,8 +87,8 @@ describe('posts', () => {
         .get(
           getTestingRoute({
             path: '/posts',
-            query: { routeNames: [business1User2.routeName] },
-          }),
+            query: { routeNames: [business1User2.routeName] }
+          })
         )
         .expect(200)
         .then((response) => {
@@ -105,28 +105,28 @@ describe('posts', () => {
     it('should return all related posts', async () => {
       const { productPost1Business1User2 } = await fillBD({
         productPost1Business1User2: {
-          postCategoriesTags: ['c1', 'c2', 'p6'],
+          postCategoriesTags: ['c1', 'c2', 'p6']
         },
         productPost2Business1User2: {
-          postCategoriesTags: ['c1', 'c3', 'n1'], //related
+          postCategoriesTags: ['c1', 'c3', 'n1'] //related
         },
         productPost3Business1User2: {
-          postCategoriesTags: ['c1', 'c2', 'c3', 'c4'], //related
+          postCategoriesTags: ['c1', 'c2', 'c3', 'c4'] //related
         },
         productPost4Business1User2: {
-          postCategoriesTags: ['n1', 'n2', 'n3'], //no related
+          postCategoriesTags: ['n1', 'n2', 'n3'] //no related
         },
         productPost5Business1User2: {
-          postCategoriesTags: ['c1', 'n2', 'n3'], //related
-        },
+          postCategoriesTags: ['c1', 'n2', 'n3'] //related
+        }
       });
 
       await supertest(app)
         .get(
           getTestingRoute({
             path: '/posts/:postId/related',
-            urlParams: { postId: productPost1Business1User2._id.toString() },
-          }),
+            urlParams: { postId: productPost1Business1User2._id.toString() }
+          })
         )
         .expect(200)
         .then((response) => {
@@ -136,7 +136,7 @@ describe('posts', () => {
           expect(relatedPosts.map((p) => p.name)).toEqual([
             'productPost2Business1User2',
             'productPost3Business1User2',
-            'productPost5Business1User2',
+            'productPost5Business1User2'
           ]);
 
           expect(response.body.paginator).toMatchInlineSnapshot(`

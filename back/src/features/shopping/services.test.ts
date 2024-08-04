@@ -1,13 +1,13 @@
 import {
   dropTestDbConnectionAsync,
   paginateOptionsForTesting,
-  setAnyString,
+  setAnyString
 } from '../../utils/test-utils';
 import { fillBD } from '../../utils/test-BD';
 import {
   shoppingServicesGetAll,
   shoppingServicesGetAllWithPagination,
-  shoppingServicesGetOne,
+  shoppingServicesGetOne
 } from './services';
 import { Shopping } from '../../types/shopping';
 
@@ -22,7 +22,7 @@ describe('shopping services', () => {
 
       const result = await shoppingServicesGetAllWithPagination({
         paginateOptions: paginateOptionsForTesting,
-        query: {},
+        query: {}
       });
 
       const { data, ...omittedProps } = result;
@@ -61,7 +61,7 @@ describe('shopping services', () => {
       const { shopping1Business1User1 } = await fillBD();
 
       const result = await shoppingServicesGetOne({
-        query: { _id: shopping1Business1User1._id.toString() },
+        query: { _id: shopping1Business1User1._id.toString() }
       });
 
       if (!result) return;
@@ -72,7 +72,7 @@ describe('shopping services', () => {
           'createdAt',
           'posts.0.postData._id',
           'posts.0.lastUpdatedDate',
-          'purchaserId',
+          'purchaserId'
         ),
         `
         {
@@ -101,7 +101,7 @@ describe('shopping services', () => {
           "routeName": "business1User1",
           "state": "CONSTRUCTION",
         }
-      `,
+      `
       );
     });
   });

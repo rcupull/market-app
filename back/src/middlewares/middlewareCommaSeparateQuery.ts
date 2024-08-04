@@ -10,14 +10,14 @@ export const middlewareCommaSeparateQuery: RequestHandler = (req, res, next) => 
     if (!value?.includes(',')) {
       return {
         ...acc,
-        [key]: value,
+        [key]: value
       };
     }
 
     const values = value.split(',');
     return {
       ...acc,
-      [key]: values,
+      [key]: values
     };
   }, {});
 

@@ -1,129 +1,84 @@
-import { NotificationPayload } from '../../types/notifications';
+import { PushNotificationType } from '../../types/notifications';
 import firebase from 'firebase-admin';
 import { QueryHandle } from '../../types/general';
 
 import { compact, excludeRepetedValues } from '../../utils/general';
 import { serviceAccount } from '../../config';
-import { Business } from '../../types/business';
 import { Shopping } from '../../types/shopping';
 import { logger } from '../logger';
-import { userServicesGetAll, userServicesGetOne } from '../user/services';
+import { userServicesGetAll } from '../user/services';
+import {
+  PushNotificationBusinessData,
+  PushNotificationModel,
+  PushNotificationUserData
+} from '../../schemas/notifications';
 
 const firebaseInstance = firebase;
 
 export const notificationsServicesInit = () => {
   firebase.initializeApp({
-    credential: firebase.credential.cert(serviceAccount),
+    credential: firebase.credential.cert(serviceAccount)
   });
   console.info('Initialized Firebase SDK');
 };
 
-export const notificationsServicesSendNotificationToUpdate: QueryHandle<{
-  payload: NotificationPayload;
-}> = async ({ payload }) => {
-  const users = await userServicesGetAll({
-    query: {},
-    projection: {
-      firebaseToken: 1,
-    },
-  });
-
-  //TODO no deberias mandar a todos los usuario si no a los que tiene abierta la pagina de ese negocio
-  let tokens = compact(users.map((user) => user.firebaseToken)); //
-  tokens = excludeRepetedValues(tokens);
-
-  await firebase.messaging().sendEachForMulticast({
-    data: { payload: JSON.stringify(payload) },
-    tokens,
-  });
-};
-
-export const notificationsServicesSendTestNativeNotification: QueryHandle<{
-  title: string;
-  body: string;
-}> = async ({ body, title }) => {
-  const users = await userServicesGetAll({
-    query: {
-      email: { $in: ['rcupull@gmail.com', 'rcupull+user1@gmail.com'] },
-    },
-    projection: {
-      firebaseToken: 1,
-    },
-  });
-
-  let tokens = compact(users.map((user) => user.firebaseToken));
-  tokens = excludeRepetedValues(tokens);
-
-  await firebase.messaging().sendEachForMulticast({
-    notification: {
-      body,
-      title,
-    },
-    tokens,
-  });
-};
-
 export const notificationsServicesSendNewOrderApprovedMessage: QueryHandle<{
-  firebaseToken: string;
-  businessName: string;
-  routeName: string;
-  shopping: Shopping;
-}> = async ({ shopping, businessName, firebaseToken, routeName }) => {
+  shoppingId: string;
+  businessData: PushNotificationBusinessData;
+  userData: PushNotificationUserData;
+}> = async ({ shoppingId, businessData, userData }) => {
   /**
    * este mensaje es enviado para el cliente cuando se apruebe una nueva orden
    */
 
-  const payload: NotificationPayload = {
-    type: 'ORDER_WAS_APPROVED',
-    shoppingId: shopping._id.toString(),
+  const { businessName, routeName } = businessData;
+
+  const notification = new PushNotificationModel({
+    type: PushNotificationType.ORDER_WAS_APPROVED,
+    userIds: [userData.userId],
+    shoppingId,
     routeName,
-    businessName,
-  };
+    businessName
+  });
+
+  await notification.save();
 
   await firebaseInstance.messaging().send({
-    data: { payload: JSON.stringify(payload) },
-    token: firebaseToken,
+    data: { payload: JSON.stringify(notification) },
+    token: userData.firebaseToken,
     notification: {
       title: 'Orden de compra aceptada',
-      body: 'Ya casi tienes tu producto',
-    },
+      body: 'Ya casi tienes tu producto'
+    }
   });
 };
 
 export const notificationsServicesSendNewOrderPushMessage: QueryHandle<{
-  business: Business;
+  userData: PushNotificationUserData;
+  businessData: PushNotificationBusinessData;
   shopping: Shopping;
-}> = async ({ business, shopping }) => {
+}> = async ({ businessData, shopping, userData }) => {
   try {
-    const { createdBy, routeName, name } = business;
-    const user = await userServicesGetOne({
-      query: {
-        _id: createdBy,
-      },
-      projection: {
-        firebaseToken: 1,
-      },
+    const { routeName, businessName } = businessData;
+
+    const notification = new PushNotificationModel({
+      type: PushNotificationType.NEW_ORDER_WAS_CREATED,
+      shoppingId: shopping._id.toString(),
+      routeName,
+      businessName,
+      userIds: [userData.userId]
     });
 
-    if (!user) return;
+    await notification.save();
 
-    if (user.firebaseToken) {
-      const payload: NotificationPayload = {
-        type: 'NEW_ORDER_WAS_CREATED',
-        shoppingId: shopping._id.toString(),
-        routeName,
-        businessName: name,
-      };
-
-      await firebaseInstance.messaging().sendEachForMulticast({
-        data: { payload: JSON.stringify(payload) },
-        tokens: [user.firebaseToken],
-        notification: {
-          title: 'Nueva orden de compra',
-          body: 'Excelente trabajo!!',
-        },
-      });
-    }
+    await firebaseInstance.messaging().send({
+      data: { payload: JSON.stringify(notification) },
+      token: userData.firebaseToken,
+      notification: {
+        title: 'Nueva orden de compra',
+        body: 'Excelente trabajo!!'
+      }
+    });
   } catch (e) {
     logger.error(e);
   }
@@ -137,23 +92,23 @@ export const notificationsServicesSendUpdateStockAmountMessage: QueryHandle<{
     const users = await userServicesGetAll({
       query: {},
       projection: {
-        firebaseToken: 1,
-      },
+        firebaseToken: 1
+      }
     });
 
     //TODO no deberias mandar a todos los usuario si no a los que tiene abierta la pagina de ese negocio
     let tokens = compact(users.map((user) => user.firebaseToken));
     tokens = excludeRepetedValues(tokens);
 
-    const payload: NotificationPayload = {
-      type: 'POST_AMOUNT_STOCK_CHANGE',
+    const notification = new PushNotificationModel({
+      type: PushNotificationType.POST_AMOUNT_STOCK_CHANGE,
       stockAmountAvailable,
-      postId,
-    };
+      postId
+    });
 
     await firebaseInstance.messaging().sendEachForMulticast({
-      data: { payload: JSON.stringify(payload) },
-      tokens,
+      data: { payload: JSON.stringify(notification) },
+      tokens
     });
   } catch (e) {
     logger.error(e);
@@ -161,28 +116,17 @@ export const notificationsServicesSendUpdateStockAmountMessage: QueryHandle<{
 };
 
 export const notificationsServicesSendOrderInConstructionWasRemoved: QueryHandle<{
-  shopping: Shopping;
-}> = async ({ shopping }) => {
+  userData: PushNotificationUserData;
+}> = async ({ userData }) => {
+  const { firebaseToken } = userData;
   try {
-    const users = await userServicesGetAll({
-      query: {
-        _id: shopping.purchaserId,
-      },
-      projection: {
-        firebaseToken: 1,
-      },
+    const notification = new PushNotificationModel({
+      type: PushNotificationType.ORDER_IN_CONSTRUCTION_WAS_REMOVED
     });
 
-    let tokens = compact(users.map((user) => user.firebaseToken));
-    tokens = excludeRepetedValues(tokens);
-
-    const payload: NotificationPayload = {
-      type: 'ORDER_IN_CONSTRUCTION_WAS_REMOVED',
-    };
-
-    await firebaseInstance.messaging().sendEachForMulticast({
-      data: { payload: JSON.stringify(payload) },
-      tokens,
+    await firebaseInstance.messaging().send({
+      data: { payload: JSON.stringify(notification) },
+      token: firebaseToken
     });
   } catch (e) {
     logger.error(e);

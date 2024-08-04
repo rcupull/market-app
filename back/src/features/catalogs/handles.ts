@@ -15,17 +15,17 @@ const search_image: () => RequestHandler = () => {
       const { search } = query;
 
       const response = await GOOGLE_IMG_SCRAP({
-        search,
+        search
       });
 
       res.send({
         result: response.result,
-        search: response.search,
+        search: response.search
       });
     });
   };
 };
 
 export const catalogsHandles = {
-  search_image,
+  search_image
 };

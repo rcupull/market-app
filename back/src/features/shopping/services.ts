@@ -10,7 +10,7 @@ import { PaginateResult } from '../../middlewares/middlewarePagination';
 import {
   GetAllShoppingArgs,
   getAllShoppingFilterQuery,
-  postToShoppingPostDataReshaper,
+  postToShoppingPostDataReshaper
 } from './utils';
 import { getSortQuery } from '../../utils/schemas';
 import { Business } from '../../types/business';
@@ -34,11 +34,11 @@ export const shoppingServicesAddOne: QueryHandle<
   const businessData: ModelDocument<Pick<Business, 'currency'>> | null =
     await businessServicesFindOne({
       query: {
-        routeName,
+        routeName
       },
       projection: {
-        currency: 1,
-      },
+        currency: 1
+      }
     });
 
   if (!businessData) return null;
@@ -54,9 +54,9 @@ export const shoppingServicesAddOne: QueryHandle<
         postData: postToShoppingPostDataReshaper(post),
         purshaseNotes,
         count: amountToAdd,
-        lastUpdatedDate: new Date(),
-      },
-    ],
+        lastUpdatedDate: new Date()
+      }
+    ]
   });
 
   await newShopping.save();
@@ -88,7 +88,7 @@ export const shoppingServicesAddPostToOne: QueryHandle<
       postData: postToShoppingPostDataReshaper(post),
       lastUpdatedDate: new Date(),
       count: amountToAdd,
-      purshaseNotes,
+      purshaseNotes
     });
   }
 
@@ -109,7 +109,7 @@ export const shoppingServicesUpdateOrAddOne: QueryHandle<
   const existInConstruction = await ShoppingModel.findOne({
     purchaserId: user._id,
     state: ShoppingState.CONSTRUCTION,
-    routeName: routeName,
+    routeName: routeName
   });
 
   if (existInConstruction) {
@@ -117,10 +117,10 @@ export const shoppingServicesUpdateOrAddOne: QueryHandle<
       amountToAdd,
       post,
       purshaseNotes,
-      currentShopping: existInConstruction,
+      currentShopping: existInConstruction
     });
     await agendaServices.scheduleRemoveOrderInConstruction({
-      orderId: existInConstruction._id.toString(),
+      orderId: existInConstruction._id.toString()
     });
   } else {
     const shopping = await shoppingServicesAddOne({ amountToAdd, purshaseNotes, user, post });
@@ -143,7 +143,7 @@ export const shoppingServicesGetAllWithPagination: QueryHandle<
 
   const out = await ShoppingModel.paginate(filterQuery, {
     ...paginateOptions,
-    sort: getSortQuery(sort),
+    sort: getSortQuery(sort)
   });
 
   return out as unknown as PaginateResult<Shopping>;
@@ -255,10 +255,10 @@ export const shoppingServicesGetDataFromPosts: QueryHandle<
           ShoppingState.CONSTRUCTION,
           ShoppingState.REQUESTED,
           ShoppingState.APPROVED,
-          ShoppingState.PROCESSING,
-        ],
-      },
-    },
+          ShoppingState.PROCESSING
+        ]
+      }
+    }
   });
 
   return {
@@ -277,9 +277,9 @@ export const shoppingServicesGetDataFromPosts: QueryHandle<
 
       return {
         amountInProcess,
-        stockAmountAvailable: isNullOrUndefined(stockAmount) ? null : stockAmount - amountInProcess,
+        stockAmountAvailable: isNullOrUndefined(stockAmount) ? null : stockAmount - amountInProcess
       };
-    },
+    }
   };
 };
 
@@ -288,7 +288,7 @@ export const shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts: Que
 }> = async ({ shopping }) => {
   if (
     ![ShoppingState.REJECTED, ShoppingState.CANCELED, ShoppingState.CONSTRUCTION].includes(
-      shopping.state,
+      shopping.state
     )
   ) {
     logger.info('No need to send update stock amount messages from shopping posts.');
@@ -297,12 +297,12 @@ export const shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts: Que
 
   const posts = await postServicesGetAll({
     query: {
-      postsIds: shopping.posts.map((post) => post.postData._id.toString()),
-    },
+      postsIds: shopping.posts.map((post) => post.postData._id.toString())
+    }
   });
 
   const { getPostData } = await shoppingServicesGetDataFromPosts({
-    posts,
+    posts
   });
 
   posts.forEach((post) => {
@@ -311,7 +311,7 @@ export const shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts: Que
     if (isNumber(stockAmountAvailable)) {
       notificationsServicesSendUpdateStockAmountMessage({
         postId: post._id.toString(),
-        stockAmountAvailable,
+        stockAmountAvailable
       });
     }
   });
@@ -332,8 +332,8 @@ export const shoppingServicesDecrementStockAmountFromShoppingPosts: QueryHandle<
     return new Promise<void>((resolve) => {
       postServicesGetOne({
         query: {
-          _id: postData._id,
-        },
+          _id: postData._id
+        }
       }).then((post) => {
         if (post && isNumber(post.stockAmount)) {
           post.updateOne({ $inc: { stockAmount: -count } }).then(() => {

@@ -19,8 +19,8 @@ const UserSchema = new Schema<User>({
     {
       _id: false,
       routeName: { type: String },
-      updatedAt: { type: Date, default: Date.now },
-    },
+      updatedAt: { type: Date, default: Date.now }
+    }
   ],
   validated: { type: Boolean, default: false },
   profileImage: {
@@ -28,15 +28,15 @@ const UserSchema = new Schema<User>({
       _id: false,
       src: { type: String, required: true },
       width: { type: Number, required: true },
-      height: { type: Number, required: true },
+      height: { type: Number, required: true }
     },
-    default: null,
+    default: null
   },
   specialAccess: { type: [String], default: [] },
   telegramBotChat: TelegramBotChatDefinition,
   phone: { type: String },
   addresses: [AddressDefinition],
-  checks: { type: Schema.Types.Mixed },
+  checks: { type: Schema.Types.Mixed }
 });
 
 const updateUserPassword = (user: User): Promise<void> => {

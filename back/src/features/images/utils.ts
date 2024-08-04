@@ -5,7 +5,7 @@ export const cloudflareBaseUrl = `https://api.cloudflare.com/client/v4/accounts/
 export const cloudflareDeliveryUrl = `https://imagedelivery.net/${cloudFlareAccountHash}`;
 
 export const cloudflareImageVariants = {
-  public: 'public',
+  public: 'public'
 };
 
 export const getCloudFlareImageIdFromUrl = (url: string): string | null => {

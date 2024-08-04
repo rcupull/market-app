@@ -9,7 +9,7 @@ const ReviewShema = new Schema<Review>({
   reviewerId: { type: Schema.Types.ObjectId, required: true },
   reviewed: { type: String, required: true },
   star: { type: Number },
-  type: { type: String, enum: Object.values(ReviewType), required: true },
+  type: { type: String, enum: Object.values(ReviewType), required: true }
 });
 
 ReviewShema.plugin(mongoosePaginate);

@@ -6,14 +6,14 @@ export const nlpRecords: NlpTrainRecord = {
     'como agregar un producto',
     'nuevo producto',
     'nuevo mercancia',
-    'mercancia',
+    'mercancia'
   ],
   'links.add': [
     'quiero agregar un enlace',
     'nuevo enlace',
     'enlace a otra pagina',
     'enlace a un negocio',
-    'link a un negocio',
+    'link a un negocio'
   ],
   'sections.add': [
     'agrupar enlaces',
@@ -22,17 +22,17 @@ export const nlpRecords: NlpTrainRecord = {
     'grupo de enlaces',
     'grupo de productos',
     'nueva seccion',
-    'nuevo grupo',
-  ],
+    'nuevo grupo'
+  ]
 };
 
 const mergeInTrainRecord = (
   record: NlpTrainRecord,
   key: string,
-  values: Array<string>,
+  values: Array<string>
 ): NlpTrainRecord => ({
   ...record,
-  [key]: [...(record[key] || []), ...values],
+  [key]: [...(record[key] || []), ...values]
 });
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -71,7 +71,7 @@ const getterMax = (label: string) => [
   `${label} barato`,
   `${label} que no cueste mas de`,
   `${label} que no cueste mas que`,
-  `${label} que no sobrepase los`,
+  `${label} que no sobrepase los`
 ];
 
 const getterMin = (label: string) => [
@@ -86,7 +86,7 @@ const getterMin = (label: string) => [
   `${label} caro`,
   `${label} que no cueste menos de`,
   `${label} que no cueste menos que`,
-  `${label} que no infiera los`,
+  `${label} que no infiera los`
 ];
 
 const getterMinMax = (label: string) => [
@@ -107,7 +107,7 @@ const getterMinMax = (label: string) => [
   `${label} mas caro que y no mas caro que`,
   `${label} que no cueste menos de y no mas caro que`,
   `${label} que no cueste menos que y no mas caro que`,
-  `${label} que no infiera los y no pase los`,
+  `${label} que no infiera los y no pase los`
 ];
 
 export const addPriceRecords = (record: NlpTrainRecord): NlpTrainRecord => {
@@ -132,7 +132,7 @@ export const addProductNameRecords = (record: NlpTrainRecord, name: string): Nlp
     `Busco ${name} en ${name}`,
     `Existe ${name} en ${name}`,
     `Estoy buscando ${name} en ${name}`,
-    `Para ${name}`,
+    `Para ${name}`
   ]);
 
   return out;
@@ -148,7 +148,7 @@ export const addBusinessNameRecords = (record: NlpTrainRecord, name: string): Nl
     `Busco ${name}`,
     `Estoy buscando ${name}`,
     `Existe ${name}`,
-    `En ${name}`,
+    `En ${name}`
   ]);
 
   return out;
@@ -158,11 +158,11 @@ export const addBusinessCategoryRecords = (
   record: NlpTrainRecord,
   {
     businessName,
-    categoryLabel,
+    categoryLabel
   }: {
     categoryLabel: string;
     businessName: string;
-  },
+  }
 ): NlpTrainRecord => {
   let out = record;
 
@@ -175,7 +175,7 @@ export const addBusinessCategoryRecords = (
     `Busco ${categoryLabel} en ${businessName}`,
     `Existe ${categoryLabel} en ${businessName}`,
     `Estoy buscando ${categoryLabel} en ${businessName}`,
-    `Para ${categoryLabel}`,
+    `Para ${categoryLabel}`
   ]);
 
   return out;
@@ -190,7 +190,7 @@ export const addProductPriceRecords = (record: NlpTrainRecord, name: string): Nl
     ...getterMax(`busco ${name}`),
     ...getterMax(`requierp ${name}`),
     ...getterMax(`exijo ${name}`),
-    ...getterMax(`ando buscando ${name}`),
+    ...getterMax(`ando buscando ${name}`)
   ]);
 
   out = mergeInTrainRecord(out, `products.name.${name}.price.min`, [
@@ -199,7 +199,7 @@ export const addProductPriceRecords = (record: NlpTrainRecord, name: string): Nl
     ...getterMin(`busco ${name}`),
     ...getterMin(`requierp ${name}`),
     ...getterMin(`exijo ${name}`),
-    ...getterMin(`ando buscando ${name}`),
+    ...getterMin(`ando buscando ${name}`)
   ]);
 
   out = mergeInTrainRecord(out, `products.name.${name}.price.min.max`, [
@@ -208,7 +208,7 @@ export const addProductPriceRecords = (record: NlpTrainRecord, name: string): Nl
     ...getterMinMax(`busco ${name}`),
     ...getterMinMax(`requierp ${name}`),
     ...getterMinMax(`exijo ${name}`),
-    ...getterMinMax(`ando buscando ${name}`),
+    ...getterMinMax(`ando buscando ${name}`)
   ]);
 
   return out;

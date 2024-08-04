@@ -4,10 +4,11 @@ import { dbUrl } from '../../config';
 import { ValidationCodeModel } from '../../schemas/auth';
 import {
   shoppingServicesFindOneAndDelete,
-  shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts,
+  shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts
 } from '../shopping/services';
 import { ShoppingState } from '../../types/shopping';
 import { notificationsServicesSendOrderInConstructionWasRemoved } from '../notifications/services';
+import { userServicesGetUsersDataForPushNotifications } from '../user/services';
 
 export const agenda = new Agenda({ db: { address: dbUrl }, processEvery: '10 seconds' });
 
@@ -23,7 +24,7 @@ agenda.define('removeValidationCode', async (job: any): Promise<void> => {
 
   if (code) {
     await ValidationCodeModel.deleteOne({
-      code,
+      code
     });
   }
 
@@ -40,13 +41,22 @@ agenda.define('removeOrderInConstruction', async (job: any) => {
   const shopping = await shoppingServicesFindOneAndDelete({
     query: {
       _id: orderId,
-      state: ShoppingState.CONSTRUCTION,
-    },
+      state: ShoppingState.CONSTRUCTION
+    }
   });
 
   if (shopping) {
     await shoppingServicesSendUpdateStockAmountMessagesFromShoppingPosts({ shopping });
-    await notificationsServicesSendOrderInConstructionWasRemoved({ shopping });
+
+    const [userData] = await userServicesGetUsersDataForPushNotifications({
+      query: {
+        _id: shopping.purchaserId
+      }
+    });
+
+    if (userData) {
+      await notificationsServicesSendOrderInConstructionWasRemoved({ userData });
+    }
   }
 });
 
@@ -60,5 +70,5 @@ export const agendaServices = {
 
     await agenda.cancel({ name: 'removeOrderInConstruction', 'data.orderId': orderId });
     await agenda.schedule('10 minutes', 'removeOrderInConstruction', { orderId });
-  },
+  }
 };

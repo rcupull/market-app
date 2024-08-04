@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'production') {
   const credentials = {
     key: privateKey,
     cert: certificate,
-    ca: ca,
+    ca: ca
   };
 
   const httpsServer = https.createServer(credentials, app);

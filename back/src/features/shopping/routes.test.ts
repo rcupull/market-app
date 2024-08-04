@@ -15,12 +15,12 @@ jest.mock('../agenda/services', () => ({
     schedule: jest.fn(),
     cancel: jest.fn(),
     on: jest.fn(),
-    define: jest.fn(),
+    define: jest.fn()
   },
   agendaServices: {
     scheduleRemoveValidationCode: jest.fn(),
-    scheduleRemoveOrderInConstruction: jest.fn(),
-  },
+    scheduleRemoveOrderInConstruction: jest.fn()
+  }
 }));
 
 const { scheduleRemoveOrderInConstruction } = agendaServicesBase as Record<
@@ -31,19 +31,19 @@ const { scheduleRemoveOrderInConstruction } = agendaServicesBase as Record<
 const handleAddPostsToOrder = async ({
   productPost1Business1User1,
   productPost2Business1User1,
-  user1,
+  user1
 }: TestBDContent) => {
   // add one product to shopping
   await supertest(app)
     .post(
       getTestingRoute({
-        path: '/shopping',
-      }),
+        path: '/shopping'
+      })
     )
     .send({
       postId: productPost1Business1User1._id,
       purshaseNotes: purshaseNotesDummy,
-      amountToAdd: 5,
+      amountToAdd: 5
     })
     .auth(generateToken(user1._id), { type: 'bearer' })
     .expect(200);
@@ -52,12 +52,12 @@ const handleAddPostsToOrder = async ({
   await supertest(app)
     .post(
       getTestingRoute({
-        path: '/shopping',
-      }),
+        path: '/shopping'
+      })
     )
     .send({
       postId: productPost2Business1User1._id,
-      amountToAdd: 10,
+      amountToAdd: 10
     })
     .auth(generateToken(user1._id), { type: 'bearer' })
     .expect(200);
@@ -76,8 +76,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/shopping',
-            query: { routeName: business1User1.routeName },
-          }),
+            query: { routeName: business1User1.routeName }
+          })
         )
         .expect(401);
     });
@@ -89,8 +89,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/shopping',
-            query: { routeName: business1User1.routeName },
-          }),
+            query: { routeName: business1User1.routeName }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
@@ -103,7 +103,7 @@ describe('shopping', () => {
               'createdAt',
               'posts.0.lastUpdatedDate',
               'posts.0.postData._id',
-              'purchaserId',
+              'purchaserId'
             ),
             `
             {
@@ -132,7 +132,7 @@ describe('shopping', () => {
               "routeName": "business1User1",
               "state": "CONSTRUCTION",
             }
-          `,
+          `
           );
         });
     });
@@ -140,19 +140,19 @@ describe('shopping', () => {
     it('should return a new shopping APPROVED', async () => {
       const { user1, business1User1 } = await fillBD({
         user1: {
-          addresses: [addressDummy],
+          addresses: [addressDummy]
         },
         shopping1Business1User1: {
-          state: ShoppingState.APPROVED,
-        },
+          state: ShoppingState.APPROVED
+        }
       });
 
       await supertest(app)
         .get(
           getTestingRoute({
             path: '/shopping',
-            query: { routeName: business1User1.routeName },
-          }),
+            query: { routeName: business1User1.routeName }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
@@ -166,7 +166,7 @@ describe('shopping', () => {
               'posts.0.lastUpdatedDate',
               'posts.0.postData._id',
               'purchaserId',
-              'purchaserAddress._id',
+              'purchaserAddress._id'
             ),
             `
             {
@@ -213,7 +213,7 @@ describe('shopping', () => {
               "routeName": "business1User1",
               "state": "APPROVED",
             }
-          `,
+          `
           );
         });
     });
@@ -231,8 +231,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/shopping/owner',
-            query: { routeName: business1User1.routeName },
-          }),
+            query: { routeName: business1User1.routeName }
+          })
         )
         .expect(401);
     });
@@ -244,8 +244,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/shopping/owner',
-            query: { routeName: business1User1.routeName },
-          }),
+            query: { routeName: business1User1.routeName }
+          })
         )
         .auth(generateToken(user2._id), { type: 'bearer' })
         .expect(401);
@@ -260,8 +260,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/shopping/owner',
-            query: { routeName: business1User1.routeName },
-          }),
+            query: { routeName: business1User1.routeName }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
@@ -275,7 +275,7 @@ describe('shopping', () => {
           expect(shopping.state).toEqual(ShoppingState.CONSTRUCTION);
           expect(shopping.posts[0].count).toEqual(5);
           expect(shopping.posts[0].postData._id).toContain(
-            productPost1Business1User1._id.toString(),
+            productPost1Business1User1._id.toString()
           );
         });
     });
@@ -292,11 +292,11 @@ describe('shopping', () => {
       await supertest(app)
         .post(
           getTestingRoute({
-            path: '/shopping',
-          }),
+            path: '/shopping'
+          })
         )
         .send({
-          postId: productPost1Business1User1._id,
+          postId: productPost1Business1User1._id
         })
         .expect(401);
     });
@@ -307,11 +307,11 @@ describe('shopping', () => {
 
       const bd = await fillBD({
         productPost1Business1User1: {
-          stockAmount: 20,
+          stockAmount: 20
         },
         productPost2Business1User1: {
-          stockAmount: 30,
-        },
+          stockAmount: 30
+        }
       });
 
       await removeAllShoppings();
@@ -322,8 +322,8 @@ describe('shopping', () => {
       await supertest(app)
         .get(
           getTestingRoute({
-            path: '/posts',
-          }),
+            path: '/posts'
+          })
         )
         .expect(200)
         .then((response) => {
@@ -346,8 +346,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/shopping',
-            query: { routeName: business1User1.routeName },
-          }),
+            query: { routeName: business1User1.routeName }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
@@ -362,19 +362,19 @@ describe('shopping', () => {
 
           expect(shopping.posts[0].count).toEqual(5);
           expect(shopping.posts[0].postData._id).toContain(
-            productPost1Business1User1._id.toString(),
+            productPost1Business1User1._id.toString()
           );
 
           expect(shopping.posts[1].count).toEqual(10);
           expect(shopping.posts[1].postData._id).toContain(
-            productPost2Business1User1._id.toString(),
+            productPost2Business1User1._id.toString()
           );
 
           /**
            * call to agenda to remove
            */
           expect(scheduleRemoveOrderInConstruction.mock.calls[0][0].orderId).toEqual(
-            shopping._id.toString(),
+            shopping._id.toString()
           );
         });
 
@@ -382,8 +382,8 @@ describe('shopping', () => {
       await supertest(app)
         .get(
           getTestingRoute({
-            path: '/posts',
-          }),
+            path: '/posts'
+          })
         )
         .expect(200)
         .then((response) => {
@@ -399,17 +399,17 @@ describe('shopping', () => {
         });
 
       expect(
-        notificationsServicesSendUpdateStockAmountMessage.mock.calls[0][0].stockAmountAvailable,
+        notificationsServicesSendUpdateStockAmountMessage.mock.calls[0][0].stockAmountAvailable
       ).toEqual(15);
       expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[0][0].postId).toEqual(
-        productPost1Business1User1._id.toString(),
+        productPost1Business1User1._id.toString()
       );
 
       expect(
-        notificationsServicesSendUpdateStockAmountMessage.mock.calls[1][0].stockAmountAvailable,
+        notificationsServicesSendUpdateStockAmountMessage.mock.calls[1][0].stockAmountAvailable
       ).toEqual(20);
       expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[1][0].postId).toEqual(
-        productPost2Business1User1._id.toString(),
+        productPost2Business1User1._id.toString()
       );
     });
 
@@ -419,8 +419,8 @@ describe('shopping', () => {
 
       const bd = await fillBD({
         productPost1Business1User1: {
-          stockAmount: 2,
-        },
+          stockAmount: 2
+        }
       });
 
       await removeAllShoppings();
@@ -430,8 +430,8 @@ describe('shopping', () => {
       await supertest(app)
         .get(
           getTestingRoute({
-            path: '/posts',
-          }),
+            path: '/posts'
+          })
         )
         .expect(200)
         .then((response) => {
@@ -451,8 +451,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/shopping',
-            query: { routeName: business1User1.routeName },
-          }),
+            query: { routeName: business1User1.routeName }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
@@ -467,7 +467,7 @@ describe('shopping', () => {
 
           expect(shopping.posts[0].count).toEqual(2);
           expect(shopping.posts[0].postData._id).toContain(
-            productPost1Business1User1._id.toString(),
+            productPost1Business1User1._id.toString()
           );
         });
 
@@ -475,8 +475,8 @@ describe('shopping', () => {
       await supertest(app)
         .get(
           getTestingRoute({
-            path: '/posts',
-          }),
+            path: '/posts'
+          })
         )
         .expect(200)
         .then((response) => {
@@ -489,10 +489,10 @@ describe('shopping', () => {
         });
 
       expect(
-        notificationsServicesSendUpdateStockAmountMessage.mock.calls[0][0].stockAmountAvailable,
+        notificationsServicesSendUpdateStockAmountMessage.mock.calls[0][0].stockAmountAvailable
       ).toEqual(0);
       expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[0][0].postId).toEqual(
-        productPost1Business1User1._id.toString(),
+        productPost1Business1User1._id.toString()
       );
     });
   });
@@ -508,11 +508,11 @@ describe('shopping', () => {
       await supertest(app)
         .del(
           getTestingRoute({
-            path: '/shopping',
-          }),
+            path: '/shopping'
+          })
         )
         .send({
-          routeName: business1User1.routeName,
+          routeName: business1User1.routeName
         })
         .expect(401);
     });
@@ -525,11 +525,11 @@ describe('shopping', () => {
 
       const bd = await fillBD({
         productPost1Business1User1: {
-          stockAmount: 20,
+          stockAmount: 20
         },
         productPost2Business1User1: {
-          stockAmount: 30,
-        },
+          stockAmount: 30
+        }
       });
 
       await removeAllShoppings();
@@ -543,8 +543,8 @@ describe('shopping', () => {
       await supertest(app)
         .get(
           getTestingRoute({
-            path: '/posts',
-          }),
+            path: '/posts'
+          })
         )
         .expect(200)
         .then((response) => {
@@ -561,28 +561,28 @@ describe('shopping', () => {
         });
 
       expect(
-        notificationsServicesSendUpdateStockAmountMessage.mock.calls[0][0].stockAmountAvailable,
+        notificationsServicesSendUpdateStockAmountMessage.mock.calls[0][0].stockAmountAvailable
       ).toEqual(15);
       expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[0][0].postId).toEqual(
-        productPost1Business1User1._id.toString(),
+        productPost1Business1User1._id.toString()
       );
 
       expect(
-        notificationsServicesSendUpdateStockAmountMessage.mock.calls[1][0].stockAmountAvailable,
+        notificationsServicesSendUpdateStockAmountMessage.mock.calls[1][0].stockAmountAvailable
       ).toEqual(20);
       expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[1][0].postId).toEqual(
-        productPost2Business1User1._id.toString(),
+        productPost2Business1User1._id.toString()
       );
 
       //emove the whole order
       await supertest(app)
         .del(
           getTestingRoute({
-            path: '/shopping',
-          }),
+            path: '/shopping'
+          })
         )
         .send({
-          routeName: business1User1.routeName,
+          routeName: business1User1.routeName
         })
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200);
@@ -592,8 +592,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/shopping',
-            query: { routeName: business1User1.routeName },
-          }),
+            query: { routeName: business1User1.routeName }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
@@ -605,8 +605,8 @@ describe('shopping', () => {
       await supertest(app)
         .get(
           getTestingRoute({
-            path: '/posts',
-          }),
+            path: '/posts'
+          })
         )
         .expect(200)
         .then((response) => {
@@ -623,17 +623,17 @@ describe('shopping', () => {
         });
 
       expect(
-        notificationsServicesSendUpdateStockAmountMessage.mock.calls[2][0].stockAmountAvailable,
+        notificationsServicesSendUpdateStockAmountMessage.mock.calls[2][0].stockAmountAvailable
       ).toEqual(20);
       expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[2][0].postId).toEqual(
-        productPost1Business1User1._id.toString(),
+        productPost1Business1User1._id.toString()
       );
 
       expect(
-        notificationsServicesSendUpdateStockAmountMessage.mock.calls[3][0].stockAmountAvailable,
+        notificationsServicesSendUpdateStockAmountMessage.mock.calls[3][0].stockAmountAvailable
       ).toEqual(30);
       expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[3][0].postId).toEqual(
-        productPost2Business1User1._id.toString(),
+        productPost2Business1User1._id.toString()
       );
     });
 
@@ -643,11 +643,11 @@ describe('shopping', () => {
 
       const bd = await fillBD({
         productPost1Business1User1: {
-          stockAmount: 20,
+          stockAmount: 20
         },
         productPost2Business1User1: {
-          stockAmount: 30,
-        },
+          stockAmount: 30
+        }
       });
 
       const { business1User1, user1, productPost1Business1User1, productPost2Business1User1 } = bd;
@@ -659,13 +659,13 @@ describe('shopping', () => {
       await supertest(app)
         .del(
           getTestingRoute({
-            path: '/shopping',
-          }),
+            path: '/shopping'
+          })
         )
         .send({
           routeName: business1User1.routeName,
           postId: productPost1Business1User1._id, // remove only the post1 from ths shopping
-          purshaseNotes: purshaseNotesDummy,
+          purshaseNotes: purshaseNotesDummy
         })
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200);
@@ -675,8 +675,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/shopping',
-            query: { routeName: business1User1.routeName },
-          }),
+            query: { routeName: business1User1.routeName }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
@@ -693,7 +693,7 @@ describe('shopping', () => {
 
           expect(shopping.posts[0].count).toEqual(10);
           expect(shopping.posts[0].postData._id).toContain(
-            productPost2Business1User1._id.toString(),
+            productPost2Business1User1._id.toString()
           );
         });
 
@@ -701,8 +701,8 @@ describe('shopping', () => {
       await supertest(app)
         .get(
           getTestingRoute({
-            path: '/posts',
-          }),
+            path: '/posts'
+          })
         )
         .expect(200)
         .then((response) => {
@@ -719,10 +719,10 @@ describe('shopping', () => {
         });
 
       expect(
-        notificationsServicesSendUpdateStockAmountMessage.mock.calls[2][0].stockAmountAvailable,
+        notificationsServicesSendUpdateStockAmountMessage.mock.calls[2][0].stockAmountAvailable
       ).toEqual(20);
       expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[2][0].postId).toEqual(
-        productPost1Business1User1._id.toString(),
+        productPost1Business1User1._id.toString()
       );
 
       expect(notificationsServicesSendUpdateStockAmountMessage.mock.calls[3]).toEqual(undefined);
@@ -737,8 +737,8 @@ describe('shopping', () => {
     it('should change the state to PROCESSING', async () => {
       const { user1, shopping1Business1User1 } = await fillBD({
         shopping1Business1User1: {
-          state: ShoppingState.REQUESTED,
-        },
+          state: ShoppingState.REQUESTED
+        }
       });
 
       // checking the state
@@ -749,12 +749,12 @@ describe('shopping', () => {
         .post(
           getTestingRoute({
             path: '/shopping/:shoppingId/changeState',
-            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
-          }),
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .send({
-          state: ShoppingState.PROCESSING,
+          state: ShoppingState.PROCESSING
         })
         .expect(200);
 
@@ -763,8 +763,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/shopping/:shoppingId',
-            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
-          }),
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
@@ -777,11 +777,11 @@ describe('shopping', () => {
     it('should change the state to REJECTED', async () => {
       const { user1, shopping1Business1User1, productPost1Business1User1 } = await fillBD({
         shopping1Business1User1: {
-          state: ShoppingState.REQUESTED,
+          state: ShoppingState.REQUESTED
         },
         productPost1Business1User1: {
-          stockAmount: 20,
-        },
+          stockAmount: 20
+        }
       });
 
       // checking the shoppinPost
@@ -789,8 +789,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/posts/:postId',
-            urlParams: { postId: productPost1Business1User1._id.toString() },
-          }),
+            urlParams: { postId: productPost1Business1User1._id.toString() }
+          })
         )
         .expect(200)
         .then((response) => {
@@ -808,12 +808,12 @@ describe('shopping', () => {
         .post(
           getTestingRoute({
             path: '/shopping/:shoppingId/changeState',
-            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
-          }),
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .send({
-          state: ShoppingState.REJECTED,
+          state: ShoppingState.REJECTED
         })
         .expect(200);
 
@@ -822,8 +822,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/shopping/:shoppingId',
-            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
-          }),
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
@@ -837,8 +837,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/posts/:postId',
-            urlParams: { postId: productPost1Business1User1._id.toString() },
-          }),
+            urlParams: { postId: productPost1Business1User1._id.toString() }
+          })
         )
         .expect(200)
         .then((response) => {
@@ -852,11 +852,11 @@ describe('shopping', () => {
     it('should change the state to CANCELED', async () => {
       const { user1, shopping1Business1User1, productPost1Business1User1 } = await fillBD({
         shopping1Business1User1: {
-          state: ShoppingState.REQUESTED,
+          state: ShoppingState.REQUESTED
         },
         productPost1Business1User1: {
-          stockAmount: 20,
-        },
+          stockAmount: 20
+        }
       });
 
       // checking the shoppinPost
@@ -864,8 +864,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/posts/:postId',
-            urlParams: { postId: productPost1Business1User1._id.toString() },
-          }),
+            urlParams: { postId: productPost1Business1User1._id.toString() }
+          })
         )
         .expect(200)
         .then((response) => {
@@ -883,12 +883,12 @@ describe('shopping', () => {
         .post(
           getTestingRoute({
             path: '/shopping/:shoppingId/changeState',
-            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
-          }),
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .send({
-          state: ShoppingState.CANCELED,
+          state: ShoppingState.CANCELED
         })
         .expect(200);
 
@@ -897,8 +897,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/shopping/:shoppingId',
-            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
-          }),
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
@@ -912,8 +912,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/posts/:postId',
-            urlParams: { postId: productPost1Business1User1._id.toString() },
-          }),
+            urlParams: { postId: productPost1Business1User1._id.toString() }
+          })
         )
         .expect(200)
         .then((response) => {
@@ -927,11 +927,11 @@ describe('shopping', () => {
     it('should change the state to DELIVERED', async () => {
       const { user1, shopping1Business1User1, productPost1Business1User1 } = await fillBD({
         shopping1Business1User1: {
-          state: ShoppingState.PROCESSING,
+          state: ShoppingState.PROCESSING
         },
         productPost1Business1User1: {
-          stockAmount: 20,
-        },
+          stockAmount: 20
+        }
       });
 
       // checking the shoppinPost
@@ -939,8 +939,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/posts/:postId',
-            urlParams: { postId: productPost1Business1User1._id.toString() },
-          }),
+            urlParams: { postId: productPost1Business1User1._id.toString() }
+          })
         )
         .expect(200)
         .then((response) => {
@@ -958,12 +958,12 @@ describe('shopping', () => {
         .post(
           getTestingRoute({
             path: '/shopping/:shoppingId/changeState',
-            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
-          }),
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .send({
-          state: ShoppingState.DELIVERED,
+          state: ShoppingState.DELIVERED
         })
         .expect(200);
 
@@ -972,8 +972,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/shopping/:shoppingId',
-            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
-          }),
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
@@ -987,8 +987,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/posts/:postId',
-            urlParams: { postId: productPost1Business1User1._id.toString() },
-          }),
+            urlParams: { postId: productPost1Business1User1._id.toString() }
+          })
         )
         .expect(200)
         .then((response) => {
@@ -1002,8 +1002,8 @@ describe('shopping', () => {
     it('should not change the state to CONSTRUCTION', async () => {
       const { user1, shopping1Business1User1 } = await fillBD({
         shopping1Business1User1: {
-          state: ShoppingState.REQUESTED,
-        },
+          state: ShoppingState.REQUESTED
+        }
       });
 
       // change the state
@@ -1011,12 +1011,12 @@ describe('shopping', () => {
         .post(
           getTestingRoute({
             path: '/shopping/:shoppingId/changeState',
-            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
-          }),
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .send({
-          state: ShoppingState.CONSTRUCTION,
+          state: ShoppingState.CONSTRUCTION
         })
         .expect(400);
 
@@ -1025,8 +1025,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/shopping/:shoppingId',
-            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
-          }),
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
@@ -1044,12 +1044,12 @@ describe('shopping', () => {
         .post(
           getTestingRoute({
             path: '/shopping/:shoppingId/changeState',
-            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
-          }),
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .send({
-          state: ShoppingState.PROCESSING,
+          state: ShoppingState.PROCESSING
         })
         .expect(400);
 
@@ -1058,8 +1058,8 @@ describe('shopping', () => {
         .get(
           getTestingRoute({
             path: '/shopping/:shoppingId',
-            urlParams: { shoppingId: shopping1Business1User1._id.toString() },
-          }),
+            urlParams: { shoppingId: shopping1Business1User1._id.toString() }
+          })
         )
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200)
