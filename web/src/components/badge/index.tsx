@@ -33,9 +33,9 @@ export const Badge = ({ variant, className }: BadgeProps) => {
           ['bg-green-100']: variant == 'success',
           ['bg-blue-100']: variant == 'info',
           ['bg-yellow-200']: variant == 'warning',
-          ['bg-gray-200']: variant == 'cart' || variant == 'truck',
+          ['bg-gray-200']: variant == 'cart' || variant == 'truck'
         },
-        className,
+        className
       )}
     >
       <IconComponent
@@ -44,7 +44,7 @@ export const Badge = ({ variant, className }: BadgeProps) => {
           ['fill-green-600']: variant == 'success',
           ['fill-blue-600']: variant == 'info',
           ['fill-yellow-600']: variant == 'warning',
-          ['fill-gray-600']: variant == 'cart',
+          ['fill-gray-600']: variant == 'cart'
         })}
         aria-hidden="true"
       />

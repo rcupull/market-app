@@ -21,13 +21,13 @@ export const useRemoveBusinessSection = (): {
             method: 'delete',
             url: getEndpoint({
               path: '/business/:routeName/sections/:sectionId',
-              urlParams: { routeName, sectionId },
-            }),
+              urlParams: { routeName, sectionId }
+            })
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

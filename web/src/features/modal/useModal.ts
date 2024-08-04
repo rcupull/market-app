@@ -1,7 +1,5 @@
 import { useSimpleSlice } from 'features/slices/useSimpleSlice';
 
-import { useRouter } from 'hooks/useRouter';
-
 import { ModalId, ModalWindowOptions, ModalWindowProps } from './types';
 
 interface ModalData<Id extends ModalId = ModalId> {
@@ -13,10 +11,10 @@ type OnCloseFn = () => void;
 type PushModal = <Id extends ModalId>(
   id: Id,
   props: ModalWindowProps<Id>,
-  options?: ModalWindowOptions,
+  options?: ModalWindowOptions
 ) => void;
 
-type OnIsOpen = <Id extends ModalId>(id: Id) => boolean;
+type OnIsOpen = () => boolean;
 
 export const useModal = (): {
   pushModal: PushModal;
@@ -25,42 +23,18 @@ export const useModal = (): {
   onIsOpen: OnIsOpen;
   allModalData: Array<ModalData>;
 } => {
-  const { onChangeQuery, query, onBack } = useRouter();
-
-  const { modalId, modalProps } = query as { modalId?: ModalId; modalProps?: string };
-
-  const {
-    data: emergentState,
-    setData,
-    reset,
-  } = useSimpleSlice<Array<ModalData>>('emergentModals');
+  const { data, setData, reset } = useSimpleSlice<Array<ModalData>>('emergentModals');
 
   ///////////////////////////////////////////////////////////////////////////////////////////
-  const handleCloseAllEmergent = () => reset();
-  const handleCloseLastEmergent = () => setData((currentState) => currentState.slice(0, -1));
-  const handleCloseRouterModal = () => onBack();
+  const onClose = () => setData((currentState) => currentState.slice(0, -1));
 
-  const hasSomeEmergent = !!emergentState.length;
-
-  const onClose = hasSomeEmergent ? handleCloseLastEmergent : handleCloseRouterModal;
-
-  const onCloseAll = () => {
-    handleCloseAllEmergent();
-    handleCloseRouterModal();
-  };
-
+  const onCloseAll = () => reset();
   const pushModal: PushModal = (modalId, props, options) => {
-    const { timeout, emergent } = options || {};
+    const { timeout } = options || {};
 
-    const handleAddEmergent = () => {
+    const handlePush = () => {
       setData((state) => [...state, { id: modalId, props }]);
     };
-
-    const handlePushModal = () => {
-      onChangeQuery({ modalId, modalProps: JSON.stringify(props) });
-    };
-
-    const handlePush = emergent ? handleAddEmergent : handlePushModal;
 
     if (timeout) {
       setTimeout(handlePush, timeout);
@@ -69,19 +43,15 @@ export const useModal = (): {
     handlePush();
   };
 
-  const onIsOpen: OnIsOpen = (currentId) => {
-    return emergentState.some(({ id }) => currentId === id) || modalId === currentId;
+  const onIsOpen: OnIsOpen = () => {
+    return !!data.length;
   };
-
-  const routerModalata: ModalData | undefined = modalId
-    ? { id: modalId, props: modalProps ? JSON.parse(modalProps) : {} }
-    : undefined;
 
   return {
     pushModal,
     onClose,
     onCloseAll,
     onIsOpen,
-    allModalData: [...(routerModalata ? [routerModalata] : []), ...emergentState],
+    allModalData: data
   };
 };

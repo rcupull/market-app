@@ -3,7 +3,7 @@ import { FieldInputImages } from '.';
 import { FormikWrapper } from 'utils/storybook';
 
 export default {
-  component: FieldInputImages,
+  component: FieldInputImages
 };
 
 export const Default = (): JSX.Element => (

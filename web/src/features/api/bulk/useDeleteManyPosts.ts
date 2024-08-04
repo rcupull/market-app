@@ -24,18 +24,18 @@ export const useDeleteManyPosts = (): {
           {
             method: 'delete',
             url: getEndpoint({
-              path: '/posts/bulkActions/delete',
+              path: '/posts/bulkActions/delete'
             }),
             data: {
               ids,
               query,
-              routeName,
-            },
+              routeName
+            }
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

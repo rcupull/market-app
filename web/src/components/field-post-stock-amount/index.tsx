@@ -32,8 +32,8 @@ export const FieldPostStockAmount = ({
           field.onChange({
             target: {
               name: field.name,
-              value: e.target.checked ? 0 : null,
-            },
+              value: e.target.checked ? 0 : null
+            }
           });
         }}
       />

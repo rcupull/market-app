@@ -30,7 +30,7 @@ export const isPasswordValidLowerCase = (password: string): boolean => {
 };
 
 export const getStrongPasswordTracking = (
-  value: string,
+  value: string
 ): {
   valid: boolean;
   trackingNode: React.ReactNode;
@@ -40,7 +40,7 @@ export const getStrongPasswordTracking = (
     number: isPasswordValidNumber(value),
     symbol: isPasswordValidSpecialChar(value),
     uppercase: isPasswordValidUppperCase(value),
-    lowercase: isPasswordValidLowerCase(value),
+    lowercase: isPasswordValidLowerCase(value)
   };
 
   const renderTraking = (label: string, valid: boolean) => {
@@ -48,7 +48,7 @@ export const getStrongPasswordTracking = (
       <div
         className={cn('flex items-center text-sm my-0.5', {
           'text-green-600 fill-green-600': valid,
-          'text-red-600 fill-red-600': !valid,
+          'text-red-600 fill-red-600': !valid
         })}
       >
         {valid ? <SvgCheckCircleSolid className="size-4" /> : <SvgTimesCircle className="size-4" />}
@@ -67,6 +67,6 @@ export const getStrongPasswordTracking = (
         {renderTraking('Requiere una letra mayúscula como mínimo.', !!validations.uppercase)}
         {renderTraking('Requiere una letra minúsculas como mínimo.', !!validations.lowercase)}
       </div>
-    ),
+    )
   };
 };

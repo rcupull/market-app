@@ -14,7 +14,7 @@ export const TableRow = ({
   onClick,
   className,
   index,
-  enabledReorder,
+  enabledReorder
 }: TableRowProps & { index: number }) => {
   let nodes = nodesProp;
   const { attributes, listeners, setNodeRef, transform, transition, isSorting, isDragging } =
@@ -25,8 +25,8 @@ export const TableRow = ({
       id: index + 1,
       transition: {
         duration: 0,
-        easing: 'ease',
-      },
+        easing: 'ease'
+      }
     });
 
   if (enabledReorder) {
@@ -37,16 +37,16 @@ export const TableRow = ({
     <tr
       style={{
         transform: CSS.Transform.toString(transform),
-        transition,
+        transition
       }}
       onClick={onClick}
       className={cn(
         {
           ['cursor-pointer']: !!onClick,
           'hover:bg-indigo-50': isSorting && !isDragging,
-          'bg-gray-50': isDragging,
+          'bg-gray-50': isDragging
         },
-        className,
+        className
       )}
     >
       {nodes.map((node, indexCell) => {
@@ -59,7 +59,7 @@ export const TableRow = ({
             ...listeners,
             ...attributes,
             className: '!cursor-grab !hover:bg-gray-100 !p-0',
-            title: 'Arrastre y suelte para reordenar',
+            title: 'Arrastre y suelte para reordenar'
           };
         }
 
@@ -69,7 +69,7 @@ export const TableRow = ({
             {...othersProps}
             className={cn(
               'px-6 py-4 whitespace-no-wrap border-b-2 border-gray-300 relative',
-              othersProps.className,
+              othersProps.className
             )}
           >
             {node}

@@ -42,7 +42,7 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
           postCategories: [],
           name: '',
           currency: 'CUP',
-          ...(business || {}),
+          ...(business || {})
         }}
         validate={[
           {
@@ -51,17 +51,17 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
             customCb: (val) => {
               return val.length > 0;
             },
-            message: 'Debes seleccionar al menos una categoría',
+            message: 'Debes seleccionar al menos una categoría'
           },
           {
             field: 'name',
-            type: 'required',
+            type: 'required'
           },
           {
             field: 'name',
             type: 'custom',
             customCb: (value) => value.length <= 25,
-            message: 'El nombre del negocio no puede superar los 25 caracteres',
+            message: 'El nombre del negocio no puede superar los 25 caracteres'
           },
           {
             field: 'name',
@@ -75,13 +75,13 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                     { routeName },
                     {
                       onAfterSuccess: () => resolve(false),
-                      onAfterFailed: () => resolve(true),
-                    },
+                      onAfterFailed: () => resolve(true)
+                    }
                   );
                 }, 500);
               });
-            },
-          },
+            }
+          }
         ]}
       >
         {({ errors, value }) => {
@@ -113,14 +113,14 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                 <FieldSelect<{ currency: BusinessCurrency }>
                   items={[
                     {
-                      currency: 'CUP',
+                      currency: 'CUP'
                     },
                     {
-                      currency: 'MLC',
+                      currency: 'MLC'
                     },
                     {
-                      currency: 'USD',
-                    },
+                      currency: 'USD'
+                    }
                   ]}
                   renderOption={({ currency }) => currency}
                   renderValue={({ currency }) => currency}
@@ -150,12 +150,12 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                         {
                           routeName: business.routeName,
                           update: {
-                            name,
-                          },
+                            name
+                          }
                         },
                         {
-                          onAfterSuccess,
-                        },
+                          onAfterSuccess
+                        }
                       );
                     } else {
                       const { postCategories, name, currency } = value;
@@ -165,17 +165,17 @@ export const Component = ({ portal, business, onAfterSuccess }: ComponentProps) 
                           postCategories,
                           name,
                           currency,
-                          routeName: getRouteName(name),
+                          routeName: getRouteName(name)
                         },
                         {
-                          onAfterSuccess,
-                        },
+                          onAfterSuccess
+                        }
                       );
                     }
                   }}
                   variant="primary"
                   className="w-full"
-                />,
+                />
               )}
             </form>
           );

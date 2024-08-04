@@ -25,9 +25,9 @@ export const HighlightedBox = ({ children, className, variant }: HighlightedBoxP
         {
           'ring-yellow-500': variant === 'warning',
           'ring-gray-500': variant === 'neutral',
-          'ring-green-500': variant === 'success',
+          'ring-green-500': variant === 'success'
         },
-        className,
+        className
       )}
     >
       <Badge variant={getBadgeVariant()} />

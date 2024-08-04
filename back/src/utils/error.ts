@@ -20,7 +20,7 @@ export const withTryCatch = async (
 
     get500Response({
       res,
-      json: { error: `Error: ${tag}` },
+      json: { error: `Error: ${tag}` }
     });
   }
 };

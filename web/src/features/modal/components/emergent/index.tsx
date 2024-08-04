@@ -1,7 +1,5 @@
 import { Modal, ModalProps } from 'components/modal';
 
-import { CloseContextProvider } from './closeContext/CloseContextProvider';
-
 export interface EmergentProps {
   useProps: () => Partial<ModalProps>;
 }
@@ -9,11 +7,7 @@ export interface EmergentProps {
 export const Emergent = ({ useProps }: EmergentProps) => {
   const modalProps = useProps();
 
-  return (
-    <CloseContextProvider modalProps={modalProps}>
-      {({ modalProps }) => <Modal content="<Some message>" {...modalProps} />}
-    </CloseContextProvider>
-  );
+  return <Modal content="<Some message>" {...modalProps} />;
 };
 
 export default Emergent;

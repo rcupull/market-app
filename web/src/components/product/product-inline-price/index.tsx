@@ -18,7 +18,7 @@ export const ProductInlinePrice = ({
   href,
   name,
   description,
-  price,
+  price
 }: Props) => {
   return (
     <div data-id="ProductInlinePrice" className={cn('group relative', className)}>

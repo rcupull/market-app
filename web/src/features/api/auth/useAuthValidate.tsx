@@ -17,12 +17,12 @@ export const useAuthValidate = (): {
           {
             method: 'post',
             url: getEndpoint({ path: '/auth/validate' }),
-            data: { code },
+            data: { code }
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

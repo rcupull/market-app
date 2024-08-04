@@ -14,7 +14,7 @@ import { getFlattenArray, isArray, isEqual } from 'utils/general';
 export interface FieldSelectAsyncProps<
   Option extends AnyRecord = AnyRecord,
   Value = any,
-  FetchArgs = AnyRecord,
+  FetchArgs = AnyRecord
 > extends StyleProps,
     FormFieldWrapperProps {
   useCall: () => FetchResourceWithPagination<FetchArgs, Option>;
@@ -50,7 +50,7 @@ export const FieldSelectAsync = <Option extends AnyRecord = AnyRecord>({
   const items = data || [];
 
   const itemToSelectOption = (
-    item: Option | undefined,
+    item: Option | undefined
   ): {
     value: any;
     label: React.ReactNode;
@@ -58,13 +58,13 @@ export const FieldSelectAsync = <Option extends AnyRecord = AnyRecord>({
     if (item === undefined) {
       return {
         value: undefined,
-        label: 'Elemento desconocido',
+        label: 'Elemento desconocido'
       };
     }
 
     return {
       value: item,
-      label: renderOption(item),
+      label: renderOption(item)
     };
   };
 
@@ -73,7 +73,7 @@ export const FieldSelectAsync = <Option extends AnyRecord = AnyRecord>({
 
     if (isArray(value)) {
       const foundItems = value.map((v) =>
-        items.find((item) => isEqual(optionToValue ? optionToValue(item) : item, v)),
+        items.find((item) => isEqual(optionToValue ? optionToValue(item) : item, v))
       );
       newState = foundItems.map(itemToSelectOption);
     } else {
@@ -95,8 +95,8 @@ export const FieldSelectAsync = <Option extends AnyRecord = AnyRecord>({
       field.onChange({
         target: {
           name: field.name,
-          value: newValue.map((v) => (optionToValue ? optionToValue(v.value) : v.value)),
-        },
+          value: newValue.map((v) => (optionToValue ? optionToValue(v.value) : v.value))
+        }
       });
     } else {
       const newSelectedOption = newValue;
@@ -105,8 +105,8 @@ export const FieldSelectAsync = <Option extends AnyRecord = AnyRecord>({
       field.onChange({
         target: {
           name: field.name,
-          value: optionToValue ? optionToValue(newValue.value) : newValue.value,
-        },
+          value: optionToValue ? optionToValue(newValue.value) : newValue.value
+        }
       });
     }
   };
@@ -122,7 +122,7 @@ export const FieldSelectAsync = <Option extends AnyRecord = AnyRecord>({
     handleFetch('', {
       onAfterSuccess: () => {
         setTimeout(() => setInitialFetching(false), 100);
-      },
+      }
     });
   };
 
@@ -173,14 +173,14 @@ export const FieldSelectAsync = <Option extends AnyRecord = AnyRecord>({
               border: 'none',
               outline: 'none',
               ':focus-visible': {
-                outline: 'none',
+                outline: 'none'
               },
               ':focus': {
                 outline: 'none',
-                boxShadow: 'none',
-              },
+                boxShadow: 'none'
+              }
             };
-          },
+          }
         }}
         options={items.map(itemToSelectOption)}
         onInputChange={(inputValue, { action }) => {
@@ -195,8 +195,8 @@ export const FieldSelectAsync = <Option extends AnyRecord = AnyRecord>({
 
           field.onBlur({
             target: {
-              name: field.name,
-            },
+              name: field.name
+            }
           });
 
           handleChange(newValue);

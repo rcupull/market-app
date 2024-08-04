@@ -8,10 +8,9 @@ import { IconButton } from 'components/icon-button';
 import { IconButtonRemove } from 'components/icon-button-remove';
 import { Input } from 'components/input';
 
-import { useModal } from 'features/modal/useModal';
-
 import SvgExternalLinkAltSolid from 'icons/ExternalLinkAltSolid';
 import SvgPlusSolid from 'icons/PlusSolid';
+import { useCatalogsSearchImageModal } from 'pages/@modals/useCatalogsSearchImageModal';
 import { Image, ImageFile } from 'types/general';
 import { getImageEndpoint } from 'utils/api';
 import { getFileImageSize } from 'utils/file';
@@ -33,7 +32,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
   (props, ref) => {
     const { className, label, multi, max, enabledImageHref, ...omittedProps } = props;
 
-    const { pushModal } = useModal();
+    const { catalogsSearchImageModal } = useCatalogsSearchImageModal();
     const { field, error } = useFormField(props);
 
     const { value } = field;
@@ -84,7 +83,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
 
     const handleChange = async (
       image: File | Image | null | undefined,
-      action: 'add' | 'remove' | 'change',
+      action: 'add' | 'remove' | 'change'
     ) => {
       let newStateToPreview = [...stateToPreview];
 
@@ -97,9 +96,9 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
               newStateToPreview,
               {
                 src: image,
-                ...(await getFileImageSize(image)),
+                ...(await getFileImageSize(image))
               },
-              previewIndex,
+              previewIndex
             );
           } else {
             newStateToPreview = updateRow(newStateToPreview, image, previewIndex);
@@ -127,18 +126,18 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
               {
                 ...newStateToPreview[previewIndex],
                 src: image,
-                ...(await getFileImageSize(image)),
+                ...(await getFileImageSize(image))
               },
-              previewIndex,
+              previewIndex
             );
           } else {
             newStateToPreview = updateRow(
               newStateToPreview,
               {
                 ...newStateToPreview[previewIndex],
-                ...image,
+                ...image
               },
-              previewIndex,
+              previewIndex
             );
           }
 
@@ -156,15 +155,15 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
 
       field.onBlur({
         target: {
-          name: field.name,
-        },
+          name: field.name
+        }
       });
 
       field.onChange({
         target: {
           name: field.name,
-          value: newState,
-        },
+          value: newState
+        }
       });
     };
 
@@ -177,14 +176,14 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
       const addImages = async (
         images: Array<ImageElement>,
         imagesToAdd: Array<Image | File>,
-        index: number,
+        index: number
       ): Promise<void> => {
         const image = imagesToAdd[index];
 
         if (image instanceof File) {
           images.push({
             src: image,
-            ...(await getFileImageSize(image)),
+            ...(await getFileImageSize(image))
           });
         } else {
           images.push(image);
@@ -209,8 +208,8 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
       field.onChange({
         target: {
           name: field.name,
-          value: newState,
-        },
+          value: newState
+        }
       });
     };
 
@@ -224,9 +223,9 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
           newStateToPreview,
           {
             ...current,
-            href,
+            href
           },
-          previewIndex,
+          previewIndex
         );
 
         setStateToPreview(newStateToPreview);
@@ -236,21 +235,17 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
         field.onChange({
           target: {
             name: field.name,
-            value: newState,
-          },
+            value: newState
+          }
         });
       }
     };
 
     const handleOpenCatalogsSearchImage = () => {
-      pushModal(
-        'CatalogsSearchImage',
-        {
-          onSelected: (images) => handleAddManyImages(images),
-          multi: true,
-        },
-        { emergent: true },
-      );
+      catalogsSearchImageModal.open({
+        onSelected: (images) => handleAddManyImages(images),
+        multi: true
+      });
     };
     return (
       <FormFieldWrapper label={label} error={error} className={className}>
@@ -263,7 +258,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                 <div
                   key={index}
                   className={cn('h-8 w-10 cursor-pointer', {
-                    'border-gray-700 border-2 rounded-md p-0.5': selected,
+                    'border-gray-700 border-2 rounded-md p-0.5': selected
                   })}
                   onClick={() => setPreviewIndex(index)}
                 >
@@ -282,7 +277,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
         )}
         <div
           className={cn('relative h-48', {
-            'ring-1 rounded-md ring-red-500 focus:ring-red-500': !!error,
+            'ring-1 rounded-md ring-red-500 focus:ring-red-500': !!error
           })}
           onDragOver={(event) => {
             event.preventDefault();
@@ -321,7 +316,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                     <label
                       htmlFor={field.name}
                       className={cn(
-                        'relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500',
+                        'relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500'
                       )}
                     >
                       <span>Seleccione imagen en su galería</span>
@@ -336,7 +331,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                         onChange={(event) => {
                           handleChange(
                             event.target.files?.[0],
-                            previewIndex === stateToPreview.length - 1 ? 'add' : 'change',
+                            previewIndex === stateToPreview.length - 1 ? 'add' : 'change'
                           );
                         }}
                       />
@@ -345,7 +340,7 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
                   <li>
                     <span
                       className={cn(
-                        'relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500',
+                        'relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500'
                       )}
                       onClick={() => {
                         handleOpenCatalogsSearchImage();
@@ -382,5 +377,5 @@ export const FieldInputImages = forwardRef<HTMLInputElement, FieldInputImagesPro
         )}
       </FormFieldWrapper>
     );
-  },
+  }
 );

@@ -10,94 +10,94 @@ describe('useGetFormErrors', () => {
       // simple valid required
       {},
       {
-        value: 'test',
+        value: 'test'
       },
       {
         field: 'value',
-        type: 'required',
-      },
+        type: 'required'
+      }
     ],
     [
       // deep valid required
       {},
       {
-        value: { field: 'test' },
+        value: { field: 'test' }
       },
       {
         field: 'value.field',
-        type: 'required',
-      },
+        type: 'required'
+      }
     ],
     [
       // simple not valid required
       { value: 'Campo requerido.' },
       {
-        value: '',
+        value: ''
       },
       {
         field: 'value',
-        type: 'required',
-      },
+        type: 'required'
+      }
     ],
     [
       // deep not valid required
       { 'value.field': 'Campo requerido.' },
       {
-        value: { field: '' },
+        value: { field: '' }
       },
       {
         field: 'value.field',
-        type: 'required',
-      },
+        type: 'required'
+      }
     ],
     [
       // simple valid email
       {},
       {
-        value: 'asdasd@asdd.com',
+        value: 'asdasd@asdd.com'
       },
       {
         field: 'value',
-        type: 'email',
-      },
+        type: 'email'
+      }
     ],
     [
       // simple not valid email
       { value: 'Email inválido.' },
       {
-        value: 'wrong email',
+        value: 'wrong email'
       },
       {
         field: 'value',
-        type: 'email',
-      },
+        type: 'email'
+      }
     ],
     [
       // deep valid email
       {},
       {
         value: {
-          email: 'asdasd@asdd.com',
-        },
+          email: 'asdasd@asdd.com'
+        }
       },
       {
         field: 'value.email',
-        type: 'email',
-      },
+        type: 'email'
+      }
     ],
     [
       // deep not valid email
       { 'value.email': 'Email inválido.' },
       {
         value: {
-          email: 'wrong email',
-        },
+          email: 'wrong email'
+        }
       },
       {
         field: 'value.email',
-        type: 'email',
-      },
-    ],
+        type: 'email'
+      }
+    ]
   ];
 
   it.each(args)(
@@ -107,6 +107,6 @@ describe('useGetFormErrors', () => {
 
       const errors = await result.current(value, [validation]);
       expect(errors).toEqual(expected);
-    },
+    }
   );
 });

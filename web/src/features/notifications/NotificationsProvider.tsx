@@ -4,7 +4,7 @@ import { ChildrenProp } from 'types/general';
 import { dynamic } from 'utils/makeLazy';
 
 const NotificationsProviderNative = dynamic(() =>
-  import('./NotificationsProviderNative').then((m) => m),
+  import('./NotificationsProviderNative').then((m) => m)
 );
 const NotificationsProviderWeb = dynamic(() => import('./NotificationsProviderWeb').then((m) => m));
 
@@ -13,7 +13,7 @@ export const NotificationsProvider = ({ children }: ChildrenProp) => {
 
   const Provider = platformToggle({
     native: NotificationsProviderNative,
-    web: NotificationsProviderWeb,
+    web: NotificationsProviderWeb
   });
 
   return (

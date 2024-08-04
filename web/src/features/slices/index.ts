@@ -7,16 +7,16 @@ export const slices = {
   useCart: createSimpleSlice<ReduxState['useCart']>('useCart', null),
   useShoppingIdPersistent: createSimpleSlice<ReduxState['useShoppingIdPersistent']>(
     'useShoppingIdPersistent',
-    null,
+    null
   ),
   usePostIdPersistent: createSimpleSlice<ReduxState['usePostIdPersistent']>(
     'usePostIdPersistent',
-    null,
+    null
   ),
   //
   modal_catalogsSearchImage: createSimpleSlice<ReduxState['modal_catalogsSearchImage']>(
     'modal_catalogsSearchImage',
-    null,
+    null
   ),
   //
   useCallFromAfar: createSimpleSlice<ReduxState['useCallFromAfar']>('useCallFromAfar', []),
@@ -24,9 +24,9 @@ export const slices = {
   //
   useAllUserBusiness: createSimpleSlice<ReduxState['useAllUserBusiness']>(
     'useAllUserBusiness',
-    null,
+    null
   ),
   useAdminConfig: createSimpleSlice<ReduxState['useAdminConfig']>('useAdminConfig', null),
   useAuth: createSimpleSlice<ReduxState['useAuth']>('useAuth', null),
-  useSignOut: createSimpleSlice<ReduxState['useSignOut']>('useSignOut', null),
+  useSignOut: createSimpleSlice<ReduxState['useSignOut']>('useSignOut', null)
 };

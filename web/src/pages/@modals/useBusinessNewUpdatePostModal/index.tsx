@@ -21,66 +21,62 @@ export const useBusinessNewUpdatePostModal = () => {
   return {
     businessNewUpdatePostModal: {
       open: (args: { postId?: string; postType?: PostType; onAfterSuccess?: () => void }) => {
-        pushModal(
-          'Emergent',
-          {
-            useProps: () => {
-              const { postId, onAfterSuccess, postType } = args || {};
-              const { onClose } = useModal();
-              const portal = usePortal();
-              const { getOnePost } = useGetOnePost();
+        pushModal('Emergent', {
+          useProps: () => {
+            const { postId, onAfterSuccess, postType } = args || {};
+            const { onClose } = useModal();
+            const portal = usePortal();
+            const { getOnePost } = useGetOnePost();
 
-              const realPostType = postType || getOnePost.data?.postType;
+            const realPostType = postType || getOnePost.data?.postType;
 
-              useEffect(() => {
-                if (postId) {
-                  getOnePost.fetch({ id: postId });
-                }
-              }, []);
+            useEffect(() => {
+              if (postId) {
+                getOnePost.fetch({ id: postId });
+              }
+            }, []);
 
-              const getContent = () => {
-                if (getOnePost.status.isBusy && !getOnePost.data) {
-                  return <></>;
-                }
+            const getContent = () => {
+              if (getOnePost.status.isBusy && !getOnePost.data) {
+                return <></>;
+              }
 
-                const Component = realPostType === 'product' ? ComponentProduct : ComponentLink;
+              const Component = realPostType === 'product' ? ComponentProduct : ComponentLink;
 
-                return (
-                  <Component
-                    portal={portal}
-                    post={getOnePost.data}
-                    onRefreshPost={() => postId && getOnePost.fetch({ id: postId })}
-                    onAfterSuccess={() => {
-                      onAfterSuccess?.();
-                      onClose();
-                    }}
-                  />
-                );
-              };
+              return (
+                <Component
+                  portal={portal}
+                  post={getOnePost.data}
+                  onRefreshPost={() => postId && getOnePost.fetch({ id: postId })}
+                  onAfterSuccess={() => {
+                    onAfterSuccess?.();
+                    onClose();
+                  }}
+                />
+              );
+            };
 
-              const getTitle = () => {
-                if (!realPostType) {
-                  return 'Cargando...';
-                }
+            const getTitle = () => {
+              if (!realPostType) {
+                return 'Cargando...';
+              }
 
-                if (postId) {
-                  return realPostType == 'product' ? 'Editar Producto' : 'Editar Enlace';
-                } else {
-                  return realPostType == 'product' ? 'Nuevo Producto' : 'Nuevo Enlace';
-                }
-              };
-              return {
-                title: getTitle(),
-                isBusy: getOnePost.status.isBusy && !getOnePost.data,
-                content: getContent(),
-                secondaryBtn: <ButtonClose />,
-                primaryBtn: <div ref={portal.ref} />,
-              };
-            },
-          },
-          { emergent: true },
-        );
-      },
-    },
+              if (postId) {
+                return realPostType == 'product' ? 'Editar Producto' : 'Editar Enlace';
+              } else {
+                return realPostType == 'product' ? 'Nuevo Producto' : 'Nuevo Enlace';
+              }
+            };
+            return {
+              title: getTitle(),
+              isBusy: getOnePost.status.isBusy && !getOnePost.data,
+              content: getContent(),
+              secondaryBtn: <ButtonClose />,
+              primaryBtn: <div ref={portal.ref} />
+            };
+          }
+        });
+      }
+    }
   };
 };

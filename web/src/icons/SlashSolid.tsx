@@ -9,9 +9,9 @@ export function SvgSlashSolid(props: StyleProps) {
       viewBox: '0 0 32 32',
       width: '1em',
       height: '1em',
-      ...props,
+      ...props
     },
-    createElement('path', { d: 'M26.281 4.281l-22 22L5.72 27.72l22-22z' }),
+    createElement('path', { d: 'M26.281 4.281l-22 22L5.72 27.72l22-22z' })
   );
 }
 export default SvgSlashSolid;

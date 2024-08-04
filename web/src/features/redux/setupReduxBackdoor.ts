@@ -9,7 +9,7 @@ interface WrappedStore {
 const store: WrappedStore = {
   dispatch: (action) => action,
   getState: () => ({}),
-  subscribe: () => () => undefined,
+  subscribe: () => () => undefined
 };
 
 /*

@@ -19,14 +19,14 @@ export const useShoppingMakeOrder = (): {
             method: 'post',
             url: getEndpoint({
               path: '/shopping/:shoppingId/makeOrder',
-              urlParams: { shoppingId },
+              urlParams: { shoppingId }
             }),
-            data: { delivery },
+            data: { delivery }
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

@@ -22,7 +22,7 @@ export const ProductImages2 = ({ value, className }: ProductImages2Props) => {
     <div
       className={cn(
         'flex flex-col-reverse sm:flex-row justify-center gap-2 w-full min-h-[20rem] lg:min-h-[30rem]',
-        className,
+        className
       )}
     >
       <div className="flex flex-row sm:flex-col gap-2 overflow-auto flex-shrink-0">
@@ -37,7 +37,7 @@ export const ProductImages2 = ({ value, className }: ProductImages2Props) => {
               src={getImageEndpoint(src)}
               alt={alt}
               className={cn('h-20 w-20 object-cover object-center cursor-pointer', {
-                'border-2 border-gray-400 rounded-sm': selected,
+                'border-2 border-gray-400 rounded-sm': selected
               })}
             />
           );

@@ -18,13 +18,13 @@ export const useRemoveOneUserAdmin = (): {
             method: 'delete',
             url: getEndpoint({
               path: '/admin/users/:id',
-              urlParams: { id },
-            }),
+              urlParams: { id }
+            })
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

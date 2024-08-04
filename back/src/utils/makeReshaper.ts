@@ -71,7 +71,7 @@ export const makeReshaper = <I extends AnyRecord = AnyRecord, O extends AnyRecor
 
     return {
       ...propsToAdd,
-      ...reshaped,
+      ...reshaped
     };
   };
 };
@@ -86,16 +86,19 @@ export const makeInvestedReshaper = <
     return () => ({});
   }
 
-  const investedRules = Object.entries(reshapeRules).reduce((acc, [newKey, oldKey]) => {
-    if (typeof oldKey === 'function') {
-      throw new Error('This fearure is imposible using functions');
-    }
+  const investedRules = Object.entries(reshapeRules).reduce(
+    (acc, [newKey, oldKey]) => {
+      if (typeof oldKey === 'function') {
+        throw new Error('This fearure is imposible using functions');
+      }
 
-    return {
-      ...acc,
-      [oldKey as string]: newKey,
-    };
-  }, {} as ReshapeRules<O, I>);
+      return {
+        ...acc,
+        [oldKey as string]: newKey
+      };
+    },
+    {} as ReshapeRules<O, I>
+  );
 
   return makeReshaper<O, I>(investedRules);
 };

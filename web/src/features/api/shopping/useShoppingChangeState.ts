@@ -19,16 +19,16 @@ export const useShoppingChangeState = (): {
             method: 'post',
             url: getEndpoint({
               path: '/shopping/:shoppingId/changeState',
-              urlParams: { shoppingId },
+              urlParams: { shoppingId }
             }),
             data: {
-              state,
-            },
+              state
+            }
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

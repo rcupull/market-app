@@ -12,12 +12,12 @@ describe('BulkActions', () => {
           current: {
             onReset: () => {},
             selected: [],
-            selectedAll: false,
-          },
+            selectedAll: false
+          }
         }}
       >
         {() => <></>}
-      </BulkActions>,
+      </BulkActions>
     );
 
     expect(result.container).toMatchInlineSnapshot(`<div />`);

@@ -22,9 +22,9 @@ export const ShoppingStateLabel = ({ state, disableColor, className }: ShoppingS
           'text-blue-500': !disableColor && state === ShoppingState.APPROVED,
           'text-red-500':
             (!disableColor && state === ShoppingState.REJECTED) ||
-            (!disableColor && state === ShoppingState.CANCELED),
+            (!disableColor && state === ShoppingState.CANCELED)
         },
-        className,
+        className
       )}
     >
       {getShoppingStateLabel(state)}

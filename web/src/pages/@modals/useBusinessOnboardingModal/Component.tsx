@@ -23,21 +23,21 @@ export const Component = () => {
       {
         routeName: business?.routeName,
         update: {
-          doneOnboarding: true,
-        },
+          doneOnboarding: true
+        }
       },
       {
         onAfterSuccess: () => {
           onClose();
           onFetch({ routeName: business?.routeName });
-        },
-      },
+        }
+      }
     );
   };
 
   const getStepProps = (
     stepperProps: OnboardingStepProps,
-    isLast: boolean,
+    isLast: boolean
   ): OnboardingStepProps => {
     if (isLast) {
       return {
@@ -48,15 +48,15 @@ export const Component = () => {
           isBusy: updateChecksBusiness.status.isBusy,
           onClick: () => {
             handleCheckAndClose();
-          },
+          }
         },
         centerBtnProps: {
           ...stepperProps.centerBtnProps,
           isBusy: updateChecksBusiness.status.isBusy,
           onClick: () => {
             handleCheckAndClose();
-          },
-        },
+          }
+        }
       };
     }
 
@@ -68,24 +68,24 @@ export const Component = () => {
       items={[
         {
           label: 'Notificaciones',
-          render: (props) => <StepNotifications {...getStepProps(props, false)} />,
+          render: (props) => <StepNotifications {...getStepProps(props, false)} />
         },
         {
           label: 'Agregue su primera sección de productos',
-          render: (props) => <StepPostsSections {...getStepProps(props, false)} />,
+          render: (props) => <StepPostsSections {...getStepProps(props, false)} />
         },
         {
           label: 'Formulario de productos',
-          render: (props) => <StepPostForm {...getStepProps(props, false)} />,
+          render: (props) => <StepPostForm {...getStepProps(props, false)} />
         },
         {
           label: 'Agregue su primer producto',
-          render: (props) => <StepPost {...getStepProps(props, false)} />,
+          render: (props) => <StepPost {...getStepProps(props, false)} />
         },
         {
           label: 'Banner publicitario',
-          render: (props) => <StepBanner {...getStepProps(props, true)} />,
-        },
+          render: (props) => <StepBanner {...getStepProps(props, true)} />
+        }
       ]}
     />
   );

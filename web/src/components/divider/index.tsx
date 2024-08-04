@@ -12,9 +12,9 @@ export const Divider = ({ className, narrow }: DividerProps) => {
         'w-full border-t-2 border-gray-300',
         {
           'mt-8 mb-4': !narrow,
-          'my-1': narrow,
+          'my-1': narrow
         },
-        className,
+        className
       )}
     />
   );

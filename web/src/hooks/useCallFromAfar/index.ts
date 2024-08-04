@@ -8,7 +8,7 @@ export type CallAfarResources = string | Array<string>;
 
 export const useCallFromAfar = (
   currentId?: CallAfarResources,
-  callback?: (response?: any) => void,
+  callback?: (response?: any) => void
 ): {
   onCallAfar: (callAfarResources?: CallAfarResources, response?: any) => void;
 } => {
@@ -36,6 +36,6 @@ export const useCallFromAfar = (
       }
 
       return setData([...data, { id: callAfarResources, response }]);
-    },
+    }
   };
 };

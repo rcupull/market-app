@@ -30,16 +30,16 @@ export const AdvertisementsBusinessOnboarding = () => {
                 {
                   routeName: business?.routeName,
                   update: {
-                    doneOnboarding: true,
-                  },
+                    doneOnboarding: true
+                  }
                 },
                 {
                   onAfterSuccess: () => {
                     onFetch({ routeName: business?.routeName });
-                  },
-                },
+                  }
+                }
               );
-            },
+            }
           }}
         >
           <span>

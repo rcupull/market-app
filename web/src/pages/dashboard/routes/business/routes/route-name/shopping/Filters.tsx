@@ -26,7 +26,7 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
   };
 
   const businessHasDelivery = getDeliveryUtils().getIsEnabled({
-    deliveryConfig: business?.deliveryConfig,
+    deliveryConfig: business?.deliveryConfig
   });
 
   const handleChange = (state: Value) => {
@@ -53,26 +53,26 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
         optionToValue={({ value }) => value}
         items={[
           {
-            value: 'ALL',
+            value: 'ALL'
           },
           {
-            value: ShoppingState.REQUESTED,
+            value: ShoppingState.REQUESTED
           },
           {
-            value: ShoppingState.APPROVED,
+            value: ShoppingState.APPROVED
           },
           {
-            value: ShoppingState.PROCESSING,
+            value: ShoppingState.PROCESSING
           },
           businessHasDelivery && {
-            value: ShoppingState.READY_TO_DELIVERY,
+            value: ShoppingState.READY_TO_DELIVERY
           },
           {
-            value: ShoppingState.DELIVERED,
+            value: ShoppingState.DELIVERED
           },
           {
-            value: ShoppingState.REJECTED,
-          },
+            value: ShoppingState.REJECTED
+          }
         ]}
         className={cn('flex items-center gap-4 mb-5 flex-wrap w-full', className)}
       />

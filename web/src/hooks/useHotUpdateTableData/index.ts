@@ -8,12 +8,12 @@ import { isNumber, updateRow } from 'utils/general';
 
 export const useHotUpdateTableData = <
   T extends AnyRecord = AnyRecord,
-  Args extends AnyRecord = AnyRecord,
+  Args extends AnyRecord = AnyRecord
 >({
   updateKey,
   data,
   findCB,
-  changeCB,
+  changeCB
 }: {
   updateKey: string;
   data: FetchData<Array<T>>;
@@ -40,6 +40,6 @@ export const useHotUpdateTableData = <
   }, [JSON.stringify(data)]);
 
   return {
-    data: state,
+    data: state
   };
 };

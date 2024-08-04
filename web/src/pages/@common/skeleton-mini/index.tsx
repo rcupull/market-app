@@ -10,9 +10,9 @@ const Piece = ({ className, active }: PieceProps) => {
       className={cn(
         'w-full h-2 bg-gray-200 rounded-md',
         {
-          'bg-indigo-800': active,
+          'bg-indigo-800': active
         },
-        className,
+        className
       )}
     />
   );

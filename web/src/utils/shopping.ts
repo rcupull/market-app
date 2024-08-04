@@ -3,7 +3,7 @@ import { isNumber } from './general';
 import { Shopping, ShoppingState } from 'types/shopping';
 
 export const getShoppingData = (
-  shopping: Shopping,
+  shopping: Shopping
 ): {
   totalProducts: number;
   totalPrice: number;
@@ -25,7 +25,7 @@ export const getShoppingData = (
 
   return {
     totalProducts,
-    totalPrice,
+    totalPrice
   };
 };
 
@@ -38,7 +38,7 @@ export const getShoppingStateLabel = (state: ShoppingState): string => {
     [ShoppingState.PROCESSING]: 'En proceso',
     [ShoppingState.READY_TO_DELIVERY]: 'Listo para entregar',
     [ShoppingState.DELIVERED]: 'Entregado',
-    [ShoppingState.APPROVED]: 'Aceptado',
+    [ShoppingState.APPROVED]: 'Aceptado'
   };
 
   return labels[state];

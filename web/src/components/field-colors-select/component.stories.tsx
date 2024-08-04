@@ -3,7 +3,7 @@ import { FieldColorSelect } from '.';
 import { FormikWrapper } from 'utils/storybook';
 
 export default {
-  component: FieldColorSelect,
+  component: FieldColorSelect
 };
 
 export const Default = (): JSX.Element => (

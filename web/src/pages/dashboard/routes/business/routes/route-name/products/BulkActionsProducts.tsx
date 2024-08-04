@@ -38,135 +38,127 @@ export const BulkActionsProducts = ({
   const { routeName } = business;
 
   const handleDelete = () => {
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { deleteManyPosts } = useDeleteManyPosts();
-          const { onClose } = useModal();
-          return {
-            content: (
-              <div>
-                <span>
-                  Al eliminar estas publicaciones seran borradas todas las imágenes y datos
-                  asociados a las mismas de manera <span className="font-bold">permanente</span>.
-                  Seguro que desea eliminar estas publicaciones?
-                </span>
-              </div>
-            ),
-            badge: <Badge variant="error" />,
-            primaryBtn: (
-              <ButtonRemove
-                isBusy={deleteManyPosts.status.isBusy}
-                onClick={() => {
-                  const { selected, selectedAll, onReset } = refMeta.current;
-                  const onAfterSuccess = () => {
-                    onClose();
-                    onReset();
-                    onRefresh();
-                  };
-                  const { postCategoriesMethod, postCategoriesTags, search } = filters;
+    pushModal('Confirmation', {
+      useProps: () => {
+        const { deleteManyPosts } = useDeleteManyPosts();
+        const { onClose } = useModal();
+        return {
+          content: (
+            <div>
+              <span>
+                Al eliminar estas publicaciones seran borradas todas las imágenes y datos asociados
+                a las mismas de manera <span className="font-bold">permanente</span>. Seguro que
+                desea eliminar estas publicaciones?
+              </span>
+            </div>
+          ),
+          badge: <Badge variant="error" />,
+          primaryBtn: (
+            <ButtonRemove
+              isBusy={deleteManyPosts.status.isBusy}
+              onClick={() => {
+                const { selected, selectedAll, onReset } = refMeta.current;
+                const onAfterSuccess = () => {
+                  onClose();
+                  onReset();
+                  onRefresh();
+                };
+                const { postCategoriesMethod, postCategoriesTags, search } = filters;
 
-                  if (selectedAll) {
-                    return deleteManyPosts.fetch(
-                      {
-                        routeName,
-                        query: { postCategoriesMethod, postCategoriesTags, search },
-                      },
-                      { onAfterSuccess },
-                    );
-                  }
+                if (selectedAll) {
+                  return deleteManyPosts.fetch(
+                    {
+                      routeName,
+                      query: { postCategoriesMethod, postCategoriesTags, search }
+                    },
+                    { onAfterSuccess }
+                  );
+                }
 
-                  if (selected.length > 0) {
-                    return deleteManyPosts.fetch(
-                      {
-                        routeName,
-                        query: { postCategoriesMethod, postCategoriesTags, search },
-                        ids: selected.map((p) => p._id),
-                      },
-                      { onAfterSuccess },
-                    );
-                  }
-                }}
-              />
-            ),
-          };
-        },
-      },
-      { emergent: true },
-    );
+                if (selected.length > 0) {
+                  return deleteManyPosts.fetch(
+                    {
+                      routeName,
+                      query: { postCategoriesMethod, postCategoriesTags, search },
+                      ids: selected.map((p) => p._id)
+                    },
+                    { onAfterSuccess }
+                  );
+                }
+              }}
+            />
+          )
+        };
+      }
+    });
   };
 
   const handleShowHide = (hidden: boolean) => {
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { updateManyPosts } = useUpdateManyPosts();
-          const { onClose } = useModal();
-          return {
-            content: (
-              <div>
-                <span>
-                  Al {`${hidden ? 'ocultar' : 'mostrar'}`} no se perderá ningun dato delas mismas.
-                  Solo se controla la visibilidad en la página de su negocio Seguro que desea{' '}
-                  {`${hidden ? 'ocultar' : 'mostrar'}`} estas publicaciones?
-                </span>
-              </div>
-            ),
-            badge: <Badge variant="warning" />,
-            primaryBtn: (
-              <ButtonSave
-                isBusy={updateManyPosts.status.isBusy}
-                label={hidden ? 'Ocultar' : 'Mostrar'}
-                onClick={() => {
-                  const { selected, selectedAll, onReset } = refMeta.current;
+    pushModal('Confirmation', {
+      useProps: () => {
+        const { updateManyPosts } = useUpdateManyPosts();
+        const { onClose } = useModal();
+        return {
+          content: (
+            <div>
+              <span>
+                Al {`${hidden ? 'ocultar' : 'mostrar'}`} no se perderá ningun dato delas mismas.
+                Solo se controla la visibilidad en la página de su negocio Seguro que desea{' '}
+                {`${hidden ? 'ocultar' : 'mostrar'}`} estas publicaciones?
+              </span>
+            </div>
+          ),
+          badge: <Badge variant="warning" />,
+          primaryBtn: (
+            <ButtonSave
+              isBusy={updateManyPosts.status.isBusy}
+              label={hidden ? 'Ocultar' : 'Mostrar'}
+              onClick={() => {
+                const { selected, selectedAll, onReset } = refMeta.current;
 
-                  const onAfterSuccess = () => {
-                    onClose();
-                    onRefresh();
-                    onReset();
-                  };
-                  const { postCategoriesMethod, postCategoriesTags, search } = filters;
+                const onAfterSuccess = () => {
+                  onClose();
+                  onRefresh();
+                  onReset();
+                };
+                const { postCategoriesMethod, postCategoriesTags, search } = filters;
 
-                  if (selectedAll) {
-                    return updateManyPosts.fetch(
-                      {
-                        routeName,
-                        update: { hidden },
-                        query: {
-                          postCategoriesMethod,
-                          postCategoriesTags,
-                          search,
-                        },
+                if (selectedAll) {
+                  return updateManyPosts.fetch(
+                    {
+                      routeName,
+                      update: { hidden },
+                      query: {
+                        postCategoriesMethod,
+                        postCategoriesTags,
+                        search
+                      }
+                    },
+                    { onAfterSuccess }
+                  );
+                }
+
+                if (selected.length > 0) {
+                  return updateManyPosts.fetch(
+                    {
+                      routeName,
+                      update: { hidden },
+                      query: {
+                        postCategoriesMethod,
+                        postCategoriesTags,
+                        search
                       },
-                      { onAfterSuccess },
-                    );
-                  }
-
-                  if (selected.length > 0) {
-                    return updateManyPosts.fetch(
-                      {
-                        routeName,
-                        update: { hidden },
-                        query: {
-                          postCategoriesMethod,
-                          postCategoriesTags,
-                          search,
-                        },
-                        ids: selected.map((p) => p._id),
-                      },
-                      { onAfterSuccess },
-                    );
-                  }
-                }}
-              />
-            ),
-          };
-        },
-      },
-      { emergent: true },
-    );
+                      ids: selected.map((p) => p._id)
+                    },
+                    { onAfterSuccess }
+                  );
+                }
+              }}
+            />
+          )
+        };
+      }
+    });
   };
 
   return (
@@ -177,17 +169,17 @@ export const BulkActionsProducts = ({
           case 'remove':
             return {
               label: 'Eliminar productos',
-              onClick: () => handleDelete(),
+              onClick: () => handleDelete()
             };
           case 'hide':
             return {
               label: 'Ocultar productos',
-              onClick: () => handleShowHide(true),
+              onClick: () => handleShowHide(true)
             };
           case 'show':
             return {
               label: 'Mostrar productos',
-              onClick: () => handleShowHide(false),
+              onClick: () => handleShowHide(false)
             };
           default:
             return {};
@@ -195,25 +187,20 @@ export const BulkActionsProducts = ({
       }}
       renderMenuNode={({ setAction }) => (
         <Menu
-          buttonElement={
-            <div className="flex items-center">
-              <IconButtonOptionsBars />
-              <span className="ml-2">Acciones múltiples</span>
-            </div>
-          }
+          buttonElement={<IconButtonOptionsBars />}
           items={[
             {
               label: 'Eliminar productos',
-              onClick: () => setAction('remove'),
+              onClick: () => setAction('remove')
             },
             {
               label: 'Ocultar productos',
-              onClick: () => setAction('hide'),
+              onClick: () => setAction('hide')
             },
             {
               label: 'Mostrar productos',
-              onClick: () => setAction('show'),
-            },
+              onClick: () => setAction('show')
+            }
           ]}
         />
       )}

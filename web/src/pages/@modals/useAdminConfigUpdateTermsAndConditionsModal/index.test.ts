@@ -7,7 +7,7 @@ import { getWrapper } from 'utils/test-utils';
 describe('useAdminConfigUpdateTermsAndConditionsModal', () => {
   it.skip('should close when click on the close button', async () => {
     const { result } = renderHook(() => useAdminConfigUpdateTermsAndConditionsModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.adminConfigUpdateTermsAndConditionsModal.open());
@@ -21,7 +21,7 @@ describe('useAdminConfigUpdateTermsAndConditionsModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => useAdminConfigUpdateTermsAndConditionsModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.adminConfigUpdateTermsAndConditionsModal.open());
@@ -122,7 +122,7 @@ describe('useAdminConfigUpdateTermsAndConditionsModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

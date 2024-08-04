@@ -21,14 +21,14 @@ export const useUpdateAddOneShopping = (): {
           {
             method: 'post',
             url: getEndpoint({
-              path: '/shopping',
+              path: '/shopping'
             }),
-            data,
+            data
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

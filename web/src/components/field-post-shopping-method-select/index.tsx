@@ -38,12 +38,12 @@ export const FieldPostShoppingMethodSelect = (props: FieldPostShoppingMethodSele
       items={[
         {
           value: 'none',
-          label: 'Ninguno',
+          label: 'Ninguno'
         },
         {
           value: 'shoppingCart',
-          label: 'Carro de compras',
-        },
+          label: 'Carro de compras'
+        }
       ]}
       containerClassName="flex items-center flex-wrap gap-4"
       {...props}

@@ -15,10 +15,10 @@ describe('BusinessCardSimple', () => {
           name: 'name',
           images: [],
           routeName: 'routeName',
-          salesAmount: 0,
+          salesAmount: 0
         }}
       />,
-      { wrapper: getWrapper({ useRouter: true, useRedux: true }) },
+      { wrapper: getWrapper({ useRouter: true, useRedux: true }) }
     );
 
     expect(result.container).toMatchInlineSnapshot(`

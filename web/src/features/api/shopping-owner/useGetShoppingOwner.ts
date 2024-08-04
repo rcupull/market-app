@@ -21,13 +21,13 @@ export const useGetShoppingOwner = (): {
             method: 'get',
             url: getEndpoint({
               path: '/shopping/owner',
-              query: { limit: defaultLimit, ...query },
-            }),
+              query: { limit: defaultLimit, ...query }
+            })
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

@@ -2,7 +2,7 @@ import { BaseIdentity } from './general';
 
 export enum ReviewType {
   PRODUCT = 'PRODUCT',
-  BUSINESS = 'BUSINESS',
+  BUSINESS = 'BUSINESS'
 }
 
 export interface Review extends BaseIdentity {

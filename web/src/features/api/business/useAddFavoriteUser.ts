@@ -18,16 +18,16 @@ export const useAddFavoriteUser = (): {
             method: 'post',
             url: getEndpoint({
               path: '/business/:routeName/favoriteUsers',
-              urlParams: { routeName },
+              urlParams: { routeName }
             }),
             data: {
-              userId,
-            },
+              userId
+            }
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

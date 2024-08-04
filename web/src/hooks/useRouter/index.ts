@@ -9,7 +9,7 @@ import {
   getBusinessRoute,
   getOnePostRoute,
   getPostsRoute,
-  getShoppingRoute,
+  getShoppingRoute
 } from 'utils/business';
 import { getFlattenJson } from 'utils/general';
 
@@ -19,7 +19,7 @@ interface UseRouterReturn<Q extends Query = Query> {
     query?: AnyRecord,
     options?: {
       timeout?: number;
-    },
+    }
   ) => void;
   onBack: () => void;
   queryToSearch: (query: Q) => void;
@@ -44,7 +44,7 @@ interface UseRouterReturn<Q extends Query = Query> {
     options?: {
       timeout?: number;
       replaceAll?: boolean;
-    },
+    }
   ) => void;
 }
 
@@ -65,7 +65,7 @@ export const useRouter = <Q extends Query = Query>(): UseRouterReturn<Q> => {
 
       navigate({
         pathname: pathname,
-        search: queryToSearch(updatedQuery),
+        search: queryToSearch(updatedQuery)
       });
     };
 
@@ -114,6 +114,6 @@ export const useRouter = <Q extends Query = Query>(): UseRouterReturn<Q> => {
         return;
       }
       handle();
-    },
+    }
   };
 };

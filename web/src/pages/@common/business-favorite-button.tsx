@@ -29,13 +29,13 @@ export const BusinessFavoriteButton = ({
         (isFavorite ? removeFavoriteUser : addFavoriteUser).fetch(
           {
             userId: user._id,
-            routeName,
+            routeName
           },
           {
             onAfterSuccess: () => {
               onRefreshAuthUser();
-            },
-          },
+            }
+          }
         );
       }}
       {...omittedProps}

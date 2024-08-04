@@ -8,7 +8,7 @@ export const ListDetailsKey = ({ label, error }: ListDetailsKeyProps) => {
   return (
     <div
       className={cn('font-bold text-xs text-gray-400', {
-        'text-red-500': error,
+        'text-red-500': error
       })}
     >
       {label}

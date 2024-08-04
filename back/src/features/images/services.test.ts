@@ -3,12 +3,12 @@ import { Image } from '../../types/general';
 import { mockAxios } from '../../utils/test-mocks/mockApiClients';
 import {
   mockImagesServicesDeleteMany,
-  mockImagesServicesDeleteOne,
+  mockImagesServicesDeleteOne
 } from '../../utils/test-mocks/mockImagesServices';
 import {
   imagesServicesDeleteMany,
   imagesServicesDeleteOldImages,
-  imagesServicesDeleteOne,
+  imagesServicesDeleteOne
 } from './services';
 import { cloudflareDeliveryUrl } from './utils';
 
@@ -21,10 +21,10 @@ describe('services', () => {
 
       expect(axios).toHaveBeenCalledWith({
         headers: {
-          Authorization: `Bearer ${cloudFlareApiToken}`,
+          Authorization: `Bearer ${cloudFlareApiToken}`
         },
         method: 'delete',
-        url: `https://api.cloudflare.com/client/v4/accounts/${cloudFlareAccountId}/images/v1/imageId`,
+        url: `https://api.cloudflare.com/client/v4/accounts/${cloudFlareAccountId}/images/v1/imageId`
       });
     });
 
@@ -35,10 +35,10 @@ describe('services', () => {
 
       expect(axios).toHaveBeenCalledWith({
         headers: {
-          Authorization: `Bearer ${cloudFlareApiToken}`,
+          Authorization: `Bearer ${cloudFlareApiToken}`
         },
         method: 'delete',
-        url: `https://api.cloudflare.com/client/v4/accounts/${cloudFlareAccountId}/images/v1/imageId`,
+        url: `https://api.cloudflare.com/client/v4/accounts/${cloudFlareAccountId}/images/v1/imageId`
       });
     });
 
@@ -58,7 +58,7 @@ describe('services', () => {
       const srcs = [
         `${cloudflareDeliveryUrl}/imageId1/public`,
         `${cloudflareDeliveryUrl}/imageId2/public`,
-        `${cloudflareDeliveryUrl}/imageId3/public`,
+        `${cloudflareDeliveryUrl}/imageId3/public`
       ];
 
       await imagesServicesDeleteMany({ srcs });
@@ -79,52 +79,52 @@ describe('services', () => {
         {
           src: `${cloudflareDeliveryUrl}/imageId1/public`,
           height: 0,
-          width: 0,
+          width: 0
         },
         {
           src: `${cloudflareDeliveryUrl}/imageId2/public`,
           height: 0,
-          width: 0,
+          width: 0
         },
         {
           src: `http://someurl.com`,
           height: 0,
-          width: 0,
+          width: 0
         },
         {
           src: `imageId3`,
           height: 0,
-          width: 0,
-        },
+          width: 0
+        }
       ];
 
       const newImagesSrcs: Array<Image> = [
         {
           src: `${cloudflareDeliveryUrl}/imageId1/public`,
           height: 0,
-          width: 0,
+          width: 0
         },
         {
           src: `${cloudflareDeliveryUrl}/imageId6/public`,
           height: 0,
-          width: 0,
+          width: 0
         },
         {
           src: `http://someurl2.com`,
           height: 0,
-          width: 0,
+          width: 0
         },
         {
           src: `imageId4`,
           height: 0,
-          width: 0,
-        },
+          width: 0
+        }
       ];
 
       await imagesServicesDeleteOldImages({ oldImagesSrcs, newImagesSrcs });
 
       expect(imagesServicesDeleteMany).toHaveBeenLastCalledWith({
-        srcs: [`${cloudflareDeliveryUrl}/imageId2/public`, 'http://someurl.com', 'imageId3'],
+        srcs: [`${cloudflareDeliveryUrl}/imageId2/public`, 'http://someurl.com', 'imageId3']
       });
     });
   });

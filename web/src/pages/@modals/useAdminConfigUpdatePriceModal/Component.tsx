@@ -25,7 +25,7 @@ export const Component = ({ portal }: ComponentProps) => {
     <>
       <Formux<State>
         value={{
-          price: data?.price || '',
+          price: data?.price || ''
         }}
       >
         {({ value }) => {
@@ -35,7 +35,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 name="price"
                 className="mt-6"
                 checkEditorProps={{
-                  className: 'check-editor-max-h-65vh',
+                  className: 'check-editor-max-h-65vh'
                 }}
               />
 
@@ -48,19 +48,19 @@ export const Component = ({ portal }: ComponentProps) => {
                     const { price } = value;
                     updateConfigAdmin.fetch(
                       {
-                        price,
+                        price
                       },
                       {
                         onAfterSuccess: () => {
                           init();
                           onClose();
-                        },
-                      },
+                        }
+                      }
                     );
                   }}
                   variant="primary"
                   className="w-full"
-                />,
+                />
               )}
             </form>
           );

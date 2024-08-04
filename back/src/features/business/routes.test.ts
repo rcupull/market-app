@@ -17,7 +17,7 @@ describe('business', () => {
       await supertest(app)
         .get(
           getTestingRoute({
-            path: '/business',
+            path: '/business'
           })
         )
         .expect(200)
@@ -57,7 +57,7 @@ describe('business', () => {
               "logo": null,
               "name": "business1User1",
               "notificationFlags": [
-                "TELEGRAM_NEW_SHOPPING",
+                "NEW_SHOPPING",
               ],
               "postCategories": [],
               "postFormFields": [
@@ -85,7 +85,7 @@ describe('business', () => {
       await supertest(app)
         .get(
           getTestingRoute({
-            path: '/business',
+            path: '/business'
           })
         )
         .expect(200)
@@ -97,17 +97,17 @@ describe('business', () => {
     it('should not return the hidden business', async () => {
       await fillBD({
         business1User1: {
-          hidden: true,
+          hidden: true
         },
         business1User2: {
-          hidden: true,
-        },
+          hidden: true
+        }
       });
 
       await supertest(app)
         .get(
           getTestingRoute({
-            path: '/business',
+            path: '/business'
           })
         )
         .expect(200)
@@ -125,14 +125,14 @@ describe('business', () => {
     it('should fail if the user can not create a business', async () => {
       const { user1 } = await fillBD({
         user1: {
-          canCreateBusiness: false,
-        },
+          canCreateBusiness: false
+        }
       });
 
       await supertest(app)
         .post(
           getTestingRoute({
-            path: '/business',
+            path: '/business'
           })
         )
         .send({
@@ -142,9 +142,9 @@ describe('business', () => {
             {
               label: 'Recientes',
               tag: 'recientes',
-              hidden: false,
-            },
-          ],
+              hidden: false
+            }
+          ]
         })
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(401);
@@ -156,7 +156,7 @@ describe('business', () => {
       await supertest(app)
         .post(
           getTestingRoute({
-            path: '/business',
+            path: '/business'
           })
         )
         .send({
@@ -166,9 +166,9 @@ describe('business', () => {
             {
               label: 'Recientes',
               tag: 'recientes',
-              hidden: false,
-            },
-          ],
+              hidden: false
+            }
+          ]
         })
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(400);
@@ -180,7 +180,7 @@ describe('business', () => {
       await supertest(app)
         .post(
           getTestingRoute({
-            path: '/business',
+            path: '/business'
           })
         )
         .send({
@@ -190,10 +190,10 @@ describe('business', () => {
             {
               label: 'Recientes',
               tag: 'recientes',
-              hidden: false,
-            },
+              hidden: false
+            }
           ],
-          currency: 'CUP',
+          currency: 'CUP'
         })
         .auth(generateToken(user1._id), { type: 'bearer' })
         .expect(200);
@@ -202,7 +202,7 @@ describe('business', () => {
         .get(
           getTestingRoute({
             path: '/business/:newBusiness',
-            urlParams: { newBusiness: 'newBusiness' },
+            urlParams: { newBusiness: 'newBusiness' }
           })
         )
         .expect(200);
@@ -214,7 +214,7 @@ describe('business', () => {
       await supertest(app)
         .post(
           getTestingRoute({
-            path: '/business',
+            path: '/business'
           })
         )
         .send({
@@ -224,9 +224,9 @@ describe('business', () => {
             {
               label: 'Recientes',
               tag: 'recientes',
-              hidden: false,
-            },
-          ],
+              hidden: false
+            }
+          ]
         })
         .expect(401);
     });
@@ -244,7 +244,7 @@ describe('business', () => {
         .get(
           getTestingRoute({
             path: '/business/:routeName',
-            urlParams: { routeName: business1User1.routeName },
+            urlParams: { routeName: business1User1.routeName }
           })
         )
         .expect(200)
@@ -284,7 +284,7 @@ describe('business', () => {
               "logo": null,
               "name": "business1User1",
               "notificationFlags": [
-                "TELEGRAM_NEW_SHOPPING",
+                "NEW_SHOPPING",
               ],
               "postCategories": [],
               "postFormFields": [

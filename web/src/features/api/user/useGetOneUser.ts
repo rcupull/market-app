@@ -20,14 +20,14 @@ export const useGetOneUser = (): {
             url: getEndpoint({
               path: '/users/:userId',
               urlParams: {
-                userId,
-              },
-            }),
+                userId
+              }
+            })
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

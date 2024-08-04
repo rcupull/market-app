@@ -7,11 +7,11 @@ import { getWrapper } from 'utils/test-utils';
 describe('usePostMakeReviewModal', () => {
   it('should close when click on the close button', async () => {
     const { result } = renderHook(() => usePostMakeReviewModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() =>
-      result.current.postMakeReviewModal.open({ postId: 'postId', onAfterSuccess: jest.fn() }),
+      result.current.postMakeReviewModal.open({ postId: 'postId', onAfterSuccess: jest.fn() })
     );
 
     await waitFor(() => expect(screen.getByTestId('Modal')));
@@ -23,11 +23,11 @@ describe('usePostMakeReviewModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => usePostMakeReviewModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() =>
-      result.current.postMakeReviewModal.open({ postId: 'postId', onAfterSuccess: jest.fn() }),
+      result.current.postMakeReviewModal.open({ postId: 'postId', onAfterSuccess: jest.fn() })
     );
 
     await waitFor(() =>
@@ -126,7 +126,7 @@ describe('usePostMakeReviewModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

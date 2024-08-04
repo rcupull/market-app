@@ -7,7 +7,7 @@ import { getWrapper } from 'utils/test-utils';
 describe('useBusinessDeliveryManModal', () => {
   it('should close when click on the close button', async () => {
     const { result } = renderHook(() => useBusinessDeliveryManModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.businessDeliveryManModal.open());
@@ -21,7 +21,7 @@ describe('useBusinessDeliveryManModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => useBusinessDeliveryManModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.businessDeliveryManModal.open());
@@ -139,7 +139,7 @@ describe('useBusinessDeliveryManModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

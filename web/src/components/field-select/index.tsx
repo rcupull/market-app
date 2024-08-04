@@ -4,7 +4,7 @@ import {
   ListboxButton,
   ListboxOption,
   ListboxOptions,
-  Transition,
+  Transition
 } from '@headlessui/react';
 import { Fragment, useEffect, useState } from 'react';
 
@@ -32,7 +32,7 @@ export interface FieldSelectProps<Option extends AnyRecord = AnyRecord, Value = 
 }
 
 export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
-  props: FieldSelectProps<Option>,
+  props: FieldSelectProps<Option>
 ) => {
   const {
     items,
@@ -44,7 +44,7 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
     multi,
     disabled,
     description,
-    anchor = 'bottom',
+    anchor = 'bottom'
   } = props;
 
   const [state, setState] = useState<Option | Array<Option>>();
@@ -74,8 +74,8 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
       field.onChange({
         target: {
           name: field.name,
-          value: optionToValue ? newSelectedOption.map(optionToValue) : newSelectedOption,
-        },
+          value: optionToValue ? newSelectedOption.map(optionToValue) : newSelectedOption
+        }
       });
     } else {
       const newSelectedOption = newSelectedOptionT;
@@ -84,8 +84,8 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
       field.onChange({
         target: {
           name: field.name,
-          value: optionToValue ? optionToValue(newSelectedOption) : newSelectedOption,
-        },
+          value: optionToValue ? optionToValue(newSelectedOption) : newSelectedOption
+        }
       });
     }
   };
@@ -102,8 +102,8 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
                   'relative w-full cursor-pointer rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6',
                   {
                     'ring-1 rounded-md ring-red-500 focus:ring-red-500': !!error,
-                    '!cursor-not-allowed !bg-gray-200': disabled,
-                  },
+                    '!cursor-not-allowed !bg-gray-200': disabled
+                  }
                 )}
               >
                 <div className="flex items-center h-6">
@@ -143,7 +143,7 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
                         key={index}
                         className={({ active }) => {
                           return cn('text-gray-900 relative select-none cursor-pointer', {
-                            ['bg-indigo-600 text-white']: active,
+                            ['bg-indigo-600 text-white']: active
                           });
                         }}
                         onClick={(e) => {
@@ -153,9 +153,9 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
                               selected
                                 ? removeRow(
                                     state,
-                                    state.findIndex((i) => isEqualObj(i, item)),
+                                    state.findIndex((i) => isEqualObj(i, item))
                                   )
-                                : [...state, item],
+                                : [...state, item]
                             );
                           } else {
                             if (!selected) {
@@ -168,7 +168,7 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
                         {() => (
                           <div
                             className={cn('p-2', {
-                              ['bg-gray-200']: selected,
+                              ['bg-gray-200']: selected
                             })}
                           >
                             <div className="flex items-center ml-3 truncate">
@@ -178,7 +178,7 @@ export const FieldSelect = <Option extends AnyRecord = AnyRecord>(
                             {selected && (
                               <span
                                 className={cn(
-                                  'bg-inherit absolute inset-y-0 right-0 flex items-center pr-4 fill-indigo-600',
+                                  'bg-inherit absolute inset-y-0 right-0 flex items-center pr-4 fill-indigo-600'
                                 )}
                               >
                                 <SvgCheckSolid className="h-5 w-5" aria-hidden="true" />

@@ -23,7 +23,7 @@ export const SearchFilter = ({
   className,
   value,
   hideButtons,
-  placeholder,
+  placeholder
 }: SearchFilterProps) => {
   const submitBtnPortal = usePortal();
   const clearBtnPortal = usePortal();
@@ -33,7 +33,7 @@ export const SearchFilter = ({
       <div className={cn(className)}>
         <Formux
           value={{
-            search: value || '',
+            search: value || ''
           }}
         >
           {({ value }) => {
@@ -62,7 +62,7 @@ export const SearchFilter = ({
     <div className={cn('flex items-center w-full sm:w-fit ', className)}>
       <Formux
         value={{
-          search: value || '',
+          search: value || ''
         }}
       >
         {({ value }) => {
@@ -95,7 +95,7 @@ export const SearchFilter = ({
                     className="hidden sm:block"
                   />
                   <SvgSearchSolid className="sm:hidden h-8 w-8 rounded-full p-1 fill-indigo-500 cursor-pointer hover:bg-gray-100" />
-                </div>,
+                </div>
               )}
 
               {clearBtnPortal.getPortal(
@@ -108,7 +108,7 @@ export const SearchFilter = ({
                 >
                   <Button label="Limpiar" variant="outlined" className="hidden sm:block" />
                   <SvgTimesCircle className="sm:hidden h-8 w-8 rounded-full p-1 fill-red-500 cursor-pointer hover:bg-gray-100" />
-                </div>,
+                </div>
               )}
             </form>
           );

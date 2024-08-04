@@ -7,7 +7,7 @@ import { getWrapper } from 'utils/test-utils';
 describe('useAuthSignUpModal', () => {
   it('should close when click on the close button', async () => {
     const { result } = renderHook(() => useAuthSignUpModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.authSignUpModal.open());
@@ -21,7 +21,7 @@ describe('useAuthSignUpModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => useAuthSignUpModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.authSignUpModal.open());
@@ -120,7 +120,7 @@ describe('useAuthSignUpModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

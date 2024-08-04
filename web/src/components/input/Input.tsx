@@ -26,8 +26,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           className={cn(
             'block w-full h-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 disabled:bg-gray-200 disabled:cursor-not-allowed',
             {
-              '!pr-10': endElement,
-            },
+              '!pr-10': endElement
+            }
           )}
           {...omittedProps}
           onKeyPress={(event) => {
@@ -78,10 +78,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           target: {
             ...e.target,
             //@ts-expect-error ignore this error, it is necessary for now
-            value: Number(e.target.value),
-          },
+            value: Number(e.target.value)
+          }
         });
-      },
+      }
     });
   }
 

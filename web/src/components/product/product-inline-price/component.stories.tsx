@@ -1,7 +1,7 @@
 import { ProductInlinePrice } from '.';
 
 export default {
-  component: ProductInlinePrice,
+  component: ProductInlinePrice
 };
 
 export const Default = (): JSX.Element => (

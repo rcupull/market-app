@@ -17,14 +17,14 @@ export const useAdminBDScript = (): {
           {
             method: 'get',
             url: getEndpoint({
-              path: '/admin/bd-script',
+              path: '/admin/bd-script'
             }),
-            data,
+            data
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

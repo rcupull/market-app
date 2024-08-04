@@ -28,7 +28,7 @@ export const Banner = ({ className }: BannerProps) => {
         businessUpdateBannerModal.open({
           onAfterSuccess: () => {
             business && onFetch({ routeName: business.routeName });
-          },
+          }
         })
       }
       className={className}
@@ -68,8 +68,8 @@ export const Banner = ({ className }: BannerProps) => {
         content: (
           <img src={src && getImageEndpoint(src)} className="object-contain w-full h-full" />
         ),
-        href,
-      }),
+        href
+      })
     );
   }
 
@@ -78,7 +78,7 @@ export const Banner = ({ className }: BannerProps) => {
       bannerImages?.length && (
         <Swiper
           autoplay={{
-            delay: 5000,
+            delay: 5000
           }}
           items={bannerImages?.map(({ src, href }) => {
             return {
@@ -89,12 +89,12 @@ export const Banner = ({ className }: BannerProps) => {
                     className="object-contain w-full h-full"
                   />
                 ),
-                href,
-              }),
+                href
+              })
             };
           })}
         />
-      ),
+      )
     );
   }
 

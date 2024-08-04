@@ -8,7 +8,7 @@ export const middlewareUserCanCreateBusiness: RequestHandler = async (req, res, 
   if (!user) {
     return get404Response({
       res,
-      json: { message: 'user not found' },
+      json: { message: 'user not found' }
     });
   }
 
@@ -18,6 +18,6 @@ export const middlewareUserCanCreateBusiness: RequestHandler = async (req, res, 
 
   return get401Response({
     res,
-    json: { message: 'The user is not business owner' },
+    json: { message: 'The user is not business owner' }
   });
 };

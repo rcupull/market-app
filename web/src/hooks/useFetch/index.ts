@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { useCookies } from 'features/cookies/useCookies';
+import { usePersistentContext } from 'features/persistent/usePersistentContext';
+import { useToast } from 'features/toast';
 
 import { useDebouncedValue } from 'hooks/useDebouncedValue';
 
@@ -15,7 +16,7 @@ import {
   FetchStatus,
   Headers,
   OnAfterFailed,
-  OnAfterSuccess,
+  OnAfterSuccess
 } from 'types/api';
 import { getEndpoint } from 'utils/api';
 import { wait } from 'utils/general';
@@ -36,13 +37,13 @@ interface FetchFnCallArgs {
 
 export type FetchFnCall<Data = unknown> = (
   args?: FetchFnCallArgs | Array<FetchFnCallArgs>,
-  options?: Omit<FetchOptions<Data>, 'fetchWhenMount'>,
+  options?: Omit<FetchOptions<Data>, 'fetchWhenMount'>
 ) => void;
 export type UseFetchReturn<Data = unknown> = [
   FetchData<Data>,
   FetchStatus,
   FetchFnCall<Data>,
-  FetchFnReset,
+  FetchFnReset
 ];
 
 let fetchingTokenPromise: Promise<any> | null = null;
@@ -57,7 +58,8 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
   const [error, setError] = useState<ApiError | null>(null);
   const [status, setStatus] = useState<ApiStatus>('NOT_STARTED');
   const [wasCalled, setWasCalled] = useState<boolean>(false);
-  const { getCookie, setCookie } = useCookies();
+  const { showMessage } = useToast();
+  const { getPersistent, setPersistent } = usePersistentContext();
   const debouncedStatus = useDebouncedValue<ApiStatus>(status, 100);
 
   useEffect(() => {
@@ -83,35 +85,43 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
         return fetchingTokenPromise;
       }
 
-      fetchingTokenPromise = new Promise((resolve, reject) => {
-        const refreshToken = getCookie('refreshToken');
-
-        axios({
-          method: 'post',
-          url: getEndpoint({ path: '/auth/refresh' }),
-          data: { refreshToken },
-        })
-          .then(({ data }) => {
-            const newAccessToken = data.accessToken;
-
-            setCookie('accessToken', newAccessToken);
-            setCookie('accessTokenUpdatedAt', new Date().toISOString());
-
-            fetchingTokenPromise = null;
-
-            if (DEVELOPMENT) {
-              //simulate the api call delay
-              wait(500).then(() => {
-                resolve(newAccessToken);
-              });
-            } else {
-              resolve(newAccessToken);
-            }
+      fetchingTokenPromise = new Promise((resolve) => {
+        getPersistent('refreshToken').then((refreshToken) => {
+          axios({
+            method: 'post',
+            url: getEndpoint({ path: '/auth/refresh' }),
+            data: { refreshToken }
           })
-          .catch((e) => {
-            fetchingTokenPromise = null;
-            reject(e);
-          });
+            .then(({ data }) => {
+              fetchingTokenPromise = null;
+
+              const newAccessToken = data.accessToken;
+
+              setPersistent('accessToken', newAccessToken);
+              setPersistent('accessTokenUpdatedAt', new Date().toISOString());
+
+              if (DEVELOPMENT) {
+                //simulate the api call delay
+                wait(500).then(() => {
+                  resolve(newAccessToken);
+                });
+              } else {
+                resolve(newAccessToken);
+              }
+            })
+            .catch(() => {
+              fetchingTokenPromise = null;
+
+              if (DEVELOPMENT) {
+                //simulate the api call delay
+                wait(500).then(() => {
+                  resolve(null);
+                });
+              } else {
+                resolve(null);
+              }
+            });
+        });
       });
 
       return fetchingTokenPromise;
@@ -131,7 +141,9 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
             headers: {
               ...headers,
               Authorization: accessToken && `Bearer ${accessToken}`,
-            },
+              //https://ngrok.com/abuse
+              ...(TUNNEL ? { 'ngrok-skip-browser-warning': true } : {})
+            }
           });
         });
 
@@ -153,9 +165,18 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
       } catch (e) {
         const { response } = e as AxiosError<{ message?: string; reazon?: ApiErrorReazon }>;
 
+        if (response?.data?.message) {
+          showMessage(
+            { title: 'Error', body: response?.data?.message },
+            {
+              type: 'error'
+            }
+          );
+        }
+
         const apiError: ApiError = {
           message: response?.data?.message || 'Something went wrong',
-          reazon: response?.data?.reazon,
+          reazon: response?.data?.reazon
         };
 
         onAfterFailed?.(apiError);
@@ -166,14 +187,15 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
       }
     };
 
-    const accessTokenUpdatedAt = getCookie('accessTokenUpdatedAt') as string | null;
+    const accessTokenUpdatedAt = await getPersistent('accessTokenUpdatedAt');
+    const accessToken = await getPersistent('accessToken');
 
     if (accessTokenUpdatedAt && isOutOfDateToken(accessTokenUpdatedAt)) {
-      const accessToken = await handleFetchAccessToken();
-      await handleFetchCall(accessToken);
+      //the token is outdate
+      const newAccessToken = (await handleFetchAccessToken()) ?? accessToken;
+      await handleFetchCall(newAccessToken);
     } else {
-      const accessToken = getCookie('accessToken') as string | null;
-
+      //the token is OK
       await handleFetchCall(accessToken);
     }
   };
@@ -186,9 +208,9 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
       isFailed: status === 'FAILED',
       isSuccess: status === 'SUCCESS',
       error,
-      wasCalled,
+      wasCalled
     },
     handleFetch,
-    handleReset,
+    handleReset
   ];
 };

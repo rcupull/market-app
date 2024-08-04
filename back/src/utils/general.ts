@@ -44,7 +44,7 @@ export const isEqualObj = (aArg: AnyRecord | undefined, bArg: AnyRecord | undefi
 
   const mergedObj = {
     ...a,
-    ...b,
+    ...b
   };
 
   for (const prop in mergedObj) {
@@ -206,4 +206,15 @@ export const numberExtract = (value: string): Array<number> | null => {
   }
 
   return response.map(Number);
+};
+
+export const excludeRepetedValues = <T = any>(values: Array<T>): Array<T> => {
+  const out: Array<any> = [];
+
+  values.forEach((value) => {
+    if (out.some((v) => isEqual(v, value))) return;
+    out.push(value);
+  });
+
+  return out;
 };

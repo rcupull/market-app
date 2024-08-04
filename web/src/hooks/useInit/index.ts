@@ -5,7 +5,7 @@ import { useAdminConfig } from 'features/api-slices/useAdminConfig';
 import { useAuth } from 'features/api-slices/useAuth';
 import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
 import { useSignOut } from 'features/api-slices/useSignOut';
-import { useCookies } from 'features/cookies/useCookies';
+import { usePersistentContext } from 'features/persistent/usePersistentContext';
 
 import { useDebouncer } from 'hooks/useDebouncer';
 import { useInterval } from 'hooks/useInterval';
@@ -43,7 +43,7 @@ export const useInit = () => {
   const { authRefresh } = useAuthRefresh();
   const refreshInterval = useInterval();
   const { signOut } = useSignOut();
-  const { setCookie } = useCookies();
+  const { setPersistent } = usePersistentContext();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -51,15 +51,15 @@ export const useInit = () => {
         () => {
           authRefresh.fetch(undefined, {
             onAfterSuccess: ({ accessToken }) => {
-              setCookie('accessToken', accessToken);
-              setCookie('accessTokenUpdatedAt', new Date().toISOString());
+              setPersistent('accessToken', accessToken);
+              setPersistent('accessTokenUpdatedAt', new Date().toISOString());
             },
             onAfterFailed: () => {
               signOut.fetch();
-            },
+            }
           });
         },
-        20 * 60 * 1000, //20min
+        20 * 60 * 1000 //20min
       );
     } else {
       refreshInterval.cancel();

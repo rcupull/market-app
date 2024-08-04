@@ -17,7 +17,7 @@ const validationsCallback = {
   },
   equal: (value1: any, value2: any): boolean => {
     return value1 === value2;
-  },
+  }
 };
 
 interface Validation<V extends AnyRecord, F extends keyof V = keyof V> {
@@ -34,7 +34,7 @@ export type FormValidations<V extends AnyRecord, F extends keyof V = keyof V> = 
 
 export type GetFormErrors<V extends AnyRecord, F extends keyof V = keyof V> = (
   value: V,
-  validations: FormValidations<V, F>,
+  validations: FormValidations<V, F>
 ) => Promise<Partial<Record<F, string>>>;
 
 export const useGetFormErrors = <V extends AnyRecord, F extends keyof V = keyof V>(): GetFormErrors<

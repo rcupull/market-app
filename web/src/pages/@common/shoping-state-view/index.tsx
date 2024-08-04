@@ -29,7 +29,7 @@ export const ShoppingStateView = ({
   shopping,
   onAfterSuccess,
   fetchStatus,
-  businessHasDelivery,
+  businessHasDelivery
 }: ShoppingStateViewProps) => {
   const { state, _id } = shopping;
   const [formState, setFormState] = useState<State>({ state });
@@ -60,7 +60,7 @@ export const ShoppingStateView = ({
           return [
             ShoppingState.PROCESSING,
             ShoppingState.READY_TO_DELIVERY,
-            ShoppingState.REJECTED,
+            ShoppingState.REJECTED
           ];
         case ShoppingState.READY_TO_DELIVERY:
           return [ShoppingState.READY_TO_DELIVERY, ShoppingState.DELIVERED, ShoppingState.REJECTED];
@@ -88,57 +88,52 @@ export const ShoppingStateView = ({
         setFormState(newFormState);
 
         if (!isEqual(newFormState, formState)) {
-          pushModal(
-            'Confirmation',
-            {
-              useProps: () => {
-                const { onClose } = useModal();
+          pushModal('Confirmation', {
+            useProps: () => {
+              const { onClose } = useModal();
 
-                const { shoppingChangeState } = useShoppingChangeState();
+              const { shoppingChangeState } = useShoppingChangeState();
 
-                return {
-                  content: (
-                    <span>
-                      Seguro que desea actualizar el estado de esta orden de compra hacia{' '}
-                      <span className="font-bold">{getShoppingStateLabel(newFormState.state)}</span>
-                      ?
-                    </span>
-                  ),
-                  badge: <Badge variant="warning" />,
-                  className: '!w-[30rem]',
-                  primaryBtn: (
-                    <ButtonSave
-                      label="Actualizar"
-                      isBusy={shoppingChangeState.status.isBusy}
-                      onClick={() => {
-                        const { state } = newFormState;
+              return {
+                content: (
+                  <span>
+                    Seguro que desea actualizar el estado de esta orden de compra hacia{' '}
+                    <span className="font-bold">{getShoppingStateLabel(newFormState.state)}</span>?
+                  </span>
+                ),
+                badge: <Badge variant="warning" />,
+                className: '!w-[30rem]',
+                primaryBtn: (
+                  <ButtonSave
+                    label="Actualizar"
+                    isBusy={shoppingChangeState.status.isBusy}
+                    onClick={() => {
+                      const { state } = newFormState;
 
-                        shoppingChangeState.fetch(
-                          { state, shoppingId: _id },
-                          {
-                            onAfterSuccess: () => {
-                              onClose();
-                              onAfterSuccess?.();
-                            },
-                          },
-                        );
-                      }}
-                    />
-                  ),
-                  secondaryBtn: (
-                    <ButtonClose
-                      onClick={() => {
-                        const { state } = shopping;
-                        setFormState({ state });
-                        onClose();
-                      }}
-                    />
-                  ),
-                };
-              },
-            },
-            { emergent: true },
-          );
+                      shoppingChangeState.fetch(
+                        { state, shoppingId: _id },
+                        {
+                          onAfterSuccess: () => {
+                            onClose();
+                            onAfterSuccess?.();
+                          }
+                        }
+                      );
+                    }}
+                  />
+                ),
+                secondaryBtn: (
+                  <ButtonClose
+                    onClick={() => {
+                      const { state } = shopping;
+                      setFormState({ state });
+                      onClose();
+                    }}
+                  />
+                )
+              };
+            }
+          });
         }
       }}
     >
@@ -151,7 +146,7 @@ export const ShoppingStateView = ({
               renderValue={({ value }) => <ShoppingStateLabel state={value} />}
               renderOption={({ value }) => <ShoppingStateLabel state={value} />}
               items={nextStates().map((value) => ({
-                value,
+                value
               }))}
             />
           </form>

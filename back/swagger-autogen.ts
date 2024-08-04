@@ -7,22 +7,22 @@ swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, {
   info: {
     version: "v1.0.0",
     title: "Asere Market",
-    description: "Asere Market API",
+    description: "Asere Market API"
   },
   servers: [
     {
       url: "http://localhost/api-services",
-      description: "",
-    },
+      description: ""
+    }
   ],
   components: {
     securitySchemes: {
       bearerAuth: {
         type: "http",
         scheme: "bearer",
-        bearerFormat: "JWT",
-      },
-    },
+        bearerFormat: "JWT"
+      }
+    }
   },
-  security: [{ bearerAuth: [] }],
+  security: [{ bearerAuth: [] }]
 });

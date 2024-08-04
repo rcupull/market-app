@@ -11,39 +11,39 @@ export interface FieldBusinessCategoriesSelectProps<O>
 
 const defaultCategoriesLabels: Array<{ label: string }> = [
   {
-    label: 'Recientes',
+    label: 'Recientes'
   },
   {
-    label: 'Ofertas',
+    label: 'Ofertas'
   },
   {
-    label: 'Rebajas',
+    label: 'Rebajas'
   },
   {
-    label: 'Recomendados',
+    label: 'Recomendados'
   },
   {
-    label: 'Ventas calientes',
+    label: 'Ventas calientes'
   },
   {
-    label: 'Para hombres',
+    label: 'Para hombres'
   },
   {
-    label: 'Para mujeres',
+    label: 'Para mujeres'
   },
   {
-    label: 'Para niños',
+    label: 'Para niños'
   },
   {
-    label: 'En tendencia',
+    label: 'En tendencia'
   },
   {
-    label: 'Tallas grandes',
-  },
+    label: 'Tallas grandes'
+  }
 ];
 
 export const FieldBusinessCategoriesSelect = (
-  props: FieldBusinessCategoriesSelectProps<AnyRecord>,
+  props: FieldBusinessCategoriesSelectProps<AnyRecord>
 ) => {
   return (
     <FieldRadioGroup<{ value: PostCategory }>
@@ -53,7 +53,7 @@ export const FieldBusinessCategoriesSelect = (
           <Button
             as="div"
             className={cn('w-fit cursor-pointer', {
-              '!bg-gray-300': checked,
+              '!bg-gray-300': checked
             })}
             variant="outlined"
             label={value.label}
@@ -66,8 +66,8 @@ export const FieldBusinessCategoriesSelect = (
         value: {
           label,
           tag: getPostCategoryTag(label),
-          hidden: false,
-        },
+          hidden: false
+        }
       }))}
       containerClassName="flex flex-wrap gap-2 justify-between"
       {...props}

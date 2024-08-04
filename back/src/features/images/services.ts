@@ -18,7 +18,7 @@ export const imagesServicesUploadFile: QueryHandle<
   const fileName = getFileNameToSave({
     userId,
     postId,
-    routeName,
+    routeName
   });
 
   if (!fileName) {
@@ -37,9 +37,9 @@ export const imagesServicesUploadFile: QueryHandle<
     url: cloudflareBaseUrl,
     headers: {
       Authorization: `Bearer ${cloudFlareApiToken}`,
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'multipart/form-data'
     },
-    data: formData,
+    data: formData
   });
 
   const out: CloudflareCDNUploadResponse = response.data;
@@ -52,8 +52,8 @@ export const imagesServicesGetAll: QueryHandle<void, CloudflareCDNListResponse> 
     method: 'get',
     url: cloudflareBaseUrl,
     headers: {
-      Authorization: `Bearer ${cloudFlareApiToken}`,
-    },
+      Authorization: `Bearer ${cloudFlareApiToken}`
+    }
   });
 
   const out: CloudflareCDNListResponse = axiosResponse.data;
@@ -74,8 +74,8 @@ export const imagesServicesDeleteOne: QueryHandle<{ src: string }> = async ({ sr
     method: 'delete',
     url: `${cloudflareBaseUrl}/${id}`,
     headers: {
-      Authorization: `Bearer ${cloudFlareApiToken}`,
-    },
+      Authorization: `Bearer ${cloudFlareApiToken}`
+    }
   });
 };
 
@@ -99,7 +99,7 @@ export const imagesServicesDeleteBulk: QueryHandle<{
   const filename = getFileNameToSave({
     userId,
     postId,
-    routeName,
+    routeName
   });
 
   const imagesToRemove = allImages.result.images.filter(({ id }) => id.startsWith(`${filename}/`));

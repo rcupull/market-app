@@ -18,15 +18,15 @@ export const PostSchema = new Schema<Post>({
       {
         src: { type: String, required: true },
         width: { type: Number, required: true },
-        height: { type: Number, required: true },
-      },
-    ],
+        height: { type: Number, required: true }
+      }
+    ]
   },
   clothingSizes: [
     {
       type: String,
-      enum: ['XXS', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'],
-    },
+      enum: ['XXS', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL']
+    }
   ],
   colors: [
     {
@@ -46,10 +46,10 @@ export const PostSchema = new Schema<Post>({
         'fuchsia',
         'violet',
         'cyan',
-        'teal',
+        'teal'
       ],
-      required: true,
-    },
+      required: true
+    }
   ],
   name: { type: String, required: true },
   price: { type: Number },
@@ -59,15 +59,15 @@ export const PostSchema = new Schema<Post>({
     type: String,
     enum: ['product', 'link'],
     required: true,
-    default: 'product',
+    default: 'product'
   },
   postLink: {
     type: {
       type: String,
-      enum: ['business', 'external'],
+      enum: ['business', 'external']
     },
-    value: { type: String },
-  },
+    value: { type: String }
+  }
 });
 
 PostSchema.plugin(mongoosePaginate);
@@ -75,7 +75,7 @@ PostSchema.plugin(mongoosePaginate);
 PostSchema.pre('save', async function (next) {
   try {
     const out = await BusinessModel.findOne({
-      routeName: this.routeName,
+      routeName: this.routeName
     });
     this.hiddenBusiness = out?.hidden;
   } catch (err: any) {

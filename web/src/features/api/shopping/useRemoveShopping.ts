@@ -21,14 +21,14 @@ export const useRemoveShopping = (): {
           {
             method: 'delete',
             url: getEndpoint({
-              path: '/shopping',
+              path: '/shopping'
             }),
-            data,
+            data
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

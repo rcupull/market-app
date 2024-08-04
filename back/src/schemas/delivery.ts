@@ -11,7 +11,7 @@ const DeliveryShema = new Schema<Delivery>({
   routeName: { type: String, required: true },
   shoppingId: { type: Schema.Types.ObjectId, ref: 'Shopping', required: true },
   deliveryManId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  currency: { type: String, enum: ['CUP', 'MLC', 'USD'], required: true },
+  currency: { type: String, enum: ['CUP', 'MLC', 'USD'], required: true }
 });
 
 DeliveryShema.plugin(mongoosePaginate);

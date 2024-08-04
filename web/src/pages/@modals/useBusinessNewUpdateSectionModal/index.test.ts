@@ -7,7 +7,7 @@ import { getWrapper } from 'utils/test-utils';
 describe('useBusinessNewUpdateSectionModal', () => {
   it('should close when click on the close button', async () => {
     const { result } = renderHook(() => useBusinessNewUpdateSectionModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.businessNewUpdateSectionModal.open());
@@ -21,7 +21,7 @@ describe('useBusinessNewUpdateSectionModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => useBusinessNewUpdateSectionModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.businessNewUpdateSectionModal.open());
@@ -122,7 +122,7 @@ describe('useBusinessNewUpdateSectionModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

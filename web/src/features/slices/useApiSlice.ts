@@ -6,13 +6,13 @@ import type { FetchData } from 'types/api';
 
 export const useApiSlice = <D = any, N extends string = string>(
   fetch: UseFetchReturn<D>,
-  name: N,
+  name: N
 ): [
   ...UseFetchReturn<D>,
   {
     setDataRedux: (data: D) => void;
     resetDataRedux: () => void;
-  },
+  }
 ] => {
   const [, status, handleCall, handleReset] = fetch;
 
@@ -27,7 +27,7 @@ export const useApiSlice = <D = any, N extends string = string>(
         onAfterSuccess: (res) => {
           setData(res);
           options?.onAfterSuccess?.(res);
-        },
+        }
       });
     },
     () => {
@@ -36,7 +36,7 @@ export const useApiSlice = <D = any, N extends string = string>(
     },
     {
       setDataRedux: setData,
-      resetDataRedux: reset,
-    },
+      resetDataRedux: reset
+    }
   ];
 };

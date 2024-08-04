@@ -43,14 +43,14 @@ export const useUpdateOneBusiness = (): {
             method: 'put',
             url: getEndpoint({
               path: '/business/:routeName',
-              urlParams: { routeName },
+              urlParams: { routeName }
             }),
-            data: update,
+            data: update
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

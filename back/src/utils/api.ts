@@ -29,7 +29,7 @@ export const injectUrlParams = (url: string, urlParams: UrlParams = {}): string 
 export const getTestingRoute = ({
   path,
   query,
-  urlParams,
+  urlParams
 }: {
   path: string;
   query?: Query;

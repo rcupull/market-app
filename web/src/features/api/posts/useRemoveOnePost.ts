@@ -24,13 +24,13 @@ export const useRemoveOnePost = (): {
             method: 'delete',
             url: getEndpoint({
               path: '/posts/:id',
-              urlParams: { id, userId },
-            }),
+              urlParams: { id, userId }
+            })
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

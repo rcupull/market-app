@@ -15,32 +15,28 @@ export const useBusinessUpdatePostFormModal = () => {
   return {
     businessUpdatePostFormModal: {
       open: (args?: { onAfterSuccess?: () => void }) => {
-        pushModal(
-          'Emergent',
-          {
-            useProps: () => {
-              const portal = usePortal();
-              const { onClose } = useModal();
+        pushModal('Emergent', {
+          useProps: () => {
+            const portal = usePortal();
+            const { onClose } = useModal();
 
-              return {
-                title: 'Formulario de publicación',
-                content: (
-                  <Component
-                    portal={portal}
-                    onAfterSuccess={() => {
-                      onClose();
-                      args?.onAfterSuccess?.();
-                    }}
-                  />
-                ),
-                secondaryBtn: <ButtonClose />,
-                primaryBtn: <div ref={portal.ref} />,
-              };
-            },
-          },
-          { emergent: true },
-        );
-      },
-    },
+            return {
+              title: 'Formulario de publicación',
+              content: (
+                <Component
+                  portal={portal}
+                  onAfterSuccess={() => {
+                    onClose();
+                    args?.onAfterSuccess?.();
+                  }}
+                />
+              ),
+              secondaryBtn: <ButtonClose />,
+              primaryBtn: <div ref={portal.ref} />
+            };
+          }
+        });
+      }
+    }
   };
 };

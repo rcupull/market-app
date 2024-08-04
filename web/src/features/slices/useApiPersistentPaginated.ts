@@ -5,7 +5,7 @@ import { AnyRecord } from 'types/general';
 
 export const useApiPersistentPaginated = <Args = any, D extends AnyRecord = AnyRecord>(
   field: string,
-  resources: FetchResourceWithPagination<Args, D>,
+  resources: FetchResourceWithPagination<Args, D>
 ): FetchResourceWithPagination<Args, D> => {
   const { data, reset, setData } = useSimpleSlice(field);
 
@@ -18,12 +18,12 @@ export const useApiPersistentPaginated = <Args = any, D extends AnyRecord = AnyR
         onAfterSuccess: (response) => {
           setData(response.data);
           options?.onAfterSuccess?.(response);
-        },
+        }
       });
     },
     reset: () => {
       reset();
       resources.reset();
-    },
+    }
   };
 };

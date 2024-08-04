@@ -21,13 +21,13 @@ export const useGetAllBusinessSummary = (): {
             method: 'get',
             url: getEndpoint({
               path: '/business/summary',
-              query: { limit: defaultLimit, ...query },
-            }),
+              query: { limit: defaultLimit, ...query }
+            })
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

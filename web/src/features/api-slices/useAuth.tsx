@@ -1,6 +1,6 @@
 import { useAuthSignIn } from 'features/api/auth/useAuthSignIn';
 import { useGetOneUser } from 'features/api/user/useGetOneUser';
-import { useCookies } from 'features/cookies/useCookies';
+import { usePersistentContext } from 'features/persistent/usePersistentContext';
 import { useApiPersistent } from 'features/slices/useApiPersistent';
 
 import { Access } from 'types/admin';
@@ -25,7 +25,7 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
 
   const { data, setDataRedux, status, fetch, reset } = useApiPersistent('useAuth', authSignIn);
 
-  const { removeCookie, setCookie } = useCookies();
+  const { removePersistent, setPersistent } = usePersistentContext();
 
   const { getOneUser } = useGetOneUser();
 
@@ -71,17 +71,17 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
 
       getOneUser.fetch(
         {
-          userId,
+          userId
         },
         {
           onAfterSuccess: (user) => {
-            setCookie('user', user);
+            setPersistent('user', user);
             setDataRedux({
               ...data,
-              user,
+              user
             });
-          },
-        },
+          }
+        }
       );
     },
     isAuthenticated: !!user,
@@ -94,31 +94,31 @@ export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
         fetch(
           {
             email,
-            password,
+            password
           },
           {
             ...options,
             onAfterSuccess: async (response) => {
               const { accessToken, user, refreshToken } = response;
 
-              setCookie('accessToken', accessToken);
-              setCookie('accessTokenUpdatedAt', new Date().toISOString());
-              setCookie('refreshToken', refreshToken);
-              setCookie('user', user);
+              setPersistent('accessToken', accessToken);
+              setPersistent('accessTokenUpdatedAt', new Date().toISOString());
+              setPersistent('refreshToken', refreshToken);
+              setPersistent('user', user);
 
               await wait(100);
               options?.onAfterSuccess?.(response);
-            },
-          },
+            }
+          }
         );
       },
       reset: () => {
-        removeCookie('accessToken');
-        removeCookie('accessTokenUpdatedAt');
-        removeCookie('refreshToken');
-        removeCookie('user');
+        removePersistent('accessToken');
+        removePersistent('accessTokenUpdatedAt');
+        removePersistent('refreshToken');
+        removePersistent('user');
         reset();
-      },
-    },
+      }
+    }
   };
 };

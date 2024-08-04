@@ -14,7 +14,7 @@ export interface UseFiltersReturn<S extends AnyRecord = AnyRecord> {
 }
 
 export const useFiltersVolatile = <S extends AnyRecord = AnyRecord>(
-  args: UseFiltersArgs<S>,
+  args: UseFiltersArgs<S>
 ): UseFiltersReturn<S> => {
   const { onChange } = args || {};
 
@@ -26,7 +26,7 @@ export const useFiltersVolatile = <S extends AnyRecord = AnyRecord>(
 
       const newFilterValue: S = getFlattenUndefinedJson({
         ...filterValue,
-        ...partialValue,
+        ...partialValue
       });
 
       const hasChanges = !isEqualObj(newFilterValue, filterValue);
@@ -38,6 +38,6 @@ export const useFiltersVolatile = <S extends AnyRecord = AnyRecord>(
       }
     },
     onRefresh: () => onChange?.(filterValue),
-    value: filterValue,
+    value: filterValue
   };
 };

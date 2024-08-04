@@ -4,7 +4,7 @@ import { Business } from 'types/business';
 import { viewUtils } from 'utils/view';
 
 export const useTableCellCategoriesTags = ({
-  business,
+  business
 }: {
   business: Business | undefined | null;
 }): {
@@ -17,11 +17,11 @@ export const useTableCellCategoriesTags = ({
       (postCategories || []).reduce(
         (acc, { tag, label }) => ({
           ...acc,
-          [tag]: label,
+          [tag]: label
         }),
-        {},
+        {}
       ),
-    [JSON.stringify(postCategories)],
+    [JSON.stringify(postCategories)]
   );
 
   return {
@@ -30,10 +30,10 @@ export const useTableCellCategoriesTags = ({
         <div key="categories" className="flex flex-wrap max-w-48">
           {viewUtils.mapToOutlinedBox({
             value: postCategoriesTags,
-            preMap: (tag) => tagsRecord[tag],
+            preMap: (tag) => tagsRecord[tag]
           })}
         </div>
       );
-    },
+    }
   };
 };

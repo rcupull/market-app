@@ -43,8 +43,8 @@ export const Validate = () => {
             } else {
               authSignInModal.open();
             }
-          },
-        },
+          }
+        }
       );
     }
   }, [code]);

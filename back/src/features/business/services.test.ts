@@ -13,7 +13,7 @@ describe('services', () => {
 
       const paginatedPosts = await businessServicesGetAllWithPagination({
         paginateOptions: paginateOptionsForTesting,
-        query: {},
+        query: {}
       });
 
       const { data, ...omittedProps } = paginatedPosts;
@@ -49,17 +49,17 @@ describe('services', () => {
     it('should search in name using search', async () => {
       await fillBD({
         business1User1: {
-          name: 'newName',
+          name: 'newName'
         },
         business2User1: {
-          name: 'newName1',
+          name: 'newName1'
         },
         business1User2: {
-          name: 'newName12',
+          name: 'newName12'
         },
         business2User2: {
-          name: 'newName123',
-        },
+          name: 'newName123'
+        }
       });
 
       ///////////////////////////////////////////////////////////
@@ -67,8 +67,8 @@ describe('services', () => {
         (
           await businessServicesGetAll({
             query: {
-              search: 'somethingWrong',
-            },
+              search: 'somethingWrong'
+            }
           })
         ).map(({ name }) => name)
       ).toEqual([]);
@@ -78,8 +78,8 @@ describe('services', () => {
         (
           await businessServicesGetAll({
             query: {
-              search: 'wNaMe1',
-            },
+              search: 'wNaMe1'
+            }
           })
         ).map(({ name }) => name)
       ).toEqual(['newName1', 'newName12', 'newName123']);
@@ -89,8 +89,8 @@ describe('services', () => {
         (
           await businessServicesGetAll({
             query: {
-              search: 'wNaMe12',
-            },
+              search: 'wNaMe12'
+            }
           })
         ).map(({ name }) => name)
       ).toEqual(['newName12', 'newName123']);
@@ -101,8 +101,8 @@ describe('services', () => {
         (
           await businessServicesGetAll({
             query: {
-              search: '',
-            },
+              search: ''
+            }
           })
         ).map(({ name }) => name)
       ).toEqual([
@@ -111,7 +111,7 @@ describe('services', () => {
         'business3User1',
         'newName12',
         'newName123',
-        'business3User2',
+        'business3User2'
       ]);
     });
 
@@ -122,43 +122,43 @@ describe('services', () => {
             {
               label: 'cat1',
               tag: 'tagCat1',
-              hidden: false,
+              hidden: false
             },
             {
               label: 'cat12',
               tag: 'tagCat12',
-              hidden: false,
-            },
-          ],
+              hidden: false
+            }
+          ]
         },
         business2User1: {
           postCategories: [
             {
               label: 'cat123',
               tag: 'tagCat123',
-              hidden: false,
+              hidden: false
             },
             {
               label: 'cat1234',
               tag: 'tagCat1234',
-              hidden: false,
-            },
-          ],
+              hidden: false
+            }
+          ]
         },
         business1User2: {
           postCategories: [
             {
               label: 'cat12345',
               tag: 'tagCat12345',
-              hidden: false,
+              hidden: false
             },
             {
               label: 'cat123456',
               tag: 'tagCat123456',
-              hidden: false,
-            },
-          ],
-        },
+              hidden: false
+            }
+          ]
+        }
       });
 
       ///////////////////////////////////////////////////////////
@@ -166,8 +166,8 @@ describe('services', () => {
         (
           await businessServicesGetAll({
             query: {
-              search: 'somethingWrong',
-            },
+              search: 'somethingWrong'
+            }
           })
         ).map(({ name }) => name)
       ).toEqual([]);
@@ -177,8 +177,8 @@ describe('services', () => {
         (
           await businessServicesGetAll({
             query: {
-              search: 'aT1234',
-            },
+              search: 'aT1234'
+            }
           })
         ).map(({ name }) => name)
       ).toEqual(['business2User1', 'business1User2']);
@@ -188,8 +188,8 @@ describe('services', () => {
         (
           await businessServicesGetAll({
             query: {
-              search: '',
-            },
+              search: ''
+            }
           })
         ).map(({ name }) => name)
       ).toEqual([
@@ -198,7 +198,7 @@ describe('services', () => {
         'business3User1',
         'business1User2',
         'business2User2',
-        'business3User2',
+        'business3User2'
       ]);
     });
   });

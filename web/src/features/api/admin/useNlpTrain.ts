@@ -17,13 +17,13 @@ export const useNlpTrain = (): {
           {
             method: 'post',
             url: getEndpoint({
-              path: '/nlp/train',
-            }),
+              path: '/nlp/train'
+            })
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

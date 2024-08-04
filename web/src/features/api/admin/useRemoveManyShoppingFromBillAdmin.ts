@@ -18,14 +18,14 @@ export const useRemoveManyShoppingFromBillAdmin = (): {
             method: 'delete',
             url: getEndpoint({
               path: '/admin/bills/:billId/shopping',
-              urlParams: { billId },
+              urlParams: { billId }
             }),
-            data: { shoppingIds },
+            data: { shoppingIds }
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

@@ -19,7 +19,7 @@ describe('admin', () => {
         .del(
           getTestingRoute({
             path: '/admin/business/:routeName',
-            urlParams: { routeName: business1User1.routeName },
+            urlParams: { routeName: business1User1.routeName }
           })
         )
         .expect(401);
@@ -27,7 +27,7 @@ describe('admin', () => {
 
     it('should fail if has not access', async () => {
       const { business1User1, admin } = await fillBD({
-        admin: { specialAccess: [] },
+        admin: { specialAccess: [] }
       });
 
       //delete business
@@ -35,7 +35,7 @@ describe('admin', () => {
         .del(
           getTestingRoute({
             path: '/admin/business/:routeName',
-            urlParams: { routeName: business1User1.routeName },
+            urlParams: { routeName: business1User1.routeName }
           })
         )
         .auth(generateToken(admin._id), { type: 'bearer' })
@@ -46,14 +46,14 @@ describe('admin', () => {
       const { imagesServicesDeleteBulk } = mockImagesServicesDeleteBulk();
 
       const { business1User1, admin } = await fillBD({
-        admin: { specialAccess: ['business__remove'] },
+        admin: { specialAccess: ['business__remove'] }
       });
 
       await supertest(app)
         .get(
           getTestingRoute({
             path: '/business/:routeName',
-            urlParams: { routeName: business1User1.routeName },
+            urlParams: { routeName: business1User1.routeName }
           })
         )
         .expect(200)
@@ -66,7 +66,7 @@ describe('admin', () => {
         .get(
           getTestingRoute({
             path: '/posts',
-            query: { routeNames: [business1User1.routeName] },
+            query: { routeNames: [business1User1.routeName] }
           })
         )
         .expect(200)
@@ -79,7 +79,7 @@ describe('admin', () => {
         .del(
           getTestingRoute({
             path: '/admin/business/:routeName',
-            urlParams: { routeName: business1User1.routeName },
+            urlParams: { routeName: business1User1.routeName }
           })
         )
         .auth(generateToken(admin._id), { type: 'bearer' })
@@ -90,7 +90,7 @@ describe('admin', () => {
        */
       expect(imagesServicesDeleteBulk).toHaveBeenCalledWith({
         routeName: business1User1.routeName,
-        userId: business1User1.createdBy.toString(),
+        userId: business1User1.createdBy.toString()
       });
 
       //get business posts(should be 0)
@@ -98,7 +98,7 @@ describe('admin', () => {
         .get(
           getTestingRoute({
             path: '/posts',
-            query: { routeNames: [business1User1.routeName] },
+            query: { routeNames: [business1User1.routeName] }
           })
         )
         .expect(200)
@@ -110,7 +110,7 @@ describe('admin', () => {
         .get(
           getTestingRoute({
             path: '/business/:routeName',
-            urlParams: { routeName: business1User1.routeName },
+            urlParams: { routeName: business1User1.routeName }
           })
         )
         .expect(404)

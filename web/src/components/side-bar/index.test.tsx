@@ -13,11 +13,11 @@ describe('SideBar', () => {
             endElement: <div />,
             label: 'Label',
             content: <div />,
-            divider: true,
-          },
+            divider: true
+          }
         ]}
       />,
-      { wrapper: getWrapper({ useRouter: true }) },
+      { wrapper: getWrapper({ useRouter: true }) }
     );
 
     expect(result.container).toMatchInlineSnapshot(`

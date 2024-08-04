@@ -12,10 +12,10 @@ describe('PricePlanCard', () => {
         items={[
           {
             description: '5 products',
-            included: true,
-          },
+            included: true
+          }
         ]}
-      />,
+      />
     );
 
     expect(result.container).toMatchInlineSnapshot(`

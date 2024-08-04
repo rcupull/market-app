@@ -15,7 +15,6 @@ import { PostsSections } from './posts-sections';
 import { Products } from './products';
 import { Settings } from './settings';
 import { ShoppingPage } from './shopping';
-import { BusinessTab, getBusinessTabLabel } from './utils';
 
 import SvgCogSolid from 'icons/CogSolid';
 import SvgLayerGroupSolid from 'icons/LayerGroupSolid';
@@ -24,12 +23,12 @@ import SvgMoneyBillAltSolid from 'icons/MoneyBillAltSolid';
 import SvgProductHunt from 'icons/ProductHunt';
 import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import { AdvertisementsBusinessOnboarding } from 'pages/@advertisements/business-onboarding';
-import { BannerInfoTelegramBusiness } from 'pages/@common/banner-info-telegram-business';
 import { BannerInfoTotalDebitBusiness } from 'pages/@common/banner-info-total-debit-business';
 import { LayoutPage } from 'pages/@common/layout-page';
 import { LayoutSection } from 'pages/@common/layout-section';
 import { useBusiness } from 'pages/@hooks/useBusiness';
 import { compact, isString } from 'utils/general';
+import { BusinessTab, getBusinessTabLabel } from 'utils/view';
 
 export const RouteName = () => {
   const { params, query, onChangeQuery } = useRouter();
@@ -83,38 +82,38 @@ export const RouteName = () => {
       q: 'shopping',
       label: getBusinessTabLabel('shopping'),
       content: <ShoppingPage />,
-      svg: SvgShoppingCartSolid,
+      svg: SvgShoppingCartSolid
     },
     {
       q: 'sections',
       label: getBusinessTabLabel('sections'),
       content: <PostsSections />,
-      svg: SvgLayerGroupSolid,
+      svg: SvgLayerGroupSolid
     },
     {
       q: 'products',
       label: getBusinessTabLabel('products'),
       content: <Products />,
-      svg: SvgProductHunt,
+      svg: SvgProductHunt
     },
     {
       q: 'links',
       label: getBusinessTabLabel('links'),
       content: <Links />,
-      svg: SvgLinkSolid,
+      svg: SvgLinkSolid
     },
     {
       q: 'settings',
       label: getBusinessTabLabel('settings'),
       svg: SvgCogSolid,
-      content: <Settings />,
+      content: <Settings />
     },
     getEnabledFeature('BILLIING_THE_BUSINESS') && {
       q: 'billing',
       label: getBusinessTabLabel('billing'),
       content: <Billing />,
-      svg: SvgMoneyBillAltSolid,
-    },
+      svg: SvgMoneyBillAltSolid
+    }
   ]);
 
   const tabIndexToQuery = (tabIndex: number) => {
@@ -127,22 +126,14 @@ export const RouteName = () => {
   return (
     <>
       <LayoutSection
-        title={
-          query.businessTab && (
-            <span className="ml-2 sm:hidden">
-              {getBusinessTabLabel(query.businessTab as BusinessTab)}
-            </span>
-          )
-        }
         topRightHeader={
           <div className="flex items-center gap-6">
-            <BannerInfoTelegramBusiness className="hidden sm:flex" />
-
             <BannerInfoTotalDebitBusiness className="hidden sm:flex" />
 
             <Options
               business={business}
               onRefresh={() => businessOwnerData.onFetch({ routeName })}
+              className="hidden sm:flex"
             />
           </div>
         }
@@ -151,13 +142,13 @@ export const RouteName = () => {
 
         <Tabs
           tabListClassName="mt-4 shadow-lg hidden sm:flex"
-          tabPanelClassName="w-full overflow-y-auto h-[calc(100vh-12rem)]"
+          tabPanelClassName="w-full h-[calc(100vh-9rem)]"
           onSelect={(tabIndex) =>
             onChangeQuery(
               { businessTab: tabIndexToQuery(tabIndex) },
               {
-                replaceAll: true,
-              },
+                replaceAll: true
+              }
             )
           }
           selected={isString(query.businessTab) ? tabQueryToIndex(query.businessTab) : undefined}

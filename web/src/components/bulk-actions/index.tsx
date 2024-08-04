@@ -17,7 +17,7 @@ type GetBulkRowNodes<RowData extends AnyRecord = AnyRecord> = (
   args: {
     rowData: RowData;
   },
-  nodes: Array<React.ReactNode>,
+  nodes: Array<React.ReactNode>
 ) => Array<React.ReactNode>;
 
 type GetBulkHeaderNodes = (nodes: Array<React.ReactNode>) => Array<React.ReactNode>;
@@ -33,7 +33,7 @@ interface BulkActionArgs<RowData extends AnyRecord = AnyRecord> {
 
 export interface BulkActionsProps<
   Action extends string = string,
-  RowData extends AnyRecord = AnyRecord,
+  RowData extends AnyRecord = AnyRecord
 > extends StyleProps {
   renderMenuNode: (args: { setAction: (action: Action) => void }) => React.ReactNode;
   getBulkActionBtnProps: (args: { action: Action }) => Partial<ButtonProps>;
@@ -45,7 +45,7 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
   children,
   renderMenuNode,
   getBulkActionBtnProps,
-  refMeta,
+  refMeta
 }: BulkActionsProps<E, RowData>) => {
   const [action, setAction] = useState<E>();
   const [selected, setSelected] = useState<Array<RowData>>([]);
@@ -127,7 +127,7 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
           {node}
           <div className="absolute inset-0 bg-white opacity-60 rounded-md cursor-not-allowed" />
         </div>
-      )),
+      ))
     ];
   };
 
@@ -145,10 +145,10 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
 
             return {
               ...out,
-              nodes: getBulkRowNodes({ rowData }, out.nodes),
+              nodes: getBulkRowNodes({ rowData }, out.nodes)
             };
           },
-          disabledRemapRowsValidation: selecting,
+          disabledRemapRowsValidation: selecting
         }),
         getDisabledOverlay: (node) => {
           return (
@@ -159,7 +159,7 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
               )}
             </div>
           );
-        },
+        }
       })}
     </>
   );

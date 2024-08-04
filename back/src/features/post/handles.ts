@@ -8,7 +8,7 @@ import {
   postServicesGetAllWithPagination,
   postServicesGetOne,
   postServicesUpdateMany,
-  postServicesUpdateOne,
+  postServicesUpdateOne
 } from './services';
 
 import { getPostNotFoundResponse, getUserNotFoundResponse } from '../../utils/server-response';
@@ -33,7 +33,7 @@ const get_posts: () => RequestHandler = () => {
         includeHidden,
         postsIds,
         postType,
-        sort = defaultQuerySort,
+        sort = defaultQuerySort
       } = query;
 
       const posts = await postServicesGetAllWithPagination({
@@ -47,12 +47,12 @@ const get_posts: () => RequestHandler = () => {
           hiddenBusiness: includeHidden === 'true' ? undefined : false,
           postCategoriesTags,
           postCategoriesMethod,
-          postType,
-        },
+          postType
+        }
       });
 
       const { getPostData } = await shoppingServicesGetDataFromPosts({
-        posts: posts.data,
+        posts: posts.data
       });
 
       const out = deepJsonCopy(posts);
@@ -63,7 +63,7 @@ const get_posts: () => RequestHandler = () => {
         return {
           ...post,
           stockAmountAvailable,
-          amountInProcess,
+          amountInProcess
         };
       };
 
@@ -83,8 +83,8 @@ const get_posts_postId: () => RequestHandler = () => {
 
       const post = await postServicesGetOne({
         query: {
-          _id: postId,
-        },
+          _id: postId
+        }
       });
 
       if (!post) {
@@ -94,7 +94,7 @@ const get_posts_postId: () => RequestHandler = () => {
       const out = deepJsonCopy(post);
 
       const { getPostData } = await shoppingServicesGetDataFromPosts({
-        posts: [out],
+        posts: [out]
       });
 
       const getPostDto = (post: Post): PostDto => {
@@ -103,7 +103,7 @@ const get_posts_postId: () => RequestHandler = () => {
         return {
           ...post,
           stockAmountAvailable,
-          amountInProcess,
+          amountInProcess
         };
       };
 
@@ -138,7 +138,7 @@ const post_posts: () => RequestHandler<AnyRecord, any, Post> = () => {
         postCategoriesTags,
         stockAmount,
         postType,
-        postLink,
+        postLink
       } = body;
 
       const out = await postServicesAddOne({
@@ -158,7 +158,7 @@ const post_posts: () => RequestHandler<AnyRecord, any, Post> = () => {
         //
         createdBy: user._id,
         postType,
-        postLink,
+        postLink
       });
 
       res.send(out);
@@ -175,8 +175,8 @@ const post_posts_postId_duplicate: () => RequestHandler = () => {
 
       const post = await postServicesGetOne({
         query: {
-          _id: postId,
-        },
+          _id: postId
+        }
       });
 
       if (!post) {
@@ -204,20 +204,20 @@ const put_posts_postId: () => RequestHandler = () => {
 
       if (!post) {
         return getPostNotFoundResponse({
-          res,
+          res
         });
       }
 
       if (!isEqual(body.images, post.images)) {
         await imagesServicesDeleteOldImages({
           newImagesSrcs: body.images,
-          oldImagesSrcs: post.images,
+          oldImagesSrcs: post.images
         });
       }
 
       const out = await postServicesUpdateOne({
         query: {
-          _id: post._id,
+          _id: post._id
         },
         update: makeReshaper<Partial<Post>, Partial<Post>>({
           clothingSizes: 'clothingSizes',
@@ -233,8 +233,8 @@ const put_posts_postId: () => RequestHandler = () => {
           postCategoriesTags: 'postCategoriesTags',
           discount: 'discount',
           stockAmount: 'stockAmount',
-          postLink: 'postLink',
-        })(body),
+          postLink: 'postLink'
+        })(body)
       });
 
       // await notificationsServicesSendNotification({
@@ -257,7 +257,7 @@ const delete_posts_postId: () => RequestHandler = () => {
        * Removing the post
        */
       const out = await postServicesDeleteOne({
-        postId,
+        postId
       });
 
       res.send(out);
@@ -286,14 +286,14 @@ const get_related_posts: () => RequestHandler = () => {
           $expr: {
             $gt: [
               { $size: { $setIntersection: ['$postCategoriesTags', post.postCategoriesTags] } },
-              0,
-            ],
-          },
-        },
+              0
+            ]
+          }
+        }
       });
 
       const { getPostData } = await shoppingServicesGetDataFromPosts({
-        posts: related.data,
+        posts: related.data
       });
 
       const out = deepJsonCopy(related);
@@ -304,7 +304,7 @@ const get_related_posts: () => RequestHandler = () => {
         return {
           ...post,
           stockAmountAvailable,
-          amountInProcess,
+          amountInProcess
         };
       };
 
@@ -333,8 +333,8 @@ const bulk_action_delete: () => RequestHandler = () => {
         await postServicesDeleteMany({
           query: {
             postIds: ids,
-            routeName,
-          },
+            routeName
+          }
         });
       } else if (!isEmpty(query)) {
         const { postCategoriesMethod, postCategoriesTags, search } = query;
@@ -344,29 +344,29 @@ const bulk_action_delete: () => RequestHandler = () => {
             routeNames: [routeName],
             postCategoriesMethod,
             postCategoriesTags,
-            search,
-          },
+            search
+          }
         });
 
         await postServicesDeleteMany({
           query: {
             postIds: posts.map((post) => post._id.toString()),
-            routeName,
-          },
+            routeName
+          }
         });
       } else {
         // get all post
         const posts = await postServicesGetAll({
           query: {
-            routeNames: [routeName],
-          },
+            routeNames: [routeName]
+          }
         });
 
         await postServicesDeleteMany({
           query: {
             postIds: posts.map((post) => post._id.toString()),
-            routeName,
-          },
+            routeName
+          }
         });
       }
 
@@ -394,11 +394,11 @@ const bulk_action_update: () => RequestHandler = () => {
       if (ids?.length) {
         await postServicesUpdateMany({
           query: {
-            _id: { $in: ids },
+            _id: { $in: ids }
           },
           update: {
-            hidden,
-          },
+            hidden
+          }
         });
       } else if (!isEmpty(query)) {
         // TODO esto puede ser mejorado en una sola quuery
@@ -409,33 +409,33 @@ const bulk_action_update: () => RequestHandler = () => {
             routeNames: [routeName],
             postCategoriesMethod,
             postCategoriesTags,
-            search,
-          },
+            search
+          }
         });
 
         await postServicesUpdateMany({
           query: {
-            _id: { $in: posts.map(({ _id }) => _id) },
+            _id: { $in: posts.map(({ _id }) => _id) }
           },
           update: {
-            hidden,
-          },
+            hidden
+          }
         });
       } else {
         // get all posts
         const posts = await postServicesGetAll({
           query: {
-            routeNames: [routeName],
-          },
+            routeNames: [routeName]
+          }
         });
 
         await postServicesUpdateMany({
           query: {
-            _id: { $in: posts.map(({ _id }) => _id) },
+            _id: { $in: posts.map(({ _id }) => _id) }
           },
           update: {
-            hidden,
-          },
+            hidden
+          }
         });
       }
 
@@ -455,5 +455,5 @@ export const postHandles = {
   get_related_posts,
   //
   bulk_action_delete,
-  bulk_action_update,
+  bulk_action_update
 };

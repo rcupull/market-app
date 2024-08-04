@@ -14,7 +14,7 @@ export const HeroSectionCentered = () => {
 
   return (
     <div data-id="HeroSectionCentered" className="relative isolate px-6 lg:px-8 mx-auto">
-      <div className="mx-auto max-w-2xl py-16 lg:py-32">
+      <div className="mx-auto max-w-2xl py-4 sm:py-16 lg:py-32">
         <div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">

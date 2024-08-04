@@ -19,12 +19,12 @@ export const useGetOneGeoReverse = (): {
         fetch[2](
           {
             method: 'get',
-            url: getEndpoint({ path: '/geolocation/reverse', query: { lat, lon } }),
+            url: getEndpoint({ path: '/geolocation/reverse', query: { lat, lon } })
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

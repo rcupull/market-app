@@ -8,7 +8,7 @@ import { FieldRadioGroup } from 'components/field-radio-group';
 import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
-import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
+import { useCloseContext } from 'features/modal/closeContext/useCloseContext';
 import { useModal } from 'features/modal/useModal';
 
 import { Portal } from 'hooks/usePortal';
@@ -45,14 +45,14 @@ export const Component = ({ portal }: ComponentProps) => {
     <Formux<State>
       value={{
         deliveryConfig: business.deliveryConfig,
-        address: business.addresses?.[0],
+        address: business.addresses?.[0]
       }}
     >
       {({ value, hasChange }) => {
         onChangeUnsavedChanges(hasChange);
 
         const isEnabledDelivery = getDeliveryUtils().getIsEnabled({
-          deliveryConfig: value.deliveryConfig,
+          deliveryConfig: value.deliveryConfig
         });
 
         return (
@@ -76,20 +76,20 @@ export const Component = ({ portal }: ComponentProps) => {
               items={[
                 {
                   value: DeliveryConfigType.NONE,
-                  label: 'Ninguno',
+                  label: 'Ninguno'
                 },
                 {
                   value: DeliveryConfigType.FREE,
-                  label: 'Gratis',
+                  label: 'Gratis'
                 },
                 {
                   value: DeliveryConfigType.OPTIONAL,
-                  label: 'Opcional',
+                  label: 'Opcional'
                 },
                 {
                   value: DeliveryConfigType.REQUIRED,
-                  label: 'Obligatorio',
-                },
+                  label: 'Obligatorio'
+                }
               ]}
               containerClassName="flex items-center flex-wrap gap-4"
             />
@@ -136,21 +136,21 @@ export const Component = ({ portal }: ComponentProps) => {
                     {
                       update: {
                         deliveryConfig: value.deliveryConfig,
-                        addresses: value.address ? [value.address] : [],
+                        addresses: value.address ? [value.address] : []
                       },
-                      routeName,
+                      routeName
                     },
                     {
                       onAfterSuccess: () => {
                         onFetch({ routeName });
                         onClose();
-                      },
-                    },
+                      }
+                    }
                   );
                 }}
                 variant="primary"
                 className="w-full"
-              />,
+              />
             )}
           </form>
         );

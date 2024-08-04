@@ -7,7 +7,7 @@ import { getWrapper } from 'utils/test-utils';
 describe('useTermsAndConditionsModal', () => {
   it('should close when click on the close button', async () => {
     const { result } = renderHook(() => useTermsAndConditionsModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.termsAndConditionsModal.open());
@@ -21,7 +21,7 @@ describe('useTermsAndConditionsModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => useTermsAndConditionsModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.termsAndConditionsModal.open());
@@ -122,7 +122,7 @@ describe('useTermsAndConditionsModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

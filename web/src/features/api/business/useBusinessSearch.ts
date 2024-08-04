@@ -20,13 +20,13 @@ export const useBusinessSearch = (): {
             method: 'get',
             url: getEndpoint({
               path: '/business/search',
-              query: { search },
-            }),
+              query: { search }
+            })
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

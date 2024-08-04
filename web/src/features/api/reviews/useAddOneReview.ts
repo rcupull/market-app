@@ -21,14 +21,14 @@ export const useAddOneReview = (): {
           {
             method: 'post',
             url: getEndpoint({
-              path: '/reviews',
+              path: '/reviews'
             }),
-            data,
+            data
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

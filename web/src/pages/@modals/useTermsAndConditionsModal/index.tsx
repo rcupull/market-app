@@ -8,7 +8,7 @@ import { dynamic } from 'utils/makeLazy';
 
 //eslint-disable-next-line
 const TermsAndConditions = dynamic(() =>
-  import('pages/@common/terms-and-conditions').then((m) => m),
+  import('pages/@common/terms-and-conditions').then((m) => m)
 );
 
 export const useTermsAndConditionsModal = () => {
@@ -17,26 +17,22 @@ export const useTermsAndConditionsModal = () => {
   return {
     termsAndConditionsModal: {
       open: () => {
-        pushModal(
-          'Emergent',
-          {
-            useProps: () => {
-              const portal = usePortal();
+        pushModal('Emergent', {
+          useProps: () => {
+            const portal = usePortal();
 
-              return {
-                title: 'Términos y Condiciones',
-                content: (
-                  <TermsAndConditions portal={portal} className="max-h-[75vh] overflow-y-auto" />
-                ),
-                secondaryBtn: <ButtonClose />,
-                primaryBtn: <div ref={portal.ref} />,
-                className: '!w-[95vw] !sm:w-[80vw]',
-              };
-            },
-          },
-          { emergent: true },
-        );
-      },
-    },
+            return {
+              title: 'Términos y Condiciones',
+              content: (
+                <TermsAndConditions portal={portal} className="max-h-[75vh] overflow-y-auto" />
+              ),
+              secondaryBtn: <ButtonClose />,
+              primaryBtn: <div ref={portal.ref} />,
+              className: '!w-[95vw] !sm:w-[80vw]'
+            };
+          }
+        });
+      }
+    }
   };
 };

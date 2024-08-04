@@ -1,7 +1,9 @@
+import { Fragment } from 'react';
+
 import { RemapRowsIndexRecord, RemapRowsIndexValue, TableGetRowProps, TableHeads } from './types';
 
 import { AnyRecord } from 'types/general';
-import { isEqual, range } from 'utils/general';
+import { cn, isEqual, range } from 'utils/general';
 
 export const getRemapedProps = <RowData extends AnyRecord = AnyRecord>(args: {
   remapIndex: RemapRowsIndexValue;
@@ -25,31 +27,37 @@ export const getRemapedProps = <RowData extends AnyRecord = AnyRecord>(args: {
       const outNodes = remapIndex.reduce((acc, group, index) => {
         return [
           ...acc,
-          <div key={index} className="flex flex-col items-start gap-2">
-            {group.map((index) => (
-              <div
-                key={index}
-                className="flex items-center gap-4 w-full odd:bg-gray-100 px-2 py-0.5 rounded-sm"
-              >
-                <div className="font-semibold">{heads[index]}</div>
-                <div className="ml-auto">{nodes[index]}</div>
-              </div>
-            ))}
-          </div>,
+          <div key={index} className="grid grid-cols-2">
+            {group.map((index, i) => {
+              const isDark = i % 2 === 0;
+              const commonStyle = cn('font-semibold px-4 py-1 rounded-sm', {
+                'bg-gray-100': isDark
+              });
+
+              return (
+                <Fragment key={i}>
+                  <div className={cn('font-semibold flex items-center', commonStyle)}>
+                    {heads[index]}
+                  </div>
+                  <div className={cn(commonStyle)}>{nodes[index]}</div>
+                </Fragment>
+              );
+            })}
+          </div>
         ];
       }, [] as TableHeads);
 
       return {
         nodes: outNodes,
-        ...omittedProps,
+        ...omittedProps
       };
-    },
+    }
   };
 };
 
 export const validateRemapIndex = (
   remapIndex: RemapRowsIndexRecord,
-  headsCount: number,
+  headsCount: number
 ): boolean => {
   const validRange = range(headsCount);
 

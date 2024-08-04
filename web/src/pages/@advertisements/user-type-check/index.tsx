@@ -24,12 +24,12 @@ export const AdvertisementsUserTypeCheck = () => {
       {
         userId: user._id,
         update: {
-          requestUserTypeWhenStart: true,
-        },
+          requestUserTypeWhenStart: true
+        }
       },
       {
-        onAfterSuccess: () => onRefreshAuthUser(),
-      },
+        onAfterSuccess: () => onRefreshAuthUser()
+      }
     );
   };
 
@@ -39,7 +39,7 @@ export const AdvertisementsUserTypeCheck = () => {
         gotItButtonProps={{
           onClick: handleUpdateFlag,
           isBusy: updateChecksUser.status.isBusy,
-          label: 'Entendido',
+          label: 'Entendido'
         }}
       >
         <span>

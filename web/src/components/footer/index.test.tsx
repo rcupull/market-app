@@ -13,10 +13,10 @@ describe('Footer', () => {
           instagram: 'instagram',
           linkedin: 'linkedin',
           twitter: 'twitter',
-          youtube: 'youtube',
+          youtube: 'youtube'
         }}
       />,
-      { wrapper: getWrapper({ useRouter: true }) },
+      { wrapper: getWrapper({ useRouter: true }) }
     );
 
     expect(result.container).toMatchInlineSnapshot(`

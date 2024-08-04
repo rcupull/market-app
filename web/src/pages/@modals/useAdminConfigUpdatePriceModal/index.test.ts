@@ -7,7 +7,7 @@ import { getWrapper } from 'utils/test-utils';
 describe('useAdminConfigUpdatePriceModal', () => {
   it.skip('should close when click on the close button', async () => {
     const { result } = renderHook(() => useAdminConfigUpdatePriceModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.adminConfigUpdatePriceModal.open());
@@ -21,7 +21,7 @@ describe('useAdminConfigUpdatePriceModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => useAdminConfigUpdatePriceModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.adminConfigUpdatePriceModal.open());
@@ -122,7 +122,7 @@ describe('useAdminConfigUpdatePriceModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

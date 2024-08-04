@@ -20,5 +20,5 @@ export const specialAccessRecord: Record<Access, any> = {
   bills__read: {},
   bills__write: {},
   bills__remove: {},
-  agenda__full: {},
+  agenda__full: {}
 };

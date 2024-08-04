@@ -45,14 +45,14 @@ export const useUpdateOnePost = (): {
             method: 'put',
             url: getEndpoint({
               path: '/posts/:postId',
-              urlParams: { postId, userId },
+              urlParams: { postId, userId }
             }),
-            data,
+            data
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

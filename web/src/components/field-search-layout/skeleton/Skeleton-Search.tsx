@@ -29,9 +29,9 @@ export const SkeletonSearch = ({ searchLayoutType, active }: SkeletonSearchProps
             () => setSelectedIndex([2, 6, 9]),
             () => setSelectedIndex([2, 9]),
             () => setSelectedIndex([9]),
-            () => setSelectedIndex([]),
+            () => setSelectedIndex([])
           ],
-          1000,
+          1000
         );
       }
       case 'postCategoriesScrollable': {
@@ -45,9 +45,9 @@ export const SkeletonSearch = ({ searchLayoutType, active }: SkeletonSearchProps
             () => ref.current?.scrollTo({ left: 0, behavior: 'smooth' }),
             () => setSelectedIndex([2, 9]),
             () => setSelectedIndex([9]),
-            () => setSelectedIndex([]),
+            () => setSelectedIndex([])
           ],
-          1000,
+          1000
         );
       }
       case 'postCategoriesExcluded': {
@@ -56,9 +56,9 @@ export const SkeletonSearch = ({ searchLayoutType, active }: SkeletonSearchProps
             () => setSelectedIndex([2]),
             () => setSelectedIndex([6]),
             () => setSelectedIndex([9]),
-            () => setSelectedIndex([]),
+            () => setSelectedIndex([])
           ],
-          1000,
+          1000
         );
       }
       case 'postCategoriesExcludedScrollable': {
@@ -70,9 +70,9 @@ export const SkeletonSearch = ({ searchLayoutType, active }: SkeletonSearchProps
             () => ref.current?.scrollTo({ left: 400, behavior: 'smooth' }),
             () => setSelectedIndex([9]),
             () => ref.current?.scrollTo({ left: 0, behavior: 'smooth' }),
-            () => setSelectedIndex([]),
+            () => setSelectedIndex([])
           ],
-          1000,
+          1000
         );
       }
     }
@@ -121,7 +121,7 @@ export const SkeletonSearch = ({ searchLayoutType, active }: SkeletonSearchProps
           <MutedBox
             key={index}
             className={cn('!w-12 !h-6 flex-shrink-0', {
-              'bg-gray-500': selectedIndex.includes(index),
+              'bg-gray-500': selectedIndex.includes(index)
             })}
             active={active}
           />
@@ -151,7 +151,7 @@ export const SkeletonSearch = ({ searchLayoutType, active }: SkeletonSearchProps
           <MutedBox
             key={index}
             className={cn('!w-12 !h-6 flex-shrink-0', {
-              'bg-gray-500': selectedIndex.includes(index),
+              'bg-gray-500': selectedIndex.includes(index)
             })}
             active={active}
           />

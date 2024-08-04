@@ -25,14 +25,14 @@ export const useUpdateOneBusinessAdmin = (): {
             method: 'put',
             url: getEndpoint({
               path: '/admin/business/:routeName',
-              urlParams: { routeName },
+              urlParams: { routeName }
             }),
-            data: update,
+            data: update
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

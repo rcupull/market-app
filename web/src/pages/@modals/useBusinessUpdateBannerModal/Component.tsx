@@ -8,7 +8,7 @@ import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
-import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
+import { useCloseContext } from 'features/modal/closeContext/useCloseContext';
 
 import { Portal } from 'hooks/usePortal';
 
@@ -34,7 +34,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
 
   const initialValue: State = {
     bannerImages: bannerImages || [],
-    bannerLayoutType: business?.layouts?.banner?.type || 'none',
+    bannerLayoutType: business?.layouts?.banner?.type || 'none'
   };
 
   const { onChangeUnsavedChanges } = useCloseContext();
@@ -54,8 +54,8 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               {
                 field: 'bannerImages',
                 type: 'custom',
-                customCb: (value) => value.length,
-              },
+                customCb: (value) => value.length
+              }
             ]
           : undefined
       }
@@ -77,16 +77,16 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               items={[
                 {
                   value: 'none',
-                  label: 'Ninguno',
+                  label: 'Ninguno'
                 },
                 {
                   value: 'static',
-                  label: 'Estático',
+                  label: 'Estático'
                 },
                 {
                   value: 'swipableClassic',
-                  label: 'Deslizante',
-                },
+                  label: 'Deslizante'
+                }
               ]}
               name="bannerLayoutType"
               containerClassName="flex flex-col sm:flex-row sm:items-center sm:gap-4"
@@ -122,24 +122,24 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                                 layouts: {
                                   ...business.layouts,
                                   banner: {
-                                    type: bannerLayoutType,
-                                  },
-                                },
+                                    type: bannerLayoutType
+                                  }
+                                }
                               },
-                              routeName: business.routeName,
+                              routeName: business.routeName
                             },
                             {
-                              onAfterSuccess,
-                            },
+                              onAfterSuccess
+                            }
                           );
-                        },
-                      },
+                        }
+                      }
                     );
                   }
                 }}
                 variant="primary"
                 className="w-full"
-              />,
+              />
             )}
           </form>
         );

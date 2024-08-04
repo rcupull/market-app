@@ -12,14 +12,14 @@ describe('Menu', () => {
         items={[
           {
             label: 'Label1',
-            onClick: () => {},
+            onClick: () => {}
           },
           {
             label: 'Label2',
-            onClick: () => {},
-          },
+            onClick: () => {}
+          }
         ]}
-      />,
+      />
     );
 
     expect(result.container).toMatchInlineSnapshot(`

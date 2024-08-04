@@ -51,12 +51,12 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
       <div className="flex">
         <Formux
           value={{
-            label: '',
+            label: ''
           }}
           validate={[
             {
               field: 'label',
-              type: 'required',
+              type: 'required'
             },
             {
               field: 'label',
@@ -64,8 +64,8 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               message: 'Esa categoría ya existe.',
               customCb: (label) => {
                 return !state.map(({ label }) => label).includes(label);
-              },
-            },
+              }
+            }
           ]}
         >
           {({ value, resetForm }) => {
@@ -75,8 +75,8 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               setState(
                 addRow(state, {
                   label,
-                  tag: getPostCategoryTag(label),
-                }),
+                  tag: getPostCategoryTag(label)
+                })
               );
               resetForm();
             };
@@ -104,7 +104,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                     onClick={() => handleAdd()}
                     variant="primary"
                     className="ml-4"
-                  />,
+                  />
                 )}
               </form>
             );
@@ -120,87 +120,78 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
             <div
               key={index}
               className={cn('flex items-center gap-2 border border-gray-400 rounded-md p-2', {
-                'bg-gray-200': hidden,
+                'bg-gray-200': hidden
               })}
             >
               {label}
               <IconButtonRemove
                 className="text-gray-600 hover:text-gray-800 cursor-pointer"
                 onClick={() => {
-                  pushModal(
-                    'Confirmation',
-                    {
-                      useProps: () => {
-                        const { onClose } = useModal();
+                  pushModal('Confirmation', {
+                    useProps: () => {
+                      const { onClose } = useModal();
 
-                        return {
-                          content: (
-                            <div>
-                              Al eliminar una categoría estará removiendo esta clasificación de
-                              todas las publicaciones de su negocio y es un cambio irreversible.
-                              Seguro que desea eliminar la categoría{' '}
-                              <span className="font-bold">{label}</span>?
-                            </div>
-                          ),
-                          badge: <Badge variant="error" />,
-                          primaryBtn: (
-                            <ButtonRemove
-                              label="Eliminar"
-                              onClick={() => {
-                                setState(removeRow(state, index));
-                                onClose();
-                              }}
-                            />
-                          ),
-                        };
-                      },
-                    },
-                    { emergent: true },
-                  );
+                      return {
+                        content: (
+                          <div>
+                            Al eliminar una categoría estará removiendo esta clasificación de todas
+                            las publicaciones de su negocio y es un cambio irreversible. Seguro que
+                            desea eliminar la categoría <span className="font-bold">{label}</span>?
+                          </div>
+                        ),
+                        badge: <Badge variant="error" />,
+                        primaryBtn: (
+                          <ButtonRemove
+                            label="Eliminar"
+                            onClick={() => {
+                              setState(removeRow(state, index));
+                              onClose();
+                            }}
+                          />
+                        )
+                      };
+                    }
+                  });
                 }}
               />
 
               <IconButtonShowHide
                 hidden={hidden}
                 onClick={() => {
-                  pushModal(
-                    'Confirmation',
-                    {
-                      useProps: () => {
-                        const { onClose } = useModal();
+                  pushModal('Confirmation', {
+                    useProps: () => {
+                      const { onClose } = useModal();
 
-                        return {
-                          title: `${hidden ? 'Mostrar' : 'Ocultar'} categoría`,
-                          content: (
-                            <>
-                              {hidden ? (
-                                <div>
-                                  Usted está mostrando esta categoría y podrá ser usada para filtrar
-                                  sus publicaciones en la página de su negocio. Desea continuar?
-                                </div>
-                              ) : (
-                                <div>
-                                  Usted está ocultando esta categoría y no será visible en el filtro
-                                  por categorias en la página de su negocio. Desea continuar?
-                                </div>
-                              )}
-                            </>
-                          ),
-                          badge: <Badge variant="info" />,
-                          primaryBtn: (
-                            <Button
-                              label="Continuar"
-                              onClick={() => {
-                                setState(updateRow(state, { ...cat, hidden: !hidden }, index));
-                                onClose();
-                              }}
-                            />
-                          ),
-                        };
-                      },
-                    },
-                    { emergent: true },
-                  );
+                      return {
+                        title: `${hidden ? 'Mostrar' : 'Ocultar'} categoría`,
+                        content: (
+                          <>
+                            {hidden ? (
+                              <div>
+                                Usted está mostrando esta categoría y podrá ser usada para filtrar
+                                sus publicaciones en la página de su negocio. Desea continuar?
+                              </div>
+                            ) : (
+                              <div>
+                                Usted está ocultando esta categoría y no será visible en el filtro
+                                por categorias en la página de su negocio. Desea continuar?
+                              </div>
+                            )}
+                          </>
+                        ),
+                        badge: <Badge variant="info" />,
+                        primaryBtn: (
+                          <Button
+                            label="Continuar"
+                            onClick={() => {
+                              setState(updateRow(state, { ...cat, hidden: !hidden }, index));
+                              onClose();
+                            }}
+                          />
+                        )
+                      };
+                    }
+                  });
                 }}
               />
             </div>
@@ -216,11 +207,11 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
             updateBusinessPostCategories.fetch(
               { postCategories: state, routeName },
               {
-                onAfterSuccess,
-              },
+                onAfterSuccess
+              }
             );
           }}
-        />,
+        />
       )}
     </>
   );

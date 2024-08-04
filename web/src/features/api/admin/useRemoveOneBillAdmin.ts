@@ -18,13 +18,13 @@ export const useRemoveOneBillAdmin = (): {
             method: 'delete',
             url: getEndpoint({
               path: '/admin/bills/:billId',
-              urlParams: { billId },
-            }),
+              urlParams: { billId }
+            })
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

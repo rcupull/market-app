@@ -7,7 +7,7 @@ import { getWrapper } from 'utils/test-utils';
 describe('useAuthForgotPasswordRequestModal', () => {
   it('should close when click on the close button', async () => {
     const { result } = renderHook(() => useAuthForgotPasswordRequestModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.authForgotPasswordRequestModal.open());
@@ -21,7 +21,7 @@ describe('useAuthForgotPasswordRequestModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => useAuthForgotPasswordRequestModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.authForgotPasswordRequestModal.open());
@@ -120,7 +120,7 @@ describe('useAuthForgotPasswordRequestModal', () => {
             </div>
           </div>
         </div>
-      `),
+      `)
     );
   });
 });

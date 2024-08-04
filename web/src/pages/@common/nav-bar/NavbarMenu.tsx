@@ -6,20 +6,17 @@ import { UserAvatar } from 'components/user-avatar';
 
 import { useAdminBDScript } from 'features/api/admin/useAdminBDScript';
 import { useGetAgendaTokenAdmin } from 'features/api/admin/useGetAgendaTokenAdmin';
-import { useAdminConfig } from 'features/api-slices/useAdminConfig';
 import { useAuth } from 'features/api-slices/useAuth';
 import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
 import { useSignOut } from 'features/api-slices/useSignOut';
 
+import { useBreakpoints } from 'hooks/useBreakpoints';
 import { useRouter } from 'hooks/useRouter';
-
-import { BannerInfoTelegramUser } from '../banner-info-telegram-user';
 
 import SvgBarsSolid from 'icons/BarsSolid';
 import SvgCalendar from 'icons/Calendar';
 import SvgCogSolid from 'icons/CogSolid';
-import SvgDollarSignSolid from 'icons/DollarSignSolid';
-import SvgHomeSolid from 'icons/HomeSolid';
+import SvgEllipsisVSolid from 'icons/EllipsisVSolid';
 import SvgKeySolid from 'icons/KeySolid';
 import SvgMoneyBillAltSolid from 'icons/MoneyBillAltSolid';
 import SvgProductHunt from 'icons/ProductHunt';
@@ -41,12 +38,7 @@ import { useBusinessUpdateNewModal } from 'pages/@modals/useBusinessUpdateNewMod
 import { useUserUpdateSettingsModal } from 'pages/@modals/useUserUpdateSettingsModal';
 import { Nullable } from 'types/general';
 import { getEndpoint } from 'utils/api';
-import {
-  getBusinessRoute,
-  getDashboardBusinessRoute,
-  getOneBusinessRoute,
-  getShoppingRoute,
-} from 'utils/business';
+import { getDashboardBusinessRoute, getOneBusinessRoute, getShoppingRoute } from 'utils/business';
 import { cn } from 'utils/general';
 
 export const NavbarMenu = () => {
@@ -56,14 +48,14 @@ export const NavbarMenu = () => {
     user,
     getIsBusinessUser,
     getHasSomeAccess,
-    onRefreshAuthUser,
+    onRefreshAuthUser
   } = useAuth();
   const { signOut } = useSignOut();
   const { isOneBusinessPage, params, isAuthenticatedPage, pushRoute } = useRouter();
   const { routeName } = params;
   const { authChangePasswordModal } = useAuthChangePasswordModal();
   const { userUpdateSettingsModal } = useUserUpdateSettingsModal();
-  const { getEnabledFeature } = useAdminConfig();
+  const breakpoints = useBreakpoints();
 
   const { businessUpdateNewModal } = useBusinessUpdateNewModal();
 
@@ -86,7 +78,7 @@ export const NavbarMenu = () => {
 
   const addDividerToFirst = (
     items: Array<Nullable<MenuItem>>,
-    label: string,
+    label: string
   ): Array<Nullable<MenuItem>> => {
     const out = [...items];
 
@@ -102,7 +94,7 @@ export const NavbarMenu = () => {
   };
 
   const getBusinessItems = (): Array<Nullable<MenuItem>> => {
-    if (!isAuthenticated || !getIsBusinessUser(user)) return [];
+    if (!isAuthenticated || !getIsBusinessUser(user) || breakpoints.xs) return [];
 
     const out: Array<MenuItem> = (allUserBusiness.data || []).map(({ name, routeName, hidden }) => {
       const isCurrentBusiness = params.routeName === routeName;
@@ -115,15 +107,15 @@ export const NavbarMenu = () => {
             className={cn(
               className,
               cn({
-                'fill-gray-500 ': hidden,
-              }),
+                'fill-gray-500 ': hidden
+              })
             )}
             hidden={hidden}
           />
         ),
         className: cn({
-          'bg-indigo-100': isCurrentBusiness,
-        }),
+          'bg-indigo-100': isCurrentBusiness
+        })
       };
     });
 
@@ -142,13 +134,13 @@ export const NavbarMenu = () => {
                     pushRoute(getDashboardBusinessRoute({ routeName }), {}, { timeout: 100 });
                     allUserBusiness.refresh();
                   }
-                },
+                }
               });
             }}
             className="!rounded-2xl !py-0 my-1"
           />
         </div>
-      ),
+      )
     });
 
     return addDividerToFirst(out, 'Mis negocios');
@@ -163,28 +155,28 @@ export const NavbarMenu = () => {
   const { adminBDScript } = useAdminBDScript();
 
   const getAdminItems = (): Array<Nullable<MenuItem>> => {
-    if (!isAuthenticated || !getIsAdmin(user)) return [];
+    if (!isAuthenticated || !getIsAdmin(user) || breakpoints.xs) return [];
 
     const out: Array<Nullable<MenuItem>> = [
       getHasSomeAccess('user__read') && {
         label: 'Usuarios',
         onClick: () => pushRoute('/admin/users'),
-        svg: SvgUsersSolid,
+        svg: SvgUsersSolid
       },
       {
         label: 'Órdenes de compra',
         onClick: () => pushRoute('/admin/shopping'),
-        svg: SvgShoppingCartSolid,
+        svg: SvgShoppingCartSolid
       },
       {
         label: 'Negocios',
         onClick: () => pushRoute('/admin/business'),
-        svg: SvgStoreSolid,
+        svg: SvgStoreSolid
       },
       getHasSomeAccess('bills__read') && {
         label: 'Facturas',
         onClick: () => pushRoute('/admin/bills'),
-        svg: SvgMoneyBillAltSolid,
+        svg: SvgMoneyBillAltSolid
       },
       getHasSomeAccess('agenda__full') && {
         label: 'Agenda',
@@ -196,29 +188,29 @@ export const NavbarMenu = () => {
               window.open(
                 getEndpoint({
                   path: '/admin/agenda/web/:agendaToken',
-                  urlParams: { agendaToken },
-                }),
+                  urlParams: { agendaToken }
+                })
               );
-            },
+            }
           });
         },
-        svg: SvgCalendar,
+        svg: SvgCalendar
       },
       {
         label: 'Configuración',
         onClick: () => pushRoute('/admin/settings'),
-        svg: SvgCogSolid,
+        svg: SvgCogSolid
       },
       {
         label: 'Nlp',
         onClick: () => pushRoute('/admin/nlp'),
-        svg: SvgTrainSolid,
+        svg: SvgTrainSolid
       },
       getHasSomeAccess('full') && {
         label: 'Run BD script',
         onClick: () => adminBDScript.fetch(),
-        svg: SvgRunningSolid,
-      },
+        svg: SvgRunningSolid
+      }
     ];
 
     return addDividerToFirst(out, 'Administración');
@@ -230,17 +222,17 @@ export const NavbarMenu = () => {
         label: 'Iniciar sesión',
         onClick: () => authSignInModal.open(),
         svg: SvgSignInAltSolid,
-        className: 'bg-green-100',
+        className: 'bg-green-100'
       },
       !isAuthenticated && {
         label: 'Créate una cuenta',
         onClick: () => authSignUpModal.open(),
-        svg: SvgUserPlusSolid,
+        svg: SvgUserPlusSolid
       },
       !isAuthenticated && {
         label: 'Recupera tu cuenta olvidada',
         onClick: () => authForgotPasswordRequestModal.open(),
-        svg: SvgUserCircleSolid,
+        svg: SvgUserCircleSolid
       },
       isAuthenticated && {
         label: 'Cerrar sesión',
@@ -252,64 +244,25 @@ export const NavbarMenu = () => {
         },
         svg: SvgSignOutAltSolid,
         divider: 'Mi cuenta',
-        className: 'bg-red-100',
+        className: 'bg-red-100'
       },
       isAuthenticated && {
         label: 'Cambiar contraseña',
         onClick: () => {
           authChangePasswordModal.open();
         },
-        svg: SvgKeySolid,
+        svg: SvgKeySolid
       },
       isAuthenticated && {
-        label: 'Preferencias de usuario',
+        label: 'Ajustes',
         onClick: () => {
           user && userUpdateSettingsModal.open({ user, onAfterSuccess: () => onRefreshAuthUser() });
         },
-        svg: SvgCogSolid,
-      },
+        svg: SvgCogSolid
+      }
     ];
 
     return addDividerToFirst(out, 'Mi cuenta');
-  };
-
-  const getGeneralItems = (): Array<Nullable<MenuItem>> => {
-    const out: Array<Nullable<MenuItem>> = [
-      {
-        label: 'Inicio',
-        onClick: () => pushRoute('/'),
-        svg: SvgHomeSolid,
-        className: cn('lg:hidden', {
-          '!block': isOneBusinessPage,
-        }),
-      },
-      {
-        label: 'Todos los negocios',
-        onClick: () => pushRoute(getBusinessRoute()),
-        svg: SvgStoreSolid,
-        className: cn('lg:hidden', {
-          '!block': isOneBusinessPage,
-        }),
-      },
-      getEnabledFeature('BILLIING_THE_BUSINESS') && {
-        label: 'Precios',
-        onClick: () => pushRoute('/price'),
-        svg: SvgDollarSignSolid,
-        className: cn('lg:hidden', {
-          '!block': isOneBusinessPage,
-        }),
-      },
-      {
-        label: '¿Que es Asere Market?',
-        onClick: () => pushRoute('/about-us'),
-        svg: SvgUsersSolid,
-        className: cn('lg:hidden', {
-          '!block': isOneBusinessPage,
-        }),
-      },
-    ];
-
-    return addDividerToFirst(out, 'Generales');
   };
 
   const getThisBusinessItems = (): Array<Nullable<MenuItem>> => {
@@ -320,31 +273,40 @@ export const NavbarMenu = () => {
         label: 'Productos',
         onClick: () => routeName && pushRoute(getOneBusinessRoute({ routeName })),
         svg: SvgProductHunt,
-        className: cn('lg:hidden'),
+        className: cn('lg:hidden')
       },
       {
         label: 'Mis compras',
         onClick: () => routeName && pushRoute(getShoppingRoute({ routeName })),
         svg: SvgShoppingBagSolid,
-        className: cn('lg:hidden'),
-      },
+        className: cn('lg:hidden')
+      }
     ];
 
     return addDividerToFirst(out, 'En este negocio');
   };
 
+  const renderButtonElement = () => {
+    if (breakpoints.xs) {
+      return <IconButton svg={<SvgEllipsisVSolid className="!size-7" />} />;
+    }
+
+    if (isAuthenticated) {
+      return <UserAvatar />;
+    }
+
+    return <IconButton svg={<SvgBarsSolid className="!size-7" />} />;
+  };
+
   return (
     <Menu
-      buttonElement={
-        isAuthenticated ? <UserAvatar /> : <IconButton svg={<SvgBarsSolid className="!size-7" />} />
-      }
+      buttonElement={renderButtonElement()}
       topElement={
         <>
           {user ? (
             <div className="px-2 py-3 flex flex-col gap-3 items-center">
               <span className="text-sm border px-2 py-1 rounded-2xl">{user.name}</span>
               <span className="text-xs">{user.email}</span>
-              <BannerInfoTelegramUser />
             </div>
           ) : (
             <div className="w-64 m-2 rounded-md px-4 py-3 border flex items-center justify-center">
@@ -358,8 +320,6 @@ export const NavbarMenu = () => {
       }
       items={[
         ...getThisBusinessItems(),
-        /////////////////////////////////////////////////////////////////////////////
-        ...getGeneralItems(),
         // {
         //   label: getCopyLinkLabel(),
         //   onClick: () => {
@@ -369,7 +329,7 @@ export const NavbarMenu = () => {
         // },
         ...getAccountItems(),
         ...getBusinessItems(),
-        ...getAdminItems(),
+        ...getAdminItems()
       ]}
       className="flex-shrink-0"
     />

@@ -9,9 +9,9 @@ export function SvgMinusSolid(props: StyleProps) {
       viewBox: '0 0 32 32',
       width: '1em',
       height: '1em',
-      ...props,
+      ...props
     },
-    createElement('path', { d: 'M5 15v2h22v-2z' }),
+    createElement('path', { d: 'M5 15v2h22v-2z' })
   );
 }
 export default SvgMinusSolid;

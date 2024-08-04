@@ -22,41 +22,37 @@ export const RowActions = ({ rowData, onRefresh }: RowActionsProps) => {
   const { adminUpdateUserAccessModal } = useAdminUpdateUserAccessModal();
 
   const handleDelete = () => {
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { removeOneUserAdmin } = useRemoveOneUserAdmin();
-          const { onClose } = useModal();
-          return {
-            content: (
-              <div>
-                <span>Seguro que desea eliminar este usuario?</span>
-              </div>
-            ),
-            badge: <Badge variant="error" />,
-            primaryBtn: (
-              <ButtonRemove
-                isBusy={removeOneUserAdmin.status.isBusy}
-                onClick={() =>
-                  removeOneUserAdmin.fetch(
-                    { id: rowData._id },
-                    {
-                      onAfterSuccess: () => {
-                        onClose();
+    pushModal('Confirmation', {
+      useProps: () => {
+        const { removeOneUserAdmin } = useRemoveOneUserAdmin();
+        const { onClose } = useModal();
+        return {
+          content: (
+            <div>
+              <span>Seguro que desea eliminar este usuario?</span>
+            </div>
+          ),
+          badge: <Badge variant="error" />,
+          primaryBtn: (
+            <ButtonRemove
+              isBusy={removeOneUserAdmin.status.isBusy}
+              onClick={() =>
+                removeOneUserAdmin.fetch(
+                  { id: rowData._id },
+                  {
+                    onAfterSuccess: () => {
+                      onClose();
 
-                        onRefresh();
-                      },
-                    },
-                  )
-                }
-              />
-            ),
-          };
-        },
-      },
-      { emergent: true },
-    );
+                      onRefresh();
+                    }
+                  }
+                )
+              }
+            />
+          )
+        };
+      }
+    });
   };
 
   return (

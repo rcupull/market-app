@@ -6,7 +6,7 @@ import {
   get401Response,
   get404Response,
   getPostNotFoundResponse,
-  getUserNotFoundResponse,
+  getUserNotFoundResponse
 } from '../utils/server-response';
 
 import { getFieldInReqData } from './utils';
@@ -23,14 +23,14 @@ export const middlewareIsUserThisPostOwner: RequestHandler = async (req, res, ne
   if (!postId) {
     return get404Response({
       res,
-      json: { message: 'routeName not found' },
+      json: { message: 'routeName not found' }
     });
   }
 
   const post = await postServicesGetOne({
     query: {
-      _id: postId,
-    },
+      _id: postId
+    }
   });
 
   if (!post) {
@@ -44,6 +44,6 @@ export const middlewareIsUserThisPostOwner: RequestHandler = async (req, res, ne
 
   get401Response({
     res,
-    json: { message: 'The user has not access to this post' },
+    json: { message: 'The user has not access to this post' }
   });
 };

@@ -6,7 +6,7 @@ import { PostPurshaseNotes } from '../types/post';
 export const objectIds = {
   obj0: new mongose.Types.ObjectId('62a23958e5a9e9b88f853a10'),
   obj1: new mongose.Types.ObjectId('62a23958e5a9e9b88f853a11'),
-  obj2: new mongose.Types.ObjectId('62a23958e5a9e9b88f853a12'),
+  obj2: new mongose.Types.ObjectId('62a23958e5a9e9b88f853a12')
 };
 
 export const addressDummy: Address = {
@@ -24,10 +24,10 @@ export const addressDummy: Address = {
   lat: -7,
   lon: 7,
   placeId: 'asdasd',
-  postCode: 'asdasda',
+  postCode: 'asdasda'
 };
 
 export const purshaseNotesDummy: PostPurshaseNotes = {
   interestedByClothingSizes: [],
-  interestedByColors: [],
+  interestedByColors: []
 };

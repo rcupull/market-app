@@ -19,8 +19,8 @@ const get_geolocation_reverse: () => RequestHandler = () => {
         params: {
           lat,
           lon,
-          apiKey: geoapifyApikey,
-        },
+          apiKey: geoapifyApikey
+        }
       });
 
       const geoapifyResponse: GeoapifyResponse = response.data;
@@ -36,7 +36,7 @@ const get_geolocation_reverse: () => RequestHandler = () => {
         postCode: 'features.0.properties.postcode',
         placeId: 'features.0.properties.place_id',
         municipality: 'features.0.properties.county',
-        neighborhood: 'features.0.properties.suburb',
+        neighborhood: 'features.0.properties.suburb'
       })(geoapifyResponse);
 
       if (process.env.NODE_ENV === 'development') {
@@ -50,5 +50,5 @@ const get_geolocation_reverse: () => RequestHandler = () => {
 };
 
 export const geolocationHandles = {
-  get_geolocation_reverse,
+  get_geolocation_reverse
 };

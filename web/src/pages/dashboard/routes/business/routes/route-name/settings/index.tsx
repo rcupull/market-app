@@ -46,7 +46,7 @@ export const Settings = () => {
   const { getIsEnabled } = getDeliveryUtils();
 
   const enabledDelivery = getIsEnabled({
-    deliveryConfig: business?.deliveryConfig,
+    deliveryConfig: business?.deliveryConfig
   });
 
   return (
@@ -67,13 +67,13 @@ export const Settings = () => {
 
       <SettingBox
         title="Notificaciones"
-        description="Reciba las notificaciones de su negocio por Telegram en tiempo real."
+        description="Reciba las notificaciones de su negocio en tiempo real."
         svg={SvgBell}
         onClick={() =>
           businessUpdateNotificationsModal.open({
             onAfterSuccess: () => {
               business && onFetch({ routeName: business?.routeName });
-            },
+            }
           })
         }
       />
@@ -86,7 +86,7 @@ export const Settings = () => {
           businessUpdateSocialNetworksModal.open({
             onAfterSuccess: () => {
               business && onFetch({ routeName: business?.routeName });
-            },
+            }
           })
         }
       />
@@ -99,7 +99,7 @@ export const Settings = () => {
           businessUpdatePostFormModal.open({
             onAfterSuccess: () => {
               business && onFetch({ routeName: business?.routeName });
-            },
+            }
           })
         }
       />
@@ -112,7 +112,7 @@ export const Settings = () => {
           businessUpdateBannerModal.open({
             onAfterSuccess: () => {
               business && onFetch({ routeName: business?.routeName });
-            },
+            }
           })
         }
       />
@@ -130,7 +130,7 @@ export const Settings = () => {
         description="Categoriza tus productos y mejorarás tus ventas."
         onClick={() =>
           businessUpdatePostCategoriesModal.open({
-            onAfterSuccess: () => business && onFetch({ routeName: business?.routeName }),
+            onAfterSuccess: () => business && onFetch({ routeName: business?.routeName })
           })
         }
       />

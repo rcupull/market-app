@@ -32,86 +32,78 @@ export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
   const { business } = useBusiness();
 
   const handleDelete = () => {
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { removeOnePost } = useRemoveOnePost();
-          const { onClose } = useModal();
-          return {
-            content: (
-              <div>
-                <span>
-                  Al eliminar esta publicación seran borradas todas las imágenes y datos asociados
-                  al mismo de manera <span className="font-bold">permanente</span>. Seguro que desea
-                  eliminar esta publicación?
-                </span>
-              </div>
-            ),
-            badge: <Badge variant="warning" />,
-            primaryBtn: (
-              <ButtonRemove
-                isBusy={removeOnePost.status.isBusy}
-                onClick={() =>
-                  removeOnePost.fetch(
-                    { id: rowData._id },
-                    {
-                      onAfterSuccess: () => {
-                        onClose();
-                        onRefreshForce();
-                      },
-                    },
-                  )
-                }
-              />
-            ),
-          };
-        },
-      },
-      { emergent: true },
-    );
+    pushModal('Confirmation', {
+      useProps: () => {
+        const { removeOnePost } = useRemoveOnePost();
+        const { onClose } = useModal();
+        return {
+          content: (
+            <div>
+              <span>
+                Al eliminar esta publicación seran borradas todas las imágenes y datos asociados al
+                mismo de manera <span className="font-bold">permanente</span>. Seguro que desea
+                eliminar esta publicación?
+              </span>
+            </div>
+          ),
+          badge: <Badge variant="warning" />,
+          primaryBtn: (
+            <ButtonRemove
+              isBusy={removeOnePost.status.isBusy}
+              onClick={() =>
+                removeOnePost.fetch(
+                  { id: rowData._id },
+                  {
+                    onAfterSuccess: () => {
+                      onClose();
+                      onRefreshForce();
+                    }
+                  }
+                )
+              }
+            />
+          )
+        };
+      }
+    });
   };
 
   const handleShowHide = (hidden: boolean) => {
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { updateOnePost } = useUpdateOnePost();
-          const { onClose } = useModal();
-          return {
-            content: (
-              <div>
-                <span>
-                  Al {`${hidden ? 'ocultar' : 'mostrar'}`} esta publicación no serán perdidos los
-                  datos de la misma. Solo se controla la visibilidad en la página de su negocio.
-                  Seguro que desea {`${hidden ? 'ocultar' : 'mostrar'}`} esta publicación?
-                </span>
-              </div>
-            ),
-            badge: <Badge variant="warning" />,
-            primaryBtn: (
-              <ButtonSave
-                isBusy={updateOnePost.status.isBusy}
-                label={hidden ? 'Ocultar' : 'Mostrar'}
-                onClick={() =>
-                  updateOnePost.fetch(
-                    { postId: rowData._id, hidden },
-                    {
-                      onAfterSuccess: () => {
-                        onClose();
-                        onRefreshForce();
-                      },
-                    },
-                  )
-                }
-              />
-            ),
-          };
-        },
-      },
-      { emergent: true },
-    );
+    pushModal('Confirmation', {
+      useProps: () => {
+        const { updateOnePost } = useUpdateOnePost();
+        const { onClose } = useModal();
+        return {
+          content: (
+            <div>
+              <span>
+                Al {`${hidden ? 'ocultar' : 'mostrar'}`} esta publicación no serán perdidos los
+                datos de la misma. Solo se controla la visibilidad en la página de su negocio.
+                Seguro que desea {`${hidden ? 'ocultar' : 'mostrar'}`} esta publicación?
+              </span>
+            </div>
+          ),
+          badge: <Badge variant="warning" />,
+          primaryBtn: (
+            <ButtonSave
+              isBusy={updateOnePost.status.isBusy}
+              label={hidden ? 'Ocultar' : 'Mostrar'}
+              onClick={() =>
+                updateOnePost.fetch(
+                  { postId: rowData._id, hidden },
+                  {
+                    onAfterSuccess: () => {
+                      onClose();
+                      onRefreshForce();
+                    }
+                  }
+                )
+              }
+            />
+          )
+        };
+      }
+    });
   };
 
   const { duplicateOnePost } = useDuplicateOnePost();
@@ -119,13 +111,13 @@ export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
   const handleDuplicate = () => {
     duplicateOnePost.fetch(
       {
-        postId: rowData._id,
+        postId: rowData._id
       },
       {
         onAfterSuccess: () => {
           onRefreshForce();
-        },
-      },
+        }
+      }
     );
   };
 
@@ -134,7 +126,7 @@ export const RowActions = ({ rowData, onRefreshForce }: RowActionsProps) => {
       postId: rowData._id,
       onAfterSuccess: () => {
         onRefreshForce();
-      },
+      }
     });
   };
 

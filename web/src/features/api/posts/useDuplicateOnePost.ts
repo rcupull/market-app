@@ -25,13 +25,13 @@ export const useDuplicateOnePost = (): {
             method: 'post',
             url: getEndpoint({
               path: '/posts/:postId/duplicate',
-              urlParams: { userId, postId },
-            }),
+              urlParams: { userId, postId }
+            })
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

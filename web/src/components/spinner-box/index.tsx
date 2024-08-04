@@ -10,7 +10,7 @@ export const SpinnerBox = ({ className }: SpinnerBoxProps) => {
     <div
       className={cn(
         'bg-white opacity-50 cursor-not-allowed absolute inset-0 flex items-center justify-center',
-        className,
+        className
       )}
     >
       <SpinnerEllipsis />

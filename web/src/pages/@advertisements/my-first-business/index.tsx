@@ -35,10 +35,10 @@ export const AdvertisementsMyFirstBusiness = () => {
                   business &&
                     pushRoute(
                       getDashboardBusinessRoute({
-                        routeName: business.routeName,
-                      }),
+                        routeName: business.routeName
+                      })
                     );
-                },
+                }
               });
             }}
           />

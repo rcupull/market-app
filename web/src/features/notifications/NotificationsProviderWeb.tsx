@@ -17,7 +17,7 @@ const NotificationsProviderWeb = () => {
   const handleGetToken = async (messaging: Messaging): Promise<string | undefined> => {
     try {
       const newToken = await getToken(messaging, {
-        vapidKey: firebaseVapidKey,
+        vapidKey: firebaseVapidKey
       });
 
       if (DEVELOPMENT) {

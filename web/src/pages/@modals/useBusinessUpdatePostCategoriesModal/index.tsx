@@ -15,32 +15,28 @@ export const useBusinessUpdatePostCategoriesModal = () => {
   return {
     businessUpdatePostCategoriesModal: {
       open: (args?: { onAfterSuccess: () => void }) => {
-        pushModal(
-          'Emergent',
-          {
-            useProps: () => {
-              const portal = usePortal();
-              const { onClose } = useModal();
+        pushModal('Emergent', {
+          useProps: () => {
+            const portal = usePortal();
+            const { onClose } = useModal();
 
-              return {
-                title: 'Categorías',
-                content: (
-                  <Component
-                    portal={portal}
-                    onAfterSuccess={() => {
-                      args?.onAfterSuccess?.();
-                      onClose();
-                    }}
-                  />
-                ),
-                secondaryBtn: <ButtonClose />,
-                primaryBtn: <div ref={portal.ref} />,
-              };
-            },
-          },
-          { emergent: true },
-        );
-      },
-    },
+            return {
+              title: 'Categorías',
+              content: (
+                <Component
+                  portal={portal}
+                  onAfterSuccess={() => {
+                    args?.onAfterSuccess?.();
+                    onClose();
+                  }}
+                />
+              ),
+              secondaryBtn: <ButtonClose />,
+              primaryBtn: <div ref={portal.ref} />
+            };
+          }
+        });
+      }
+    }
   };
 };

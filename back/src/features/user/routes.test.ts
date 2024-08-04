@@ -70,7 +70,7 @@ describe('users', () => {
       const profileImage: Image = {
         height: 300,
         width: 300,
-        src: 'http://link-src.com/image.png',
+        src: 'http://link-src.com/image.png'
       };
 
       //change the profileImage

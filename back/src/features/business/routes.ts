@@ -97,17 +97,6 @@ router
     businessHandles.del_business_routeName_sections_sectionId()
   );
 
-router
-  .route('/business/:routeName/chatbotValidate')
-  .post(
-    middlewareExpressValidator.param('routeName').notEmpty(),
-    middlewareExpressValidator.body('code').notEmpty(),
-    middlewareExpressValidator.handle,
-    middlewareIsLogged,
-    middlewareBusinessManIsOwnerOfThis,
-    businessHandles.post_business_routeName_chatbot_validate()
-  );
-
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////

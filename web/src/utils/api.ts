@@ -10,22 +10,18 @@ export const apiErrorsMesages = {
   networkError: 'Network Error',
   incorrectUsernameOrPassword: 'Incorrect username or password.',
   userNotAutorized:
-    'PreAuthentication failed with error Usted no tiene acceso a los recursos de esta aplicación.',
+    'PreAuthentication failed with error Usted no tiene acceso a los recursos de esta aplicación.'
 };
 
 export const getCloudflareEndpoint = () => {
   return 'https://imagedelivery.net/PbRzz2Q180x22vsY1oXAdA';
 };
 
-export const getTelegramUrl = () => {
-  if (DEVELOPMENT) {
-    return 'https://t.me/AsereMarketDevBot';
+export const getEndpointUrl = () => {
+  if (TUNNEL) {
+    return 'https://fleet-hamster-positive.ngrok-free.app';
   }
 
-  return 'https://t.me/AsereMarketBot';
-};
-
-export const getEndpointUrl = () => {
   if (DEVELOPMENT) {
     return 'http://localhost';
   }
@@ -49,7 +45,7 @@ export const injectUrlParams = (url: string, urlParams: UrlParams = {}): string 
 export const fillPath = ({
   path,
   query,
-  urlParams,
+  urlParams
 }: {
   path: string;
   query?: Query;
@@ -76,7 +72,7 @@ export const getEndpoint: GetEndpoint = ({ path, query, urlParams }) => {
   const flattenPath = fillPath({
     path,
     query,
-    urlParams,
+    urlParams
   });
 
   return `${getEndpointUrl()}/api-services${flattenPath}`;

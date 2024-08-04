@@ -27,7 +27,7 @@ export const paginationCustomLabels: PaginateOptions['customLabels'] = {
   prevPage: 'prevPage',
   totalPages: 'pageCount',
   pagingCounter: 'pagingCounter',
-  meta: 'paginator',
+  meta: 'paginator'
 };
 
 export const middlewarePagination: RequestHandler = (req, _, next) => {

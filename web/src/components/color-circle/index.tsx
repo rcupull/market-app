@@ -15,7 +15,7 @@ export const ColorCircle = ({
   postColor,
   checked,
   error,
-  size = 'medium',
+  size = 'medium'
 }: ColorCircleProps) => {
   const { bgColor, selectedRingColor } = allColorMeta[postColor];
 
@@ -25,9 +25,9 @@ export const ColorCircle = ({
         'rounded-full p-0.5',
         {
           'ring-2 ring-red-500': !!error,
-          'ring-2 ring-indigo-600': checked,
+          'ring-2 ring-indigo-600': checked
         },
-        className,
+        className
       )}
     >
       <div
@@ -37,8 +37,8 @@ export const ColorCircle = ({
           'rounded-full border border-black border-opacity-30',
           {
             'size-4': size === 'small',
-            'size-8': size === 'medium',
-          },
+            'size-8': size === 'medium'
+          }
         )}
       />
     </div>

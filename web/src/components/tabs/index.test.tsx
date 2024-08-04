@@ -9,14 +9,14 @@ describe('Tabs', () => {
         items={[
           {
             label: 'Tab 1',
-            content: <div>Tab 1</div>,
+            content: <div>Tab 1</div>
           },
           {
             label: 'Tab 2',
-            content: <div>Tab 2</div>,
-          },
+            content: <div>Tab 2</div>
+          }
         ]}
-      />,
+      />
     );
 
     expect(result.container).toMatchInlineSnapshot(`

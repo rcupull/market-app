@@ -8,7 +8,7 @@ import {
   billingServicesDeleteOne,
   billingServicesGetAllWithPagination,
   billingServicesGetBillDataFromShopping,
-  billingServicesGetOne,
+  billingServicesGetOne
 } from '../../billing/services';
 import { shoppingServicesGetAll } from '../../shopping/services';
 import { getShoppingsTotalDebit } from '../../shopping/utils';
@@ -21,7 +21,7 @@ const post_admin_bills: () => RequestHandler = () => {
       const { routeName, shoppingIds, dateFrom, dateTo, states } = body;
 
       const { getAllShopingIds } = await billingServicesGetBillDataFromShopping({
-        query: { routeNames: [routeName] },
+        query: { routeNames: [routeName] }
       });
 
       // get shopping
@@ -32,8 +32,8 @@ const post_admin_bills: () => RequestHandler = () => {
           dateFrom,
           dateTo,
           states,
-          excludeShoppingIds: getAllShopingIds(),
-        },
+          excludeShoppingIds: getAllShopingIds()
+        }
       });
 
       const totalDebit = getShoppingsTotalDebit(shoppings);
@@ -43,7 +43,7 @@ const post_admin_bills: () => RequestHandler = () => {
         routeName,
         shoppingIds: shoppings.map(({ _id }) => _id),
         totalDebit,
-        state: 'PENDING_TO_PAY',
+        state: 'PENDING_TO_PAY'
       });
 
       res.send(newBill);
@@ -62,8 +62,8 @@ const get_admin_bills: () => RequestHandler = () => {
         paginateOptions,
         query: {
           routeNames,
-          states,
-        },
+          states
+        }
       });
 
       res.send(bills);
@@ -81,8 +81,8 @@ const del_admin_bills_billId_shopping: () => RequestHandler = () => {
 
       const bill = await billingServicesGetOne({
         query: {
-          _id: billId,
-        },
+          _id: billId
+        }
       });
 
       if (!bill) {
@@ -93,8 +93,8 @@ const del_admin_bills_billId_shopping: () => RequestHandler = () => {
         return get400Response({
           res,
           json: {
-            message: 'The bill was already paid or canceled',
-          },
+            message: 'The bill was already paid or canceled'
+          }
         });
       }
 
@@ -127,8 +127,8 @@ const del_admin_bills_billId: () => RequestHandler = () => {
 
       await billingServicesDeleteOne({
         query: {
-          _id: billId,
-        },
+          _id: billId
+        }
       });
 
       res.send({});
@@ -140,5 +140,5 @@ export const adminBillsHandles = {
   post_admin_bills,
   get_admin_bills,
   del_admin_bills_billId_shopping,
-  del_admin_bills_billId,
+  del_admin_bills_billId
 };

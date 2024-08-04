@@ -9,7 +9,7 @@ export interface DocBlockItemComponentProps extends DocBlockItem {
 export const DocBlockItemComponent = ({
   items,
   title,
-  variant = 'bullet',
+  variant = 'bullet'
 }: DocBlockItemComponentProps) => {
   const renderList = (content: React.ReactNode) => {
     if (variant === 'bullet') {
@@ -29,7 +29,7 @@ export const DocBlockItemComponent = ({
               {item}
             </li>
           );
-        }),
+        })
       )}
     </HtmlTextContainer>
   );

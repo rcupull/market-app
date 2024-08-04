@@ -21,12 +21,12 @@ export const useAuthSignUp = (): {
           {
             method: 'post',
             url: getEndpoint({ path: '/auth/sign-up' }),
-            data,
+            data
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

@@ -27,7 +27,7 @@ export const postServicesGetAllWithPagination: QueryHandle<
 
   const out = await PostModel.paginate(filterQuery, {
     ...paginateOptions,
-    sort: getSortQuery(sort),
+    sort: getSortQuery(sort)
   });
 
   return out as unknown as PaginateResult<Post>;
@@ -85,7 +85,7 @@ export const postServicesDeleteOne: QueryHandle<{
    * Removing the post
    */
   const post = await PostModel.findOneAndDelete({
-    _id: postId,
+    _id: postId
   });
 
   if (!post) {
@@ -97,7 +97,7 @@ export const postServicesDeleteOne: QueryHandle<{
   await imagesServicesDeleteBulk({
     userId: post.createdBy.toString(),
     postId,
-    routeName: post.routeName,
+    routeName: post.routeName
   });
 };
 
@@ -169,31 +169,31 @@ export const postServicesUpdateStockAmount: QueryHandle<
       newStockAmount = 0;
       await PostModel.updateOne(
         {
-          _id: post._id,
+          _id: post._id
         },
         {
-          stockAmount: newStockAmount,
+          stockAmount: newStockAmount
         }
       );
 
       return {
         amountAddedToPost: -post.stockAmount,
-        currentStockAmount: newStockAmount,
+        currentStockAmount: newStockAmount
       };
     }
 
     await PostModel.updateOne(
       {
-        _id: post._id,
+        _id: post._id
       },
       {
-        stockAmount: newStockAmount,
+        stockAmount: newStockAmount
       }
     );
 
     return {
       amountAddedToPost: amountToAdd,
-      currentStockAmount: newStockAmount,
+      currentStockAmount: newStockAmount
     };
   }
 

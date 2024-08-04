@@ -30,7 +30,7 @@ export const Menu = ({
   items = [],
   topElement,
   bottomElement,
-  anchor = 'bottom start',
+  anchor = 'bottom start'
 }: MenuProps) => {
   return (
     <MenuBase data-id="Menu" as="div" className={cn('relative', className)}>
@@ -80,8 +80,8 @@ export const Menu = ({
                           'cursor-pointer px-4 py-2 text-sm text-gray-700 flex items-center border-b-2 border-b-white',
                           {
                             'bg-gray-100': active,
-                            '!cursor-not-allowed !text-gray-300': disabled,
-                          },
+                            '!cursor-not-allowed !text-gray-300': disabled
+                          }
                         )}
                       >
                         {Svg && <Svg className={cn('h-5 w-5', { ['mr-2']: label })} />}
@@ -92,7 +92,7 @@ export const Menu = ({
                   );
                 }}
               </MenuItem>
-            ),
+            )
           )}
 
           <MenuItem key="bottomElement" as="div">

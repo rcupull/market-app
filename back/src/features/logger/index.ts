@@ -22,8 +22,8 @@ const devLogger = () => {
       myFormat
     ),
     transports: [
-      new transports.Console(), // ONLY PRINTING LOGS IN TERMINAL
-    ],
+      new transports.Console() // ONLY PRINTING LOGS IN TERMINAL
+    ]
   });
 };
 
@@ -36,16 +36,16 @@ const productionsLogger = () => {
         datePattern: 'YYYY-MM-DD',
         zippedArchive: true,
         format: format.combine(format.timestamp({ format: 'HH:mm:ss' }), format.json()),
-        level: 'info',
+        level: 'info'
       }),
       new transports.DailyRotateFile({
         filename: './logs/%DATE%-error.log',
         datePattern: 'YYYY-MM-DD',
         zippedArchive: true,
         level: 'error',
-        format: format.combine(format.timestamp({ format: 'HH:mm:ss' }), format.json()),
-      }),
-    ],
+        format: format.combine(format.timestamp({ format: 'HH:mm:ss' }), format.json())
+      })
+    ]
   });
 };
 

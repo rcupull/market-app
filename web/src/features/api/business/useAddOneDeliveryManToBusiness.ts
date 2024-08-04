@@ -18,16 +18,16 @@ export const useAddOneDeliveryManToBusiness = (): {
             method: 'post',
             url: getEndpoint({
               path: '/users/:userId/deliveryBusiness',
-              urlParams: { userId },
+              urlParams: { userId }
             }),
             data: {
-              routeName,
-            },
+              routeName
+            }
           },
-          options,
+          options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };
