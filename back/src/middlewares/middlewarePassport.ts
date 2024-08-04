@@ -19,7 +19,7 @@ passport.use(
 
       if (!user) {
         return done(null, false, {
-          message: translateES['Usuario o contraseña incorrectos.'],
+          message: translateES['Usuario o contraseña incorrectos.']
         });
       }
 
@@ -30,7 +30,7 @@ passport.use(
           message:
             translateES[
               'Ya tiene una sesión abierta en otro dispositivo. Por motivos de seguridad no permitimos varias sesiones con las mismas credenciales.'
-            ],
+            ]
         });
       }
 
@@ -38,7 +38,7 @@ passport.use(
 
       if (!isPasswordValid) {
         return done(null, false, {
-          message: translateES['Usuario o contraseña incorrectos.'],
+          message: translateES['Usuario o contraseña incorrectos.']
         });
       }
 
@@ -48,14 +48,14 @@ passport.use(
     } catch (err) {
       return done(err);
     }
-  }),
+  })
 );
 
 passport.use(
   new JWTStrategy(
     {
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: secretAccessToken,
+      secretOrKey: secretAccessToken
     },
     async (jwt_payload, done) => {
       const session = await AuthSessionModel.findOne({ userId: jwt_payload.id });
@@ -65,7 +65,7 @@ passport.use(
           message:
             translateES[
               'No tiene una sesión abierta en este dispositivo o venció el tiempo de expiración.'
-            ],
+            ]
         });
       }
 
@@ -73,13 +73,13 @@ passport.use(
 
       if (!user) {
         return done(null, false, {
-          message: translateES['Usuario o contraseña incorrectos.'],
+          message: translateES['Usuario o contraseña incorrectos.']
         });
       }
 
       return done(null, user);
-    },
-  ),
+    }
+  )
 );
 
 export const middlewareAutentication: RequestHandler = (req, res, next) => {
@@ -90,7 +90,7 @@ export const middlewareAutentication: RequestHandler = (req, res, next) => {
       //@ts-expect-error ignore
       const message = info?.message as string | undefined;
       return res.status(401).send({
-        message: message || translateES['Error en la autenticación.'],
+        message: message || translateES['Error en la autenticación.']
       });
     }
 
@@ -101,9 +101,9 @@ export const middlewareAutentication: RequestHandler = (req, res, next) => {
   passport.authenticate(
     'local',
     {
-      session: false,
+      session: false
     },
-    callback,
+    callback
   )(req, res, next);
 };
 
@@ -118,7 +118,7 @@ export const middlewarePassportJwt: RequestHandler = (req, res, next) => {
       const message = info?.message as string | undefined;
 
       return res.status(401).send({
-        message: message || translateES['Error en la autenticación.'],
+        message: message || translateES['Error en la autenticación.']
       });
     }
 
@@ -129,8 +129,8 @@ export const middlewarePassportJwt: RequestHandler = (req, res, next) => {
   passport.authenticate(
     'jwt',
     {
-      session: false,
+      session: false
     },
-    callback,
+    callback
   )(req, res, next);
 };

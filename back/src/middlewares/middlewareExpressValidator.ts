@@ -15,8 +15,8 @@ const handle: RequestHandler = (req: Request, res: Response, next: NextFunction)
     return get422Response({
       res,
       json: {
-        error,
-      },
+        error
+      }
     });
   }
   next();
@@ -27,5 +27,5 @@ export const middlewareExpressValidator = {
   param,
   body,
   header,
-  handle,
+  handle
 };

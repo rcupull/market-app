@@ -80,7 +80,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                 optionToValue={({ value }) => value}
                 items={[
                   {
-                    value: BusinessNotificationFlags.TELEGRAM_NEW_SHOPPING,
+                    value: BusinessNotificationFlags.NEW_SHOPPING,
                     label: 'Al crear orden de compra',
                     description:
                       'Le llegarán los detalles (precio, productos y enlace) de las órdenes de compra al ser solicitadas por los clientes.'

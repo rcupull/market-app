@@ -12,8 +12,8 @@ export const middlewareAddPostToReq: RequestHandler = async (req, res, next) => 
 
   const post = await postServicesGetOne({
     query: {
-      _id: postId,
-    },
+      _id: postId
+    }
   });
 
   if (!post) {

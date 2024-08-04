@@ -7,7 +7,7 @@ import {
   userServicesAddOne,
   userServicesFindOneAndUpdate,
   userServicesGetOne,
-  userServicesUpdateOne,
+  userServicesUpdateOne
 } from '../user/services';
 import jwt from 'jsonwebtoken';
 
@@ -18,7 +18,7 @@ import {
   get401Response,
   get404Response,
   getSessionNotFoundResponse,
-  getUserNotFoundResponse,
+  getUserNotFoundResponse
 } from '../../utils/server-response';
 import { secretRefreshToken } from '../../config';
 import { generateAccessJWT, generateRefreshJWT } from '../../utils/auth';
@@ -42,7 +42,7 @@ const post_signIn: () => RequestHandler = () => {
       if (!validated) {
         return get401Response({
           res,
-          json: { message: 'The user is no validated' },
+          json: { message: 'The user is no validated' }
         });
       }
 
@@ -53,7 +53,7 @@ const post_signIn: () => RequestHandler = () => {
         refreshToken,
         userId: user._id,
         typeDevice,
-        descriptionDevice: headers['user-agent'],
+        descriptionDevice: headers['user-agent']
       });
 
       await authSession.save();
@@ -71,9 +71,9 @@ const post_signIn: () => RequestHandler = () => {
             role: 'role',
             validated: 'validated',
             canCreateBusiness: 'canCreateBusiness',
-            profileImage: 'profileImage',
-          })(user),
-        },
+            profileImage: 'profileImage'
+          })(user)
+        }
       });
     });
   };
@@ -85,7 +85,7 @@ const post_refresh: () => RequestHandler = () => {
       const { refreshToken } = req.body;
 
       const currentSession = await AuthSessionModel.findOne({
-        refreshToken,
+        refreshToken
       });
 
       if (!currentSession) {
@@ -103,8 +103,8 @@ const post_refresh: () => RequestHandler = () => {
             get401Response({
               res,
               json: {
-                message: 'Error refreshing token',
-              },
+                message: 'Error refreshing token'
+              }
             });
           });
         }
@@ -112,8 +112,8 @@ const post_refresh: () => RequestHandler = () => {
         get200Response({
           res,
           json: {
-            accessToken: generateAccessJWT({ id: jwt_payload.id }),
-          },
+            accessToken: generateAccessJWT({ id: jwt_payload.id })
+          }
         });
       });
     });
@@ -131,7 +131,7 @@ const post_signOut: () => RequestHandler = () => {
 
       return get200Response({
         res,
-        json: { message: 'the session was closed successfully' },
+        json: { message: 'the session was closed successfully' }
       });
     });
   };
@@ -145,7 +145,7 @@ const post_signUp: () => RequestHandler = () => {
       const newUser = await userServicesAddOne({
         email,
         name,
-        password,
+        password
       });
 
       if (!newUser) return getUserNotFoundResponse({ res });
@@ -156,7 +156,7 @@ const post_signUp: () => RequestHandler = () => {
       await sendValidationCodeToEmail({ email, code });
       const newValidationCode = new ValidationCodeModel({
         code,
-        userId: newUser._id,
+        userId: newUser._id
       });
       await newValidationCode.save();
 
@@ -167,7 +167,7 @@ const post_signUp: () => RequestHandler = () => {
 
       get201Response({
         res,
-        json: { message: 'User registered successfully' },
+        json: { message: 'User registered successfully' }
       });
     });
   };
@@ -179,21 +179,21 @@ const post_validate: () => RequestHandler = () => {
       const { code } = req.body;
 
       const validationCode = await ValidationCodeModel.findOneAndDelete({
-        code,
+        code
       });
 
       if (!validationCode) {
         return get404Response({
           res,
           json: {
-            message: 'Este codigo de validación no existe o ya el usuario fue validado',
-          },
+            message: 'Este codigo de validación no existe o ya el usuario fue validado'
+          }
         });
       }
 
       const user = await userServicesFindOneAndUpdate({
         query: { _id: validationCode.userId },
-        update: { validated: true },
+        update: { validated: true }
       });
 
       if (!user) {
@@ -202,7 +202,7 @@ const post_validate: () => RequestHandler = () => {
 
       get201Response({
         res,
-        json: { message: 'User validated successfully', email: user.email },
+        json: { message: 'User validated successfully', email: user.email }
       });
     });
   };
@@ -227,7 +227,7 @@ const post_change_password: () => RequestHandler = () => {
 
       get200Response({
         res,
-        json: { message: 'password changed successfully' },
+        json: { message: 'password changed successfully' }
       });
     });
   };
@@ -239,20 +239,20 @@ const post_forgot_password_validate: () => RequestHandler = () => {
       const { code, newPassword } = req.body;
 
       const validationCode = await ValidationCodeModel.findOneAndDelete({
-        code,
+        code
       });
 
       if (!validationCode) {
         return get404Response({
           res,
           json: {
-            message: 'Este codigo de validación no existe o ya la cuenta fue recuperada',
-          },
+            message: 'Este codigo de validación no existe o ya la cuenta fue recuperada'
+          }
         });
       }
 
       const user = await userServicesGetOne({
-        query: { _id: validationCode.userId },
+        query: { _id: validationCode.userId }
       });
 
       if (!user) {
@@ -269,8 +269,8 @@ const post_forgot_password_validate: () => RequestHandler = () => {
         res,
         json: {
           message: 'The password was changes successfully',
-          email: user.email,
-        },
+          email: user.email
+        }
       });
     });
   };
@@ -283,8 +283,8 @@ const post_forgot_password_request: () => RequestHandler = () => {
 
       const user = await userServicesGetOne({
         query: {
-          email,
-        },
+          email
+        }
       });
 
       if (!user) return getUserNotFoundResponse({ res });
@@ -294,7 +294,7 @@ const post_forgot_password_request: () => RequestHandler = () => {
       await sendForgotPasswordCodeToEmail({ email, code });
       const newValidationCode = new ValidationCodeModel({
         code,
-        userId: user._id,
+        userId: user._id
       });
       await newValidationCode.save();
 
@@ -305,7 +305,7 @@ const post_forgot_password_request: () => RequestHandler = () => {
 
       get201Response({
         res,
-        json: { message: 'Forgot password request sent' },
+        json: { message: 'Forgot password request sent' }
       });
     });
   };
@@ -324,16 +324,16 @@ const put_firebase_token: () => RequestHandler = () => {
 
       await userServicesUpdateOne({
         query: {
-          _id: user._id,
+          _id: user._id
         },
         update: {
-          firebaseToken,
-        },
+          firebaseToken
+        }
       });
 
       get200Response({
         res,
-        json: {},
+        json: {}
       });
     });
   };
@@ -349,5 +349,5 @@ export const authHandles = {
   post_change_password,
   post_forgot_password_request,
   post_forgot_password_validate,
-  put_firebase_token,
+  put_firebase_token
 };

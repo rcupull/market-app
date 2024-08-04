@@ -6,7 +6,7 @@ import fs from 'fs';
 import {
   get404Response,
   getBusinessNotFoundResponse,
-  getPostNotFoundResponse,
+  getPostNotFoundResponse
 } from '../utils/server-response';
 import { logger } from '../features/logger';
 import { combineMiddleware } from '../utils/general';
@@ -21,7 +21,7 @@ const defaultMeta: HtmlMeta = {
   title: 'Asere Market - Comercio para todos',
   description: 'Un proyecto B2B para desarrollar el comercio electrónico en Cuba.',
   url: 'http://www.aseremarket.net/',
-  image: '/logo.png',
+  image: '/logo.png'
 };
 
 const injectMeta = (html: string, meta: HtmlMeta) => {
@@ -49,7 +49,7 @@ const injectMetaService: RequestHandler = (req, res, next) => {
 
         return get404Response({
           res,
-          json: { message: 'Html file not found' },
+          json: { message: 'Html file not found' }
         });
       }
       res.send(injectMeta(htmlData, htmlMeta));
@@ -72,8 +72,8 @@ const injectBusinessMetaMiddlware: RequestHandler = async (req, res, next) => {
   if (routeName) {
     const business = await businessServicesFindOne({
       query: {
-        routeName,
-      },
+        routeName
+      }
     });
 
     if (!business) {
@@ -114,7 +114,7 @@ const injectBusinessMetaMiddlware: RequestHandler = async (req, res, next) => {
       description: getDescription(),
       title: getTitle(),
       image: getImageSrc(),
-      url: getBusinessUrl(),
+      url: getBusinessUrl()
     };
   }
 
@@ -129,8 +129,8 @@ const injectPostMetaMiddlware: RequestHandler = async (req, res, next) => {
   if (postId) {
     const post = await postServicesGetOne({
       query: {
-        _id: postId,
-      },
+        _id: postId
+      }
     });
 
     if (!post) {
@@ -155,7 +155,7 @@ const injectPostMetaMiddlware: RequestHandler = async (req, res, next) => {
       description: `${post.description}`,
       title: `${post.name}`,
       image: getImageSrc(),
-      url: getPostUrl(),
+      url: getPostUrl()
     };
   }
 
@@ -171,8 +171,8 @@ const injectShoppingMetaMiddlware: RequestHandler = async (req, res, next) => {
 
   const shopping = await shoppingServicesGetOne({
     query: {
-      _id: shoppingId,
-    },
+      _id: shoppingId
+    }
   });
 
   if (!shopping) {
@@ -207,7 +207,7 @@ const injectShoppingMetaMiddlware: RequestHandler = async (req, res, next) => {
     description: getDescription(),
     title: `Órden de compra en estado ${getShoppingStateLabel(shopping.state)}`,
     image: getImageSrc(),
-    url: getShoppingUrl(),
+    url: getShoppingUrl()
   };
 
   injectMetaService(req, res, next);
@@ -220,5 +220,5 @@ export const middlewareFront = combineMiddleware(
   router.get('/b/:routeName/posts/:postId', injectPostMetaMiddlware),
   router.get('/b/:routeName/shopping/:shoppingId', injectShoppingMetaMiddlware),
   router.get('/b/:routeName*', injectBusinessMetaMiddlware),
-  injectDefaultMetaMiddlware,
+  injectDefaultMetaMiddlware
 );

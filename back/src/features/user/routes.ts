@@ -17,7 +17,7 @@ router
     middlewareIsLogged,
     middlewareUserCanCreateBusiness,
     middlewarePagination,
-    userHandles.get_users_delivery_man(),
+    userHandles.get_users_delivery_man()
   );
 
 /////////////////////////////////////////////////////////////////
@@ -29,27 +29,14 @@ router
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareIsUserIdAccessible,
-    userHandles.get_users_userId(),
+    userHandles.get_users_userId()
   )
   .put(
     middlewareExpressValidator.param('userId').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareIsUserIdAccessible,
-    userHandles.put_users_userId(),
-  );
-
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-router
-  .route('/users/:userId/chatbotValidate')
-  .post(
-    middlewareExpressValidator.param('userId').notEmpty(),
-    middlewareExpressValidator.body('code').notEmpty(),
-    middlewareExpressValidator.handle,
-    middlewareIsLogged,
-    userHandles.post_users_userId_chatbot_validate(),
+    userHandles.put_users_userId()
   );
 
 ///////////////////////////////////////////////////////////////////
@@ -62,7 +49,7 @@ router
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     middlewareIsUserIdAccessible,
-    userHandles.put_users_userId_checks(),
+    userHandles.put_users_userId_checks()
   );
 
 ///////////////////////////////////////////////////////////////////
@@ -75,12 +62,12 @@ router
     middlewareExpressValidator.body('routeName').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
-    userHandles.post_users_userId_delivery_business(),
+    userHandles.post_users_userId_delivery_business()
   )
   .delete(
     middlewareExpressValidator.param('userId').notEmpty(),
     middlewareExpressValidator.body('routeName').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareIsLogged,
-    userHandles.del_users_userId_delivery_business(),
+    userHandles.del_users_userId_delivery_business()
   );

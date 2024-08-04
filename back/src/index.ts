@@ -5,12 +5,10 @@ import { app } from './server';
 import fs from 'fs';
 import https from 'https';
 import http from 'http';
-import { telegramServicesInit } from './features/telegram/services';
 import { nlpServicesInit } from './features/nlp/services';
 
 connectDB();
 
-telegramServicesInit();
 notificationsServicesInit();
 nlpServicesInit();
 
@@ -22,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
   const credentials = {
     key: privateKey,
     cert: certificate,
-    ca: ca,
+    ca: ca
   };
 
   const httpsServer = https.createServer(credentials, app);

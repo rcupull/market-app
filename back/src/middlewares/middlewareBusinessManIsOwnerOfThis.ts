@@ -4,7 +4,7 @@ import { isEqualIds } from '../utils/general';
 import {
   get401Response,
   get404Response,
-  getBusinessNotFoundResponse,
+  getBusinessNotFoundResponse
 } from '../utils/server-response';
 
 import { businessServicesFindOne } from '../features/business/services';
@@ -17,21 +17,21 @@ export const middlewareBusinessManIsOwnerOfThis: RequestHandler = async (req, re
   if (!user) {
     return get404Response({
       res,
-      json: { message: 'user not found' },
+      json: { message: 'user not found' }
     });
   }
 
   if (!routeName) {
     return get404Response({
       res,
-      json: { message: 'routeName not found' },
+      json: { message: 'routeName not found' }
     });
   }
 
   const business = await businessServicesFindOne({
     query: {
-      routeName,
-    },
+      routeName
+    }
   });
 
   if (!business) {
@@ -45,6 +45,6 @@ export const middlewareBusinessManIsOwnerOfThis: RequestHandler = async (req, re
 
   get401Response({
     res,
-    json: { message: 'The user has not access to this business' },
+    json: { message: 'The user has not access to this business' }
   });
 };

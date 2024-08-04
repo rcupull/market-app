@@ -11,5 +11,5 @@ export const translateES = {
   [auth_message2]: auth_message2,
   [auth_message3]: auth_message3,
   [auth_message4]: auth_message4,
-  [auth_message5]: auth_message5,
+  [auth_message5]: auth_message5
 };

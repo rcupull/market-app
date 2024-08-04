@@ -3,7 +3,7 @@ import { AnyRecord, BaseIdentity } from './general';
 
 export enum TYPE_DEVICE {
   NATIVE = 'NATIVE',
-  WEB = 'WEB',
+  WEB = 'WEB'
 }
 
 export interface AuthSession extends BaseIdentity {

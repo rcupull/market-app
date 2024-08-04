@@ -11,7 +11,7 @@ const get_admin_admin_config: () => RequestHandler = () => {
       if (!config) {
         return get400Response({
           res,
-          json: { message: 'No se ecuentra la configuracion principal' },
+          json: { message: 'No se ecuentra la configuracion principal' }
         });
       }
 
@@ -31,7 +31,7 @@ const put_admin_admin_config: () => RequestHandler = () => {
       if (!config) {
         return get400Response({
           res,
-          json: { message: 'No se ecuentra la configuracion principal' },
+          json: { message: 'No se ecuentra la configuracion principal' }
         });
       }
 
@@ -60,5 +60,5 @@ const put_admin_admin_config: () => RequestHandler = () => {
 
 export const adminConfigHandles = {
   put_admin_admin_config,
-  get_admin_admin_config,
+  get_admin_admin_config
 };

@@ -15,8 +15,8 @@ const get_users: () => RequestHandler = () => {
       const out = await userServicesGetAllWithPagination({
         paginateOptions,
         query: {
-          role: { $in: ['user', 'admin'] },
-        },
+          role: { $in: ['user', 'admin'] }
+        }
       });
 
       res.send(out);
@@ -34,7 +34,7 @@ const del_users_userId: () => RequestHandler = () => {
        * Remove all business images
        */
       await imagesServicesDeleteBulk({
-        userId,
+        userId
       });
 
       await UserModel.deleteOne({ _id: userId });
@@ -50,8 +50,8 @@ const get_admin_access: () => RequestHandler = () => {
       get200Response({
         res,
         json: {
-          specialAccess: Object.keys(specialAccessRecord),
-        },
+          specialAccess: Object.keys(specialAccessRecord)
+        }
       });
     });
   };
@@ -67,11 +67,11 @@ const put_admin_users_userId_access: () => RequestHandler = () => {
 
       await userServicesUpdateOne({
         query: {
-          _id: userId,
+          _id: userId
         },
         update: {
-          specialAccess,
-        },
+          specialAccess
+        }
       });
 
       get200Response({ res, json: {} });
@@ -83,5 +83,5 @@ export const adminUsersHandles = {
   get_users,
   del_users_userId,
   get_admin_access,
-  put_admin_users_userId_access,
+  put_admin_users_userId_access
 };

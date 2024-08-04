@@ -27,5 +27,5 @@ const use_admin_agenda_web: () => RequestHandler = () =>
 
 export const adminAgendaHandles = {
   get_admin_agenda_token,
-  use_admin_agenda_web,
+  use_admin_agenda_web
 };

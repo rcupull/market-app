@@ -6,13 +6,13 @@ const ValidationCodeShema = new Schema<ValidationCode>({
   ...createdAtSchemaDefinition,
   code: { type: String, required: true, unique: true },
   userId: { type: Schema.Types.ObjectId, ref: 'User' },
-  meta: { type: Schema.Types.Mixed },
+  meta: { type: Schema.Types.Mixed }
 });
 
 export const ValidationCodeModel = model<ValidationCode>(
   'ValidationCode',
   ValidationCodeShema,
-  'validation_codes',
+  'validation_codes'
 );
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -22,11 +22,11 @@ const AuthSessionShema = new Schema<AuthSession>({
   refreshToken: { type: String, required: true },
   typeDevice: { type: String, enum: Object.values(TYPE_DEVICE), required: true },
   descriptionDevice: { type: String, required: true },
-  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true }
 });
 
 export const AuthSessionModel = model<AuthSession>(
   'AuthSession',
   AuthSessionShema,
-  'auth_sessions',
+  'auth_sessions'
 );

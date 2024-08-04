@@ -9,7 +9,7 @@ const config: Config = {
   preset: 'ts-jest',
   testPathIgnorePatterns: ['build'],
   maxWorkers: 1,
-  testEnvironment: 'node',
+  testEnvironment: 'node'
 };
 
 export default config;
