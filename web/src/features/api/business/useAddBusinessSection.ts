@@ -22,14 +22,14 @@ export const useAddBusinessSection = (): {
             method: 'post',
             url: getEndpoint({
               path: '/business/:routeName/sections',
-              urlParams: { routeName },
+              urlParams: { routeName }
             }),
-            data,
+            data
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

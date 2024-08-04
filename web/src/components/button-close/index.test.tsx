@@ -7,7 +7,7 @@ import { getWrapper } from 'utils/test-utils';
 describe('ButtonClose', () => {
   it('render', async () => {
     render(<ButtonClose />, {
-      wrapper: getWrapper({ useRedux: true, useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRedux: true, useRouter: true, useModal: true })
     });
 
     await waitFor(() =>

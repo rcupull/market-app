@@ -25,9 +25,9 @@ export const Billing = () => {
       business &&
         getAllBills.fetch({
           routeName: business.routeName,
-          ...filters,
+          ...filters
         });
-    },
+    }
   });
 
   useEffect(() => {
@@ -66,7 +66,7 @@ export const Billing = () => {
       <Table<Bill>
         remapRowsIndex={{
           xs: [[0, 1, 2]],
-          lg: 'none',
+          lg: 'none'
         }}
         heads={['Estado', 'Débito Total', 'Fecha']}
         getRowProps={(rowData) => {
@@ -76,8 +76,8 @@ export const Billing = () => {
             nodes: [
               state,
               <span key="price" className="text-nowrap">{`${totalDebit} CUP`}</span>,
-              getDateString({ date: createdAt, showTime: true }),
-            ],
+              getDateString({ date: createdAt, showTime: true })
+            ]
           };
         }}
         data={getAllBills.data}

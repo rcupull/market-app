@@ -25,7 +25,7 @@ export const UserAvatar = ({ className, size = 'small' }: UserAvatarProps) => {
           'rounded-full',
           {
             'size-10': size === 'small',
-            'size-16': size === 'medium',
+            'size-16': size === 'medium'
           },
           className
         )}
@@ -46,7 +46,7 @@ export const UserAvatar = ({ className, size = 'small' }: UserAvatarProps) => {
         'rounded-full flex items-center justify-center bg-gray-200',
         {
           'size-10': size === 'small',
-          'size-16': size === 'medium',
+          'size-16': size === 'medium'
         },
         className
       )}
@@ -54,7 +54,7 @@ export const UserAvatar = ({ className, size = 'small' }: UserAvatarProps) => {
       <span
         className={cn('text-gray-600', {
           'text-xl': size === 'small',
-          'text-3xl': size === 'medium',
+          'text-3xl': size === 'medium'
         })}
       >
         {getInitials(profileName)}

@@ -35,7 +35,7 @@ export const Options = ({ business, onRefresh, className }: OptionsProps) => {
               onAfterSuccess: () => {
                 onRefresh();
                 allUserBusiness.refresh();
-              },
+              }
             });
           }}
         />

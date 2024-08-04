@@ -69,7 +69,7 @@ export const BulkActionsProducts = ({
                   return deleteManyPosts.fetch(
                     {
                       routeName,
-                      query: { postCategoriesMethod, postCategoriesTags, search },
+                      query: { postCategoriesMethod, postCategoriesTags, search }
                     },
                     { onAfterSuccess }
                   );
@@ -80,16 +80,16 @@ export const BulkActionsProducts = ({
                     {
                       routeName,
                       query: { postCategoriesMethod, postCategoriesTags, search },
-                      ids: selected.map((p) => p._id),
+                      ids: selected.map((p) => p._id)
                     },
                     { onAfterSuccess }
                   );
                 }
               }}
             />
-          ),
+          )
         };
-      },
+      }
     });
   };
 
@@ -131,8 +131,8 @@ export const BulkActionsProducts = ({
                       query: {
                         postCategoriesMethod,
                         postCategoriesTags,
-                        search,
-                      },
+                        search
+                      }
                     },
                     { onAfterSuccess }
                   );
@@ -146,18 +146,18 @@ export const BulkActionsProducts = ({
                       query: {
                         postCategoriesMethod,
                         postCategoriesTags,
-                        search,
+                        search
                       },
-                      ids: selected.map((p) => p._id),
+                      ids: selected.map((p) => p._id)
                     },
                     { onAfterSuccess }
                   );
                 }
               }}
             />
-          ),
+          )
         };
-      },
+      }
     });
   };
 
@@ -169,17 +169,17 @@ export const BulkActionsProducts = ({
           case 'remove':
             return {
               label: 'Eliminar productos',
-              onClick: () => handleDelete(),
+              onClick: () => handleDelete()
             };
           case 'hide':
             return {
               label: 'Ocultar productos',
-              onClick: () => handleShowHide(true),
+              onClick: () => handleShowHide(true)
             };
           case 'show':
             return {
               label: 'Mostrar productos',
-              onClick: () => handleShowHide(false),
+              onClick: () => handleShowHide(false)
             };
           default:
             return {};
@@ -191,16 +191,16 @@ export const BulkActionsProducts = ({
           items={[
             {
               label: 'Eliminar productos',
-              onClick: () => setAction('remove'),
+              onClick: () => setAction('remove')
             },
             {
               label: 'Ocultar productos',
-              onClick: () => setAction('hide'),
+              onClick: () => setAction('hide')
             },
             {
               label: 'Mostrar productos',
-              onClick: () => setAction('show'),
-            },
+              onClick: () => setAction('show')
+            }
           ]}
         />
       )}

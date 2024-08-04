@@ -12,7 +12,7 @@ export const useCloseContext = (): {
 
   return {
     onChangeUnsavedChanges: (hasChange) => {
-      debouncer(() => onChangeUnsavedChanges(hasChange), 500);
-    },
+      debouncer(() => onChangeUnsavedChanges(hasChange), 100);
+    }
   };
 };

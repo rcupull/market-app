@@ -8,6 +8,6 @@ export const usePlatform = (): {
 
   return {
     isNative,
-    platformToggle: ({ native, web }) => (isNative ? native : web),
+    platformToggle: ({ native, web }) => (isNative ? native : web)
   };
 };

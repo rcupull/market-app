@@ -22,7 +22,7 @@ export interface HiddenBusinessControl {
 
 export const useHiddenBusinessControl = ({
   onRefresh,
-  fetchStatus,
+  fetchStatus
 }: {
   onRefresh: OnRefresh;
   fetchStatus: FetchStatus;
@@ -59,9 +59,9 @@ export const useHiddenBusinessControl = ({
                 onClose();
               }}
             />
-          ),
+          )
         };
-      },
+      }
     });
   };
 
@@ -69,12 +69,12 @@ export const useHiddenBusinessControl = ({
     updateManyBussiness.fetch(
       Object.entries(state).map(([key, value]) => ({
         routeName: key,
-        hidden: value,
+        hidden: value
       })),
       {
         onAfterSuccess: () => {
           onRefresh();
-        },
+        }
       }
     );
   };
@@ -107,9 +107,9 @@ export const useHiddenBusinessControl = ({
                 onClose();
               }}
             />
-          ),
+          )
         };
-      },
+      }
     });
   };
 
@@ -137,13 +137,13 @@ export const useHiddenBusinessControl = ({
           }
 
           setState(newState);
-        },
+        }
       };
     },
     onGetHiddenTableRowStyles: (value: Business) => {
       return cn({
-        'bg-gray-100 text-gray-400': isHidden(value),
+        'bg-gray-100 text-gray-400': isHidden(value)
       });
-    },
+    }
   };
 };

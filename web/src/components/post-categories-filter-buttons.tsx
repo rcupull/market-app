@@ -30,7 +30,7 @@ export const PostCategoriesFilterButtons = ({
   excluding,
   type,
   debounceDelay = 0,
-  buttonType = 'button',
+  buttonType = 'button'
 }: PostCategoriesFilterButtonsProps) => {
   const debouncer = useDebouncer();
   const [state, setState] = useState<Array<string>>();
@@ -70,7 +70,7 @@ export const PostCategoriesFilterButtons = ({
         'flex w-full gap-3 p-2',
         {
           'flex-wrap': type === 'wrapped',
-          'overflow-x-auto max-w-full': type === 'scrollable',
+          'overflow-x-auto max-w-full': type === 'scrollable'
         },
         className
       )}

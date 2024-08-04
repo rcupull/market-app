@@ -52,6 +52,6 @@ export const useModal = (): {
     onClose,
     onCloseAll,
     onIsOpen,
-    allModalData: data,
+    allModalData: data
   };
 };

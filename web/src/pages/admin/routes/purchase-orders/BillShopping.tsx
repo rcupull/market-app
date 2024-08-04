@@ -37,14 +37,14 @@ export const BillShopping = ({ rowData, onRefresh }: BillShoppingProps) => {
                     onAfterSuccess: () => {
                       onClose();
                       onRefresh();
-                    },
+                    }
                   }
                 );
               }}
             />
-          ),
+          )
         };
-      },
+      }
     });
   };
 

@@ -22,12 +22,12 @@ export const useAuthRefresh = (): {
           {
             method: 'post',
             url: getEndpoint({ path: '/auth/refresh' }),
-            data: { refreshToken },
+            data: { refreshToken }
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

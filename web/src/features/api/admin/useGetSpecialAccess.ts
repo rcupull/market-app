@@ -18,14 +18,14 @@ export const useGetSpecialAccess = (): {
           {
             method: 'get',
             url: getEndpoint({
-              path: '/admin/access',
+              path: '/admin/access'
             }),
-            data,
+            data
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

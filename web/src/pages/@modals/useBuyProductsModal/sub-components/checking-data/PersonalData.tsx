@@ -78,7 +78,7 @@ export const PersonalData = ({ className, onValid }: PersonalDataProps) => {
                 user,
                 onAfterSuccess: () => {
                   onRefreshAuthUser();
-                },
+                }
               })
             }
             className="!ml-auto"

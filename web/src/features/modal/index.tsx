@@ -7,7 +7,7 @@ import { dynamic, LoadableReturn } from 'utils/makeLazy';
 
 const componentRecord: Record<ModalId, LoadableReturn> = {
   Emergent: dynamic(() => import('./components/emergent').then((m) => m)),
-  Confirmation: dynamic(() => import('./components/confirmation').then((m) => m)),
+  Confirmation: dynamic(() => import('./components/confirmation').then((m) => m))
 };
 
 export const ModalContainer = (): JSX.Element | null => {

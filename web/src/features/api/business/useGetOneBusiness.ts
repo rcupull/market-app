@@ -20,14 +20,14 @@ export const useGetOneBusiness = (): {
             url: getEndpoint({
               path: '/business/:routeName',
               urlParams: {
-                routeName,
-              },
-            }),
+                routeName
+              }
+            })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

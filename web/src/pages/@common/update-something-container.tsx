@@ -20,7 +20,7 @@ export const UpdateSomethingContainer = ({
   onClick,
   title,
   className,
-  warning,
+  warning
 }: UpdateSomethingContainerProps) => {
   const { owner } = useBusiness();
   const [over, setOver] = useState(false);
@@ -36,7 +36,7 @@ export const UpdateSomethingContainer = ({
         {
           '!border-gray-400': over,
           '!border-gray-200': !over,
-          '!border-red-200': warning,
+          '!border-red-200': warning
         },
         className
       )}

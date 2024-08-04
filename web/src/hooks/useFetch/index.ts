@@ -16,7 +16,7 @@ import {
   FetchStatus,
   Headers,
   OnAfterFailed,
-  OnAfterSuccess,
+  OnAfterSuccess
 } from 'types/api';
 import { getEndpoint } from 'utils/api';
 import { wait } from 'utils/general';
@@ -90,7 +90,7 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
           axios({
             method: 'post',
             url: getEndpoint({ path: '/auth/refresh' }),
-            data: { refreshToken },
+            data: { refreshToken }
           })
             .then(({ data }) => {
               fetchingTokenPromise = null;
@@ -142,8 +142,8 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
               ...headers,
               Authorization: accessToken && `Bearer ${accessToken}`,
               //https://ngrok.com/abuse
-              ...(TUNNEL ? { 'ngrok-skip-browser-warning': true } : {}),
-            },
+              ...(TUNNEL ? { 'ngrok-skip-browser-warning': true } : {})
+            }
           });
         });
 
@@ -169,14 +169,14 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
           showMessage(
             { title: 'Error', body: response?.data?.message },
             {
-              type: 'error',
+              type: 'error'
             }
           );
         }
 
         const apiError: ApiError = {
           message: response?.data?.message || 'Something went wrong',
-          reazon: response?.data?.reazon,
+          reazon: response?.data?.reazon
         };
 
         onAfterFailed?.(apiError);
@@ -208,9 +208,9 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
       isFailed: status === 'FAILED',
       isSuccess: status === 'SUCCESS',
       error,
-      wasCalled,
+      wasCalled
     },
     handleFetch,
-    handleReset,
+    handleReset
   ];
 };

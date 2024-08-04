@@ -19,13 +19,13 @@ export const useGetOneShopping = (): {
             method: 'get',
             url: getEndpoint({
               path: '/shopping/:shoppingId',
-              urlParams: { shoppingId },
-            }),
+              urlParams: { shoppingId }
+            })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

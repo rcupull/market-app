@@ -31,7 +31,7 @@ export const getRemapedProps = <RowData extends AnyRecord = AnyRecord>(args: {
             {group.map((index, i) => {
               const isDark = i % 2 === 0;
               const commonStyle = cn('font-semibold px-4 py-1 rounded-sm', {
-                'bg-gray-100': isDark,
+                'bg-gray-100': isDark
               });
 
               return (
@@ -43,21 +43,21 @@ export const getRemapedProps = <RowData extends AnyRecord = AnyRecord>(args: {
                 </Fragment>
               );
             })}
-          </div>,
+          </div>
         ];
       }, [] as TableHeads);
 
       return {
         nodes: outNodes,
-        ...omittedProps,
+        ...omittedProps
       };
-    },
+    }
   };
 };
 
 export const validateRemapIndex = (
   remapIndex: RemapRowsIndexRecord,
-  headsCount: number,
+  headsCount: number
 ): boolean => {
   const validRange = range(headsCount);
 

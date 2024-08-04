@@ -14,7 +14,7 @@ describe('Pagination', () => {
           page: 0,
           pagingCounter: 0,
           hasPrevPage: false,
-          hasNextPage: false,
+          hasNextPage: false
         }}
       />
     );

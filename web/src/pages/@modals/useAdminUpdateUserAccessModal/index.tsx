@@ -46,11 +46,11 @@ export const useAdminUpdateUserAccessModal = () => {
               ),
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,
-              className: '!w-[95vw]',
+              className: '!w-[95vw]'
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

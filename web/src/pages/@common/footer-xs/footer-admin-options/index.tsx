@@ -41,19 +41,19 @@ export const FooterAdminOptions = ({ active }: FooterAdminOptionsProps) => {
     const out: Array<Nullable<MenuItem>> = [
       getHasSomeAccess('user__read') && {
         label: 'Usuarios',
-        onClick: () => pushRoute('/admin/users'),
+        onClick: () => pushRoute('/admin/users')
       },
       {
         label: 'Órdenes de compra',
-        onClick: () => pushRoute('/admin/shopping'),
+        onClick: () => pushRoute('/admin/shopping')
       },
       {
         label: 'Negocios',
-        onClick: () => pushRoute('/admin/business'),
+        onClick: () => pushRoute('/admin/business')
       },
       getHasSomeAccess('bills__read') && {
         label: 'Facturas',
-        onClick: () => pushRoute('/admin/bills'),
+        onClick: () => pushRoute('/admin/bills')
       },
       getHasSomeAccess('agenda__full') && {
         label: 'Agenda',
@@ -65,25 +65,25 @@ export const FooterAdminOptions = ({ active }: FooterAdminOptionsProps) => {
               window.open(
                 getEndpoint({
                   path: '/admin/agenda/web/:agendaToken',
-                  urlParams: { agendaToken },
+                  urlParams: { agendaToken }
                 })
               );
-            },
+            }
           });
-        },
+        }
       },
       {
         label: 'Configuración',
-        onClick: () => pushRoute('/admin/settings'),
+        onClick: () => pushRoute('/admin/settings')
       },
       {
         label: 'Nlp',
-        onClick: () => pushRoute('/admin/nlp'),
+        onClick: () => pushRoute('/admin/nlp')
       },
       getHasSomeAccess('full') && {
         label: 'Run BD script',
-        onClick: () => adminBDScript.fetch(),
-      },
+        onClick: () => adminBDScript.fetch()
+      }
     ];
 
     return out;

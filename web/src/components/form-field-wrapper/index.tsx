@@ -22,26 +22,26 @@ export const FormFieldWrapper = ({
   labelPosition = 'top',
   description,
   collapsable,
-  collapsableHeader = 'Abrir',
+  collapsableHeader = 'Abrir'
 }: FormFieldWrapperProps & { children: React.ReactNode; error?: Nullable<string> }) => {
   return (
     <div data-id="FormFieldWrapper" className={cn(className)}>
       <div
         className={cn({
-          'flex flex-row-reverse items-center': labelPosition === 'right',
+          'flex flex-row-reverse items-center': labelPosition === 'right'
         })}
       >
         {(label || description) && (
           <div
             className={cn('flex items-center h-7', {
               'mb-2': labelPosition === 'top',
-              'ml-2': labelPosition === 'right',
+              'ml-2': labelPosition === 'right'
             })}
           >
             {label && (
               <label
                 className={cn('block text-sm font-semibold leading-6 text-gray-900  w-fit', {
-                  'text-red-500': !!error,
+                  'text-red-500': !!error
                 })}
               >
                 {label}

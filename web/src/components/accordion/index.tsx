@@ -19,7 +19,7 @@ export const Accordion = ({ children, header, className }: AccordionProps) => {
 
               <SvgAngleRightSolid
                 className={cn('w-5 h-5 ml-auto fill-gray-400', {
-                  'rotate-90 transform': open,
+                  'rotate-90 transform': open
                 })}
               />
             </DisclosureButton>

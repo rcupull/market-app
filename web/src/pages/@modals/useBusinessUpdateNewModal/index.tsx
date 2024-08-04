@@ -50,11 +50,11 @@ export const useBusinessUpdateNewModal = () => {
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,
               isBusy: getOneBusiness.status.isBusy,
-              className: '!w-[95vw] !lg:w-[90vw]',
+              className: '!w-[95vw] !lg:w-[90vw]'
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

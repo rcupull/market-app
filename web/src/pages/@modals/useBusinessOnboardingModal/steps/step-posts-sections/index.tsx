@@ -12,7 +12,7 @@ export interface StepPostsSectionsProps extends OnboardingStepProps {}
 export const StepPostsSections = ({
   backBtnProps,
   nextBtnProps,
-  centerBtnProps,
+  centerBtnProps
 }: StepPostsSectionsProps) => {
   const { nextAction, portal, rightButton } = useNextButtonPortal({ nextBtnProps });
   const { onFetch, business, getSections } = useBusiness();

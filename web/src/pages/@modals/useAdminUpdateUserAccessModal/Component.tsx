@@ -26,7 +26,7 @@ export const Component = ({ portal, user, onAfterSuccess, allSpecialAccess }: Co
     <>
       <Formux<State>
         value={{
-          specialAccess: user.specialAccess || [],
+          specialAccess: user.specialAccess || []
         }}
       >
         {({ value }) => {
@@ -40,7 +40,7 @@ export const Component = ({ portal, user, onAfterSuccess, allSpecialAccess }: Co
                 }}
                 optionToValue={({ value }) => value}
                 items={allSpecialAccess.map((value) => ({
-                  value,
+                  value
                 }))}
                 multi
                 containerClassName="flex items-center flex-wrap gap-4"
@@ -57,10 +57,10 @@ export const Component = ({ portal, user, onAfterSuccess, allSpecialAccess }: Co
                     updateUserAccessAdmin.fetch(
                       {
                         specialAccess,
-                        userId: user._id,
+                        userId: user._id
                       },
                       {
-                        onAfterSuccess,
+                        onAfterSuccess
                       }
                     );
                   }}

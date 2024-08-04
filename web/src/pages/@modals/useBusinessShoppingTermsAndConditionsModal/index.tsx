@@ -25,11 +25,11 @@ export const useBusinessShoppingTermsAndConditionsModal = () => {
               badge: <Badge variant="cart" />,
               content: <Component portal={portal} />,
               secondaryBtn: <ButtonClose />,
-              primaryBtn: <div ref={portal.ref} />,
+              primaryBtn: <div ref={portal.ref} />
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

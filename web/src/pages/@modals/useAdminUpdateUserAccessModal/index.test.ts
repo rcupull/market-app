@@ -8,13 +8,13 @@ import { getWrapper } from 'utils/test-utils';
 describe('useAdminUpdateUserAccessModal', () => {
   it('should close when click on the close button', async () => {
     const { result } = renderHook(() => useAdminUpdateUserAccessModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() =>
       result.current.adminUpdateUserAccessModal.open({
         user: userDummy,
-        onAfterSuccess: jest.fn(),
+        onAfterSuccess: jest.fn()
       })
     );
 
@@ -27,13 +27,13 @@ describe('useAdminUpdateUserAccessModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => useAdminUpdateUserAccessModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() =>
       result.current.adminUpdateUserAccessModal.open({
         user: userDummy,
-        onAfterSuccess: jest.fn(),
+        onAfterSuccess: jest.fn()
       })
     );
 

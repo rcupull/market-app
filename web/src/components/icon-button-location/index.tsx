@@ -14,7 +14,7 @@ export const IconButtonLocation = ({ size = 'small', ...props }: IconButtonLocat
         className={cn('fill-indigo-600', className, {
           '!size-5': size === 'small',
           '!size-10': size === 'medium',
-          '!size-16': size === 'large',
+          '!size-16': size === 'large'
         })}
       />
     )}

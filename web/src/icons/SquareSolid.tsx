@@ -9,7 +9,7 @@ export function SvgSquareSolid(props: StyleProps) {
       viewBox: '0 0 32 32',
       width: '1em',
       height: '1em',
-      ...props,
+      ...props
     },
     createElement('path', { d: 'M6 6v20h20V6H6z' })
   );

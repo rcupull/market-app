@@ -36,7 +36,7 @@ export const ComponentProduct = ({
   onAfterSuccess,
   post,
   className,
-  onRefreshPost,
+  onRefreshPost
 }: ComponentProductProps) => {
   const { business } = useBusiness();
 
@@ -64,29 +64,29 @@ export const ComponentProduct = ({
         images: [],
         postCategoriesTags: [],
         stockAmount: null,
-        ...(post || {}),
+        ...(post || {})
       }}
       validate={[
         {
           field: 'name',
-          type: 'required',
+          type: 'required'
         },
         {
           field: 'postCategoriesTags',
           type: 'custom',
           customCb: (value) => value?.length,
-          message: 'Debe seleccionar al menos una categoría',
+          message: 'Debe seleccionar al menos una categoría'
         },
         postFormFields.includes('price') && {
           field: 'price',
-          type: 'required',
+          type: 'required'
         },
         postFormFields.includes('price') && {
           field: 'price',
           type: 'custom',
           customCb: (priceVal) => isNumber(priceVal) && priceVal > 0,
-          message: 'Precio inválido',
-        },
+          message: 'Precio inválido'
+        }
       ]}
     >
       {({ value, hasChange }) => {
@@ -249,7 +249,7 @@ export const ComponentProduct = ({
                     details,
                     postCategoriesTags,
                     discount,
-                    stockAmount,
+                    stockAmount
                   } = value;
 
                   const handelUpdatePost = (post: Post) => {
@@ -261,7 +261,7 @@ export const ComponentProduct = ({
                         routeName,
                         postId,
                         userId: post.createdBy,
-                        ...imagesDimensions.cardPost,
+                        ...imagesDimensions.cardPost
                       },
                       {
                         onAfterSuccess: (images) => {
@@ -277,13 +277,13 @@ export const ComponentProduct = ({
                               details,
                               postCategoriesTags,
                               discount,
-                              stockAmount,
+                              stockAmount
                             },
                             {
-                              onAfterSuccess,
+                              onAfterSuccess
                             }
                           );
-                        },
+                        }
                       }
                     );
                   };
@@ -300,12 +300,12 @@ export const ComponentProduct = ({
                         images: [],
                         discount,
                         stockAmount,
-                        postType: 'product',
+                        postType: 'product'
                       },
                       {
                         onAfterSuccess: (response) => {
                           handelUpdatePost(response);
-                        },
+                        }
                       }
                     );
                   };

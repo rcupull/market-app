@@ -30,13 +30,13 @@ export const useGetCatalogsImages = (): {
             method: 'get',
             url: getEndpoint({
               path: '/catalogs/images',
-              query: { search },
-            }),
+              query: { search }
+            })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

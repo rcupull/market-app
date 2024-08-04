@@ -45,22 +45,22 @@ export const useBusinessShowHide = (): {
                     {
                       routeName,
                       update: {
-                        hidden: !hidden,
-                      },
+                        hidden: !hidden
+                      }
                     },
                     {
                       onAfterSuccess: (response) => {
                         onAfterSuccess?.(response);
                         onClose();
-                      },
+                      }
                     }
                   );
                 }}
               />
-            ),
+            )
           };
-        },
+        }
       });
-    },
+    }
   };
 };

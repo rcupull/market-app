@@ -21,13 +21,13 @@ export const useGetAllUsersAdmin = (): {
             method: 'get',
             url: getEndpoint({
               path: '/admin/users',
-              query: { limit: defaultLimit },
-            }),
+              query: { limit: defaultLimit }
+            })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

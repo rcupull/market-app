@@ -42,15 +42,15 @@ export const ShoppingButtonCancel = ({ shopping, onAfterSucess }: ShoppingButton
                     onAfterSuccess: () => {
                       onClose();
                       onAfterSucess?.();
-                    },
+                    }
                   }
                 );
               }}
             />
           ),
-          secondaryBtn: <ButtonClose />,
+          secondaryBtn: <ButtonClose />
         };
-      },
+      }
     });
   };
   return (

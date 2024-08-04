@@ -31,7 +31,7 @@ export const Table = <RowData extends AnyRecord = AnyRecord>(props: TableProps<R
     enabledReorder,
     onReorder,
     remapRowsIndex,
-    disabledRemapRowsValidation,
+    disabledRemapRowsValidation
   } = (propsPreprocessors || []).reduce(
     (acc, propsPreprocessor) => ({ ...acc, ...propsPreprocessor(acc) }),
     initialProps
@@ -59,7 +59,7 @@ export const Table = <RowData extends AnyRecord = AnyRecord>(props: TableProps<R
       const remapedProps = getRemapedProps<RowData>({
         remapIndex,
         heads,
-        getRowProps,
+        getRowProps
       });
 
       getRowProps = remapedProps.getRowProps;
@@ -124,7 +124,7 @@ export const Table = <RowData extends AnyRecord = AnyRecord>(props: TableProps<R
                     className={cn(
                       'px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b-2 border-gray-200 bg-gray-50',
                       {
-                        '!p-0': enabledReorder && index === 0,
+                        '!p-0': enabledReorder && index === 0
                       }
                     )}
                   >

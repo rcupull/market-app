@@ -18,14 +18,14 @@ const obj = {
       src: 'https://i.pinimg.com/474x/39/42/c5/3942c5ec65becb58ad1d8c06a6eac4d9.jpg',
       width: 464,
       height: 493,
-      _id: '6638348afae0b1017b5e2cf1',
+      _id: '6638348afae0b1017b5e2cf1'
     },
     {
       src: 'https://www.tailorclub.co/wp-content/uploads/2023/10/I-understand-wish-to-continue--768x1024.jpg',
       width: 768,
       height: 1024,
-      _id: '6638348afae0b1017b5e2cf2',
-    },
+      _id: '6638348afae0b1017b5e2cf2'
+    }
   ],
   clothingSizes: ['XS', 'XXS', 'S'],
   colors: ['cyan'],
@@ -34,7 +34,7 @@ const obj = {
   price: 200,
   stockAmount: null,
   __v: 0,
-  discount: 10,
+  discount: 10
 };
 
 const arr = [0, 3, 'some', obj];
@@ -54,7 +54,7 @@ describe('isEqual', () => {
     [true, arr, deepJsonCopy(arr)],
     [false, arr, [...deepJsonCopy(arr), undefined]],
     [false, arr, [...deepJsonCopy(arr), null]],
-    [false, arr, [...deepJsonCopy(arr), 'wrong value']],
+    [false, arr, [...deepJsonCopy(arr), 'wrong value']]
   ])('should return %p when dateIn = %p and showTime is %p', (expected, value1, value2) => {
     expect(isEqual(value1, value2)).toEqual(expected);
   });

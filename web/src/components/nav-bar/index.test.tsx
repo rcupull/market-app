@@ -11,12 +11,12 @@ describe('NavBar', () => {
         items={[
           {
             name: 'name1',
-            href: '/href1',
+            href: '/href1'
           },
           {
             name: 'name2',
-            href: '/href2',
-          },
+            href: '/href2'
+          }
         ]}
       />,
       { wrapper: getWrapper({ useRouter: true }) }

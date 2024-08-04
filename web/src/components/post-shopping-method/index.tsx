@@ -16,7 +16,7 @@ export const PostShoppingMethod = ({
   post,
   purshaseNotes,
   className,
-  btnPostToCartVariant,
+  btnPostToCartVariant
 }: PostShoppingMethodProps) => {
   if (layout === 'shoppingCart') {
     return (

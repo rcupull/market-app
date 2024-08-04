@@ -26,19 +26,19 @@ export const useUpdateManyPosts = (): {
           {
             method: 'put',
             url: getEndpoint({
-              path: '/posts/bulkActions/update',
+              path: '/posts/bulkActions/update'
             }),
             data: {
               ids,
               query,
               update,
-              routeName,
-            },
+              routeName
+            }
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

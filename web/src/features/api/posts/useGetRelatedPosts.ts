@@ -21,13 +21,13 @@ export const useGetRelatedPosts = (): {
           url: getEndpoint({
             path: '/posts/:postId/related',
             urlParams: {
-              postId,
+              postId
             },
-            query: { limit: defaultLimit },
-          }),
+            query: { limit: defaultLimit }
+          })
         });
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

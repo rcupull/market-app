@@ -26,8 +26,8 @@ export class CheckEditorUploadAdapter {
         method: 'post',
         data,
         headers: {
-          Authorization: accessToken && `Bearer ${accessToken}`,
-        },
+          Authorization: accessToken && `Bearer ${accessToken}`
+        }
       })
         .then((res) => {
           const resData = res.data;

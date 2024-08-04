@@ -17,14 +17,14 @@ export const useDeleteImages = (): {
           {
             method: 'delete',
             url: getEndpoint({
-              path: '/images',
+              path: '/images'
             }),
-            data: { srcs },
+            data: { srcs }
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

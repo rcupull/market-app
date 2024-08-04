@@ -20,6 +20,7 @@ module.exports = {
     'react/display-name': 'off',
     'react/no-unescaped-entities': 'off',
     'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
+    "comma-dangle": ["error", "never"],
     //
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-unnecessary-type-constraint': 'off',

@@ -37,7 +37,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
     Enter: (e) => {
       e.preventDefault();
       refPassword.current?.focus();
-    },
+    }
   });
 
   const passwordKeyboard = useKeyBoard<{
@@ -46,7 +46,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
     Enter: (e, { handleSubmit }) => {
       e.preventDefault();
       handleSubmit();
-    },
+    }
   });
 
   return (
@@ -66,16 +66,16 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
           validate={[
             {
               field: 'email',
-              type: 'required',
+              type: 'required'
             },
             {
               field: 'email',
-              type: 'email',
+              type: 'email'
             },
             {
               field: 'password',
-              type: 'required',
-            },
+              type: 'required'
+            }
           ]}
         >
           {({ value, setErrors }) => {
@@ -111,9 +111,9 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                   onAfterFailed: () => {
                     setErrors({
                       email: ' ',
-                      password: ' ',
+                      password: ' '
                     });
-                  },
+                  }
                 }
               );
             };
