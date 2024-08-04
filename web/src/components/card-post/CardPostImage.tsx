@@ -38,7 +38,7 @@ export const CardPostImage = ({ post, layout, className }: CardPostImageProps) =
 
       interval(
         images.map((image) => () => setSwitchImage(image)),
-        getRandomNumber(900, 1100)
+        getRandomNumber(3000, 5000)
       );
 
       return interval.cancel;
