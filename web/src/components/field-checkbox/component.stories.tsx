@@ -3,7 +3,7 @@ import { FieldCheckbox } from '.';
 import { FormikWrapper } from 'utils/storybook';
 
 export default {
-  component: FieldCheckbox,
+  component: FieldCheckbox
 };
 
 export const Default = (): JSX.Element => (

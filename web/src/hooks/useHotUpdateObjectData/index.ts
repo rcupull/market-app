@@ -11,7 +11,7 @@ export const useHotUpdateObjectData = <
 >({
   updateKey,
   data,
-  changeCB,
+  changeCB
 }: {
   updateKey: string;
   data: FetchData<T>;
@@ -32,6 +32,6 @@ export const useHotUpdateObjectData = <
   }, [JSON.stringify(data)]);
 
   return {
-    data: state,
+    data: state
   };
 };

@@ -11,7 +11,7 @@ import { ChildrenProp } from 'types/general';
 
 export const AutenticatedRole = ({
   children,
-  roles,
+  roles
 }: ChildrenProp & { roles: Array<UserRole> }) => {
   const { user } = useAuth();
   const { pathname } = useRouter();

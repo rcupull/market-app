@@ -19,7 +19,7 @@ export interface ShoppingTermsAndConditionsProps extends StyleProps {
 export const ShoppingTermsAndConditions = ({
   approved,
   onApprobed,
-  className,
+  className
 }: ShoppingTermsAndConditionsProps) => {
   const { businessShoppingTermsAndConditionsModal } = useBusinessShoppingTermsAndConditionsModal();
   const { business, owner } = useBusiness();

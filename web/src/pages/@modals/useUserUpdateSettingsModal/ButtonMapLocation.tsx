@@ -58,13 +58,13 @@ export const ButtonMapLocation = ({ onChange, value, ...props }: ButtonMapLocati
                       onAfterSuccess: (response) => {
                         onClose();
                         onChange?.(response);
-                      },
+                      }
                     });
                   }}
                 />
-              ),
+              )
             };
-          },
+          }
         });
       }}
       {...props}

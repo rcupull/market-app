@@ -42,7 +42,7 @@ export const DeliveryManView = ({ user, business, onAfterSuccess }: DeliveryManV
             addOneDeliveryManToBusiness.fetch(
               { userId: _id, routeName: business.routeName },
               {
-                onAfterSuccess,
+                onAfterSuccess
               }
             );
           }}
@@ -56,7 +56,7 @@ export const DeliveryManView = ({ user, business, onAfterSuccess }: DeliveryManV
             removeOneDeliveryManFromBusines.fetch(
               { userId: _id, routeName: business.routeName },
               {
-                onAfterSuccess,
+                onAfterSuccess
               }
             );
           }}

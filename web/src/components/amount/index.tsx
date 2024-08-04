@@ -31,7 +31,7 @@ export const Amount = ({
   min,
   max,
   size = 'small',
-  disabled,
+  disabled
 }: AmountProps) => {
   const [state, setState] = useState<number>();
   const [bottomMessage, setBottomMessage] = useState<string>();
@@ -88,7 +88,7 @@ export const Amount = ({
               className={cn({
                 '!size-3': size === 'small',
                 '!size-4': size === 'medium',
-                '!size-6': size === 'large',
+                '!size-6': size === 'large'
               })}
             />
           }
@@ -103,7 +103,7 @@ export const Amount = ({
           }}
           variant="outlined"
           className={cn('!p-1 !ring-1', {
-            '!ring-2 ring-red-500': error,
+            '!ring-2 ring-red-500': error
           })}
         />
 
@@ -118,7 +118,7 @@ export const Amount = ({
             'ring-2 ring-red-500  rounded-md': error,
             '!h-6': size === 'small',
             '!h-7': size === 'medium',
-            '!h-9': size === 'large',
+            '!h-9': size === 'large'
           })}
         />
 
@@ -128,7 +128,7 @@ export const Amount = ({
               className={cn({
                 '!size-3': size === 'small',
                 '!size-4': size === 'medium',
-                '!size-6': size === 'large',
+                '!size-6': size === 'large'
               })}
             />
           }
@@ -142,7 +142,7 @@ export const Amount = ({
           disabled={getDisabledByMax() || disabled}
           variant="outlined"
           className={cn('!p-1 !ring-1', {
-            '!ring-2 ring-red-500': error,
+            '!ring-2 ring-red-500': error
           })}
         />
 

@@ -46,47 +46,47 @@ export const Component = ({ portal }: ComponentProps) => {
             confirmPassword: '',
             name: '',
             canCreateBusiness: false,
-            termsAndConditionsAccepted: false,
+            termsAndConditionsAccepted: false
           }}
           validate={[
             {
               field: 'email',
-              type: 'required',
+              type: 'required'
             },
             {
               field: 'email',
-              type: 'email',
+              type: 'email'
             },
             {
               field: 'password',
-              type: 'required',
+              type: 'required'
             },
             {
               field: 'password',
               type: 'custom',
               customCb: (value) => getStrongPasswordTracking(value).valid,
-              message: 'Contraseña inválida',
+              message: 'Contraseña inválida'
             },
             {
               field: 'name',
-              type: 'required',
+              type: 'required'
             },
             {
               field: 'confirmPassword',
-              type: 'required',
+              type: 'required'
             },
             {
               field: 'confirmPassword',
               type: 'equal',
               equalField: 'password',
-              message: 'Las dos contraseña deben ser iguales',
+              message: 'Las dos contraseña deben ser iguales'
             },
             {
               field: 'termsAndConditionsAccepted',
               type: 'custom',
               customCb: (value) => value,
-              message: 'Debe aceptar los Términos y Condiciones',
-            },
+              message: 'Debe aceptar los Términos y Condiciones'
+            }
           ]}
         >
           {({ value, setErrors, errors }) => {
@@ -180,19 +180,19 @@ export const Component = ({ portal }: ComponentProps) => {
                                     />
                                   ),
                                   primaryBtn: <></>,
-                                  secondaryBtn: <></>,
+                                  secondaryBtn: <></>
                                 };
-                              },
+                              }
                             });
                           },
                           onAfterFailed: (e) => {
                             if (e.reazon === 'EMAIL_ALREADY_REGISTERED') {
                               setErrors({
                                 ...errors,
-                                email: e.message,
+                                email: e.message
                               });
                             }
-                          },
+                          }
                         }
                       );
                     }}

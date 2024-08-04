@@ -33,11 +33,11 @@ export const useBusinessUpdateBannerModal = () => {
                 />
               ),
               secondaryBtn: <ButtonClose />,
-              primaryBtn: <div ref={portal.ref} />,
+              primaryBtn: <div ref={portal.ref} />
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

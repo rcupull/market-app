@@ -19,7 +19,7 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
   return (
     <Formux<{ search: string }>
       value={{
-        search: value?.search || '',
+        search: value?.search || ''
       }}
       onChange={(filters) => {
         const { search } = filters;

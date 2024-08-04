@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { Button } from 'components/button';
 
 import { StepCommonProps } from '../../types';
@@ -10,11 +8,13 @@ import { ShoppingCartPosts } from 'pages/@common/shopping-cart-posts';
 import { ShoppingCartRemoveAllButton } from 'pages/@common/shopping-cart-remove-all-button';
 import { useCart } from 'pages/@hooks/useCart';
 
-export interface ShoppingCartProps extends StepCommonProps {}
+export interface ShoppingCartProps extends StepCommonProps {
+  approved: boolean;
+  onApprobed: (approved: boolean) => void;
+}
 
-export const ShoppingCart = ({ nextBtnProps }: ShoppingCartProps) => {
+export const ShoppingCart = ({ nextBtnProps, approved, onApprobed }: ShoppingCartProps) => {
   const cart = useCart();
-  const [approved, setApproved] = useState(false);
 
   if (!cart.constructionShopping) {
     return <div className="font-semibold">No tiene productos en la bolsa</div>;
@@ -29,7 +29,7 @@ export const ShoppingCart = ({ nextBtnProps }: ShoppingCartProps) => {
           <ShoppingCartRemoveAllButton />
         </div>
 
-        <ShoppingTermsAndConditions className="mt-4" approved={approved} onApprobed={setApproved} />
+        <ShoppingTermsAndConditions className="mt-4" approved={approved} onApprobed={onApprobed} />
       </div>
 
       <ButtonNavContainer rightButton={<Button {...nextBtnProps} disabled={!approved} />} />

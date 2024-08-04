@@ -72,11 +72,11 @@ export const useBusinessNewUpdatePostModal = () => {
               isBusy: getOnePost.status.isBusy && !getOnePost.data,
               content: getContent(),
               secondaryBtn: <ButtonClose />,
-              primaryBtn: <div ref={portal.ref} />,
+              primaryBtn: <div ref={portal.ref} />
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

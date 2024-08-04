@@ -11,7 +11,7 @@ const keys: Array<keyof Address> = [
   'streetBetweenTo',
   'neighborhood',
   'city',
-  'municipality',
+  'municipality'
 ];
 
 const labels: Record<keyof Address, string> = {
@@ -28,7 +28,7 @@ const labels: Record<keyof Address, string> = {
   lat: '',
   lon: '',
   placeId: '',
-  postCode: '',
+  postCode: ''
 };
 
 export interface AddressViewProps extends StyleProps {

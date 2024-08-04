@@ -17,14 +17,14 @@ export const useGetAgendaTokenAdmin = (): {
           {
             method: 'get',
             url: getEndpoint({
-              path: '/admin/agenda/token',
+              path: '/admin/agenda/token'
             }),
-            data,
+            data
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

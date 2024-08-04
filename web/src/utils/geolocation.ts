@@ -6,7 +6,7 @@ export const getCurrentLocation = async (): Promise<MapOlPosition> => {
       (position) => {
         resolve({
           lat: position.coords.latitude,
-          lon: position.coords.longitude,
+          lon: position.coords.longitude
         });
       },
       (e) => {

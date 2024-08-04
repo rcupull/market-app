@@ -31,7 +31,7 @@ export const Home = () => {
               if (newBussiness) {
                 allUserBusiness.refresh();
               }
-            },
+            }
           });
         }}
       />

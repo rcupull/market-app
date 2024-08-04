@@ -8,7 +8,7 @@ import { Shopping, ShoppingState } from 'types/shopping';
 
 export const portalDummy: Portal = {
   getPortal: jest.fn(),
-  ref: jest.fn(),
+  ref: jest.fn()
 };
 
 export const userDummy: User = {
@@ -18,7 +18,7 @@ export const userDummy: User = {
   role: 'user',
   createdAt: 'test',
   canCreateBusiness: true,
-  validated: true,
+  validated: true
 };
 
 export const paginatorDummy: Paginator = {
@@ -31,7 +31,7 @@ export const paginatorDummy: Paginator = {
   pageCount: 2,
   pagingCounter: 5,
   nextPage: undefined,
-  prevPage: undefined,
+  prevPage: undefined
 };
 
 export const shoppingDummy: Shopping = {
@@ -44,11 +44,11 @@ export const shoppingDummy: Shopping = {
         _id: 'someid',
         name: 'Chancletas de palo',
         images: [],
-        price: 50,
+        price: 50
       },
       count: 4,
-      lastUpdatedDate: '2024-06-25T15:47:05.649Z',
-    },
+      lastUpdatedDate: '2024-06-25T15:47:05.649Z'
+    }
   ],
   purchaserId: 'purchaserId',
   purchaserName: 'purchaserName',
@@ -56,7 +56,7 @@ export const shoppingDummy: Shopping = {
   state: ShoppingState.CONSTRUCTION,
   billId: 'billId',
   billState: 'PENDING_TO_PAY',
-  history: [],
+  history: []
 };
 
 export const businessDummy: Business = {
@@ -66,7 +66,7 @@ export const businessDummy: Business = {
   createdBy: 'createdBy',
   name: 'name',
   routeName: 'routeName',
-  shoppingDebit: 0,
+  shoppingDebit: 0
 };
 
 export const adminConfigDummy: AdminConfig = {
@@ -74,9 +74,9 @@ export const adminConfigDummy: AdminConfig = {
   createdAt: 'createdAt',
   price: '<>price</>',
   privacyPolicy: '<>privacyPolicy</>',
-  termsAndConditions: '<>termsAndConditions</>',
+  termsAndConditions: '<>termsAndConditions</>'
 };
 
 export const authDataDummy: AuthData = {
-  user: userDummy,
+  user: userDummy
 };

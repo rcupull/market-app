@@ -36,7 +36,7 @@ const clasicItemRender: ItemRender = ({ selected, label, svg: Svg }) => {
       className={cn(
         'w-full text-center p-2 bg-gray-50 rounded-sm hover:bg-gray-100 border-b-2 border-transparent text-nowrap flex items-center gap-2',
         {
-          '!border-indigo-600': selected,
+          '!border-indigo-600': selected
         }
       )}
     >
@@ -56,7 +56,7 @@ export const Tabs = <L extends string = string>({
   //
   tabListClassName,
   tabPanelClassName,
-  disabledStepNavigation,
+  disabledStepNavigation
 }: TabsProps<L>) => {
   const items = compact(itemsProp);
 
@@ -72,7 +72,7 @@ export const Tabs = <L extends string = string>({
                     className={cn(
                       'cursor-pointer focus-visible:outline-none',
                       {
-                        'cursor-default': disabledStepNavigation,
+                        'cursor-default': disabledStepNavigation
                       },
                       itemContainerClassName?.({ selected, index })
                     )}

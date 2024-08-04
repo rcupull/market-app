@@ -66,7 +66,7 @@ export const ClothingProductGrid1 = ({ post, render, currency }: ClothingProduct
           <Formux
             value={{
               interestedByColors: [],
-              interestedByClothingSizes: [],
+              interestedByClothingSizes: []
             }}
           >
             {({ value }) => {
@@ -79,7 +79,7 @@ export const ClothingProductGrid1 = ({ post, render, currency }: ClothingProduct
                       className: 'mt-10',
                       label: 'Colores disponibles',
                       name: 'interestedByColors',
-                      multi: true,
+                      multi: true
                     })}
 
                   {/* Sizes */}
@@ -89,7 +89,7 @@ export const ClothingProductGrid1 = ({ post, render, currency }: ClothingProduct
                       className: 'mt-10',
                       label: 'Tallas disponibles',
                       name: 'interestedByClothingSizes',
-                      multi: true,
+                      multi: true
                     })}
 
                   {portal.getPortal(
@@ -97,7 +97,7 @@ export const ClothingProductGrid1 = ({ post, render, currency }: ClothingProduct
                       post={post}
                       purshaseNotes={{
                         interestedByClothingSizes: value.interestedByClothingSizes,
-                        interestedByColors: value.interestedByColors,
+                        interestedByColors: value.interestedByColors
                       }}
                       layout="shoppingCart"
                       btnPostToCartVariant="button"
@@ -123,7 +123,7 @@ export const ClothingProductGrid1 = ({ post, render, currency }: ClothingProduct
             render.highLights?.({
               value: highlights,
               className: 'mt-10',
-              title: 'Características',
+              title: 'Características'
             })}
 
           {details && render.details?.({ value: details, className: 'mt-10', title: 'Detalles' })}

@@ -21,13 +21,13 @@ export const useGetAllPosts = (): {
             method: 'get',
             url: getEndpoint({
               path: '/posts',
-              query: { limit: defaultLimit, ...query },
-            }),
+              query: { limit: defaultLimit, ...query }
+            })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

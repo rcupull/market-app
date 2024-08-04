@@ -52,7 +52,7 @@ export const Component = ({ portal, options }: ComponentProps) => {
           preventDefault
           onClick={() => window.open(href, '_blank')}
         />
-      ),
+      )
     });
   };
 
@@ -63,7 +63,7 @@ export const Component = ({ portal, options }: ComponentProps) => {
         instagram: business?.socialLinks?.instagram || '',
         twitter: business?.socialLinks?.twitter || '',
         linkedin: business?.socialLinks?.linkedin || '',
-        youtube: business?.socialLinks?.youtube || '',
+        youtube: business?.socialLinks?.youtube || ''
       }}
     >
       {({ value, hasChange }) => {
@@ -73,11 +73,11 @@ export const Component = ({ portal, options }: ComponentProps) => {
           <form className="w-full">
             {renderFieldLink(
               <FieldInput label="Facebook" name="face" className="w-full mt-4" />,
-              value.face,
+              value.face
             )}
             {renderFieldLink(
               <FieldInput label="Instagram" name="instagram" className="w-full mt-4" />,
-              value.instagram,
+              value.instagram
             )}
             {/* {renderFieldLink(
               <FieldInput label="Twitter" name="twitter" className="w-full mt-4" />,
@@ -104,22 +104,22 @@ export const Component = ({ portal, options }: ComponentProps) => {
                           instagram,
                           twitter,
                           linkedin,
-                          youtube,
-                        },
+                          youtube
+                        }
                       },
-                      routeName,
+                      routeName
                     },
                     {
                       onAfterSuccess: () => {
                         options?.onAfterSuccess?.({});
                         onClose();
-                      },
-                    },
+                      }
+                    }
                   );
                 }}
                 variant="primary"
                 className="w-full"
-              />,
+              />
             )}
           </form>
         );

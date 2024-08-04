@@ -20,7 +20,7 @@ const validationsCallback = {
   },
   equal: (value1: any, value2: any): boolean => {
     return value1 === value2;
-  },
+  }
 };
 
 export interface Validation<V extends AnyRecord, F extends Path<V> = Path<V>> {

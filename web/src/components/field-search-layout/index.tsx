@@ -39,26 +39,26 @@ export const FieldSearchLayout = (props: FieldSearchLayoutProps) => {
         optionToValue={({ value }) => value}
         items={[
           {
-            value: 'none',
+            value: 'none'
           },
           {
-            value: 'left',
+            value: 'left'
           },
           {
-            value: 'center',
+            value: 'center'
           },
           {
-            value: 'right',
+            value: 'right'
           },
           {
-            value: 'postCategories',
+            value: 'postCategories'
           },
           // {
           //   value: 'postCategoriesScrollable',
           // },
           {
-            value: 'postCategoriesExcluded',
-          },
+            value: 'postCategoriesExcluded'
+          }
           // {
           //   value: 'postCategoriesExcludedScrollable',
           // },

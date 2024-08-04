@@ -16,7 +16,7 @@ const PersistentsUtilsContext = ({ children }: ChildrenProp) => {
     const [, setPersistent] = usePersistentsPersistent.current;
     setPersistent(name, value, {
       path: '/',
-      ...options,
+      ...options
     });
   };
 
@@ -35,7 +35,7 @@ const PersistentsUtilsContext = ({ children }: ChildrenProp) => {
       value={{
         getPersistent,
         removePersistent,
-        setPersistent,
+        setPersistent
       }}
     >
       {children}
@@ -47,7 +47,7 @@ const PersistentProviderWeb = ({ children }: ChildrenProp) => {
   return (
     <ReactPersistentsProvider
       defaultSetOptions={{
-        path: '/',
+        path: '/'
       }}
     >
       <PersistentsUtilsContext>{children}</PersistentsUtilsContext>

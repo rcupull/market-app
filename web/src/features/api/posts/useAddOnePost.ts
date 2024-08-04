@@ -44,14 +44,14 @@ export const useAddOnePost = (): {
             method: 'post',
             url: getEndpoint({
               path: '/posts',
-              urlParams: { userId },
+              urlParams: { userId }
             }),
-            data,
+            data
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

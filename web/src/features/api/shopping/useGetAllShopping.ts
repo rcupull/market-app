@@ -24,13 +24,13 @@ export const useGetAllShopping = (): {
             method: 'get',
             url: getEndpoint({
               path: '/shopping',
-              query: { limit: defaultLimit, ...query },
-            }),
+              query: { limit: defaultLimit, ...query }
+            })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

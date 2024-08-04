@@ -24,11 +24,11 @@ export const useBusinessUpdateSocialNetworksModal = () => {
               title: 'Redes sociales',
               content: <Component portal={portal} options={options} />,
               secondaryBtn: <ButtonClose />,
-              primaryBtn: <div ref={portal.ref} />,
+              primaryBtn: <div ref={portal.ref} />
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

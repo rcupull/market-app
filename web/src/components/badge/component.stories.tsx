@@ -1,7 +1,7 @@
 import { Badge } from '.';
 
 export default {
-  component: Badge,
+  component: Badge
 };
 
 export const Variants = () => (

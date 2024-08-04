@@ -62,8 +62,8 @@ export const FieldCheckbox = forwardRef<HTMLInputElement, FieldCheckboxProps>((a
                 onChange({
                   target: {
                     name: field.name,
-                    value: e.target.checked,
-                  },
+                    value: e.target.checked
+                  }
                 });
               }}
             />

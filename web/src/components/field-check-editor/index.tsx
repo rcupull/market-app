@@ -28,8 +28,8 @@ export const FieldCheckEditor = (props: FieldCheckEditorProps) => {
           field.onChange({
             target: {
               name: field.name,
-              value: data,
-            },
+              value: data
+            }
           });
         }}
         {...checkEditorProps}

@@ -3,7 +3,7 @@ import { FieldClothingSizeSelect } from '.';
 import { FormikWrapper } from 'utils/storybook';
 
 export default {
-  component: FieldClothingSizeSelect,
+  component: FieldClothingSizeSelect
 };
 
 export const Default = (): JSX.Element => (

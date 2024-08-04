@@ -24,11 +24,11 @@ export const useBusinessUpdateSeoModal = () => {
               content: <Component portal={portal} />,
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,
-              className: '!w-[95vw] !max-w-[40rem]',
+              className: '!w-[95vw] !max-w-[40rem]'
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

@@ -43,9 +43,9 @@ export const CloseContextProvider = ({ children, last }: CloseContextProviderPro
               />
             ),
             secondaryBtn: <ButtonClose label="Cancelar" />,
-            className: '!w-96',
+            className: '!w-96'
           };
-        },
+        }
       });
     };
   }
@@ -55,7 +55,7 @@ export const CloseContextProvider = ({ children, last }: CloseContextProviderPro
       value={{
         onChangeUnsavedChanges: (hasChange) => {
           refHasUnsavedChanges.current = hasChange;
-        },
+        }
       }}
     >
       {children}

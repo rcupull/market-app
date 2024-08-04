@@ -43,12 +43,12 @@ const keyValueList = (list: Array<KeyValueListItem>) => {
 
 export const viewUtils = {
   mapToOutlinedBox,
-  keyValueList,
+  keyValueList
 };
 
 export const breakpointsSwitch = <T extends any = any>({
   values,
-  breakpoints,
+  breakpoints
 }: {
   breakpoints: UseBreakpointsReturn;
   values: {
@@ -78,7 +78,7 @@ export const getBusinessTabLabel = (tab: BusinessTab): string => {
     links: 'Enlaces',
     sections: 'Secciones',
     settings: 'Configuración',
-    shopping: 'Órdenes de compras',
+    shopping: 'Órdenes de compras'
   };
 
   return record[tab] || 'unknown tab';

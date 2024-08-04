@@ -32,7 +32,7 @@ export const NewSectionButton = () => {
               <div>Escoja el tipo de sección que desea añadir a la página de su negocio.</div>
               <Formux<{ postType: PostType }>
                 value={{
-                  postType: 'product',
+                  postType: 'product'
                 }}
               >
                 {({ value }) => {
@@ -65,7 +65,7 @@ export const NewSectionButton = () => {
                                 <span className="font-bold">productos</span> de su negocio que
                                 tengan las categorías asociadas a dicha sección.
                               </div>
-                            ),
+                            )
                           },
                           {
                             value: 'link',
@@ -76,8 +76,8 @@ export const NewSectionButton = () => {
                                 <span className="font-bold">enlaces</span> de su negocio hacia otros
                                 negocios de Asere Market o hacia links externos.
                               </div>
-                            ),
-                          },
+                            )
+                          }
                         ]}
                         containerClassName="flex items-center justify-center gap-8"
                       />
@@ -92,7 +92,7 @@ export const NewSectionButton = () => {
                               businessNewUpdateSectionModal.open({
                                 postType,
                                 onAfterSuccess: () =>
-                                  business && onFetch({ routeName: business.routeName }),
+                                  business && onFetch({ routeName: business.routeName })
                               });
                             }, 100);
                           }}
@@ -106,9 +106,9 @@ export const NewSectionButton = () => {
             </div>
           ),
           badge: <Badge variant="info" />,
-          primaryBtn: <div ref={portal.ref} />,
+          primaryBtn: <div ref={portal.ref} />
         };
-      },
+      }
     });
   };
 

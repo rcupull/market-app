@@ -23,14 +23,14 @@ export const Component = ({ portal, postId, onAfterSuccess }: ComponentProps) =>
     }>
       value={{
         star: undefined,
-        comment: '',
+        comment: ''
       }}
       validate={[
         {
           field: 'star',
           type: 'required',
-          message: 'Cuantifica la calidad de este producto.',
-        },
+          message: 'Cuantifica la calidad de este producto.'
+        }
         // {
         //   field: 'comment',
         //   type: 'required',
@@ -57,10 +57,10 @@ export const Component = ({ portal, postId, onAfterSuccess }: ComponentProps) =>
                     {
                       postId,
                       comment,
-                      star,
+                      star
                     },
                     {
-                      onAfterSuccess,
+                      onAfterSuccess
                     }
                   );
                 }}

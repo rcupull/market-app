@@ -15,7 +15,7 @@ export const SettingBox = ({
   className,
   onClick,
   description,
-  svg: Svg,
+  svg: Svg
 }: SettingBoxProps): JSX.Element => {
   return (
     <div

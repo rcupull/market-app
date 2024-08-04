@@ -62,12 +62,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
   const getSvg = (Component: ButtonSvg): ReactElement => {
     const commonClassName = cn('h-5 w-5', {
       ['mr-2']: svgPosition === 'left' && label,
-      ['ml-2']: svgPosition === 'right' && label,
+      ['ml-2']: svgPosition === 'right' && label
     });
 
     if (isValidElement(Component)) {
       return cloneElement(Component, {
-        className: cn(commonClassName, Component.props?.className || ''),
+        className: cn(commonClassName, Component.props?.className || '')
       });
     }
 
@@ -98,7 +98,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
                   ['cursor-not-allowed']: buttonDisabled,
                   ['!bg-indigo-300']: variant === 'primary' && buttonDisabled,
                   ['!bg-gray-300']: variant === 'outlined' && buttonDisabled,
-                  ['!bg-red-300']: variant === 'error' && buttonDisabled,
+                  ['!bg-red-300']: variant === 'error' && buttonDisabled
                 },
                 className
               )}
@@ -140,7 +140,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    ...(variant === 'link' ? { top: '-7px' } : {}),
+                    ...(variant === 'link' ? { top: '-7px' } : {})
                   }}
                   {...(variant === 'link' ? { color: 'gray' } : {})}
                 />
@@ -168,7 +168,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
           ['cursor-not-allowed']: disabled,
           ['!bg-indigo-300']: variant === 'primary' && disabled,
           ['!bg-gray-300']: variant === 'outlined' && disabled,
-          ['!bg-red-300']: variant === 'error' && disabled,
+          ['!bg-red-300']: variant === 'error' && disabled
         },
         className
       )}
@@ -202,7 +202,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            ...(variant === 'link' ? { top: '-7px' } : {}),
+            ...(variant === 'link' ? { top: '-7px' } : {})
           }}
           {...(variant === 'link' ? { color: 'gray' } : {})}
         />

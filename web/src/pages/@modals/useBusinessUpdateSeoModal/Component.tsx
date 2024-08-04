@@ -38,7 +38,7 @@ export const Component = ({ portal }: ComponentProps) => {
       <Formux<State>
         value={{
           title: business?.seo?.title || '',
-          description: business?.seo?.description || '',
+          description: business?.seo?.description || ''
         }}
       >
         {({ value, hasChange }) => {
@@ -59,15 +59,15 @@ export const Component = ({ portal }: ComponentProps) => {
                     updateOneBusiness.fetch(
                       {
                         update: {
-                          seo: value,
+                          seo: value
                         },
-                        routeName,
+                        routeName
                       },
                       {
                         onAfterSuccess: () => {
                           onFetch({ routeName });
                           onClose();
-                        },
+                        }
                       }
                     );
                   }}

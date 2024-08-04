@@ -13,7 +13,7 @@ export const getAllProductsFields = () => {
     discount: true,
     stockAmount: true,
     description: true,
-    images: true,
+    images: true
   };
 
   return Object.keys(record) as Array<ProductFormField>;

@@ -24,7 +24,7 @@ export const PostsReviews = ({
   className,
   onScrollBottom,
   status,
-  onAddReview,
+  onAddReview
 }: PostsReviewsProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { isBusy, wasCalled } = status;

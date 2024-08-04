@@ -10,7 +10,7 @@ export const LayoutSection = ({
   title,
   children,
   topRightHeader,
-  className,
+  className
 }: LayoutSectionProps): JSX.Element => {
   return (
     <div className={className}>

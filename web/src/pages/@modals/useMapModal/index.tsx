@@ -27,11 +27,11 @@ export const useMapModal = () => {
               content: <Component {...mapProps} />,
               secondaryBtn: <ButtonClose />,
               primaryBtn,
-              className: '!w-[95vw]',
+              className: '!w-[95vw]'
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

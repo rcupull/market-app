@@ -28,7 +28,7 @@ export const FieldPostsSectionSelect = ({ label, ...props }: FieldPostsSectionLa
               e.stopPropagation();
               businessNewUpdateSectionModal.open({
                 postType: 'product',
-                onAfterSuccess: () => business && onFetch({ routeName: business.routeName }),
+                onAfterSuccess: () => business && onFetch({ routeName: business.routeName })
               });
             }}
           />
@@ -42,7 +42,7 @@ export const FieldPostsSectionSelect = ({ label, ...props }: FieldPostsSectionLa
       optionToValue={({ id }) => id}
       items={sections.map(({ _id, name }) => ({
         id: _id,
-        name,
+        name
       }))}
       {...props}
     />

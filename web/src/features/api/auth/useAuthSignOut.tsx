@@ -22,12 +22,12 @@ export const useAuthSignOut = (): {
           {
             method: 'post',
             url: getEndpoint({ path: '/auth/sign-out' }),
-            data: { refreshToken },
+            data: { refreshToken }
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

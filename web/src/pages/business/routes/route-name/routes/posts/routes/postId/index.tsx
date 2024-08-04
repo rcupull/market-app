@@ -54,7 +54,7 @@ export const PostId = () => {
 
   const infiniteScrollingAllReviews = useInfiniteScrolling({
     fetchPaginatedResources: getAllReviews,
-    onFetch: ({ page }) => getAllReviews.fetch({ postId, page, limit: 3 }),
+    onFetch: ({ page }) => getAllReviews.fetch({ postId, page, limit: 3 })
   });
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export const PostId = () => {
   >({
     data: postIdPersistent.data,
     updateKey: `updatePostAmount`,
-    changeCB: (rowData, { stockAmountAvailable }) => ({ ...rowData, stockAmountAvailable }),
+    changeCB: (rowData, { stockAmountAvailable }) => ({ ...rowData, stockAmountAvailable })
   });
 
   const business = businessPageData.business;
@@ -95,7 +95,7 @@ export const PostId = () => {
       onAfterSuccess: () => {
         getOneReviewSummary.fetch({ postId: post._id });
         infiniteScrollingAllReviews.fetch();
-      },
+      }
     });
   };
 
@@ -106,7 +106,7 @@ export const PostId = () => {
         onClick={() => {
           businessNewUpdatePostModal.open({
             postId: post._id,
-            onAfterSuccess: () => postIdPersistent.fetch({ id: post._id }),
+            onAfterSuccess: () => postIdPersistent.fetch({ id: post._id })
           });
         }}
         className="w-full"
@@ -133,10 +133,10 @@ export const PostId = () => {
               <ProductStockLabel
                 {...props}
                 layout={{
-                  size: 'long',
+                  size: 'long'
                 }}
               />
-            ),
+            )
           }}
         />
       </UpdateSomethingContainer>

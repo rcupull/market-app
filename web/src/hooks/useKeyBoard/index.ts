@@ -20,7 +20,7 @@ export const keyboardEventKeys: Record<EventKey, EventKey> = {
   Enter: 'Enter',
   Escape: 'Escape',
   Backspace: 'Backspace',
-  Tab: 'Tab',
+  Tab: 'Tab'
 };
 
 type Callback<T> = (event: React.KeyboardEvent<HTMLElement>, options: T) => void;
@@ -81,6 +81,6 @@ export const useKeyBoard = <T = void>(callbacks: Callbacks<T> = {}): UseKeyBoard
 
   return (options) => ({
     onKeyDown: (e) => onKeyDown(e, options),
-    onKeyUp: (e) => onKeyUp(e),
+    onKeyUp: (e) => onKeyUp(e)
   });
 };

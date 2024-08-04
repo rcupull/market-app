@@ -23,8 +23,8 @@ export const FieldToggleButton = (props: FieldToggleButtonProps) => {
           field.onChange({
             target: {
               name: field.name,
-              value: newValue,
-            },
+              value: newValue
+            }
           });
         }}
       />
