@@ -16,7 +16,7 @@ export const Component = () => {
           {
             label: 'Productos',
             render: (props) => (
-              <ShoppingCart {...props} {...{ approved }} onChangeApproved={setApproved} />
+              <ShoppingCart {...props} approved={approved} onApprobed={setApproved} />
             ),
           },
           {

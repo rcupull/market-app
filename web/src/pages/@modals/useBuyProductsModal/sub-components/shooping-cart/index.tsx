@@ -10,13 +10,13 @@ import { useCart } from 'pages/@hooks/useCart';
 
 export interface ShoppingCartProps extends StepCommonProps {
   approved: boolean;
-  onChangeApproved: (approved: boolean) => void;
+  onApprobed: (approved: boolean) => void;
 }
 
 export const ShoppingCart = ({
   nextBtnProps,
   approved,
-  onChangeApproved: setApproved,
+  onApprobed,
 }: ShoppingCartProps) => {
   const cart = useCart();
 
@@ -33,7 +33,7 @@ export const ShoppingCart = ({
           <ShoppingCartRemoveAllButton />
         </div>
 
-        <ShoppingTermsAndConditions className="mt-4" approved={approved} onApprobed={setApproved} />
+        <ShoppingTermsAndConditions className="mt-4" approved={approved} onApprobed={onApprobed} />
       </div>
 
       <ButtonNavContainer rightButton={<Button {...nextBtnProps} disabled={!approved} />} />
