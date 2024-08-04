@@ -10,7 +10,7 @@ import { IconButtonRemove } from 'components/icon-button-remove';
 import { IconButtonShowHide } from 'components/icon-button-show-hide';
 
 import { useUpdateBusinessPostCategories } from 'features/api/business/useUpdateBusinessPostCategories';
-import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
+import { useCloseContext } from 'features/modal/closeContext/useCloseContext';
 import { useModal } from 'features/modal/useModal';
 
 import { Portal, usePortal } from 'hooks/usePortal';
@@ -47,12 +47,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
 
   const { pushModal } = useModal();
 
-  const initialValue : State = {
-    label: '',
-    categories: state,
-  };
-
-  const closeContext = useCloseContext<State>({initialValue});
+  const { onChangeUnsavedChanges } = useCloseContext();
 
   if (!routeName) {
     return <></>;
@@ -62,8 +57,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
     <>
       <div className="flex">
         <Formux<State>
-          value={initialValue}
-          onChange={closeContext.onChangeValue}
+          value={{ label: '', categories: state }}
           validate={[
             {
               field: 'label',
@@ -79,7 +73,9 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
             },
           ]}
         >
-          {({ value, resetForm }) => {
+          {({ value, resetForm, hasChange }) => {
+            onChangeUnsavedChanges(hasChange);
+
             const handleAdd = () => {
               const { label } = value;
 
@@ -87,7 +83,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                 addRow(state, {
                   label,
                   tag: getPostCategoryTag(label),
-                })
+                }),
               );
               resetForm();
             };
@@ -115,7 +111,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                     onClick={() => handleAdd()}
                     variant="primary"
                     className="ml-4"
-                  />
+                  />,
                 )}
               </form>
             );
@@ -219,10 +215,10 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               { postCategories: state, routeName },
               {
                 onAfterSuccess,
-              }
+              },
             );
           }}
-        />
+        />,
       )}
     </>
   );
