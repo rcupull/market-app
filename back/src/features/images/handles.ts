@@ -5,12 +5,12 @@ import { withTryCatch } from '../../utils/error';
 import {
   get200Response,
   get400Response,
-  getUserNotFoundResponse,
+  getUserNotFoundResponse
 } from '../../utils/server-response';
 import {
   imagesServicesDeleteMany,
   imagesServicesDeleteOne,
-  imagesServicesUploadFile,
+  imagesServicesUploadFile
 } from './services';
 
 const post_images: () => RequestHandler = () => {
@@ -26,7 +26,7 @@ const post_images: () => RequestHandler = () => {
         if (!file) {
           return get400Response({
             res,
-            json: { message: 'Has not file' },
+            json: { message: 'Has not file' }
           });
         }
 
@@ -34,23 +34,23 @@ const post_images: () => RequestHandler = () => {
           file,
           userId: req.query.userId,
           postId: req.query.postId,
-          routeName: req.query.routeName,
+          routeName: req.query.routeName
         });
 
         if (!response) {
           return get400Response({
             res,
             json: {
-              message: 'Some problem saving the image',
-            },
+              message: 'Some problem saving the image'
+            }
           });
         }
 
         return get200Response({
           res,
           json: {
-            imageSrc: response.result.id,
-          },
+            imageSrc: response.result.id
+          }
         });
       });
     });
@@ -76,7 +76,7 @@ const post_image_checkeditor: () => RequestHandler = () => {
         if (!file) {
           return get400Response({
             res,
-            json: { message: 'Has not file' },
+            json: { message: 'Has not file' }
           });
         }
 
@@ -84,15 +84,15 @@ const post_image_checkeditor: () => RequestHandler = () => {
           file,
           userId: user._id.toString(),
           postId,
-          routeName,
+          routeName
         });
 
         if (!response) {
           return get400Response({
             res,
             json: {
-              message: 'Some problem saving the image',
-            },
+              message: 'Some problem saving the image'
+            }
           });
         }
 
@@ -100,8 +100,8 @@ const post_image_checkeditor: () => RequestHandler = () => {
           res,
           json: {
             url: response.result.variants[0],
-            uploaded: 1,
-          },
+            uploaded: 1
+          }
         });
       });
     });
@@ -117,7 +117,7 @@ const delete_one_image: () => RequestHandler = () => {
 
       get200Response({
         res,
-        json: {},
+        json: {}
       });
     });
   };
@@ -132,7 +132,7 @@ const delete_images: () => RequestHandler = () => {
 
       get200Response({
         res,
-        json: {},
+        json: {}
       });
     });
   };
@@ -143,5 +143,5 @@ export const imageHandles = {
   delete_one_image,
   //
   post_image_checkeditor,
-  delete_images,
+  delete_images
 };

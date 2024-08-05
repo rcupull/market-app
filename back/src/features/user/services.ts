@@ -4,9 +4,10 @@ import { UserModel } from '../../schemas/user';
 import { FilterQuery, PaginateOptions, ProjectionType, UpdateQuery } from 'mongoose';
 import { UpdateOptions } from 'mongodb';
 import { Shopping } from '../../types/shopping';
-import { isEqualIds } from '../../utils/general';
+import { compact, isEqualIds } from '../../utils/general';
 import { PaginateResult } from '../../middlewares/middlewarePagination';
 import { getSortQuery } from '../../utils/schemas';
+import { PushNotificationUserData } from '../../schemas/notifications';
 
 export const userServicesAddOne: QueryHandle<
   {
@@ -27,7 +28,7 @@ export const userServicesAddOne: QueryHandle<
     email,
     password,
     passwordVerbose: password,
-    name,
+    name
   });
 
   await newUser.save();
@@ -47,6 +48,34 @@ export const userServicesGetOne: QueryHandle<
   return user;
 };
 
+export const userServicesGetUsersDataForPushNotifications: QueryHandle<
+  {
+    query: FilterQuery<User>;
+  },
+  Array<PushNotificationUserData>
+> = async ({ query }) => {
+  const usersData = await userServicesGetAll({
+    query,
+    projection: {
+      firebaseToken: 1,
+      _id: 1
+    }
+  });
+
+  return compact(
+    usersData.map((userData) => {
+      if (!userData?.firebaseToken) {
+        return null;
+      }
+
+      return {
+        firebaseToken: userData.firebaseToken,
+        userId: userData._id
+      };
+    })
+  );
+};
+
 export const userServicesGetAllWithPagination: QueryHandle<
   {
     paginateOptions?: PaginateOptions;
@@ -57,7 +86,7 @@ export const userServicesGetAllWithPagination: QueryHandle<
 > = async ({ query, sort, paginateOptions = {} }) => {
   const out = await UserModel.paginate(query, {
     ...paginateOptions,
-    sort: getSortQuery(sort),
+    sort: getSortQuery(sort)
   });
 
   return out as unknown as PaginateResult<User>;
@@ -122,7 +151,7 @@ export const userServicesGetUserDataFromShopping: QueryHandle<
   const usersData: Array<Pick<User, '_id' | 'name' | 'addresses' | 'phone'>> =
     await userServicesGetAll({
       query,
-      projection: { name: 1, addresses: 1, _id: 1, phone: 1 },
+      projection: { name: 1, addresses: 1, _id: 1, phone: 1 }
     });
 
   return {
@@ -132,10 +161,10 @@ export const userServicesGetUserDataFromShopping: QueryHandle<
         return {
           purchaserName: userData.name,
           purchaserAddress: userData.addresses?.[0],
-          purchaserPhone: userData.phone,
+          purchaserPhone: userData.phone
         };
       }
       return null;
-    },
+    }
   };
 };

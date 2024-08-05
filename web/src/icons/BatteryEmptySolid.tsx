@@ -9,7 +9,7 @@ export function SvgBatteryEmptySolid(props: StyleProps) {
       viewBox: '0 0 32 32',
       width: '1em',
       height: '1em',
-      ...props,
+      ...props
     },
     createElement('path', { d: 'M3 8v16h24v-5h2v-6h-2V8zm2 2h20v12H5z' })
   );

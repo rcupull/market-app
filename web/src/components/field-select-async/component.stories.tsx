@@ -6,7 +6,7 @@ import { Post } from 'types/post';
 import { FormikWrapper } from 'utils/storybook';
 
 export default {
-  component: FieldSelectAsync,
+  component: FieldSelectAsync
 };
 
 export const Default = (): JSX.Element => {

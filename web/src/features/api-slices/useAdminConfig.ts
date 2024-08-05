@@ -21,6 +21,6 @@ export const useAdminConfig = (): {
     },
     getEnabledFeature: (featureKey: string) => {
       return data?.features?.find((feature) => feature.key === featureKey)?.enabled ?? false;
-    },
+    }
   };
 };

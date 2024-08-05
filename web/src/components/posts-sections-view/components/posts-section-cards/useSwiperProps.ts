@@ -6,7 +6,7 @@ import { PostCardLayout } from 'types/business';
 import { breakpointsSwitch } from 'utils/view';
 
 export const useSwiperProps = ({
-  layout,
+  layout
 }: {
   layout: PostCardLayout | undefined;
 }): Pick<SwiperProps, 'slidesPerView' | 'spaceBetween'> => {
@@ -24,8 +24,8 @@ export const useSwiperProps = ({
             sm: 6,
             md: 7,
             lg: 9,
-            xl: 8,
-          },
+            xl: 8
+          }
         });
       case 'medium':
         return breakpointsSwitch({
@@ -34,8 +34,8 @@ export const useSwiperProps = ({
             xs: 2,
             sm: 3,
             md: 4,
-            xl: 5,
-          },
+            xl: 5
+          }
         });
       case 'long':
         return breakpointsSwitch({
@@ -44,14 +44,14 @@ export const useSwiperProps = ({
             xs: 1,
             sm: 2,
             md: 3,
-            lg: 4,
-          },
+            lg: 4
+          }
         });
     }
   };
 
   return {
     slidesPerView: getSlidesPerView(),
-    spaceBetween: 10,
+    spaceBetween: 10
   };
 };

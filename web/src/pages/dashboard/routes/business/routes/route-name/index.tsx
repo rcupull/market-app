@@ -82,38 +82,38 @@ export const RouteName = () => {
       q: 'shopping',
       label: getBusinessTabLabel('shopping'),
       content: <ShoppingPage />,
-      svg: SvgShoppingCartSolid,
+      svg: SvgShoppingCartSolid
     },
     {
       q: 'sections',
       label: getBusinessTabLabel('sections'),
       content: <PostsSections />,
-      svg: SvgLayerGroupSolid,
+      svg: SvgLayerGroupSolid
     },
     {
       q: 'products',
       label: getBusinessTabLabel('products'),
       content: <Products />,
-      svg: SvgProductHunt,
+      svg: SvgProductHunt
     },
     {
       q: 'links',
       label: getBusinessTabLabel('links'),
       content: <Links />,
-      svg: SvgLinkSolid,
+      svg: SvgLinkSolid
     },
     {
       q: 'settings',
       label: getBusinessTabLabel('settings'),
       svg: SvgCogSolid,
-      content: <Settings />,
+      content: <Settings />
     },
     getEnabledFeature('BILLIING_THE_BUSINESS') && {
       q: 'billing',
       label: getBusinessTabLabel('billing'),
       content: <Billing />,
-      svg: SvgMoneyBillAltSolid,
-    },
+      svg: SvgMoneyBillAltSolid
+    }
   ]);
 
   const tabIndexToQuery = (tabIndex: number) => {
@@ -147,7 +147,7 @@ export const RouteName = () => {
             onChangeQuery(
               { businessTab: tabIndexToQuery(tabIndex) },
               {
-                replaceAll: true,
+                replaceAll: true
               }
             )
           }

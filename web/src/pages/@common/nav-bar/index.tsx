@@ -21,7 +21,7 @@ import {
   getBusinessAboutUsRoute,
   getBusinessRoute,
   getOneBusinessRoute,
-  getShoppingRoute,
+  getShoppingRoute
 } from 'utils/business';
 
 export interface NavbarProps extends StyleProps {}
@@ -51,7 +51,7 @@ export const Navbar = ({ className }: NavbarProps) => {
           !!aboutUsPage.title &&
           !!routeName && {
             name: aboutUsPage.title,
-            href: getBusinessAboutUsRoute({ routeName }),
+            href: getBusinessAboutUsRoute({ routeName })
           },
         ////////////////////////////////////////////////////////////////////////////////////////////////
         !isOneBusinessPage && { name: 'Inicio', href: '/' },
@@ -64,35 +64,35 @@ export const Navbar = ({ className }: NavbarProps) => {
                 label: '¿Que es Asere Market?',
                 onClick: () => pushRoute('/about-us'),
                 svg: SvgUsersSolid,
-                active: pathname === '/about-us',
+                active: pathname === '/about-us'
               },
               getEnabledFeature('BILLIING_THE_BUSINESS') && {
                 label: 'Precios',
                 onClick: () => pushRoute('/price'),
                 svg: SvgDollarSignSolid,
-                active: pathname === '/price',
+                active: pathname === '/price'
               },
               {
                 label: 'Términos y condiciones',
                 onClick: () => pushRoute('/terms-and-conditions'),
                 svg: SvgFileAltSolid,
-                active: pathname === '/terms-and-conditions',
+                active: pathname === '/terms-and-conditions'
               },
               {
                 label: 'Política de privacidad',
                 onClick: () => pushRoute('/privacy-policy'),
                 svg: SvgUserSecretSolid,
-                active: pathname === '/privacy-policy',
+                active: pathname === '/privacy-policy'
               },
               DEVELOPMENT && {
                 label: 'Documentación',
                 onClick: () => pushRoute('/docs'),
                 svg: SvgBookSolid,
-                active: pathname === '/docs',
-              },
-            ],
-          },
-        },
+                active: pathname === '/docs'
+              }
+            ]
+          }
+        }
         ////////////////////////////////////////////////////////////////////////////////////////////////
       ]}
       postContent={

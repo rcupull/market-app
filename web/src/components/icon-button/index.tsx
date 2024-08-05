@@ -11,7 +11,7 @@ export const IconButton = ({ className, variant, ...omittedProps }: IconButtonPr
       '!rounded-full !p-2 !ring-0 !shadow-none',
       {
         ['text-red-600 fill-red-600 !hover:bg-red-50']: variant === 'error',
-        ['text-indigo-600 fill-indigo-600 !hover:bg-indigo-50']: variant === 'primary',
+        ['text-indigo-600 fill-indigo-600 !hover:bg-indigo-50']: variant === 'primary'
       },
       className
     )}

@@ -8,7 +8,7 @@ const BillSchema = new Schema<Bill>({
   shoppingIds: { type: [Schema.Types.ObjectId], required: true },
   state: { type: String, enum: ['PENDING_TO_PAY', 'CHECKING_PAY', 'PAID'], required: true },
   totalDebit: { type: Number, required: true },
-  routeName: { type: String, required: true },
+  routeName: { type: String, required: true }
 });
 
 BillSchema.plugin(mongoosePaginate);

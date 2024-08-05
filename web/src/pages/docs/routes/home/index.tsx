@@ -24,13 +24,13 @@ export const Home = () => {
                 <Link to="/docs/business-config-manual">
                   Configurar un negocio manualmente desde el cero.
                 </Link>
-              </>,
-            ],
+              </>
+            ]
           },
           {
             title: 'Como cambiar el logo de un negocio',
-            items: [<>En el paner de control de tu negocio</>],
-          },
+            items: [<>En el paner de control de tu negocio</>]
+          }
         ]}
       />
     </LayoutPage>

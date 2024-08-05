@@ -23,7 +23,7 @@ export const PostsSections = () => {
     return postCategories.reduce(
       (acc, { label, tag }) => ({
         ...acc,
-        [tag]: label,
+        [tag]: label
       }),
       {}
     );
@@ -74,10 +74,10 @@ export const PostsSections = () => {
           xs: [[0, 1, 2, 3, 4]],
           sm: [
             [0, 1, 2],
-            [3, 4],
+            [3, 4]
           ],
           md: [[0, 1, 2], [3], [4]],
-          lg: 'none',
+          lg: 'none'
         }}
         heads={['Acciones', 'Nombre', 'Tipo', 'Categorias', 'Visible']}
         getRowProps={(rowData, rowIndex) => {
@@ -85,7 +85,7 @@ export const PostsSections = () => {
 
           return {
             className: cn({
-              'bg-gray-100': !showMobile && !showPC,
+              'bg-gray-100': !showMobile && !showPC
             }),
             nodes: [
               <RowActions
@@ -100,8 +100,8 @@ export const PostsSections = () => {
               </div>,
               postType === 'product' ? 'Productos' : 'Enlaces',
               renderCategories(rowData),
-              <IconButtonShowHideSection key="hidden" rowData={rowData} />,
-            ],
+              <IconButtonShowHideSection key="hidden" rowData={rowData} />
+            ]
           };
         }}
         data={data}

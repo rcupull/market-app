@@ -47,5 +47,5 @@ export interface AuthDataDto extends AuthData {
 
 export enum TYPE_DEVICE {
   NATIVE = 'NATIVE',
-  WEB = 'WEB',
+  WEB = 'WEB'
 }

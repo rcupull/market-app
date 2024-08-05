@@ -41,7 +41,7 @@ import { get, set } from './general';
  * Most commonly, this will be used to add a `type` property to the object.
  */
 type MakeReshaperReturn<I extends AnyRecord = AnyRecord, O extends AnyRecord = AnyRecord> = (
-  obj: I,
+  obj: I
 ) => Partial<O>;
 
 export type ReshapeRules<I extends AnyRecord = AnyRecord, O extends AnyRecord = AnyRecord> = {
@@ -50,7 +50,7 @@ export type ReshapeRules<I extends AnyRecord = AnyRecord, O extends AnyRecord = 
 
 export const makeReshaper = <I extends AnyRecord = AnyRecord, O extends AnyRecord = AnyRecord>(
   reshapeRules?: ReshapeRules<I, O> | false | null,
-  propsToAdd: AnyRecord = {},
+  propsToAdd: AnyRecord = {}
 ): MakeReshaperReturn<I, O> => {
   if (!reshapeRules || typeof reshapeRules !== 'object') {
     return () => ({});
@@ -71,16 +71,16 @@ export const makeReshaper = <I extends AnyRecord = AnyRecord, O extends AnyRecor
 
     return {
       ...propsToAdd,
-      ...reshaped,
+      ...reshaped
     };
   };
 };
 
 export const makeInvestedReshaper = <
   I extends AnyRecord = AnyRecord,
-  O extends AnyRecord = AnyRecord,
+  O extends AnyRecord = AnyRecord
 >(
-  reshapeRules?: ReshapeRules<I, O> | false | null,
+  reshapeRules?: ReshapeRules<I, O> | false | null
 ): MakeReshaperReturn<O, I> => {
   if (!reshapeRules || typeof reshapeRules !== 'object') {
     return () => ({});
@@ -94,10 +94,10 @@ export const makeInvestedReshaper = <
 
       return {
         ...acc,
-        [oldKey as string]: newKey,
+        [oldKey as string]: newKey
       };
     },
-    {} as ReshapeRules<O, I>,
+    {} as ReshapeRules<O, I>
   );
 
   return makeReshaper<O, I>(investedRules);

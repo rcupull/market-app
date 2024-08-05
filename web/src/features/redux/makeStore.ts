@@ -11,7 +11,7 @@ import { AnyRecord } from 'types/general';
 
 export const makerStore = async (preloadedState: Partial<AnyRecord> = {}) => {
   const enhancedReducers = combineReducers({
-    ...Object.values(slices).reduce((r, { name, reducer }) => ({ ...r, [name]: reducer }), {}),
+    ...Object.values(slices).reduce((r, { name, reducer }) => ({ ...r, [name]: reducer }), {})
   });
 
   const store = configureStore({
@@ -21,9 +21,9 @@ export const makerStore = async (preloadedState: Partial<AnyRecord> = {}) => {
     middleware: (getDefaultMiddleware) => {
       //https://stackoverflow.com/questions/61704805/getting-an-error-a-non-serializable-value-was-detected-in-the-state-when-using
       return getDefaultMiddleware({
-        serializableCheck: false,
+        serializableCheck: false
       });
-    },
+    }
   });
 
   // setting authentication data
@@ -31,13 +31,13 @@ export const makerStore = async (preloadedState: Partial<AnyRecord> = {}) => {
 
   if (user) {
     const authData: AuthData = {
-      user,
+      user
     };
 
     store.dispatch(
       slices.useAuth.actions.setState({
         data: authData,
-        status: dummyStatus,
+        status: dummyStatus
       })
     );
   }

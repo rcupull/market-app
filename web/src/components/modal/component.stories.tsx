@@ -3,7 +3,7 @@ import { Button } from 'components/button';
 import { Modal } from '.';
 
 export default {
-  component: Modal,
+  component: Modal
 };
 
 export const Default = () => (

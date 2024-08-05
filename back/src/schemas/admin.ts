@@ -15,10 +15,10 @@ const AdminConfigShema = new Schema<AdminConfig>({
         _id: false,
         key: { type: String, unique: true },
         enabled: { type: Boolean },
-        description: { type: String },
-      },
-    ],
-  },
+        description: { type: String }
+      }
+    ]
+  }
 });
 
 export const AdminConfigModel = model<AdminConfig>('AdminConfig', AdminConfigShema, 'admin_config');

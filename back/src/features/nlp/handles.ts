@@ -11,7 +11,7 @@ import {
   addBusinessNameRecords,
   addPriceRecords,
   addProductPriceRecords,
-  addProductNameRecords,
+  addProductNameRecords
 } from './utils';
 
 const post_nlp_train: () => RequestHandler = () => {
@@ -32,7 +32,7 @@ const post_nlp_train: () => RequestHandler = () => {
         postCategories?.forEach(({ label }) => {
           out = addBusinessCategoryRecords(out, {
             businessName: name,
-            categoryLabel: label,
+            categoryLabel: label
           });
         });
 
@@ -78,5 +78,5 @@ const get_nlp_search: () => RequestHandler = () => {
 
 export const nlpHandles = {
   post_nlp_train,
-  get_nlp_search,
+  get_nlp_search
 };

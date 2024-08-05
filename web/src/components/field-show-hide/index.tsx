@@ -26,8 +26,8 @@ export const FieldShowHide = (props: FieldShowHideProps) => {
           field.onChange({
             target: {
               name: field.name,
-              value: !value,
-            },
+              value: !value
+            }
           });
         }}
       />

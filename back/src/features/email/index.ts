@@ -8,8 +8,8 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user,
-    pass,
-  },
+    pass
+  }
 });
 
 const getValidationCodeRoute = (code: string): string => {
@@ -22,7 +22,7 @@ const getForgotPasswordCodeRoute = (code: string): string => {
 
 export const sendValidationCodeToEmail = ({
   email,
-  code,
+  code
 }: {
   email: string;
   code: string;
@@ -34,8 +34,8 @@ export const sendValidationCodeToEmail = ({
         to: email,
         subject: 'Verificación de la cuenta',
         text: `No debe responde a este correo. De click al siguiente link para validar su cuenta en Asere Market ${getValidationCodeRoute(
-          code,
-        )}`,
+          code
+        )}`
       },
       (error: any, info: any) => {
         if (error) {
@@ -43,14 +43,14 @@ export const sendValidationCodeToEmail = ({
         } else {
           resolve(info);
         }
-      },
+      }
     );
   });
 };
 
 export const sendForgotPasswordCodeToEmail = ({
   email,
-  code,
+  code
 }: {
   email: string;
   code: string;
@@ -62,8 +62,8 @@ export const sendForgotPasswordCodeToEmail = ({
         to: email,
         subject: 'Recuperación de la cuenta',
         text: `No debe responde a este correo. De click al siguiente link para recuperar su cuenta en Asere Market ${getForgotPasswordCodeRoute(
-          code,
-        )}`,
+          code
+        )}`
       },
       (error: any, info: any) => {
         if (error) {
@@ -71,7 +71,7 @@ export const sendForgotPasswordCodeToEmail = ({
         } else {
           resolve(info);
         }
-      },
+      }
     );
   });
 };

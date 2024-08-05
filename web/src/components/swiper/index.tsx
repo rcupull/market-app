@@ -3,7 +3,7 @@ import {
   Swiper as SwiperBase,
   SwiperClass,
   SwiperProps as SwiperPropsBase,
-  SwiperSlide,
+  SwiperSlide
 } from 'swiper/react';
 
 import 'swiper/css';
@@ -44,7 +44,7 @@ export const Swiper = ({ items, className, activeIndex, ...omittedProps }: Swipe
             key={index}
             className={cn({
               //fixing soome bugs in the slide's width when slidesPerView=auto
-              '!w-auto': omittedProps.slidesPerView == 'auto',
+              '!w-auto': omittedProps.slidesPerView == 'auto'
             })}
           >
             {content}

@@ -20,12 +20,12 @@ export const useAuthForgotPasswordValidate = (): {
           {
             method: 'post',
             url: getEndpoint({ path: '/auth/forgot-password-validate' }),
-            data,
+            data
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

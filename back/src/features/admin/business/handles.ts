@@ -8,7 +8,7 @@ import { makeReshaper } from '../../../utils/makeReshaper';
 import {
   businessServicesDeleteOne,
   businessServicesGetAllWithPagination,
-  businessServicesUpdateOne,
+  businessServicesUpdateOne
 } from '../../business/services';
 import { postServicesGetAll } from '../../post/services';
 import { userServicesGetAll } from '../../user/services';
@@ -24,7 +24,7 @@ const delete_admin_business_routeName: () => RequestHandler = () => {
        * Delete the business, business images, posts, and billing
        */
       await businessServicesDeleteOne({
-        routeName,
+        routeName
       });
 
       res.send();
@@ -44,27 +44,27 @@ const get_admin_business: () => RequestHandler = () => {
         query: {
           routeNames,
           search,
-          createdBy: userId,
-        },
+          createdBy: userId
+        }
       });
 
       const usersData: Array<Pick<User, 'name' | '_id'>> = await userServicesGetAll({
         query: {
-          _id: { $in: out.data.map(({ createdBy }) => createdBy) },
+          _id: { $in: out.data.map(({ createdBy }) => createdBy) }
         },
         projection: {
           name: 1,
-          _id: 1,
-        },
+          _id: 1
+        }
       });
 
       const postsData: Array<Pick<Post, 'routeName'>> = await postServicesGetAll({
         query: {
-          routeName: { $in: out.data.map(({ routeName }) => routeName) },
+          routeName: { $in: out.data.map(({ routeName }) => routeName) }
         },
         projection: {
-          routeName: 1,
-        },
+          routeName: 1
+        }
       });
 
       out = deepJsonCopy(out);
@@ -78,7 +78,7 @@ const get_admin_business: () => RequestHandler = () => {
 
         if (userData) {
           out.userData = {
-            name: userData.name,
+            name: userData.name
           };
         }
 
@@ -109,11 +109,11 @@ const put_admin_business_routeName: () => RequestHandler = () => {
 
       const out = await businessServicesUpdateOne({
         query: {
-          routeName,
+          routeName
         },
         update: makeReshaper<Business, Business>({
-          hidden: 'hidden',
-        })(body),
+          hidden: 'hidden'
+        })(body)
       });
 
       res.send(out);
@@ -124,5 +124,5 @@ const put_admin_business_routeName: () => RequestHandler = () => {
 export const adminBusinessHandles = {
   delete_admin_business_routeName,
   put_admin_business_routeName,
-  get_admin_business,
+  get_admin_business
 };

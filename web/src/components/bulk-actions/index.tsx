@@ -45,7 +45,7 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
   children,
   renderMenuNode,
   getBulkActionBtnProps,
-  refMeta,
+  refMeta
 }: BulkActionsProps<E, RowData>) => {
   const [action, setAction] = useState<E>();
   const [selected, setSelected] = useState<Array<RowData>>([]);
@@ -127,7 +127,7 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
           {node}
           <div className="absolute inset-0 bg-white opacity-60 rounded-md cursor-not-allowed" />
         </div>
-      )),
+      ))
     ];
   };
 
@@ -145,10 +145,10 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
 
             return {
               ...out,
-              nodes: getBulkRowNodes({ rowData }, out.nodes),
+              nodes: getBulkRowNodes({ rowData }, out.nodes)
             };
           },
-          disabledRemapRowsValidation: selecting,
+          disabledRemapRowsValidation: selecting
         }),
         getDisabledOverlay: (node) => {
           return (
@@ -159,7 +159,7 @@ export const BulkActions = <E extends string = string, RowData extends AnyRecord
               )}
             </div>
           );
-        },
+        }
       })}
     </>
   );

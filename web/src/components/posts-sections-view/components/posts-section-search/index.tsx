@@ -17,7 +17,7 @@ export const PostsSectionSearch = ({
   layout,
   className,
   filters,
-  business,
+  business
 }: PostsSectionSearchProps) => {
   const { searchLayout, postCategoriesTags } = layout;
 

@@ -9,18 +9,18 @@ const defaultOptions: ToastOptions = {
   position: 'top-right',
   autoClose: 5000,
   closeButton: true,
-  closeOnClick: true,
+  closeOnClick: true
 };
 
 export const useToast = () => {
   const showMessage = (toastMessage: ToastMessage, options: ToastOptions = {}) => {
     toast(renderToastMessage(toastMessage), {
       ...defaultOptions,
-      ...options,
+      ...options
     });
   };
 
   return {
-    showMessage,
+    showMessage
   };
 };

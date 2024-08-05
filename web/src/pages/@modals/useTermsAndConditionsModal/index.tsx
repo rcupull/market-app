@@ -28,11 +28,11 @@ export const useTermsAndConditionsModal = () => {
               ),
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,
-              className: '!w-[95vw] !sm:w-[80vw]',
+              className: '!w-[95vw] !sm:w-[80vw]'
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

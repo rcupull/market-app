@@ -19,7 +19,7 @@ export const reviewServicesGetAllWithPagination: QueryHandle<
 
   const out = await ReviewModel.paginate(filterQuery, {
     ...paginateOptions,
-    sort: getSortQuery(sort),
+    sort: getSortQuery(sort)
   });
 
   return out as unknown as PaginateResult<Review>;

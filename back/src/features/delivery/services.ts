@@ -19,7 +19,7 @@ export const deliveryServicesGetAllWithPagination: QueryHandle<
 
   const out = await DeliveryModel.paginate(filterQuery, {
     ...paginateOptions,
-    sort: getSortQuery(sort),
+    sort: getSortQuery(sort)
   });
 
   return out as unknown as PaginateResult<Delivery>;

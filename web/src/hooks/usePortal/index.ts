@@ -11,6 +11,6 @@ export const usePortal = (): Portal => {
 
   return {
     ref: (el) => !element && el && setElement(el),
-    getPortal: (node) => element && createPortal(node, element),
+    getPortal: (node) => element && createPortal(node, element)
   };
 };

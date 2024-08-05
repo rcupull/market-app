@@ -21,14 +21,14 @@ export const useBusinessSectionsReorder = (): {
             method: 'put',
             url: getEndpoint({
               path: '/business/:routeName/sections/reorder',
-              urlParams: { routeName },
+              urlParams: { routeName }
             }),
-            data,
+            data
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

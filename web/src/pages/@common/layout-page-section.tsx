@@ -12,7 +12,7 @@ export const LayoutPageSection = ({
   title,
   children,
   className,
-  isBusy,
+  isBusy
 }: LayoutSectionSubProps): JSX.Element => {
   return (
     <div className={cn('mt-4 w-full relative px-2', className)}>

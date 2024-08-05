@@ -21,7 +21,7 @@ export const PostsSectionCards = ({
   business,
   posts,
   layout,
-  onRefresh,
+  onRefresh
 }: PostsSectionCardsProps) => {
   const { routeName, currency } = business;
   const { type, postType } = layout;
@@ -56,7 +56,7 @@ export const PostsSectionCards = ({
                 href={getPostHref(post)}
                 onRefresh={onRefresh}
               />
-            ),
+            )
           };
         })}
         {...extraProps}

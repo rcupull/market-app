@@ -37,7 +37,7 @@ export const useFormField = <Value extends any = any>(args: {
         if (!name) return;
 
         setTouched((touched) => ({ ...touched, [name]: true }));
-      },
-    },
+      }
+    }
   };
 };

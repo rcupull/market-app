@@ -9,14 +9,13 @@ import axios, { AxiosError } from 'axios';
 import { differenceInMinutes } from 'date-fns';
 import {
   ApiError,
-  ApiErrorReazon,
   ApiStatus,
   FetchData,
   FetchMethod,
   FetchStatus,
   Headers,
   OnAfterFailed,
-  OnAfterSuccess,
+  OnAfterSuccess
 } from 'types/api';
 import { getEndpoint } from 'utils/api';
 import { wait } from 'utils/general';
@@ -90,7 +89,7 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
           axios({
             method: 'post',
             url: getEndpoint({ path: '/auth/refresh' }),
-            data: { refreshToken },
+            data: { refreshToken }
           })
             .then(({ data }) => {
               fetchingTokenPromise = null;
@@ -142,8 +141,8 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
               ...headers,
               Authorization: accessToken && `Bearer ${accessToken}`,
               //https://ngrok.com/abuse
-              ...(TUNNEL ? { 'ngrok-skip-browser-warning': true } : {}),
-            },
+              ...(TUNNEL ? { 'ngrok-skip-browser-warning': true } : {})
+            }
           });
         });
 
@@ -163,20 +162,19 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
         setStatus('SUCCESS');
         setWasCalled(true);
       } catch (e) {
-        const { response } = e as AxiosError<{ message?: string; reazon?: ApiErrorReazon }>;
+        const { response } = e as AxiosError<{ message?: string }>;
 
         if (response?.data?.message) {
           showMessage(
             { title: 'Error', body: response?.data?.message },
             {
-              type: 'error',
+              type: 'error'
             }
           );
         }
 
         const apiError: ApiError = {
-          message: response?.data?.message || 'Something went wrong',
-          reazon: response?.data?.reazon,
+          message: response?.data?.message || 'Something went wrong'
         };
 
         onAfterFailed?.(apiError);
@@ -208,9 +206,9 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
       isFailed: status === 'FAILED',
       isSuccess: status === 'SUCCESS',
       error,
-      wasCalled,
+      wasCalled
     },
     handleFetch,
-    handleReset,
+    handleReset
   ];
 };

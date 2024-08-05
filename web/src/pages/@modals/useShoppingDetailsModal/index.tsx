@@ -21,11 +21,11 @@ export const useShoppingDetailsModal = () => {
             return {
               title: 'Detalles de la orden de compra',
               content: <Component shopping={shopping} />,
-              customBtn: <ButtonClose className="ml-auto" />,
+              customBtn: <ButtonClose className="ml-auto" />
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

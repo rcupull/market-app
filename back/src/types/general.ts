@@ -6,7 +6,7 @@ import {
   ObtainDocumentType,
   PaginateOptions,
   ResolveSchemaOptions,
-  Schema,
+  Schema
 } from 'mongoose';
 
 import { Post } from './post';
@@ -39,11 +39,11 @@ export interface RequestHandler<
   ResBody = any,
   ReqBody = any,
   ReqQuery = AnyRecord,
-  Locals extends Record<string, any> = Record<string, any>,
+  Locals extends Record<string, any> = Record<string, any>
 > extends ExpressRequestHandler<P, ResBody, ReqBody, ReqQuery, Locals> {}
 
 export type QueryHandle<Args extends AnyRecord | void = void, R = void> = (
-  args: Args,
+  args: Args
 ) => Promise<R>;
 
 export interface Image {
@@ -71,12 +71,6 @@ export interface HtmlMeta {
 }
 
 export type ModelDocument<T extends AnyRecord = AnyRecord> = Document<unknown, AnyRecord, T> & T;
-
-export interface TelegramBotChat {
-  chatId: number;
-  firstName?: string;
-  userName?: string;
-}
 
 export interface Address {
   _id: string;

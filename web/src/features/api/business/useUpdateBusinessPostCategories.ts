@@ -22,16 +22,16 @@ export const useUpdateBusinessPostCategories = (): {
             method: 'put',
             url: getEndpoint({
               path: '/business/:routeName/postCategories',
-              urlParams: { routeName },
+              urlParams: { routeName }
             }),
             data: {
-              postCategories,
-            },
+              postCategories
+            }
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

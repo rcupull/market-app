@@ -9,7 +9,7 @@ const get_admin_bd_script: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       console.log('calling to bd script');
       const business = await businessServicesGetAll({
-        query: {},
+        query: {}
       });
 
       const promises = business.map((business) => {
@@ -19,11 +19,11 @@ const get_admin_bd_script: () => RequestHandler = () => {
           if (doneOnboarding) {
             businessServicesUpdateOne({
               query: {
-                routeName: business.routeName,
+                routeName: business.routeName
               },
               update: {
-                checks: { doneOnboarding: true },
-              },
+                checks: { doneOnboarding: true }
+              }
             }).then(() => {
               resolve();
             });
@@ -48,5 +48,5 @@ const get_admin_bd_script: () => RequestHandler = () => {
 };
 
 export const bdHandles = {
-  get_admin_bd_script,
+  get_admin_bd_script
 };

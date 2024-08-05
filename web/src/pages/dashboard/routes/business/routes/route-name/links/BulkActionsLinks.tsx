@@ -69,7 +69,7 @@ export const BulkActionsLinks = ({
                   return deleteManyPosts.fetch(
                     {
                       routeName,
-                      query: { postCategoriesMethod, postCategoriesTags, search },
+                      query: { postCategoriesMethod, postCategoriesTags, search }
                     },
                     { onAfterSuccess }
                   );
@@ -80,16 +80,16 @@ export const BulkActionsLinks = ({
                     {
                       routeName,
                       query: { postCategoriesMethod, postCategoriesTags, search },
-                      ids: selected.map((p) => p._id),
+                      ids: selected.map((p) => p._id)
                     },
                     { onAfterSuccess }
                   );
                 }
               }}
             />
-          ),
+          )
         };
-      },
+      }
     });
   };
 
@@ -131,8 +131,8 @@ export const BulkActionsLinks = ({
                       query: {
                         postCategoriesMethod,
                         postCategoriesTags,
-                        search,
-                      },
+                        search
+                      }
                     },
                     { onAfterSuccess }
                   );
@@ -146,18 +146,18 @@ export const BulkActionsLinks = ({
                       query: {
                         postCategoriesMethod,
                         postCategoriesTags,
-                        search,
+                        search
                       },
-                      ids: selected.map((p) => p._id),
+                      ids: selected.map((p) => p._id)
                     },
                     { onAfterSuccess }
                   );
                 }
               }}
             />
-          ),
+          )
         };
-      },
+      }
     });
   };
 
@@ -169,17 +169,17 @@ export const BulkActionsLinks = ({
           case 'remove':
             return {
               label: 'Eliminar enlaces',
-              onClick: () => handleDelete(),
+              onClick: () => handleDelete()
             };
           case 'hide':
             return {
               label: 'Ocultar enlaces',
-              onClick: () => handleShowHide(true),
+              onClick: () => handleShowHide(true)
             };
           case 'show':
             return {
               label: 'Mostrar enlaces',
-              onClick: () => handleShowHide(false),
+              onClick: () => handleShowHide(false)
             };
           default:
             return {};
@@ -191,16 +191,16 @@ export const BulkActionsLinks = ({
           items={[
             {
               label: 'Eliminar enlaces',
-              onClick: () => setAction('remove'),
+              onClick: () => setAction('remove')
             },
             {
               label: 'Ocultar enlaces',
-              onClick: () => setAction('hide'),
+              onClick: () => setAction('hide')
             },
             {
               label: 'Mostrar enlaces',
-              onClick: () => setAction('show'),
-            },
+              onClick: () => setAction('show')
+            }
           ]}
         />
       )}

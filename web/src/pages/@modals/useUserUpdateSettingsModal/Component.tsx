@@ -42,7 +42,7 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
     phone: user?.phone,
     address: user?.addresses?.[0],
     canCreateBusiness: user?.canCreateBusiness,
-    canMakeDeliveries: user?.canMakeDeliveries,
+    canMakeDeliveries: user?.canMakeDeliveries
   };
 
   const { onChangeUnsavedChanges } = useCloseContext();
@@ -53,13 +53,13 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
       validate={[
         {
           field: 'name',
-          type: 'required',
+          type: 'required'
         },
         {
           field: 'phone',
           type: 'custom',
-          customCb: (value) => (value ? getIsValidPhone(value) : true),
-        },
+          customCb: (value) => (value ? getIsValidPhone(value) : true)
+        }
       ]}
     >
       {({ value, hasChange }) => {
@@ -136,7 +136,7 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
                     address,
                     phone,
                     canCreateBusiness,
-                    canMakeDeliveries,
+                    canMakeDeliveries
                   } = value;
 
                   const handleSubmit = (profileImage?: Image | null) => {
@@ -149,11 +149,11 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
                           addresses: address ? [address] : undefined,
                           phone,
                           canCreateBusiness,
-                          canMakeDeliveries,
-                        },
+                          canMakeDeliveries
+                        }
                       },
                       {
-                        onAfterSuccess: () => onAfterSuccess(),
+                        onAfterSuccess: () => onAfterSuccess()
                       }
                     );
                   };
@@ -164,7 +164,7 @@ export const Component = ({ portal, user, onAfterSuccess }: ComponentProps) => {
                       {
                         onAfterSuccess: (images) => {
                           handleSubmit(images[0]);
-                        },
+                        }
                       }
                     );
                   } else {

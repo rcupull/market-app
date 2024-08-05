@@ -16,7 +16,7 @@ export const PriceTesting = ({ deliveryConfig }: PriceTestingProps) => {
 
   const { price } = getDeliveryConfigPrice({
     deliveryConfig,
-    distance,
+    distance
   });
 
   return (

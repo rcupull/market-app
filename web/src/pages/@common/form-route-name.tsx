@@ -25,7 +25,7 @@ export const FormRouteName = ({ routeName, error, className }: FormRouteNameProp
           <span
             className={cn('text-sm ml-1', {
               'text-red-500': error,
-              'text-green-500': !error,
+              'text-green-500': !error
             })}
           >
             {routeName}

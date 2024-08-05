@@ -21,7 +21,7 @@ export interface FooterBusinessOptionsProps {
 export const FooterBusinessOptions = ({
   business,
   onRefresh,
-  active,
+  active
 }: FooterBusinessOptionsProps) => {
   const { routeName, hidden, name } = business;
 
@@ -65,7 +65,7 @@ export const FooterBusinessOptions = ({
           label: 'Ver la página',
           onClick: () => {
             pushRoute(getOneBusinessRoute({ routeName }));
-          },
+          }
         },
         {
           label: `${hidden ? 'Mostrar' : 'Ocultar'}`,
@@ -73,52 +73,52 @@ export const FooterBusinessOptions = ({
             onBusinessShowHide(business, {
               onAfterSuccess: () => {
                 onRefresh();
-              },
+              }
             });
-          },
+          }
         },
         {
           label: getBusinessTabLabel('settings'),
           onClick: () => {
             pushRoute(getDashboardBusinessRoute({ routeName }), { businessTab: 'settings' });
           },
-          active: query.businessTab === 'settings',
+          active: query.businessTab === 'settings'
         },
         getEnabledFeature('BILLIING_THE_BUSINESS') && {
           label: getBusinessTabLabel('billing'),
           onClick: () => {
             pushRoute(getDashboardBusinessRoute({ routeName }), { businessTab: 'billing' });
           },
-          active: query.businessTab === 'billing',
+          active: query.businessTab === 'billing'
         },
         {
           label: getBusinessTabLabel('products'),
           onClick: () => {
             pushRoute(getDashboardBusinessRoute({ routeName }), { businessTab: 'products' });
           },
-          active: query.businessTab === 'products',
+          active: query.businessTab === 'products'
         },
         {
           label: getBusinessTabLabel('links'),
           onClick: () => {
             pushRoute(getDashboardBusinessRoute({ routeName }), { businessTab: 'links' });
           },
-          active: query.businessTab === 'links',
+          active: query.businessTab === 'links'
         },
         {
           label: getBusinessTabLabel('sections'),
           onClick: () => {
             pushRoute(getDashboardBusinessRoute({ routeName }), { businessTab: 'sections' });
           },
-          active: query.businessTab === 'sections',
+          active: query.businessTab === 'sections'
         },
         {
           label: getBusinessTabLabel('shopping'),
           onClick: () => {
             pushRoute(getDashboardBusinessRoute({ routeName }), { businessTab: 'shopping' });
           },
-          active: query.businessTab === 'shopping',
-        },
+          active: query.businessTab === 'shopping'
+        }
       ]}
     />
   );

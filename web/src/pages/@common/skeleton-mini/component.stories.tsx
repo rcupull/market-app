@@ -1,7 +1,7 @@
 import { SkeletonMini } from '.';
 
 export default {
-  component: SkeletonMini,
+  component: SkeletonMini
 };
 
 export const Default = () => <SkeletonMini />;

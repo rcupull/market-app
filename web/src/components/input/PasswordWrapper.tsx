@@ -21,7 +21,7 @@ export const PasswordWrapper = ({ children }: PasswordWrapperProps) => {
           >
             <SvgEye className="size-6 fill-gray-500 cursor-pointer mx-2" />
           </div>
-        ),
+        )
       })}
     </>
   );

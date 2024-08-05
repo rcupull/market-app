@@ -3,7 +3,7 @@ import { fillBD } from '../../utils/test-BD';
 import {
   postServicesGetAll,
   postServicesGetAllWithPagination,
-  postServicesGetOne,
+  postServicesGetOne
 } from './services';
 
 describe('services', () => {
@@ -17,7 +17,7 @@ describe('services', () => {
 
       const paginatedPosts = await postServicesGetAllWithPagination({
         paginateOptions: paginateOptionsForTesting,
-        query: {},
+        query: {}
       });
 
       const { data, ...omittedProps } = paginatedPosts;
@@ -55,8 +55,8 @@ describe('services', () => {
 
       const response1 = await postServicesGetAll({
         query: {
-          createdBy: user1._id.toString(),
-        },
+          createdBy: user1._id.toString()
+        }
       });
 
       expect(response1.length).toEqual(5);
@@ -65,8 +65,8 @@ describe('services', () => {
 
       const response2 = await postServicesGetAll({
         query: {
-          createdBy: user2._id.toString(),
-        },
+          createdBy: user2._id.toString()
+        }
       });
 
       expect(response2.length).toEqual(5);
@@ -75,17 +75,17 @@ describe('services', () => {
     it('should return filtering by <postType>', async () => {
       await fillBD({
         productPost1Business1User1: {
-          postType: 'link',
+          postType: 'link'
         },
         productPost2Business1User1: {
-          postType: 'link',
-        },
+          postType: 'link'
+        }
       });
 
       const response1 = await postServicesGetAll({
         query: {
-          postType: 'product',
-        },
+          postType: 'product'
+        }
       });
 
       expect(response1.length).toBe(8);
@@ -94,8 +94,8 @@ describe('services', () => {
 
       const response2 = await postServicesGetAll({
         query: {
-          postType: 'link',
-        },
+          postType: 'link'
+        }
       });
 
       expect(response2.length).toBe(2);
@@ -106,8 +106,8 @@ describe('services', () => {
 
       const response1 = await postServicesGetAll({
         query: {
-          routeNames: [business1User1.routeName],
-        },
+          routeNames: [business1User1.routeName]
+        }
       });
 
       expect(response1.length).toEqual(5);
@@ -115,8 +115,8 @@ describe('services', () => {
 
       const response2 = await postServicesGetAll({
         query: {
-          routeNames: [business2User1.routeName],
-        },
+          routeNames: [business2User1.routeName]
+        }
       });
 
       expect(response2.length).toBe(0);
@@ -125,8 +125,8 @@ describe('services', () => {
 
       const response3 = await postServicesGetAll({
         query: {
-          routeNames: [business1User2.routeName],
-        },
+          routeNames: [business1User2.routeName]
+        }
       });
 
       expect(response3.length).toBe(5);
@@ -139,8 +139,8 @@ describe('services', () => {
 
       const post = await postServicesGetOne({
         query: {
-          _id: productPost1Business1User1._id,
-        },
+          _id: productPost1Business1User1._id
+        }
       });
 
       if (!post) return;

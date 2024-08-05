@@ -5,7 +5,7 @@ import { StepperBtnProps } from 'components/stepper';
 import { Portal, usePortal } from 'hooks/usePortal';
 
 export const useNextButtonPortal = ({
-  nextBtnProps,
+  nextBtnProps
 }: {
   nextBtnProps: StepperBtnProps;
 }): {
@@ -24,7 +24,7 @@ export const useNextButtonPortal = ({
       ...portal,
       getPortal: (node: React.ReactElement) => {
         return portal.getPortal(cloneElement(node, omittedProps));
-      },
-    },
+      }
+    }
   };
 };

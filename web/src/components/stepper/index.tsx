@@ -32,7 +32,7 @@ export const Stepper = ({ items, disabledStepNavigation = true }: StepperProps) 
       if (selected < items.length - 1) {
         setSelected(selected + 1);
       }
-    },
+    }
   };
 
   const backBtnProps: StepProps['backBtnProps'] = {
@@ -43,14 +43,14 @@ export const Stepper = ({ items, disabledStepNavigation = true }: StepperProps) 
       if (selected > 0) {
         setSelected(selected - 1);
       }
-    },
+    }
   };
 
   const centerBtnProps: StepProps['centerBtnProps'] = {
     label: 'Omitir',
     variant: 'outlined',
     className: '!rounded-3xl !py-0.5',
-    onClick: nextBtnProps.onClick,
+    onClick: nextBtnProps.onClick
   };
 
   return (
@@ -59,7 +59,7 @@ export const Stepper = ({ items, disabledStepNavigation = true }: StepperProps) 
         disabledStepNavigation={disabledStepNavigation}
         itemContainerClassName={({ selected }) =>
           cn({
-            'flex-grow flex justify-start': selected,
+            'flex-grow flex justify-start': selected
           })
         }
         tabPanelClassName={cn('w-full mt-8')}
@@ -71,7 +71,7 @@ export const Stepper = ({ items, disabledStepNavigation = true }: StepperProps) 
               className={cn(
                 'border-2 border-gray-400 rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0',
                 {
-                  'font-semibold !border-indigo-500 !bg-indigo-500 !text-white': selected,
+                  'font-semibold !border-indigo-500 !bg-indigo-500 !text-white': selected
                 }
               )}
             >
@@ -87,8 +87,8 @@ export const Stepper = ({ items, disabledStepNavigation = true }: StepperProps) 
             content: render({
               nextBtnProps,
               backBtnProps,
-              centerBtnProps,
-            }),
+              centerBtnProps
+            })
           };
         })}
       />

@@ -42,6 +42,6 @@ export const useInfiniteScrolling = <RowData extends AnyRecord = AnyRecord>(args
           onFetch({ page: page + 1 });
         }
       }
-    },
+    }
   };
 };

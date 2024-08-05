@@ -1,7 +1,7 @@
 import { PricePlanCard } from '.';
 
 export default {
-  component: PricePlanCard,
+  component: PricePlanCard
 };
 
 export const Default = () => {
@@ -13,28 +13,28 @@ export const Default = () => {
       items={[
         {
           description: '5 products',
-          included: true,
+          included: true
         },
         {
           description: 'Up to 1,000 subscribers',
-          included: true,
+          included: true
         },
         {
           description: 'Basic analytics',
-          included: true,
+          included: true
         },
         {
           description: '48-hour support response time',
-          included: true,
+          included: true
         },
         {
           description: 'Phone & email support',
-          included: false,
+          included: false
         },
         {
           description: 'Custom reporting tools',
-          included: false,
-        },
+          included: false
+        }
       ]}
     />
   );
@@ -50,28 +50,28 @@ export const Popular = () => {
       items={[
         {
           description: '5 products',
-          included: true,
+          included: true
         },
         {
           description: 'Up to 1,000 subscribers',
-          included: true,
+          included: true
         },
         {
           description: 'Basic analytics',
-          included: true,
+          included: true
         },
         {
           description: '48-hour support response time',
-          included: true,
+          included: true
         },
         {
           description: 'Phone & email support',
-          included: false,
+          included: false
         },
         {
           description: 'Custom reporting tools',
-          included: false,
-        },
+          included: false
+        }
       ]}
     />
   );
@@ -87,28 +87,28 @@ export const Free = () => {
       items={[
         {
           description: '5 products',
-          included: true,
+          included: true
         },
         {
           description: 'Up to 1,000 subscribers',
-          included: true,
+          included: true
         },
         {
           description: 'Basic analytics',
-          included: true,
+          included: true
         },
         {
           description: '48-hour support response time',
-          included: true,
+          included: true
         },
         {
           description: 'Phone & email support',
-          included: false,
+          included: false
         },
         {
           description: 'Custom reporting tools',
-          included: false,
-        },
+          included: false
+        }
       ]}
     />
   );

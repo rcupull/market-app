@@ -56,7 +56,7 @@ export const useInit = () => {
             },
             onAfterFailed: () => {
               signOut.fetch();
-            },
+            }
           });
         },
         20 * 60 * 1000 //20min

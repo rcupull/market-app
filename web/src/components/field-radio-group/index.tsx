@@ -24,7 +24,7 @@ export const FieldRadioGroup = <O extends any = any>(props: FieldRadioGroupProps
     disabledOption,
     onOptionClicked,
     getOptionCutomStyles,
-    onChange,
+    onChange
   } = props;
   const { field, error } = useFormField(props);
 
@@ -44,15 +44,15 @@ export const FieldRadioGroup = <O extends any = any>(props: FieldRadioGroupProps
 
           field.onBlur({
             target: {
-              name: field.name,
-            },
+              name: field.name
+            }
           });
 
           field.onChange({
             target: {
               value: newValue,
-              name: field.name,
-            },
+              name: field.name
+            }
           });
         }}
         value={field.value === undefined ? null : field.value}

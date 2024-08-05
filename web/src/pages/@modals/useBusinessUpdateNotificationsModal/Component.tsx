@@ -27,14 +27,14 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   const { updateOneBusiness } = useUpdateOneBusiness();
 
   const initialState: State = {
-    notificationFlags: business?.notificationFlags,
+    notificationFlags: business?.notificationFlags
   };
   const [state, setState] = useState<State>(initialState);
 
   return (
     <div>
-      Asere Market le notificará mediante la aplicación sobre el estado de
-      sus negocios, órdenes de compra y otras informaciones importantes.
+      Asere Market le notificará mediante la aplicación sobre el estado de sus negocios, órdenes de
+      compra y otras informaciones importantes.
       <Divider />
       <Formux<State> value={state} onChange={setState}>
         {({ value }) => {
@@ -45,15 +45,15 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
               {
                 routeName: business.routeName,
                 update: {
-                  notificationFlags,
-                },
+                  notificationFlags
+                }
               },
               {
                 onAfterSuccess: () => {
                   onAfterSuccess?.();
                   onFetch({ routeName: business.routeName });
-                },
-              },
+                }
+              }
             );
           };
 
@@ -80,11 +80,11 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                 optionToValue={({ value }) => value}
                 items={[
                   {
-                    value: BusinessNotificationFlags.TELEGRAM_NEW_SHOPPING,
+                    value: BusinessNotificationFlags.NEW_SHOPPING,
                     label: 'Al crear orden de compra',
                     description:
-                      'Le llegarán los detalles (precio, productos y enlace) de las órdenes de compra al ser solicitadas por los clientes.',
-                  },
+                      'Le llegarán los detalles (precio, productos y enlace) de las órdenes de compra al ser solicitadas por los clientes.'
+                  }
                 ]}
                 containerClassName="flex items-center flex-wrap gap-4"
               />
@@ -95,7 +95,7 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
                   className="w-full"
                   isBusy={updateOneBusiness.status.isBusy}
                   onClick={handleSubmit}
-                />,
+                />
               )}
             </form>
           );

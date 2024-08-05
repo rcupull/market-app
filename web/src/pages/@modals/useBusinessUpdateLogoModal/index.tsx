@@ -22,11 +22,11 @@ export const useBusinessUpdateLogoModal = () => {
               title: 'Logo',
               content: <Component portal={portal} />,
               secondaryBtn: <ButtonClose />,
-              primaryBtn: <div ref={portal.ref} />,
+              primaryBtn: <div ref={portal.ref} />
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

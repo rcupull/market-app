@@ -5,7 +5,7 @@ import { compact } from 'utils/general';
 export const getCheckEditorUploadUrl = (query: Query = {}): string => {
   return getEndpoint({
     path: '/images-checkeditor',
-    query,
+    query
   });
 };
 

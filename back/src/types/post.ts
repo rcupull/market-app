@@ -35,7 +35,7 @@ export const allSortedColor: Array<PostColor> = [
   'fuchsia',
   'violet',
   'cyan',
-  'teal',
+  'teal'
 ];
 
 export type PostClothingSize = 'XXS' | 'XS' | 'S' | 'M' | 'L' | 'XL' | '2XL' | '3XL';
@@ -48,7 +48,7 @@ export const allSortedClothingSize: Array<PostClothingSize> = [
   'L',
   'XL',
   '2XL',
-  '3XL',
+  '3XL'
 ];
 
 export interface PostPurshaseNotes {

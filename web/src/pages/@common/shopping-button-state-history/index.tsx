@@ -26,9 +26,9 @@ export const ShoppingButtonStateHistory = ({ shopping }: ShoppingButtonStateHist
           title: 'Historial de la orden de compra',
           content: <ShoppingStateHistoryView state={state} history={history} />,
           customBtn: <ButtonClose className="ml-auto" />,
-          className: '!w-[30rem]',
+          className: '!w-[30rem]'
         };
-      },
+      }
     });
   };
   return (

@@ -56,14 +56,14 @@ export const useNotificationsUtils = () => {
             title: 'Nueva orden de compra',
             body: (
               <HtmlTextContainer>
-                Una orden de compra generada por usted en el negocio <span>{businessName}</span>
-                ha sido aprovada. Usted será contactado luego por el vendedor para los detalles de
-                la entrega.`{' '}
+                Una orden de compra generada por usted en el negocio{' '}
+                <span className="font-bold">{businessName}</span> ha sido aprovada. Usted será
+                contactado luego por el vendedor para los detalles de la entrega.`{' '}
                 <Link to={getOneShoppingRoute({ routeName, shoppingId })}>
                   Ver detalles de la orden de compra
                 </Link>
               </HtmlTextContainer>
-            ),
+            )
           });
           return;
         }
@@ -85,7 +85,7 @@ export const useNotificationsUtils = () => {
                 <span className="font-bold">{businessName}</span>. Puede ver los detalles{' '}
                 <Link to={getDashboardBusinessShoppingTabRequested({ routeName })}>aqui</Link>
               </HtmlTextContainer>
-            ),
+            )
           });
           return;
         }
@@ -97,6 +97,6 @@ export const useNotificationsUtils = () => {
   };
 
   return {
-    onUpdateNotification,
+    onUpdateNotification
   };
 };

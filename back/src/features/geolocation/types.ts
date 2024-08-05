@@ -49,7 +49,7 @@ export interface GeoapifyResponse {
         };
         place_id: string;
       };
-    },
+    }
   ];
   query: {
     lat: number;
@@ -65,7 +65,7 @@ export const geoapifyResponseExample: GeoapifyResponse = {
       type: 'Feature',
       geometry: {
         type: 'Point',
-        coordinates: [-82.383465, 23.035171],
+        coordinates: [-82.383465, 23.035171]
       },
       properties: {
         country_code: 'cu',
@@ -81,7 +81,7 @@ export const geoapifyResponseExample: GeoapifyResponse = {
           sourcename: 'openstreetmap',
           attribution: '© OpenStreetMap contributors',
           license: 'Open Database License',
-          url: 'https://www.openstreetmap.org/copyright',
+          url: 'https://www.openstreetmap.org/copyright'
         },
         state: 'La Habana',
         city: 'Havana',
@@ -100,21 +100,21 @@ export const geoapifyResponseExample: GeoapifyResponse = {
           offset_DST: '-04:00',
           offset_DST_seconds: -14400,
           abbreviation_STD: 'CST',
-          abbreviation_DST: 'CDT',
+          abbreviation_DST: 'CDT'
         },
         plus_code: '76MV2JP8+3J',
         plus_code_short: '2JP8+3J Havana, Arroyo Naranjo, Cuba',
         rank: {
-          popularity: 1.591313761829016,
+          popularity: 1.591313761829016
         },
         place_id:
-          '51488ac8b08a9854c05982c476f700093740f00103f901dde93f4b01000000c00201920325496e7374697475746f2064652045636f6c6f67c3ad6120792053697374656dc3a174696361e203236f70656e7374726565746d61703a76656e75653a6e6f64652f35353537343437313333',
-      },
-    },
+          '51488ac8b08a9854c05982c476f700093740f00103f901dde93f4b01000000c00201920325496e7374697475746f2064652045636f6c6f67c3ad6120792053697374656dc3a174696361e203236f70656e7374726565746d61703a76656e75653a6e6f64652f35353537343437313333'
+      }
+    }
   ],
   query: {
     lat: 23.037764323775747,
     lon: -82.38621008988393,
-    plus_code: '76MV2JQ7+4G',
-  },
+    plus_code: '76MV2JQ7+4G'
+  }
 };

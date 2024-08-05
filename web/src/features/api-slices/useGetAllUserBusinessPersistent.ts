@@ -25,9 +25,9 @@ export const useAllUserBusiness = (): {
         fetch({
           includeHidden: true,
           pagination: false,
-          userId: user?._id,
+          userId: user?._id
         });
-      },
-    },
+      }
+    }
   };
 };

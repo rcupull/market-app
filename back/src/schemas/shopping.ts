@@ -8,24 +8,24 @@ import { DeliveryConfigType } from '../types/business';
 const shoppingState = {
   type: String,
   enum: Object.values(ShoppingState),
-  required: true,
+  required: true
 };
 
 const purshaseNotesSchemaDefinition: SchemaDefinition<PostPurshaseNotes> = {
   interestedByClothingSizes: {
     _id: false,
-    type: [String],
+    type: [String]
   },
   interestedByColors: {
     _id: false,
-    type: [String],
-  },
+    type: [String]
+  }
 };
 
 const shoppingDeliverySchemaDefinition: SchemaDefinition<ShoppingDelivery> = {
   deliveryType: { type: String, enum: Object.values(DeliveryConfigType) },
   distance: { type: Number },
-  price: { type: Number },
+  price: { type: Number }
 };
 
 const postDataSchemaDefinition: SchemaDefinition<ShoppingPostData> = {
@@ -35,12 +35,12 @@ const postDataSchemaDefinition: SchemaDefinition<ShoppingPostData> = {
       {
         src: { type: String, required: true },
         width: { type: Number, required: true },
-        height: { type: Number, required: true },
-      },
-    ],
+        height: { type: Number, required: true }
+      }
+    ]
   },
   name: { type: String, required: true },
-  price: { type: Number, required: true },
+  price: { type: Number, required: true }
 };
 
 const ShoppingSchema = new Schema<Shopping>({
@@ -54,10 +54,10 @@ const ShoppingSchema = new Schema<Shopping>({
         lastUpdatedDate: { type: Date, required: true },
         purshaseNotes: {
           _id: false,
-          type: purshaseNotesSchemaDefinition,
-        },
-      },
-    ],
+          type: purshaseNotesSchemaDefinition
+        }
+      }
+    ]
   },
   purchaserId: { type: String, required: true },
   routeName: { type: String, required: true },
@@ -69,12 +69,12 @@ const ShoppingSchema = new Schema<Shopping>({
         _id: false,
         state: shoppingState,
         lastUpdatedDate: {
-          type: Date,
-        },
-      },
-    ],
+          type: Date
+        }
+      }
+    ]
   },
-  delivery: shoppingDeliverySchemaDefinition,
+  delivery: shoppingDeliverySchemaDefinition
 });
 
 ShoppingSchema.plugin(mongoosePaginate);
@@ -82,5 +82,5 @@ ShoppingSchema.plugin(mongoosePaginate);
 export const ShoppingModel = model<Shopping, PaginateModel<Shopping>>(
   'Shopping',
   ShoppingSchema,
-  'shopping',
+  'shopping'
 );

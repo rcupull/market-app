@@ -10,7 +10,7 @@ describe('BreadCrumble', () => {
       <BreadCrumble
         items={[
           { label: 'test', route: '/test' },
-          { label: 'test2', route: '/test2' },
+          { label: 'test2', route: '/test2' }
         ]}
       />,
       { wrapper: getWrapper({ useRouter: true }) }

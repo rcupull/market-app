@@ -35,20 +35,20 @@ export const useAddManyImages = (): {
                   method: 'post',
                   url: getEndpoint({
                     path: '/images',
-                    query: { userId, routeName, postId, width, height },
+                    query: { userId, routeName, postId, width, height }
                   }),
                   data: form,
                   headers: {
-                    'Content-Type': 'multipart/form-data',
-                  },
+                    'Content-Type': 'multipart/form-data'
+                  }
                 },
                 {
                   onAfterSuccess: (response) => {
                     resolve({
                       ...image,
-                      src: response.imageSrc,
+                      src: response.imageSrc
                     });
-                  },
+                  }
                 }
               );
             } else {
@@ -63,7 +63,7 @@ export const useAddManyImages = (): {
           onAfterSuccess?.(images);
         });
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

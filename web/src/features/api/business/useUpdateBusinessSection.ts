@@ -23,14 +23,14 @@ export const useUpdateBusinessSection = (): {
             method: 'put',
             url: getEndpoint({
               path: '/business/:routeName/sections/:sectionId',
-              urlParams: { routeName, sectionId },
+              urlParams: { routeName, sectionId }
             }),
-            data,
+            data
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

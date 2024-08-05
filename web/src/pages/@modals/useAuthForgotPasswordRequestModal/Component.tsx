@@ -37,12 +37,12 @@ export const Component = ({ portal }: ComponentProps) => {
           validate={[
             {
               field: 'email',
-              type: 'required',
+              type: 'required'
             },
             {
               field: 'email',
-              type: 'email',
-            },
+              type: 'email'
+            }
           ]}
         >
           {({ value }) => {
@@ -88,11 +88,11 @@ export const Component = ({ portal }: ComponentProps) => {
                                     />
                                   ),
                                   primaryBtn: <></>,
-                                  secondaryBtn: <></>,
+                                  secondaryBtn: <></>
                                 };
-                              },
+                              }
                             });
-                          },
+                          }
                         }
                       );
                     }}

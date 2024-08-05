@@ -23,7 +23,7 @@ export const SearchFilter = ({
   className,
   value,
   hideButtons,
-  placeholder,
+  placeholder
 }: SearchFilterProps) => {
   const submitBtnPortal = usePortal();
   const clearBtnPortal = usePortal();
@@ -33,7 +33,7 @@ export const SearchFilter = ({
       <div className={cn(className)}>
         <Formux
           value={{
-            search: value || '',
+            search: value || ''
           }}
         >
           {({ value }) => {
@@ -62,7 +62,7 @@ export const SearchFilter = ({
     <div className={cn('flex items-center w-full sm:w-fit ', className)}>
       <Formux
         value={{
-          search: value || '',
+          search: value || ''
         }}
       >
         {({ value }) => {

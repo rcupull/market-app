@@ -38,9 +38,9 @@ export const ShoppingPage = () => {
 
       getShoppingOwner.fetch({
         routeName: business.routeName,
-        ...filters,
+        ...filters
       });
-    },
+    }
   });
 
   useEffect(() => {
@@ -80,9 +80,9 @@ export const ShoppingPage = () => {
           xs: [[0, 1, 2, 3]],
           sm: [
             [0, 1],
-            [2, 3],
+            [2, 3]
           ],
-          lg: 'none',
+          lg: 'none'
         }}
         heads={['Acciones', 'Cliente', 'Estado', 'Detalles']}
         getRowProps={(rowData) => {
@@ -93,7 +93,7 @@ export const ShoppingPage = () => {
               <div key="ShoppingState" className="flex items-center">
                 <ShoppingStateView
                   businessHasDelivery={getDeliveryUtils().getIsEnabled({
-                    deliveryConfig: business?.deliveryConfig,
+                    deliveryConfig: business?.deliveryConfig
                   })}
                   shopping={rowData}
                   fetchStatus={getShoppingOwner.status}
@@ -104,8 +104,8 @@ export const ShoppingPage = () => {
                 />
                 <ShoppingButtonStateHistory shopping={rowData} />
               </div>,
-              <ShoppingDetails key="ShoppingDetails" rowData={rowData} business={business} />,
-            ],
+              <ShoppingDetails key="ShoppingDetails" rowData={rowData} business={business} />
+            ]
           };
         }}
         data={getShoppingOwner.data}

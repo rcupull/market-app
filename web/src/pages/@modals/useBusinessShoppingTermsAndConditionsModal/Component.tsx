@@ -35,7 +35,7 @@ export const Component = ({ portal }: ComponentProps) => {
     <>
       <Formux<State>
         value={{
-          termsAndConditions: shoppingMeta.termsAndConditions || '',
+          termsAndConditions: shoppingMeta.termsAndConditions || ''
         }}
       >
         {({ value, hasChange }) => {
@@ -47,7 +47,7 @@ export const Component = ({ portal }: ComponentProps) => {
                 name="termsAndConditions"
                 className="mt-6"
                 checkEditorProps={{
-                  className: 'check-editor-max-h-50vh check-editor-min-h-40vh',
+                  className: 'check-editor-max-h-50vh check-editor-min-h-40vh'
                 }}
               />
 
@@ -63,16 +63,16 @@ export const Component = ({ portal }: ComponentProps) => {
                         update: {
                           shoppingMeta: {
                             ...shoppingMeta,
-                            termsAndConditions,
-                          },
+                            termsAndConditions
+                          }
                         },
-                        routeName,
+                        routeName
                       },
                       {
                         onAfterSuccess: () => {
                           onFetch({ routeName });
                           onClose();
-                        },
+                        }
                       }
                     );
                   }}

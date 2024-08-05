@@ -5,7 +5,7 @@ describe('getCloudFlareImageIdFromUrl', () => {
     ['imageId', `${cloudflareDeliveryUrl}/imageId/public`],
     ['imageId', `${cloudflareDeliveryUrl}/imageId`],
     ['imageId', 'imageId'],
-    [null, 'https://someUrl.com'],
+    [null, 'https://someUrl.com']
   ])('should return %p when value = %p', (expected, value) => {
     expect(getCloudFlareImageIdFromUrl(value)).toEqual(expected);
   });

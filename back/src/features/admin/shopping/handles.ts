@@ -20,12 +20,12 @@ const get_admin_shopping: () => RequestHandler = () => {
         dateFrom,
         dateTo,
         sort = defaultQuerySort,
-        wasAccepted,
+        wasAccepted
       } = query;
 
       const { getAllShopingIds, getOneShoppingBillData } =
         await billingServicesGetBillDataFromShopping({
-          query: { routeNames },
+          query: { routeNames }
         });
 
       const shoppings = await shoppingServicesGetAllWithPagination({
@@ -38,14 +38,14 @@ const get_admin_shopping: () => RequestHandler = () => {
           routeNames,
           states,
           dateFrom,
-          dateTo,
-        },
+          dateTo
+        }
       });
 
       const out = deepJsonCopy(shoppings);
 
       const { getOneShoppingUserData } = await userServicesGetUserDataFromShopping({
-        query: { _id: { $in: out.data.map(({ purchaserId }) => purchaserId) } },
+        query: { _id: { $in: out.data.map(({ purchaserId }) => purchaserId) } }
       });
 
       const getShoppingDto = async (shopping: Shopping): Promise<ShoppingDto> => {
@@ -59,7 +59,7 @@ const get_admin_shopping: () => RequestHandler = () => {
 
           purchaserName: purchaserData?.purchaserName,
           purchaserAddress: purchaserData?.purchaserAddress,
-          purchaserPhone: purchaserData?.purchaserPhone,
+          purchaserPhone: purchaserData?.purchaserPhone
         };
       };
 
@@ -72,5 +72,5 @@ const get_admin_shopping: () => RequestHandler = () => {
 };
 
 export const adminShoppingHandles = {
-  get_admin_shopping,
+  get_admin_shopping
 };

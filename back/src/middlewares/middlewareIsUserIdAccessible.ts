@@ -13,7 +13,7 @@ export const middlewareIsUserIdAccessible: RequestHandler = (req, res, next) => 
   if (!userId) {
     return get404Response({
       res,
-      json: { message: 'UserId not found' },
+      json: { message: 'UserId not found' }
     });
   }
 
@@ -21,6 +21,6 @@ export const middlewareIsUserIdAccessible: RequestHandler = (req, res, next) => 
 
   get401Response({
     res,
-    json: { message: 'The user has not access to this data' },
+    json: { message: 'The user has not access to this data' }
   });
 };

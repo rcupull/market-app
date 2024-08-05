@@ -171,7 +171,7 @@ export const isEqualObj = (a: AnyRecord | undefined, b: AnyRecord | undefined): 
 
   const mergedObj = {
     ...a,
-    ...b,
+    ...b
   };
 
   for (const prop in mergedObj) {

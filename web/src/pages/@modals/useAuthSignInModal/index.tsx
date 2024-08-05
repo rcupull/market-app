@@ -24,11 +24,11 @@ export const useAuthSignInModal = () => {
               content: <Component portal={portal} email={email} redirect={redirect} />,
               secondaryBtn: <ButtonClose />,
               primaryBtn: <div ref={portal.ref} />,
-              className: '!w-[30rem]',
+              className: '!w-[30rem]'
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

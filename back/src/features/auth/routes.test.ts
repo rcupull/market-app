@@ -16,7 +16,7 @@ describe('POST /auth/sign-in', () => {
       .post(`/api-services/auth/sign-in`)
       .send({
         username: 'user1@gmail.com',
-        password: 'password_123_user1',
+        password: 'password_123_user1'
       })
       .expect(401);
   });
@@ -28,7 +28,7 @@ describe('POST /auth/sign-in', () => {
       .post(`/api-services/auth/sign-in`)
       .send({
         username: 'user1@gmail.com',
-        password: 'password_123_user1',
+        password: 'password_123_user1'
       })
       .expect(200)
       .then((response) => {
@@ -50,7 +50,7 @@ describe('POST /auth/sign-in', () => {
             "role": "user",
             "validated": true,
           }
-        `,
+        `
         );
       });
   });

@@ -55,14 +55,14 @@ export const RowActions = ({ rowData, allSections, rowIndex }: RowActionsProps) 
                     onAfterSuccess: () => {
                       business && onFetch({ routeName: business.routeName });
                       onClose();
-                    },
+                    }
                   }
                 );
               }}
             />
-          ),
+          )
         };
-      },
+      }
     });
   };
 
@@ -70,7 +70,7 @@ export const RowActions = ({ rowData, allSections, rowIndex }: RowActionsProps) 
   const handleUpdate = () => {
     businessNewUpdateSectionModal.open({
       sectionId: rowData._id,
-      onAfterSuccess: () => business && onFetch({ routeName: business.routeName }),
+      onAfterSuccess: () => business && onFetch({ routeName: business.routeName })
     });
   };
 
@@ -84,12 +84,12 @@ export const RowActions = ({ rowData, allSections, rowIndex }: RowActionsProps) 
       {
         routeName: business?.routeName,
         fromIndex: rowIndex,
-        toIndex: direction === 'up' ? rowIndex - 1 : rowIndex + 1,
+        toIndex: direction === 'up' ? rowIndex - 1 : rowIndex + 1
       },
       {
         onAfterSuccess: () => {
           onFetch({ routeName: business?.routeName });
-        },
+        }
       }
     );
   };

@@ -14,7 +14,7 @@ export interface IconButtonViewPostPageProps extends StyleProps {
 export const IconButtonViewPostPage = ({
   postId,
   className,
-  routeName,
+  routeName
 }: IconButtonViewPostPageProps) => {
   const { pushRoute, isThisPostPage } = useRouter();
 

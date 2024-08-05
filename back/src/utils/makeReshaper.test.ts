@@ -21,7 +21,7 @@ describe('makeReshaper()', () => {
 
   it('should compute values against the old object using a function', () => {
     const reshaper = makeReshaper({
-      hasAlerts: (obj) => obj.alerts > 0,
+      hasAlerts: (obj) => obj.alerts > 0
     });
 
     expect(reshaper({ alerts: 1 })).toEqual({ hasAlerts: true });
@@ -38,7 +38,7 @@ describe('makeReshaper()', () => {
 
     expect(reshaper({ a: true, m: { n: 2 } })).toEqual({
       x: { y: true },
-      b: 2,
+      b: 2
     });
   });
 
@@ -48,7 +48,7 @@ describe('makeReshaper()', () => {
     expect(reshaper({ a: [{ foo: 2 }, { foo: 4 }], m: { n: 2 } })).toEqual({
       x: { y: 4 },
       b: 2,
-      c: [{ field: { foo: 2 } }],
+      c: [{ field: { foo: 2 } }]
     });
   });
 
@@ -58,21 +58,21 @@ describe('makeReshaper()', () => {
     expect(reshaper({ a: [{ foo: 2 }, { foo: 4 }], m: { n: 2 } })).toEqual({
       x: { y: 4 },
       b: 2,
-      c: [{ field: { foo: 2 } }],
+      c: [{ field: { foo: 2 } }]
     });
   });
 
   it('should be able to introduce entirely new properties', async () => {
     const reshaper = makeReshaper(
       { 'x.y': 'a', b: 'm.n', type: 'm' },
-      { type: 'test', epic: true },
+      { type: 'test', epic: true }
     );
 
     expect(reshaper({ a: true, m: { n: 2 } })).toEqual({
       x: { y: true },
       b: 2,
       type: { n: 2 },
-      epic: true,
+      epic: true
     });
   });
 });
@@ -107,7 +107,7 @@ describe('makeInvestedReshaper()', () => {
 
     expect(reshaper({ a: true, m: { n: 2 } })).toEqual({
       x: { y: true },
-      b: 2,
+      b: 2
     });
   });
 
@@ -117,7 +117,7 @@ describe('makeInvestedReshaper()', () => {
     expect(reshaper({ a: [{ foo: 2 }, { foo: 4 }], m: { n: 2 } })).toEqual({
       x: { y: 4 },
       b: 2,
-      c: [{ field: { foo: 2 } }],
+      c: [{ field: { foo: 2 } }]
     });
   });
 
@@ -127,7 +127,7 @@ describe('makeInvestedReshaper()', () => {
     expect(reshaper({ a: [{ foo: 2 }, { foo: 4 }], m: { n: 2 } })).toEqual({
       x: { y: 4 },
       b: 2,
-      c: [{ field: { foo: 2 } }],
+      c: [{ field: { foo: 2 } }]
     });
   });
 });

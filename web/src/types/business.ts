@@ -121,7 +121,7 @@ export interface BusinessPaymentRequestHistory {
 }
 
 export enum BusinessNotificationFlags {
-  TELEGRAM_NEW_SHOPPING = 'TELEGRAM_NEW_SHOPPING',
+  NEW_SHOPPING = 'NEW_SHOPPING'
 }
 
 export interface BusinessSEO {
@@ -133,7 +133,7 @@ export enum DeliveryConfigType {
   NONE = 'NONE',
   FREE = 'FREE',
   REQUIRED = 'REQUIRED',
-  OPTIONAL = 'OPTIONAL',
+  OPTIONAL = 'OPTIONAL'
 }
 
 export interface DeliveryConfig {

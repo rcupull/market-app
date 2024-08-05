@@ -20,11 +20,11 @@ export const useBusinessDeliveryManModal = () => {
               title: 'Mensajeros',
               badge: <Badge variant="truck" />,
               content: <Component />,
-              secondaryBtn: <ButtonClose />,
+              secondaryBtn: <ButtonClose />
             };
-          },
+          }
         });
-      },
-    },
+      }
+    }
   };
 };

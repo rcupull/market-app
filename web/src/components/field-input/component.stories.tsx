@@ -3,7 +3,7 @@ import { FieldInput } from '.';
 import { FormikWrapper } from 'utils/storybook';
 
 export default {
-  component: FieldInput,
+  component: FieldInput
 };
 
 export const Default = (): JSX.Element => (

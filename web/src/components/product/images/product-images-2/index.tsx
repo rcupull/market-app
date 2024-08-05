@@ -37,7 +37,7 @@ export const ProductImages2 = ({ value, className }: ProductImages2Props) => {
               src={getImageEndpoint(src)}
               alt={alt}
               className={cn('h-20 w-20 object-cover object-center cursor-pointer', {
-                'border-2 border-gray-400 rounded-sm': selected,
+                'border-2 border-gray-400 rounded-sm': selected
               })}
             />
           );

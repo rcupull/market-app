@@ -37,20 +37,20 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
       items={[
         {
           label: 'Pendiente a Pagar',
-          value: 'PENDING_TO_PAY',
+          value: 'PENDING_TO_PAY'
         },
         {
           label: 'Chequeando Pago',
-          value: ShoppingState.CANCELED,
+          value: ShoppingState.CANCELED
         },
         {
           label: 'Pagado',
-          value: 'PAID',
+          value: 'PAID'
         },
         {
           label: 'Todas',
-          value: 'ALL',
-        },
+          value: 'ALL'
+        }
       ]}
       className={cn('flex flex-wrap items-center gap-4 mb-5', className)}
     />
