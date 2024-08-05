@@ -9,7 +9,6 @@ import axios, { AxiosError } from 'axios';
 import { differenceInMinutes } from 'date-fns';
 import {
   ApiError,
-  ApiErrorReazon,
   ApiStatus,
   FetchData,
   FetchMethod,
@@ -163,7 +162,7 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
         setStatus('SUCCESS');
         setWasCalled(true);
       } catch (e) {
-        const { response } = e as AxiosError<{ message?: string; reazon?: ApiErrorReazon }>;
+        const { response } = e as AxiosError<{ message?: string }>;
 
         if (response?.data?.message) {
           showMessage(
@@ -175,8 +174,7 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
         }
 
         const apiError: ApiError = {
-          message: response?.data?.message || 'Something went wrong',
-          reazon: response?.data?.reazon
+          message: response?.data?.message || 'Something went wrong'
         };
 
         onAfterFailed?.(apiError);
