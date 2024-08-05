@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-
 import { Badge } from 'components/badge';
 import { Button } from 'components/button';
 import { ButtonRemove } from 'components/button-remove';
@@ -13,7 +11,7 @@ import { useUpdateBusinessPostCategories } from 'features/api/business/useUpdate
 import { useCloseContext } from 'features/modal/closeContext/useCloseContext';
 import { useModal } from 'features/modal/useModal';
 
-import { Portal, usePortal } from 'hooks/usePortal';
+import { Portal } from 'hooks/usePortal';
 
 import { useBusiness } from '../../@hooks/useBusiness';
 
@@ -36,14 +34,8 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   const { routeName } = business || {};
 
   const initialCategories = business?.postCategories || [];
-  const portalAdd = usePortal();
 
   const { updateBusinessPostCategories } = useUpdateBusinessPostCategories();
-  const [state, setState] = useState<Array<PostCategory>>([]);
-
-  useEffect(() => {
-    setState(initialCategories);
-  }, [initialCategories]);
 
   const { pushModal } = useModal();
 
@@ -54,173 +46,188 @@ export const Component = ({ portal, onAfterSuccess }: ComponentProps) => {
   }
 
   return (
-    <>
-      <div className="flex">
-        <Formux<State>
-          value={{ label: '', categories: state }}
-          validate={[
-            {
-              field: 'label',
-              type: 'required'
-            },
-            {
-              field: 'label',
-              type: 'custom',
-              message: 'Esa categoría ya existe.',
-              customCb: (label) => {
-                return !state.map(({ label }) => label).includes(label);
-              }
+    <div>
+      <Formux<State>
+        value={{ label: '', categories: initialCategories || [] }}
+        validate={({ state }) => [
+          {
+            field: 'label',
+            type: 'required'
+          },
+          {
+            field: 'label',
+            type: 'custom',
+            message: 'Esa categoría ya existe.',
+            customCb: (label) => {
+              return !state.categories.map(({ label }) => label).includes(label);
             }
-          ]}
-        >
-          {({ value, resetForm, hasChange }) => {
-            onChangeUnsavedChanges(hasChange);
+          }
+        ]}
+      >
+        {({ value, hasChange, setValue }) => {
+          onChangeUnsavedChanges(hasChange);
 
-            const handleAdd = () => {
-              const { label } = value;
+          const handleAdd = () => {
+            const { label } = value;
+            setValue({
+              label: '',
+              categories: addRow(value.categories, {
+                label,
+                tag: getPostCategoryTag(label)
+              })
+            });
+          };
 
-              setState(
-                addRow(state, {
-                  label,
-                  tag: getPostCategoryTag(label)
-                })
-              );
-              resetForm();
-            };
-
-            return (
+          return (
+            <>
               <form className="w-full">
-                <FieldInput
-                  id="postCategoryLabel"
-                  name="label"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
+                <div className="flex">
+                  <FieldInput
+                    className="w-full"
+                    id="postCategoryLabel"
+                    name="label"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
 
-                      handleAdd();
-                    }
-                  }}
-                  placeholder='Escriba una nueva categoría, ej. "Productos en oferta", "Recientes", etc"'
-                />
+                        handleAdd();
+                      }
+                    }}
+                    placeholder='Escriba una nueva categoría, ej. "Productos en oferta", "Recientes", etc"'
+                  />
 
-                {portalAdd.getPortal(
                   <Button
                     label="Agregar categoría"
-                    formuxSubmit
-                    stopPropagation
+                    preventDefault
+                    disabled={!value.label}
                     onClick={() => handleAdd()}
                     variant="primary"
                     className="ml-4"
                   />
-                )}
+                </div>
               </form>
-            );
-          }}
-        </Formux>
-        <div ref={portalAdd.ref} />
-      </div>
 
-      <div className="flex flex-wrap mt-3 gap-3 border border-gray-300 rounded-md p-3 ">
-        {state.map((cat, index) => {
-          const { label, hidden } = cat;
-          return (
-            <div
-              key={index}
-              className={cn('flex items-center gap-2 border border-gray-400 rounded-md p-2', {
-                'bg-gray-200': hidden
-              })}
-            >
-              {label}
-              <IconButtonRemove
-                className="text-gray-600 hover:text-gray-800 cursor-pointer"
-                onClick={() => {
-                  pushModal('Confirmation', {
-                    useProps: () => {
-                      const { onClose } = useModal();
+              <div className="flex flex-wrap mt-3 gap-3 border border-gray-300 rounded-md p-3 ">
+                {value.categories.map((category, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className={cn(
+                        'flex items-center gap-2 border border-gray-400 rounded-md p-2',
+                        {
+                          'bg-gray-200': category.hidden
+                        }
+                      )}
+                    >
+                      {category.label}
+                      <IconButtonRemove
+                        className="text-gray-600 hover:text-gray-800 cursor-pointer"
+                        onClick={() => {
+                          pushModal('Confirmation', {
+                            useProps: () => {
+                              const { onClose } = useModal();
 
-                      return {
-                        content: (
-                          <div>
-                            Al eliminar una categoría estará removiendo esta clasificación de todas
-                            las publicaciones de su negocio y es un cambio irreversible. Seguro que
-                            desea eliminar la categoría <span className="font-bold">{label}</span>?
-                          </div>
-                        ),
-                        badge: <Badge variant="error" />,
-                        primaryBtn: (
-                          <ButtonRemove
-                            label="Eliminar"
-                            onClick={() => {
-                              setState(removeRow(state, index));
-                              onClose();
-                            }}
-                          />
-                        )
-                      };
-                    }
-                  });
-                }}
-              />
+                              return {
+                                content: (
+                                  <div>
+                                    Al eliminar una categoría estará removiendo esta clasificación
+                                    de todas las publicaciones de su negocio y es un cambio
+                                    irreversible. Seguro que desea eliminar la categoría{' '}
+                                    <span className="font-bold">{category.label}</span>?
+                                  </div>
+                                ),
+                                badge: <Badge variant="error" />,
+                                primaryBtn: (
+                                  <ButtonRemove
+                                    label="Eliminar"
+                                    onClick={() => {
+                                      setValue({
+                                        ...value,
+                                        categories: removeRow(value.categories, index)
+                                      });
 
-              <IconButtonShowHide
-                hidden={hidden}
-                onClick={() => {
-                  pushModal('Confirmation', {
-                    useProps: () => {
-                      const { onClose } = useModal();
+                                      onClose();
+                                    }}
+                                  />
+                                )
+                              };
+                            }
+                          });
+                        }}
+                      />
 
-                      return {
-                        title: `${hidden ? 'Mostrar' : 'Ocultar'} categoría`,
-                        content: (
-                          <>
-                            {hidden ? (
-                              <div>
-                                Usted está mostrando esta categoría y podrá ser usada para filtrar
-                                sus publicaciones en la página de su negocio. Desea continuar?
-                              </div>
-                            ) : (
-                              <div>
-                                Usted está ocultando esta categoría y no será visible en el filtro
-                                por categorias en la página de su negocio. Desea continuar?
-                              </div>
-                            )}
-                          </>
-                        ),
-                        badge: <Badge variant="info" />,
-                        primaryBtn: (
-                          <Button
-                            label="Continuar"
-                            onClick={() => {
-                              setState(updateRow(state, { ...cat, hidden: !hidden }, index));
-                              onClose();
-                            }}
-                          />
-                        )
-                      };
-                    }
-                  });
-                }}
-              />
-            </div>
+                      <IconButtonShowHide
+                        hidden={category.hidden}
+                        onClick={() => {
+                          pushModal('Confirmation', {
+                            useProps: () => {
+                              const { onClose } = useModal();
+
+                              return {
+                                title: `${category.hidden ? 'Mostrar' : 'Ocultar'} categoría`,
+                                content: (
+                                  <>
+                                    {category.hidden ? (
+                                      <div>
+                                        Usted está mostrando esta categoría y podrá ser usada para
+                                        filtrar sus publicaciones en la página de su negocio. Desea
+                                        continuar?
+                                      </div>
+                                    ) : (
+                                      <div>
+                                        Usted está ocultando esta categoría y no será visible en el
+                                        filtro por categorias en la página de su negocio. Desea
+                                        continuar?
+                                      </div>
+                                    )}
+                                  </>
+                                ),
+                                badge: <Badge variant="info" />,
+                                primaryBtn: (
+                                  <Button
+                                    label="Continuar"
+                                    onClick={() => {
+                                      setValue({
+                                        ...value,
+                                        categories: updateRow(
+                                          value.categories,
+                                          { ...category, hidden: !category.hidden },
+                                          index
+                                        )
+                                      });
+                                      onClose();
+                                    }}
+                                  />
+                                )
+                              };
+                            }
+                          });
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+
+              {portal.getPortal(
+                <ButtonSave
+                  disabled={isEqualObj(value.categories, initialCategories)}
+                  isBusy={updateBusinessPostCategories.status.isBusy}
+                  onClick={() => {
+                    updateBusinessPostCategories.fetch(
+                      { postCategories: value.categories, routeName },
+                      {
+                        onAfterSuccess
+                      }
+                    );
+                  }}
+                />
+              )}
+            </>
           );
-        })}
-      </div>
-
-      {portal.getPortal(
-        <ButtonSave
-          disabled={isEqualObj(state, initialCategories)}
-          isBusy={updateBusinessPostCategories.status.isBusy}
-          onClick={() => {
-            updateBusinessPostCategories.fetch(
-              { postCategories: state, routeName },
-              {
-                onAfterSuccess
-              }
-            );
-          }}
-        />
-      )}
-    </>
+        }}
+      </Formux>
+    </div>
   );
 };
 
