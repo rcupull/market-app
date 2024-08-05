@@ -148,7 +148,15 @@ const post_signUp: () => RequestHandler = () => {
         password
       });
 
-      if (!newUser) return getUserNotFoundResponse({ res });
+      if (!newUser) {
+        return get401Response({
+          res,
+          json: {
+            message: 'No se pudo crear la cuenta. Puede que ya exista un usuario con ese correo',
+            reazon: 'EMAIL_ALREADY_REGISTERED'
+          }
+        });
+      }
 
       // send validation code by email
       const code = uuid();
