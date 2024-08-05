@@ -1,4 +1,4 @@
-import { PushNotificationType } from '../../types/notifications';
+import { PushNotification, PushNotificationType } from '../../types/notifications';
 import firebase from 'firebase-admin';
 import { QueryHandle } from '../../types/general';
 
@@ -12,6 +12,10 @@ import {
   PushNotificationModel,
   PushNotificationUserData
 } from '../../schemas/notifications';
+import { PaginateOptions } from 'mongoose';
+import { getAllFilterQuery, GetAllNotificationsArgs } from './utils';
+import { PaginateResult } from '../../middlewares/middlewarePagination';
+import { getSortQuery } from '../../utils/schemas';
 
 const firebaseInstance = firebase;
 
@@ -20,6 +24,24 @@ export const notificationsServicesInit = () => {
     credential: firebase.credential.cert(serviceAccount)
   });
   console.info('Initialized Firebase SDK');
+};
+
+export const notificationsServicesGetAllWithPagination: QueryHandle<
+  {
+    paginateOptions?: PaginateOptions;
+    query: GetAllNotificationsArgs;
+    sort?: string;
+  },
+  PaginateResult<PushNotification>
+> = async ({ paginateOptions = {}, query, sort }) => {
+  const filterQuery = getAllFilterQuery(query);
+
+  const out = await PushNotificationModel.paginate(filterQuery, {
+    ...paginateOptions,
+    sort: getSortQuery(sort)
+  });
+
+  return out as unknown as PaginateResult<PushNotification>;
 };
 
 export const notificationsServicesSendNewOrderApprovedMessage: QueryHandle<{

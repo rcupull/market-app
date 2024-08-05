@@ -1,5 +1,6 @@
 import { RequestHandler } from 'express';
 import { get401Response, get404Response, getUserNotFoundResponse } from '../utils/server-response';
+import { isEqualIds } from '../utils/general';
 
 export const middlewareIsUserIdAccessible: RequestHandler = (req, res, next) => {
   const { user } = req;
@@ -17,7 +18,7 @@ export const middlewareIsUserIdAccessible: RequestHandler = (req, res, next) => 
     });
   }
 
-  if (user._id.toString() === userId) return next();
+  if (isEqualIds(user._id, userId)) return next();
 
   get401Response({
     res,

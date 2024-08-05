@@ -9,6 +9,7 @@ import { BusinessLogo } from '../business-logo';
 import { BusinessName } from '../business-name';
 import { ShoppingCartMenu } from '../shopping-cart-menu';
 import { NavbarMenu } from './NavbarMenu';
+import { NotificationsMenu } from './NotificationsMenu';
 
 import SvgBookSolid from 'icons/BookSolid';
 import SvgDollarSignSolid from 'icons/DollarSignSolid';
@@ -100,6 +101,8 @@ export const Navbar = ({ className }: NavbarProps) => {
           <DevSwitchSession />
 
           {isOneBusinessPage && <ShoppingCartMenu />}
+
+          <NotificationsMenu />
 
           <NavbarMenu />
         </>

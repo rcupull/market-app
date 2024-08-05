@@ -12,6 +12,7 @@ export interface GetAllPostArgs extends FilterQuery<Post> {
   postCategoriesTags?: Array<string>;
   postCategoriesMethod?: 'some' | 'every';
 }
+
 export const getAllFilterQuery = ({
   routeNames,
   postsIds,
