@@ -21,15 +21,26 @@ export const renderToastMessage = (notification: ToastMessage) => {
   );
 };
 
-export const notificationToToastMessage = (notification: PushNotification): ToastMessage | null => {
+export const notificationToToastMessage = (
+  notification: PushNotification,
+  options?: { unreadMark?: boolean }
+): ToastMessage | null => {
   const { type, routeName, businessName, shoppingId, createdAt } = notification;
+  const { unreadMark } = options || {};
 
-  const renderTitleWithDate = (title: string) => {
+  const renderTitle = (title: string) => {
     return (
       <div className="flex flex-col mb-3">
         <Divider narrow />
-        {title}
-        <span className="text-xs font-bold text-gray-600">
+
+        <div className="flex items-center gap-2">
+          {title}
+          {unreadMark && <span className="text-xs font-bold text-indigo-500">(nueva)</span>}
+        </div>
+
+        <span className="text-md font-bold text-gray-500">{businessName}</span>
+
+        <span className="text-xs font-bold text-gray-500">
           {getDateString({ date: createdAt, showTime: true })}
         </span>
       </div>
@@ -42,14 +53,12 @@ export const notificationToToastMessage = (notification: PushNotification): Toas
       if (!businessName) return null;
 
       return {
-        title: renderTitleWithDate('Orden de compra aprobada'),
+        title: renderTitle('Orden de compra aceptada'),
         body: (
           <HtmlTextContainer>
-            Una orden de compra generada por usted en el negocio{' '}
-            <span className="font-bold">{businessName}</span> ha sido aprovada. Usted será
-            contactado luego por el vendedor para los detalles de la entrega.`{' '}
+            Una orden de compra generada por usted ha sido aceptada.{' '}
             <Link to={getOneShoppingRoute({ routeName, shoppingId })}>
-              Ver detalles de la orden de compra
+              Detalles de la orden de compra
             </Link>
           </HtmlTextContainer>
         )
@@ -62,11 +71,10 @@ export const notificationToToastMessage = (notification: PushNotification): Toas
       if (!businessName) return null;
 
       return {
-        title: renderTitleWithDate('Orden de compra creada'),
+        title: renderTitle('Orden de compra creada'),
         body: (
           <HtmlTextContainer>
-            Una nueva orden de compra ha sido generada en su negocio{' '}
-            <span className="font-bold">{businessName}</span>. Puede ver los detalles{' '}
+            Una nueva orden de compra ha sido generada. Puede ver los detalles{' '}
             <Link to={getDashboardBusinessShoppingTabRequested({ routeName })}>aqui</Link>
           </HtmlTextContainer>
         )

@@ -17,4 +17,5 @@ export interface PushNotification extends BaseIdentity {
   routeName?: string;
   businessName?: string;
   //
+  readAt?: string;
 }

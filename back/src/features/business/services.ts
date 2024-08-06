@@ -15,7 +15,7 @@ import { getShoppingWasAcceptedQuery } from '../../utils/schemas';
 import { getShoppingsTotalDebit } from '../shopping/utils';
 import { imagesServicesDeleteBulk } from '../images/services';
 import { shoppingServicesDeleteMany, shoppingServicesGetAll } from '../shopping/services';
-import { PushNotificationBusinessData } from '../../schemas/notifications';
+import { PushNotificationBusinessData } from '../../types/notifications';
 
 export const businessServicesGetAllWithPagination: QueryHandle<
   {

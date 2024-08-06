@@ -18,4 +18,16 @@ export interface PushNotification extends BaseIdentity {
   routeName?: string;
   businessName?: string;
   //
+  readAt?: Date;
+}
+
+export interface PushNotificationUserData {
+  userId: Schema.Types.ObjectId;
+  firebaseToken?: string;
+}
+
+export interface PushNotificationBusinessData {
+  businessName: string;
+  routeName: string;
+  createdBy: Schema.Types.ObjectId;
 }
