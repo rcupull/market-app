@@ -7,8 +7,15 @@ export const getFileImageSize = (file: File): Promise<{ width: number; height: n
     img.onload = () => {
       resolve({
         height: img.height,
-        width: img.width,
+        width: img.width
       });
     };
+  });
+};
+
+export const renameFile = (file: File, newName: string) => {
+  return new File([file], newName, {
+    type: file.type,
+    lastModified: file.lastModified
   });
 };

@@ -12,8 +12,8 @@ describe('BulkActions', () => {
           current: {
             onReset: () => {},
             selected: [],
-            selectedAll: false,
-          },
+            selectedAll: false
+          }
         }}
       >
         {() => <></>}

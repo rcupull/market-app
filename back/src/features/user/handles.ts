@@ -4,20 +4,17 @@ import { withTryCatch } from '../../utils/error';
 import {
   userServicesGetAllWithPagination,
   userServicesGetOne,
-  userServicesUpdateOne,
+  userServicesUpdateOne
 } from './services';
 import { User, UserChecks, UserDto } from '../../types/user';
-import {
-  get400Response,
-  get404Response,
-  getUserNotFoundResponse,
-} from '../../utils/server-response';
-import { ValidationCodeModel } from '../../schemas/auth';
+import { get400Response, getUserNotFoundResponse } from '../../utils/server-response';
 import { imagesServicesDeleteOldImages } from '../images/services';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { deepJsonCopy, includesId } from '../../utils/general';
 import { businessServicesGetAll } from '../business/services';
 import { Business } from '../../types/business';
+import { notificationsServicesGetAllWithPagination } from '../notifications/services';
+import { defaultQuerySort } from '../../utils/api';
 
 const get_users_delivery_man: () => RequestHandler = () => {
   return (req, res) => {
@@ -27,8 +24,8 @@ const get_users_delivery_man: () => RequestHandler = () => {
       const out = await userServicesGetAllWithPagination({
         paginateOptions,
         query: {
-          canMakeDeliveries: true,
-        },
+          canMakeDeliveries: true
+        }
       });
 
       res.send(out);
@@ -45,8 +42,8 @@ const get_users_userId: () => RequestHandler = () => {
 
       const response = await userServicesGetOne({
         query: {
-          _id: userId,
-        },
+          _id: userId
+        }
       });
 
       if (!response) {
@@ -56,13 +53,13 @@ const get_users_userId: () => RequestHandler = () => {
       const businessData: Array<Pick<Business, 'routeName' | 'name' | 'favoritesUserIds'>> =
         await businessServicesGetAll({
           query: {
-            favoritesUserIds: { $in: userId },
+            favoritesUserIds: { $in: userId }
           },
           projection: {
             name: 1,
             routeName: 1,
-            favoritesUserIds: 1,
-          },
+            favoritesUserIds: 1
+          }
         });
 
       const getFavoritesBusiness = () => {
@@ -75,8 +72,8 @@ const get_users_userId: () => RequestHandler = () => {
                 ...acc,
                 {
                   name,
-                  routeName,
-                },
+                  routeName
+                }
               ];
             }
 
@@ -92,7 +89,7 @@ const get_users_userId: () => RequestHandler = () => {
       const getUserDto = async (user: User): Promise<UserDto> => {
         return {
           ...user,
-          favoritesBusiness: getFavoritesBusiness(),
+          favoritesBusiness: getFavoritesBusiness()
         };
       };
 
@@ -117,8 +114,8 @@ const put_users_userId: () => RequestHandler = () => {
       if (profileImage) {
         const currentUser = await userServicesGetOne({
           query: {
-            _id: userId,
-          },
+            _id: userId
+          }
         });
 
         if (!currentUser) {
@@ -128,7 +125,7 @@ const put_users_userId: () => RequestHandler = () => {
         if (currentUser.profileImage) {
           await imagesServicesDeleteOldImages({
             newImagesSrcs: [profileImage],
-            oldImagesSrcs: [currentUser.profileImage],
+            oldImagesSrcs: [currentUser.profileImage]
           });
         }
       }
@@ -153,7 +150,7 @@ const put_users_userId: () => RequestHandler = () => {
 
       const out = await userServicesUpdateOne({
         query: {
-          _id: userId,
+          _id: userId
         },
         update: makeReshaper<User, User>({
           name: 'name',
@@ -161,60 +158,11 @@ const put_users_userId: () => RequestHandler = () => {
           phone: 'phone',
           addresses: 'addresses',
           canCreateBusiness: 'canCreateBusiness',
-          canMakeDeliveries: 'canMakeDeliveries',
-        })(body),
+          canMakeDeliveries: 'canMakeDeliveries'
+        })(body)
       });
 
       res.send(out);
-    });
-  };
-};
-
-const post_users_userId_chatbot_validate: () => RequestHandler = () => {
-  return async (req, res) => {
-    withTryCatch(req, res, async () => {
-      const { body, user } = req;
-      const { code } = body;
-
-      if (!user) {
-        return getUserNotFoundResponse({ res });
-      }
-
-      const validationCode = await ValidationCodeModel.findOneAndDelete({
-        code,
-      });
-
-      if (!validationCode) {
-        return get404Response({
-          res,
-          json: {
-            message:
-              'Este codigo de validación no existe o ya el bot fue verificado con este código',
-          },
-        });
-      }
-
-      const { meta } = validationCode.toJSON();
-
-      if (!meta) {
-        return get404Response({
-          res,
-          json: {
-            message: 'No hay metadatos disponibles en este codigo de validación del bot',
-          },
-        });
-      }
-
-      await userServicesUpdateOne({
-        query: {
-          _id: user._id,
-        },
-        update: {
-          telegramBotChat: meta,
-        },
-      });
-
-      res.send({});
     });
   };
 };
@@ -229,19 +177,19 @@ const put_users_userId_checks: () => RequestHandler = () => {
       }
 
       const newChecks = makeReshaper<UserChecks, UserChecks>({
-        requestUserTypeWhenStart: 'requestUserTypeWhenStart',
+        requestUserTypeWhenStart: 'requestUserTypeWhenStart'
       })(body);
 
       await userServicesUpdateOne({
         query: {
-          _id: user._id,
+          _id: user._id
         },
         update: {
           checks: {
             ...(user.checks || {}),
-            ...Object.keys(newChecks).reduce((acc, key) => ({ ...acc, [key]: true }), {}),
-          },
-        },
+            ...Object.keys(newChecks).reduce((acc, key) => ({ ...acc, [key]: true }), {})
+          }
+        }
       });
 
       res.send({});
@@ -259,8 +207,8 @@ const post_users_userId_delivery_business: () => RequestHandler = () => {
       const deliveryMan = await userServicesGetOne({
         query: {
           _id: userId,
-          canMakeDeliveries: true,
-        },
+          canMakeDeliveries: true
+        }
       });
 
       if (!deliveryMan) {
@@ -275,23 +223,23 @@ const post_users_userId_delivery_business: () => RequestHandler = () => {
         return get400Response({
           res,
           json: {
-            message: 'This user has this bussiness',
-          },
+            message: 'This user has this bussiness'
+          }
         });
       }
 
       await userServicesUpdateOne({
         query: {
-          _id: userId,
+          _id: userId
         },
         update: {
           deliveryBusiness: [
             ...(deliveryMan.deliveryBusiness || []),
             {
-              routeName,
-            },
-          ],
-        },
+              routeName
+            }
+          ]
+        }
       });
 
       res.send({});
@@ -309,8 +257,8 @@ const del_users_userId_delivery_business: () => RequestHandler = () => {
       const deliveryMan = await userServicesGetOne({
         query: {
           _id: userId,
-          canMakeDeliveries: true,
-        },
+          canMakeDeliveries: true
+        }
       });
 
       if (!deliveryMan) {
@@ -327,13 +275,13 @@ const del_users_userId_delivery_business: () => RequestHandler = () => {
 
       await userServicesUpdateOne({
         query: {
-          _id: userId,
+          _id: userId
         },
         update: {
           deliveryBusiness: deliveryMan.deliveryBusiness.filter(
             (business) => business.routeName !== routeName
-          ),
-        },
+          )
+        }
       });
 
       res.send({});
@@ -341,14 +289,38 @@ const del_users_userId_delivery_business: () => RequestHandler = () => {
   };
 };
 
+const get_user_userId_notifications: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { query, user, paginateOptions } = req;
+
+      if (!user) {
+        return getUserNotFoundResponse({ res });
+      }
+
+      const { sort = defaultQuerySort } = query;
+
+      const notifications = await notificationsServicesGetAllWithPagination({
+        paginateOptions,
+        sort,
+        query: {
+          userIds: [user._id]
+        }
+      });
+
+      res.send(notifications);
+    });
+  };
+};
+
 export const userHandles = {
   get_users_userId,
   put_users_userId,
-  post_users_userId_chatbot_validate,
   put_users_userId_checks,
   //
   post_users_userId_delivery_business,
   del_users_userId_delivery_business,
   //
   get_users_delivery_man,
+  get_user_userId_notifications
 };

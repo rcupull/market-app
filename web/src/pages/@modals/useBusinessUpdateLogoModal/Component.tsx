@@ -4,7 +4,7 @@ import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
-import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
+import { useCloseContext } from 'features/modal/closeContext/useCloseContext';
 import { useModal } from 'features/modal/useModal';
 
 import { Portal } from 'hooks/usePortal';
@@ -41,7 +41,7 @@ export const Component = ({ portal }: ComponentProps) => {
   return (
     <Formux<State>
       value={{
-        logoField: [logo],
+        logoField: [logo]
       }}
     >
       {({ value, hasChange }) => {
@@ -66,15 +66,15 @@ export const Component = ({ portal }: ComponentProps) => {
                     updateOneBusiness.fetch(
                       {
                         update: {
-                          logo,
+                          logo
                         },
-                        routeName,
+                        routeName
                       },
                       {
                         onAfterSuccess: () => {
                           onFetch({ routeName });
                           onClose();
-                        },
+                        }
                       }
                     );
                   };
@@ -85,10 +85,10 @@ export const Component = ({ portal }: ComponentProps) => {
                         images: [logo],
                         routeName,
                         userId: business.createdBy,
-                        ...imagesDimensions.logo,
+                        ...imagesDimensions.logo
                       },
                       {
-                        onAfterSuccess: ([logo]) => submitLogo(logo),
+                        onAfterSuccess: ([logo]) => submitLogo(logo)
                       }
                     );
                   } else {

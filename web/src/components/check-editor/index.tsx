@@ -24,7 +24,7 @@ export const CheckEditor = ({
   onReady,
   value,
   className,
-  getUploadAdapter,
+  getUploadAdapter
 }: CheckEditorProps) => {
   const getItems = (): Array<CheckEditorToolbarItem> => {
     const out: Array<Nullable<CheckEditorToolbarItem>> = [
@@ -49,7 +49,7 @@ export const CheckEditor = ({
       'fontBackgroundColor',
       'fontFamily',
       'fontColor',
-      'alignment',
+      'alignment'
     ];
     return compact(out);
   };
@@ -61,8 +61,8 @@ export const CheckEditor = ({
         config={{
           toolbar: {
             items: getItems(),
-            shouldNotGroupWhenFull: true,
-          },
+            shouldNotGroupWhenFull: true
+          }
         }}
         data={value}
         onReady={(editor) => {

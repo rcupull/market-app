@@ -1,2 +1,1 @@
-export { useNotifications } from './useNotifications';
-export { NotificationsProvider } from './provider';
+export { NotificationsProvider } from './NotificationsProvider';

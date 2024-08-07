@@ -43,19 +43,6 @@ router
 ///////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////
 router
-  .route('/users/:userId/chatbotValidate')
-  .post(
-    middlewareExpressValidator.param('userId').notEmpty(),
-    middlewareExpressValidator.body('code').notEmpty(),
-    middlewareExpressValidator.handle,
-    middlewareIsLogged,
-    userHandles.post_users_userId_chatbot_validate()
-  );
-
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////
-router
   .route('/users/:userId/checks')
   .put(
     middlewareExpressValidator.param('userId').notEmpty(),
@@ -83,4 +70,18 @@ router
     middlewareExpressValidator.handle,
     middlewareIsLogged,
     userHandles.del_users_userId_delivery_business()
+  );
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+router
+  .route('/users/:userId/notifications')
+  .get(
+    middlewareExpressValidator.param('userId').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareIsUserIdAccessible,
+    middlewarePagination,
+    userHandles.get_user_userId_notifications()
   );

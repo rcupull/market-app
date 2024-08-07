@@ -10,16 +10,6 @@ export const mockNotificationsServicesSendNewOrderPushMessage = (): {
   return { notificationsServicesSendNewOrderPushMessage };
 };
 
-export const mockNotificationsServicesSendNotificationToUpdate = (): {
-  notificationsServicesSendNotificationToUpdate: jest.SpyInstance;
-} => {
-  const notificationsServicesSendNotificationToUpdate = jest
-    .spyOn(all, 'notificationsServicesSendNotificationToUpdate')
-    .mockImplementation(jest.fn());
-
-  return { notificationsServicesSendNotificationToUpdate };
-};
-
 export const mockNotificationsServicesSendOrderInConstructionWasRemoved = (): {
   notificationsServicesSendOrderInConstructionWasRemoved: jest.SpyInstance;
 } => {

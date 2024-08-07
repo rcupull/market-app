@@ -17,10 +17,8 @@ export interface PersonalDataProps extends StyleProps {
 }
 
 export const PersonalData = ({ className, onValid }: PersonalDataProps) => {
-  const { authData, onRefreshAuthUser } = useAuth();
+  const { user, onRefreshAuthUser } = useAuth();
   const { userUpdateSettingsModal } = useUserUpdateSettingsModal();
-
-  const user = authData?.user;
 
   const { phone, addresses } = user || {};
 
@@ -80,7 +78,7 @@ export const PersonalData = ({ className, onValid }: PersonalDataProps) => {
                 user,
                 onAfterSuccess: () => {
                   onRefreshAuthUser();
-                },
+                }
               })
             }
             className="!ml-auto"

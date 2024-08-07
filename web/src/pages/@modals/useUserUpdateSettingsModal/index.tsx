@@ -16,34 +16,30 @@ export const useUserUpdateSettingsModal = () => {
   return {
     userUpdateSettingsModal: {
       open: (args: { user: User; onAfterSuccess?: () => void }) => {
-        pushModal(
-          'Emergent',
-          {
-            useProps: () => {
-              const { user, onAfterSuccess } = args;
-              const { onClose } = useModal();
-              const portal = usePortal();
+        pushModal('Emergent', {
+          useProps: () => {
+            const { user, onAfterSuccess } = args;
+            const { onClose } = useModal();
+            const portal = usePortal();
 
-              return {
-                title: 'Preferencias de usuario',
-                content: (
-                  <Component
-                    portal={portal}
-                    user={user}
-                    onAfterSuccess={() => {
-                      onClose();
-                      onAfterSuccess?.();
-                    }}
-                  />
-                ),
-                secondaryBtn: <ButtonClose />,
-                primaryBtn: <div ref={portal.ref} />,
-              };
-            },
-          },
-          { emergent: true }
-        );
-      },
-    },
+            return {
+              title: 'Ajustes',
+              content: (
+                <Component
+                  portal={portal}
+                  user={user}
+                  onAfterSuccess={() => {
+                    onClose();
+                    onAfterSuccess?.();
+                  }}
+                />
+              ),
+              secondaryBtn: <ButtonClose />,
+              primaryBtn: <div ref={portal.ref} />
+            };
+          }
+        });
+      }
+    }
   };
 };

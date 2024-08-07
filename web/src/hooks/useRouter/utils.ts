@@ -6,14 +6,14 @@ export const DEFAULT_PAGINATION = { page: 1 };
 export const queryToSearch = (query: Query): string =>
   qs.stringify(query, {
     arrayFormat: 'bracket',
-    skipEmptyString: true,
+    skipEmptyString: true
   });
 
 export const searchToQuery = (search: string): Query =>
   qs.parse(search, {
     parseNumbers: true,
     arrayFormat: 'bracket',
-    parseBooleans: true,
+    parseBooleans: true
   });
 
 export const getParamsFromPathname = (
@@ -35,6 +35,6 @@ export const getParamsFromPathname = (
     routeName: getParam(['b', 'business']),
     postId: getParam(['posts']),
     shoppingId: getParam(['shopping']),
-    code: getParam(['validate', 'forgot-password']),
+    code: getParam(['validate', 'forgot-password'])
   };
 };

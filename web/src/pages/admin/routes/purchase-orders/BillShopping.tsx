@@ -18,38 +18,34 @@ export const BillShopping = ({ rowData, onRefresh }: BillShoppingProps) => {
   const handleRemoveFromBill = () => {
     if (!billId) return;
 
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { onClose } = useModal();
-          const { removeManyShoppingFromBillAdmin } = useRemoveManyShoppingFromBillAdmin();
+    pushModal('Confirmation', {
+      useProps: () => {
+        const { onClose } = useModal();
+        const { removeManyShoppingFromBillAdmin } = useRemoveManyShoppingFromBillAdmin();
 
-          return {
-            content: '¿Seguro que desea quitar esta orden de compra de la factura?',
-            badge: <Badge variant="error" />,
-            primaryBtn: (
-              <Button
-                label="Eliminar de la factura"
-                isBusy={removeManyShoppingFromBillAdmin.status.isBusy}
-                onClick={() => {
-                  removeManyShoppingFromBillAdmin.fetch(
-                    { billId, shoppingIds: [rowData._id] },
-                    {
-                      onAfterSuccess: () => {
-                        onClose();
-                        onRefresh();
-                      },
+        return {
+          content: '¿Seguro que desea quitar esta orden de compra de la factura?',
+          badge: <Badge variant="error" />,
+          primaryBtn: (
+            <Button
+              label="Eliminar de la factura"
+              isBusy={removeManyShoppingFromBillAdmin.status.isBusy}
+              onClick={() => {
+                removeManyShoppingFromBillAdmin.fetch(
+                  { billId, shoppingIds: [rowData._id] },
+                  {
+                    onAfterSuccess: () => {
+                      onClose();
+                      onRefresh();
                     }
-                  );
-                }}
-              />
-            ),
-          };
-        },
-      },
-      { emergent: true }
-    );
+                  }
+                );
+              }}
+            />
+          )
+        };
+      }
+    });
   };
 
   return (

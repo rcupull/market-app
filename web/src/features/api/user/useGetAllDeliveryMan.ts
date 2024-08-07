@@ -21,13 +21,13 @@ export const useGetAllDeliveryMan = (): {
             method: 'get',
             url: getEndpoint({
               path: '/users/deliveryMan',
-              query: { limit: defaultLimit },
-            }),
+              query: { limit: defaultLimit }
+            })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

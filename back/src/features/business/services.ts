@@ -9,12 +9,13 @@ import { UpdateOptions } from 'mongodb';
 import { GetAllBusinessArgs, UpdateQueryBusiness, getAllFilterQuery } from './utils';
 import {
   billingServicesDeleteMany,
-  billingServicesGetBillDataFromShopping,
+  billingServicesGetBillDataFromShopping
 } from '../billing/services';
 import { getShoppingWasAcceptedQuery } from '../../utils/schemas';
 import { getShoppingsTotalDebit } from '../shopping/utils';
 import { imagesServicesDeleteBulk } from '../images/services';
 import { shoppingServicesDeleteMany, shoppingServicesGetAll } from '../shopping/services';
+import { PushNotificationBusinessData } from '../../types/notifications';
 
 export const businessServicesGetAllWithPagination: QueryHandle<
   {
@@ -60,7 +61,7 @@ export const businessServicesAddOne: QueryHandle<
     routeName,
     postCategories,
     currency,
-    hidden: true, //by default the businees is hidden
+    hidden: true //by default the businees is hidden
   });
 
   await out.save();
@@ -80,6 +81,33 @@ export const businessServicesFindOne: QueryHandle<
   return out;
 };
 
+export const businessServicesGetBusinessDataForPushNotifications: QueryHandle<
+  {
+    routeName: string;
+  },
+  PushNotificationBusinessData | null
+> = async ({ routeName }) => {
+  const businessData = await businessServicesFindOne({
+    query: {
+      routeName
+    },
+    projection: {
+      name: 1,
+      createdBy: 1
+    }
+  });
+
+  if (!businessData) {
+    return null;
+  }
+
+  return {
+    businessName: businessData.name,
+    routeName,
+    createdBy: businessData.createdBy
+  };
+};
+
 export const businessServicesDeleteOne: QueryHandle<{
   routeName: string;
 }> = async ({ routeName }) => {
@@ -87,7 +115,7 @@ export const businessServicesDeleteOne: QueryHandle<{
    * Removing the business
    */
   const business = await BusinessModel.findOneAndDelete({
-    routeName,
+    routeName
   });
 
   if (!business) {
@@ -100,7 +128,7 @@ export const businessServicesDeleteOne: QueryHandle<{
 
   await imagesServicesDeleteBulk({
     userId: business.createdBy.toString(),
-    routeName,
+    routeName
   });
 
   /**
@@ -108,8 +136,8 @@ export const businessServicesDeleteOne: QueryHandle<{
    */
   await postServicesDeleteMany({
     query: {
-      routeName,
-    },
+      routeName
+    }
   });
 
   /**
@@ -118,8 +146,8 @@ export const businessServicesDeleteOne: QueryHandle<{
 
   await billingServicesDeleteMany({
     query: {
-      routeName,
-    },
+      routeName
+    }
   });
 
   /**
@@ -128,8 +156,8 @@ export const businessServicesDeleteOne: QueryHandle<{
 
   await shoppingServicesDeleteMany({
     query: {
-      routeName,
-    },
+      routeName
+    }
   });
 };
 
@@ -155,18 +183,18 @@ export const businessServicesGetShoppingPaymentData: QueryHandle<
   { shoppingDebit: number }
 > = async ({ routeName }) => {
   const { getAllShopingIds } = await billingServicesGetBillDataFromShopping({
-    query: { routeNames: [routeName] },
+    query: { routeNames: [routeName] }
   });
 
   const shoppings = await shoppingServicesGetAll({
     query: {
       routeName,
       ...getShoppingWasAcceptedQuery(),
-      excludeShoppingIds: getAllShopingIds(),
-    },
+      excludeShoppingIds: getAllShopingIds()
+    }
   });
 
   return {
-    shoppingDebit: getShoppingsTotalDebit(shoppings),
+    shoppingDebit: getShoppingsTotalDebit(shoppings)
   };
 };

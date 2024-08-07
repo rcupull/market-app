@@ -12,7 +12,7 @@ import {
   getOneBusinessRoute,
   getOnePostRoute,
   getOneShoppingRoute,
-  getShoppingRoute,
+  getShoppingRoute
 } from 'utils/business';
 
 export interface AppBreadCrumbleProps extends StyleProps {}
@@ -26,7 +26,7 @@ export const AppBreadCrumble = ({ className }: AppBreadCrumbleProps): JSX.Elemen
     isBusinessAboutUsPage,
     isHomePage,
     isOneBusinessPage,
-    isAboutUsPage,
+    isAboutUsPage
   } = useRouter();
   const shoppingIdPersistent = useShoppingIdPersistent();
   const postIdPersistent = usePostIdPersistent();
@@ -36,32 +36,32 @@ export const AppBreadCrumble = ({ className }: AppBreadCrumbleProps): JSX.Elemen
       items={[
         !isHomePage && {
           label: 'Asere Market',
-          route: '/',
+          route: '/'
         },
         isAboutUsPage && {
           label: 'Sobre nosotros',
-          route: '/about-us',
+          route: '/about-us'
         },
         isDashboardPage && {
           label: 'Dashboard',
-          route: getDashboardRoute(),
+          route: getDashboardRoute()
         },
         isOneBusinessPage &&
           business && {
             label: business.name,
-            route: getOneBusinessRoute({ routeName: business.routeName }),
+            route: getOneBusinessRoute({ routeName: business.routeName })
           },
         business &&
           isShoppingPage && {
             label: 'Compras',
-            route: getShoppingRoute({ routeName: business.routeName }),
+            route: getShoppingRoute({ routeName: business.routeName })
           },
         business?.aboutUsPage &&
           isBusinessAboutUsPage &&
           business.aboutUsPage.visible &&
           !!business.aboutUsPage.title && {
             label: business.aboutUsPage.title,
-            route: getBusinessAboutUsRoute({ routeName: business.routeName }),
+            route: getBusinessAboutUsRoute({ routeName: business.routeName })
           },
         business &&
           isShoppingPage &&
@@ -69,8 +69,8 @@ export const AppBreadCrumble = ({ className }: AppBreadCrumbleProps): JSX.Elemen
             label: shoppingIdPersistent.data._id,
             route: getOneShoppingRoute({
               routeName: business.routeName,
-              shoppingId: shoppingIdPersistent.data._id,
-            }),
+              shoppingId: shoppingIdPersistent.data._id
+            })
           },
         business &&
           isPostPage &&
@@ -78,9 +78,9 @@ export const AppBreadCrumble = ({ className }: AppBreadCrumbleProps): JSX.Elemen
             label: postIdPersistent.data.name,
             route: getOnePostRoute({
               routeName: business.routeName,
-              postId: postIdPersistent.data._id,
-            }),
-          },
+              postId: postIdPersistent.data._id
+            })
+          }
       ]}
       className={className}
     />

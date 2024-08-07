@@ -1,6 +1,6 @@
 import { Access } from './admin';
 import { Business } from './business';
-import { Address, BaseIdentity, Image, TelegramBotChat } from './general';
+import { Address, BaseIdentity, Image } from './general';
 
 export type UserRole = 'user' | 'admin';
 
@@ -28,7 +28,6 @@ export interface User extends BaseIdentity {
   profileImage?: Image;
   firebaseToken?: string;
   specialAccess?: Array<Access>;
-  telegramBotChat?: TelegramBotChat;
   phone?: string;
   addresses?: Array<Address>;
   checks?: UserChecks;

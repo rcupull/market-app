@@ -12,7 +12,7 @@ import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusines
 import { useAddManyImages } from 'features/api/images/useAddManyImages';
 import { useAddOnePost } from 'features/api/posts/useAddOnePost';
 import { useUpdateOnePost } from 'features/api/posts/useUpdateOnePost';
-import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
+import { useCloseContext } from 'features/modal/closeContext/useCloseContext';
 
 import { useMemoizedHash } from 'hooks/useMemoizedHash';
 import { Portal } from 'hooks/usePortal';
@@ -62,13 +62,13 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
                 postCategoriesTags: addStringToUniqueArray(
                   section.postCategoriesTags || [],
                   linkTag
-                ),
-              },
+                )
+              }
             },
             {
               onAfterSuccess: () => {
                 resolve();
-              },
+              }
             }
           );
         });
@@ -82,7 +82,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
   const linkTag = useMemoizedHash();
 
   const sections = getSections({
-    tags: post?.postCategoriesTags || [],
+    tags: post?.postCategoriesTags || []
   });
 
   const { onChangeUnsavedChanges } = useCloseContext();
@@ -101,20 +101,20 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
         postCategoriesTags: [linkTag],
         postLink: { type: 'business', value: '' },
         sectionIds: sections.map((section) => section._id),
-        ...(post || {}),
+        ...(post || {})
       }}
       validate={({ state }) => [
         {
           field: 'name',
-          type: 'required',
+          type: 'required'
         },
         {
           field: 'sectionIds',
-          type: 'required',
+          type: 'required'
         },
         {
           field: 'postLink.type',
-          type: 'required',
+          type: 'required'
         },
         {
           field: 'postLink.value',
@@ -122,8 +122,8 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
           message:
             state.postLink?.type === 'business'
               ? 'Debe escoger un negocio'
-              : 'Debe escribir un enlace',
-        },
+              : 'Debe escribir un enlace'
+        }
       ]}
     >
       {({ value, hasChange }) => {
@@ -146,8 +146,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
                       e.stopPropagation();
                       businessNewUpdateSectionModal.open({
                         postType: 'link',
-                        onAfterSuccess: () =>
-                          business && onFetch({ routeName: business.routeName }),
+                        onAfterSuccess: () => business && onFetch({ routeName: business.routeName })
                       });
                     }}
                   />
@@ -157,7 +156,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
               className="mt-6"
               items={getSections({ postType: 'link' }).map(({ name, _id }) => ({
                 label: name,
-                value: _id,
+                value: _id
               }))}
               renderOption={({ checked, item }) => {
                 return <FieldCheckbox noUseFormik value={checked} label={item.label} />;
@@ -195,7 +194,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
                         routeName,
                         postId,
                         userId: post.createdBy,
-                        ...imagesDimensions.cardPost,
+                        ...imagesDimensions.cardPost
                       },
                       {
                         onAfterSuccess: (images) => {
@@ -204,7 +203,7 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
                               postId,
                               images,
                               name,
-                              postLink,
+                              postLink
                             },
                             {
                               onAfterSuccess: async () => {
@@ -212,10 +211,10 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
                                 await updateLinkInSections(sectionIds, linkTag || '<unknow Tag>');
 
                                 onAfterSuccess();
-                              },
+                              }
                             }
                           );
-                        },
+                        }
                       }
                     );
                   };
@@ -227,12 +226,12 @@ export const ComponentLink = ({ portal, onAfterSuccess, post, className }: Compo
                         postCategoriesTags,
                         images: [],
                         postType: 'link',
-                        postLink,
+                        postLink
                       },
                       {
                         onAfterSuccess: (response) => {
                           handelUpdatePost(response);
-                        },
+                        }
                       }
                     );
                   };

@@ -11,9 +11,9 @@ export const useDuplicateOnePost = (): {
 } => {
   const fetch = useFetch<Post>();
 
-  const { authData } = useAuth();
+  const { user } = useAuth();
 
-  const userId = authData?.user._id || '<unknow user>';
+  const userId = user?._id || '<unknow user>';
 
   return {
     duplicateOnePost: {
@@ -25,13 +25,13 @@ export const useDuplicateOnePost = (): {
             method: 'post',
             url: getEndpoint({
               path: '/posts/:postId/duplicate',
-              urlParams: { userId, postId },
-            }),
+              urlParams: { userId, postId }
+            })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

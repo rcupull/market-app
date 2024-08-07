@@ -7,7 +7,7 @@ import { getWrapper } from 'utils/test-utils';
 describe('useAuthSignInModal', () => {
   it('should close when click on the close button', async () => {
     const { result } = renderHook(() => useAuthSignInModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.authSignInModal.open());
@@ -21,7 +21,7 @@ describe('useAuthSignInModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => useAuthSignInModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.authSignInModal.open());
@@ -29,7 +29,6 @@ describe('useAuthSignInModal', () => {
     await waitFor(() =>
       expect(screen.getByTestId('Modal')).toMatchInlineSnapshot(`
         <div
-          aria-labelledby="headlessui-dialog-title-:rh:"
           aria-modal="true"
           class="relative z-30"
           data-headlessui-state="open"

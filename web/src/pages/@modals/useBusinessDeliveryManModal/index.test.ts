@@ -7,7 +7,7 @@ import { getWrapper } from 'utils/test-utils';
 describe('useBusinessDeliveryManModal', () => {
   it('should close when click on the close button', async () => {
     const { result } = renderHook(() => useBusinessDeliveryManModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.businessDeliveryManModal.open());
@@ -21,7 +21,7 @@ describe('useBusinessDeliveryManModal', () => {
 
   it('should match snapshot', async () => {
     const { result } = renderHook(() => useBusinessDeliveryManModal(), {
-      wrapper: getWrapper({ useRouter: true, useModal: true }),
+      wrapper: getWrapper({ useRouter: true, useModal: true })
     });
 
     act(() => result.current.businessDeliveryManModal.open());
@@ -29,6 +29,7 @@ describe('useBusinessDeliveryManModal', () => {
     await waitFor(() =>
       expect(screen.getByTestId('Modal')).toMatchInlineSnapshot(`
         <div
+          aria-labelledby="headlessui-dialog-title-:rh:"
           aria-modal="true"
           class="relative z-30"
           data-headlessui-state="open"

@@ -13,7 +13,7 @@ import { dummyPostClothing } from 'constants/dummies';
 import { FormikWrapper } from 'utils/storybook';
 
 export default {
-  component: ClothingProductGrid1,
+  component: ClothingProductGrid1
 };
 
 export const Default = (): JSX.Element => (
@@ -29,7 +29,7 @@ export const Default = (): JSX.Element => (
         clothingSize: (props) => <FieldClothingSizeSelect {...props} />,
         description: (props) => <ProductDescription1 {...props} />,
         highLights: (props) => <ProductHighLights1 {...props} />,
-        details: (props) => <ProductDetails1 {...props} />,
+        details: (props) => <ProductDetails1 {...props} />
       }}
     />
   </FormikWrapper>

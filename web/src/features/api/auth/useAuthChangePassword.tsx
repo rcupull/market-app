@@ -17,12 +17,12 @@ export const useAuthChangePassword = (): {
           {
             method: 'post',
             url: getEndpoint({ path: '/auth/change-password' }),
-            data: { newPassword },
+            data: { newPassword }
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

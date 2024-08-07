@@ -20,14 +20,14 @@ export interface DeliveryDataProps extends StyleProps {
 export const DeliveryData = ({
   className,
   onChangeTakeDelivery,
-  takeDelivery,
+  takeDelivery
 }: DeliveryDataProps) => {
   const { business } = useBusiness();
-  const { authData } = useAuth();
+  const { user } = useAuth();
   const { businessDeliveryModal } = useBusinessDeliveryModal();
 
   const isEnabledDelivery = getDeliveryUtils().getIsEnabled({
-    deliveryConfig: business?.deliveryConfig,
+    deliveryConfig: business?.deliveryConfig
   });
 
   const deliveryType = business?.deliveryConfig?.type;
@@ -51,7 +51,7 @@ export const DeliveryData = ({
   const renderDeliveryMessage = ({
     message,
     type,
-    checkboxNode,
+    checkboxNode
   }: {
     type: DeliveryConfigType;
     message: React.ReactNode;
@@ -71,7 +71,7 @@ export const DeliveryData = ({
 
   const distance = getDistance({
     businessAddress: business?.addresses?.[0],
-    userAddress: authData?.user?.addresses?.[0],
+    userAddress: user?.addresses?.[0]
   });
 
   //////////////////////////////////////////////////////////////////////////////////////////
@@ -101,7 +101,7 @@ export const DeliveryData = ({
       {renderDeliveryMessage({
         type: DeliveryConfigType.REQUIRED,
         message: 'La entrega al domicilio es obligatoria para todos los productos en este negocio.',
-        checkboxNode: null,
+        checkboxNode: null
       })}
 
       {renderDeliveryMessage({
@@ -118,7 +118,7 @@ export const DeliveryData = ({
             onChange={(e) => onChangeTakeDelivery(e.target.checked)}
             value={takeDelivery}
           />
-        ),
+        )
       })}
 
       {renderDeliveryMessage({
@@ -131,7 +131,7 @@ export const DeliveryData = ({
             onChange={(e) => onChangeTakeDelivery(e.target.checked)}
             value={takeDelivery}
           />
-        ),
+        )
       })}
 
       {renderDeliveryMessage({
@@ -141,7 +141,7 @@ export const DeliveryData = ({
             Este negocio no ofrece servicio de entrega al domicilio.
           </span>
         ),
-        checkboxNode: null,
+        checkboxNode: null
       })}
 
       {renderDeliveryPrice()}

@@ -22,16 +22,16 @@ export const useUpdateUserAccessAdmin = (): {
             method: 'put',
             url: getEndpoint({
               path: '/admin/users/:userId/access',
-              urlParams: { userId },
+              urlParams: { userId }
             }),
             data: {
-              specialAccess,
-            },
+              specialAccess
+            }
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

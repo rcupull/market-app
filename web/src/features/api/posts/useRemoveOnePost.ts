@@ -10,9 +10,9 @@ export const useRemoveOnePost = (): {
 } => {
   const fetch = useFetch();
 
-  const { authData } = useAuth();
+  const { user } = useAuth();
 
-  const userId = authData?.user._id || '<unknow user>';
+  const userId = user?._id || '<unknow user>';
 
   return {
     removeOnePost: {
@@ -24,13 +24,13 @@ export const useRemoveOnePost = (): {
             method: 'delete',
             url: getEndpoint({
               path: '/posts/:id',
-              urlParams: { id, userId },
-            }),
+              urlParams: { id, userId }
+            })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

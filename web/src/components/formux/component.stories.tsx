@@ -8,7 +8,7 @@ import { Formux } from '.';
 import { ShoppingState } from 'types/shopping';
 
 export default {
-  component: Formux,
+  component: Formux
 };
 
 export const Default = (): JSX.Element => {
@@ -32,16 +32,16 @@ export const Default = (): JSX.Element => {
                 items={[
                   {
                     value: ShoppingState.CONSTRUCTION,
-                    label: 'Entregado',
+                    label: 'Entregado'
                   },
                   {
                     value: ShoppingState.CANCELED,
-                    label: 'Cancelado',
+                    label: 'Cancelado'
                   },
                   {
                     value: ShoppingState.REQUESTED,
-                    label: 'Solicitado',
-                  },
+                    label: 'Solicitado'
+                  }
                 ]}
               />
             </form>
@@ -64,16 +64,16 @@ export const Default = (): JSX.Element => {
                 items={[
                   {
                     value: ShoppingState.CONSTRUCTION,
-                    label: 'Entregado',
+                    label: 'Entregado'
                   },
                   {
                     value: ShoppingState.CANCELED,
-                    label: 'Cancelado',
+                    label: 'Cancelado'
                   },
                   {
                     value: ShoppingState.REQUESTED,
-                    label: 'Solicitado',
-                  },
+                    label: 'Solicitado'
+                  }
                 ]}
               />
             </form>

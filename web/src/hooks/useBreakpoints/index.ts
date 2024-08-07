@@ -17,7 +17,7 @@ export const useBreakpoints = (args?: { sweep?: boolean }): UseBreakpointsReturn
     useBreakpoint('md'),
     useBreakpoint('lg'),
     useBreakpoint('xl'),
-    useBreakpoint('2xl'),
+    useBreakpoint('2xl')
   ];
 
   const getBreakpointValue = (index: number): boolean => {
@@ -37,6 +37,6 @@ export const useBreakpoints = (args?: { sweep?: boolean }): UseBreakpointsReturn
     md: getBreakpointValue(2),
     lg: getBreakpointValue(3),
     xl: getBreakpointValue(4),
-    xxl: getBreakpointValue(5),
+    xxl: getBreakpointValue(5)
   };
 };

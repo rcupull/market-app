@@ -16,11 +16,11 @@ export interface ReviewSummaryViewProps extends StyleProps {
 export const ReviewSummaryView = ({
   reviewSummary,
   className,
-  onAddReview,
+  onAddReview
 }: ReviewSummaryViewProps) => {
   const { starSummary, reviewerIds } = reviewSummary || {};
 
-  const { authData } = useAuth();
+  const { user } = useAuth();
 
   const { average, totalCount } = useMemo(() => {
     let totalCount = 0;
@@ -33,11 +33,11 @@ export const ReviewSummaryView = ({
 
     return {
       totalCount,
-      average: totalSum / totalCount,
+      average: totalSum / totalCount
     };
   }, [JSON.stringify(starSummary)]);
 
-  const alreadyReviewed = authData?.user && reviewerIds?.includes(authData?.user._id);
+  const alreadyReviewed = user && reviewerIds?.includes(user?._id);
 
   return (
     <div className={className}>

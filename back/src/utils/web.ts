@@ -2,7 +2,7 @@ import { hostname } from '../config';
 
 export const getShoppingUrl = ({
   routeName,
-  shoppingId,
+  shoppingId
 }: {
   routeName: string;
   shoppingId: string;

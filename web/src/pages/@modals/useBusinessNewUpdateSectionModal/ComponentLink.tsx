@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { ButtonSave } from 'components/button-save';
 import { Divider } from 'components/divider';
 import { FieldCheckbox } from 'components/field-checkbox';
@@ -8,7 +10,7 @@ import { Formux } from 'components/formux';
 
 import { useAddBusinessSection } from 'features/api/business/useAddBusinessSection';
 import { useUpdateBusinessSection } from 'features/api/business/useUpdateBusinessSection';
-import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
+import { useCloseContext } from 'features/modal/closeContext/useCloseContext';
 
 import { Portal } from 'hooks/usePortal';
 
@@ -30,13 +32,15 @@ export const ComponentLink = ({
   portal,
   section,
   onAfterSuccess,
-  className,
+  className
 }: ComponentLinkProps) => {
   const { business } = useBusiness();
   const { updateBusinessSection } = useUpdateBusinessSection();
   const { addBusinessSection } = useAddBusinessSection();
 
   const { onChangeUnsavedChanges } = useCloseContext();
+
+  const postCategoriesTag = useMemo(getRandomHash, []);
 
   return (
     <Formux<State>
@@ -47,21 +51,21 @@ export const ComponentLink = ({
           metaLayout: 'verticalCentered',
           price: 'none',
           shoppingMethod: 'none',
-          size: 'medium',
+          size: 'medium'
         },
-        postCategoriesTags: [getRandomHash()],
+        postCategoriesTags: [postCategoriesTag],
         searchLayout: undefined,
         type: 'oneRowSlider',
         showMobile: true,
         showPC: true,
         postType: 'link',
-        ...(section || {}),
+        ...(section || {})
       }}
       validate={[
         {
           field: 'name',
-          type: 'required',
-        },
+          type: 'required'
+        }
       ]}
     >
       {({ value, hasChange }) => {
@@ -112,7 +116,7 @@ export const ComponentLink = ({
                         {
                           routeName: business.routeName,
                           sectionId: section._id,
-                          data: value,
+                          data: value
                         },
                         { onAfterSuccess }
                       )

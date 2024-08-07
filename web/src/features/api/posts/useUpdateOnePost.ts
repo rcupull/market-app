@@ -31,9 +31,9 @@ export const useUpdateOnePost = (): {
 } => {
   const fetch = useFetch();
 
-  const { authData } = useAuth();
+  const { user } = useAuth();
 
-  const userId = authData?.user._id || '<unknow user>';
+  const userId = user?._id || '<unknow user>';
 
   return {
     updateOnePost: {
@@ -45,14 +45,14 @@ export const useUpdateOnePost = (): {
             method: 'put',
             url: getEndpoint({
               path: '/posts/:postId',
-              urlParams: { postId, userId },
+              urlParams: { postId, userId }
             }),
-            data,
+            data
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

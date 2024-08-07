@@ -7,7 +7,8 @@ import { useSwiperProps } from './useSwiperProps';
 import { Business, PostsLayoutSection } from 'types/business';
 import { StyleProps } from 'types/general';
 import { Post } from 'types/post';
-import { getOneBusinessRoute, getOnePostRoute } from 'utils/business';
+import { getOnePostRoute } from 'utils/business';
+import { getRedirectLinkFromPostLink } from 'utils/products';
 
 export interface PostsSectionCardsProps extends StyleProps {
   posts: Array<Post> | null;
@@ -20,7 +21,7 @@ export const PostsSectionCards = ({
   business,
   posts,
   layout,
-  onRefresh,
+  onRefresh
 }: PostsSectionCardsProps) => {
   const { routeName, currency } = business;
   const { type, postType } = layout;
@@ -33,21 +34,7 @@ export const PostsSectionCards = ({
     }
 
     if (postType === 'link') {
-      const { type, value } = postLink || {};
-      if (!value) {
-        console.log('should has some value in href');
-        return '#';
-      }
-
-      if (type === 'external') {
-        return value;
-      }
-
-      if (type === 'business') {
-        return getOneBusinessRoute({ routeName: value });
-      }
-
-      return '#';
+      return getRedirectLinkFromPostLink(postLink);
     }
 
     return '#';
@@ -69,7 +56,7 @@ export const PostsSectionCards = ({
                 href={getPostHref(post)}
                 onRefresh={onRefresh}
               />
-            ),
+            )
           };
         })}
         {...extraProps}

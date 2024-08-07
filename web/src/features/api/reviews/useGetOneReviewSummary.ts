@@ -19,13 +19,13 @@ export const useGetOneReviewSummary = (): {
             method: 'get',
             url: getEndpoint({
               path: '/reviews/summary',
-              query,
-            }),
+              query
+            })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

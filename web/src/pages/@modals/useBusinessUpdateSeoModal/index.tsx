@@ -15,24 +15,20 @@ export const useBusinessUpdateSeoModal = () => {
   return {
     businessUpdateSeoModal: {
       open: () => {
-        pushModal(
-          'Emergent',
-          {
-            useProps: () => {
-              const portal = usePortal();
+        pushModal('Emergent', {
+          useProps: () => {
+            const portal = usePortal();
 
-              return {
-                title: 'Optimización de motores de búsqueda',
-                content: <Component portal={portal} />,
-                secondaryBtn: <ButtonClose />,
-                primaryBtn: <div ref={portal.ref} />,
-                className: '!w-[95vw] !max-w-[40rem]',
-              };
-            },
-          },
-          { emergent: true }
-        );
-      },
-    },
+            return {
+              title: 'Optimización de motores de búsqueda',
+              content: <Component portal={portal} />,
+              secondaryBtn: <ButtonClose />,
+              primaryBtn: <div ref={portal.ref} />,
+              className: '!w-[95vw] !max-w-[40rem]'
+            };
+          }
+        });
+      }
+    }
   };
 };

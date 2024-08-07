@@ -6,12 +6,12 @@ import {
   get400Response,
   getBusinessNotFoundResponse,
   getPostNotFoundResponse,
-  getUserNotFoundResponse,
+  getUserNotFoundResponse
 } from '../../utils/server-response';
 import {
   reviewServicesAddOne,
   reviewServicesGetAll,
-  reviewServicesGetAllWithPagination,
+  reviewServicesGetAllWithPagination
 } from './services';
 import { Review, ReviewDto, ReviewSummary, ReviewType } from '../../types/reviews';
 import { postServicesGetOne } from '../post/services';
@@ -33,31 +33,29 @@ const get_reviews: () => RequestHandler = () => {
         return get400Response({
           res,
           json: {
-            message: 'Please provide a postId or a routeName',
-          },
+            message: 'Please provide a postId or a routeName'
+          }
         });
       }
 
       const response = await reviewServicesGetAllWithPagination({
         paginateOptions,
         query: {
-          reviewed: postId || routeName,
-        },
+          reviewed: postId || routeName
+        }
       });
 
       const out = deepJsonCopy(response);
 
       const reviewersData: Array<Pick<User, 'name' | '_id'>> = await userServicesGetAll({
         query: {
-          _id: { $in: out.data.map(({ reviewerId }) => reviewerId) },
+          _id: { $in: out.data.map(({ reviewerId }) => reviewerId) }
         },
         projection: {
           name: 1,
-          _id: 1,
-        },
+          _id: 1
+        }
       });
-
-      console.log('reviewersData', reviewersData);
 
       const handleResolveDto = async (review: Review): Promise<ReviewDto> => {
         const { reviewerId } = review;
@@ -65,7 +63,7 @@ const get_reviews: () => RequestHandler = () => {
 
         return {
           ...review,
-          reviewerName: reviewer?.name,
+          reviewerName: reviewer?.name
         };
       };
 
@@ -93,20 +91,20 @@ const get_reviews_summary: () => RequestHandler = () => {
         return get400Response({
           res,
           json: {
-            message: 'Please provide a postId or a routeName',
-          },
+            message: 'Please provide a postId or a routeName'
+          }
         });
       }
 
       const allReview = await reviewServicesGetAll({
         query: {
-          reviewed: postId || routeName,
-        },
+          reviewed: postId || routeName
+        }
       });
 
       const out: ReviewSummary = {
         starSummary: [0, 0, 0, 0, 0],
-        reviewerIds: [],
+        reviewerIds: []
       };
 
       allReview.forEach(({ star, reviewerId }) => {
@@ -135,8 +133,8 @@ const post_reviews: () => RequestHandler = () => {
 
       const userReviews = await reviewServicesGetAll({
         query: {
-          reviewerId: user._id,
-        },
+          reviewerId: user._id
+        }
       });
 
       if (postId) {
@@ -146,17 +144,17 @@ const post_reviews: () => RequestHandler = () => {
           return get400Response({
             res,
             json: {
-              message: 'You have already reviewed this post',
-            },
+              message: 'You have already reviewed this post'
+            }
           });
         }
         const postData: Pick<Post, '_id'> | null = await postServicesGetOne({
           query: {
-            _id: postId,
+            _id: postId
           },
           projection: {
-            _id: true,
-          },
+            _id: true
+          }
         });
 
         if (!postData) {
@@ -168,7 +166,7 @@ const post_reviews: () => RequestHandler = () => {
           type: ReviewType.PRODUCT,
           reviewed: postData._id.toString(),
           comment,
-          star,
+          star
         });
       }
 
@@ -179,18 +177,18 @@ const post_reviews: () => RequestHandler = () => {
           return get400Response({
             res,
             json: {
-              message: 'You have already reviewed this business',
-            },
+              message: 'You have already reviewed this business'
+            }
           });
         }
 
         const businessData: Pick<Business, '_id'> | null = await businessServicesFindOne({
           query: {
-            routeName,
+            routeName
           },
           projection: {
-            _id: true,
-          },
+            _id: true
+          }
         });
 
         if (!businessData) {
@@ -202,13 +200,13 @@ const post_reviews: () => RequestHandler = () => {
           type: ReviewType.BUSINESS,
           reviewed: routeName,
           comment,
-          star,
+          star
         });
       }
 
       get200Response({
         res,
-        json: {},
+        json: {}
       });
     });
   };
@@ -217,5 +215,5 @@ const post_reviews: () => RequestHandler = () => {
 export const reviewsHandles = {
   get_reviews,
   post_reviews,
-  get_reviews_summary,
+  get_reviews_summary
 };

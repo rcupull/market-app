@@ -32,7 +32,7 @@ export const Products = () => {
 
   const infiniteScrolling = useInfiniteScrolling({
     fetchPaginatedResources: getAllPosts,
-    onFetch: ({ page }) => filters.onMergeFilters({ page }),
+    onFetch: ({ page }) => filters.onMergeFilters({ page })
   });
 
   const filters = useFiltersVolatile<GetAllPostsQuery>({
@@ -42,9 +42,9 @@ export const Products = () => {
           postType: 'product',
           includeHidden: true,
           routeNames: [business.routeName],
-          ...filters,
+          ...filters
         });
-    },
+    }
   });
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export const Products = () => {
   };
 
   const tableCellCategoriesTags = useTableCellCategoriesTags({
-    business,
+    business
   });
 
   const buttonNew = (
@@ -66,7 +66,7 @@ export const Products = () => {
         onClick={() => {
           businessNewUpdatePostModal.open({
             postType: 'product',
-            onAfterSuccess: () => onRefreshForce(),
+            onAfterSuccess: () => onRefreshForce()
           });
         }}
         className="ml-auto hidden sm:block"
@@ -76,7 +76,7 @@ export const Products = () => {
         onClick={() => {
           businessNewUpdatePostModal.open({
             postType: 'product',
-            onAfterSuccess: () => onRefreshForce(),
+            onAfterSuccess: () => onRefreshForce()
           });
         }}
         variant="primary"
@@ -109,14 +109,13 @@ export const Products = () => {
       >
         {({ getDisabledOverlay, tablePropsProcessor, bulkActionNode, selectAllNode }) => (
           <>
-            <div className="flex items-center justify-between mb-1">
-              {bulkActionNode}
-              {getDisabledOverlay(
-                <TopActions>
-                  {buttonNew}
-                  {buttonRefresh}
-                </TopActions>
-              )}
+            <div className="flex items-center justify-end mb-1">
+              <TopActions className="!w-fit">
+                {getDisabledOverlay(buttonNew)}
+                {getDisabledOverlay(buttonRefresh)}
+
+                {bulkActionNode}
+              </TopActions>
             </div>
 
             <Filters
@@ -128,24 +127,16 @@ export const Products = () => {
             <div className="my-2 flex justify-center">{selectAllNode}</div>
 
             <Table
-              className="!max-h-[calc(100vh-25rem)]"
               propsPreprocessors={[tablePropsProcessor]}
               remapRowsIndex={{
                 xs: [[0, 1, 2, 3, 4, 5]],
                 sm: [
                   [0, 1, 2, 3],
-                  [4, 5],
+                  [4, 5]
                 ],
-                lg: 'none',
+                lg: 'none'
               }}
-              heads={[
-                'Acciones',
-                'Nombre',
-                'Categorías',
-                'Imágen',
-                'Fecha de Creación',
-                'Detalles',
-              ]}
+              heads={['Acciones', 'Nombre', 'Categorías', 'Imágen', 'Creación', 'Detalles']}
               getRowProps={(rowData) => {
                 const { name, createdAt, postCategoriesTags, hidden, images } = rowData;
 
@@ -153,7 +144,7 @@ export const Products = () => {
 
                 return {
                   className: cn({
-                    'bg-gray-100': hidden,
+                    'bg-gray-100': hidden
                   }),
                   nodes: [
                     <RowActions
@@ -177,8 +168,8 @@ export const Products = () => {
                       rowData={rowData}
                       business={business}
                       onRefresh={filters.onRefresh}
-                    />,
-                  ],
+                    />
+                  ]
                 };
               }}
               data={infiniteScrolling.data}

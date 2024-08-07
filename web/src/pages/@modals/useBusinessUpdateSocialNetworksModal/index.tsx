@@ -16,23 +16,19 @@ export const useBusinessUpdateSocialNetworksModal = () => {
   return {
     businessUpdateSocialNetworksModal: {
       open: (options?: FetchOptions) => {
-        pushModal(
-          'Emergent',
-          {
-            useProps: () => {
-              const portal = usePortal();
+        pushModal('Emergent', {
+          useProps: () => {
+            const portal = usePortal();
 
-              return {
-                title: 'Redes sociales',
-                content: <Component portal={portal} options={options} />,
-                secondaryBtn: <ButtonClose />,
-                primaryBtn: <div ref={portal.ref} />,
-              };
-            },
-          },
-          { emergent: true }
-        );
-      },
-    },
+            return {
+              title: 'Redes sociales',
+              content: <Component portal={portal} options={options} />,
+              secondaryBtn: <ButtonClose />,
+              primaryBtn: <div ref={portal.ref} />
+            };
+          }
+        });
+      }
+    }
   };
 };

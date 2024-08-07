@@ -7,7 +7,6 @@ import { useGetAllUsersAdmin } from 'features/api/admin/useGetAllUsersAdmin';
 
 import { RowActions } from './RowActions';
 
-import { LayoutPageSection } from 'pages/@common/layout-page-section';
 import { TopActions } from 'pages/@common/top-actions';
 import { User } from 'types/auth';
 import { getDateString } from 'utils/date';
@@ -22,7 +21,7 @@ export const Users = () => {
   }, []);
 
   return (
-    <LayoutPageSection title="Usuarios">
+    <>
       <TopActions className="justify-end mb-2">
         <ButtonRefresh onClick={onRefresh} isBusy={getAllUsersAdmin.status.isBusy} />
       </TopActions>
@@ -30,9 +29,9 @@ export const Users = () => {
       <Table<User>
         remapRowsIndex={{
           xs: [[0, 1, 2, 3, 4]],
-          xl: 'none',
+          lg: 'none'
         }}
-        heads={['Acciones', 'Nombre', 'Email', 'Validado', 'Fecha de Creación']}
+        heads={['Acciones', 'Nombre', 'Email', 'Validado', 'Creación']}
         getRowProps={(rowData) => {
           const { name, createdAt, email, validated } = rowData;
 
@@ -42,13 +41,13 @@ export const Users = () => {
               name,
               email,
               `${validated}`,
-              getDateString({ date: createdAt, showTime: true }),
-            ],
+              getDateString({ date: createdAt, showTime: true })
+            ]
           };
         }}
         data={getAllUsersAdmin.data}
       />
-    </LayoutPageSection>
+    </>
   );
 };
 

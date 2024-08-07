@@ -35,7 +35,7 @@ export const DateTimePicker = ({
   preview,
   showPreviewDate,
   className,
-  defaulthours = 'start',
+  defaulthours = 'start'
 }: DateTimePickerProps): JSX.Element => {
   const allowMinDate =
     allowDaysBeforeNow === undefined ? undefined : addDays(new Date(), -allowDaysBeforeNow);
@@ -75,7 +75,7 @@ export const DateTimePicker = ({
         preview && {
           startDate: preview?.startDate === undefined ? undefined : new Date(preview?.startDate),
           endDate: preview?.endDate === undefined ? undefined : new Date(preview?.endDate),
-          color: preview?.color,
+          color: preview?.color
         }
       }
       className={className}

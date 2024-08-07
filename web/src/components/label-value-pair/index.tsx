@@ -13,7 +13,7 @@ export const LabelValuePair = ({
   value,
   className,
   variant = 'default',
-  layout = 'default',
+  layout = 'default'
 }: LabelValuePairProps) => {
   if (layout === 'kpi') {
     return (
@@ -21,7 +21,7 @@ export const LabelValuePair = ({
         className={cn('flex flex-col items-center', className, {
           'text-red-700': variant === 'error',
           'text-green-700': variant === 'success',
-          'text-indigo-700': variant === 'primary',
+          'text-indigo-700': variant === 'primary'
         })}
       >
         <span className="font-bold">{label}</span>
@@ -35,7 +35,7 @@ export const LabelValuePair = ({
       className={cn('flex items-center', className, {
         'text-red-700': variant === 'error',
         'text-green-700': variant === 'success',
-        'text-indigo-700': variant === 'primary',
+        'text-indigo-700': variant === 'primary'
       })}
     >
       <span className="font-bold">{label}:</span>

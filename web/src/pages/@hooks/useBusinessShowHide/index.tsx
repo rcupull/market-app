@@ -21,50 +21,46 @@ export const useBusinessShowHide = (): {
 
       const { onAfterSuccess } = options || {};
 
-      pushModal(
-        'Confirmation',
-        {
-          useProps: () => {
-            const { onClose } = useModal();
-            const { updateOneBusiness } = useUpdateOneBusiness();
-            const { updateOneBusinessAdmin } = useUpdateOneBusinessAdmin();
-            const { getIsAdmin, user } = useAuth();
+      pushModal('Confirmation', {
+        useProps: () => {
+          const { onClose } = useModal();
+          const { updateOneBusiness } = useUpdateOneBusiness();
+          const { updateOneBusinessAdmin } = useUpdateOneBusinessAdmin();
+          const { getIsAdmin, user } = useAuth();
 
-            const apiResource = getIsAdmin(user) ? updateOneBusinessAdmin : updateOneBusiness;
+          const apiResource = getIsAdmin(user) ? updateOneBusinessAdmin : updateOneBusiness;
 
-            return {
-              className: 'max-w-lg',
-              content: hidden
-                ? 'Esta función mostrará todas tus publicaciones que no estén propiamente ocultas. ¿Estás seguro de continuar?'
-                : 'Esta función ocultará todas tus publicaciones. ¿Estás seguro de continuar?',
-              badge: <Badge variant="warning" />,
-              primaryBtn: (
-                <Button
-                  label={hidden ? 'Mostrar' : 'Ocultar'}
-                  isBusy={apiResource.status.isBusy}
-                  onClick={() => {
-                    apiResource.fetch(
-                      {
-                        routeName,
-                        update: {
-                          hidden: !hidden,
-                        },
-                      },
-                      {
-                        onAfterSuccess: (response) => {
-                          onAfterSuccess?.(response);
-                          onClose();
-                        },
+          return {
+            className: 'max-w-lg',
+            content: hidden
+              ? 'Esta función mostrará todas tus publicaciones que no estén propiamente ocultas. ¿Estás seguro de continuar?'
+              : 'Esta función ocultará todas tus publicaciones. ¿Estás seguro de continuar?',
+            badge: <Badge variant="warning" />,
+            primaryBtn: (
+              <Button
+                label={hidden ? 'Mostrar' : 'Ocultar'}
+                isBusy={apiResource.status.isBusy}
+                onClick={() => {
+                  apiResource.fetch(
+                    {
+                      routeName,
+                      update: {
+                        hidden: !hidden
                       }
-                    );
-                  }}
-                />
-              ),
-            };
-          },
-        },
-        { emergent: true }
-      );
-    },
+                    },
+                    {
+                      onAfterSuccess: (response) => {
+                        onAfterSuccess?.(response);
+                        onClose();
+                      }
+                    }
+                  );
+                }}
+              />
+            )
+          };
+        }
+      });
+    }
   };
 };

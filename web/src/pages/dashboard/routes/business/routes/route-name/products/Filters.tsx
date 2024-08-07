@@ -49,7 +49,7 @@ export const Filters = ({ business, onChange, value, className }: FiltersProps) 
           page: 1,
           postCategoriesTags: undefined,
           postCategoriesMethod: undefined,
-          search: undefined,
+          search: undefined
         });
 
         setSearch('');
@@ -64,7 +64,7 @@ export const Filters = ({ business, onChange, value, className }: FiltersProps) 
               onChange?.({
                 page: 1,
                 postCategoriesTags: undefined,
-                postCategoriesMethod: undefined,
+                postCategoriesMethod: undefined
               });
               setFilterType(newFilterType);
             }}
@@ -76,12 +76,12 @@ export const Filters = ({ business, onChange, value, className }: FiltersProps) 
             items={[
               {
                 label: 'Filtrar por categorías',
-                value: 'categories',
+                value: 'categories'
               },
               {
                 label: 'Filtrar por secciones',
-                value: 'section',
-              },
+                value: 'section'
+              }
             ]}
             className="flex items-center gap-2 mb-5"
           />
@@ -106,7 +106,7 @@ export const Filters = ({ business, onChange, value, className }: FiltersProps) 
               onChange?.({
                 page: 1,
                 postCategoriesTags: section.postCategoriesTags,
-                postCategoriesMethod: 'some',
+                postCategoriesMethod: 'some'
               });
             }}
             items={sections}

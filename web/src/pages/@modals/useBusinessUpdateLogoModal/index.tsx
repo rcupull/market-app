@@ -15,22 +15,18 @@ export const useBusinessUpdateLogoModal = () => {
   return {
     businessUpdateLogoModal: {
       open: () => {
-        pushModal(
-          'Emergent',
-          {
-            useProps: () => {
-              const portal = usePortal();
-              return {
-                title: 'Logo',
-                content: <Component portal={portal} />,
-                secondaryBtn: <ButtonClose />,
-                primaryBtn: <div ref={portal.ref} />,
-              };
-            },
-          },
-          { emergent: true }
-        );
-      },
-    },
+        pushModal('Emergent', {
+          useProps: () => {
+            const portal = usePortal();
+            return {
+              title: 'Logo',
+              content: <Component portal={portal} />,
+              secondaryBtn: <ButtonClose />,
+              primaryBtn: <div ref={portal.ref} />
+            };
+          }
+        });
+      }
+    }
   };
 };

@@ -1,6 +1,6 @@
 import {
   Pagination as PaginationBase,
-  PaginationProps as PaginationBaseprops,
+  PaginationProps as PaginationBaseprops
 } from 'components/pagination';
 
 import { UseFiltersReturn } from 'hooks/useFilters';

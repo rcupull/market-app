@@ -8,7 +8,7 @@ import { getDateString } from 'utils/date';
 const renderState = ({
   state,
   lastUpdatedDate,
-  current,
+  current
 }: {
   state: ShoppingState;
   lastUpdatedDate?: string;
@@ -42,7 +42,7 @@ export interface ShoppingStateHistoryViewProps {
 
 export const ShoppingStateHistoryView = ({
   state,
-  history = [],
+  history = []
 }: ShoppingStateHistoryViewProps) => {
   return (
     <div className="flex flex-col-reverse">

@@ -13,7 +13,7 @@ export const NlpSearch = ({ className }: NlpSearchProps) => {
   const { nlpSearch } = useNlpSearch();
 
   const filters = useFiltersVolatile<FilterQuery>({
-    onChange: (query) => nlpSearch.fetch(query),
+    onChange: (query) => nlpSearch.fetch(query)
   });
 
   return (

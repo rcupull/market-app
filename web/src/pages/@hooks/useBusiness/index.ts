@@ -21,12 +21,12 @@ export const useBusiness = (): {
   }) => Array<PostsLayoutSection>;
 } => {
   const { getOneBusiness } = useGetOneBusiness();
-  const { authData } = useAuth();
+  const { user } = useAuth();
 
   const { data, status, reset, fetch } = useApiPersistent('useBusiness', getOneBusiness);
 
   return {
-    owner: authData?.user._id === data?.createdBy,
+    owner: user?._id === data?.createdBy,
     onFetch: ({ routeName }, options) => fetch({ routeName }, options),
     onReset: reset,
     status,
@@ -50,6 +50,6 @@ export const useBusiness = (): {
       }
 
       return out;
-    },
+    }
   };
 };

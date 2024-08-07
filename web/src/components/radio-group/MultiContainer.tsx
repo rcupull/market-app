@@ -15,7 +15,7 @@ export const MultiContainer = <O extends any = any>({
   children,
   value,
   items,
-  optionToValue,
+  optionToValue
 }: MultiContainerProps<O>) => {
   const [selected, setSelected] = useState<State>({});
 
@@ -35,7 +35,7 @@ export const MultiContainer = <O extends any = any>({
 
           return {
             ...acc,
-            [index]: exist,
+            [index]: exist
           };
         }, {})
       );

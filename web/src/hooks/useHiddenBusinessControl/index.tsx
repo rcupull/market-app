@@ -22,7 +22,7 @@ export interface HiddenBusinessControl {
 
 export const useHiddenBusinessControl = ({
   onRefresh,
-  fetchStatus,
+  fetchStatus
 }: {
   onRefresh: OnRefresh;
   fetchStatus: FetchStatus;
@@ -42,43 +42,39 @@ export const useHiddenBusinessControl = ({
       return onRefresh();
     }
 
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { onClose } = useModal();
+    pushModal('Confirmation', {
+      useProps: () => {
+        const { onClose } = useModal();
 
-          return {
-            className: 'max-w-lg',
-            content:
-              'Seguro que desea actualizar la tabla?. Serán perdidos todos los cambios hechos hasta el momento',
-            badge: <Badge variant="error" />,
-            primaryBtn: (
-              <ButtonRemove
-                label="Actualizar"
-                onClick={() => {
-                  onRefresh();
-                  onClose();
-                }}
-              />
-            ),
-          };
-        },
-      },
-      { emergent: true }
-    );
+        return {
+          className: 'max-w-lg',
+          content:
+            'Seguro que desea actualizar la tabla?. Serán perdidos todos los cambios hechos hasta el momento',
+          badge: <Badge variant="error" />,
+          primaryBtn: (
+            <ButtonRemove
+              label="Actualizar"
+              onClick={() => {
+                onRefresh();
+                onClose();
+              }}
+            />
+          )
+        };
+      }
+    });
   };
 
   const handleSubmitCall = () => {
     updateManyBussiness.fetch(
       Object.entries(state).map(([key, value]) => ({
         routeName: key,
-        hidden: value,
+        hidden: value
       })),
       {
         onAfterSuccess: () => {
           onRefresh();
-        },
+        }
       }
     );
   };
@@ -94,31 +90,27 @@ export const useHiddenBusinessControl = ({
     }
 
     // if some are to hide, then we need to show with confirmation
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { onClose } = useModal();
+    pushModal('Confirmation', {
+      useProps: () => {
+        const { onClose } = useModal();
 
-          return {
-            className: 'max-w-lg',
-            content:
-              'Ocultar los negocios ocultará tambien las publicaciones de dichos negocios. ¿Seguro que desea ocultar?',
-            badge: <Badge variant="error" />,
-            primaryBtn: (
-              <ButtonRemove
-                label="Ocultar"
-                onClick={() => {
-                  handleSubmitCall();
-                  onClose();
-                }}
-              />
-            ),
-          };
-        },
-      },
-      { emergent: true }
-    );
+        return {
+          className: 'max-w-lg',
+          content:
+            'Ocultar los negocios ocultará tambien las publicaciones de dichos negocios. ¿Seguro que desea ocultar?',
+          badge: <Badge variant="error" />,
+          primaryBtn: (
+            <ButtonRemove
+              label="Ocultar"
+              onClick={() => {
+                handleSubmitCall();
+                onClose();
+              }}
+            />
+          )
+        };
+      }
+    });
   };
 
   const isHidden = ({ hidden, routeName }: Business): boolean => {
@@ -145,13 +137,13 @@ export const useHiddenBusinessControl = ({
           }
 
           setState(newState);
-        },
+        }
       };
     },
     onGetHiddenTableRowStyles: (value: Business) => {
       return cn({
-        'bg-gray-100 text-gray-400': isHidden(value),
+        'bg-gray-100 text-gray-400': isHidden(value)
       });
-    },
+    }
   };
 };

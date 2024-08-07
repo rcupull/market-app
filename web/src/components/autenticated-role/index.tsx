@@ -11,22 +11,22 @@ import { ChildrenProp } from 'types/general';
 
 export const AutenticatedRole = ({
   children,
-  roles,
+  roles
 }: ChildrenProp & { roles: Array<UserRole> }) => {
-  const { authData } = useAuth();
+  const { user } = useAuth();
   const { pathname } = useRouter();
 
   const { authSignInModal } = useAuthSignInModal();
 
-  const role = authData?.user?.role;
+  const role = user?.role;
 
   useEffect(() => {
-    if (!authData) {
+    if (!user) {
       authSignInModal.open({ redirect: pathname });
     }
-  }, [authData]);
+  }, [user]);
 
-  if (!authData) {
+  if (!user) {
     return <Navigate to="/" />;
   }
 

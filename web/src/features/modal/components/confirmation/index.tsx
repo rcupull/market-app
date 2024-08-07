@@ -3,6 +3,8 @@ import { ButtonClose } from 'components/button-close';
 
 import { Emergent, EmergentProps } from '../emergent';
 
+import { cn } from 'utils/general';
+
 export interface ConfirmationProps extends EmergentProps {}
 
 export const Confirmation = ({ useProps }: ConfirmationProps) => {
@@ -12,6 +14,7 @@ export const Confirmation = ({ useProps }: ConfirmationProps) => {
     return {
       title: 'Confirmación',
       content: '<Mensaje de confirmación>',
+      windowType: 'confirmation',
       primaryBtn: (
         <Button
           label="Confirmar"
@@ -23,6 +26,7 @@ export const Confirmation = ({ useProps }: ConfirmationProps) => {
       ),
       secondaryBtn: <ButtonClose />,
       ...props,
+      className: cn('border-2 border-gray-300', props.className)
     };
   };
 

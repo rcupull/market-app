@@ -99,8 +99,8 @@ export const billingServicesGetBillDataFromShopping: QueryHandle<
       projection: {
         _id: 1,
         shoppingIds: 1,
-        state: 1,
-      },
+        state: 1
+      }
     }
   );
 
@@ -117,10 +117,10 @@ export const billingServicesGetBillDataFromShopping: QueryHandle<
       if (bill) {
         return {
           billId: bill._id,
-          billState: bill.state,
+          billState: bill.state
         };
       }
       return null;
-    },
+    }
   };
 };

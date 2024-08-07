@@ -19,12 +19,12 @@ export const useGetAllBusiness = (): {
         fetch[2](
           {
             method: 'get',
-            url: getEndpoint({ path: '/business', query: { limit: defaultLimit, ...query } }),
+            url: getEndpoint({ path: '/business', query: { limit: defaultLimit, ...query } })
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

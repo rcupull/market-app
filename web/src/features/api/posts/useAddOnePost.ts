@@ -30,9 +30,9 @@ export const useAddOnePost = (): {
 } => {
   const fetch = useFetch<Post>();
 
-  const { authData } = useAuth();
+  const { user } = useAuth();
 
-  const userId = authData?.user._id || '<unknow user>';
+  const userId = user?._id || '<unknow user>';
 
   return {
     addOnePost: {
@@ -44,14 +44,14 @@ export const useAddOnePost = (): {
             method: 'post',
             url: getEndpoint({
               path: '/posts',
-              urlParams: { userId },
+              urlParams: { userId }
             }),
-            data,
+            data
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

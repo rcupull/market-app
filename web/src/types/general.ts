@@ -38,6 +38,7 @@ declare global {
   const DEVELOPMENT: boolean;
   const PRODUCTION: boolean;
   const STAGING: boolean;
+  const TUNNEL: boolean;
 }
 
 export interface Address {

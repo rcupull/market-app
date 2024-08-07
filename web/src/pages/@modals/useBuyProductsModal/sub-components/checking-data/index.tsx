@@ -26,7 +26,7 @@ export const CheckingData = ({ nextBtnProps, backBtnProps }: CheckingDataProps) 
   const { business } = useBusiness();
   const [isValidPersonalData, setIsValidPersonalData] = useState(false);
   const [takeDelivery, setTakeDelivery] = useState(false);
-  const { authData } = useAuth();
+  const { user } = useAuth();
 
   if (!cart.constructionShopping) {
     return <></>;
@@ -63,7 +63,7 @@ export const CheckingData = ({ nextBtnProps, backBtnProps }: CheckingDataProps) 
 
               const getDelivery = (): ShoppingDelivery | undefined => {
                 const businessAddress = business.addresses?.[0];
-                const userAddress = authData?.user.addresses?.[0];
+                const userAddress = user?.addresses?.[0];
                 const deliveryType = business?.deliveryConfig?.type;
 
                 const { getDistance, getPrice } = getDeliveryUtils();
@@ -80,7 +80,7 @@ export const CheckingData = ({ nextBtnProps, backBtnProps }: CheckingDataProps) 
                 return {
                   deliveryType,
                   price,
-                  distance,
+                  distance
                 };
               };
 
@@ -90,7 +90,7 @@ export const CheckingData = ({ nextBtnProps, backBtnProps }: CheckingDataProps) 
                   onAfterSuccess: () => {
                     cart.onFetch();
                     nextBtnProps.onClick?.();
-                  },
+                  }
                 }
               );
             }}

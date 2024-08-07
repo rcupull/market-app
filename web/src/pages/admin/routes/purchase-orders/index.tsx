@@ -13,7 +13,6 @@ import { BulkActionsShopping } from './BulkActionsShopping';
 import { Filters } from './Filters';
 import { RowActions } from './RowActions';
 
-import { LayoutPageSection } from 'pages/@common/layout-page-section';
 import { ShoppingButtonStateHistory } from 'pages/@common/shopping-button-state-history';
 import { ShoppingStateLabel } from 'pages/@common/shopping-state-label';
 import { TopActions } from 'pages/@common/top-actions';
@@ -32,12 +31,12 @@ export const PurchaseOrders = () => {
   const filters = useFiltersVolatile<GetAllShoppingAdminQuery>({
     onChange: (filters) => {
       getAllShoppingAdmin.fetch(filters);
-    },
+    }
   });
 
   const infiniteScrolling = useInfiniteScrolling({
     fetchPaginatedResources: getAllShoppingAdmin,
-    onFetch: ({ page }) => filters.onMergeFilters({ page }),
+    onFetch: ({ page }) => filters.onMergeFilters({ page })
   });
 
   const onRefreshForce = () => {
@@ -54,7 +53,7 @@ export const PurchaseOrders = () => {
   };
 
   return (
-    <LayoutPageSection title="Órdenes de compra">
+    <>
       <BulkActionsShopping
         onRefresh={() => filters.onMergeFilters({ page: 1 }, { forceFetch: true })}
         filters={filters.value}
@@ -62,14 +61,17 @@ export const PurchaseOrders = () => {
         {({ getDisabledOverlay, bulkActionNode, selectAllNode, tablePropsProcessor }) => {
           return (
             <>
-              <div className="flex items-center justify-between mb-1">
-                {bulkActionNode}
-                {getDisabledOverlay(
-                  <ButtonRefresh
-                    onClick={() => onRefreshForce()}
-                    isBusy={getAllShoppingAdmin.status.isBusy}
-                  />
-                )}
+              <div className="flex justify-end">
+                <TopActions className="!w-fit">
+                  {getDisabledOverlay(
+                    <ButtonRefresh
+                      onClick={() => onRefreshForce()}
+                      isBusy={getAllShoppingAdmin.status.isBusy}
+                    />
+                  )}
+
+                  {bulkActionNode}
+                </TopActions>
               </div>
 
               {getDisabledOverlay(
@@ -84,15 +86,10 @@ export const PurchaseOrders = () => {
               <div className="mb-2 flex justify-center">{selectAllNode}</div>
 
               <Table<Shopping>
-                className="!max-h-[calc(100vh-25rem)]"
                 propsPreprocessors={[tablePropsProcessor]}
                 remapRowsIndex={{
                   xs: [[0, 1, 2, 3, 4, 5, 6, 7]],
-                  lg: [
-                    [0, 1, 2, 3],
-                    [4, 5, 6, 7],
-                  ],
-                  xl: 'none',
+                  lg: 'none'
                 }}
                 heads={[
                   'Acciones',
@@ -104,7 +101,7 @@ export const PurchaseOrders = () => {
                   'Unidades',
                   'Precio total',
                   'Facturación',
-                  'Fecha de creación',
+                  'Fecha de creación'
                 ]}
                 getRowProps={(rowData) => {
                   const { createdAt, purchaserName, state, routeName } = rowData;
@@ -134,8 +131,8 @@ export const PurchaseOrders = () => {
                         rowData={rowData}
                         onRefresh={onRefreshForce}
                       />,
-                      getDateString({ date: createdAt, showTime: true }),
-                    ],
+                      getDateString({ date: createdAt, showTime: true })
+                    ]
                   };
                 }}
                 data={infiniteScrolling.data}
@@ -146,7 +143,7 @@ export const PurchaseOrders = () => {
           );
         }}
       </BulkActionsShopping>
-    </LayoutPageSection>
+    </>
   );
 };
 

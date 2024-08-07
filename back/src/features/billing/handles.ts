@@ -12,8 +12,8 @@ const get_bills: () => RequestHandler = () => {
       const out = await billingServicesGetAllWithPagination({
         paginateOptions,
         query: {
-          states,
-        },
+          states
+        }
       });
 
       res.send(out);
@@ -22,5 +22,5 @@ const get_bills: () => RequestHandler = () => {
 };
 
 export const billingHandles = {
-  get_bills,
+  get_bills
 };

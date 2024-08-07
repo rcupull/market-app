@@ -27,12 +27,12 @@ export const FieldPostLink = (props: FieldPostsSectionLayoutProps) => {
         items={[
           {
             value: 'business',
-            label: 'Hacia un negocio',
+            label: 'Hacia un negocio'
           },
           {
             value: 'external',
-            label: 'Externo',
-          },
+            label: 'Externo'
+          }
         ]}
         containerClassName="flex items-center gap-4"
         label={getRequiredLabel('Tipo de enlace')}
@@ -43,9 +43,9 @@ export const FieldPostLink = (props: FieldPostsSectionLayoutProps) => {
               name: field.name,
               value: {
                 type: 'business',
-                value: '',
-              },
-            },
+                value: ''
+              }
+            }
           })
         }
       />

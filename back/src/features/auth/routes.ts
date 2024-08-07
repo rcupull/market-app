@@ -13,6 +13,7 @@ router
   .post(
     middlewareExpressValidator.body('username').notEmpty(),
     middlewareExpressValidator.body('password').notEmpty(),
+    middlewareExpressValidator.body('typeDevice').notEmpty(),
     middlewareExpressValidator.handle,
     middlewareAutentication,
     authHandles.post_signIn()

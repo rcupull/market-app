@@ -5,7 +5,7 @@ import { BaseIdentity } from '../types/general';
 import { Shopping, ShoppingState } from '../types/shopping';
 
 export const createdAtSchemaDefinition: SchemaDefinition = {
-  createdAt: { type: Date, required: true, default: Date.now },
+  createdAt: { type: Date, required: true, default: Date.now }
 };
 
 export const allPostClothingSize: Array<PostClothingSize> = [
@@ -16,7 +16,7 @@ export const allPostClothingSize: Array<PostClothingSize> = [
   'L',
   'XL',
   '2XL',
-  '3XL',
+  '3XL'
 ];
 
 export const getSortQuery = (sort: string | undefined): Record<string, number> | undefined => {
@@ -38,7 +38,7 @@ export const getSortQuery = (sort: string | undefined): Record<string, number> |
 export const setFilterQueryWithDates = <T extends BaseIdentity = BaseIdentity>({
   filterQuery,
   dateFrom,
-  dateTo,
+  dateTo
 }: {
   dateFrom?: string;
   dateTo?: string;
@@ -57,6 +57,6 @@ export const setFilterQueryWithDates = <T extends BaseIdentity = BaseIdentity>({
 
 export const getShoppingWasAcceptedQuery = (): FilterQuery<Shopping> => {
   return {
-    $or: [{ state: ShoppingState.APPROVED }, { 'history.state': { $in: ShoppingState.APPROVED } }],
+    $or: [{ state: ShoppingState.APPROVED }, { 'history.state': { $in: ShoppingState.APPROVED } }]
   };
 };

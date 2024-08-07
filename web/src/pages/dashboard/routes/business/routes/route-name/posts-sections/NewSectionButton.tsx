@@ -19,101 +19,97 @@ export const NewSectionButton = () => {
   const { businessNewUpdateSectionModal } = useBusinessNewUpdateSectionModal();
 
   const handleClick = () => {
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { onClose } = useModal();
-          const portal = usePortal();
+    pushModal('Confirmation', {
+      useProps: () => {
+        const { onClose } = useModal();
+        const portal = usePortal();
 
-          return {
-            title: 'Tipo de sección a crear',
-            className: 'max-w-lg',
-            content: (
-              <div>
-                <div>Escoja el tipo de sección que desea añadir a la página de su negocio.</div>
-                <Formux<{ postType: PostType }>
-                  value={{
-                    postType: 'product',
-                  }}
-                >
-                  {({ value }) => {
-                    return (
-                      <form className="mt-10">
-                        <FieldRadioGroup<{
-                          value: PostType;
-                          label: string;
-                          description: React.ReactNode;
-                        }>
-                          name="postType"
-                          renderOption={({ checked, item }) => {
-                            return (
-                              <FieldCheckbox
-                                noUseFormik
-                                value={checked}
-                                label={item.label}
-                                description={item.description}
-                              />
-                            );
+        return {
+          title: 'Tipo de sección a crear',
+          className: 'max-w-lg',
+          content: (
+            <div>
+              <div>Escoja el tipo de sección que desea añadir a la página de su negocio.</div>
+              <Formux<{ postType: PostType }>
+                value={{
+                  postType: 'product'
+                }}
+              >
+                {({ value }) => {
+                  return (
+                    <form className="mt-10">
+                      <FieldRadioGroup<{
+                        value: PostType;
+                        label: string;
+                        description: React.ReactNode;
+                      }>
+                        name="postType"
+                        renderOption={({ checked, item }) => {
+                          return (
+                            <FieldCheckbox
+                              noUseFormik
+                              value={checked}
+                              label={item.label}
+                              description={item.description}
+                            />
+                          );
+                        }}
+                        optionToValue={({ value }) => value}
+                        items={[
+                          {
+                            value: 'product',
+                            label: 'Productos',
+                            description: (
+                              <div>
+                                Una sección de productos agrupa los{' '}
+                                <span className="font-bold">productos</span> de su negocio que
+                                tengan las categorías asociadas a dicha sección.
+                              </div>
+                            )
+                          },
+                          {
+                            value: 'link',
+                            label: 'Enlace',
+                            description: (
+                              <div>
+                                Una sección de enlace agrupa{' '}
+                                <span className="font-bold">enlaces</span> de su negocio hacia otros
+                                negocios de Asere Market o hacia links externos.
+                              </div>
+                            )
+                          }
+                        ]}
+                        containerClassName="flex items-center justify-center gap-8"
+                      />
+
+                      {portal.getPortal(
+                        <ButtonNew
+                          label="Crear sección"
+                          onClick={() => {
+                            const { postType } = value;
+                            onClose();
+                            setTimeout(() => {
+                              businessNewUpdateSectionModal.open({
+                                postType,
+                                onAfterSuccess: () =>
+                                  business && onFetch({ routeName: business.routeName })
+                              });
+                            }, 100);
                           }}
-                          optionToValue={({ value }) => value}
-                          items={[
-                            {
-                              value: 'product',
-                              label: 'Productos',
-                              description: (
-                                <div>
-                                  Una sección de productos agrupa los{' '}
-                                  <span className="font-bold">productos</span> de su negocio que
-                                  tengan las categorías asociadas a dicha sección.
-                                </div>
-                              ),
-                            },
-                            {
-                              value: 'link',
-                              label: 'Enlace',
-                              description: (
-                                <div>
-                                  Una sección de enlace agrupa{' '}
-                                  <span className="font-bold">enlaces</span> de su negocio hacia
-                                  otros negocios de Asere Market o hacia links externos.
-                                </div>
-                              ),
-                            },
-                          ]}
-                          containerClassName="flex items-center justify-center gap-8"
+                          className="w-full sm:w-auto"
                         />
-
-                        {portal.getPortal(
-                          <ButtonNew
-                            label="Crear sección"
-                            onClick={() => {
-                              const { postType } = value;
-                              onClose();
-                              setTimeout(() => {
-                                businessNewUpdateSectionModal.open({
-                                  postType,
-                                  onAfterSuccess: () =>
-                                    business && onFetch({ routeName: business.routeName }),
-                                });
-                              }, 100);
-                            }}
-                            className="w-full sm:w-auto"
-                          />
-                        )}
-                      </form>
-                    );
-                  }}
-                </Formux>
-              </div>
-            ),
-            badge: <Badge variant="info" />,
-            primaryBtn: <div ref={portal.ref} />,
-          };
-        },
-      },
-      { emergent: true }
-    );
+                      )}
+                    </form>
+                  );
+                }}
+              </Formux>
+            </div>
+          ),
+          badge: <Badge variant="info" />,
+          primaryBtn: <div ref={portal.ref} />
+        };
+      }
+    });
   };
 
   return (

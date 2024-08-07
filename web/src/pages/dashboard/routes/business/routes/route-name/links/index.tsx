@@ -11,6 +11,7 @@ import { useGetAllPosts } from 'features/api/posts/useGetAllPosts';
 import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 
 import { BulkActionsLinks } from './BulkActionsLinks';
+import { LinkDetails } from './LinkDetails';
 import { RowActions } from './RowActions';
 
 import { TopActions } from 'pages/@common/top-actions';
@@ -21,7 +22,6 @@ import { GetAllPostsQuery } from 'types/api';
 import { getImageEndpoint } from 'utils/api';
 import { getDateString } from 'utils/date';
 import { cn } from 'utils/general';
-import { viewUtils } from 'utils/view';
 
 export const Links = () => {
   const { getAllPosts } = useGetAllPosts();
@@ -30,7 +30,7 @@ export const Links = () => {
 
   const infiniteScrolling = useInfiniteScrolling({
     fetchPaginatedResources: getAllPosts,
-    onFetch: ({ page }) => filters.onMergeFilters({ page }),
+    onFetch: ({ page }) => filters.onMergeFilters({ page })
   });
 
   const filters = useFiltersVolatile<GetAllPostsQuery>({
@@ -40,9 +40,9 @@ export const Links = () => {
           postType: 'link',
           includeHidden: true,
           routeNames: [business.routeName],
-          ...filters,
+          ...filters
         });
-    },
+    }
   });
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export const Links = () => {
         onClick={() => {
           businessNewUpdatePostModal.open({
             postType: 'link',
-            onAfterSuccess: () => onRefreshForce(),
+            onAfterSuccess: () => onRefreshForce()
           });
         }}
         className="ml-auto hidden sm:block"
@@ -70,7 +70,7 @@ export const Links = () => {
         onClick={() => {
           businessNewUpdatePostModal.open({
             postType: 'link',
-            onAfterSuccess: () => onRefreshForce(),
+            onAfterSuccess: () => onRefreshForce()
           });
         }}
         variant="primary"
@@ -103,26 +103,24 @@ export const Links = () => {
       >
         {({ selectAllNode, tablePropsProcessor, bulkActionNode, getDisabledOverlay }) => (
           <>
-            <div className="flex items-center justify-between mb-1">
-              {bulkActionNode}
-              {getDisabledOverlay(
-                <TopActions>
-                  {buttonNew}
-                  {buttonRefresh}
-                </TopActions>
-              )}
+            <div className="flex items-center justify-end mb-1">
+              <TopActions className="!w-fit">
+                {getDisabledOverlay(buttonNew)}
+                {getDisabledOverlay(buttonRefresh)}
+
+                {bulkActionNode}
+              </TopActions>
             </div>
 
             <div className="my-2 flex justify-center">{selectAllNode}</div>
 
             <Table
               propsPreprocessors={[tablePropsProcessor]}
-              className="!max-h-[calc(100vh-25rem)]"
               remapRowsIndex={{
                 xs: [[0, 1, 2, 3, 4]],
-                md: 'none',
+                md: 'none'
               }}
-              heads={['Acciones', 'Nombre', 'Imágen', 'Fecha de Creación', 'Detalles']}
+              heads={['Acciones', 'Nombre', 'Imágen', 'Creación', 'Detalles']}
               getRowProps={(rowData) => {
                 const { name, createdAt, hidden, images } = rowData;
 
@@ -130,7 +128,7 @@ export const Links = () => {
 
                 return {
                   className: cn({
-                    'bg-gray-100': hidden,
+                    'bg-gray-100': hidden
                   }),
                   nodes: [
                     <RowActions
@@ -148,19 +146,8 @@ export const Links = () => {
                       'ninguna'
                     ),
                     getDateString({ date: createdAt, showTime: true }),
-                    viewUtils.keyValueList([
-                      {
-                        label: (
-                          <span
-                            className={cn({
-                              'text-red-500': hidden,
-                            })}
-                          >{`${hidden ? 'Oculta' : 'Visible'}`}</span>
-                        ),
-                        value: null,
-                      },
-                    ]),
-                  ],
+                    <LinkDetails key="LinkDetails" rowData={rowData} />
+                  ]
                 };
               }}
               data={infiniteScrolling.data}

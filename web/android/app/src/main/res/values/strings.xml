@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">AsereMarket</string>
+    <string name="title_activity_main">AsereMarket</string>
+    <string name="package_name">com.aseremarket.app</string>
+    <string name="custom_url_scheme">https</string>
+    <string name="custom_url_host">aseremarket.net</string>
+</resources>

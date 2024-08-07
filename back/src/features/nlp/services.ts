@@ -45,7 +45,7 @@ const mainManager = new NlpManager({ languages: ['es'], nlu: { log: false } });
 const mainNlpFileName = 'mainModel.nlp';
 
 export const nlpServicesTrainMainManager: QueryHandle<{ record: NlpTrainRecord }> = async ({
-  record,
+  record
 }) => {
   Object.entries(record).forEach(([key, value]) => {
     value.forEach((value) => {

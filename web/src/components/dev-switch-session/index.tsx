@@ -13,44 +13,44 @@ import { cn } from 'utils/general';
 const sessions: Array<{ email: string | null; password: string | null }> = [
   {
     email: null,
-    password: null,
+    password: null
   },
   {
     email: 'rcupull@gmail.com',
-    password: 'Qwerty@123',
+    password: 'Qwerty@123'
   },
   {
     email: 'rcupull+admin2@gmail.com',
-    password: 'Qwerty@123',
+    password: 'Qwerty@123'
   },
   {
     email: 'rcupull+comerciante1@gmail.com',
-    password: 'Qwerty@123',
+    password: 'Qwerty@123'
   },
   {
     email: 'rcupull+comerciante2@gmail.com',
-    password: 'Qwerty@123',
+    password: 'Qwerty@123'
   },
   {
     email: 'rcupull+user1@gmail.com',
-    password: 'Qwerty@123',
+    password: 'Qwerty@123'
   },
   {
     email: 'rcupull+user2@gmail.com',
-    password: 'Qwerty@123',
+    password: 'Qwerty@123'
   },
   {
     email: 'rcupull+mensajero1@gmail.com',
-    password: 'Qwerty@123',
+    password: 'Qwerty@123'
   },
   {
     email: 'rcupull+mensajero2@gmail.com',
-    password: 'Qwerty@123',
-  },
+    password: 'Qwerty@123'
+  }
 ];
 
 export const DevSwitchSession = () => {
-  const { isAuthenticated, authSignIn, authData } = useAuth();
+  const { isAuthenticated, authSignIn, user } = useAuth();
   const { signOut } = useSignOut();
   const { pushRoute } = useRouter();
   const debouncer = useDebouncer();
@@ -68,9 +68,9 @@ export const DevSwitchSession = () => {
         if (email === null || password === null) {
           return {
             label: 'Ninguno',
-            active: !authData?.user,
+            active: !user,
             onClick: () => {
-              if (authData?.user?.email === email) return;
+              if (user?.email === email) return;
 
               if (isAuthenticated) {
                 pushRoute('/');
@@ -79,15 +79,15 @@ export const DevSwitchSession = () => {
                   signOut.fetch(undefined);
                 }, 200);
               }
-            },
+            }
           };
         }
 
         return {
           label: email,
-          active: authData?.user?.email === email,
+          active: user?.email === email,
           onClick: () => {
-            if (authData?.user?.email === email) return;
+            if (user?.email === email) return;
 
             if (isAuthenticated) {
               pushRoute('/');
@@ -96,13 +96,13 @@ export const DevSwitchSession = () => {
                 signOut.fetch(undefined, {
                   onAfterSuccess: () => {
                     authSignIn.fetch({ email, password });
-                  },
+                  }
                 });
               }, 200);
             } else {
               authSignIn.fetch({ email, password });
             }
-          },
+          }
         };
       })}
     />

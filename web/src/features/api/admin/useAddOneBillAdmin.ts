@@ -24,14 +24,14 @@ export const useAddOneBillAdmin = (): {
           {
             method: 'post',
             url: getEndpoint({
-              path: '/admin/bills',
+              path: '/admin/bills'
             }),
-            data,
+            data
           },
           options
         );
       },
-      reset: fetch[3],
-    },
+      reset: fetch[3]
+    }
   };
 };

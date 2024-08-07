@@ -1,22 +1,34 @@
-import { BrowserRouter } from 'react-router-dom';
-
 import { NotificationsProvider } from 'features/notifications';
+import { PersistentProvider } from 'features/persistent';
 import { ReduxProvider } from 'features/redux';
 
-import { CookiesService } from './features/cookies';
+import { RouterProvider } from 'hooks/useRouter/RouterProvider';
+const NativeBehavior = dynamic(() => import('./features/native/NativeBehavior').then((m) => m));
+
+import { ToastProvider } from 'features/toast';
+
+import { usePlatform } from 'hooks/useCapacitor';
+
 import { ModalContainer } from './features/modal';
 
+import { dynamic } from 'utils/makeLazy';
+
 export const Providers = ({ children }: { children: React.ReactNode }) => {
+  const { isNative } = usePlatform();
+
   return (
-    <CookiesService>
+    <PersistentProvider>
       <ReduxProvider>
-        <BrowserRouter>
+        <RouterProvider>
           <NotificationsProvider>
-            <ModalContainer />
-            {children}
+            <ToastProvider>
+              {isNative && <NativeBehavior />}
+              <ModalContainer />
+              {children}
+            </ToastProvider>
           </NotificationsProvider>
-        </BrowserRouter>
+        </RouterProvider>
       </ReduxProvider>
-    </CookiesService>
+    </PersistentProvider>
   );
 };

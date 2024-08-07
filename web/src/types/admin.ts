@@ -35,4 +35,5 @@ export type Access =
   | 'bills__write'
   | 'bills__remove'
   //
-  | 'agenda__full';
+  | 'agenda__full'
+  | 'upload__native_compilation';

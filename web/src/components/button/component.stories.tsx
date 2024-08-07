@@ -3,7 +3,7 @@ import { Button } from '.';
 import SvgStoreSolid from 'icons/StoreSolid';
 
 export default {
-  component: Button,
+  component: Button
 };
 
 export const Default = (): JSX.Element => <Button label="Label" />;

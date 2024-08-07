@@ -15,23 +15,19 @@ export const useAuthSignUpModal = () => {
   return {
     authSignUpModal: {
       open: () => {
-        pushModal(
-          'Emergent',
-          {
-            useProps: () => {
-              const portal = usePortal();
+        pushModal('Emergent', {
+          useProps: () => {
+            const portal = usePortal();
 
-              return {
-                content: <Component portal={portal} />,
-                secondaryBtn: <ButtonClose />,
-                primaryBtn: <div ref={portal.ref} />,
-                className: '!w-[30rem]',
-              };
-            },
-          },
-          { emergent: true }
-        );
-      },
-    },
+            return {
+              content: <Component portal={portal} />,
+              secondaryBtn: <ButtonClose />,
+              primaryBtn: <div ref={portal.ref} />,
+              className: '!w-[30rem]'
+            };
+          }
+        });
+      }
+    }
   };
 };

@@ -29,7 +29,7 @@ export const ProductStockLabel = ({ post, layout }: ProductStockLabelProps) => {
         'text-red-500': stockAmountAvailable === 0,
         'text-xs !py-0 !px-1': layout?.size === 'small',
         'text-lg': layout?.size === 'medium',
-        'text-xl': layout?.size === 'long',
+        'text-xl': layout?.size === 'long'
       })}
     >
       {getLabel()}

@@ -4,15 +4,14 @@ import {
   businessServicesFindOne,
   businessServicesGetAllWithPagination,
   businessServicesGetShoppingPaymentData,
-  businessServicesUpdateOne,
+  businessServicesUpdateOne
 } from './services';
 
 import {
   get200Response,
   get400Response,
-  get404Response,
   getBusinessNotFoundResponse,
-  getUserNotFoundResponse,
+  getUserNotFoundResponse
 } from '../../utils/server-response';
 import {
   Business,
@@ -20,18 +19,18 @@ import {
   BusinessDto,
   BusinessSearchDto,
   BusinessSummary,
-  PostCategory,
+  PostCategory
 } from '../../types/business';
 import { Image, ModelDocument, RequestHandler } from '../../types/general';
 import { makeReshaper } from '../../utils/makeReshaper';
 import { PaginateResult } from '../../middlewares/middlewarePagination';
-import { ValidationCodeModel } from '../../schemas/auth';
 import { isEqualIds, movRow } from '../../utils/general';
 import { imagesServicesDeleteOldImages } from '../images/services';
 import { postServicesGetOne, postServicesUpdateMany } from '../post/services';
 import { nlpServicesProcessMainManager } from '../nlp/services';
 import { deliveryServicesGetAllWithPagination } from '../delivery/services';
 import { defaultQuerySort } from '../../utils/api';
+import { notificationsServicesGetAllWithPagination } from '../notifications/services';
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {
@@ -46,8 +45,8 @@ const get_business: () => RequestHandler = () => {
           routeNames,
           search,
           createdBy: userId,
-          hidden: includeHidden === 'true' ? undefined : false,
-        },
+          hidden: includeHidden === 'true' ? undefined : false
+        }
       });
 
       res.send(out);
@@ -68,16 +67,16 @@ const get_business_summary: () => RequestHandler = () => {
           routeNames,
           search,
           createdBy: userId,
-          hidden: includeHidden === 'true' ? undefined : false,
-        },
+          hidden: includeHidden === 'true' ? undefined : false
+        }
       });
 
       const getBusinessSummary = async (business: Business): Promise<BusinessSummary> => {
         const { routeName, _id, name } = business;
         const posts = await postServicesGetOne({
           query: {
-            routeName,
-          },
+            routeName
+          }
         });
 
         const images: Array<Image> = [];
@@ -92,7 +91,7 @@ const get_business_summary: () => RequestHandler = () => {
           _id,
           bestDiscount: 20,
           images,
-          salesAmount: 78,
+          salesAmount: 78
         };
       };
 
@@ -100,7 +99,7 @@ const get_business_summary: () => RequestHandler = () => {
 
       const out: PaginateResult<BusinessSummary> = {
         ...paginatedBusiness,
-        data,
+        data
       };
 
       res.send(out);
@@ -138,8 +137,8 @@ const get_business_routeName: () => RequestHandler = () => {
 
       const business = await businessServicesFindOne({
         query: {
-          routeName,
-        },
+          routeName
+        }
       });
 
       if (!business) {
@@ -151,7 +150,7 @@ const get_business_routeName: () => RequestHandler = () => {
 
         return {
           ...business.toJSON(),
-          shoppingDebit,
+          shoppingDebit
         };
       };
 
@@ -173,8 +172,8 @@ const update_business_post_categories: () => RequestHandler = () => {
 
       const business = await businessServicesFindOne({
         query: {
-          routeName,
-        },
+          routeName
+        }
       });
 
       if (!business) return getBusinessNotFoundResponse({ res });
@@ -190,41 +189,41 @@ const update_business_post_categories: () => RequestHandler = () => {
         //
         await postServicesUpdateMany({
           query: {
-            routeName,
+            routeName
           },
           update: {
             $pullAll: {
-              postCategoriesTags: missingTags,
-            },
-          },
+              postCategoriesTags: missingTags
+            }
+          }
         });
         //
         await businessServicesUpdateOne({
           query: {
-            routeName,
+            routeName
           },
           update: {
             $pullAll: {
-              'layouts.posts.sections.$[sectionToClean].postCategoriesTags': missingTags,
-            },
+              'layouts.posts.sections.$[sectionToClean].postCategoriesTags': missingTags
+            }
           },
           options: {
             arrayFilters: [
               {
-                'sectionToClean.postCategoriesTags': { $in: missingTags },
-              },
-            ],
-          },
+                'sectionToClean.postCategoriesTags': { $in: missingTags }
+              }
+            ]
+          }
         });
       }
 
       await businessServicesUpdateOne({
         query: {
-          routeName,
+          routeName
         },
         update: {
-          postCategories,
-        },
+          postCategories
+        }
       });
 
       /**
@@ -233,7 +232,7 @@ const update_business_post_categories: () => RequestHandler = () => {
 
       get200Response({
         res,
-        json: {},
+        json: {}
       });
     });
   };
@@ -257,7 +256,7 @@ const post_business: () => RequestHandler = () => {
         routeName,
         createdBy: user._id,
         postCategories,
-        currency,
+        currency
       });
 
       if (!out) {
@@ -288,13 +287,13 @@ const put_business_routeName: () => RequestHandler = () => {
       if (body.logo === null && business.logo) {
         await imagesServicesDeleteOldImages({
           newImagesSrcs: [],
-          oldImagesSrcs: [business.logo],
+          oldImagesSrcs: [business.logo]
         });
       }
       const out = await businessServicesUpdateOne({
         query: {
           routeName,
-          createdBy: user._id,
+          createdBy: user._id
         },
         update: makeReshaper<Business, Business>({
           name: 'name',
@@ -310,8 +309,8 @@ const put_business_routeName: () => RequestHandler = () => {
           notificationFlags: 'notificationFlags',
           seo: 'seo',
           addresses: 'addresses',
-          deliveryConfig: 'deliveryConfig',
-        })(body),
+          deliveryConfig: 'deliveryConfig'
+        })(body)
       });
 
       res.send(out);
@@ -340,25 +339,25 @@ const put_business_section_reorder: () => RequestHandler = () => {
         return get400Response({
           res,
           json: {
-            message: 'Invalid fromIndex/toIndex',
-          },
+            message: 'Invalid fromIndex/toIndex'
+          }
         });
       }
 
       await businessServicesUpdateOne({
         query: {
-          routeName,
+          routeName
         },
         update: {
           $set: {
-            'layouts.posts.sections': movRow(businessSections, fromIndex, toIndex),
-          },
-        },
+            'layouts.posts.sections': movRow(businessSections, fromIndex, toIndex)
+          }
+        }
       });
 
       get200Response({
         res,
-        json: {},
+        json: {}
       });
     });
   };
@@ -372,18 +371,18 @@ const post_business_routeName_sections: () => RequestHandler = () => {
 
       await businessServicesUpdateOne({
         query: {
-          routeName,
+          routeName
         },
         update: {
           $push: {
-            'layouts.posts.sections': body,
-          },
-        },
+            'layouts.posts.sections': body
+          }
+        }
       });
 
       get200Response({
         res,
-        json: {},
+        json: {}
       });
     });
   };
@@ -400,33 +399,33 @@ const put_business_routeName_sections_sectionId: () => RequestHandler = () => {
       }
 
       const currentSection = business.layouts?.posts?.sections?.find((section) =>
-        isEqualIds(sectionId, section._id),
+        isEqualIds(sectionId, section._id)
       );
 
       await businessServicesUpdateOne({
         query: {
-          routeName,
+          routeName
         },
         update: {
           $set: {
             'layouts.posts.sections.$[section]': {
               ...(currentSection || {}),
-              ...body,
-            },
-          },
+              ...body
+            }
+          }
         },
         options: {
           arrayFilters: [
             {
-              'section._id': sectionId,
-            },
-          ],
-        },
+              'section._id': sectionId
+            }
+          ]
+        }
       });
 
       get200Response({
         res,
-        json: {},
+        json: {}
       });
     });
   };
@@ -440,70 +439,21 @@ const del_business_routeName_sections_sectionId: () => RequestHandler = () => {
 
       await businessServicesUpdateOne({
         query: {
-          routeName,
+          routeName
         },
         update: {
           $pull: {
             'layouts.posts.sections': {
-              _id: sectionId,
-            },
-          },
-        },
+              _id: sectionId
+            }
+          }
+        }
       });
 
       get200Response({
         res,
-        json: {},
+        json: {}
       });
-    });
-  };
-};
-
-const post_business_routeName_chatbot_validate: () => RequestHandler = () => {
-  return async (req, res) => {
-    withTryCatch(req, res, async () => {
-      const { body, business } = req;
-      const { code } = body;
-
-      if (!business) {
-        return getBusinessNotFoundResponse({ res });
-      }
-
-      const validationCode = await ValidationCodeModel.findOneAndDelete({
-        code,
-      });
-
-      if (!validationCode) {
-        return get404Response({
-          res,
-          json: {
-            message:
-              'Este codigo de validación no existe o ya el bot fue verificado con este código',
-          },
-        });
-      }
-
-      const { meta } = validationCode.toJSON();
-
-      if (!meta) {
-        return get404Response({
-          res,
-          json: {
-            message: 'No hay metadatos disponibles en este codigo de validación del bot',
-          },
-        });
-      }
-
-      await businessServicesUpdateOne({
-        query: {
-          _id: business._id,
-        },
-        update: {
-          telegramBotChat: meta,
-        },
-      });
-
-      res.send({});
     });
   };
 };
@@ -518,13 +468,13 @@ const post_business_routeName_favorite_users: () => RequestHandler = () => {
 
       await businessServicesUpdateOne({
         query: {
-          routeName,
+          routeName
         },
         update: {
           $push: {
-            favoritesUserIds: userId,
-          },
-        },
+            favoritesUserIds: userId
+          }
+        }
       });
 
       res.send({});
@@ -542,13 +492,13 @@ const del_business_routeName_favorite_users: () => RequestHandler = () => {
 
       await businessServicesUpdateOne({
         query: {
-          routeName,
+          routeName
         },
         update: {
           $pull: {
-            favoritesUserIds: userId,
-          },
-        },
+            favoritesUserIds: userId
+          }
+        }
       });
 
       res.send({});
@@ -564,11 +514,11 @@ const put_business_routeName_checks: () => RequestHandler = () => {
 
       const businessData: Pick<Business, 'checks'> | null = await businessServicesFindOne({
         query: {
-          routeName,
+          routeName
         },
         projection: {
-          checks: 1,
-        },
+          checks: 1
+        }
       });
 
       if (!businessData) {
@@ -576,19 +526,19 @@ const put_business_routeName_checks: () => RequestHandler = () => {
       }
 
       const newChecks = makeReshaper<BusinessChecks, BusinessChecks>({
-        doneOnboarding: 'doneOnboarding',
+        doneOnboarding: 'doneOnboarding'
       })(body);
 
       await businessServicesUpdateOne({
         query: {
-          routeName,
+          routeName
         },
         update: {
           checks: {
             ...(businessData.checks || {}),
-            ...Object.keys(newChecks).reduce((acc, key) => ({ ...acc, [key]: true }), {}),
-          },
-        },
+            ...Object.keys(newChecks).reduce((acc, key) => ({ ...acc, [key]: true }), {})
+          }
+        }
       });
 
       res.send({});
@@ -611,11 +561,36 @@ const get_business_routeName_deliveries: () => RequestHandler = () => {
         paginateOptions,
         sort,
         query: {
-          routeName,
-        },
+          routeName
+        }
       });
 
       res.send(deliveries);
+    });
+  };
+};
+
+const get_business_routeName_notifications: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { query, user, paginateOptions } = req;
+
+      if (!user) {
+        return getUserNotFoundResponse({ res });
+      }
+
+      const { routeName, sort = defaultQuerySort } = query;
+
+      const notifications = await notificationsServicesGetAllWithPagination({
+        paginateOptions,
+        sort,
+        query: {
+          routeName,
+          userIds: [user._id]
+        }
+      });
+
+      res.send(notifications);
     });
   };
 };
@@ -637,7 +612,6 @@ export const businessHandles = {
   get_business_summary,
   get_business_search,
 
-  post_business_routeName_chatbot_validate,
   //
   post_business_routeName_favorite_users,
   del_business_routeName_favorite_users,
@@ -645,4 +619,6 @@ export const businessHandles = {
   put_business_routeName_checks,
   //
   get_business_routeName_deliveries,
+  //
+  get_business_routeName_notifications
 };

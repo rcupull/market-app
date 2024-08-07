@@ -43,12 +43,12 @@ const keyValueList = (list: Array<KeyValueListItem>) => {
 
 export const viewUtils = {
   mapToOutlinedBox,
-  keyValueList,
+  keyValueList
 };
 
 export const breakpointsSwitch = <T extends any = any>({
   values,
-  breakpoints,
+  breakpoints
 }: {
   breakpoints: UseBreakpointsReturn;
   values: {
@@ -67,4 +67,34 @@ export const breakpointsSwitch = <T extends any = any>({
   if (breakpoints.sm && values.sm) return values.sm;
 
   return values.xs;
+};
+
+export type BusinessTab = 'products' | 'links' | 'sections' | 'shopping' | 'billing' | 'settings';
+
+export const getBusinessTabLabel = (tab: BusinessTab): string => {
+  const record: Record<BusinessTab, string> = {
+    products: 'Productos',
+    billing: 'Facturación',
+    links: 'Enlaces',
+    sections: 'Secciones',
+    settings: 'Configuración',
+    shopping: 'Órdenes de compras'
+  };
+
+  return record[tab] || 'unknown tab';
+};
+
+export type AdminTab = 'users' | 'shopping' | 'business' | 'billing' | 'settings' | 'nlp';
+
+export const getAdminTabLabel = (tab: AdminTab): string => {
+  const record: Record<AdminTab, string> = {
+    billing: 'Facturación',
+    settings: 'Configuración',
+    shopping: 'Órdenes de compras',
+    users: 'Usuarios',
+    business: 'Negocios',
+    nlp: 'NLP'
+  };
+
+  return record[tab] || 'unknown tab';
 };

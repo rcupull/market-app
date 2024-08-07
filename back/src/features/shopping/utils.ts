@@ -6,7 +6,7 @@ import {
   shoppingServicesDeleteOne,
   shoppingServicesFindAndUpdateOne,
   shoppingServicesFindOneAndDelete,
-  shoppingServicesGetDataFromPosts,
+  shoppingServicesGetDataFromPosts
 } from './services';
 import { compact, isEmpty, isNumber } from '../../utils/general';
 import { postServicesGetAll, postServicesGetOne } from '../post/services';
@@ -33,8 +33,8 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
 }> = async ({ postId, routeName, user, purshaseNotes }) => {
   const post = await postServicesGetOne({
     query: {
-      _id: postId,
-    },
+      _id: postId
+    }
   });
 
   if (!post) {
@@ -47,16 +47,16 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
     query: {
       state: ShoppingState.CONSTRUCTION,
       routeName,
-      purchaserId: user._id,
+      purchaserId: user._id
     },
     update: {
       $pull: {
         posts: {
           'postData._id': postId,
-          purshaseNotes,
-        },
-      },
-    },
+          purshaseNotes
+        }
+      }
+    }
   });
 
   if (!oldShopping) {
@@ -70,8 +70,8 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
      */
     await shoppingServicesDeleteOne({
       query: {
-        _id: oldShopping._id,
-      },
+        _id: oldShopping._id
+      }
     });
   }
 
@@ -79,7 +79,7 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
    * push Notification to update the stock in  the front
    */
   const { getPostData } = await shoppingServicesGetDataFromPosts({
-    posts: [post],
+    posts: [post]
   });
 
   const { stockAmountAvailable } = getPostData(post);
@@ -87,7 +87,7 @@ export const deleteOnePostFromShoppingInContruction: QueryHandle<{
   if (isNumber(stockAmountAvailable)) {
     notificationsServicesSendUpdateStockAmountMessage({
       postId: post._id.toString(),
-      stockAmountAvailable,
+      stockAmountAvailable
     });
   }
 };
@@ -99,19 +99,19 @@ export const deleteShoppingInConstruction: QueryHandle<{
   const oldShopping = await shoppingServicesFindOneAndDelete({
     query: {
       state: ShoppingState.CONSTRUCTION,
-      routeName,
-    },
+      routeName
+    }
   });
 
   if (oldShopping) {
     const posts = await postServicesGetAll({
       query: {
-        postsIds: oldShopping.posts.map((p) => p.postData._id.toString()),
-      },
+        postsIds: oldShopping.posts.map((p) => p.postData._id.toString())
+      }
     });
 
     const { getPostData } = await shoppingServicesGetDataFromPosts({
-      posts,
+      posts
     });
 
     posts.forEach((post) => {
@@ -120,7 +120,7 @@ export const deleteShoppingInConstruction: QueryHandle<{
       if (isNumber(stockAmountAvailable)) {
         notificationsServicesSendUpdateStockAmountMessage({
           postId: post._id.toString(),
-          stockAmountAvailable,
+          stockAmountAvailable
         });
       }
     });
@@ -131,7 +131,7 @@ export const postToShoppingPostDataReshaper = makeReshaper<Post, ShoppingPostDat
   _id: '_id',
   price: 'price',
   images: 'images',
-  name: 'name',
+  name: 'name'
 });
 
 export const getAllShoppingFilterQuery = (args: GetAllShoppingArgs): FilterQuery<Shopping> => {
@@ -191,7 +191,7 @@ export const getShoppingInfo = (
   return {
     totalProducts,
     totalPrice,
-    shoppingDebit: totalPrice * 0.01, //el 1% de las ventas es de la app
+    shoppingDebit: totalPrice * 0.01 //el 1% de las ventas es de la app
   };
 };
 
@@ -233,6 +233,6 @@ export const sortPurshaseNotes = (
       allSortedClothingSize.map((size) => {
         return purshaseNotes?.interestedByClothingSizes?.includes?.(size) ? size : null;
       })
-    ),
+    )
   };
 };

@@ -21,65 +21,61 @@ export const IconButtonShowHideSection = ({ rowData }: IconButtonShowHideSection
     value: boolean,
     field: Extract<keyof PostsLayoutSection, 'showMobile' | 'showPC'>
   ) => {
-    pushModal(
-      'Confirmation',
-      {
-        useProps: () => {
-          const { onClose } = useModal();
-          const { updateBusinessSection } = useUpdateBusinessSection();
+    pushModal('Confirmation', {
+      useProps: () => {
+        const { onClose } = useModal();
+        const { updateBusinessSection } = useUpdateBusinessSection();
 
-          return {
-            title: `${value ? 'Mostrar' : 'Ocultar'} sección`,
-            content: (
-              <>
-                {value ? (
-                  <div>
-                    Esta sección será <span className="font-bold">visible</span> en{' '}
-                    <span className="font-bold">{`vista ${
-                      field === 'showMobile' ? 'móvil' : 'PC'
-                    }`}</span>{' '}
-                    para todos sus clientes. Desea continuar?
-                  </div>
-                ) : (
-                  <div>
-                    Esta sección será <span className="font-bold">oculta</span> en{' '}
-                    <span className="font-bold">{`vista ${
-                      field === 'showMobile' ? 'móvil' : 'PC'
-                    }`}</span>{' '}
-                    para todos sus clientes. Desea continuar?
-                  </div>
-                )}
-              </>
-            ),
-            badge: <Badge variant="info" />,
-            primaryBtn: (
-              <Button
-                label={value ? 'Mostrar' : 'Ocultar'}
-                isBusy={updateBusinessSection.status.isBusy}
-                onClick={() => {
-                  if (!business) return;
+        return {
+          title: `${value ? 'Mostrar' : 'Ocultar'} sección`,
+          content: (
+            <>
+              {value ? (
+                <div>
+                  Esta sección será <span className="font-bold">visible</span> en{' '}
+                  <span className="font-bold">{`vista ${
+                    field === 'showMobile' ? 'móvil' : 'PC'
+                  }`}</span>{' '}
+                  para todos sus clientes. Desea continuar?
+                </div>
+              ) : (
+                <div>
+                  Esta sección será <span className="font-bold">oculta</span> en{' '}
+                  <span className="font-bold">{`vista ${
+                    field === 'showMobile' ? 'móvil' : 'PC'
+                  }`}</span>{' '}
+                  para todos sus clientes. Desea continuar?
+                </div>
+              )}
+            </>
+          ),
+          badge: <Badge variant="info" />,
+          primaryBtn: (
+            <Button
+              label={value ? 'Mostrar' : 'Ocultar'}
+              isBusy={updateBusinessSection.status.isBusy}
+              onClick={() => {
+                if (!business) return;
 
-                  updateBusinessSection.fetch(
-                    {
-                      routeName: business.routeName,
-                      sectionId: rowData._id,
-                      data: { [field]: value },
-                    },
-                    {
-                      onAfterSuccess: () => {
-                        onFetch({ routeName: business.routeName });
-                        onClose();
-                      },
+                updateBusinessSection.fetch(
+                  {
+                    routeName: business.routeName,
+                    sectionId: rowData._id,
+                    data: { [field]: value }
+                  },
+                  {
+                    onAfterSuccess: () => {
+                      onFetch({ routeName: business.routeName });
+                      onClose();
                     }
-                  );
-                }}
-              />
-            ),
-          };
-        },
-      },
-      { emergent: true }
-    );
+                  }
+                );
+              }}
+            />
+          )
+        };
+      }
+    });
   };
 
   return (

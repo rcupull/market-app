@@ -20,41 +20,37 @@ export const ShoppingCartRemoveAllButton = ({ className }: ShoppingCartRemoveAll
       label="Eliminar todos"
       variant="link"
       onClick={() => {
-        pushModal(
-          'Confirmation',
-          {
-            useProps: () => {
-              const { onClose } = useModal();
-              const { removeShopping } = useRemoveShopping();
+        pushModal('Confirmation', {
+          useProps: () => {
+            const { onClose } = useModal();
+            const { removeShopping } = useRemoveShopping();
 
-              return {
-                className: '!w-96',
-                content: '¿Seguro que desea eliminar todos los artículos de su carro de compras?',
-                badge: <Badge variant="error" />,
-                primaryBtn: (
-                  <Button
-                    label="Eliminar"
-                    isBusy={removeShopping.status.isBusy}
-                    onClick={() => {
-                      if (!business) return;
+            return {
+              className: '!w-96',
+              content: '¿Seguro que desea eliminar todos los artículos de su carro de compras?',
+              badge: <Badge variant="error" />,
+              primaryBtn: (
+                <Button
+                  label="Eliminar"
+                  isBusy={removeShopping.status.isBusy}
+                  onClick={() => {
+                    if (!business) return;
 
-                      removeShopping.fetch(
-                        { routeName: business?.routeName },
-                        {
-                          onAfterSuccess: () => {
-                            onClose();
-                            cart.onFetch();
-                          },
+                    removeShopping.fetch(
+                      { routeName: business?.routeName },
+                      {
+                        onAfterSuccess: () => {
+                          onClose();
+                          cart.onFetch();
                         }
-                      );
-                    }}
-                  />
-                ),
-              };
-            },
-          },
-          { emergent: true }
-        );
+                      }
+                    );
+                  }}
+                />
+              )
+            };
+          }
+        });
       }}
       className={className}
     />

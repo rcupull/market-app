@@ -30,7 +30,7 @@ export const Menu = ({
   items = [],
   topElement,
   bottomElement,
-  anchor = 'bottom start',
+  anchor = 'bottom start'
 }: MenuProps) => {
   return (
     <MenuBase data-id="Menu" as="div" className={cn('relative', className)}>
@@ -62,7 +62,7 @@ export const Menu = ({
                     <div className={className}>
                       {divider && (
                         <div className="relative flex justify-center bg-white">
-                          <Divider narrow />
+                          <Divider className="!my-2" />
                           {typeof divider === 'string' && (
                             <div className="bg-white absolute top-0 text-xs text-gray-700 font-bold px-1">
                               {divider}
@@ -80,7 +80,7 @@ export const Menu = ({
                           'cursor-pointer px-4 py-2 text-sm text-gray-700 flex items-center border-b-2 border-b-white',
                           {
                             'bg-gray-100': active,
-                            '!cursor-not-allowed !text-gray-300': disabled,
+                            '!cursor-not-allowed !text-gray-300': disabled
                           }
                         )}
                       >

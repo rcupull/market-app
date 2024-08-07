@@ -4,7 +4,7 @@ import { FieldTextArea } from 'components/field-text-area';
 import { Formux } from 'components/formux';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
-import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
+import { useCloseContext } from 'features/modal/closeContext/useCloseContext';
 import { useModal } from 'features/modal/useModal';
 
 import { Portal } from 'hooks/usePortal';
@@ -38,7 +38,7 @@ export const Component = ({ portal }: ComponentProps) => {
       <Formux<State>
         value={{
           title: business?.seo?.title || '',
-          description: business?.seo?.description || '',
+          description: business?.seo?.description || ''
         }}
       >
         {({ value, hasChange }) => {
@@ -59,15 +59,15 @@ export const Component = ({ portal }: ComponentProps) => {
                     updateOneBusiness.fetch(
                       {
                         update: {
-                          seo: value,
+                          seo: value
                         },
-                        routeName,
+                        routeName
                       },
                       {
                         onAfterSuccess: () => {
                           onFetch({ routeName });
                           onClose();
-                        },
+                        }
                       }
                     );
                   }}

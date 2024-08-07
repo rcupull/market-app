@@ -24,7 +24,6 @@ export type UpdateQueryBusiness =
           | 'postCategories'
           | 'aboutUsPage'
           | 'aboutUsPage'
-          | 'telegramBotChat'
         >
       >
     >
@@ -61,7 +60,7 @@ export const getAllFilterQuery = ({
   if (search) {
     filterQuery.$or = [
       { name: { $regex: new RegExp(search), $options: 'i' } },
-      { postCategories: { $elemMatch: { label: { $regex: new RegExp(search), $options: 'i' } } } },
+      { postCategories: { $elemMatch: { label: { $regex: new RegExp(search), $options: 'i' } } } }
     ];
   }
   ///////////////////////////////////////////////////////////////////

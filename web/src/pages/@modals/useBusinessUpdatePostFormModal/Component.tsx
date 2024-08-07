@@ -5,7 +5,7 @@ import { Formux } from 'components/formux';
 import { HighlightedBox } from 'components/highlighted-box';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
-import { useCloseContext } from 'features/modal/components/emergent/closeContext/useCloseContext';
+import { useCloseContext } from 'features/modal/closeContext/useCloseContext';
 
 import { Portal } from 'hooks/usePortal';
 
@@ -49,7 +49,7 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
 
       <Formux<State>
         value={{
-          postFormFields,
+          postFormFields
         }}
       >
         {({ value, hasChange }) => {
@@ -74,46 +74,46 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
                   {
                     label: 'Nombre',
                     value: 'name',
-                    hidden: true,
+                    hidden: true
                   },
                   {
                     label: 'Imágenes',
                     value: 'images',
-                    hidden: true,
+                    hidden: true
                   },
                   {
                     label: 'Categorias',
                     value: 'postCategoriesTags',
-                    hidden: true,
+                    hidden: true
                   },
                   {
                     label: 'Tallas de ropa',
-                    value: 'clothingSizes',
+                    value: 'clothingSizes'
                   },
                   {
                     label: 'Colores',
-                    value: 'colors',
+                    value: 'colors'
                   },
                   {
                     label: 'Descripción',
-                    value: 'description',
+                    value: 'description'
                   },
                   {
                     label: 'Detalles',
-                    value: 'details',
+                    value: 'details'
                   },
                   {
                     label: 'Descuento',
-                    value: 'discount',
+                    value: 'discount'
                   },
                   {
                     label: 'Precio',
-                    value: 'price',
+                    value: 'price'
                   },
                   {
                     label: 'Existencia en almacén',
-                    value: 'stockAmount',
-                  },
+                    value: 'stockAmount'
+                  }
                 ]}
                 className="mt-6"
                 containerClassName="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4"
@@ -131,12 +131,12 @@ export const Component = ({ portal, onAfterSuccess, className }: ComponentProps)
                     updateOneBusiness.fetch(
                       {
                         update: {
-                          postFormFields,
+                          postFormFields
                         },
-                        routeName,
+                        routeName
                       },
                       {
-                        onAfterSuccess,
+                        onAfterSuccess
                       }
                     );
                   }}

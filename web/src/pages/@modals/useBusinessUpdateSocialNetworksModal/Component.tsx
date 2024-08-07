@@ -6,6 +6,7 @@ import { Formux } from 'components/formux';
 import { IconButton } from 'components/icon-button';
 
 import { useUpdateOneBusiness } from 'features/api/business/useUpdateOneBusiness';
+import { useCloseContext } from 'features/modal/closeContext/useCloseContext';
 import { useModal } from 'features/modal/useModal';
 
 import { FetchOptions } from 'hooks/useFetch';
@@ -34,6 +35,8 @@ export const Component = ({ portal, options }: ComponentProps) => {
 
   const { updateOneBusiness } = useUpdateOneBusiness();
 
+  const { onChangeUnsavedChanges } = useCloseContext();
+
   if (!business) {
     return <></>;
   }
@@ -49,7 +52,7 @@ export const Component = ({ portal, options }: ComponentProps) => {
           preventDefault
           onClick={() => window.open(href, '_blank')}
         />
-      ),
+      )
     });
   };
 
@@ -60,10 +63,12 @@ export const Component = ({ portal, options }: ComponentProps) => {
         instagram: business?.socialLinks?.instagram || '',
         twitter: business?.socialLinks?.twitter || '',
         linkedin: business?.socialLinks?.linkedin || '',
-        youtube: business?.socialLinks?.youtube || '',
+        youtube: business?.socialLinks?.youtube || ''
       }}
     >
-      {({ value }) => {
+      {({ value, hasChange }) => {
+        onChangeUnsavedChanges(hasChange);
+
         return (
           <form className="w-full">
             {renderFieldLink(
@@ -99,16 +104,16 @@ export const Component = ({ portal, options }: ComponentProps) => {
                           instagram,
                           twitter,
                           linkedin,
-                          youtube,
-                        },
+                          youtube
+                        }
                       },
-                      routeName,
+                      routeName
                     },
                     {
                       onAfterSuccess: () => {
                         options?.onAfterSuccess?.({});
                         onClose();
-                      },
+                      }
                     }
                   );
                 }}

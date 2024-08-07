@@ -21,4 +21,5 @@ export const specialAccessRecord: Record<Access, any> = {
   bills__write: {},
   bills__remove: {},
   agenda__full: {},
+  upload__native_compilation: {}
 };

@@ -25,6 +25,6 @@ export const useSimpleSlice = <D = any, N extends string = string>(
     },
     reset: () => {
       dispatch({ type: `${name}/reset` });
-    },
+    }
   };
 };

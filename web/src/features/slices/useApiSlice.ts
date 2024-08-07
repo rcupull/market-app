@@ -27,7 +27,7 @@ export const useApiSlice = <D = any, N extends string = string>(
         onAfterSuccess: (res) => {
           setData(res);
           options?.onAfterSuccess?.(res);
-        },
+        }
       });
     },
     () => {
@@ -36,7 +36,7 @@ export const useApiSlice = <D = any, N extends string = string>(
     },
     {
       setDataRedux: setData,
-      resetDataRedux: reset,
-    },
+      resetDataRedux: reset
+    }
   ];
 };

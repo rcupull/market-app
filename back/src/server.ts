@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'development') {
     swaggerUiExpress.serve,
     //eslint-disable-next-line
     swaggerUiExpress.setup(require('../swagger_output.json'), {
-      explorer: true,
+      explorer: true
     })
   );
 }
@@ -33,6 +33,13 @@ app.use('/api-services', router);
 app.use((req, res, next) => {
   if (req.url.startsWith('/app-images')) {
     return express.static(join(process.cwd(), appAssetsDir))(req, res, next);
+  }
+  next();
+});
+
+app.use((req, res, next) => {
+  if (req.url.startsWith('/uploaded-files')) {
+    return express.static(join(process.cwd(), './'))(req, res, next);
   }
   next();
 });

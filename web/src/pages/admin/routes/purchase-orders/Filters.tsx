@@ -25,7 +25,7 @@ const allStates: Array<ShoppingState> = [
   ShoppingState.CANCELED,
   ShoppingState.REJECTED,
   ShoppingState.DELIVERED,
-  ShoppingState.PROCESSING,
+  ShoppingState.PROCESSING
 ];
 
 export const Filters = ({ onChange, value, className }: FiltersProps) => {
@@ -40,7 +40,7 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
           dateTo: undefined,
           states: undefined,
           routeNames: undefined,
-          hasBill: undefined,
+          hasBill: undefined
         });
       }}
     >
@@ -51,12 +51,12 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
           dateFrom: value?.dateFrom,
           dateTo: value?.dateTo,
           hasBill: value?.hasBill,
-          wasAccepted: value?.wasAccepted,
+          wasAccepted: value?.wasAccepted
         }}
         onChange={(filters) => {
           onChange?.({
             ...filters,
-            page: 1,
+            page: 1
           });
         }}
       >
@@ -101,16 +101,16 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
                   items={[
                     {
                       label: 'Si',
-                      value: true,
+                      value: true
                     },
                     {
                       label: 'No',
-                      value: false,
+                      value: false
                     },
                     {
                       label: 'Todas',
-                      value: null,
-                    },
+                      value: null
+                    }
                   ]}
                   containerClassName="flex item-center flex-wrap gap-4 w-fit"
                 />
@@ -126,12 +126,12 @@ export const Filters = ({ onChange, value, className }: FiltersProps) => {
                   items={[
                     {
                       label: 'Si',
-                      value: true,
+                      value: true
                     },
                     {
                       label: 'Todas',
-                      value: null,
-                    },
+                      value: null
+                    }
                   ]}
                   containerClassName="flex item-center flex-wrap gap-4 w-fit"
                 />

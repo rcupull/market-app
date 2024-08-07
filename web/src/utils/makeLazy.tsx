@@ -13,6 +13,6 @@ export type LoadableReturn = ReturnType<typeof loadable>;
 
 export const dynamic = (fn: LoadableFn, fallback?: LoadableOptions['fallback']): LoadableReturn => {
   return loadable(fn, {
-    fallback: fallback || <LazyLoadFallback />,
+    fallback: fallback || <LazyLoadFallback />
   });
 };
