@@ -13,6 +13,9 @@ import { useSignOut } from 'features/api-slices/useSignOut';
 import { useBreakpoints } from 'hooks/useBreakpoints';
 import { useRouter } from 'hooks/useRouter';
 
+import { UploadApk } from '../useUploadApk';
+
+import SvgAndroid from 'icons/Android';
 import SvgBarsSolid from 'icons/BarsSolid';
 import SvgCalendar from 'icons/Calendar';
 import SvgCogSolid from 'icons/CogSolid';
@@ -170,6 +173,14 @@ export const NavbarMenu = () => {
         label: 'Run BD script',
         onClick: () => adminBDScript.fetch(),
         svg: SvgRunningSolid
+      },
+      getHasSomeAccess('upload__native_compilation') && {
+        label: (
+          <div onClick={(e) => e.stopPropagation()}>
+            <UploadApk>Subir APK</UploadApk>
+          </div>
+        ),
+        svg: SvgAndroid
       }
     ];
 

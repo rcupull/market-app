@@ -37,6 +37,13 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  if (req.url.startsWith('/uploaded-files')) {
+    return express.static(join(process.cwd(), './'))(req, res, next);
+  }
+  next();
+});
+
 /**
  * the middlewareFront mmust be he last to use
  */

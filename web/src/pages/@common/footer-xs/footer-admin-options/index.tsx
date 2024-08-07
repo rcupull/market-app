@@ -92,7 +92,8 @@ export const FooterAdminOptions = ({ active }: FooterAdminOptionsProps) => {
               );
             }
           });
-        }
+        },
+        divider: true
       },
       getHasSomeAccess('full') && {
         label: 'Run BD script',
