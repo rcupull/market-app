@@ -24,7 +24,7 @@
     "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Both>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>": "",
     "start": "env-cmd -e start concurrently \"pnpm start:client\" \"pnpm start:server\"",
     "start:native": "TUNNEL=true env-cmd -e start pnpm run:android",
-    "build:native": "env-cmd -e build pnpm build:android",
+    "build:native": "env-cmd -e build pnpm run:android",
     "lint:fix": "env-cmd -e start concurrently \"pnpm lint:fix:client\" \"pnpm lint:fix:server\"",
     "tsc": "env-cmd -e start concurrently \"pnpm tsc:client\" \"pnpm tsc:server\"",
     "start:prod": "env-cmd -e start:prod concurrently \"pnpm start:client\" \"pnpm start:server\"",
