@@ -11,14 +11,14 @@ import { FooterButton } from '../footer-button';
 import SvgUserCogSolid from 'icons/UserCogSolid';
 import { Nullable } from 'types/general';
 import { getEndpoint } from 'utils/api';
-import { BusinessTab, getBusinessTabLabel } from 'utils/view';
+import { AdminTab, getAdminTabLabel } from 'utils/view';
 
 export interface FooterAdminOptionsProps {
   active?: boolean;
 }
 
 export const FooterAdminOptions = ({ active }: FooterAdminOptionsProps) => {
-  const { pushRoute, query, isOneBusinessPage } = useRouter();
+  const { pushRoute, query } = useRouter();
   const { getHasSomeAccess } = useAuth();
   const { getAgendaTokenAdmin } = useGetAgendaTokenAdmin();
   const { adminBDScript } = useAdminBDScript();
@@ -26,12 +26,8 @@ export const FooterAdminOptions = ({ active }: FooterAdminOptionsProps) => {
   const getSubLabel = () => {
     if (!active) return null;
 
-    if (isOneBusinessPage) {
-      return `Página`;
-    }
-
-    if (query.businessTab) {
-      return getBusinessTabLabel(query.businessTab as BusinessTab);
+    if (query.adminTab) {
+      return getAdminTabLabel(query.adminTab as AdminTab);
     }
 
     return null;
@@ -41,19 +37,45 @@ export const FooterAdminOptions = ({ active }: FooterAdminOptionsProps) => {
     const out: Array<Nullable<MenuItem>> = [
       getHasSomeAccess('user__read') && {
         label: 'Usuarios',
-        onClick: () => pushRoute('/admin/users')
+        onClick: () => {
+          const adminTab: AdminTab = 'users';
+          pushRoute('/admin', { adminTab });
+        }
       },
-      {
+      getHasSomeAccess('shopping__read') && {
         label: 'Órdenes de compra',
-        onClick: () => pushRoute('/admin/shopping')
+        onClick: () => {
+          const adminTab: AdminTab = 'shopping';
+          pushRoute('/admin', { adminTab });
+        }
       },
       {
         label: 'Negocios',
-        onClick: () => pushRoute('/admin/business')
+        onClick: () => {
+          const adminTab: AdminTab = 'business';
+          pushRoute('/admin', { adminTab });
+        }
       },
       getHasSomeAccess('bills__read') && {
         label: 'Facturas',
-        onClick: () => pushRoute('/admin/bills')
+        onClick: () => {
+          const adminTab: AdminTab = 'billing';
+          pushRoute('/admin', { adminTab });
+        }
+      },
+      {
+        label: 'Configuración',
+        onClick: () => {
+          const adminTab: AdminTab = 'settings';
+          pushRoute('/admin', { adminTab });
+        }
+      },
+      getHasSomeAccess('full') && {
+        label: 'Nlp',
+        onClick: () => {
+          const adminTab: AdminTab = 'nlp';
+          pushRoute('/admin', { adminTab });
+        }
       },
       getHasSomeAccess('agenda__full') && {
         label: 'Agenda',
@@ -72,17 +94,10 @@ export const FooterAdminOptions = ({ active }: FooterAdminOptionsProps) => {
           });
         }
       },
-      {
-        label: 'Configuración',
-        onClick: () => pushRoute('/admin/settings')
-      },
-      {
-        label: 'Nlp',
-        onClick: () => pushRoute('/admin/nlp')
-      },
       getHasSomeAccess('full') && {
         label: 'Run BD script',
-        onClick: () => adminBDScript.fetch()
+        onClick: () => adminBDScript.fetch(),
+        className: '!bg-red-200'
       }
     ];
 
@@ -90,6 +105,7 @@ export const FooterAdminOptions = ({ active }: FooterAdminOptionsProps) => {
   };
 
   const subLabel = getSubLabel();
+
   return (
     <Menu
       buttonElement={

@@ -41,7 +41,7 @@ export const NotificationsMenu = () => {
         </div>
         <div className="overflow-y-auto max-h-[75vh]">
           {getUserNotifications.data?.map((notification, index) => {
-            const toastMessage = notificationToToastMessage(notification, {unreadMark: true});
+            const toastMessage = notificationToToastMessage(notification, { unreadMark: true });
 
             if (!toastMessage) {
               return null;
@@ -62,10 +62,14 @@ export const NotificationsMenu = () => {
   const getHasUnreadNotifications = () => getUserNotifications.data?.some(({ readAt }) => !readAt);
 
   const renderButtonElement = () => {
-    return <div className='relative'>
-      <IconButton svg={<SvgBell className="!size-7" />} />
-      {getHasUnreadNotifications() && <div className='size-2 bg-red-600 absolute top-2 right-2 rounded-full'/>}
-    </div>;
+    return (
+      <div className="relative">
+        <IconButton svg={<SvgBell className="!size-7" />} />
+        {getHasUnreadNotifications() && (
+          <div className="size-2 bg-red-600 absolute top-2 right-2 rounded-full" />
+        )}
+      </div>
+    );
   };
 
   return (

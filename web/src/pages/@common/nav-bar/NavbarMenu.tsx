@@ -16,20 +16,16 @@ import { useRouter } from 'hooks/useRouter';
 import SvgBarsSolid from 'icons/BarsSolid';
 import SvgCalendar from 'icons/Calendar';
 import SvgCogSolid from 'icons/CogSolid';
+import SvgCogsSolid from 'icons/CogsSolid';
 import SvgEllipsisVSolid from 'icons/EllipsisVSolid';
 import SvgKeySolid from 'icons/KeySolid';
-import SvgMoneyBillAltSolid from 'icons/MoneyBillAltSolid';
 import SvgProductHunt from 'icons/ProductHunt';
 import SvgRunningSolid from 'icons/RunningSolid';
 import SvgShoppingBagSolid from 'icons/ShoppingBagSolid';
-import SvgShoppingCartSolid from 'icons/ShoppingCartSolid';
 import SvgSignInAltSolid from 'icons/SignInAltSolid';
 import SvgSignOutAltSolid from 'icons/SignOutAltSolid';
-import SvgStoreSolid from 'icons/StoreSolid';
-import SvgTrainSolid from 'icons/TrainSolid';
 import SvgUserCircleSolid from 'icons/UserCircleSolid';
 import SvgUserPlusSolid from 'icons/UserPlusSolid';
-import SvgUsersSolid from 'icons/UsersSolid';
 import { useAuthChangePasswordModal } from 'pages/@modals/useAuthChangePasswordModal';
 import { useAuthForgotPasswordRequestModal } from 'pages/@modals/useAuthForgotPasswordRequestModal';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
@@ -64,17 +60,6 @@ export const NavbarMenu = () => {
   const { authForgotPasswordRequestModal } = useAuthForgotPasswordRequestModal();
 
   const { allUserBusiness } = useAllUserBusiness();
-
-  // const getCopyLinkLabel = () => {
-  //   if (isPostPage) {
-  //     return 'Copiar el link de este producto';
-  //   }
-  //   if (isOneBusinessPage) {
-  //     return 'Copiar el link de este negocio';
-  //   }
-
-  //   return 'Copiar link';
-  // };
 
   const addDividerToFirst = (
     items: Array<Nullable<MenuItem>>,
@@ -158,25 +143,10 @@ export const NavbarMenu = () => {
     if (!isAuthenticated || !getIsAdmin(user) || breakpoints.xs) return [];
 
     const out: Array<Nullable<MenuItem>> = [
-      getHasSomeAccess('user__read') && {
-        label: 'Usuarios',
-        onClick: () => pushRoute('/admin/users'),
-        svg: SvgUsersSolid
-      },
       {
-        label: 'Órdenes de compra',
-        onClick: () => pushRoute('/admin/shopping'),
-        svg: SvgShoppingCartSolid
-      },
-      {
-        label: 'Negocios',
-        onClick: () => pushRoute('/admin/business'),
-        svg: SvgStoreSolid
-      },
-      getHasSomeAccess('bills__read') && {
-        label: 'Facturas',
-        onClick: () => pushRoute('/admin/bills'),
-        svg: SvgMoneyBillAltSolid
+        label: 'Control',
+        onClick: () => pushRoute('/admin'),
+        svg: SvgCogsSolid
       },
       getHasSomeAccess('agenda__full') && {
         label: 'Agenda',
@@ -195,16 +165,6 @@ export const NavbarMenu = () => {
           });
         },
         svg: SvgCalendar
-      },
-      {
-        label: 'Configuración',
-        onClick: () => pushRoute('/admin/settings'),
-        svg: SvgCogSolid
-      },
-      {
-        label: 'Nlp',
-        onClick: () => pushRoute('/admin/nlp'),
-        svg: SvgTrainSolid
       },
       getHasSomeAccess('full') && {
         label: 'Run BD script',
@@ -320,13 +280,6 @@ export const NavbarMenu = () => {
       }
       items={[
         ...getThisBusinessItems(),
-        // {
-        //   label: getCopyLinkLabel(),
-        //   onClick: () => {
-        //     copyToClipboard(window.location.href);
-        //   },
-        //   svg: SvgLinkSolid,
-        // },
         ...getAccountItems(),
         ...getBusinessItems(),
         ...getAdminItems()

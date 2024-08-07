@@ -10,7 +10,6 @@ import { useFiltersVolatile } from 'hooks/useFiltersVolatile';
 import { Filters } from './Filters';
 import { RowActions } from './RowActions';
 
-import { LayoutPageSection } from 'pages/@common/layout-page-section';
 import { TopActions } from 'pages/@common/top-actions';
 import { GetAllBillAdminQuery } from 'types/api';
 import { Bill } from 'types/billing';
@@ -34,7 +33,7 @@ export const Bills = () => {
   }, []);
 
   return (
-    <LayoutPageSection title="Facturas">
+    <>
       <TopActions>
         <Filters
           onChange={(filtersValue) => filters.onMergeFilters(filtersValue)}
@@ -71,7 +70,7 @@ export const Bills = () => {
         data={getAllBillsAdmin.data}
         isBusy={getAllBillsAdmin.status.isBusy}
       />
-    </LayoutPageSection>
+    </>
   );
 };
 

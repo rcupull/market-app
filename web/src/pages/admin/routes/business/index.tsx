@@ -7,7 +7,6 @@ import { useGetAllBusinessAdmin } from 'features/api/admin/useGetAllBusinessAdmi
 
 import { RowActions } from './RowActions';
 
-import { LayoutPageSection } from 'pages/@common/layout-page-section';
 import { TopActions } from 'pages/@common/top-actions';
 import { getDateString } from 'utils/date';
 import { cn } from 'utils/general';
@@ -22,7 +21,7 @@ export const BusinessPage = () => {
   }, []);
 
   return (
-    <LayoutPageSection title="Negocios">
+    <>
       <TopActions className="justify-end mb-2">
         <ButtonRefresh onClick={onRefresh} isBusy={getAllBusinessAdmin.status.isBusy} />
       </TopActions>
@@ -56,7 +55,7 @@ export const BusinessPage = () => {
         }}
         data={getAllBusinessAdmin.data}
       />
-    </LayoutPageSection>
+    </>
   );
 };
 
