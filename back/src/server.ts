@@ -7,6 +7,7 @@ import { middlewareCommaSeparateQuery } from './middlewares/middlewareCommaSepar
 import { middlewareFront } from './middlewares/middlewareFront';
 import { join } from 'path';
 import { appAssetsDir } from './config';
+import { logger } from './features/logger';
 
 export const app = express();
 
@@ -39,6 +40,9 @@ app.use((req, res, next) => {
 
 app.use((req, res, next) => {
   if (req.url.startsWith('/uploaded-files')) {
+    logger.info('Calliing to download file...');
+    logger.info(req.url);
+
     return express.static(join(process.cwd(), './'))(req, res, next);
   }
   next();
