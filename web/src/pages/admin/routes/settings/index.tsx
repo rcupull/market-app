@@ -4,7 +4,6 @@ import SvgCodeBranchSolid from 'icons/CodeBranchSolid';
 import SvgFileInvoiceSolid from 'icons/FileInvoiceSolid';
 import SvgHandHoldingUsdSolid from 'icons/HandHoldingUsdSolid';
 import SvgUserSecretSolid from 'icons/UserSecretSolid';
-import { LayoutPageSection } from 'pages/@common/layout-page-section';
 import { useAdminConfigUpdateFeaturesModal } from 'pages/@modals/useAdminConfigUpdateFeaturesModal';
 import { useAdminConfigUpdatePriceModal } from 'pages/@modals/useAdminConfigUpdatePriceModal';
 import { useAdminConfigUpdatePrivacyPolicyModal } from 'pages/@modals/useAdminConfigUpdatePrivacyPolicyModal';
@@ -18,7 +17,7 @@ export const Settings = () => {
   const { adminConfigUpdateFeaturesModal } = useAdminConfigUpdateFeaturesModal();
 
   return (
-    <LayoutPageSection title="Configuración">
+    <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 place-items-center">
         <SettingBox
           title="Términos y condiciones"
@@ -44,6 +43,8 @@ export const Settings = () => {
           onClick={() => adminConfigUpdateFeaturesModal.open()}
         />
       </div>
-    </LayoutPageSection>
+    </>
   );
 };
+
+export default Settings;

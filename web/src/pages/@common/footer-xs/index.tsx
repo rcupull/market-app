@@ -1,6 +1,8 @@
 import { useAuth } from 'features/api-slices/useAuth';
 import { useAllUserBusiness } from 'features/api-slices/useGetAllUserBusinessPersistent';
 
+import { useRouter } from 'hooks/useRouter';
+
 import { FooterAdminOptions } from './footer-admin-options';
 import { FooterBusinessOptions } from './footer-business-options';
 import { FooterGeneralMenu } from './footer-general-menu';
@@ -14,8 +16,9 @@ export interface FooterXsProps extends StyleProps {}
 export const FooterXs = ({ className }: FooterXsProps) => {
   const { user, getIsBusinessUser, getIsAdmin, isAuthenticated } = useAuth();
   const { business, onFetch } = useBusiness();
-  const { allUserBusiness } = useAllUserBusiness();
 
+  const { allUserBusiness } = useAllUserBusiness();
+  const { isAdminPage } = useRouter();
   return (
     <footer className={cn('shadow-lg -scale-y-100 bg-white px-2 py-1', className)}>
       <div
@@ -26,7 +29,7 @@ export const FooterXs = ({ className }: FooterXsProps) => {
       >
         <FooterGeneralMenu spread={!isAuthenticated} />
 
-        {getIsAdmin(user) && <FooterAdminOptions />}
+        {getIsAdmin(user) && <FooterAdminOptions active={isAdminPage} />}
 
         {getIsBusinessUser(user) &&
           allUserBusiness.data?.map((userBusiness, index) => {

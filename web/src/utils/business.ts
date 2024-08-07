@@ -85,6 +85,10 @@ export const getAdminRoute = () => {
   return `/admin`;
 };
 
+export const getUploadedFileRoute = (args: { filename: string }) => {
+  return `/uploaded-files/${args.filename}`;
+};
+
 export const getSearchLayoutLabel = (type: SearchLayoutType): string => {
   switch (type) {
     case 'none':

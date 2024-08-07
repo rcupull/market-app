@@ -11,7 +11,8 @@ const PushNotificationShema = new Schema<PushNotification>({
   postId: { type: String },
   routeName: { type: String },
   shoppingId: { type: String },
-  stockAmountAvailable: { type: Number }
+  stockAmountAvailable: { type: Number },
+  readAt: { type: Date }
 });
 
 PushNotificationShema.plugin(mongoosePaginate);
@@ -21,14 +22,3 @@ export const PushNotificationModel = model<PushNotification, PaginateModel<PushN
   PushNotificationShema,
   'push_notification'
 );
-
-export interface PushNotificationUserData {
-  userId: Schema.Types.ObjectId;
-  firebaseToken: string;
-}
-
-export interface PushNotificationBusinessData {
-  businessName: string;
-  routeName: string;
-  createdBy: Schema.Types.ObjectId;
-}

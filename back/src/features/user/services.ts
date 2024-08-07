@@ -4,10 +4,10 @@ import { UserModel } from '../../schemas/user';
 import { FilterQuery, PaginateOptions, ProjectionType, UpdateQuery } from 'mongoose';
 import { UpdateOptions } from 'mongodb';
 import { Shopping } from '../../types/shopping';
-import { compact, isEqualIds } from '../../utils/general';
+import { isEqualIds } from '../../utils/general';
 import { PaginateResult } from '../../middlewares/middlewarePagination';
 import { getSortQuery } from '../../utils/schemas';
-import { PushNotificationUserData } from '../../schemas/notifications';
+import { PushNotificationUserData } from '../../types/notifications';
 
 export const userServicesAddOne: QueryHandle<
   {
@@ -62,18 +62,10 @@ export const userServicesGetUsersDataForPushNotifications: QueryHandle<
     }
   });
 
-  return compact(
-    usersData.map((userData) => {
-      if (!userData?.firebaseToken) {
-        return null;
-      }
-
-      return {
-        firebaseToken: userData.firebaseToken,
-        userId: userData._id
-      };
-    })
-  );
+  return usersData.map((userData) => ({
+    firebaseToken: userData.firebaseToken,
+    userId: userData._id
+  }));
 };
 
 export const userServicesGetAllWithPagination: QueryHandle<

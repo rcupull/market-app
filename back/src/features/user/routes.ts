@@ -71,3 +71,17 @@ router
     middlewareIsLogged,
     userHandles.del_users_userId_delivery_business()
   );
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+router
+  .route('/users/:userId/notifications')
+  .get(
+    middlewareExpressValidator.param('userId').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewareIsUserIdAccessible,
+    middlewarePagination,
+    userHandles.get_user_userId_notifications()
+  );

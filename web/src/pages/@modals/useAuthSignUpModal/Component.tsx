@@ -185,13 +185,11 @@ export const Component = ({ portal }: ComponentProps) => {
                               }
                             });
                           },
-                          onAfterFailed: (e) => {
-                            if (e.reazon === 'EMAIL_ALREADY_REGISTERED') {
-                              setErrors({
-                                ...errors,
-                                email: e.message
-                              });
-                            }
+                          onAfterFailed: () => {
+                            setErrors({
+                              ...errors,
+                              email: ' '
+                            });
                           }
                         }
                       );

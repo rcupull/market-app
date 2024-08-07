@@ -83,3 +83,18 @@ export const getBusinessTabLabel = (tab: BusinessTab): string => {
 
   return record[tab] || 'unknown tab';
 };
+
+export type AdminTab = 'users' | 'shopping' | 'business' | 'billing' | 'settings' | 'nlp';
+
+export const getAdminTabLabel = (tab: AdminTab): string => {
+  const record: Record<AdminTab, string> = {
+    billing: 'Facturación',
+    settings: 'Configuración',
+    shopping: 'Órdenes de compras',
+    users: 'Usuarios',
+    business: 'Negocios',
+    nlp: 'NLP'
+  };
+
+  return record[tab] || 'unknown tab';
+};
