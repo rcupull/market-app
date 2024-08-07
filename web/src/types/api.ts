@@ -126,6 +126,8 @@ export interface GetAllShoppingAdminQuery extends PaginationQuery {
   wasAccepted?: boolean;
 }
 
+export interface GetAllUserAdminQuery extends PaginationQuery {}
+
 export interface GetAllBillAdminQuery extends PaginationQuery {
   routeNames?: Array<string>;
   states?: Array<BillState>;

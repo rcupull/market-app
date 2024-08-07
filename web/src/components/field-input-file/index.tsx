@@ -13,7 +13,7 @@ export const FieldInputFile = forwardRef<HTMLInputElement, FieldInputFileProps>(
   const { className, label, description, error: errorProp, children, ...omittedProps } = props;
 
   const { field, error } = useFormField(props);
-  const {  onBlur, onChange, name } = field;
+  const { onBlur, onChange, name } = field;
 
   return (
     <FormFieldWrapper

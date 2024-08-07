@@ -30,7 +30,7 @@ export const UploadApk = ({ children }: UploadApkProps) => {
                 <IconButton
                   preventDefault
                   variant="primary"
-                  className='shrink-0'
+                  className="shrink-0"
                   svg={SvgUploadSolid}
                   onClick={() => {
                     if (value.file) {

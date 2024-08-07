@@ -1,5 +1,6 @@
 import { UserModel } from '../../../schemas/user';
 import { RequestHandler } from '../../../types/general';
+import { defaultQuerySort } from '../../../utils/api';
 import { withTryCatch } from '../../../utils/error';
 import { get200Response } from '../../../utils/server-response';
 import { imagesServicesDeleteBulk } from '../../images/services';
@@ -10,10 +11,12 @@ import { specialAccessRecord } from './utils';
 const get_users: () => RequestHandler = () => {
   return (req, res) => {
     withTryCatch(req, res, async () => {
-      const { paginateOptions } = req;
+      const { paginateOptions, query } = req;
+      const { sort = defaultQuerySort } = query;
 
       const out = await userServicesGetAllWithPagination({
         paginateOptions,
+        sort,
         query: {
           role: { $in: ['user', 'admin'] }
         }

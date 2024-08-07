@@ -26,7 +26,7 @@ export const getEndpointUrl = () => {
     return 'http://localhost';
   }
 
-  return 'https://aseremarket.net';
+  return 'https://www.aseremarket.net';
 };
 
 export const injectUrlParams = (url: string, urlParams: UrlParams = {}): string => {

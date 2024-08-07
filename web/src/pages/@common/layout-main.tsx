@@ -17,7 +17,7 @@ export interface LayoutMainProps extends ChildrenProp {}
 export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
   const { signOut } = useSignOut();
   const { authSignIn } = useAuth();
-  const { isDashboardPage } = useRouter();
+  const { isDashboardPage, isAdminPage } = useRouter();
   const breakpoints = useBreakpoints();
 
   const renderFooter = () => {
@@ -25,7 +25,7 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
       return <FooterXs className="flex-shrink-0 fixed bottom-0 left-0 right-0" />;
     }
 
-    if (isDashboardPage) {
+    if (isDashboardPage || isAdminPage) {
       return null;
     }
 

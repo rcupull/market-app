@@ -8,6 +8,7 @@ import { useAuth } from 'features/api-slices/useAuth';
 import SvgAndroid from 'icons/Android';
 import { useAuthSignInModal } from 'pages/@modals/useAuthSignInModal';
 import { useAuthSignUpModal } from 'pages/@modals/useAuthSignUpModal';
+import { getEndpointUrl } from 'utils/api';
 import { getUploadedFileRoute } from 'utils/business';
 
 export const HeroSectionCentered = () => {
@@ -29,8 +30,8 @@ export const HeroSectionCentered = () => {
             </h1>
 
             <p className="text-lg leading-8 text-gray-600 hidden sm:block">
-              El emprendimiento es algo grande. Quien trabaja
-              duro, quien ama el dolor, quien construye sus sueños, siempre será triunfador.
+              El emprendimiento es algo grande. Quien trabaja duro, quien ama el dolor, quien
+              construye sus sueños, siempre será triunfador.
             </p>
           </div>
 
@@ -56,18 +57,17 @@ export const HeroSectionCentered = () => {
             </div>
           )}
 
-          <a
-            target="_blank"
-            href={getUploadedFileRoute({ filename: 'asere-market.apk' })}
-            rel="noreferrer"
-            className="flex justify-center"
-          >
-            <Button
-              svg={() => <SvgAndroid className="size-8" />}
-              label="Descargar asere-market.apk"
-              className="!py-1"
-            />
-          </a>
+          <Button
+            svg={() => <SvgAndroid className="size-8" />}
+            label="Descargar asere-market.apk"
+            className="!py-1"
+            onClick={() => {
+              window.open(
+                `${getEndpointUrl()}${getUploadedFileRoute({ filename: 'asere-market.apk' })}`,
+                '_blank'
+              );
+            }}
+          />
         </div>
       </div>
     </HtmlTextContainer>
