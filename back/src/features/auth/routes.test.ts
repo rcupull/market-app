@@ -3,6 +3,7 @@ import { app } from '../../server';
 import { dropTestDbConnectionAsync, setAnyString } from '../../utils/test-utils';
 import { User } from '../../types/user';
 import { fillBD } from '../../utils/test-BD';
+import { TYPE_DEVICE } from '../../types/auth';
 
 describe('POST /auth/sign-in', () => {
   afterEach(async () => {
@@ -14,21 +15,25 @@ describe('POST /auth/sign-in', () => {
 
     await supertest(app)
       .post(`/api-services/auth/sign-in`)
+      .set('User-Agent', 'some decription')
       .send({
         username: 'user1@gmail.com',
-        password: 'password_123_user1'
+        password: 'password_123_user1',
+        typeDevice: TYPE_DEVICE.WEB
       })
       .expect(401);
   });
 
   it('should sign in', async () => {
-    await fillBD();
+    await fillBD({ noCreateSesions: true });
 
     await supertest(app)
       .post(`/api-services/auth/sign-in`)
+      .set('User-Agent', 'some decription')
       .send({
         username: 'user1@gmail.com',
-        password: 'password_123_user1'
+        password: 'password_123_user1',
+        typeDevice: TYPE_DEVICE.WEB
       })
       .expect(200)
       .then((response) => {
