@@ -22,3 +22,4 @@ app-config*
 *.sln
 *.sw?
 .eslintcache
+uploaded-files

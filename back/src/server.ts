@@ -42,7 +42,6 @@ app.use((req, res, next) => {
   if (req.url.startsWith('/uploaded-files')) {
     logger.info('Calliing to download file...');
     logger.info(req.url);
-
     return express.static(join(process.cwd(), './'))(req, res, next);
   }
   next();

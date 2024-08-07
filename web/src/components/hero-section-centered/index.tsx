@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 
 import { Button } from 'components/button';
 import { HtmlTextContainer } from 'components/html-text-container';
-import { IconButton } from 'components/icon-button';
 
 import { useAuth } from 'features/api-slices/useAuth';
 
