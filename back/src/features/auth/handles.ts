@@ -143,23 +143,30 @@ const post_signUp: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { email, password, name } = req.body;
 
-      const newUser = await userServicesAddOne({
-        email,
-        name,
-        password
+      // Check if the email is already registered
+      const existingUser = await userServicesGetOne({
+        query: {
+          email
+        }
       });
 
-      if (!newUser) {
+      if (existingUser) {
         return get401Response({
           res,
           json: {
             message:
               translateES[
-                'No se pudo crear la cuenta. Puede que ya exista un usuario con ese correo'
+                'No se pudo crear la cuenta. Puede que ya exista un usuario con ese correo.'
               ]
           }
         });
       }
+
+      const newUser = await userServicesAddOne({
+        email,
+        name,
+        password
+      });
 
       // send validation code by email
       const code = uuid();
