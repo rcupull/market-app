@@ -96,6 +96,8 @@ export const Component = ({ portal }: ComponentProps) => {
                   id="name"
                   name="name"
                   autoComplete="name"
+                  autoFocus
+                  autoFocusDelay={300}
                   label={getRequiredLabel('Nombre')}
                 />
 

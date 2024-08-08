@@ -28,5 +28,9 @@ export const slices = {
   ),
   useAdminConfig: createSimpleSlice<ReduxState['useAdminConfig']>('useAdminConfig', null),
   useAuth: createSimpleSlice<ReduxState['useAuth']>('useAuth', null),
-  useSignOut: createSimpleSlice<ReduxState['useSignOut']>('useSignOut', null)
+  useSignOut: createSimpleSlice<ReduxState['useSignOut']>('useSignOut', null),
+  useUserNotifications: createSimpleSlice<ReduxState['useUserNotifications']>(
+    'useUserNotifications',
+    null
+  )
 };

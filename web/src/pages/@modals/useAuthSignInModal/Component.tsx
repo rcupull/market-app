@@ -125,6 +125,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                   type="email"
                   autoComplete="email"
                   autoFocus
+                  autoFocusDelay={300}
                   label={getRequiredLabel('Correo Electrónico')}
                   {...emailKeyboard()}
                 />
@@ -136,6 +137,7 @@ export const Component = ({ portal, email = '', redirect }: ComponentProps) => {
                   type="password"
                   autoComplete="current-password"
                   autoFocus={!!email}
+                  autoFocusDelay={300}
                   label={getRequiredLabel('Contraseña')}
                   className="mt-4 sm:mt-6"
                   {...passwordKeyboard({ handleSubmit })}

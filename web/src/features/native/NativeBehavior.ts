@@ -8,6 +8,7 @@ import { usePersistentValue } from 'hooks/usePersistentValue';
 import { useRouter } from '../../hooks/useRouter';
 
 import { App, URLOpenListenerEvent } from '@capacitor/app';
+import { getEndpointUrl } from 'utils/api';
 
 const NativeBehavior = () => {
   const router = useRouter();
@@ -44,7 +45,10 @@ const NativeBehavior = () => {
       const slug = event.url.split('.app').pop();
 
       if (slug) {
-        pushRoute(slug);
+        const endpoint = getEndpointUrl();
+        const pathname = slug.includes(endpoint) ? slug.replace(endpoint, '') : slug;
+
+        pushRoute(pathname);
       }
     });
 

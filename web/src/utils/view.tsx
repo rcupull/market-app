@@ -1,5 +1,7 @@
 import type { UseBreakpointsReturn } from 'hooks/useBreakpoints';
 
+import { isNullOrUndefined } from './general';
+
 const mapToOutlinedBox = <T extends React.ReactNode = React.ReactNode>(args: {
   value?: Array<T>;
   preMap?: (t: T, index: number) => T;
@@ -82,4 +84,31 @@ export const getBusinessTabLabel = (tab: BusinessTab): string => {
   };
 
   return record[tab] || 'unknown tab';
+};
+
+export type AdminTab = 'users' | 'shopping' | 'business' | 'billing' | 'settings' | 'nlp';
+
+export const getAdminTabLabel = (tab: AdminTab): string => {
+  const record: Record<AdminTab, string> = {
+    billing: 'Facturación',
+    settings: 'Configuración',
+    shopping: 'Órdenes de compras',
+    users: 'Usuarios',
+    business: 'Negocios',
+    nlp: 'NLP'
+  };
+
+  return record[tab] || 'unknown tab';
+};
+
+export const mergeRefs = <T extends any>(
+  refs: Array<React.MutableRefObject<T> | React.LegacyRef<T> | null | undefined>
+): React.RefCallback<T> => {
+  return (value) => {
+    refs.forEach((ref) => {
+      typeof ref === 'function'
+        ? ref(value)
+        : !isNullOrUndefined(ref) && ((ref as React.MutableRefObject<T | null>).current = value);
+    });
+  };
 };

@@ -39,7 +39,7 @@ export const Table = <RowData extends AnyRecord = AnyRecord>(props: TableProps<R
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const { onScroll } = useScrollBottom(ref, () => onScrollBottom?.());
+  const { onScroll } = useScrollBottom(ref, () => onScrollBottom?.(), { backWayDiff: 50 });
 
   let heads = headsProp;
   let getRowProps = getRowPropsProp;

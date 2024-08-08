@@ -30,6 +30,7 @@ import { postServicesGetOne, postServicesUpdateMany } from '../post/services';
 import { nlpServicesProcessMainManager } from '../nlp/services';
 import { deliveryServicesGetAllWithPagination } from '../delivery/services';
 import { defaultQuerySort } from '../../utils/api';
+import { notificationsServicesGetAllWithPagination } from '../notifications/services';
 
 const get_business: () => RequestHandler = () => {
   return (req, res) => {
@@ -569,6 +570,31 @@ const get_business_routeName_deliveries: () => RequestHandler = () => {
   };
 };
 
+const get_business_routeName_notifications: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { query, user, paginateOptions } = req;
+
+      if (!user) {
+        return getUserNotFoundResponse({ res });
+      }
+
+      const { routeName, sort = defaultQuerySort } = query;
+
+      const notifications = await notificationsServicesGetAllWithPagination({
+        paginateOptions,
+        sort,
+        query: {
+          routeName,
+          userIds: [user._id]
+        }
+      });
+
+      res.send(notifications);
+    });
+  };
+};
+
 export const businessHandles = {
   get_business,
   get_business_routeName,
@@ -592,5 +618,7 @@ export const businessHandles = {
 
   put_business_routeName_checks,
   //
-  get_business_routeName_deliveries
+  get_business_routeName_deliveries,
+  //
+  get_business_routeName_notifications
 };

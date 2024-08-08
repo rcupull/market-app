@@ -7,6 +7,7 @@ const PushNotificationShema = new Schema<PushNotification>({
   ...createdAtSchemaDefinition,
   type: { type: String, enum: Object.values(PushNotificationType), required: true },
   userIds: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  readBys: { type: Object },
   businessName: { type: String },
   postId: { type: String },
   routeName: { type: String },
@@ -21,14 +22,3 @@ export const PushNotificationModel = model<PushNotification, PaginateModel<PushN
   PushNotificationShema,
   'push_notification'
 );
-
-export interface PushNotificationUserData {
-  userId: Schema.Types.ObjectId;
-  firebaseToken: string;
-}
-
-export interface PushNotificationBusinessData {
-  businessName: string;
-  routeName: string;
-  createdBy: Schema.Types.ObjectId;
-}

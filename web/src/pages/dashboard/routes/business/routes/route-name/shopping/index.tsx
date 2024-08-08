@@ -44,7 +44,10 @@ export const ShoppingPage = () => {
   });
 
   useEffect(() => {
-    filters.onMergeFilters({ states: [query.state || ShoppingState.REQUESTED] });
+    filters.onMergeFilters(
+      { states: [query.state || ShoppingState.REQUESTED] },
+      { forceFetch: true }
+    );
   }, [business?.routeName]);
 
   const onRefreshForce = () => {

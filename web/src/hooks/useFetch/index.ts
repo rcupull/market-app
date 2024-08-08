@@ -99,7 +99,7 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
               setPersistent('accessToken', newAccessToken);
               setPersistent('accessTokenUpdatedAt', new Date().toISOString());
 
-              if (DEVELOPMENT) {
+              if (DEVELOPMENT && !TUNNEL) {
                 //simulate the api call delay
                 wait(500).then(() => {
                   resolve(newAccessToken);
@@ -111,7 +111,7 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
             .catch(() => {
               fetchingTokenPromise = null;
 
-              if (DEVELOPMENT) {
+              if (DEVELOPMENT && !TUNNEL) {
                 //simulate the api call delay
                 wait(500).then(() => {
                   resolve(null);
@@ -166,7 +166,7 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
 
         if (response?.data?.message) {
           showMessage(
-            { title: 'Error', body: response?.data?.message },
+            { title: 'Error', body: response?.data?.message, meta: undefined },
             {
               type: 'error'
             }

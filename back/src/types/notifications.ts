@@ -11,11 +11,22 @@ export enum PushNotificationType {
 export interface PushNotification extends BaseIdentity {
   type: PushNotificationType;
   userIds: Array<Schema.Types.ObjectId>;
+  readBys?: Record<string, Date>;
   //
   postId?: string;
   shoppingId?: string;
   stockAmountAvailable?: number;
   routeName?: string;
   businessName?: string;
-  //
+}
+
+export interface PushNotificationUserData {
+  userId: Schema.Types.ObjectId;
+  firebaseToken?: string;
+}
+
+export interface PushNotificationBusinessData {
+  businessName: string;
+  routeName: string;
+  createdBy: Schema.Types.ObjectId;
 }

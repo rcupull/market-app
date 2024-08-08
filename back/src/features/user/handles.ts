@@ -13,6 +13,8 @@ import { makeReshaper } from '../../utils/makeReshaper';
 import { deepJsonCopy, includesId } from '../../utils/general';
 import { businessServicesGetAll } from '../business/services';
 import { Business } from '../../types/business';
+import { notificationsServicesGetAllWithPagination } from '../notifications/services';
+import { defaultQuerySort } from '../../utils/api';
 
 const get_users_delivery_man: () => RequestHandler = () => {
   return (req, res) => {
@@ -287,6 +289,33 @@ const del_users_userId_delivery_business: () => RequestHandler = () => {
   };
 };
 
+const get_user_userId_notifications: () => RequestHandler = () => {
+  return (req, res) => {
+    withTryCatch(req, res, async () => {
+      const { query, user, paginateOptions } = req;
+
+      if (!user) {
+        return getUserNotFoundResponse({ res });
+      }
+
+      const { sort = defaultQuerySort, onlyUnread } = query;
+
+      const notifications = await notificationsServicesGetAllWithPagination({
+        paginateOptions,
+        sort,
+        query: {
+          userIds: [user._id],
+          ...(onlyUnread === 'true'
+            ? { [`readBys.${user._id.toString()}`]: { $exists: false } }
+            : {})
+        }
+      });
+
+      res.send(notifications);
+    });
+  };
+};
+
 export const userHandles = {
   get_users_userId,
   put_users_userId,
@@ -295,5 +324,6 @@ export const userHandles = {
   post_users_userId_delivery_business,
   del_users_userId_delivery_business,
   //
-  get_users_delivery_man
+  get_users_delivery_man,
+  get_user_userId_notifications
 };

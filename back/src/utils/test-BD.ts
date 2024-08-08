@@ -108,6 +108,8 @@ export const fillBD = async (args?: {
   //
   user3?: Partial<User>;
   admin?: Partial<User>;
+  //
+  noCreateSesions?: boolean;
 }): Promise<TestBDContent> => {
   const admin = new UserModel({
     name: 'admin',
@@ -281,18 +283,21 @@ export const fillBD = async (args?: {
 
   //////////////////////////////////////////////////////////////////////////////////
 
-  const createSession = async (user: User) => {
-    await AuthSessionModel.create({
-      userId: user._id,
-      descriptionDevice: 'descriptionDevice',
-      typeDevice: TYPE_DEVICE.WEB,
-      refreshToken: generateRefreshJWT({ id: user._id.toString() })
-    });
-  };
+  if (!args?.noCreateSesions) {
+    const createSession = async (user: User) => {
+      await AuthSessionModel.create({
+        userId: user._id,
+        descriptionDevice: 'descriptionDevice',
+        typeDevice: TYPE_DEVICE.WEB,
+        refreshToken: generateRefreshJWT({ id: user._id.toString() })
+      });
+    };
 
-  await createSession(user1);
-  await createSession(user2);
-  await createSession(user3);
+    await createSession(user1);
+    await createSession(user2);
+    await createSession(user3);
+    await createSession(admin);
+  }
 
   return {
     user1,

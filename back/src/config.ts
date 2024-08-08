@@ -11,6 +11,7 @@ export const secretAgendaToken = appConfig.secretAgendaToken;
 export const appAssetsDir = appConfig.appAssetsDir;
 export const appFrontDir = appConfig.appFrontDir;
 export const hostname = appConfig.hostname;
+export const appUploadedFilesDir = appConfig.appUploadedFilesDir;
 
 export const cloudFlareAccountId = appConfig.cloudFlareAccountId;
 export const cloudFlareApiToken = appConfig.cloudFlareApiToken;

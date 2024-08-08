@@ -143,3 +143,13 @@ router
     middlewarePagination,
     businessHandles.get_business_routeName_deliveries()
   );
+
+router
+  .route('/business/:routeName/notifications')
+  .get(
+    middlewareExpressValidator.param('routeName').notEmpty(),
+    middlewareExpressValidator.handle,
+    middlewareIsLogged,
+    middlewarePagination,
+    businessHandles.get_business_routeName_notifications()
+  );
