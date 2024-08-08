@@ -467,6 +467,13 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "onlyUnread",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1995,6 +2002,26 @@
           {
             "name": "routeName",
             "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/notifications/{notificationId}/read": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "notificationId",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string"
             }

@@ -27,6 +27,7 @@ import { makeReshaper } from '../../utils/makeReshaper';
 import { User } from '../../types/user';
 import { agendaServices } from '../agenda/services';
 import { authServicesRemoveSession } from './services';
+import { translateES } from '../../utils/translate';
 
 const post_signIn: () => RequestHandler = () => {
   return (req, res) => {
@@ -142,13 +143,30 @@ const post_signUp: () => RequestHandler = () => {
     withTryCatch(req, res, async () => {
       const { email, password, name } = req.body;
 
+      // Check if the email is already registered
+      const existingUser = await userServicesGetOne({
+        query: {
+          email
+        }
+      });
+
+      if (existingUser) {
+        return get401Response({
+          res,
+          json: {
+            message:
+              translateES[
+                'No se pudo crear la cuenta. Puede que ya exista un usuario con ese correo.'
+              ]
+          }
+        });
+      }
+
       const newUser = await userServicesAddOne({
         email,
         name,
         password
       });
-
-      if (!newUser) return getUserNotFoundResponse({ res });
 
       // send validation code by email
       const code = uuid();

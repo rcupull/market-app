@@ -15,15 +15,8 @@ export const userServicesAddOne: QueryHandle<
     password: string;
     name: string;
   },
-  User | null
+  ModelDocument<User>
 > = async ({ email, password, name }) => {
-  // Check if the email is already registered
-  const existingUser = await UserModel.findOne({ email });
-  if (existingUser) {
-    return null;
-  }
-
-  // Create a new user
   const newUser = new UserModel({
     email,
     password,
