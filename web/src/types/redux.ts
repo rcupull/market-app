@@ -1,6 +1,7 @@
 import { AdminConfig } from './admin';
 import { PaginatedData, SliceApiPersistentState } from './api';
 import { AuthData } from './auth';
+import { PushNotification } from './notifications';
 import { Shopping } from './shopping';
 
 export interface ReduxState {
@@ -18,4 +19,5 @@ export interface ReduxState {
   useAdminConfig: SliceApiPersistentState<AdminConfig>;
   useAuth: SliceApiPersistentState<AuthData>;
   useSignOut: SliceApiPersistentState;
+  useUserNotifications: SliceApiPersistentState<PaginatedData<PushNotification>>;
 }

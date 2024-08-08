@@ -20,7 +20,9 @@ type UseAuthMeta = {
   getHasSomeAccess: (...access: Array<Access>) => boolean;
 };
 
-export const useAuth = (): ReturnType<typeof useAuthSignIn> & UseAuthMeta => {
+export type UserAuthReturn = ReturnType<typeof useAuthSignIn> & UseAuthMeta;
+
+export const useAuth = (): UserAuthReturn => {
   const { authSignIn } = useAuthSignIn();
 
   const { data, setDataRedux, status, fetch, reset } = useApiPersistent('useAuth', authSignIn);

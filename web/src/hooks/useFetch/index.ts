@@ -166,7 +166,7 @@ export const useFetch = <Data = any>(): UseFetchReturn<Data> => {
 
         if (response?.data?.message) {
           showMessage(
-            { title: 'Error', body: response?.data?.message },
+            { title: 'Error', body: response?.data?.message, meta: undefined },
             {
               type: 'error'
             }

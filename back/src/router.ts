@@ -11,6 +11,7 @@ import { router as billingRouter } from './features/billing/routes';
 import { router as geolocationRouter } from './features/geolocation/routes';
 import { router as nlpRouter } from './features/nlp/routes';
 import { router as reviewRouter } from './features/review/routes';
+import { router as notificationsRouter } from './features/notifications/routes';
 
 export const router = Router();
 
@@ -27,7 +28,8 @@ router.use(
   billingRouter,
   geolocationRouter,
   nlpRouter,
-  reviewRouter
+  reviewRouter,
+  notificationsRouter
 );
 
 export default router;

@@ -6,7 +6,10 @@ import { getEndpoint } from 'utils/api';
 import { getPaginationResources } from 'utils/pagination';
 
 export const useGetUserNotifications = (): {
-  getUserNotifications: FetchResourceWithPagination<{ userId: string }, PushNotification>;
+  getUserNotifications: FetchResourceWithPagination<
+    { userId: string; onlyUnread?: boolean },
+    PushNotification
+  >;
 } => {
   const fetch = useFetch();
 
@@ -14,13 +17,14 @@ export const useGetUserNotifications = (): {
     getUserNotifications: {
       ...getPaginationResources(fetch[0]),
       status: fetch[1],
-      fetch: ({ userId }, options = {}) => {
+      fetch: ({ userId, onlyUnread }, options = {}) => {
         fetch[2](
           {
             method: 'get',
             url: getEndpoint({
               path: '/users/:userId/notifications',
-              urlParams: { userId }
+              urlParams: { userId },
+              query: { onlyUnread }
             })
           },
           options

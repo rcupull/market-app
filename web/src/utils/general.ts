@@ -18,6 +18,10 @@ export const isString = (value: unknown): value is string => {
   return typeof value === 'string';
 };
 
+export const isBoolean = (value: unknown): value is boolean => {
+  return typeof value === 'boolean';
+};
+
 //eslint-disable-next-line @typescript-eslint/ban-types
 export const isFunction = (value: unknown): value is Function => {
   return typeof value === 'function';

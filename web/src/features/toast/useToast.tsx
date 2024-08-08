@@ -1,6 +1,6 @@
 import { toast, ToastOptions } from 'react-toastify';
 
-import { renderToastMessage } from './utils';
+import { RenderToastMessage } from './RenderToastMessage';
 
 import { ToastMessage } from 'types/toast';
 
@@ -14,7 +14,7 @@ const defaultOptions: ToastOptions = {
 
 export const useToast = () => {
   const showMessage = (toastMessage: ToastMessage, options: ToastOptions = {}) => {
-    toast(renderToastMessage(toastMessage), {
+    toast(<RenderToastMessage toastMessage={toastMessage} />, {
       ...defaultOptions,
       ...options
     });

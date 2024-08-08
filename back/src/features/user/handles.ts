@@ -298,13 +298,16 @@ const get_user_userId_notifications: () => RequestHandler = () => {
         return getUserNotFoundResponse({ res });
       }
 
-      const { sort = defaultQuerySort } = query;
+      const { sort = defaultQuerySort, onlyUnread } = query;
 
       const notifications = await notificationsServicesGetAllWithPagination({
         paginateOptions,
         sort,
         query: {
-          userIds: [user._id]
+          userIds: [user._id],
+          ...(onlyUnread === 'true'
+            ? { [`readBys.${user._id.toString()}`]: { $exists: false } }
+            : {})
         }
       });
 

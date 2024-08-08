@@ -23,7 +23,7 @@ export const HeroSectionCentered = () => {
     >
       <div className="mx-auto max-w-2xl py-4 sm:py-16 lg:py-32">
         <div className="hidden sm:mb-8 sm:flex sm:justify-center"></div>
-        <div className="flex flex-col gap-14 text-center">
+        <div className="flex flex-col gap-14 text-center items-center">
           <div className="flex flex-col gap-4">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
               Recursos para enriquecer tu negocio online
@@ -60,7 +60,7 @@ export const HeroSectionCentered = () => {
           <Button
             svg={() => <SvgAndroid className="size-8" />}
             label="Descargar asere-market.apk"
-            className="!py-1"
+            className="!py-1 !w-fit"
             onClick={() => {
               window.open(
                 `${getEndpointUrl()}${getUploadedFileRoute({ filename: 'asere-market.apk' })}`,
