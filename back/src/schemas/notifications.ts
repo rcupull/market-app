@@ -7,12 +7,12 @@ const PushNotificationShema = new Schema<PushNotification>({
   ...createdAtSchemaDefinition,
   type: { type: String, enum: Object.values(PushNotificationType), required: true },
   userIds: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  readBys: { type: Object },
   businessName: { type: String },
   postId: { type: String },
   routeName: { type: String },
   shoppingId: { type: String },
-  stockAmountAvailable: { type: Number },
-  readAt: { type: Date }
+  stockAmountAvailable: { type: Number }
 });
 
 PushNotificationShema.plugin(mongoosePaginate);

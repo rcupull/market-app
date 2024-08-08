@@ -59,7 +59,7 @@ export const NotificationsMenu = () => {
     );
   };
 
-  const getHasUnreadNotifications = () => getUserNotifications.data?.some(({ readAt }) => !readAt);
+  const getHasUnreadNotifications = () => user && getUserNotifications.data?.some(({ readBys }) => !readBys?.[user._id]);
 
   const renderButtonElement = () => {
     return (

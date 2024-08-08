@@ -10,12 +10,11 @@ export enum PushNotificationType {
 export interface PushNotification extends BaseIdentity {
   type: PushNotificationType;
   userIds: Array<string>;
+  readBys?: Record<string, Date>;
   //
   postId?: string;
   shoppingId?: string;
   stockAmountAvailable?: number;
   routeName?: string;
   businessName?: string;
-  //
-  readAt?: string;
 }

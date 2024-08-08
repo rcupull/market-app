@@ -5,7 +5,7 @@ import {
   PushNotificationUserData
 } from '../../types/notifications';
 import firebase from 'firebase-admin';
-import { QueryHandle } from '../../types/general';
+import { ModelDocument, QueryHandle } from '../../types/general';
 
 import { compact, excludeRepetedValues } from '../../utils/general';
 import { serviceAccount } from '../../config';
@@ -13,7 +13,7 @@ import { Shopping } from '../../types/shopping';
 import { logger } from '../logger';
 import { userServicesGetAll } from '../user/services';
 import { PushNotificationModel } from '../../schemas/notifications';
-import { PaginateOptions } from 'mongoose';
+import { FilterQuery, PaginateOptions, ProjectionType, UpdateQuery } from 'mongoose';
 import { getAllFilterQuery, GetAllNotificationsArgs } from './utils';
 import { PaginateResult } from '../../middlewares/middlewarePagination';
 import { getSortQuery } from '../../utils/schemas';
@@ -43,6 +43,27 @@ export const notificationsServicesGetAllWithPagination: QueryHandle<
   });
 
   return out as unknown as PaginateResult<PushNotification>;
+};
+
+export const notificationsServicesGetAll: QueryHandle<
+  {
+    query: GetAllNotificationsArgs;
+    projection?: ProjectionType<PushNotification>;
+  },
+  Array<ModelDocument<PushNotification>>
+> = async ({ query, projection }) => {
+  const filterQuery = getAllFilterQuery(query);
+
+  const out = await PushNotificationModel.find(filterQuery, projection);
+
+  return out;
+};
+
+export const notificationsServicesUpdateOne: QueryHandle<{
+  query: FilterQuery<PushNotification>;
+  update: UpdateQuery<PushNotification>;
+}> = async ({ query, update }) => {
+  await PushNotificationModel.updateOne(query, update);
 };
 
 export const notificationsServicesSendNewOrderApprovedMessage: QueryHandle<{
