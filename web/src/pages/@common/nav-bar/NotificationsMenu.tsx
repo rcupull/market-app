@@ -6,41 +6,52 @@ import { IconButtonRefresh } from 'components/icon-button-refresh';
 import { Menu } from 'components/menu';
 import { SpinnerBox } from 'components/spinner-box';
 
-import { useGetUserNotifications } from 'features/api/user/useGetUserNotifications';
 import { useAuth } from 'features/api-slices/useAuth';
-import { notificationToToastMessage, renderToastMessage } from 'features/toast/utils';
+import { useUserNotifications } from 'features/api-slices/useUserNotifications';
+import { RenderToastMessage } from 'features/toast/RenderToastMessage';
+import { notificationToToastMessage } from 'features/toast/utils';
 
 import SvgBell from 'icons/Bell';
+import { getHasSomeUnReadUserNotification } from 'utils/notifications';
 
 export const NotificationsMenu = () => {
   const { isAuthenticated, user } = useAuth();
 
-  const { getUserNotifications } = useGetUserNotifications();
-
-  const onRefresh = () => {
-    user && getUserNotifications.fetch({ userId: user._id });
-  };
+  const userNotifications = useUserNotifications();
 
   useEffect(() => {
-    onRefresh();
-  }, [user]);
+    userNotifications.onRefresh();
+  }, []);
 
   const getContent = () => {
-    if (!isAuthenticated || !getUserNotifications.data?.length) return null;
+    if (!isAuthenticated || !userNotifications.data?.length) return null;
 
     return (
       <div className="flex flex-col">
-        <div className="flex m-1 justify-end gap-2">
-          <Button label="Todas" preventDefault variant="transparent" className="rounded-3xl" />
-          <Button label="No leídas" preventDefault variant="transparent" className="rounded-3xl" />
-          <IconButtonRefresh
-            onClick={() => onRefresh()}
+        <div className="flex m-1 mt-3 justify-end gap-2">
+          <Button
+            label="Todas"
             preventDefault
-            isBusy={getUserNotifications.status.isBusy}
+            variant={!userNotifications.onlyUnread ? 'outlined' : 'transparent'}
+            className="!rounded-3xl !py-0"
+            onClick={() => userNotifications.onRefresh({ onlyUnread: false })}
+          />
+          <Button
+            label="No leídas"
+            preventDefault
+            variant={userNotifications.onlyUnread ? 'outlined' : 'transparent'}
+            onClick={() => userNotifications.onRefresh({ onlyUnread: true })}
+            className="!rounded-3xl !py-0"
+          />
+          <IconButtonRefresh
+            onClick={() => userNotifications.onRefresh()}
+            preventDefault
+            isBusy={userNotifications.status.isBusy}
+            className="!py-0"
           />
         </div>
         <div className="overflow-y-auto max-h-[75vh]">
-          {getUserNotifications.data?.map((notification, index) => {
+          {userNotifications.data.map((notification, index) => {
             const toastMessage = notificationToToastMessage(notification, { unreadMark: true });
 
             if (!toastMessage) {
@@ -49,17 +60,19 @@ export const NotificationsMenu = () => {
 
             return (
               <div key={index} className="w-80 mt-3">
-                {renderToastMessage(toastMessage)}
+                <RenderToastMessage toastMessage={toastMessage} />
               </div>
             );
           })}
         </div>
-        {getUserNotifications.status.isBusy && <SpinnerBox />}
+        {userNotifications.status.isBusy && <SpinnerBox />}
       </div>
     );
   };
 
-  const getHasUnreadNotifications = () => user && getUserNotifications.data?.some(({ readBys }) => !readBys?.[user._id]);
+  const getHasUnreadNotifications = () => {
+    return user && getHasSomeUnReadUserNotification(userNotifications.data, user);
+  };
 
   const renderButtonElement = () => {
     return (

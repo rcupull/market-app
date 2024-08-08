@@ -13,7 +13,7 @@ import {
 } from 'utils/business';
 import { getFlattenJson } from 'utils/general';
 
-interface UseRouterReturn<Q extends Query = Query> {
+export interface UseRouterReturn<Q extends Query = Query> {
   pushRoute: (
     route: string,
     query?: AnyRecord,

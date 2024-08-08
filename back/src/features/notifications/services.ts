@@ -59,6 +59,20 @@ export const notificationsServicesGetAll: QueryHandle<
   return out;
 };
 
+export const notificationsServicesGetOne: QueryHandle<
+  {
+    query: FilterQuery<PushNotification>;
+    projection?: ProjectionType<PushNotification>;
+  },
+  ModelDocument<PushNotification> | null
+> = async ({ query, projection }) => {
+  const filterQuery = getAllFilterQuery(query);
+
+  const out = await PushNotificationModel.findOne(filterQuery, projection);
+
+  return out;
+};
+
 export const notificationsServicesUpdateOne: QueryHandle<{
   query: FilterQuery<PushNotification>;
   update: UpdateQuery<PushNotification>;
