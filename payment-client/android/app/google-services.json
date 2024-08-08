@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "470555603384",
+    "project_id": "multi-store-2b052",
+    "storage_bucket": "multi-store-2b052.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:470555603384:android:06bc37e6292ed5efc91f4d",
+        "android_client_info": {
+          "package_name": "com.aseremarket.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbzP6lOSPD7ce7-B-hThU_CM5E-KirpT4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
