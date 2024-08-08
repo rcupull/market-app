@@ -2,7 +2,7 @@ import { Access } from './admin';
 import { Business } from './business';
 import { Address, BaseIdentity, Image } from './general';
 
-export type UserRole = 'user' | 'admin';
+export type UserRole = 'user' | 'admin' | 'paymentClient';
 
 export interface UserChecks {
   requestUserTypeWhenStart?: boolean;

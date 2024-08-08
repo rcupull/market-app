@@ -15,6 +15,7 @@ type UseAuthMeta = {
   getIsDeliveryUser: (user: UserDto | undefined) => boolean;
   getIsBusinessUser: (user: UserDto | undefined) => boolean;
   getIsAdmin: (user: UserDto | undefined) => boolean;
+  getIsPaymentClient: (user: UserDto | undefined) => boolean;
   isAuthenticated: boolean;
   onRefreshAuthUser: () => void;
   getHasSomeAccess: (...access: Array<Access>) => boolean;
@@ -35,6 +36,10 @@ export const useAuth = (): UserAuthReturn => {
 
   const getIsAdmin: UseAuthMeta['getIsAdmin'] = (user) => {
     return user?.role === 'admin';
+  };
+
+  const getIsPaymentClient: UseAuthMeta['getIsPaymentClient'] = (user) => {
+    return user?.role === 'paymentClient';
   };
 
   const getIsBusinessUser: UseAuthMeta['getIsBusinessUser'] = (user) => {
@@ -59,6 +64,7 @@ export const useAuth = (): UserAuthReturn => {
     getIsDeliveryUser,
     getIsSimpleUser,
     getIsBusinessUser,
+    getIsPaymentClient,
     getHasSomeAccess: (...access) => {
       const { specialAccess } = user || {};
 

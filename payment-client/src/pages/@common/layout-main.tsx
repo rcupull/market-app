@@ -4,7 +4,7 @@ import { useAuth } from 'features/api-slices/useAuth';
 import { useSignOut } from 'features/api-slices/useSignOut';
 import { useUssd } from 'features/ussd/useUssd';
 
-import { FooterXs } from './footer-xs';
+import { Footer } from './footer';
 
 import { Navbar } from 'pages/@common/nav-bar';
 import { ChildrenProp } from 'types/general';
@@ -16,20 +16,13 @@ export const LayoutMain = ({ children }: LayoutMainProps): JSX.Element => {
   const { authSignIn } = useAuth();
   const ussd = useUssd();
 
-  const renderFooter = () => {
-    return <FooterXs className="flex-shrink-0 fixed bottom-0 left-0 right-0" />;
-  };
-
   const isMainBusy = signOut.status.isBusy || authSignIn.status.isBusy || ussd.isBusy;
 
   return (
     <div className="flex flex-col h-screen relative">
       <Navbar className="flex-shrink-0 fixed top-0 z-10" />
-
       <div className="mt-[64px]">{children}</div>
-
-      {renderFooter()}
-
+      <Footer className="flex-shrink-0 fixed bottom-0 left-0 right-0" />
       {isMainBusy && (
         <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-gray-200 opacity-70">
           <SpinnerEllipsis />
