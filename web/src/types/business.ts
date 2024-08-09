@@ -170,7 +170,7 @@ export interface Business extends BaseIdentity {
   socialLinks?: SocialLinks;
   layouts?: BusinessLayouts;
   aboutUsPage?: BusinessAboutUsPage;
-  whatsAppPhoneNumber?: string;
+  phoneNumber?: string;
   notificationFlags?: Array<BusinessNotificationFlags>;
   shoppingMeta?: {
     termsAndConditions?: string;

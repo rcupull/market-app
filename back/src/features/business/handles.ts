@@ -313,7 +313,7 @@ const put_business_routeName: () => RequestHandler = () => {
           logo: 'logo',
           layouts: 'layouts',
           aboutUsPage: 'aboutUsPage',
-          whatsAppPhoneNumber: 'whatsAppPhoneNumber',
+          phoneNumber: 'phoneNumber',
           postFormFields: 'postFormFields',
           shoppingMeta: 'shoppingMeta',
           notificationFlags: 'notificationFlags',

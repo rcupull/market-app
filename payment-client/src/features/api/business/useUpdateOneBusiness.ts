@@ -18,7 +18,7 @@ export const useUpdateOneBusiness = (): {
           | 'logo'
           | 'layouts'
           | 'aboutUsPage'
-          | 'whatsAppPhoneNumber'
+          | 'phoneNumber'
           | 'shoppingMeta'
           | 'postFormFields'
           | 'notificationFlags'
