@@ -1,5 +1,5 @@
 import { PaginateModel, Schema, model } from 'mongoose';
-import { Business, BusinessNotificationFlags } from '../types/business';
+import { Business, BusinessBankAccountStatus, BusinessNotificationFlags } from '../types/business';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { createdAtSchemaDefinition } from '../utils/schemas';
 import { PostModel } from './post';
@@ -139,7 +139,19 @@ const BusinessSchema = new Schema<Business>({
   addresses: [AddressDefinition],
   deliveryConfig: DeliveryConfigDefinition,
   favoritesUserIds: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-  checks: { type: Schema.Types.Mixed }
+  checks: { type: Schema.Types.Mixed },
+  bankAccounts: [
+    {
+      alias: { type: String },
+      accountNumber: { type: String },
+      status: {
+        type: String,
+        enum: Object.values(BusinessBankAccountStatus),
+        default: BusinessBankAccountStatus.NOT_VALIDATED
+      },
+      current: { type: Boolean, default: false }
+    }
+  ]
 });
 
 BusinessSchema.plugin(mongoosePaginate);

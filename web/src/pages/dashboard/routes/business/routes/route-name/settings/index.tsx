@@ -6,6 +6,7 @@ import SvgBootstrap from 'icons/Bootstrap';
 import SvgFighterJetSolid from 'icons/FighterJetSolid';
 import SvgHandshakeSolid from 'icons/HandshakeSolid';
 import SvgMedrt from 'icons/Medrt';
+import SvgMoneyCheckSolid from 'icons/MoneyCheckSolid';
 import SvgNetworkWiredSolid from 'icons/NetworkWiredSolid';
 import SvgPeopleCarrySolid from 'icons/PeopleCarrySolid';
 import SvgShareAltSolid from 'icons/ShareAltSolid';
@@ -19,6 +20,7 @@ import { useBusinessDeliveryModal } from 'pages/@modals/useBusinessDeliveryModal
 import { useBusinessOnboardingModal } from 'pages/@modals/useBusinessOnboardingModal';
 import { useBusinessShoppingTermsAndConditionsModal } from 'pages/@modals/useBusinessShoppingTermsAndConditionsModal';
 import { useBusinessUpdateAboutUsModal } from 'pages/@modals/useBusinessUpdateAboutUsModal';
+import { useBusinessUpdateBankAccounts } from 'pages/@modals/useBusinessUpdateBankAccounts';
 import { useBusinessUpdateBannerModal } from 'pages/@modals/useBusinessUpdateBannerModal';
 import { useBusinessUpdateLogoModal } from 'pages/@modals/useBusinessUpdateLogoModal';
 import { useBusinessUpdateNotificationsModal } from 'pages/@modals/useBusinessUpdateNotificationsModal';
@@ -41,6 +43,7 @@ export const Settings = () => {
   const { businessShoppingTermsAndConditionsModal } = useBusinessShoppingTermsAndConditionsModal();
   const { businessDeliveryModal } = useBusinessDeliveryModal();
   const { businessDeliveryManModal } = useBusinessDeliveryManModal();
+  const { businessUpdateBankAccounts } = useBusinessUpdateBankAccounts();
 
   const { onFetch, business } = useBusiness();
   const { getIsEnabled } = getDeliveryUtils();
@@ -159,6 +162,13 @@ export const Settings = () => {
         }
         svg={SvgHandshakeSolid}
         onClick={() => businessShoppingTermsAndConditionsModal.open()}
+      />
+
+      <SettingBox
+        title="Cuentas de banco"
+        description={<div>Crea y administra tus cuentas de Banco.</div>}
+        svg={SvgMoneyCheckSolid}
+        onClick={() => businessUpdateBankAccounts.open()}
       />
 
       <SettingBox

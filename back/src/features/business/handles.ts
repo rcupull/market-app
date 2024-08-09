@@ -290,6 +290,16 @@ const put_business_routeName: () => RequestHandler = () => {
           oldImagesSrcs: [business.logo]
         });
       }
+
+      if (body.bankAccounts) {
+        /**
+         * TODO
+         * check if the account has changes and validate they
+         * mark the account as not validated
+         * send validation code to client
+         */
+      }
+
       const out = await businessServicesUpdateOne({
         query: {
           routeName,
@@ -309,7 +319,8 @@ const put_business_routeName: () => RequestHandler = () => {
           notificationFlags: 'notificationFlags',
           seo: 'seo',
           addresses: 'addresses',
-          deliveryConfig: 'deliveryConfig'
+          deliveryConfig: 'deliveryConfig',
+          bankAccounts: 'bankAccounts'
         })(body)
       });
 

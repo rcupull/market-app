@@ -146,6 +146,19 @@ export interface BusinessChecks {
   doneOnboarding?: boolean;
 }
 
+export enum BusinessBankAccountStatus {
+  NOT_VALIDATED = 'NOT_VALIDATED',
+  SENT_VALIDATION = 'SENT_VALIDATION',
+  VALIDATED = 'VALIDATED'
+}
+
+export interface BusinessBankAccount {
+  alias?: string;
+  accountNumber?: string;
+  status: BusinessBankAccountStatus;
+  current: boolean;
+}
+
 export interface Business extends BaseIdentity {
   name: string;
   routeName: string;
@@ -170,6 +183,8 @@ export interface Business extends BaseIdentity {
   deliveryConfig?: DeliveryConfig;
   //
   checks?: BusinessChecks;
+  //
+  bankAccounts?: Array<BusinessBankAccount>;
 }
 
 export interface BusinessSummary extends Pick<Business, '_id' | 'name' | 'routeName'> {

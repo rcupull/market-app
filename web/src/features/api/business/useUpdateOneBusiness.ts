@@ -25,6 +25,7 @@ export const useUpdateOneBusiness = (): {
           | 'seo'
           | 'deliveryConfig'
           | 'addresses'
+          | 'bankAccounts'
         >
       >;
     },
